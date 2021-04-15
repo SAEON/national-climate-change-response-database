@@ -1,0 +1,19 @@
+{
+  "name": "nccs",
+  "version": "0.0.1",
+  "description": "National climate change systems",
+  "scripts": {
+    "start:api": "npm --prefix src/nccrd-api start",
+    "start:client": "npm --prefix src/nccrd-client start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SAEON/national-climate-change-systems.git"
+  },
+  "author": "zach@saeon.ac.za",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SAEON/national-climate-change-systems/issues"
+  },
+  "homepage": "https://github.com/SAEON/national-climate-change-systems#readme"
+}

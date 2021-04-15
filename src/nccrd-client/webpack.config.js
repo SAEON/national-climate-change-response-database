@@ -1,10 +1,9 @@
-const Dotenv = require('dotenv-webpack')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const packageJson = require('./package.json')
-require('dotenv').config()
+const dotenv = require('dotenv').config({path: path.join(__dirname, './.env')})
 
 let { NODE_ENV: mode, NCCRD_DEPLOYMENT_ENV = 'local' } = process.env
 
@@ -64,14 +63,20 @@ module.exports = () => {
       ],
     },
     plugins: [
-      new Dotenv(),
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(mode),
-        'process.env.NCCRD_DEPLOYMENT_ENV': JSON.stringify(NCCRD_DEPLOYMENT_ENV),
-        'process.env.PACKAGE_NAME': JSON.stringify(packageJson.name),
-        'process.env.PACKAGE_DESCRIPTION': JSON.stringify(packageJson.description),
-        'process.env.PACKAGE_KEYWORDS': JSON.stringify(packageJson.keywords),
-      }),
+        'process.env': {
+          NODE_ENV: JSON.stringify(mode),
+          NCCRD_DEPLOYMENT_ENV: JSON.stringify(NCCRD_DEPLOYMENT_ENV),
+          PACKAGE_NAME: JSON.stringify(packageJson.name),
+          PACKAGE_DESCRIPTION: JSON.stringify(packageJson.description),
+          PACKAGE_KEYWORDS: JSON.stringify(packageJson.keywords),
+          ...Object.fromEntries(
+            Object.entries(dotenv.parsed)
+            .filter(([key]) => key !== 'NCCRD_DEPLOYMENT_ENV')
+            .map(([key, value]) => [key, JSON.stringify(value)])
+          )
+         }
+     }),
       new CopyPlugin({
         patterns: [
           {

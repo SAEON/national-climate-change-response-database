@@ -10,6 +10,7 @@
     "ncu": "ncu",
     "ncu -u": "ncu -u"
   },
+  "keywords": [],
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "repository": {
@@ -39,7 +40,6 @@
     "cross-fetch": "^3.1.4",
     "css-loader": "^5.2.1",
     "dotenv": "^8.2.0",
-    "dotenv-webpack": "^7.0.2",
     "file-loader": "^6.2.0",
     "graphql": "^15.5.0",
     "html-webpack-plugin": "^5.3.1",

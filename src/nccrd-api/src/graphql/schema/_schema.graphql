@@ -1,0 +1,13 @@
+scalar DateTime
+scalar JSON
+scalar Void
+
+type Query {
+  helloWorld: String
+}
+
+# type Subscription {}
+
+type Mutation {
+  helloWorld: String
+}

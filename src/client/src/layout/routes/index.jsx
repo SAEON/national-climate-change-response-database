@@ -4,6 +4,7 @@ import Transition from './_transition'
 
 const HomePage = lazy(() => import('../../pages/home'))
 const LoginPage = lazy(() => import('../../pages/login'))
+const UsersPage = lazy(() => import('../../pages/users'))
 
 export default withRouter(() => {
   return (
@@ -16,6 +17,18 @@ export default withRouter(() => {
         render={() => (
           <Transition>
             <HomePage />
+          </Transition>
+        )}
+      />
+
+      {/* USERS */}
+      <Route
+        key={'users'}
+        path={'/users'}
+        exact
+        render={() => (
+          <Transition>
+            <UsersPage />
           </Transition>
         )}
       />

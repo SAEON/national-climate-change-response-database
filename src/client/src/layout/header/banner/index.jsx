@@ -43,6 +43,7 @@ export default props => {
         {mdAndUp && (
           <MuiLink component={Link} to="/">
             <Typography
+              color="textPrimary"
               style={{ display: 'flex', flexBasis: 0, flexGrow: 1, textAlign: 'center' }}
               variant="h1"
             >

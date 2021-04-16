@@ -25,7 +25,7 @@ export default {
     type: 'light',
     contrastThreshold: 3,
     primary: {
-      main: '#051d40',
+      main: 'rgb(46, 125, 50)',
     },
     secondary: {
       main: '#dee1e5',

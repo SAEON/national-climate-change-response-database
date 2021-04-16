@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "National climate change systems",
   "scripts": {
-    "start:api": "npm --prefix src/nccrd-api start",
-    "start:client": "npm --prefix src/nccrd-client start"
+    "start:api": "npm --prefix src/api start",
+    "start:client": "npm --prefix src/client start"
   },
   "repository": {
     "type": "git",

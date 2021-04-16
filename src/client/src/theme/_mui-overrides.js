@@ -1,6 +1,8 @@
 export default theme => ({
   MuiTypography: {
-    h1: {},
+    h1: {
+      fontSize: '2rem',
+    },
     h2: {},
     h6: {},
   },

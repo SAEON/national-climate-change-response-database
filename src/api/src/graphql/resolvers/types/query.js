@@ -1,5 +1,5 @@
-import helloWorld from '../queries/hello-world.js'
+import userRoles from '../queries/user-roles.js'
 
 export default {
-  helloWorld,
+  userRoles,
 }

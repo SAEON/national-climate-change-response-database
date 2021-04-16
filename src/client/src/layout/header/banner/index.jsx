@@ -1,0 +1,72 @@
+import { Link } from 'react-router-dom'
+import MuiLink from '@material-ui/core/Link'
+import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import Collapse from '@material-ui/core/Collapse'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Typography from '@material-ui/core/Typography'
+import Toolbar from './toolbar'
+import useTheme from '@material-ui/core/styles/useTheme'
+
+export const IMAGE_HEIGHT = 93
+
+const HideOnScroll = ({ children }) => {
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+  })
+  return (
+    <Collapse in={!trigger}>
+      <div>{children}</div>
+    </Collapse>
+  )
+}
+
+export default props => {
+  const theme = useTheme()
+  const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
+  const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
+
+  return (
+    <HideOnScroll {...props}>
+      <Toolbar>
+        {/* DFFE LOGO */}
+        <a
+          style={{ display: 'flex', flexBasis: 0, flexGrow: 1 }}
+          target="_blank"
+          rel="noreferrer"
+          href="http://www.environment.gov.za/"
+        >
+          <img style={{ height: IMAGE_HEIGHT }} src="/dffe-logo.png" alt="SA Government" />
+        </a>
+
+        {/* TITLE */}
+        {mdAndUp && (
+          <MuiLink component={Link} to="/">
+            <Typography
+              style={{ display: 'flex', flexBasis: 0, flexGrow: 1, textAlign: 'center' }}
+              variant="h1"
+            >
+              National Climate Change Response Database
+            </Typography>
+          </MuiLink>
+        )}
+
+        {/* SA FLAG */}
+        {smAndUp && (
+          <a
+            style={{ display: 'flex', flexBasis: 0, flexGrow: 1, justifyContent: 'flex-end' }}
+            target="_blank"
+            rel="noreferrer"
+            href="http://www.environment.gov.za/"
+          >
+            <img
+              style={{ height: IMAGE_HEIGHT, display: 'flex' }}
+              src="/sa-flag.jpg"
+              alt="SA Government"
+            />
+          </a>
+        )}
+      </Toolbar>
+    </HideOnScroll>
+  )
+}

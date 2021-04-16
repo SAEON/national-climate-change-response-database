@@ -2,8 +2,14 @@ scalar DateTime
 scalar JSON
 scalar Void
 
+type UserRole {
+  id: ID!
+  name: String!
+  description: String
+}
+
 type Query {
-  helloWorld: String
+  userRoles: [UserRole!]!
 }
 
 # type Subscription {}

@@ -9,7 +9,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 
 export const IMAGE_HEIGHT = 93
 
-const HideOnScroll = ({ children }) => {
+export const HideOnScroll = ({ children }) => {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,

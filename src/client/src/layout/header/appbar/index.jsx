@@ -9,11 +9,13 @@ import Breadcrumbs from './breadcrumbs'
 import Divider from '@material-ui/core/Divider'
 import useTheme from '@material-ui/core/styles/useTheme'
 import Typography from '@material-ui/core/Typography'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 export default () => {
   const theme = useTheme()
   const { userInfo: authenticated } = useContext(authenticationContext)
   useLocation() // Trigger re-render on location changes
+  const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
     <Toolbar
@@ -26,10 +28,10 @@ export default () => {
       {/* NAVIGATION MENU */}
       <NavMenu />
 
-      <Divider orientation="vertical" flexItem style={{ margin: theme.spacing(2) }} />
+      {smAndUp && <Divider orientation="vertical" flexItem style={{ margin: theme.spacing(2) }} />}
 
       {/* BREADCRUMBS */}
-      <Breadcrumbs />
+      {smAndUp && <Breadcrumbs />}
 
       {/* LOG IN */}
       {window.location.pathname !== '/login' && !authenticated && (
@@ -50,7 +52,7 @@ export default () => {
           href={`${NCCRD_API_ADDRESS}/logout?redirect=${NCCRD_CLIENT_ADDRESS}`}
         >
           <Typography style={{ paddingRight: theme.spacing(1) }} variant="overline">
-            Log out
+            Log out {smAndUp && `(${authenticated.username})`}
           </Typography>
         </MuiLink>
       )}

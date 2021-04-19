@@ -2,7 +2,7 @@ import { cloneElement } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import BannerToolbar from './banner/toolbar'
-import Banner, { IMAGE_HEIGHT } from './banner'
+import Banner, { IMAGE_HEIGHT, HideOnScroll } from './banner'
 import Divider from '@material-ui/core/Divider'
 import ApplicationToolbar from './appbar'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
@@ -32,9 +32,11 @@ export default props => {
       </ElevationScroll>
 
       {/* Push content down below banner and toolbar */}
-      <BannerToolbar>
-        <div style={{ minHeight: IMAGE_HEIGHT }}></div>
-      </BannerToolbar>
+      <HideOnScroll>
+        <BannerToolbar>
+          <div style={{ minHeight: IMAGE_HEIGHT }}></div>
+        </BannerToolbar>
+      </HideOnScroll>
       <Toolbar />
     </>
   )

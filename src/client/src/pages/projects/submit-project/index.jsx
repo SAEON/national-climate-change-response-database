@@ -17,7 +17,7 @@ export default () => {
       <CardContent>
         <Typography>Description of the different types of project submission</Typography>
       </CardContent>
-      <CardActions style={{ justifyContent: 'center' }}>
+      <CardActions style={{ justifyContent: 'space-between' }}>
         <Button
           disableElevation
           component={Link}

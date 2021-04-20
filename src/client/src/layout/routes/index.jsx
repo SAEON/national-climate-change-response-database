@@ -6,6 +6,7 @@ const HomePage = lazy(() => import('../../pages/home'))
 const LoginPage = lazy(() => import('../../pages/login'))
 const AccessPage = lazy(() => import('../../pages/access'))
 const ProjectsPage = lazy(() => import('../../pages/projects'))
+const ProjectWizard = lazy(() => import('../../pages/project-wizard'))
 
 export default withRouter(() => {
   return (
@@ -42,6 +43,18 @@ export default withRouter(() => {
         render={() => (
           <Transition>
             <ProjectsPage />
+          </Transition>
+        )}
+      />
+
+      {/* NEW PROJECT WIZARD */}
+      <Route
+        key={'new-project-wizard'}
+        path={'/projects/new'}
+        exact
+        render={() => (
+          <Transition>
+            <ProjectWizard />
           </Transition>
         )}
       />

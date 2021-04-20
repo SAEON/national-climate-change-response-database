@@ -18,8 +18,8 @@ export default ({ title, navItems, children }) => {
   const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
-    <Grid container>
-      <Grid item style={{ maxWidth: 300 }}>
+    <Grid container spacing={2}>
+      <Grid item style={{ maxWidth: 350 }}>
         <List style={{ padding: 0 }}>
           {navItems.map(({ primaryText, secondaryText, Icon }, i) => (
             <Card variant="outlined" key={i}>

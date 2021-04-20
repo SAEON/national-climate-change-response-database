@@ -8,11 +8,8 @@ import Fade from '@material-ui/core/Fade'
 import Users from './users'
 import Roles from './roles'
 import Permissions from './permissions'
-import useTheme from '@material-ui/core/styles/useTheme'
 
 export default () => {
-  const theme = useTheme()
-
   return (
     <Container>
       <Box my={2}>
@@ -30,7 +27,7 @@ export default () => {
         >
           {({ activeIndex }) => {
             return (
-              <div style={{ position: 'relative', marginLeft: theme.spacing(1) }}>
+              <div style={{ position: 'relative' }}>
                 <Fade key={0} unmountOnExit in={activeIndex === 0}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
                     <Users />

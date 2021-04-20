@@ -20,11 +20,10 @@ export default function IconBreadcrumbs() {
   const classes = useStyles()
   const { pathname } = useLocation() // Trigger re-render on location changes
   const tree = [...new Set(pathname.split('/'))].map(p => {
-    const navItem = navItems.find(({ to }) => {
+    return navItems.find(({ to }) => {
       to = to.replace('/', '')
       return to === p
     })
-    return navItem
   })
 
   return (
@@ -39,7 +38,11 @@ export default function IconBreadcrumbs() {
           )
         })}
 
-      {tree.slice(-1).map(({ label, Icon }) => {
+      {tree.slice(-1).map(({ label, Icon } = {}) => {
+        if (!label) {
+          return <Typography>404 (Not found)</Typography>
+        }
+
         return (
           <Typography key={label} color="textPrimary" className={classes.link}>
             <Icon className={classes.icon} />

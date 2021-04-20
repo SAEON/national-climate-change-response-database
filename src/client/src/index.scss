@@ -1,2 +1,6 @@
 @import './scss/layout';
 @import './scss/scrollbar';
+
+.debug {
+  border: 5px solid red !important;
+}

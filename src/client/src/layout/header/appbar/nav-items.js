@@ -1,6 +1,7 @@
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import HomeIcon from 'mdi-react/HomeIcon'
 import LoginIcon from 'mdi-react/LoginIcon'
+import ProjectsIcon from 'mdi-react/ClipboardFileIcon'
 
 export default [
   {
@@ -8,7 +9,12 @@ export default [
     Icon: HomeIcon,
     to: '/',
   },
-  { label: 'Users', Icon: UsersIcon, to: '/users', authorization: ['admin'] },
+  {
+    label: 'Projects',
+    Icon: ProjectsIcon,
+    to: '/projects',
+  },
+  { label: 'Access', Icon: UsersIcon, to: '/access', authorization: ['admin'] },
   {
     label: 'Login',
     Icon: LoginIcon,

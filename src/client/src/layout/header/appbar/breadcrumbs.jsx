@@ -3,9 +3,6 @@ import Typography from '@material-ui/core/Typography'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import { Link, useLocation } from 'react-router-dom'
 import MuiLink from '@material-ui/core/Link'
-import HomeIcon from 'mdi-react/HomeIcon'
-import WhatshotIcon from 'mdi-react/HomeIcon'
-import GrainIcon from 'mdi-react/HomeIcon'
 import navItems from './nav-items'
 
 const useStyles = makeStyles(theme => ({

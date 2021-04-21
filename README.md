@@ -54,9 +54,6 @@ npm run build-all-packages
 # Start a MongoDB server
 docker run --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:4.4.3
 
-# Start the Node.js proxy server
-npm run start:proxy
-
 # Start the Node.js API server
 npm run start:api
 

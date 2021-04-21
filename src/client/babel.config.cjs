@@ -24,7 +24,7 @@ module.exports = {
         '@material-ui/lab': {
           transform: '@material-ui/lab/${member}',
           preventFullImport: true,
-        },
+        }
       },
     ],
     ['@babel/plugin-proposal-optional-chaining'],

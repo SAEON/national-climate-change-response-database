@@ -2,7 +2,13 @@ import * as config from '../config.js'
 
 const mask = str => str?.replace(/./g, '*').padEnd(60, '*')
 
-const MASKED_FIELDS = ['NCCRD_API_KEY', 'NCCRD_API_GOOGLE_CLIENT_SECRET']
+const MASKED_FIELDS = [
+  'NCCRD_API_KEY',
+  'NCCRD_API_GOOGLE_CLIENT_ID',
+  'NCCRD_API_GOOGLE_CLIENT_SECRET',
+  'MONGO_DB_USERNAME',
+  'MONGO_DB_PASSWORD',
+]
 
 console.log(
   'Configuration',

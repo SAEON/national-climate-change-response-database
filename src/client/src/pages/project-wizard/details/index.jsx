@@ -1,36 +1,52 @@
-import Wrapper from '../wrapper'
-import TextField from '@material-ui/core/TextField'
+import { gql, useQuery } from '@apollo/client'
+import Form from './form'
+import Loading from '../../../components/loading'
+import Fade from '@material-ui/core/Fade'
 
-export default () => (
-  <Wrapper title="Project details">
-    <TextField
-      margin="normal"
-      id="project-title-form-entry"
-      label="Project title"
-      fullWidth
-      placeholder="Enter project title here"
-      variant="outlined"
-      helperText="Max 50 characters"
-    />
-    <TextField
-      id="project-description-form-entry"
-      label="Project description"
-      multiline
-      margin="normal"
-      rows={3}
-      fullWidth
-      placeholder="Enter project description here"
-      variant="outlined"
-    />
-    <TextField
-      id="project-methodology-form-entry"
-      label="Project methodology"
-      multiline
-      margin="normal"
-      rows={3}
-      fullWidth
-      placeholder="Enter project methodology here"
-      variant="outlined"
-    />
-  </Wrapper>
-)
+export default () => {
+  const { error, loading, data } = useQuery(
+    gql`
+      query projectDetailFields($name: String!) {
+        __type(name: $name) {
+          inputFields {
+            name
+            description
+            type {
+              name
+              ofType {
+                name
+              }
+            }
+          }
+        }
+      }
+    `,
+    {
+      variables: {
+        name: 'ProjectInput',
+      },
+    }
+  )
+
+  if (loading) {
+    return (
+      <Fade in={loading} key="loading-in">
+        <span>
+          <Loading />
+        </span>
+      </Fade>
+    )
+  }
+
+  if (error) {
+    throw error
+  }
+
+  return (
+    <Fade in={Boolean(data)} key="form-in">
+      <span>
+        <Form fields={data.__type.inputFields} />
+      </span>
+    </Fade>
+  )
+}

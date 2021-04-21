@@ -1,7 +1,9 @@
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/core/styles'
 import theme from './theme'
-import Apollo from './components/apollo'
+import ApolloProvider from './components/apollo'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
 import ClientInfoProvider from './contexts/client-info'
 import AuthenticationProvider from './contexts/authentication'
 import AuthorizationProvider from './contexts/authorization'
@@ -20,21 +22,23 @@ export default () => {
         <ErrorBoundary>
           <DetectDevice>
             <NativeExtensions>
-              <Apollo>
+              <ApolloProvider>
                 <ClientInfoProvider>
                   <CookieConsent>
                     <AuthenticationProvider>
                       <AuthorizationProvider>
-                        <SnackbarProvider>
-                          <DefaultApplicationNotices>
-                            <Layout />
-                          </DefaultApplicationNotices>
-                        </SnackbarProvider>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <SnackbarProvider>
+                            <DefaultApplicationNotices>
+                              <Layout />
+                            </DefaultApplicationNotices>
+                          </SnackbarProvider>
+                        </MuiPickersUtilsProvider>
                       </AuthorizationProvider>
                     </AuthenticationProvider>
                   </CookieConsent>
                 </ClientInfoProvider>
-              </Apollo>
+              </ApolloProvider>
             </NativeExtensions>
           </DetectDevice>
         </ErrorBoundary>

@@ -3,6 +3,7 @@ import HomeIcon from 'mdi-react/HomeIcon'
 import LoginIcon from 'mdi-react/LoginIcon'
 import ProjectsIcon from 'mdi-react/DatabaseIcon'
 import NewProjectsIcon from 'mdi-react/DatabasePlusIcon'
+import TenantsIcon from 'mdi-react/ServerIcon'
 
 export default [
   {
@@ -14,6 +15,11 @@ export default [
     label: 'Projects',
     Icon: ProjectsIcon,
     to: '/projects',
+  },
+  {
+    label: 'Tenants',
+    Icon: TenantsIcon,
+    to: '/tenants',
   },
   {
     label: 'New project',

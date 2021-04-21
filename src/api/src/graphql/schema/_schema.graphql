@@ -1,11 +1,18 @@
 scalar DateTime
 scalar JSON
 scalar Void
+scalar Money
 
 type UserRole {
   id: ID!
   name: String!
   description: String
+}
+
+enum InterventionType {
+  Mitigation
+  Adaptation
+  CrossCutting
 }
 
 enum ProjectType {
@@ -35,6 +42,7 @@ enum ProjectType {
   Transport
   Wind
 }
+
 enum ProjectSubType {
   Agriculturalresidues_Mustardcrop
   AgriculturalResidues_OtherKinds
@@ -88,67 +96,55 @@ enum ProjectSubType {
   SolarWaterHeating
 }
 
-enum InterventionType {
-  Mitigation
-  Adaptation
-  CrossCutting
-}
-
 input ProjectInput {
+  # Project title :: Unique project name
   title: String
-  projectType: ProjectType!
-  interventionType: InterventionType!
-  leadAgent: String
-  hostPartner: String
-  fundingOrganisation: String
-  fundingPartner: String
-  hostOrganisation: String
-  hostSector: Int!
-  status: Int!
-  startYear: Int!
-  endYear: Int!
-  estimatedBudget: Int!
-  projectManager: Int!
+  # Project description :: Enter long text description here
   description: String!
+  # Project manager :: Who is in charge of managing this project?
+  projectManager: String!
+  # Lead agent :: Lead contact agent
+  leadAgent: String
+  # Host organization :: Who is the main hosting organization?
+  hostOrganisation: String
+  # Host partner :: Who is the main hosting partner?
+  hostPartner: String
+  # Funding organization :: Who is the main funding organization?
+  fundingOrganisation: String
+  # Funding partner :: Who is the main funding partner
+  fundingPartner: String
+  # Alternative contact :: Who else can people contact?
   alternativeContact: String!
+  # Alternative contact email :: Contact details of the alternative contact
   alternativeContactEmail: String!
+  # Link :: Is there a URI that is associated with this project?
   link: String!
-  validationStatus: String!
-  updatedBy: String!
-  updatedAt: DateTime!
-  fundingStatus: Int!
+  # Project start date :: Round to the beginning or end of the year
+  startDate: DateTime!
+  # Project end date :: Round to the beginning or end of the year
+  endDate: DateTime!
+  # Validation status :: Has this project been validated?
+  validationStatus: Boolean!
+  # Validation Comments :: Any validation feedback?
   validationComments: String!
-  budgetLower: Float!
-  budgetUpper: Float!
+  # Estimated budget :: What is the estimated budget for this project?
+  estimatedBudget: Money!
+  # Budget (lower bound) :: What is the lower-bound of the estimated budget?
+  budgetLower: Money!
+  # Budget (upper bound) :: What is the upper-bound of the estimated budget?
+  budgetUpper: Money!
+
+  # projectType: ProjectType!
+  # projectSubType: ProjectSubType!
+  # interventionType: InterventionType!
+  # hostSector: Int! # TODO enum
+  # projectStatus: Int! # TODO enum
+  # fundingStatus: Int! # TODO enum
 }
 
 type Project {
   id: ID!
   title: String
-  projectType: Int!
-  interventionType: Int!
-  leadAgent: String
-  hostPartner: String
-  fundingOrganisation: String
-  fundingPartner: String
-  hostOrganisation: String
-  hostSector: Int!
-  status: Int!
-  startYear: Int!
-  endYear: Int!
-  estimatedBudget: Int!
-  projectManager: Int!
-  description: String!
-  alternativeContact: String!
-  alternativeContactEmail: String!
-  link: String!
-  validationStatus: String!
-  updatedBy: String!
-  updatedAt: DateTime!
-  fundingStatus: Int!
-  validationComments: String!
-  budgetLower: Float!
-  budgetUpper: Float!
 }
 
 type Query {
@@ -159,4 +155,5 @@ type Query {
 
 type Mutation {
   createProject(projectDetails: ProjectInput!): Project!
+  updateProject(projectDetails: ProjectInput!): Project!
 }

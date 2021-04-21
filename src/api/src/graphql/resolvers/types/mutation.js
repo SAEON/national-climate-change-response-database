@@ -1,5 +1,5 @@
-import helloWorld from '../mutations/hello-world.js'
+import createProject from '../mutations/create-project.js'
 
 export default {
-  helloWorld,
+  createProject,
 }

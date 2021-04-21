@@ -8,6 +8,149 @@ type UserRole {
   description: String
 }
 
+enum ProjectType {
+  Afforestation
+  Agriculture
+  BiomassEnergy
+  Biogas
+  Cement
+  CoalBedMineMethane
+  EEHouseholds
+  EEIndustry
+  EEOwnGeneration
+  EEService
+  EESupplySide
+  EnergyDistribution
+  FossilFuelSwitch
+  FugitiveGases
+  Geothermal
+  HFCs
+  Hydro
+  LandfillGas
+  N2O
+  PFCs
+  Reforestation
+  Solar
+  Tidal
+  Transport
+  Wind
+}
+enum ProjectSubType {
+  Agriculturalresidues_Mustardcrop
+  AgriculturalResidues_OtherKinds
+  AgriculturalResidues_PoultryLitter
+  AgriculturalResidues_RiceHusk
+  BagassePower
+  Biodiesel
+  BlackLiquor
+  Ethanol
+  Forest
+  Biomass
+  ForestResidues_Other
+  ForestResidues_SawmillWaste
+  GasificationOfBiomass
+  IndustrialWaste
+  Irrigation
+  PalmOilSolidWaste
+  BiogasFlaring
+  BiogasPower
+  CoalMineMethane
+  BuildingMaterials
+  Cement
+  Chemicals
+  CokeOven
+  Construction
+  Electronics
+  Food
+  Glass
+  IronAndSteel
+  Machinery
+  MetalProducts
+  Mining
+  NonFerrousMetals
+  Paper
+  Petrochemicals
+  Textiles
+  Wood
+  ExistingDam
+  NewDam
+  RunOfRiver
+  CombustionForMSW
+  Composting
+  GasificationOfMSW
+  LandfillFlaring
+  LandfillPower
+  AdipicAcid
+  Caprolactam
+  NitricAcid
+  SolarCoking
+  SolarPV
+  SolarWaterHeating
+}
+
+enum InterventionType {
+  Mitigation
+  Adaptation
+  CrossCutting
+}
+
+input ProjectInput {
+  title: String
+  projectType: ProjectType!
+  interventionType: InterventionType!
+  leadAgent: String
+  hostPartner: String
+  fundingOrganisation: String
+  fundingPartner: String
+  hostOrganisation: String
+  hostSector: Int!
+  status: Int!
+  startYear: Int!
+  endYear: Int!
+  estimatedBudget: Int!
+  projectManager: Int!
+  description: String!
+  alternativeContact: String!
+  alternativeContactEmail: String!
+  link: String!
+  validationStatus: String!
+  updatedBy: String!
+  updatedAt: DateTime!
+  fundingStatus: Int!
+  validationComments: String!
+  budgetLower: Float!
+  budgetUpper: Float!
+}
+
+type Project {
+  id: ID!
+  title: String
+  projectType: Int!
+  interventionType: Int!
+  leadAgent: String
+  hostPartner: String
+  fundingOrganisation: String
+  fundingPartner: String
+  hostOrganisation: String
+  hostSector: Int!
+  status: Int!
+  startYear: Int!
+  endYear: Int!
+  estimatedBudget: Int!
+  projectManager: Int!
+  description: String!
+  alternativeContact: String!
+  alternativeContactEmail: String!
+  link: String!
+  validationStatus: String!
+  updatedBy: String!
+  updatedAt: DateTime!
+  fundingStatus: Int!
+  validationComments: String!
+  budgetLower: Float!
+  budgetUpper: Float!
+}
+
 type Query {
   userRoles: [UserRole!]!
 }
@@ -15,5 +158,5 @@ type Query {
 # type Subscription {}
 
 type Mutation {
-  helloWorld: String
+  createProject(projectDetails: ProjectInput!): Project!
 }

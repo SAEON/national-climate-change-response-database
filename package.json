@@ -1,10 +1,11 @@
 {
-  "name": "nccs",
+  "name": "nccis",
   "version": "0.0.1",
-  "description": "National climate change systems",
+  "description": "National climate change information systems",
   "scripts": {
     "start:api": "npm --prefix src/api start",
-    "start:client": "npm --prefix src/client start"
+    "start:client": "npm --prefix src/client start",
+    "doc": "doctoc README.md"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/SAEON/national-climate-change-systems/issues"
   },
-  "homepage": "https://github.com/SAEON/national-climate-change-systems#readme"
+  "homepage": "https://github.com/SAEON/national-climate-change-systems#readme",
+  "devDependencies": {
+    "doctoc": "^2.0.0"
+  }
 }

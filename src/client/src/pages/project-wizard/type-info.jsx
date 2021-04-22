@@ -1,9 +1,8 @@
 import { gql, useQuery } from '@apollo/client'
-import Form from './form'
-import Loading from '../../../components/loading'
+import Loading from '../../components/loading'
 import Fade from '@material-ui/core/Fade'
 
-export default ({ form, updateForm }) => {
+export default ({ children, name }) => {
   const { error, loading, data } = useQuery(
     gql`
       query projectDetailFields($name: String!) {
@@ -23,7 +22,7 @@ export default ({ form, updateForm }) => {
     `,
     {
       variables: {
-        name: 'ProjectInput',
+        name,
       },
     }
   )
@@ -44,9 +43,7 @@ export default ({ form, updateForm }) => {
 
   return (
     <Fade in={Boolean(data)} key="form-in">
-      <span>
-        <Form form={form} updateForm={updateForm} fields={data.__type.inputFields} />
-      </span>
+      <span>{children(data.__type.inputFields)}</span>
     </Fade>
   )
 }

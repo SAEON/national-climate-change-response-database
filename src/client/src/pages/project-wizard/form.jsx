@@ -1,11 +1,9 @@
-import Wrapper from '../wrapper'
-import { StringField, DateTimeField, IntField, MoneyField, BooleanField } from '../form-components'
+import Wrapper from './wrapper'
+import { StringField, DateTimeField, IntField, MoneyField, BooleanField } from './form-components'
 
-const MULTILINE_FIELDS = ['description', 'projectManager']
-
-export default ({ fields, form, updateForm }) => {
+export default ({ fields, form, updateForm, title, multilineFields }) => {
   return (
-    <Wrapper title="Project details">
+    <Wrapper title={title}>
       {fields.map(({ name, description, type }) => {
         const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
         const { name: inputType, ofType } = type
@@ -13,7 +11,7 @@ export default ({ fields, form, updateForm }) => {
         const isRequired = !inputType
 
         if (gqlType === 'String') {
-          const isMultilineText = MULTILINE_FIELDS.includes(name)
+          const isMultilineText = multilineFields.includes(name)
           return (
             <StringField
               error={isRequired && !form[name]}
@@ -74,7 +72,7 @@ export default ({ fields, form, updateForm }) => {
           return <IntField key={name} />
         }
 
-        throw new Error('The form builder encountered an unknown GraphQL type')
+        throw new Error(`The form builder encountered an unknown GraphQL type - ${gqlType}`)
       })}
     </Wrapper>
   )

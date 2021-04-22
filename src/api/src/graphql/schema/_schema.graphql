@@ -104,7 +104,7 @@ input ProjectInput {
   # Project manager :: Who is in charge of managing this project?
   projectManager: String
   # Intervention Type :: What type of intervention does this project focus on?
-  interventionType: InterventionType!
+  # interventionType: InterventionType!
   # Lead agent :: Lead contact agent
   leadAgent: String
   # Host organization :: Who is the main hosting organization?
@@ -144,11 +144,8 @@ input ProjectInput {
 }
 
 input MitigationInput {
-  # n/a ::
-  MitigationDetailsId: ID!
-  # n/a ::
-  ProjectDetailsId: ID!
-
+  # Project ID ::
+  # projectId: ID!
   # Carbon credit :: Does this project produce carbon credits?
   CarbonCredit: Boolean!
   # Voluntary methodology :: Describe the method used in the project.

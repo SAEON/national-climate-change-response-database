@@ -147,7 +147,6 @@ input MitigationInput {
   MitigationDetailsId: ID!
   # n/a ::
   ProjectDetailsId: ID!
-
   # Carbon credit :: Does this project produce carbon credits?
   CarbonCredit: Boolean!
   # Voluntary methodology :: Describe the method used in the project.
@@ -164,7 +163,7 @@ input MitigationInput {
   UpdtUser: String!
   #  ::
   UpdtTime: DateTime!
-  # CDM project number :: The code a project is give by the CDM once it is accepted.
+  # CDM project number :: The code a project is given by the CDM once it is accepted.
   CDMProjectNumber: String!
 
   # Mitigation type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
@@ -213,3 +212,8 @@ type Mutation {
   createProject(projectDetails: ProjectInput!): Project!
   updateProject(projectDetails: ProjectInput!): Project!
 }
+
+#type Mutation {
+#  createMitigation(mitigationDetails: MitigationInput!): Mitigation!
+#  updateMitigation(mitigationDetails: MitigationInput!): Mitigation!
+#}

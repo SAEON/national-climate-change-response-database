@@ -142,6 +142,62 @@ input ProjectInput {
   # fundingStatus: Int! # TODO enum
 }
 
+input MitigationInput {
+  # n/a ::
+  MitigationDetailsId: ID!
+  # n/a ::
+  ProjectDetailsId: ID!
+
+  # Carbon credit :: Does this project produce carbon credits?
+  CarbonCredit: Boolean!
+  # Voluntary methodology :: Describe the method used in the project.
+  VolMethodoloy: String!
+  #  ::
+  GoldStandard: Boolean!
+  #  ::
+  VCS: Boolean!
+  # Other carbon programme :: Please list the name of the carbon programme.
+  Other: String!
+  # Programme method :: Please describe the programme.
+  otherDesc: String!
+  #  ::
+  UpdtUser: String!
+  #  ::
+  UpdtTime: DateTime!
+  # CDM project number :: The code a project is give by the CDM once it is accepted.
+  CDMProjectNumber: String!
+
+  # Mitigation type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
+  # ProjectType: ProjectType!
+
+  # Mitigation subtype :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
+  # ProjectSubType: ProjectSubType!
+
+  # Host Sector (IPCC) :: Select the IPCC host sector that best decribes your project.
+  # HostSector: HostSector!
+
+  # Main SubSector :: Select the IPCC main subsector that best decribes you project.
+  # HostMainSubSector: HostMainSubSector!
+
+  # SubSector :: Select the IPCC subsector that best decribes your project.
+  # HostSubSector: HostSubSector!
+
+  # CDM Executive Board Status :: What is the CDM status of this project?
+  # ExecutiveStatus: ExecutiveStatus!
+
+  # Project status :: Planned: The concept for a project has been put forward but is not currently underway and may not specifically have funding.
+  # Adopted (Approved): The project has moved from the concept stage and specifications for implementation have been established. This project may have been assigned funding.
+  # In Progress: Infrastructure for the project is in the process of being established and the project has assigned funding.
+  # Implemented (Operational): The project infrastructure has been completed and any remaining funding is now directed towards maintenance.
+  # Published: The project has been completed and the outcome described in professional documentation
+  # Expired: The project infrastructure is no longer useful or sustainable without additional funding or funding for the project has run out.
+  # Discontinued: The project has been abandoned.
+  # CDMStatus: CDMStatus!
+
+  # CDM methodology :: Please select the CDM method used in your project.
+  # CDMMethodoloy: CDMMethodoloy!
+}
+
 type Project {
   id: ID!
   title: String

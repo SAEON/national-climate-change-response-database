@@ -97,7 +97,7 @@ enum ProjectSubType {
 }
 
 input ProjectInput {
-  # Project title :: Unique project name
+  # Project title :: Unique project name in line with programatic inputs
   title: String
   # Project description :: Enter long text description here
   description: String!

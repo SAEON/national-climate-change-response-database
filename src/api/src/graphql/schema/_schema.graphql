@@ -103,6 +103,8 @@ input ProjectInput {
   description: String!
   # Project manager :: Who is in charge of managing this project?
   projectManager: String
+  # Intervention Type :: What type of intervention does this project focus on?
+  interventionType: InterventionType!
   # Lead agent :: Lead contact agent
   leadAgent: String
   # Host organization :: Who is the main hosting organization?
@@ -136,7 +138,6 @@ input ProjectInput {
 
   # projectType: ProjectType!
   # projectSubType: ProjectSubType!
-  # interventionType: InterventionType!
   # hostSector: Int! # TODO enum
   # projectStatus: Int! # TODO enum
   # fundingStatus: Int! # TODO enum

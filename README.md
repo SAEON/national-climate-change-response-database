@@ -38,14 +38,8 @@ sudo apt-get install -y nodejs
 git clone git@github.com:SAEON/catalogue.git catalogue
 cd catalogue
 
-# Update repository git configuration
-npm run configure-git
-
 # Install package dependencies (this might take several minutes on the first run)
 npm run install-dependencies
-
-# Build local packages
-npm run build-all-packages
 ```
 
 ## Local development

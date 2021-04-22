@@ -24,7 +24,7 @@ export default () => {
           style={buttonStyle}
           color="primary"
           variant="contained"
-          to="/projects/new"
+          to="/projects/submission"
         >
           Submission wizard
         </Button>

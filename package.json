@@ -5,7 +5,10 @@
   "scripts": {
     "start:api": "npm --prefix src/api start",
     "start:client": "npm --prefix src/client start",
-    "doc": "doctoc README.md"
+    "************ REPOSITORY TOOLING **********": "",
+    "doc": "doctoc README.md",
+    "************ PACKAGES **********": "",
+    "install-dependencies": "TC=utc node scripts/install-dependencies.js"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import ContentNav from '../../components/content-nav'
@@ -27,6 +27,12 @@ const AvatarIcon = ({ i }) => {
 }
 
 export default () => {
+  const [projectDetails, updateProjectDetails] = useState({})
+
+  const updateForm = obj => {
+    updateProjectDetails(Object.assign({ ...projectDetails }, obj))
+  }
+
   return (
     <Container>
       <Box my={2}>
@@ -55,7 +61,7 @@ export default () => {
             },
             {
               primaryText: 'Submit',
-              secondaryText: 'Submit project for review',
+              secondaryText: 'Review and submit project',
               Icon: () => <AvatarIcon i={5} />,
             },
           ]}
@@ -66,7 +72,7 @@ export default () => {
                 <Fade key={0} unmountOnExit in={activeIndex === 0}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
                     <Suspense fallback={<Loading />}>
-                      <Details />
+                      <Details form={projectDetails} updateForm={updateForm} />
                     </Suspense>
                   </div>
                 </Fade>
@@ -94,7 +100,7 @@ export default () => {
                 <Fade key={4} unmountOnExit in={activeIndex === 4}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
                     <Suspense fallback={<Loading />}>
-                      <Submit />
+                      <Submit projectDetails={projectDetails} />
                     </Suspense>
                   </div>
                 </Fade>

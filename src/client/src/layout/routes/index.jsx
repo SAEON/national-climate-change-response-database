@@ -63,7 +63,7 @@ export default withRouter(() => {
       {/* NEW PROJECT WIZARD */}
       <Route
         key={'new-project-wizard'}
-        path={'/projects/new'}
+        path={'/projects/submission'}
         exact
         render={() => (
           <Transition>

@@ -20,10 +20,12 @@ export default function IconBreadcrumbs() {
   const classes = useStyles()
   const { pathname } = useLocation() // Trigger re-render on location changes
   const tree = [...new Set(pathname.split('/'))].map(p => {
-    return navItems.find(({ to }) => {
-      to = to.replace('/', '')
-      return to === p
-    })
+    return (
+      navItems.find(({ to }) => {
+        to = to.replace('/', '')
+        return to === p
+      }) || { label: p?.titleize() || '404 (Not found)' }
+    )
   })
 
   return (
@@ -32,20 +34,16 @@ export default function IconBreadcrumbs() {
         tree.slice(0, -1).map(({ label, Icon, to }) => {
           return (
             <MuiLink component={Link} key={label} color="inherit" to={to} className={classes.link}>
-              <Icon className={classes.icon} />
+              {Icon && <Icon className={classes.icon} />}
               {label}
             </MuiLink>
           )
         })}
 
       {tree.slice(-1).map(({ label, Icon } = {}) => {
-        if (!label) {
-          return <Typography>404 (Not found)</Typography>
-        }
-
         return (
           <Typography key={label} color="textPrimary" className={classes.link}>
-            <Icon className={classes.icon} />
+            {Icon && <Icon className={classes.icon} />}
             {label}
           </Typography>
         )

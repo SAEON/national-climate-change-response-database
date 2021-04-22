@@ -3,7 +3,7 @@ import Form from './form'
 import Loading from '../../../components/loading'
 import Fade from '@material-ui/core/Fade'
 
-export default () => {
+export default ({ form, updateForm }) => {
   const { error, loading, data } = useQuery(
     gql`
       query projectDetailFields($name: String!) {
@@ -45,7 +45,7 @@ export default () => {
   return (
     <Fade in={Boolean(data)} key="form-in">
       <span>
-        <Form fields={data.__type.inputFields} />
+        <Form form={form} updateForm={updateForm} fields={data.__type.inputFields} />
       </span>
     </Fade>
   )

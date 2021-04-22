@@ -98,11 +98,11 @@ enum ProjectSubType {
 
 input ProjectInput {
   # Project title :: Unique project name
-  title: String
+  title: String!
   # Project description :: Enter long text description here
   description: String!
   # Project manager :: Who is in charge of managing this project?
-  projectManager: String!
+  projectManager: String
   # Lead agent :: Lead contact agent
   leadAgent: String
   # Host organization :: Who is the main hosting organization?
@@ -114,25 +114,25 @@ input ProjectInput {
   # Funding partner :: Who is the main funding partner
   fundingPartner: String
   # Alternative contact :: Who else can people contact?
-  alternativeContact: String!
+  alternativeContact: String
   # Alternative contact email :: Contact details of the alternative contact
-  alternativeContactEmail: String!
+  alternativeContactEmail: String
   # Link :: Is there a URI that is associated with this project?
-  link: String!
+  link: String
   # Project start date :: Round to the beginning or end of the year
-  startDate: DateTime!
+  startDate: DateTime
   # Project end date :: Round to the beginning or end of the year
-  endDate: DateTime!
+  endDate: DateTime
   # Validation status :: Has this project been validated?
-  validationStatus: Boolean!
+  validationStatus: Boolean
   # Validation Comments :: Any validation feedback?
-  validationComments: String!
+  validationComments: String
   # Estimated budget :: What is the estimated budget for this project?
-  estimatedBudget: Money!
+  estimatedBudget: Money
   # Budget (lower bound) :: What is the lower-bound of the estimated budget?
-  budgetLower: Money!
+  budgetLower: Money
   # Budget (upper bound) :: What is the upper-bound of the estimated budget?
-  budgetUpper: Money!
+  budgetUpper: Money
 
   # projectType: ProjectType!
   # projectSubType: ProjectSubType!

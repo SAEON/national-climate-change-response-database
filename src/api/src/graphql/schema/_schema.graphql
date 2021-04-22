@@ -148,6 +148,7 @@ type Project {
 }
 
 type Query {
+  project(id: ID!): Project
   userRoles: [UserRole!]!
 }
 

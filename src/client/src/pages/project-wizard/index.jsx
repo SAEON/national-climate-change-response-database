@@ -1,18 +1,14 @@
-import { lazy, Suspense, useState } from 'react'
+import { useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import ContentNav from '../../components/content-nav'
 import Avatar from '@material-ui/core/Avatar'
 import Fade from '@material-ui/core/Fade'
-import Loading from '../../components/loading'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import clsx from 'clsx'
 import TypeInfo from './type-info'
 import Form from './form'
-
-const Adaptation = lazy(() => import('./adaptation'))
-const Research = lazy(() => import('./research'))
-const Submit = lazy(() => import('./submit'))
+import Submit from './submit'
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -84,15 +80,13 @@ export default () => {
                     <TypeInfo name="ProjectInput">
                       {fields => {
                         return (
-                          <Suspense fallback={<Loading />}>
-                            <Form
-                              title="Project details"
-                              multilineFields={['description', 'projectManager']}
-                              fields={fields}
-                              form={projectDetails}
-                              updateForm={updateProjectForm}
-                            />
-                          </Suspense>
+                          <Form
+                            title="Project details"
+                            multilineFields={['description', 'projectManager']}
+                            fields={fields}
+                            form={projectDetails}
+                            updateForm={updateProjectForm}
+                          />
                         )
                       }}
                     </TypeInfo>
@@ -103,15 +97,13 @@ export default () => {
                     <TypeInfo name="MitigationInput">
                       {fields => {
                         return (
-                          <Suspense fallback={<Loading />}>
-                            <Form
-                              title="Mitigation details"
-                              multilineFields={[]}
-                              fields={fields}
-                              form={mitigationDetails}
-                              updateForm={updateMitigationForm}
-                            />
-                          </Suspense>
+                          <Form
+                            title="Mitigation details"
+                            multilineFields={[]}
+                            fields={fields}
+                            form={mitigationDetails}
+                            updateForm={updateMitigationForm}
+                          />
                         )
                       }}
                     </TypeInfo>
@@ -123,7 +115,7 @@ export default () => {
                     {/* <TypeInfo name="AdaptationInput">
                       {fields => {
                         return (
-                          <Suspense fallback={<Loading />}>
+                 
                             <Form
                               title="Adaptation details"
                               multilineFields={[]}
@@ -131,7 +123,7 @@ export default () => {
                               form={adaptationDetails}
                               updateForm={updateAdaptationForm}
                             />
-                          </Suspense>
+                 
                         )
                       }}
                     </TypeInfo> */}
@@ -139,16 +131,12 @@ export default () => {
                 </Fade>
                 <Fade key={3} unmountOnExit in={activeIndex === 3}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                    <Suspense fallback={<Loading />}>
-                      <div>todo</div>
-                    </Suspense>
+                    <div>todo</div>
                   </div>
                 </Fade>
                 <Fade key={4} unmountOnExit in={activeIndex === 4}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                    <Suspense fallback={<Loading />}>
-                      <Submit projectDetails={projectDetails} />
-                    </Suspense>
+                    <Submit projectDetails={projectDetails} />
                   </div>
                 </Fade>
               </div>

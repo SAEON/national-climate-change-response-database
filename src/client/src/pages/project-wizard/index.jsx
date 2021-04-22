@@ -29,6 +29,7 @@ const AvatarIcon = ({ i }) => {
 export default () => {
   const [projectDetails, updateProjectDetails] = useState({})
   const [mitigationDetails, updateMitigationDetails] = useState({})
+  const [adaptationDetails, updateAdaptationDetails] = useState({})
 
   const updateProjectForm = obj => {
     updateProjectDetails(Object.assign({ ...projectDetails }, obj))
@@ -36,6 +37,10 @@ export default () => {
 
   const updateMitigationForm = obj => {
     updateMitigationDetails(Object.assign({ ...mitigationDetails }, obj))
+  }
+
+  const updateAdaptationForm = obj => {
+    updateAdaptationDetails(Object.assign({ ...adaptationDetails }, obj))
   }
 
   return (
@@ -103,7 +108,7 @@ export default () => {
                               title="Mitigation details"
                               multilineFields={[]}
                               fields={fields}
-                              form={projectDetails}
+                              form={mitigationDetails}
                               updateForm={updateMitigationForm}
                             />
                           </Suspense>
@@ -114,15 +119,28 @@ export default () => {
                 </Fade>
                 <Fade key={2} unmountOnExit in={activeIndex === 2}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                    <Suspense fallback={<Loading />}>
-                      <Adaptation />
-                    </Suspense>
+                    TODO
+                    {/* <TypeInfo name="AdaptationInput">
+                      {fields => {
+                        return (
+                          <Suspense fallback={<Loading />}>
+                            <Form
+                              title="Adaptation details"
+                              multilineFields={[]}
+                              fields={fields}
+                              form={adaptationDetails}
+                              updateForm={updateAdaptationForm}
+                            />
+                          </Suspense>
+                        )
+                      }}
+                    </TypeInfo> */}
                   </div>
                 </Fade>
                 <Fade key={3} unmountOnExit in={activeIndex === 3}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
                     <Suspense fallback={<Loading />}>
-                      <Research />
+                      <div>todo</div>
                     </Suspense>
                   </div>
                 </Fade>

@@ -28,7 +28,7 @@ export default {
       main: 'rgb(46, 125, 50)',
     },
     secondary: {
-      main: '#dee1e5',
+      main: '#dee5e0',
     },
   },
   status: {

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import Wrapper from '../wrapper'
 import Button from '@material-ui/core/Button'
 
-export default ({ projectDetails }) => {
+export default ({ clearForm, projectDetails }) => {
   const history = useHistory()
 
   const [createProject, { error, loading }] = useMutation(
@@ -18,9 +18,26 @@ export default ({ projectDetails }) => {
       variables: {
         projectDetails,
       },
+      update: (cache, { data: { createProject } }) => {
+        cache.modify({
+          fields: {
+            projects: (existingProjects = []) => [
+              ...existingProjects,
+              cache.writeFragment({
+                data: createProject,
+                fragment: gql`
+                  fragment newProject on Project {
+                    id
+                  }
+                `,
+              }),
+            ],
+          },
+        })
+      },
       onCompleted: ({ createProject }) => {
         const { id } = createProject
-        // TODO clear the form
+        clearForm()
         history.push(`/projects/${id}`)
       },
     }

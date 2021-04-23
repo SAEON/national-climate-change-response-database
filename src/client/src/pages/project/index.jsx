@@ -6,13 +6,13 @@ import Box from '@material-ui/core/Box'
 export default ({ id }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query project($id: ID!) {
-        project(id: $id) {
+      query projects($ids: [ID!]) {
+        projects(ids: $ids) {
           id
         }
       }
     `,
-    { variables: { id } }
+    { variables: { ids: [id] } }
   )
 
   if (loading) {

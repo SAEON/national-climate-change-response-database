@@ -22,14 +22,14 @@ export default () => {
               Icon: ViewProjectsIcon,
             },
             {
-              primaryText: 'Submit',
-              secondaryText: 'Submit projects (single/bulk)',
-              Icon: AddProjectIcon,
-            },
-            {
               primaryText: 'Review',
               secondaryText: 'Review project submissions',
               Icon: ReviewIcon,
+            },
+            {
+              primaryText: 'Submit',
+              secondaryText: 'Submit project(s)',
+              Icon: AddProjectIcon,
             },
           ]}
         >
@@ -43,12 +43,12 @@ export default () => {
                 </Fade>
                 <Fade key={1} unmountOnExit in={activeIndex === 1}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                    <SubmitProject />
+                    <ReviewSubmissions />
                   </div>
                 </Fade>
                 <Fade key={2} unmountOnExit in={activeIndex === 2}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                    <ReviewSubmissions />
+                    <SubmitProject />
                   </div>
                 </Fade>
               </div>

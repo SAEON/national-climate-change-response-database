@@ -143,9 +143,21 @@ input ProjectInput {
   # fundingStatus: Int! # TODO enum
 }
 
+input AdaptationInput {
+  # Adaptation title :: This is for reference purposes
+  title: String!
+  # Description :: Short description of this adaptation component
+  description: String
+}
+
+input ResearchInput {
+  # Research item title :: This is for reference purposes
+  title: String!
+  # Description :: Short description of this research component
+  description: String
+}
+
 input MitigationInput {
-  # Project ID ::
-  # projectId: ID!
   # Carbon credit :: Does this project produce carbon credits?
   CarbonCredit: Boolean!
   # Voluntary methodology :: Describe the method used in the project.
@@ -202,7 +214,7 @@ type Project {
 }
 
 type Query {
-  project(id: ID!): Project
+  projects(ids: [ID!]): [Project]!
   userRoles: [UserRole!]!
 }
 

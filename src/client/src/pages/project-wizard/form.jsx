@@ -1,7 +1,7 @@
 import Wrapper from './wrapper'
 import { StringField, DateTimeField, IntField, MoneyField, BooleanField } from './form-components'
 
-export default ({ fields, form, updateForm, title, multilineFields }) => {
+export default ({ fields, form, updateForm, title = undefined, multilineFields }) => {
   return (
     <Wrapper title={title}>
       {fields.map(({ name, description, type }) => {

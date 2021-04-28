@@ -61,7 +61,7 @@ export default ({ fields, form, updateForm, title = undefined, multilineFields }
                 helperText={helperText}
                 name={placeholder}
                 key={name}
-                value={form[name] || 0}
+                value={form[name] || ''}
                 setValue={val => updateForm({ [name]: val })}
               />
             )

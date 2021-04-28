@@ -213,9 +213,17 @@ type Project {
   title: String
 }
 
+type ControlledVocabulary {
+  id: ID!
+  term: String!
+  children: [ControlledVocabulary!]
+  trees: [String!]
+}
+
 type Query {
   projects(ids: [ID!]): [Project]!
   userRoles: [UserRole!]!
+  controlledVocabulary(root: String!, tree: String!): ControlledVocabulary
 }
 
 # type Subscription {}
@@ -223,4 +231,5 @@ type Query {
 type Mutation {
   createProject(projectDetails: ProjectInput!): Project!
   updateProject(projectDetails: ProjectInput!): Project!
+  updateVocabulary: JSON!
 }

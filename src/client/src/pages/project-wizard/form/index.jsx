@@ -34,7 +34,7 @@ export default ({ fields, form, updateForm, title = undefined, multilineFields }
                 name={placeholder}
                 key={name}
                 value={form[name] || ''}
-                onChange={e => updateForm({ [name]: e.target.value })}
+                setValue={val => updateForm({ [name]: val })}
               />
             )
           }
@@ -61,8 +61,8 @@ export default ({ fields, form, updateForm, title = undefined, multilineFields }
                 helperText={helperText}
                 name={placeholder}
                 key={name}
-                value={form[name] || ''}
-                onChange={e => updateForm({ [name]: e.target.value })}
+                value={form[name] || 0}
+                setValue={val => updateForm({ [name]: val })}
               />
             )
           }

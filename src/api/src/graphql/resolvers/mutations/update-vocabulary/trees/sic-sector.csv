@@ -1,0 +1,94 @@
+parent,term,tree
+,sicSector,leadSector
+sicSector,"Agriculture, Forestry, Fishing",leadSector
+sicSector,Mining,leadSector
+sicSector,Construction,leadSector
+sicSector,Manufacturing,leadSector
+sicSector,Transportation & Public Utilities,leadSector
+sicSector,Wholesale Trade,leadSector
+sicSector,Retail Trade,leadSector
+sicSector,"Finance, Insurance, Real Estate",leadSector
+sicSector,Services,leadSector
+sicSector,Public Administration,leadSector
+"Agriculture, Forestry, Fishing",Agricultural Production - Crops,leadSector
+"Agriculture, Forestry, Fishing",Agricultural Production - Livestock,leadSector
+"Agriculture, Forestry, Fishing",Agricultural Services,leadSector
+"Agriculture, Forestry, Fishing",Forestry,leadSector
+"Agriculture, Forestry, Fishing","Fishing, Hunting and Trapping",leadSector
+Mining,Metal Mining,leadSector
+Mining,Bituminous Coal and Lignite Mining,leadSector
+Mining,Oil and Gas Extraction,leadSector
+Mining,"Mining and Quarrying of Nonmetallic Minerals, except Fuels",leadSector
+Construction,Building Construction General Contractors and Operative Builders,leadSector
+Construction,Heavy Construction other than Building Construction Contractors,leadSector
+Construction,Construction Special Trade Contractors,leadSector
+Manufacturing,Food and Kindred Products,leadSector
+Manufacturing,Tobacco Products,leadSector
+Manufacturing,Textile Mill Products,leadSector
+Manufacturing,Apparel and other Finished Products Made from Fabrics and Similar Materials,leadSector
+Manufacturing,"Lumber and Wood Products, except Furniture",leadSector
+Manufacturing,Furniture and Fixtures,leadSector
+Manufacturing,Paper and Allied Products,leadSector
+Manufacturing,"Printing, Publishing, and Allied Industries",leadSector
+Manufacturing,Chemicals and Allied Products,leadSector
+Manufacturing,Petroleum Refining and Related Industries,leadSector
+Manufacturing,Rubber and Miscellaneous Plastics Products,leadSector
+Manufacturing,Leather and Leather Products,leadSector
+Manufacturing,"Stone, Clay, Glass, and Concrete Products",leadSector
+Manufacturing,Primary Metal Industries,leadSector
+Manufacturing,"Fabricated Metal Products, except Machinery and Transportation Equipment",leadSector
+Manufacturing,Industrial and Commercial Machinery and Computer Equipment,leadSector
+Manufacturing,"Electronic and other Electrical Equipment and Components, except Computer Equipment",leadSector
+Manufacturing,Transportation Equipment,leadSector
+Manufacturing,"Measuring, Analyzing, and Controlling Instruments; Photographic, Medical and Optical Goods; Watches and Clocks",leadSector
+Manufacturing,Miscellaneous Manufacturing Industries,leadSector
+Transportation & Public Utilities,Railroad Transportation,leadSector
+Transportation & Public Utilities,Local and Suburban Transit and Interurban Highway Passenger Transportation,leadSector
+Transportation & Public Utilities,Motor Freight Transportation and Warehousing,leadSector
+Transportation & Public Utilities,Water Transportation,leadSector
+Transportation & Public Utilities,Transportation by Air,leadSector
+Transportation & Public Utilities,"Pipelines, except Natural Gas",leadSector
+Transportation & Public Utilities,Transportation Services,leadSector
+Transportation & Public Utilities,Communications,leadSector
+Transportation & Public Utilities,"Electric, Gas and Sanitary Services",leadSector
+Wholesale Trade,Wholesale Trade-Durable Goods,leadSector
+Wholesale Trade,Wholesale Trade-Nondurable Goods,leadSector
+Retail Trade,"Building Materials, Hardware, Garden Supply, and Mobile Home Dealers",leadSector
+Retail Trade,General Merchandise Stores,leadSector
+Retail Trade,Food Stores,leadSector
+Retail Trade,Automotive Dealers and Gasoline Service Stations,leadSector
+Retail Trade,Apparel and Accessory Stores,leadSector
+Retail Trade,"Home Furniture, Furnishings, and Equipment Stores",leadSector
+Retail Trade,Eating and Drinking Places,leadSector
+Retail Trade,Miscellaneous Retail,leadSector
+"Finance, Insurance, Real Estate",Depository Institutions,leadSector
+"Finance, Insurance, Real Estate",Non-Depository Credit Institutions,leadSector
+"Finance, Insurance, Real Estate","Security and Commodity Brokers, Dealers, Exchanges, and Services",leadSector
+"Finance, Insurance, Real Estate",Insurance Carriers,leadSector
+"Finance, Insurance, Real Estate","Insurance Agents, Brokers and Service",leadSector
+"Finance, Insurance, Real Estate",Real Estate,leadSector
+"Finance, Insurance, Real Estate",Holding and other Investment Offices,leadSector
+Services,"Hotels, Rooming Houses, Camps, and other Lodging Places",leadSector
+Services,Personal Services,leadSector
+Services,Business Services,leadSector
+Services,"Automotive Repair, Services, and Parking",leadSector
+Services,Miscellaneous Repair Services,leadSector
+Services,Motion Pictures,leadSector
+Services,Amusement and Recreation Services,leadSector
+Services,Health Services,leadSector
+Services,Legal Services,leadSector
+Services,Educational Services,leadSector
+Services,Social Services,leadSector
+Services,"Museums, Art Galleries, and Botanical and Zoological Gardens",leadSector
+Services,Membership Organizations,leadSector
+Services,"Engineering, Accounting, Research, Management, and Related Services",leadSector
+Services,Private Households,leadSector
+Services,Miscellaneous Services,leadSector
+Public Administration,"Executive, Legislative, and General Government, except Finance",leadSector
+Public Administration,"Justice, Public Order, and Safety",leadSector
+Public Administration,"Public Finance, Taxation, and Monetary Policy",leadSector
+Public Administration,Administration of Human Resource Programs,leadSector
+Public Administration,Administration of Environmental Quality and Housing Programs,leadSector
+Public Administration,Administration of Economic Programs,leadSector
+Public Administration,National Security and International Affairs,leadSector
+Public Administration,Nonclassifiable Establishments,leadSector

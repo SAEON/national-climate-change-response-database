@@ -217,7 +217,7 @@ type ControlledVocabulary {
   id: ID!
   term: String!
   children: [ControlledVocabulary!]
-  trees: [String!]
+  tree: String!
 }
 
 type Query {

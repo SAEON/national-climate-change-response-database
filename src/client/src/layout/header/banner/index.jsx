@@ -14,6 +14,7 @@ export const HideOnScroll = ({ children }) => {
     disableHysteresis: true,
     threshold: 0,
   })
+
   return (
     <Collapse in={!trigger}>
       <div>{children}</div>

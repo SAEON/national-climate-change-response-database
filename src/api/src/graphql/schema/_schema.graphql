@@ -97,12 +97,14 @@ enum ProjectSubType {
 }
 
 input ProjectInput {
-  # Project title :: Unique project name in line with programatic inputs
+  # Project title :: Unique project name in line with programmatic inputs
   title: String
   # Project description :: Enter long text description here
   description: String!
   # Project manager :: Who is in charge of managing this project?
-  projectManager: String!
+  projectManager: String
+  # Intervention Type :: What type of intervention does this project focus on?
+  # interventionType: InterventionType!
   # Lead agent :: Lead contact agent
   leadAgent: String
   # Host organization :: Who is the main hosting organization?
@@ -114,39 +116,48 @@ input ProjectInput {
   # Funding partner :: Who is the main funding partner
   fundingPartner: String
   # Alternative contact :: Who else can people contact?
-  alternativeContact: String!
+  alternativeContact: String
   # Alternative contact email :: Contact details of the alternative contact
-  alternativeContactEmail: String!
+  alternativeContactEmail: String
   # Link :: Is there a URI that is associated with this project?
-  link: String!
+  link: String
   # Project start date :: Round to the beginning or end of the year
-  startDate: DateTime!
+  startDate: DateTime
   # Project end date :: Round to the beginning or end of the year
-  endDate: DateTime!
+  endDate: DateTime
   # Validation status :: Has this project been validated?
-  validationStatus: Boolean!
+  validationStatus: Boolean
   # Validation Comments :: Any validation feedback?
-  validationComments: String!
+  validationComments: String
   # Estimated budget :: What is the estimated budget for this project?
-  estimatedBudget: Money!
+  estimatedBudget: Money
   # Budget (lower bound) :: What is the lower-bound of the estimated budget?
-  budgetLower: Money!
+  budgetLower: Money
   # Budget (upper bound) :: What is the upper-bound of the estimated budget?
-  budgetUpper: Money!
+  budgetUpper: Money
 
   # projectType: ProjectType!
   # projectSubType: ProjectSubType!
-  # interventionType: InterventionType!
   # hostSector: Int! # TODO enum
   # projectStatus: Int! # TODO enum
   # fundingStatus: Int! # TODO enum
 }
 
+input AdaptationInput {
+  # Adaptation title :: This is for reference purposes
+  title: String!
+  # Description :: Short description of this adaptation component
+  description: String
+}
+
+input ResearchInput {
+  # Research item title :: This is for reference purposes
+  title: String!
+  # Description :: Short description of this research component
+  description: String
+}
+
 input MitigationInput {
-  # n/a ::
-  MitigationDetailsId: ID!
-  # n/a ::
-  ProjectDetailsId: ID!
   # Carbon credit :: Does this project produce carbon credits?
   CarbonCredit: Boolean!
   # Voluntary methodology :: Describe the method used in the project.
@@ -202,8 +213,17 @@ type Project {
   title: String
 }
 
+type ControlledVocabulary {
+  id: ID!
+  term: String!
+  children: [ControlledVocabulary!]
+  trees: [String!]
+}
+
 type Query {
+  projects(ids: [ID!]): [Project]!
   userRoles: [UserRole!]!
+  controlledVocabulary(root: String!, tree: String!): ControlledVocabulary
 }
 
 # type Subscription {}
@@ -211,6 +231,7 @@ type Query {
 type Mutation {
   createProject(projectDetails: ProjectInput!): Project!
   updateProject(projectDetails: ProjectInput!): Project!
+  updateVocabulary: JSON!
 }
 
 #type Mutation {

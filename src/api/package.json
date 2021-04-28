@@ -30,6 +30,7 @@
     "@koa/router": "^10.0.0",
     "apollo-server-koa": "2.22",
     "cookie": "^0.4.1",
+    "csv": "^5.5.0",
     "dataloader": "^2.0.0",
     "date-fns": "^2.21.1",
     "dotenv": "^8.2.0",

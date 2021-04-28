@@ -25,4 +25,15 @@ export default {
     name: 'projects',
     indices: [],
   },
+  Vocabulary: {
+    name: 'vocabulary',
+    indices: [
+      {
+        index: 'term',
+        options: {
+          unique: true,
+        },
+      },
+    ],
+  },
 }

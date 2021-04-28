@@ -11,7 +11,7 @@ import clsx from 'clsx'
 import useTheme from '@material-ui/core/styles/useTheme'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
-export default ({ title, navItems, children }) => {
+export default ({ title, navItems, subNavChildren = null, children }) => {
   const classes = useStyles()
   const theme = useTheme()
   const [activeIndex, setActiveIndex] = useLocalstorage(title, 0)
@@ -40,10 +40,11 @@ export default ({ title, navItems, children }) => {
             </Card>
           ))}
         </List>
+        {subNavChildren && subNavChildren({ setActiveIndex })}
       </Grid>
 
       <Grid item style={{ flexGrow: 1 }}>
-        <div>{children({ activeIndex })}</div>
+        <div>{children({ setActiveIndex, activeIndex })}</div>
       </Grid>
     </Grid>
   )

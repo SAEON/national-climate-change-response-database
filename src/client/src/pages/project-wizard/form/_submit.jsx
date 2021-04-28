@@ -1,10 +1,16 @@
+import { useContext } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
-import Wrapper from '../wrapper'
 import Button from '@material-ui/core/Button'
+import CardHeader from '@material-ui/core/CardHeader'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import { context as formContext } from './_context'
 
-export default ({ clearForm, projectDetails }) => {
+export default ({ setActiveIndex }) => {
   const history = useHistory()
+  const form = useContext(formContext)
+  const projectDetails = {} // TODO
 
   const [createProject, { error, loading }] = useMutation(
     gql`
@@ -15,9 +21,6 @@ export default ({ clearForm, projectDetails }) => {
       }
     `,
     {
-      variables: {
-        projectDetails,
-      },
       update: (cache, { data: { createProject } }) => {
         cache.modify({
           fields: {
@@ -37,7 +40,8 @@ export default ({ clearForm, projectDetails }) => {
       },
       onCompleted: ({ createProject }) => {
         const { id } = createProject
-        clearForm()
+        // TODO clearForm()
+        setActiveIndex(0)
         history.push(`/projects/${id}`)
       },
     }
@@ -49,17 +53,20 @@ export default ({ clearForm, projectDetails }) => {
 
   return (
     <div>
-      <Wrapper title="Finalize and submit">
-        <Button
-          onClick={() => createProject({ variables: { projectDetails } })}
-          variant="contained"
-          color="primary"
-          disableElevation
-        >
-          {loading && 'Loading'}
-          {!loading && 'submit'}
-        </Button>
-      </Wrapper>
+      <Card variant="outlined">
+        <CardHeader title={'Finalize and submit'} />
+        <CardContent>
+          <Button
+            onClick={() => createProject({ variables: { projectDetails } })}
+            variant="contained"
+            color="primary"
+            disableElevation
+          >
+            {loading && 'Loading'}
+            {!loading && 'submit'}
+          </Button>
+        </CardContent>
+      </Card>
     </div>
   )
 }

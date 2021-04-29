@@ -1,5 +1,6 @@
 import TextField from '@material-ui/core/TextField'
-import { MenuItem } from '@material-ui/core'
+import MenuItem from '@material-ui/core/MenuItem'
+import Typography from '@material-ui/core/Typography'
 
 export default ({ name, placeholder, helperText, error, value, onChange, options }) => (
   <TextField
@@ -15,10 +16,11 @@ export default ({ name, placeholder, helperText, error, value, onChange, options
     value={value}
     onChange={onChange}
   >
-    {options.map(item => {
+    {options.map(({ name, description }) => {
+      const [placeholder] = description?.split('::').map(s => s.trim()) || []
       return (
-        <MenuItem key={item} value={item}>
-          {item}
+        <MenuItem key={name} value={name}>
+          <Typography variant="overline">{placeholder}</Typography>
         </MenuItem>
       )
     })}

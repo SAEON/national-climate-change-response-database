@@ -5,6 +5,29 @@ import Fade from '@material-ui/core/Fade'
 
 export const context = createContext()
 
+const CORE_FIELDS = gql`
+  fragment CoreFields on __Type {
+    inputFields {
+      name
+      description
+      type {
+        name
+        enumValues {
+          name
+          description
+        }
+        ofType {
+          name
+          enumValues {
+            name
+            description
+          }
+        }
+      }
+    }
+  }
+`
+
 export default ({ children }) => {
   const [projectForm, setProjectForm] = useState({})
   const [mitigationsForm, setMitigationsForm] = useState([])
@@ -17,6 +40,7 @@ export default ({ children }) => {
 
   const { error, loading, data } = useQuery(
     gql`
+      ${CORE_FIELDS}
       query formFields(
         $projectInputType: String!
         $adaptationInputType: String!
@@ -24,76 +48,16 @@ export default ({ children }) => {
         $researchInputType: String!
       ) {
         projectFields: __type(name: $projectInputType) {
-          inputFields {
-            name
-            description
-            type {
-              name
-              enumValues {
-                name
-              }
-              ofType {
-                name
-                enumValues {
-                  name
-                }
-              }
-            }
-          }
+          ...CoreFields
         }
         mitigationFields: __type(name: $mitigationInputType) {
-          inputFields {
-            name
-            description
-            type {
-              name
-              enumValues {
-                name
-              }
-              ofType {
-                name
-                enumValues {
-                  name
-                }
-              }
-            }
-          }
+          ...CoreFields
         }
         adaptationFields: __type(name: $adaptationInputType) {
-          inputFields {
-            name
-            description
-            type {
-              name
-              enumValues {
-                name
-              }
-              ofType {
-                name
-                enumValues {
-                  name
-                }
-              }
-            }
-          }
+          ...CoreFields
         }
         researchFields: __type(name: $researchInputType) {
-          inputFields {
-            name
-            description
-            type {
-              name
-              enumValues {
-                name
-              }
-              ofType {
-                name
-                enumValues {
-                  name
-                }
-              }
-            }
-          }
+          ...CoreFields
         }
       }
     `,
@@ -130,7 +94,17 @@ export default ({ children }) => {
    * Update form on type-load
    */
   useEffect(() => {
-    setProjectForm({})
+    if (projectFields) {
+      setProjectForm(
+        Object.fromEntries(
+          projectFields.map(({ name, type }) => {
+            const enumValues = type?.enumValues || type?.ofType?.enumValues
+            return [name, enumValues?.[0].name || '']
+          })
+        )
+      )
+    }
+
     setMitigationsForm([])
     setAdaptationsForm([])
     setResearchForm([])

@@ -10,90 +10,39 @@ type UserRole {
 }
 
 enum InterventionType {
+  # Mitigation :: @amelia TODO
   Mitigation
+  # Adaptation :: @amelia TODO
   Adaptation
+  # Cross cutting :: @amelia TODO
   CrossCutting
 }
 
-enum ProjectType {
-  Afforestation
-  Agriculture
-  BiomassEnergy
-  Biogas
-  Cement
-  CoalBedMineMethane
-  EEHouseholds
-  EEIndustry
-  EEOwnGeneration
-  EEService
-  EESupplySide
-  EnergyDistribution
-  FossilFuelSwitch
-  FugitiveGases
-  Geothermal
-  HFCs
-  Hydro
-  LandfillGas
-  N2O
-  PFCs
-  Reforestation
-  Solar
-  Tidal
-  Transport
-  Wind
+enum ProjectStatus {
+  # Operational :: @amelia TODO
+  Operational
+  # Under development :: @amelia TODO
+  UnderDevelopment
+  # Complete :: @amelia TODO
+  Complete
 }
 
-enum ProjectSubType {
-  Agriculturalresidues_Mustardcrop
-  AgriculturalResidues_OtherKinds
-  AgriculturalResidues_PoultryLitter
-  AgriculturalResidues_RiceHusk
-  BagassePower
-  Biodiesel
-  BlackLiquor
-  Ethanol
-  Forest
-  Biomass
-  ForestResidues_Other
-  ForestResidues_SawmillWaste
-  GasificationOfBiomass
-  IndustrialWaste
-  Irrigation
-  PalmOilSolidWaste
-  BiogasFlaring
-  BiogasPower
-  CoalMineMethane
-  BuildingMaterials
-  Cement
-  Chemicals
-  CokeOven
-  Construction
-  Electronics
-  Food
-  Glass
-  IronAndSteel
-  Machinery
-  MetalProducts
-  Mining
-  NonFerrousMetals
-  Paper
-  Petrochemicals
-  Textiles
-  Wood
-  ExistingDam
-  NewDam
-  RunOfRiver
-  CombustionForMSW
-  Composting
-  GasificationOfMSW
-  LandfillFlaring
-  LandfillPower
-  AdipicAcid
-  Caprolactam
-  NitricAcid
-  SolarCoking
-  SolarPV
-  SolarWaterHeating
+enum ValidationStatus {
+  # Not accepted :: @amelia TODO
+  NotAccepted
+  # Pending :: @amelia TODO
+  Pending
+  # Accepted :: @amelia TODO
+  Accepted
+}
+
+enum FundingStatus {
+  # Not funded :: @amelia TODO
+  NotFunded
+  # Partially funded :: @amelia TODO
+  PartiallyFunded
+  # Fully funded :: @amelia TODO
+  FullyFunded
 }
 
 input ProjectInput {
@@ -103,8 +52,12 @@ input ProjectInput {
   description: String!
   # Project manager :: Who is in charge of managing this project?
   projectManager: String
-  # Intervention Type :: What type of intervention does this project focus on?
+  # Intervention type :: What type of intervention does this project focus on?
   interventionType: InterventionType!
+  # Project status :: TODO Amelia
+  projectStatus: ProjectStatus!
+  # Funding status :: TODO Amelia
+  fundingStatus: FundingStatus!
   # Lead agent :: Lead contact agent
   leadAgent: String
   # Host organization :: Who is the main hosting organization?
@@ -126,21 +79,42 @@ input ProjectInput {
   # Project end date :: Round to the beginning or end of the year
   endDate: DateTime
   # Validation status :: Has this project been validated?
-  validationStatus: Boolean
+  validationStatus: ValidationStatus!
   # Validation Comments :: Any validation feedback?
   validationComments: String
   # Estimated budget :: What is the estimated budget for this project?
-  estimatedBudget: Money
+  estimatedBudget: BudgetRages!
   # Budget (lower bound) :: What is the lower-bound of the estimated budget?
   budgetLower: Money
   # Budget (upper bound) :: What is the upper-bound of the estimated budget?
   budgetUpper: Money
 
-  # projectType: ProjectType!
-  # projectSubType: ProjectSubType!
+  # projectType: ProjectType! # TODO
+  # projectSubType: TODO ProjectSubType!
   # hostSector: Int! # TODO enum
-  # projectStatus: Int! # TODO enum
-  # fundingStatus: Int! # TODO enum
+}
+
+enum BudgetRages {
+  # < R10k :: @amelia TODO
+  R10KOrLess
+  # R10k - R50K :: @amelia TODO
+  R10kToR50k
+  # R50k - R100k :: @amelia TODO
+  R50kTo1000k
+  # R100k - R500k :: @amelia TODO
+  R100kToR500k
+  # R500k - R1m :: @amelia TODO
+  R500kToR1m
+  # R1m - R5m :: @amelia TODO
+  R1mToR5m
+  # R5m - R10m :: @amelia TODO
+  R5mToR10m
+  # R10m - R50m :: @amelia TODO
+  R10mToR50m
+  # R50m - R100m :: @amelia TODO
+  R50mToR100m
+  # > R100m :: @amelia TODO
+  R100mOrMore
 }
 
 input AdaptationInput {
@@ -170,10 +144,6 @@ input MitigationInput {
   Other: String!
   # Programme method :: Please describe the programme.
   otherDesc: String!
-  #  ::
-  UpdtUser: String!
-  #  ::
-  UpdtTime: DateTime!
   # CDM project number :: The code a project is given by the CDM once it is accepted.
   CDMProjectNumber: String!
 

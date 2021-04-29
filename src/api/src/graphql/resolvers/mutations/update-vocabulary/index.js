@@ -7,11 +7,10 @@ const { parse } = csv
 const __dirname = getCurrentDirectory(import.meta)
 
 const VOCABULARIES = [
-  'districts.csv',
+  'regions.csv',
   'hazards.csv',
   'mitigation-sector.csv',
   'mitigation-type.csv',
-  'provinces.csv',
   'sic-sector.csv',
 ]
 

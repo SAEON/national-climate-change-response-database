@@ -1,0 +1,276 @@
+parent,term,tree
+,South Africa,regions
+South Africa,Eastern Cape,regions
+South Africa,Free State,regions
+South Africa,Gauteng,regions
+South Africa,KwaZulu-Natal,regions
+South Africa,Limpopo,regions
+South Africa,Mpumalanga,regions
+South Africa,North West,regions
+South Africa,Northern Cape,regions
+South Africa,Western Cape,regions
+Western Cape,Cape Winelands District Municipality (DC2),regions
+Western Cape,Central Karoo District Municipality (DC5),regions
+Western Cape,City of Cape Town (CPT),regions
+Western Cape,Eden District Municipality (DC4),regions
+Western Cape,Overberg District Municipality (DC3),regions
+Western Cape,West Coast District Municipality (DC1),regions
+Eastern Cape,Alfred Nzo District Municipality (DC44),regions
+Eastern Cape,Amathole District Municipality (DC12),regions
+Eastern Cape,Buffalo City (BUF),regions
+Eastern Cape,Cacadu District Municipality (DC10),regions
+Eastern Cape,Chris Hani District Municipality (DC13),regions
+Eastern Cape,Joe Gqabi District Municipality (DC14),regions
+Eastern Cape,Nelson Mandela Bay (NMA),regions
+Eastern Cape,O.R.Tambo District Municipality (DC15),regions
+Northern Cape,Frances Baard District Municipality (DC9),regions
+Northern Cape,John Taolo Gaetsewe District Municipality (DC45),regions
+Northern Cape,Namakwa District Municipality (DC6),regions
+Northern Cape,Pixley ka Seme District Municipality (DC7),regions
+Northern Cape,Z F Mgcawu District Municipality (DC8),regions
+Free State,Fezile Dabi District Municipality (DC20),regions
+Free State,Lejweleputswa District Municipality (DC18),regions
+Free State,Mangaung (MAN),regions
+Free State,Thabo Mofutsanyane District Municipality (DC19),regions
+Free State,Xhariep District Municipality (DC16),regions
+KwaZulu-Natal,Amajuba District Municipality (DC25),regions
+KwaZulu-Natal,eThekwini (ETH),regions
+KwaZulu-Natal,Harry Gwala District Municipality (DC43),regions
+KwaZulu-Natal,iLembe District Municipality (DC29),regions
+KwaZulu-Natal,Ugu District Municipality (DC21),regions
+KwaZulu-Natal,Umgungundlovu District Municipality (DC22),regions
+KwaZulu-Natal,Umkhanyakude District Municipality (DC27),regions
+KwaZulu-Natal,Umzinyathi District Municipality (DC24),regions
+KwaZulu-Natal,Uthukela District Municipality (DC23),regions
+KwaZulu-Natal,Uthungulu District Municipality (DC28),regions
+KwaZulu-Natal,Zululand District Municipality (DC26),regions
+North West,Bojanala District Municipality (DC37),regions
+North West,Dr Kenneth Kaunda District Municipality (DC40),regions
+North West,Dr Ruth Segomotsi Mompati District Municipality (DC39),regions
+North West,Ngaka Modiri Molema District Municipality (DC38),regions
+Gauteng,City of Johannesburg (JHB),regions
+Gauteng,City of Tshwane (TSH),regions
+Gauteng,Ekurhuleni (EKU),regions
+Gauteng,Sedibeng District Municipality (DC42),regions
+Gauteng,West Rand District Municipality (DC48),regions
+Mpumalanga,Ehlanzeni District Municipality (DC32),regions
+Mpumalanga,Gert Sibande District Municipality (DC30),regions
+Mpumalanga,Nkangala District Municipality (DC31),regions
+Limpopo,Capricorn District Municipality (DC35),regions
+Limpopo,Mopani District Municipality (DC33),regions
+Limpopo,Sekhukhune District Municipality (DC47),regions
+Limpopo,Vhembe District Municipality (DC34),regions
+Limpopo,Waterberg District Municipality (DC36),regions
+Alfred Nzo District Municipality (DC44),Matatiele Local Municipality (EC441),regions
+Alfred Nzo District Municipality (DC44),Mbizana Local Municipality (EC443),regions
+Alfred Nzo District Municipality (DC44),Ntabankulu Local Municipality (EC444),regions
+Alfred Nzo District Municipality (DC44),Umzimvubu Local Municipality (EC442),regions
+Amajuba District Municipality (DC25),Dannhauser Local Municipality (KZN254),regions
+Amajuba District Municipality (DC25),Emadlangeni Local Municipality (KZN253),regions
+Amajuba District Municipality (DC25),Newcastle Local Municipality (KZN252),regions
+Amathole District Municipality (DC12),Amahlathi Local Municipality (EC124),regions
+Amathole District Municipality (DC12),Great Kei Local Municipality (EC123),regions
+Amathole District Municipality (DC12),Mbhashe Local Municipality (EC121),regions
+Amathole District Municipality (DC12),Mnquma Local Municipality (EC122),regions
+Amathole District Municipality (DC12),Ngqushwa Local Municipality (EC126),regions
+Amathole District Municipality (DC12),Raymond Mhlaba Local Municipality (EC129),regions
+Bojanala District Municipality (DC37),Kgetlengrivier Local Municipality (NW374),regions
+Bojanala District Municipality (DC37),Local Municipality of Madibeng (NW372),regions
+Bojanala District Municipality (DC37),Moretele Local Municipality (NW371),regions
+Bojanala District Municipality (DC37),Moses Kotane Local Municipality (NW375),regions
+Bojanala District Municipality (DC37),Rustenburg Local Municipality (NW373),regions
+Buffalo City (BUF),Buffalo City Metropolitan Municipality (BUF),regions
+Cacadu District Municipality (DC10),Blue Crane Route Local Municipality (EC102),regions
+Cacadu District Municipality (DC10),Dr Beyers Naude Local Municipality (EC101),regions
+Cacadu District Municipality (DC10),Kouga Local Municipality (EC108),regions
+Cacadu District Municipality (DC10),Kou-Kamma Local Municipality (EC109),regions
+Cacadu District Municipality (DC10),Makana Local Municipality (EC104),regions
+Cacadu District Municipality (DC10),Ndlambe Local Municipality (EC105),regions
+Cacadu District Municipality (DC10),Sundays River Valley Local Municipality (EC106),regions
+Cape Winelands District Municipality (DC2),Breede Valley Local Municipality (WC025),regions
+Cape Winelands District Municipality (DC2),Drakenstein Local Municipality (WC023),regions
+Cape Winelands District Municipality (DC2),Langeberg Local Municipality (WC026),regions
+Cape Winelands District Municipality (DC2),Stellenbosch Local Municipality (WC024),regions
+Cape Winelands District Municipality (DC2),Witzenberg Local Municipality (WC022),regions
+Capricorn District Municipality (DC35),Blouberg Local Municipality (LIM351),regions
+Capricorn District Municipality (DC35),Lepele-Nkumpi Local Municipality (LIM355),regions
+Capricorn District Municipality (DC35),Molemole Local Municipality (LIM353),regions
+Capricorn District Municipality (DC35),Polokwane Local Municipality (LIM354),regions
+Central Karoo District Municipality (DC5),Beaufort West Local Municipality (WC053),regions
+Central Karoo District Municipality (DC5),Laingsburg Local Municipality (WC051),regions
+Central Karoo District Municipality (DC5),Prince Albert Local Municipality (WC052),regions
+Chris Hani District Municipality (DC13),Emalahleni Local Municipality (EC136),regions
+Chris Hani District Municipality (DC13),Engcobo Local Municipality (EC137),regions
+Chris Hani District Municipality (DC13),Enoch Mgijima Local Municipality (EC139),regions
+Chris Hani District Municipality (DC13),Intsika Yethu Local Municipality (EC135),regions
+Chris Hani District Municipality (DC13),Inxuba Yethemba Local Municipality (EC131),regions
+Chris Hani District Municipality (DC13),Sakhisizwe Local Municipality (EC138),regions
+City of Cape Town (CPT),City of Cape Town Metropolitan Municipality (CPT),regions
+City of Johannesburg (JHB),City of Johannesburg Metropolitan Municipality (JHB),regions
+City of Tshwane (TSH),City of Tshwane Metropolitan Municipality (TSH),regions
+Dr Kenneth Kaunda District Municipality (DC40),City of Matlosana Local Municipality (NW403),regions
+Dr Kenneth Kaunda District Municipality (DC40),Maquassi Hills Local Municipality (NW404),regions
+Dr Kenneth Kaunda District Municipality (DC40),Ventersdorp/Tlokwe Local Municipality (NW405),regions
+Dr Ruth Segomotsi Mompati District Municipality (DC39),Greater Taung Local Municipality (NW394),regions
+Dr Ruth Segomotsi Mompati District Municipality (DC39),Kagisano/Molopo Local Municipality (NW397),regions
+Dr Ruth Segomotsi Mompati District Municipality (DC39),Lekwa-Teemane Local Municipality (NW396),regions
+Dr Ruth Segomotsi Mompati District Municipality (DC39),Mamusa Local Municipality (NW393),regions
+Dr Ruth Segomotsi Mompati District Municipality (DC39),Naledi Local Municipality (NW392),regions
+Eden District Municipality (DC4),Bitou Local Municipality (WC047),regions
+Eden District Municipality (DC4),George Local Municipality (WC044),regions
+Eden District Municipality (DC4),Hessequa Local Municipality (WC042),regions
+Eden District Municipality (DC4),Kannaland Local Municipality (WC041),regions
+Eden District Municipality (DC4),Knysna Local Municipality (WC048),regions
+Eden District Municipality (DC4),Mossel Bay Local Municipality (WC043),regions
+Eden District Municipality (DC4),Oudtshoorn Local Municipality (WC045),regions
+Ehlanzeni District Municipality (DC32),Bushbuckridge Local Municipality (MP325),regions
+Ehlanzeni District Municipality (DC32),City of Mbombela Local Municipality (MP326),regions
+Ehlanzeni District Municipality (DC32),Nkomazi Local Municipality (MP324),regions
+Ehlanzeni District Municipality (DC32),Thaba Chweu Local Municipality (MP321),regions
+Ekurhuleni (EKU),Ekurhuleni Metropolitan Municipality (EKU),regions
+eThekwini (ETH),Ethekwini Metropolitan Municipality (ETH),regions
+Fezile Dabi District Municipality (DC20),Mafube Local Municipality (FS205),regions
+Fezile Dabi District Municipality (DC20),Metsimaholo Local Municipality (FS204),regions
+Fezile Dabi District Municipality (DC20),Moqhaka Local Municipality (FS201),regions
+Fezile Dabi District Municipality (DC20),Ngwathe Local Municipality (FS203),regions
+Frances Baard District Municipality (DC9),Dikgatlong Local Municipality (NC092),regions
+Frances Baard District Municipality (DC9),Magareng Local Municipality (NC093),regions
+Frances Baard District Municipality (DC9),Phokwane Local Municipality (NC094),regions
+Frances Baard District Municipality (DC9),Sol Plaatjie Local Municipality (NC091),regions
+Gert Sibande District Municipality (DC30),Chief Albert Luthuli Local Municipality (MP301),regions
+Gert Sibande District Municipality (DC30),Dipaleseng Local Municipality (MP306),regions
+Gert Sibande District Municipality (DC30),Dr Pixley Ka Isaka Seme Local Municipality (MP304),regions
+Gert Sibande District Municipality (DC30),Govan Mbeki Local Municipality (MP307),regions
+Gert Sibande District Municipality (DC30),Lekwa Local Municipality (MP305),regions
+Gert Sibande District Municipality (DC30),Mkhondo Local Municipality (MP303),regions
+Gert Sibande District Municipality (DC30),Msukaligwa Local Municipality (MP302),regions
+Harry Gwala District Municipality (DC43),Dr Nkosazana Dlamini Zuma Local Municipality (KZN436),regions
+Harry Gwala District Municipality (DC43),Greater Kokstad Local Municipality (KZN433),regions
+Harry Gwala District Municipality (DC43),Ubuhlebezwe Local Municipality (KZN434),regions
+Harry Gwala District Municipality (DC43),Umzimkhulu Local Municipality (KZN435),regions
+iLembe District Municipality (DC29),KwaDukuza Local Municipality (KZN292),regions
+iLembe District Municipality (DC29),Mandeni Local Municipality (KZN291),regions
+iLembe District Municipality (DC29),Maphumulo Local Municipality (KZN294),regions
+iLembe District Municipality (DC29),Ndwedwe Local Municipality (KZN293),regions
+Joe Gqabi District Municipality (DC14),Elundini Local Municipality (EC141),regions
+Joe Gqabi District Municipality (DC14),Senqu Local Municipality (EC142),regions
+Joe Gqabi District Municipality (DC14),Walter Sisulu Local Municipality (EC145),regions
+John Taolo Gaetsewe District Municipality (DC45),Gamagara Local Municipality (NC453),regions
+John Taolo Gaetsewe District Municipality (DC45),Ga-Segonyana Local Municipality (NC452),regions
+John Taolo Gaetsewe District Municipality (DC45),Joe Morolong Local Municipality (NC451),regions
+Lejweleputswa District Municipality (DC18),Masilonyana Local Municipality (FS181),regions
+Lejweleputswa District Municipality (DC18),Matjhabeng Local Municipality (FS184),regions
+Lejweleputswa District Municipality (DC18),Nala Local Municipality (FS185),regions
+Lejweleputswa District Municipality (DC18),Tokologo Local Municipality (FS182),regions
+Lejweleputswa District Municipality (DC18),Tswelopele Local Municipality (FS183),regions
+Mangaung (MAN),Mangaung Metropolitan Municipality (MAN),regions
+Mopani District Municipality (DC33),Ba-Phalaborwa Local Municipality (LIM334),regions
+Mopani District Municipality (DC33),Greater Giyani Local Municipality (LIM331),regions
+Mopani District Municipality (DC33),Greater Letaba Local Municipality (LIM332),regions
+Mopani District Municipality (DC33),Greater Tzaneen Local Municipality (LIM333),regions
+Mopani District Municipality (DC33),Maruleng Local Municipality (LIM335),regions
+Namakwa District Municipality (DC6),Hantam Local Municipality (NC065),regions
+Namakwa District Municipality (DC6),Kamiesberg Local Municipality (NC064),regions
+Namakwa District Municipality (DC6),Karoo Hoogland Local Municipality (NC066),regions
+Namakwa District Municipality (DC6),Khai-Ma Local Municipality (NC067),regions
+Namakwa District Municipality (DC6),Nama Khoi Local Municipality (NC062),regions
+Namakwa District Municipality (DC6),Richtersveld Local Municipality (NC061),regions
+Nelson Mandela Bay (NMA),Nelson Mandela Bay Metropolitan Municipality (NMA),regions
+Ngaka Modiri Molema District Municipality (DC38),Ditsobotla Local Municipality (NW384),regions
+Ngaka Modiri Molema District Municipality (DC38),Mafikeng Local Municipality (NW383),regions
+Ngaka Modiri Molema District Municipality (DC38),Ramotshere Moiloa Local Municipality (NW385),regions
+Ngaka Modiri Molema District Municipality (DC38),Ratlou Local Municipality (NW381),regions
+Ngaka Modiri Molema District Municipality (DC38),Tswaing Local Municipality (NW382),regions
+Nkangala District Municipality (DC31),Dr JS Moroka Local Municipality (MP316),regions
+Nkangala District Municipality (DC31),Emakhazeni Local Municipality (MP314),regions
+Nkangala District Municipality (DC31),Emalahleni Local Municipality (MP312),regions
+Nkangala District Municipality (DC31),Steve Tshwete Local Municipality (MP313),regions
+Nkangala District Municipality (DC31),Thembisile Local Municipality (MP315),regions
+Nkangala District Municipality (DC31),Victor Khanye Local Municipality (MP311),regions
+O.R.Tambo District Municipality (DC15),King Sabata Dalindyebo Local Municipality (EC157),regions
+O.R.Tambo District Municipality (DC15),Mhlontlo Local Municipality (EC156),regions
+O.R.Tambo District Municipality (DC15),Ngquza Hill Local Municipality (EC153),regions
+O.R.Tambo District Municipality (DC15),Nyandeni Local Municipality (EC155),regions
+O.R.Tambo District Municipality (DC15),Port St Johns Local Municipality (EC154),regions
+Overberg District Municipality (DC3),Cape Agulhas Local Municipality (WC033),regions
+Overberg District Municipality (DC3),Overstrand Local Municipality (WC032),regions
+Overberg District Municipality (DC3),Swellendam Local Municipality (WC034),regions
+Overberg District Municipality (DC3),Theewaterskloof Local Municipality (WC031),regions
+Pixley ka Seme District Municipality (DC7),Emthanjeni Local Municipality (NC073),regions
+Pixley ka Seme District Municipality (DC7),Kareeberg Local Municipality (NC074),regions
+Pixley ka Seme District Municipality (DC7),Renosterberg Local Municipality (NC075),regions
+Pixley ka Seme District Municipality (DC7),Siyancuma Local Municipality (NC078),regions
+Pixley ka Seme District Municipality (DC7),Siyathemba Local Municipality (NC077),regions
+Pixley ka Seme District Municipality (DC7),Thembelihle Local Municipality (NC076),regions
+Pixley ka Seme District Municipality (DC7),Ubuntu Local Municipality (NC071),regions
+Pixley ka Seme District Municipality (DC7),Umsobomvu Local Municipality (NC072),regions
+Sedibeng District Municipality (DC42),Emfuleni Local Municipality (GT421),regions
+Sedibeng District Municipality (DC42),Lesedi Local Municipality (GT423),regions
+Sedibeng District Municipality (DC42),Midvaal Local Municipality (GT422),regions
+Sekhukhune District Municipality (DC47),Elias Motsoaledi Local Municipality (LIM472),regions
+Sekhukhune District Municipality (DC47),Ephraim Mogale Local Municipality (LIM471),regions
+Sekhukhune District Municipality (DC47),Greater Tubatse/Fetakgomo Local Municipality (LIM476),regions
+Sekhukhune District Municipality (DC47),Makhuduthamaga Local Municipality (LIM473),regions
+Thabo Mofutsanyane District Municipality (DC19),Dihlabeng Local Municipality (FS192),regions
+Thabo Mofutsanyane District Municipality (DC19),Maluti a Phofung Local Municipality (FS194),regions
+Thabo Mofutsanyane District Municipality (DC19),Mantsopa Local Municipality (FS196),regions
+Thabo Mofutsanyane District Municipality (DC19),Nketoana Local Municipality (FS193),regions
+Thabo Mofutsanyane District Municipality (DC19),Phumelela Local Municipality (FS195),regions
+Thabo Mofutsanyane District Municipality (DC19),Setsoto Local Municipality (FS191),regions
+Ugu District Municipality (DC21),Ray Nkonyeni Local Municipality (KZN216),regions
+Ugu District Municipality (DC21),Umdoni Local Municipality (KZN212),regions
+Ugu District Municipality (DC21),UMuziwabantu Local Municipality (KZN214),regions
+Ugu District Municipality (DC21),Umzumbe Local Municipality (KZN213),regions
+Umgungundlovu District Municipality (DC22),Impendle Local Municipality (KZN224),regions
+Umgungundlovu District Municipality (DC22),Mkhambathini Local Municipality (KZN226),regions
+Umgungundlovu District Municipality (DC22),Mpofana Local Municipality (KZN223),regions
+Umgungundlovu District Municipality (DC22),Richmond Local Municipality (KZN227),regions
+Umgungundlovu District Municipality (DC22),The Msunduzi Local Municipality (KZN225),regions
+Umgungundlovu District Municipality (DC22),uMngeni Local Municipality (KZN222),regions
+Umgungundlovu District Municipality (DC22),uMshwathi Local Municipality (KZN221),regions
+Umkhanyakude District Municipality (DC27),Big Five Hlabisa Local Municipality (KZN276),regions
+Umkhanyakude District Municipality (DC27),Jozini Local Municipality (KZN272),regions
+Umkhanyakude District Municipality (DC27),Mtubatuba Local Municipality (KZN275),regions
+Umkhanyakude District Municipality (DC27),Umhlabuyalingana Local Municipality (KZN271),regions
+Umzinyathi District Municipality (DC24),Endumeni Local Municipality (KZN241),regions
+Umzinyathi District Municipality (DC24),Msinga Local Municipality (KZN244),regions
+Umzinyathi District Municipality (DC24),Nqutu Local Municipality (KZN242),regions
+Umzinyathi District Municipality (DC24),Umvoti Local Municipality (KZN245),regions
+Uthukela District Municipality (DC23),Alfred Duma Local Municipality (KZN238),regions
+Uthukela District Municipality (DC23),Inkosi Langalibalele Local Municipality (KZN237),regions
+Uthukela District Municipality (DC23),Okhahlamba Local Municipality (KZN235),regions
+Uthungulu District Municipality (DC28),Mfolozi Local Municipality (KZN281),regions
+Uthungulu District Municipality (DC28),Mthonjaneni Local Municipality (KZN285),regions
+Uthungulu District Municipality (DC28),Nkandla Local Municipality (KZN286),regions
+Uthungulu District Municipality (DC28),uMhlathuze Local Municipality (KZN282),regions
+Uthungulu District Municipality (DC28),uMlalazi Local Municipality (KZN284),regions
+Vhembe District Municipality (DC34),Makhado Local Municipality (LIM344),regions
+Vhembe District Municipality (DC34),Musina Local Municipality (LIM341),regions
+Vhembe District Municipality (DC34),New Local Municipality (LIM345),regions
+Vhembe District Municipality (DC34),Thulamela Local Municipality (LIM343),regions
+Waterberg District Municipality (DC36),Bela-Bela Local Municipality (LIM366),regions
+Waterberg District Municipality (DC36),Lephalale Local Municipality (LIM362),regions
+Waterberg District Municipality (DC36),Modimolle/Mookgophong Local Municipality (LIM368),regions
+Waterberg District Municipality (DC36),Mogalakwena Local Municipality (LIM367),regions
+Waterberg District Municipality (DC36),Thabazimbi Local Municipality (LIM361),regions
+West Coast District Municipality (DC1),Bergrivier Local Municipality (WC013),regions
+West Coast District Municipality (DC1),Cederberg Local Municipality (WC012),regions
+West Coast District Municipality (DC1),Matzikama Local Municipality (WC011),regions
+West Coast District Municipality (DC1),Saldanha Bay Local Municipality (WC014),regions
+West Coast District Municipality (DC1),Swartland Local Municipality (WC015),regions
+West Rand District Municipality (DC48),Merafong City Local Municipality (GT484),regions
+West Rand District Municipality (DC48),Mogale City Local Municipality (GT481),regions
+West Rand District Municipality (DC48),Rand West City Local Municipality (GT485),regions
+Xhariep District Municipality (DC16),Kopanong Local Municipality (FS162),regions
+Xhariep District Municipality (DC16),Letsemeng Local Municipality (FS161),regions
+Xhariep District Municipality (DC16),Mohokare Local Municipality (FS163),regions
+Z F Mgcawu District Municipality (DC8),!Kheis Local Municipality (NC084),regions
+Z F Mgcawu District Municipality (DC8),Dawid Kruiper Local Municipality (NC087),regions
+Z F Mgcawu District Municipality (DC8),Kai !Garib Local Municipality (NC082),regions
+Z F Mgcawu District Municipality (DC8),Kgatelopele Local Municipality (NC086),regions
+Z F Mgcawu District Municipality (DC8),Tsantsabane Local Municipality (NC085),regions
+Zululand District Municipality (DC26),Abaqulusi Local Municipality (KZN263),regions
+Zululand District Municipality (DC26),eDumbe Local Municipality (KZN261),regions
+Zululand District Municipality (DC26),Nongoma Local Municipality (KZN265),regions
+Zululand District Municipality (DC26),Ulundi Local Municipality (KZN266),regions
+Zululand District Municipality (DC26),UPhongolo Local Municipality (KZN262),regions

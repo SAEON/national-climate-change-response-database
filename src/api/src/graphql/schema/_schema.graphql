@@ -104,7 +104,7 @@ input ProjectInput {
   # Project manager :: Who is in charge of managing this project?
   projectManager: String
   # Intervention Type :: What type of intervention does this project focus on?
-  # interventionType: InterventionType!
+  interventionType: InterventionType!
   # Lead agent :: Lead contact agent
   leadAgent: String
   # Host organization :: Who is the main hosting organization?

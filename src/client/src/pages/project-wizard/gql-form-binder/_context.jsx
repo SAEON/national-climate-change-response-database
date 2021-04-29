@@ -29,8 +29,14 @@ export default ({ children }) => {
             description
             type {
               name
+              enumValues {
+                name
+              }
               ofType {
                 name
+                enumValues {
+                  name
+                }
               }
             }
           }
@@ -41,8 +47,14 @@ export default ({ children }) => {
             description
             type {
               name
+              enumValues {
+                name
+              }
               ofType {
                 name
+                enumValues {
+                  name
+                }
               }
             }
           }
@@ -53,8 +65,14 @@ export default ({ children }) => {
             description
             type {
               name
+              enumValues {
+                name
+              }
               ofType {
                 name
+                enumValues {
+                  name
+                }
               }
             }
           }
@@ -65,8 +83,14 @@ export default ({ children }) => {
             description
             type {
               name
+              enumValues {
+                name
+              }
               ofType {
                 name
+                enumValues {
+                  name
+                }
               }
             }
           }

@@ -3,6 +3,7 @@ import { GqlBoundFormInput, context as formContext, EnumField } from '../gql-for
 import CardHeader from '@material-ui/core/CardHeader'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 const multilineFields = ['description', 'validationComments']
 
@@ -17,10 +18,11 @@ const basicEnumFields = [
 ]
 
 export default () => {
+  const theme = useTheme()
   const { projectFields, projectForm, updateProjectForm } = useContext(formContext)
 
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" style={{ backgroundColor: theme.backgroundColor }}>
       <CardHeader title={'Enter project details'} />
       <CardContent>
         {projectFields.map(field => {

@@ -10,6 +10,7 @@ import AuthorizationProvider from './contexts/authorization'
 import { SnackbarProvider } from 'notistack'
 import NativeExtensions from './components/native-extensions'
 import DefaultApplicationNotices from './components/default-application-notices'
+import BackgroundImageProvider from './contexts/background-image'
 import ErrorBoundary from './components/error-boundary'
 import CookieConsent from './components/cookie-consent'
 import DetectDevice from './components/detect-device'
@@ -27,13 +28,15 @@ export default () => {
                   <CookieConsent>
                     <AuthenticationProvider>
                       <AuthorizationProvider>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                          <SnackbarProvider>
-                            <DefaultApplicationNotices>
-                              <Layout />
-                            </DefaultApplicationNotices>
-                          </SnackbarProvider>
-                        </MuiPickersUtilsProvider>
+                        <BackgroundImageProvider>
+                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <SnackbarProvider>
+                              <DefaultApplicationNotices>
+                                <Layout />
+                              </DefaultApplicationNotices>
+                            </SnackbarProvider>
+                          </MuiPickersUtilsProvider>
+                        </BackgroundImageProvider>
                       </AuthorizationProvider>
                     </AuthenticationProvider>
                   </CookieConsent>

@@ -37,7 +37,11 @@ export default props => {
           rel="noreferrer"
           href="http://www.environment.gov.za/"
         >
-          <img style={{ height: IMAGE_HEIGHT }} src="/dffe-logo.png" alt="SA Government" />
+          <img
+            style={{ height: IMAGE_HEIGHT }}
+            src="/dffe-logo-transparent.png"
+            alt="SA Government"
+          />
         </a>
 
         {/* TITLE */}

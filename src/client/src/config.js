@@ -5,7 +5,8 @@ export const NCCRD_API_GQL_ADDRESS = `${NCCRD_API_ADDRESS}/graphql`
 export const NCCRD_CLIENT_ADDRESS = process.env.NCCRD_CLIENT_ADDRESS || 'http://localhost:3001'
 export const PACKAGE_DESCRIPTION = process.env.PACKAGE_DESCRIPTION.toString()
 export const PACKAGE_KEYWORDS = process.env.PACKAGE_KEYWORDS.toString().split(',')
-export const NCCRD_TECHNICAL_CONTACT = process.env.NCCRD_TECHNICAL_CONTACT || 'info@saeon.ac.za'
+export const NCCRD_TECHNICAL_CONTACT = process.env.NCCRD_TECHNICAL_CONTACT || 'zach@saeon.ac.za'
+export const NCCRD_CLIENT_BACKGROUNDS = process.env.NCCRD_CLIENT_BACKGROUNDS || ''
 
 const url = new URL(NCCRD_API_ADDRESS)
 export const NCCRD_API_GQL_SUBSCRIPTIONS_ADDRESS = `${url.protocol === 'http:' ? 'ws:' : 'wss:'}//${

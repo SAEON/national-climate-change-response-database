@@ -13,7 +13,7 @@ export default () => {
           fullWidth
           size="large"
           startIcon={<RefreshIcon />}
-          color="secondary"
+          color="default"
           variant="contained"
           disableElevation
           onClick={() => window.location.reload()}

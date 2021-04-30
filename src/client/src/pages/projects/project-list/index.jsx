@@ -6,8 +6,11 @@ import Typography from '@material-ui/core/Typography'
 import { useQuery, gql } from '@apollo/client'
 import Loading from '../../../components/loading'
 import Fade from '@material-ui/core/Fade'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export default () => {
+  const theme = useTheme()
+
   const { error, loading, data } = useQuery(gql`
     query projects {
       projects {
@@ -39,7 +42,10 @@ export default () => {
       </Grid>
       {data.projects.map(({ id }) => (
         <Grid key={id} item xs={12}>
-          <Card variant="outlined" style={{ width: '100%' }}>
+          <Card
+            variant="outlined"
+            style={{ width: '100%', backgroundColor: theme.backgroundColor }}
+          >
             <CardHeader title={id} />
             <CardContent>
               <Typography>Project details here</Typography>

@@ -94,11 +94,11 @@ export default () => {
       <div style={{ display: 'flex' }}>
         <Button
           variant="contained"
-          disableElevation
-          color="primary"
           onClick={addAdaptationForm}
           endIcon={<PlusIcon />}
-          style={{ marginLeft: 'auto' }}
+          size="large"
+          color="default"
+          style={{ marginRight: 'auto' }}
         >
           Add adaptation component
         </Button>

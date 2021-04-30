@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import ExpandIcon from 'mdi-react/ChevronDownIcon'
 import CollapseIcon from 'mdi-react/ChevronUpIcon'
 import Avatar from '@material-ui/core/Avatar'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 export default ({
   children,
@@ -15,10 +16,11 @@ export default ({
   defaultExpanded = false,
   actions = [],
 }) => {
+  const theme = useTheme()
   const [collapsed, setCollapsed] = useState(!defaultExpanded)
 
   return (
-    <Card variant="outlined" style={{ width: '100%' }}>
+    <Card variant="outlined" style={{ width: '100%', backgroundColor: theme.backgroundColor }}>
       <CardHeader
         style={{ cursor: 'pointer' }}
         onClick={() => setCollapsed(!collapsed)}

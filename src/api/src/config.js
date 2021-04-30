@@ -32,6 +32,7 @@ export const NCCRD_API_ADDRESS_PORT = process.env.NCCRD_API_ADDRESS_PORT || 3000
 export const NCCRD_API_GQL_ADDRESS = `${NCCRD_API_ADDRESS}/graphql`
 
 export const NCCRD_API_ALLOWED_ORIGINS =
-  process.env.NCCRD_API_ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'
+  process.env.NCCRD_API_ALLOWED_ORIGINS ||
+  'http://localhost:3000,http://localhost:3001,http://localhost:8080'
 
 export const NCCRD_CLIENT_ID = process.env.NCCRD_CLIENT_ID || 'client.sess'

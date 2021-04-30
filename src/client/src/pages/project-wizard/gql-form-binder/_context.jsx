@@ -128,19 +128,19 @@ export default ({ children }) => {
   const adaptationFields = data?.adaptationFields.inputFields
   const researchFields = data?.researchFields.inputFields
 
-  /**
-   * Reset form completely
-   * on component dismount
-   */
-  useEffect(
-    () => () => {
-      setProjectForm({})
-      setMitigationForms([])
-      setAdaptationForms([])
-      setResearchForms([])
-    },
-    []
-  )
+  // /**
+  //  * Reset form completely
+  //  * on component dismount
+  //  */
+  // useEffect(
+  //   () => () => {
+  //     setProjectForm({})
+  //     setMitigationForms([])
+  //     setAdaptationForms([])
+  //     setResearchForms([])
+  //   },
+  //   []
+  // )
 
   /**
    * Update form on type-load
@@ -156,9 +156,9 @@ export default ({ children }) => {
         )
       )
     }
-    setMitigationForms([])
-    setAdaptationForms([])
-    setResearchForms([])
+    setMitigationForms([]) // TODO
+    setAdaptationForms([]) // TODO
+    setResearchForms([]) // TODO
   }, [projectFields, mitigationFields, adaptationFields, researchFields])
 
   if (loading) {

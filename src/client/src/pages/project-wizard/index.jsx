@@ -1,19 +1,17 @@
 import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import ContentNav from '../../components/content-nav'
 import Avatar from '@material-ui/core/Avatar'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import clsx from 'clsx'
 import GraphQLFormProvider, { Submit } from './gql-form-binder'
-import Button from '@material-ui/core/Button'
 import useTheme from '@material-ui/core/styles/useTheme'
-import RefreshIcon from 'mdi-react/RefreshIcon'
 import ProjectForm from './forms/project'
 import MitigationForms from './forms/mitigation'
 import AdaptationForms from './forms/adaptation'
 import ResearchForms from './forms/research'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import ResetForm from './reset-form'
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -63,26 +61,8 @@ export default () => {
                 Icon: () => <AvatarIcon i={5} />,
               },
             ]}
-            subNavChildren={() => {
-              return (
-                mdAndUp && (
-                  <Grid container spacing={2} style={{ marginTop: theme.spacing(2) }}>
-                    <Grid item xs={12}>
-                      <Button
-                        fullWidth
-                        size="large"
-                        startIcon={<RefreshIcon />}
-                        color="secondary"
-                        variant="contained"
-                        disableElevation
-                        onClick={() => alert('todo')}
-                      >
-                        Reset form
-                      </Button>
-                    </Grid>
-                  </Grid>
-                )
-              )
+            subNavChildren={({ setActiveIndex }) => {
+              return mdAndUp && <ResetForm setActiveIndex={setActiveIndex} />
             }}
           >
             {({ activeIndex }) => {

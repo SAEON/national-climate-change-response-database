@@ -12,7 +12,8 @@ export default () => {
         alignContent: 'center',
       }}
       position="relative"
-      color="primary"
+      color="secondary"
+      variant="outlined"
     >
       <Toolbar variant="dense">
         <Typography variant="overline">© SAEON 2020 - {new Date().getFullYear()}</Typography>

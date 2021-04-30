@@ -25,10 +25,10 @@ export default {
     type: 'light',
     contrastThreshold: 3,
     primary: {
-      main: 'rgb(46, 125, 50)',
+      main: 'rgb(0, 93, 40)',
     },
     secondary: {
-      main: '#dee5e0',
+      main: 'rgb(135, 69, 21)',
     },
   },
   status: {

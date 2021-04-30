@@ -67,7 +67,7 @@ module.exports = () => {
       new webpack.DefinePlugin({
         'process.env.NCCRD_CLIENT_BACKGROUNDS': JSON.stringify(
           fs
-            .readdirSync('public/bg')
+            .readdirSync(path.join(__dirname, './public/bg'))
             .filter(f => ['.jpg', '.jpeg'].includes(f.match(/\.[0-9a-z]{1,5}$/i)?.[0] || undefined))
             .join(',')
         ),

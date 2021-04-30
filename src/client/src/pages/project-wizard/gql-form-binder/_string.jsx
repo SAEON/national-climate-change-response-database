@@ -4,7 +4,7 @@ import QuickForm from '../../../components/quick-form'
 import debounce from '../../../lib/debounce'
 
 export default ({ name, placeholder, helperText, multiline, rows, error, setValue, value }) => {
-  const effect = useMemo(() => debounce(({ value }) => setValue(value), 100), [setValue])
+  const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
 
   return (
     <QuickForm effect={effect} value={value}>

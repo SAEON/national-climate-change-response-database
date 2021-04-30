@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
@@ -9,19 +8,12 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import clsx from 'clsx'
 import GraphQLFormProvider, { Submit } from './gql-form-binder'
 import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
 import useTheme from '@material-ui/core/styles/useTheme'
 import RefreshIcon from 'mdi-react/RefreshIcon'
-import PlusIcon from 'mdi-react/PlusIcon'
-import Card from '@material-ui/core/Card'
-import Typography from '@material-ui/core/Typography'
-import Collapse from '../../components/collapse'
-import FormIcon from 'mdi-react/PencilIcon'
-import DeleteIcon from 'mdi-react/DeleteIcon'
-import ProjectForm from './_project-form'
-import MitigationForms from './_mitigation-forms'
-import AdaptationForms from './_adaptation-forms'
-import ResearchFields from './_research-forms'
+import ProjectForm from './forms/project'
+import MitigationForms from './forms/mitigation'
+import AdaptationForms from './forms/adaptation'
+import ResearchForms from './forms/research'
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -29,25 +21,6 @@ const useStyles = makeStyles(theme => ({
     height: theme.spacing(3),
   },
 }))
-
-const NoDetailsStub = ({ style, props }) => {
-  const theme = useTheme()
-  return (
-    <Card
-      {...props}
-      variant="outlined"
-      style={{
-        width: '100%',
-        padding: theme.spacing(2),
-        display: 'flex',
-        justifyContent: 'center',
-        ...style,
-      }}
-    >
-      <Typography>No details added yet</Typography>
-    </Card>
-  )
-}
 
 const AvatarIcon = ({ i }) => {
   const classes = useStyles()
@@ -62,7 +35,6 @@ export default () => {
       <Box my={2}>
         <GraphQLFormProvider>
           <ContentNav
-            title="new-project"
             navItems={[
               {
                 primaryText: 'Project',
@@ -110,7 +82,7 @@ export default () => {
               )
             }}
           >
-            {({ setActiveIndex, activeIndex }) => {
+            {({ activeIndex }) => {
               return (
                 <div style={{ position: 'relative' }}>
                   <Fade key={0} unmountOnExit in={activeIndex === 0}>
@@ -130,12 +102,12 @@ export default () => {
                   </Fade>
                   <Fade key={3} unmountOnExit in={activeIndex === 3}>
                     <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                      <ResearchFields />
+                      <ResearchForms />
                     </div>
                   </Fade>
                   <Fade key={4} unmountOnExit in={activeIndex === 4}>
                     <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                      <Submit setActiveIndex={setActiveIndex} />
+                      <Submit />
                     </div>
                   </Fade>
                 </div>

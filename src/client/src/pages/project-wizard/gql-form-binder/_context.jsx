@@ -30,27 +30,65 @@ const CORE_FIELDS = gql`
 
 export default ({ children }) => {
   const [projectForm, setProjectForm] = useState({})
-  const [mitigationsForm, setMitigationsForm] = useState([])
-  const [adaptationsForm, setAdaptationsForm] = useState([])
-  const [researchForm, setResearchForm] = useState([])
+  const [mitigationForms, setMitigationForms] = useState([])
+  const [adaptationForms, setAdaptationForms] = useState([])
+  const [researchForms, setResearchForms] = useState([])
+
+  /* PROJECT FORM */
 
   const updateProjectForm = useCallback(obj => {
     setProjectForm(projectForm => Object.assign({ ...projectForm }, obj))
   }, [])
 
+  /* MITIGATION FORMS */
+
   const updateMitigationForm = useCallback((obj, i) => {
-    setMitigationsForm(forms =>
-      forms.map((form, _i) => (i === _i ? Object.assign({ ...forms }, obj) : form))
+    setMitigationForms(forms =>
+      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, obj) : form))
     )
   }, [])
 
   const addMitigationForm = useCallback(() => {
-    setMitigationsForm(forms => [...forms, {}])
+    setMitigationForms(forms => [...forms, {}])
   }, [])
 
   const removeMitigationForm = useCallback(i => {
-    setMitigationsForm(forms => forms.filter((form, _i) => i !== _i))
+    setMitigationForms(forms => forms.filter((form, _i) => i !== _i))
   }, [])
+
+  /* ADAPTATION FORMS */
+
+  const updateAdaptationForm = useCallback((obj, i) => {
+    setAdaptationForms(forms =>
+      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, obj) : form))
+    )
+  }, [])
+
+  const addAdaptationForm = useCallback(() => {
+    setAdaptationForms(forms => [...forms, {}])
+  }, [])
+
+  const removeAdaptationForm = useCallback(i => {
+    setAdaptationForms(forms => forms.filter((form, _i) => i !== _i))
+  }, [])
+
+  /* RESEARCH FORMS */
+
+  const updateResearchForm = useCallback((obj, i) => {
+    setResearchForms(forms =>
+      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, obj) : form))
+    )
+  }, [])
+
+  const addResearchForm = useCallback(() => {
+    setResearchForms(forms => [...forms, {}])
+  }, [])
+
+  const removeResearchForm = useCallback(i => {
+    setResearchForms(forms => forms.filter((form, _i) => i !== _i))
+  }, [])
+
+  /* TYPE QUERY */
 
   const { error, loading, data } = useQuery(
     gql`
@@ -97,9 +135,9 @@ export default ({ children }) => {
   useEffect(
     () => () => {
       setProjectForm({})
-      setMitigationsForm([])
-      setAdaptationsForm([])
-      setResearchForm([])
+      setMitigationForms([])
+      setAdaptationForms([])
+      setResearchForms([])
     },
     []
   )
@@ -118,10 +156,9 @@ export default ({ children }) => {
         )
       )
     }
-
-    setMitigationsForm([])
-    setAdaptationsForm([])
-    setResearchForm([])
+    setMitigationForms([])
+    setAdaptationForms([])
+    setResearchForms([])
   }, [projectFields, mitigationFields, adaptationFields, researchFields])
 
   if (loading) {
@@ -145,14 +182,20 @@ export default ({ children }) => {
         projectForm,
         updateProjectForm,
         mitigationFields,
-        mitigationsForm,
+        mitigationForms,
         updateMitigationForm,
         addMitigationForm,
         removeMitigationForm,
         adaptationFields,
-        adaptationsForm,
+        updateAdaptationForm,
+        addAdaptationForm,
+        removeAdaptationForm,
+        adaptationForms,
         researchFields,
-        researchForm,
+        researchForms,
+        updateResearchForm,
+        addResearchForm,
+        removeResearchForm,
       }}
     >
       <Fade in={Boolean(data)} key="data-in">

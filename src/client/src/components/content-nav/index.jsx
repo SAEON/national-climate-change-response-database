@@ -1,8 +1,8 @@
+import { useState } from 'react'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import useLocalstorage from '../../hooks/use-localstorage'
 import Grid from '@material-ui/core/Grid'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Card from '@material-ui/core/Card'
@@ -11,10 +11,10 @@ import clsx from 'clsx'
 import useTheme from '@material-ui/core/styles/useTheme'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
-export default ({ title, navItems, subNavChildren = null, children }) => {
+export default ({ navItems, subNavChildren = null, children }) => {
   const classes = useStyles()
   const theme = useTheme()
-  const [activeIndex, setActiveIndex] = useLocalstorage(title, 0)
+  const [activeIndex, setActiveIndex] = useState(0)
   const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (

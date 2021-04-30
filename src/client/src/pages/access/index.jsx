@@ -14,7 +14,6 @@ export default () => {
     <Container>
       <Box my={2}>
         <ContentNav
-          title="access-managements"
           navItems={[
             { primaryText: 'Users', secondaryText: 'Manage users directly', Icon: UsersIcon },
             { primaryText: 'Roles', secondaryText: 'Assign users to roles', Icon: RolesIcon },

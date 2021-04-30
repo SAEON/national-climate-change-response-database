@@ -7,15 +7,24 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { context as formContext } from './_context'
 
-export default ({ setActiveIndex }) => {
+export default () => {
   const history = useHistory()
-  const form = useContext(formContext)
-  const projectDetails = {} // TODO
+  const { projectForm, mitigationForms, adaptationForms, researchForms } = useContext(formContext)
 
   const [createProject, { error, loading }] = useMutation(
     gql`
-      mutation createProject($projectDetails: ProjectInput!) {
-        createProject(projectDetails: $projectDetails) {
+      mutation createProject(
+        $projectForm: ProjectInput!
+        $mitigationForms: [MitigationInput!]
+        $adaptationForms: [AdaptationInput!]
+        $researchForms: [ResearchInput!]
+      ) {
+        createProject(
+          projectForm: $projectForm
+          mitigationForms: $mitigationForms
+          adaptationForms: $adaptationForms
+          researchForms: $researchForms
+        ) {
           id
         }
       }
@@ -40,8 +49,6 @@ export default ({ setActiveIndex }) => {
       },
       onCompleted: ({ createProject }) => {
         const { id } = createProject
-        // TODO clearForm()
-        setActiveIndex(0)
         history.push(`/projects/${id}`)
       },
     }
@@ -57,7 +64,11 @@ export default ({ setActiveIndex }) => {
         <CardHeader title={'Finalize and submit'} />
         <CardContent>
           <Button
-            onClick={() => createProject({ variables: { projectDetails } })}
+            onClick={() =>
+              createProject({
+                variables: { projectForm, mitigationForms, adaptationForms, researchForms },
+              })
+            }
             variant="contained"
             color="primary"
             disableElevation

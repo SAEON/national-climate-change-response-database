@@ -14,7 +14,6 @@ export default () => {
     <Container>
       <Box my={2}>
         <ContentNav
-          title="project-management"
           navItems={[
             {
               primaryText: 'Projects',

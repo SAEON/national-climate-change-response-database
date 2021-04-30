@@ -18,6 +18,23 @@ enum InterventionType {
   CrossCutting
 }
 
+enum InterventionStatus {
+  # Planned :: The concept for a project has been put forward but is not currently underway and may not specifically have funding.
+  Planned
+  # Adopted (Approved) :: The project has moved from the concept stage and specifications for implementation have been established. This project may have been assigned funding.
+  Adopted
+  # In Progress :: Infrastructure for the project is in the process of being established and the project has assigned funding.
+  InProgress
+  # Implemented (Operational) :: The project infrastructure has been completed and any remaining funding is now directed towards maintenance.
+  Implemented
+  # Published :: The project has been completed and the outcome described in professional documentation
+  Published
+  # Expired :: The project infrastructure is no longer useful or sustainable without additional funding or funding for the project has run out.
+  Expired
+  # Discontinued :: The project has been abandoned.
+  Discontinued
+}
+
 enum ProjectStatus {
   # Operational :: @amelia TODO
   Operational
@@ -45,11 +62,41 @@ enum FundingStatus {
   FullyFunded
 }
 
+enum BudgetRages {
+  # < R10k :: @amelia TODO
+  R10KOrLess
+  # R10k - R50K :: @amelia TODO
+  R10kToR50k
+  # R50k - R100k :: @amelia TODO
+  R50kTo1000k
+  # R100k - R500k :: @amelia TODO
+  R100kToR500k
+  # R500k - R1m :: @amelia TODO
+  R500kToR1m
+  # R1m - R5m :: @amelia TODO
+  R1mToR5m
+  # R5m - R10m :: @amelia TODO
+  R5mToR10m
+  # R10m - R50m :: @amelia TODO
+  R10mToR50m
+  # R50m - R100m :: @amelia TODO
+  R50mToR100m
+  # > R100m :: @amelia TODO
+  R100mOrMore
+}
+
 enum HostSector {
   # Thing 1 :: @Amelia TODO
   thing1
   # Thing 2 :: @Amelia TODO
   thing2
+}
+
+enum ProjectType {
+  # Research :: @amelia TODO
+  Research
+  # Applied :: @amelia TODO
+  Applied
 }
 
 input ProjectInput {
@@ -99,36 +146,6 @@ input ProjectInput {
   budgetUpper: Money
 }
 
-enum BudgetRages {
-  # < R10k :: @amelia TODO
-  R10KOrLess
-  # R10k - R50K :: @amelia TODO
-  R10kToR50k
-  # R50k - R100k :: @amelia TODO
-  R50kTo1000k
-  # R100k - R500k :: @amelia TODO
-  R100kToR500k
-  # R500k - R1m :: @amelia TODO
-  R500kToR1m
-  # R1m - R5m :: @amelia TODO
-  R1mToR5m
-  # R5m - R10m :: @amelia TODO
-  R5mToR10m
-  # R10m - R50m :: @amelia TODO
-  R10mToR50m
-  # R50m - R100m :: @amelia TODO
-  R50mToR100m
-  # > R100m :: @amelia TODO
-  R100mOrMore
-}
-
-enum ProjectType {
-  # Research :: @amelia TODO
-  Research
-  # Applied :: @amelia TODO
-  Applied
-}
-
 input AdaptationInput {
   # Adaptation title :: This is for reference purposes
   title: String!
@@ -147,15 +164,15 @@ input MitigationInput {
   # Title :: @Amelia TODO
   title: String!
   # Carbon credit :: Does this project produce carbon credits?
-  CarbonCredit: Boolean!
+  carbonCredit: Boolean!
   # Voluntary methodology :: Describe the method used in the project.
-  VolMethodoloy: String!
-  #  ::
-  GoldStandard: Boolean!
-  #  ::
-  VCS: Boolean!
+  volMethodology: String
+  #  ? :: @amelia TODO
+  goldStandard: Boolean!
+  #  ? :: @amelia TODO
+  vcs: Boolean!
   # Other carbon programme :: Please list the name of the carbon programme.
-  Other: String!
+  other: String!
   # Programme method :: Please describe the programme.
   otherDesc: String!
   # CDM project number :: The code a project is given by the CDM once it is accepted.
@@ -179,13 +196,9 @@ input MitigationInput {
   # CDM Executive Board Status :: What is the CDM status of this project?
   # ExecutiveStatus: ExecutiveStatus!
 
-  # Project status :: Planned: The concept for a project has been put forward but is not currently underway and may not specifically have funding.
-  # Adopted (Approved): The project has moved from the concept stage and specifications for implementation have been established. This project may have been assigned funding.
-  # In Progress: Infrastructure for the project is in the process of being established and the project has assigned funding.
-  # Implemented (Operational): The project infrastructure has been completed and any remaining funding is now directed towards maintenance.
-  # Published: The project has been completed and the outcome described in professional documentation
-  # Expired: The project infrastructure is no longer useful or sustainable without additional funding or funding for the project has run out.
-  # Discontinued: The project has been abandoned.
+  # Intervention status :: @amelia TODO
+  status: InterventionStatus!
+
   # CDMStatus: CDMStatus!
 
   # CDM methodology :: Please select the CDM method used in your project.
@@ -213,12 +226,17 @@ type Query {
 # type Subscription {}
 
 type Mutation {
-  createProject(projectDetails: ProjectInput!): Project!
-  updateProject(projectDetails: ProjectInput!): Project!
   updateVocabulary: JSON!
+  createProject(
+    projectForm: ProjectInput!
+    mitigationForms: [MitigationInput!]
+    adaptationForms: [AdaptationInput!]
+    researchForms: [ResearchInput!]
+  ): Project!
+  updateProject(
+    projectForm: ProjectInput!
+    mitigationForms: [MitigationInput!]
+    adaptationForms: [AdaptationInput!]
+    researchForms: [ResearchInput!]
+  ): Project!
 }
-
-#type Mutation {
-#  createMitigation(mitigationDetails: MitigationInput!): Mitigation!
-#  updateMitigation(mitigationDetails: MitigationInput!): Mitigation!
-#}

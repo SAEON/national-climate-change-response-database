@@ -164,9 +164,9 @@ export default ({ children }) => {
   if (loading) {
     return (
       <Fade in={loading} key="loading-in">
-        <span>
-          <Loading msg="Loading form fields" />
-        </span>
+        <div>
+          <Loading />
+        </div>
       </Fade>
     )
   }

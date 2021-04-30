@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import ContentNav from '../../components/content-nav'
 import Avatar from '@material-ui/core/Avatar'
-import Fade from '@material-ui/core/Fade'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import clsx from 'clsx'
 import GraphQLFormProvider, { Submit } from './gql-form-binder'
@@ -32,7 +31,7 @@ export default () => {
 
   return (
     <Container>
-      <Box my={2}>
+      <Box my={2} style={{ position: 'relative' }}>
         <GraphQLFormProvider>
           <ContentNav
             navItems={[
@@ -84,33 +83,13 @@ export default () => {
           >
             {({ activeIndex }) => {
               return (
-                <div style={{ position: 'relative' }}>
-                  <Fade key={0} unmountOnExit in={activeIndex === 0}>
-                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                      <ProjectForm />
-                    </div>
-                  </Fade>
-                  <Fade key={1} unmountOnExit in={activeIndex === 1}>
-                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                      <MitigationForms />
-                    </div>
-                  </Fade>
-                  <Fade key={2} unmountOnExit in={activeIndex === 2}>
-                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                      <AdaptationForms />
-                    </div>
-                  </Fade>
-                  <Fade key={3} unmountOnExit in={activeIndex === 3}>
-                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                      <ResearchForms />
-                    </div>
-                  </Fade>
-                  <Fade key={4} unmountOnExit in={activeIndex === 4}>
-                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                      <Submit />
-                    </div>
-                  </Fade>
-                </div>
+                <>
+                  {activeIndex === 0 && <ProjectForm key="project-form" />}
+                  {activeIndex === 1 && <MitigationForms key="mitigation-forms" />}
+                  {activeIndex === 2 && <AdaptationForms key="adaptation-forms" />}
+                  {activeIndex === 3 && <ResearchForms key="research-forms" />}
+                  {activeIndex === 4 && <Submit key="submit" />}
+                </>
               )
             }}
           </ContentNav>

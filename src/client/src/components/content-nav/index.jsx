@@ -19,7 +19,7 @@ export default ({ navItems, subNavChildren = null, children }) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item style={{ maxWidth: 350 }}>
+      <Grid item xs={12} sm={3}>
         <List style={{ padding: 0 }}>
           {navItems.map(({ primaryText, secondaryText, Icon }, i) => (
             <Card variant="outlined" key={i}>
@@ -43,7 +43,7 @@ export default ({ navItems, subNavChildren = null, children }) => {
         {subNavChildren && subNavChildren({ setActiveIndex })}
       </Grid>
 
-      <Grid item style={{ flexGrow: 1 }}>
+      <Grid item xs={12} sm={9}>
         <div>{children({ setActiveIndex, activeIndex })}</div>
       </Grid>
     </Grid>

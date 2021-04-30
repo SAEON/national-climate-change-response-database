@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { useQuery, gql } from '@apollo/client'
 import Loading from '../../../components/loading'
+import Fade from '@material-ui/core/Fade'
 
 export default () => {
   const { error, loading, data } = useQuery(gql`
@@ -16,7 +17,13 @@ export default () => {
   `)
 
   if (loading) {
-    return <Loading />
+    return (
+      <Fade in={loading} key="loading-in">
+        <div>
+          <Loading />
+        </div>
+      </Fade>
+    )
   }
 
   if (error) {

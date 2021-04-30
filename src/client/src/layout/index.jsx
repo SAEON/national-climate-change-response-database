@@ -8,7 +8,7 @@ export default props => {
     <Router>
       <Header {...props} />
       <Routes />
-      {/* <Footer /> */}
+      <Footer />
     </Router>
   )
 }

@@ -28,7 +28,7 @@ export default {
       main: 'rgb(0, 93, 40)',
     },
     secondary: {
-      main: 'rgb(135, 69, 21)',
+      main: 'rgb(224, 31, 22)',
     },
   },
   status: {

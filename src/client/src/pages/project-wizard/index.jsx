@@ -13,6 +13,7 @@ import ProjectForm from './forms/project'
 import MitigationForms from './forms/mitigation'
 import AdaptationForms from './forms/adaptation'
 import ResearchForms from './forms/research'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -28,6 +29,7 @@ const AvatarIcon = ({ i }) => {
 
 export default () => {
   const theme = useTheme()
+  const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
 
   return (
     <Container>
@@ -63,21 +65,23 @@ export default () => {
             ]}
             subNavChildren={() => {
               return (
-                <Grid container spacing={2} style={{ marginTop: theme.spacing(2) }}>
-                  <Grid item xs={12}>
-                    <Button
-                      fullWidth
-                      size="large"
-                      startIcon={<RefreshIcon />}
-                      color="secondary"
-                      variant="contained"
-                      disableElevation
-                      onClick={() => alert('todo')}
-                    >
-                      Reset form
-                    </Button>
+                mdAndUp && (
+                  <Grid container spacing={2} style={{ marginTop: theme.spacing(2) }}>
+                    <Grid item xs={12}>
+                      <Button
+                        fullWidth
+                        size="large"
+                        startIcon={<RefreshIcon />}
+                        color="secondary"
+                        variant="contained"
+                        disableElevation
+                        onClick={() => alert('todo')}
+                      >
+                        Reset form
+                      </Button>
+                    </Grid>
                   </Grid>
-                </Grid>
+                )
               )
             }}
           >

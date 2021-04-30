@@ -15,14 +15,20 @@ export default ({ navItems, subNavChildren = null, children }) => {
   const classes = useStyles()
   const theme = useTheme()
   const [activeIndex, setActiveIndex] = useState(0)
+  const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
   const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
+  const xsAndDown = useMediaQuery(theme.breakpoints.down('xs'))
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} sm={3}>
-        <List style={{ padding: 0 }}>
+      <Grid item xs={12} md={3}>
+        <List style={{ padding: 0, display: 'flex', flexDirection: mdAndUp ? 'column' : 'row' }}>
           {navItems.map(({ primaryText, secondaryText, Icon }, i) => (
-            <Card variant="outlined" key={i}>
+            <Card
+              variant="outlined"
+              style={{ flexBasis: mdAndUp ? 'auto' : 0, flexGrow: 1 }}
+              key={i}
+            >
               <ButtonBase
                 className={clsx({
                   [classes.active]: i === activeIndex,
@@ -31,10 +37,19 @@ export default ({ navItems, subNavChildren = null, children }) => {
                 style={{ width: '100%' }}
               >
                 <ListItem>
-                  <ListItemIcon style={{ justifyContent: 'center' }}>
-                    <Icon />
-                  </ListItemIcon>
-                  {smAndUp && <ListItemText primary={primaryText} secondary={secondaryText} />}
+                  {(xsAndDown || mdAndUp) && (
+                    <ListItemIcon style={{ justifyContent: 'center' }}>
+                      <Icon />
+                    </ListItemIcon>
+                  )}
+
+                  {smAndUp && (
+                    <ListItemText
+                      style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                      primary={primaryText}
+                      secondary={mdAndUp && secondaryText}
+                    />
+                  )}
                 </ListItem>
               </ButtonBase>
             </Card>
@@ -43,7 +58,7 @@ export default ({ navItems, subNavChildren = null, children }) => {
         {subNavChildren && subNavChildren({ setActiveIndex })}
       </Grid>
 
-      <Grid item xs={12} sm={9}>
+      <Grid item xs={12} md={9}>
         <div>{children({ setActiveIndex, activeIndex })}</div>
       </Grid>
     </Grid>

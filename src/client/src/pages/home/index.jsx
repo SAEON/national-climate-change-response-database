@@ -1,8 +1,9 @@
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
+import Footer from '../../components/footer'
 
 export default () => (
-  <div>
+  <>
     <Container>
       <Box my={2}>
         {[...new Array(120)]
@@ -15,5 +16,6 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
           .join('\n')}
       </Box>
     </Container>
-  </div>
+    <Footer />
+  </>
 )

@@ -38,6 +38,20 @@ export default ({ children }) => {
     setProjectForm(projectForm => Object.assign({ ...projectForm }, obj))
   }, [])
 
+  const updateMitigationForm = useCallback((obj, i) => {
+    setMitigationsForm(forms =>
+      forms.map((form, _i) => (i === _i ? Object.assign({ ...forms }, obj) : form))
+    )
+  }, [])
+
+  const addMitigationForm = useCallback(() => {
+    setMitigationsForm(forms => [...forms, {}])
+  }, [])
+
+  const removeMitigationForm = useCallback(i => {
+    setMitigationsForm(forms => forms.filter((form, _i) => i !== _i))
+  }, [])
+
   const { error, loading, data } = useQuery(
     gql`
       ${CORE_FIELDS}
@@ -132,6 +146,9 @@ export default ({ children }) => {
         updateProjectForm,
         mitigationFields,
         mitigationsForm,
+        updateMitigationForm,
+        addMitigationForm,
+        removeMitigationForm,
         adaptationFields,
         adaptationsForm,
         researchFields,

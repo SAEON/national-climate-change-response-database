@@ -45,6 +45,13 @@ enum FundingStatus {
   FullyFunded
 }
 
+enum HostSector {
+  # Thing 1 :: @Amelia TODO
+  thing1
+  # Thing 2 :: @Amelia TODO
+  thing2
+}
+
 input ProjectInput {
   # Project title :: Unique project name in line with programmatic inputs
   title: String
@@ -52,6 +59,8 @@ input ProjectInput {
   description: String!
   # Project manager :: Who is in charge of managing this project?
   projectManager: String
+  # Project type :: @amelia TODO
+  projectType: ProjectType!
   # Intervention type :: What type of intervention does this project focus on?
   interventionType: InterventionType!
   # Project status :: TODO Amelia
@@ -88,10 +97,6 @@ input ProjectInput {
   budgetLower: Money
   # Budget (upper bound) :: What is the upper-bound of the estimated budget?
   budgetUpper: Money
-
-  # projectType: ProjectType! # TODO
-  # projectSubType: TODO ProjectSubType!
-  # hostSector: Int! # TODO enum
 }
 
 enum BudgetRages {
@@ -117,6 +122,13 @@ enum BudgetRages {
   R100mOrMore
 }
 
+enum ProjectType {
+  # Research :: @amelia TODO
+  Research
+  # Applied :: @amelia TODO
+  Applied
+}
+
 input AdaptationInput {
   # Adaptation title :: This is for reference purposes
   title: String!
@@ -132,6 +144,8 @@ input ResearchInput {
 }
 
 input MitigationInput {
+  # Title :: @Amelia TODO
+  title: String!
   # Carbon credit :: Does this project produce carbon credits?
   CarbonCredit: Boolean!
   # Voluntary methodology :: Describe the method used in the project.

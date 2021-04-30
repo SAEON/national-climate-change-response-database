@@ -10,6 +10,8 @@ const basicEnumFields = [
   'FundingStatus',
   'ValidationStatus',
   'BudgetRages',
+  'HostSector',
+  'ProjectType',
 ]
 
 export default () => {

@@ -18,10 +18,10 @@ import Typography from '@material-ui/core/Typography'
 import Collapse from '../../components/collapse'
 import FormIcon from 'mdi-react/PencilIcon'
 import DeleteIcon from 'mdi-react/DeleteIcon'
-import ProjectFields from './_project-fields'
-import MitigationFields from './_mitigation-fields'
-import AdaptationFields from './_adaptation-fields'
-import ResearchFields from './_research-fields'
+import ProjectForm from './_project-form'
+import MitigationForms from './_mitigation-forms'
+import AdaptationForms from './_adaptation-forms'
+import ResearchFields from './_research-forms'
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -115,17 +115,17 @@ export default () => {
                 <div style={{ position: 'relative' }}>
                   <Fade key={0} unmountOnExit in={activeIndex === 0}>
                     <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                      <ProjectFields />
+                      <ProjectForm />
                     </div>
                   </Fade>
                   <Fade key={1} unmountOnExit in={activeIndex === 1}>
                     <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                      <MitigationFields />
+                      <MitigationForms />
                     </div>
                   </Fade>
                   <Fade key={2} unmountOnExit in={activeIndex === 2}>
                     <div style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
-                      <AdaptationFields />
+                      <AdaptationForms />
                     </div>
                   </Fade>
                   <Fade key={3} unmountOnExit in={activeIndex === 3}>

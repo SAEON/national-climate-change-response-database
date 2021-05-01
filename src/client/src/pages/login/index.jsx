@@ -1,4 +1,3 @@
-import Container from '@material-ui/core/Container'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -17,22 +16,21 @@ export default () => {
         position: 'absolute',
         top: window.location.pathname.includes('render') ? 0 : 48,
         bottom: 0,
+        justifyContent: 'center',
         left: 0,
         right: 0,
       }}
       id="login"
     >
-      <Container style={{ display: 'flex', justifyContent: 'center' }}>
-        <Card style={{ maxWidth: 400 }}>
-          <CardHeader
-            style={{ textAlign: 'center' }}
-            title={<Typography variant="overline">Log in</Typography>}
-          />
-          <CardContent>
-            <GoogleAuth redirect={redirect} />
-          </CardContent>
-        </Card>
-      </Container>
+      <Card style={{ maxWidth: 400, position: 'relative', top: -100 }}>
+        <CardHeader
+          style={{ textAlign: 'center' }}
+          title={<Typography variant="overline">Log in</Typography>}
+        />
+        <CardContent>
+          <GoogleAuth redirect={redirect} />
+        </CardContent>
+      </Card>
     </main>
   )
 }

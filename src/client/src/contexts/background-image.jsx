@@ -1,5 +1,6 @@
 import { createContext } from 'react'
 import { NCCRD_CLIENT_BACKGROUNDS } from '../config'
+import { isIE } from 'react-device-detect'
 
 /**
  * Provides some measure of control over which background
@@ -21,19 +22,22 @@ export const BgImageContext = createContext()
 export default ({ children }) => {
   return (
     <>
-      <div
-        id="bg"
-        style={{
-          position: 'fixed',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-          backgroundSize: 'cover',
-          backgroundImage: getBackgroundImagePath(),
-          zIndex: -1,
-        }}
-      />
+      {!isIE && (
+        <div
+          id="bg"
+          style={{
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundSize: 'cover',
+            backgroundImage: getBackgroundImagePath(),
+            zIndex: -1,
+            backgroundAttachment: 'fixed',
+          }}
+        />
+      )}
 
       {children}
     </>

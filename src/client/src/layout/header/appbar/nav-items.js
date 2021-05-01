@@ -2,7 +2,7 @@ import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import HomeIcon from 'mdi-react/HomeIcon'
 import LoginIcon from 'mdi-react/LoginIcon'
 import ProjectsIcon from 'mdi-react/DatabaseIcon'
-import TenantsIcon from 'mdi-react/ServerIcon'
+import DeploymentsIcon from 'mdi-react/ServerIcon'
 
 export default [
   {
@@ -16,9 +16,9 @@ export default [
     to: '/projects',
   },
   {
-    label: 'Tenants',
-    Icon: TenantsIcon,
-    to: '/tenants',
+    label: 'Deployments',
+    Icon: DeploymentsIcon,
+    to: '/deployments',
   },
   { label: 'Access', Icon: UsersIcon, to: '/access', authorization: ['admin'] },
   {

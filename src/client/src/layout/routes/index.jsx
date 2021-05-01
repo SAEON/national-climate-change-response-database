@@ -8,7 +8,7 @@ const AccessPage = lazy(() => import('../../pages/access'))
 const ProjectsPage = lazy(() => import('../../pages/projects'))
 const ProjectPage = lazy(() => import('../../pages/project'))
 const ProjectWizardPage = lazy(() => import('../../pages/project-wizard'))
-const TenantsPage = lazy(() => import('../../pages/tenants'))
+const DeploymentsPage = lazy(() => import('../../pages/deployments'))
 
 export default withRouter(() => {
   return (
@@ -73,14 +73,14 @@ export default withRouter(() => {
         )}
       />
 
-      {/* TENANTS */}
+      {/* DEPLOYMENTS */}
       <Route
-        key={'tenants'}
-        path={'/tenants'}
+        key={'deployments'}
+        path={'/deployments'}
         exact
         render={() => (
-          <Transition tKey="tenants">
-            <TenantsPage />
+          <Transition tKey="deployments">
+            <DeploymentsPage />
           </Transition>
         )}
       />

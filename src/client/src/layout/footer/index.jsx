@@ -5,7 +5,12 @@ import Container from '@material-ui/core/Container'
 
 export default () => {
   return (
-    <AppBar position="relative" color="secondary" variant="outlined">
+    <AppBar
+      position="absolute"
+      style={{ top: 'auto', bottom: 0 }}
+      color="primary"
+      variant="outlined"
+    >
       <Container>
         <Toolbar variant="dense">
           <Typography style={{ textAlign: 'center', margin: 'auto' }} variant="overline">

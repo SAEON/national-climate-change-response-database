@@ -56,7 +56,7 @@ app
     )
   ) // Only compress the http / graphql api responses
   .use(koaBody())
-  .use(koaSession(passportCookieConfig, app), '/proxy')
+  .use(koaSession(passportCookieConfig, app))
   .use(cors)
   .use(clientSession)
   .use(koaPassport.initialize())
@@ -73,7 +73,7 @@ app
   )
   .use(fourOfour)
   .use(mount('/', reactClient))
-  .use(blacklistRoutes(staticSpaMiddleware, '/http', '/graphql'))
+  .use(blacklistRoutes(staticSpaMiddleware, '/http', '/graphql')) // Resolve all paths to the React.js entry (SPA)
 
 // Configure HTTP server
 const httpServer = createServer(app.callback())

@@ -2,13 +2,15 @@
   "name": "nccis",
   "version": "0.0.1",
   "description": "National climate change information systems",
+  "type": "module",
   "scripts": {
     "start:api": "npm --prefix src/api start",
     "start:client": "npm --prefix src/client start",
+    "start:bundled": "rimraf src/api/src/http/web/dist/ && npm --prefix src/client run build && mv src/client/dist/ src/api/src/http/web/dist/ && npm --prefix src/api run start:prod",
     "************ REPOSITORY TOOLING **********": "",
-    "doc": "doctoc README.md",
-    "************ PACKAGES **********": "",
-    "install-dependencies": "TC=utc node scripts/install-dependencies.js"
+    "doc": "doctoc README.md && doctoc src/README.md && doctoc src/api/README.md && doctoc src/client/README.md",
+    "install-dependencies": "TC=utc node scripts/install-dependencies.js",
+    "************ PACKAGES **********": ""
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
   },
   "homepage": "https://github.com/SAEON/national-climate-change-systems#readme",
   "devDependencies": {
-    "doctoc": "^2.0.0"
+    "doctoc": "^2.0.0",
+    "rimraf": "^3.0.2"
   }
 }

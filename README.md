@@ -10,6 +10,8 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
   - [System requirements](#system-requirements)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
   - [Local development](#local-development)
+- [Deployment](#deployment)
+  - [Deploy bundled API + client](#deploy-bundled-api--client)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -54,3 +56,25 @@ npm run start:api
 # Start the React.js client
 npm run start:client
 ```
+
+# Deployment
+
+## Deploy bundled API + client
+The easiest way to deploy the application is to serve the React.js static files from the koa.js server. Note that compression IS enabled for API calls (HTTP and GraphQL), but is NOT enabled for static files since this would be better done via a webserver. To start this app in a production environment:
+
+```sh
+# Install Node.js 14.16.x on the server (https://nodejs.org/en/)
+
+# Clone the repository if not already done
+git clone ... nccrd
+cd nccrd
+
+# Install dependencies if not already done
+npm run install-dependencies
+
+# Start the application
+npm run start:bundled
+```
+
+## Containerized deployment
+TODO

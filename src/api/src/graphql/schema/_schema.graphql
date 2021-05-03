@@ -10,11 +10,11 @@ type UserRole {
 }
 
 enum InterventionType {
-  # Mitigation :: @amelia TODO
+  # Mitigation :: Mitigation interventions are defined as ' actions aimed at reducing the extent or likelihood of global climate change through the reduction or displacement of greenhouse gas emissions (GHGs) (e.g. through emission reduction, energy efficiency or renewable energy projects').
   Mitigation
-  # Adaptation :: @amelia TODO
+  # Adaptation :: Adaptation interventions are defined as 'actions preventing or minimising the negative effects and taking advantage of positive effects of global warming in addition to actions which would have occurred naturally or as a matter of course.
   Adaptation
-  # Cross cutting :: @amelia TODO
+  # Cross cutting :: Crosscutting interventions contain elements of both climate change adaptation and mitigation.
   CrossCutting
 }
 
@@ -93,9 +93,9 @@ enum HostSector {
 }
 
 enum ProjectType {
-  # Research :: @amelia TODO
+  # Research :: Research actions are studies conducted in South Africa intended to test the effectiveness or feasibility of some aspect of climate change response.
   Research
-  # Applied :: @amelia TODO
+  # Applied :: Applied actions are actions carried out at scale based on previously tested and researched work.
   Applied
 }
 
@@ -161,15 +161,15 @@ input ResearchInput {
 }
 
 input MitigationInput {
-  # Title :: @Amelia TODO
+  # Title :: Title of the specific mitigation intervention if there is more than one for a project.
   title: String!
   # Carbon credit :: Does this project produce carbon credits?
   carbonCredit: Boolean!
   # Voluntary methodology :: Describe the method used in the project.
   volMethodology: String
-  #  ? :: @amelia TODO
+  #  Gold Standard :: Does this intervention produce carbon credits through the Gold Standard market?
   goldStandard: Boolean!
-  #  ? :: @amelia TODO
+  #  Voluntary Carbon Standard :: @amelia TODO
   vcs: Boolean!
   # Other carbon programme :: Please list the name of the carbon programme.
   other: String!
@@ -184,7 +184,7 @@ input MitigationInput {
   # Mitigation subtype :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
   # ProjectSubType: ProjectSubType!
 
-  # Host Sector (IPCC) :: Select the IPCC host sector that best decribes your project.
+  # Host Sector (IPCC) :: Select the IPCC host sector that best describes your project.
   # HostSector: HostSector!
 
   # Main SubSector :: Select the IPCC main subsector that best decribes you project.

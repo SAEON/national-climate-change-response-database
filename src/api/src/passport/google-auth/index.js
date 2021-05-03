@@ -75,13 +75,14 @@ export default () => {
       authenticate: passport.authenticate('google'),
       login: async (ctx, next) => {
         /**
-         * If /login/google is called without a 'redirect'
+         * If /http/login/google is called without a 'redirect'
          * query param, then the result is 'undefined' as
          * a string
          */
+        console.log('hi there', ctx.request.query.redirect)
         const redirect = ctx.request.query.redirect
           ? ctx.request.query.redirect == 'undefined'
-            ? NCCRD_API_ADDRESS
+            ? `${NCCRD_API_ADDRESS}`
             : ctx.request.query.redirect
           : NCCRD_API_ADDRESS
 

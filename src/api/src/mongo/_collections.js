@@ -10,6 +10,17 @@ export default {
       },
     ],
   },
+  UserPermissions: {
+    name: 'userPermissions',
+    indices: [
+      {
+        index: 'name',
+        options: {
+          unique: true,
+        },
+      },
+    ],
+  },
   Users: {
     name: 'users',
     indices: [

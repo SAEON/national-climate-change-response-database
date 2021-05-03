@@ -3,7 +3,18 @@ scalar JSON
 scalar Void
 scalar Money
 
+type User {
+  id: ID!
+  username: String!
+}
+
 type UserRole {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type UserPermission {
   id: ID!
   name: String!
   description: String
@@ -220,7 +231,9 @@ type ControlledVocabulary {
 type Query {
   projects(ids: [ID!]): [Project]!
   userRoles: [UserRole!]!
+  userPermissions: [UserPermission!]!
   controlledVocabulary(root: String!, tree: String!): ControlledVocabulary
+  users: [User!]
 }
 
 # type Subscription {}

@@ -11,7 +11,7 @@ export const NCCRD_API_GOOGLE_CLIENT_ID = process.env.NCCRD_API_GOOGLE_CLIENT_ID
 export const NCCRD_API_GOOGLE_CLIENT_SECRET = process.env.NCCRD_API_GOOGLE_CLIENT_SECRET || ''
 export const NCCRD_API_GOOGLE_OAUTH_REDIRECT_ADDRESS =
   process.env.NCCRD_API_GOOGLE_OAUTH_REDIRECT_ADDRESS ||
-  'http://localhost:3000/authenticate/redirect/google'
+  'http://localhost:3000/http/authenticate/redirect/google'
 
 export const NCCRD_DEPLOYMENT_ENV = process.env.NCCRD_DEPLOYMENT_ENV || 'development'
 

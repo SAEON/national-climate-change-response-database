@@ -10,6 +10,7 @@ import {
 import _collections from './_collections.js'
 import _Logger from './_logger.js'
 import userRoles from './_user-roles.js'
+import userPermissions from './_user-permissions.js'
 import DataLoader from 'dataloader'
 import sift from 'sift'
 
@@ -72,7 +73,22 @@ await db.then(db =>
   )
 )
 
+// Insert user permissions
+await db.then(db =>
+  Promise.all(
+    userPermissions.map(userPermission => {
+      const { name, ...other } = userPermission
+      db.collection(_collections.UserPermissions.name).findOneAndUpdate(
+        { name },
+        { $setOnInsert: { name }, $set: { ...other } },
+        { upsert: true }
+      )
+    })
+  )
+)
+
 // Insert user roles
+// TODO - also assign permissions
 await db.then(db =>
   Promise.all(
     userRoles.map(userRole => {

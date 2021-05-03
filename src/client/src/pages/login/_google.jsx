@@ -1,4 +1,4 @@
-import { NCCRD_API_ADDRESS } from '../../config'
+import {  NCCRD_API_HTTP_ADDRESS } from '../../config'
 import GoogleIcon from 'mdi-react/GoogleIcon'
 import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -12,7 +12,7 @@ export default ({ redirect }) => {
     <Tooltip title={'Login via your Google account'} placement="bottom-end">
       <span>
         <Button
-          href={`${NCCRD_API_ADDRESS}/login/google?redirect=${redirect}`}
+          href={`${NCCRD_API_HTTP_ADDRESS}/login/google?redirect=${redirect}`}
           fullWidth
           className={clsx(classes.button)}
           color="primary"

@@ -1,9 +1,11 @@
-import { useState, useEffect, createContext } from 'react'
-import { NCCRD_CLIENT_ADDRESS, NCCRD_API_ADDRESS } from '../config'
+import { useState, useEffect, useContext, createContext } from 'react'
+import { NCCRD_API_HTTP_ADDRESS } from '../config'
+import { context as clientInfoContext } from './client-info'
 
 export const context = createContext()
 
 export default ({ children }) => {
+  const { origin: NCCRD_CLIENT_ADDRESS } = useContext(clientInfoContext)
   const [userInfo, setUserInfo] = useState(false)
   const [authenticating, setAuthenticating] = useState(false)
 
@@ -21,7 +23,7 @@ export default ({ children }) => {
     ;(async () => {
       setAuthenticating(true)
       try {
-        const response = await fetch(`${NCCRD_API_ADDRESS}/authenticate`, {
+        const response = await fetch(`${NCCRD_API_HTTP_ADDRESS}/authenticate`, {
           credentials: 'include',
           mode: 'cors',
           signal: abortController.signal,

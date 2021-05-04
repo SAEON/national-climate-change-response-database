@@ -1,8 +1,5 @@
-import mongo from 'mongodb'
-const { ObjectID } = mongo
-
 export default async (ctx, name) => {
-  const { findUserRoles, findUsers } = ctx.mongo.dataFinders
+  const { query } = ctx.mssql
 
   if (!ctx.userInfo) {
     ctx.throw(401)
@@ -10,11 +7,17 @@ export default async (ctx, name) => {
   }
 
   const { userInfo } = ctx
-  const { _id } = userInfo
-  const roleId = (await findUserRoles({ name }))[0]._id
-  const userRoles = (await findUsers({ _id: ObjectID(_id) }))[0].userRoles.map(id => id.toString())
+  const { id: userId } = userInfo
 
-  if (!userRoles.includes(roleId.toString())) {
+  const isAuthorized = Boolean(
+    (
+      await query(
+        `select * from UserRoleXref where userId = ${userId} and roleId in (select id from Roles where name = '${name}');`
+      )
+    ).recordset.length
+  )
+
+  if (!isAuthorized) {
     ctx.throw(403)
   }
 }

@@ -27,18 +27,18 @@ export default ({ children }) => {
   const applicationRoles = data?.roles
   const adminRoleId = applicationRoles && applicationRoles.find(({ name }) => name === 'admin').id
 
-  console.log(applicationRoles)
-
   return (
     <context.Provider
       value={{
         applicationRoles,
         isAuthenticated: Boolean(userInfo),
-        isAdmin: Boolean(adminRoleId && roles?.includes(adminRoleId)),
-        isAuthorized: (...roles) => {
+        isAdmin: Boolean(
+          adminRoleId && roles?.map(({ id }) => id).includes(parseInt(adminRoleId, 10))
+        ),
+        isAuthorized: (..._roles) => {
           if (!applicationRoles) return false
-          const roleId = applicationRoles.find(({ name }) => roles.includes(name)).id
-          return roles?.includes(roleId)
+          const roleId = applicationRoles.find(({ name }) => _roles.includes(name)).id
+          return roles?.map(({ id }) => id).includes(parseInt(roleId, 10))
         },
       }}
     >

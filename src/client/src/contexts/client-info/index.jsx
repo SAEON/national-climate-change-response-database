@@ -19,8 +19,6 @@ export default ({ children }) => {
           throw new Error(msg)
         }
 
-        console.log('data', data)
-
         return (
           <context.Provider
             value={{

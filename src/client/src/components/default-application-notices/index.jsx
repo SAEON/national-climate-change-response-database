@@ -13,7 +13,7 @@ export default ({ children }) => {
 
   useEffect(() => {
     if (!userInfo) return
-    enqueueSnackbar(`Welcome back ${userInfo.username}`, { variant: 'info' })
+    enqueueSnackbar(`Welcome back ${userInfo.emailAddress}`, { variant: 'info' })
   }, [enqueueSnackbar, userInfo])
 
   useEffect(

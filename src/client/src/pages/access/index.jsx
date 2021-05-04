@@ -46,8 +46,8 @@ export default () => {
       {({ activeIndex }) => {
         return navItems
           .filter(({ access }) => isAuthorized(access))
-          .map(({ Component, primaryText }, i) =>
-            activeIndex === i ? <Component key={primaryText} /> : null
+          .map(({ Component, primaryText, access }, i) =>
+            activeIndex === i ? <Component access={access} key={primaryText} /> : null
           )
       }}
     </ContentNav>

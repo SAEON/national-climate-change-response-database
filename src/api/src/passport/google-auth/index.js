@@ -1,5 +1,5 @@
 import passport from 'koa-passport'
-import { collections } from '../../mongo/index.js'
+import query from '../../mssql/query.js'
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth'
 import base64url from 'base64url'
 import {
@@ -19,39 +19,39 @@ export default () => {
           callbackURL: NCCRD_API_GOOGLE_OAUTH_REDIRECT_ADDRESS,
         },
         async (accessToken, refreshToken, profile, cb) => {
-          const { Users } = await collections
           const { _json: googleProfile } = profile
 
           try {
-            cb(
-              null,
-              (
-                await Users.findOneAndUpdate(
-                  {
-                    username: googleProfile.email,
-                  },
+            await query(`
+              with currentUser as (
+                select
+                '${googleProfile.email}' emailAddress,
+                '${googleProfile.sub}' googleId
+              )
+              
+              merge Users as target
+              using currentUser as source
+              on target.emailAddress = source.emailAddress
+              
+              when matched and coalesce(target.googleId, '') <> source.googleId
+              then update set target.googleId = source.googleId
+              
+              when not matched by target
+              then insert (emailAddress, googleId) values (source.emailAddress, source.googleId);`)
 
-                  {
-                    $setOnInsert: {
-                      username: googleProfile.email,
-                    },
-                    $set: {
-                      google: Object.assign({ accessToken, modifiedAt: new Date() }, googleProfile),
-                    },
-                    $addToSet: {
-                      emails: {
-                        email: googleProfile.email,
-                        verified: googleProfile.email_verified,
-                      },
-                    },
-                  },
-                  {
-                    returnOriginal: false,
-                    upsert: true,
-                  }
-                )
-              ).value
-            )
+            const user = (
+              await query(`
+                select
+                u.*,
+                roles.roleId id
+                from Users u
+                join UserRoleXref roles on roles.userId = u.id
+                where googleId = '${googleProfile.sub}'
+                for json auto;
+              `)
+            ).recordset[0][0]
+
+            cb(null, user)
           } catch (error) {
             cb(error, null)
           }

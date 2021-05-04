@@ -6,10 +6,9 @@ import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../components/loading'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-export default () => {
-  const { isAdmin } = useContext(authContext)
-
-  if (!isAdmin) {
+export default ({ access }) => {
+  const { isAuthorized } = useContext(authContext)
+  if (!isAuthorized(access)) {
     return null
   }
 

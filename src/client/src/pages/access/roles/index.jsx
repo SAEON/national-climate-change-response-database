@@ -1,10 +1,17 @@
+import { useContext } from 'react'
+import { context as authContext } from '../../../contexts/authorization'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../components/loading'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-export default () => {
+export default ({ access }) => {
+  const { isAuthorized } = useContext(authContext)
+  if (!isAuthorized(access)) {
+    return null
+  }
+
   const theme = useTheme()
 
   const { error, loading, data } = useQuery(gql`

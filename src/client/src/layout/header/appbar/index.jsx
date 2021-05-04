@@ -54,7 +54,7 @@ export default () => {
           href={`${NCCRD_API_HTTP_ADDRESS}/logout?redirect=${NCCRD_CLIENT_ADDRESS}`}
         >
           <Typography style={{ paddingRight: theme.spacing(1) }} variant="overline">
-            Log out {smAndUp && `(${authenticated.username})`}
+            Log out {smAndUp && `(${authenticated.emailAddress})`}
           </Typography>
         </MuiLink>
       )}

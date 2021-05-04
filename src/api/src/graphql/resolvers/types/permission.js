@@ -1,3 +1,1 @@
-export default {
-  id: async self => self._id,
-}
+export default {}

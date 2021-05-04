@@ -12,7 +12,7 @@ const basicEnumFields = [
   'ProjectStatus',
   'FundingStatus',
   'ValidationStatus',
-  'BudgetRages',
+  'BudgetRanges',
   'HostSector',
   'ProjectType',
 ]

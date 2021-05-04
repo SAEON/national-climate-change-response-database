@@ -258,6 +258,8 @@ input ProjectInput {
   # Lead agent :: Lead contact agent
   leadAgent: String
   # Host organization :: Who is the main hosting organization?
+  # hostSector: TODO - from tree
+  # hostSubSector: TODO - from tree
   hostOrganisation: String
   # Host partner :: Who is the main hosting partner?
   hostPartner: String

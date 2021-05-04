@@ -9,6 +9,136 @@ type UserRole {
   description: String
 }
 
+# enum CDMMethodoloy {
+# AM0001
+# AM0007
+# AM0009
+# AM0014
+# AM0017
+# AM0018
+# AM0019
+# AM0020
+# AM0021
+# AM0023
+# AM0024
+# AM0025
+# AM0026
+# AM0027
+# AM0028
+# AM0029
+# AM0030
+# AM0031
+# AM0034
+# AM0035
+# AM0036
+# AM0037
+# AM0038
+# AM0039
+# AM0041
+# AM0042
+# AM0043
+# AM0044
+# AM0045
+# AM0046
+# AM0047
+# AM0048
+# AM0049
+# AM0050
+# AM0051
+# AM0052
+# AM0053
+# AM0054
+# AM0055
+# AM0056
+# AM0057
+# AM0058
+# AM0059
+# AM0060
+# AM0061
+# AM0062
+# AM0063
+# AM0064
+# AM0065
+# AM0066
+# AM0067
+# AM0068
+# AM0069
+# AM0070
+# AM0071
+# AM0072
+# AM0073
+# AM0074
+# ACM0001
+# ACM0002
+# ACM0003
+# ACM0005
+# ACM0006
+# ACM0007
+# ACM0008
+# ACM0009
+# ACM0010
+# ACM0011
+# ACM0012
+# ACM0013
+# ACM0014
+# ACM0015
+# AR-AM0001
+# AR-AM0002
+# AR-AM0004
+# AR-AM0005
+# AR-AM0006
+# AR-AM0007
+# AR-AM0008
+# AR-AM0009
+# AR-AM0010
+# AR-ACM0001
+# AMS-I.A.
+# AMS-I.B.
+# AMS-I.C.
+# AMS-I.D.
+# AMS-I.E.
+# AMS-II.A.
+# AMS-II.B.
+# AMS-II.C.
+# AMS-II.D.
+# AMS-II.E.
+# AMS-II.F.
+# AMS-II.G.
+# AMS-II.H.
+# AMS-II.I.
+# AMS-II.J.
+# AMS-III.A.
+# AMS-III.B.
+# AMS-III.C.
+# AMS-III.D.
+# AMS-III.E.
+# AMS-III.F.
+# AMS-III.G.
+# AMS-III.H.
+# AMS-III.I.
+# AMS-III.J.
+# AMS-III.K.
+# AMS-III.L.
+# AMS-III.M.
+# AMS-III.N.
+# AMS-III.O.
+# AMS-III.P
+# AMS-III.Q
+# AMS-III.R.
+# AMS-III.S.
+# AMS-III.T.
+# AMS-III.U
+# AMS-III.V
+# AMS-III.W
+# AMS-III.X.
+# AMS-III.Y.
+# AR-AMS0001
+# AR-AMS0002
+# AR-AMS0003
+# AR-AMS0004
+# AR-AMS0005
+# }
+
 enum InterventionType {
   # Mitigation :: Mitigation interventions are defined as ' actions aimed at reducing the extent or likelihood of global climate change through the reduction or displacement of greenhouse gas emissions (GHGs) (e.g. through emission reduction, energy efficiency or renewable energy projects').
   Mitigation
@@ -36,52 +166,52 @@ enum InterventionStatus {
 }
 
 enum ProjectStatus {
-  # Operational :: @amelia TODO
+  # Operational :: Project is realising emissions reductions (e.g. equipment is inefficient/has been replaced).
   Operational
-  # Under development :: @amelia TODO
+  # Under development :: Project has not begun to realise emissions reductions but is being constructed or has been registered/approved/funded.
   UnderDevelopment
-  # Complete :: @amelia TODO
+  # Complete :: Project has ceased to realise emissions reductions.
   Complete
 }
 
 enum ValidationStatus {
-  # Not accepted :: @amelia TODO
+  # Not accepted :: ### This is something that is currently undefined by DFFE but that they will have to decide on
   NotAccepted
-  # Pending :: @amelia TODO
+  # Pending :: TODO
   Pending
-  # Accepted :: @amelia TODO
+  # Accepted :: TODO
   Accepted
 }
 
 enum FundingStatus {
-  # Not funded :: @amelia TODO
+  # Not funded :: The project manager is currently seeking funding or additional funding for the intervention
   NotFunded
-  # Partially funded :: @amelia TODO
+  # Partially funded :: The intervention currently has some funding
   PartiallyFunded
-  # Fully funded :: @amelia TODO
+  # Fully funded :: Funding is fully available for the entire life time of the intervention
   FullyFunded
 }
 
-enum BudgetRages {
-  # < R10k :: @amelia TODO
+enum BudgetRanges {
+  # < R10k
   R10KOrLess
-  # R10k - R50K :: @amelia TODO
+  # R10k - R50K
   R10kToR50k
-  # R50k - R100k :: @amelia TODO
+  # R50k - R100k
   R50kTo1000k
-  # R100k - R500k :: @amelia TODO
+  # R100k - R500k
   R100kToR500k
-  # R500k - R1m :: @amelia TODO
+  # R500k - R1m
   R500kToR1m
-  # R1m - R5m :: @amelia TODO
+  # R1m - R5m
   R1mToR5m
-  # R5m - R10m :: @amelia TODO
+  # R5m - R10m
   R5mToR10m
-  # R10m - R50m :: @amelia TODO
+  # R10m - R50m
   R10mToR50m
-  # R50m - R100m :: @amelia TODO
+  # R50m - R100m
   R50mToR100m
-  # > R100m :: @amelia TODO
+  # > R100m
   R100mOrMore
 }
 
@@ -106,7 +236,7 @@ input ProjectInput {
   description: String!
   # Project manager :: Who is in charge of managing this project?
   projectManager: String
-  # Project type :: @amelia TODO
+  # Project type :: Is this a research or applied project?
   projectType: ProjectType!
   # Intervention type :: What type of intervention does this project focus on?
   interventionType: InterventionType!
@@ -139,7 +269,7 @@ input ProjectInput {
   # Validation Comments :: Any validation feedback?
   validationComments: String
   # Estimated budget :: What is the estimated budget for this project?
-  estimatedBudget: BudgetRages!
+  estimatedBudget: BudgetRanges!
   # Budget (lower bound) :: What is the lower-bound of the estimated budget?
   budgetLower: Money
   # Budget (upper bound) :: What is the upper-bound of the estimated budget?
@@ -169,9 +299,9 @@ input MitigationInput {
   volMethodology: String
   #  Gold Standard :: Does this intervention produce carbon credits through the Gold Standard market?
   goldStandard: Boolean!
-  #  Voluntary Carbon Standard :: @amelia TODO
+  #  Verified Carbon Standard :: Does this intervention produce carbon credits through the Verified Carbon Standard market?
   vcs: Boolean!
-  # Other carbon programme :: Please list the name of the carbon programme.
+  # Other carbon programme :: Does this mitigation intervention produce carbon credits through another carbon programme?
   other: String!
   # Programme method :: Please describe the programme.
   otherDesc: String!
@@ -179,18 +309,18 @@ input MitigationInput {
   CDMProjectNumber: String!
 
   # Mitigation type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
-  # ProjectType: ProjectType!
+  # MitigationType: MitigationType!
 
   # Mitigation subtype :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
-  # ProjectSubType: ProjectSubType!
+  # MitigationSubType: MitigationSubType!
 
   # Host Sector (IPCC) :: Select the IPCC host sector that best describes your project.
   # HostSector: HostSector!
 
-  # Main SubSector :: Select the IPCC main subsector that best decribes you project.
+  # Main SubSector :: Select the IPCC main subsector that best describes you project.
   # HostMainSubSector: HostMainSubSector!
 
-  # SubSector :: Select the IPCC subsector that best decribes your project.
+  # SubSector :: Select the IPCC subsector that best describes your project.
   # HostSubSector: HostSubSector!
 
   # CDM Executive Board Status :: What is the CDM status of this project?

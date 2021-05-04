@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { context as authContext } from '../../../contexts/authentication'
+import { context as authContext } from '../../../contexts/authorization'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { gql, useQuery } from '@apollo/client'
@@ -7,9 +7,9 @@ import Loading from '../../../components/loading'
 import useTheme from '@material-ui/core/styles/useTheme'
 
 export default () => {
-  const isAuthenticated = useContext(authContext).authenticate()
+  const { isAdmin } = useContext(authContext)
 
-  if (!isAuthenticated) {
+  if (!isAdmin) {
     return null
   }
 

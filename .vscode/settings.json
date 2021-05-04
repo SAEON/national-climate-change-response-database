@@ -1,0 +1,6 @@
+{
+  "cSpell.words": [
+    "NCCRD"
+  ],
+  "eslint.workingDirectories": ["src/api", "src/client"]
+}

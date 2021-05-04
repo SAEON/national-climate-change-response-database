@@ -1,7 +1,7 @@
 export default [
   {
-    name: 'user',
-    description: 'Non-admin user',
+    name: 'dffe',
+    description: 'Non-privileged user from DFFE',
     permissions: [], // TODO
   },
   {

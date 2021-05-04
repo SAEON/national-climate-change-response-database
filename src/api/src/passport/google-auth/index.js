@@ -19,10 +19,7 @@ export default () => {
           callbackURL: NCCRD_API_GOOGLE_OAUTH_REDIRECT_ADDRESS,
         },
         async (accessToken, refreshToken, profile, cb) => {
-          const { Users, UserRoles } = await collections
-          const datascientistRoleId = (await UserRoles.find({ name: 'datascientist' }).toArray())[0]
-            ._id
-
+          const { Users } = await collections
           const { _json: googleProfile } = profile
 
           try {
@@ -42,7 +39,6 @@ export default () => {
                       google: Object.assign({ accessToken, modifiedAt: new Date() }, googleProfile),
                     },
                     $addToSet: {
-                      userRoles: googleProfile.hd === 'saeon.ac.za' ? datascientistRoleId : '',
                       emails: {
                         email: googleProfile.email,
                         verified: googleProfile.email_verified,
@@ -79,7 +75,6 @@ export default () => {
          * query param, then the result is 'undefined' as
          * a string
          */
-        console.log('hi there', ctx.request.query.redirect)
         const redirect = ctx.request.query.redirect
           ? ctx.request.query.redirect == 'undefined'
             ? `${NCCRD_API_ADDRESS}`

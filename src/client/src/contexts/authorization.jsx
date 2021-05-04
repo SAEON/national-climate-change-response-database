@@ -32,8 +32,8 @@ export default ({ children }) => {
       value={{
         applicationRoles,
         isAuthenticated: Boolean(userInfo),
-        isAdmin: adminRoleId && userRoles?.includes(adminRoleId),
-        isAuthorized: roles => {
+        isAdmin: Boolean(adminRoleId && userRoles?.includes(adminRoleId)),
+        isAuthorized: (...roles) => {
           if (!applicationRoles) return false
           const roleId = applicationRoles.find(({ name }) => roles.includes(name)).id
           return userRoles?.includes(roleId)

@@ -5,12 +5,9 @@ import {
   MONGO_DB_USERNAME,
   MONGO_DB_PASSWORD,
   NCCRD_API_NODE_ENV,
-  NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES,
 } from '../config.js'
 import _collections from './_collections.js'
 import _Logger from './_logger.js'
-import userRoles from './_user-roles.js'
-import userPermissions from './_user-permissions.js'
 import DataLoader from 'dataloader'
 import sift from 'sift'
 
@@ -72,61 +69,6 @@ await db.then(db =>
     )
   )
 )
-
-// Insert user permissions
-await db.then(db =>
-  Promise.all(
-    userPermissions.map(userPermission => {
-      const { name, ...other } = userPermission
-      db.collection(_collections.UserPermissions.name).findOneAndUpdate(
-        { name },
-        { $setOnInsert: { name }, $set: { ...other } },
-        { upsert: true }
-      )
-    })
-  )
-)
-
-// Insert user roles
-// TODO - also assign permissions
-await db.then(db =>
-  Promise.all(
-    userRoles.map(userRole => {
-      const { name, ...other } = userRole
-      db.collection(_collections.UserRoles.name).findOneAndUpdate(
-        { name },
-        { $setOnInsert: { name }, $set: { ...other } },
-        { upsert: true }
-      )
-    })
-  )
-)
-
-// Setup default admins
-await db
-  .then(db => db.collection(_collections.UserRoles.name).findOne({ name: 'admin' }))
-  .then(({ _id: adminRoleId }) =>
-    db.then(db =>
-      Promise.all(
-        NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',')
-          .filter(_ => _)
-          .map(email =>
-            db.collection(_collections.Users.name).findOneAndUpdate(
-              {
-                username: email,
-              },
-              {
-                $setOnInsert: { emails: [{ email, verified: true }], username: email },
-                $addToSet: {
-                  userRoles: adminRoleId,
-                },
-              },
-              { upsert: true }
-            )
-          )
-      )
-    )
-  )
 
 // Apply indices
 await db.then(db =>

@@ -8,13 +8,13 @@ type User {
   emailAddress: String!
 }
 
-type UserRole {
+type Role {
   id: ID!
   name: String!
   description: String
 }
 
-type UserPermission {
+type Permission {
   id: ID!
   name: String!
   description: String
@@ -362,8 +362,8 @@ type ControlledVocabulary {
 
 type Query {
   projects(ids: [ID!]): [Project]!
-  userRoles: [UserRole!]!
-  userPermissions: [UserPermission!]!
+  roles: [Role!]!
+  permissions: [Permission!]!
   controlledVocabulary(root: String!, tree: String!): ControlledVocabulary
   users: [User!]
 }

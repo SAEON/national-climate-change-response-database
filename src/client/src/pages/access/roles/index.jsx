@@ -8,8 +8,8 @@ export default () => {
   const theme = useTheme()
 
   const { error, loading, data } = useQuery(gql`
-    query userRoles {
-      userRoles {
+    query roles {
+      roles {
         id
       }
     }

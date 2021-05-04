@@ -19,7 +19,7 @@ export default () => {
     query users {
       users {
         id
-        username
+        emailAddress
       }
     }
   `)

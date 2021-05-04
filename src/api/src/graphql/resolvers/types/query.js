@@ -1,13 +1,13 @@
 import users from '../queries/users.js'
-import userRoles from '../queries/user-roles.js'
-import userPermissions from '../queries/user-permissions.js'
+import roles from '../queries/roles.js'
+import permissions from '../queries/permissions.js'
 import projects from '../queries/projects.js'
 import controlledVocabulary from '../queries/controlled-vocabulary.js'
 
 export default {
   users,
-  userRoles,
-  userPermissions,
+  roles,
+  permissions,
   projects,
   controlledVocabulary,
 }

@@ -8,11 +8,11 @@ export const context = createContext()
 
 export default ({ children }) => {
   const { userInfo } = useContext(authenticationContext)
-  const userRoles = userInfo?.userRoles
+  const roles = userInfo?.roles
 
   const { loading, data } = useQuery(gql`
-    query userRoles {
-      userRoles {
+    query roles {
+      roles {
         id
         name
         description
@@ -24,19 +24,21 @@ export default ({ children }) => {
     return <Loading />
   }
 
-  const applicationRoles = data?.userRoles
+  const applicationRoles = data?.roles
   const adminRoleId = applicationRoles && applicationRoles.find(({ name }) => name === 'admin').id
+
+  console.log(applicationRoles)
 
   return (
     <context.Provider
       value={{
         applicationRoles,
         isAuthenticated: Boolean(userInfo),
-        isAdmin: Boolean(adminRoleId && userRoles?.includes(adminRoleId)),
+        isAdmin: Boolean(adminRoleId && roles?.includes(adminRoleId)),
         isAuthorized: (...roles) => {
           if (!applicationRoles) return false
           const roleId = applicationRoles.find(({ name }) => roles.includes(name)).id
-          return userRoles?.includes(roleId)
+          return roles?.includes(roleId)
         },
       }}
     >

@@ -36,3 +36,13 @@ export const NCCRD_API_ALLOWED_ORIGINS =
   'http://localhost:3000,http://localhost:3001,http://localhost:8080'
 
 export const NCCRD_CLIENT_ID = process.env.NCCRD_CLIENT_ID || 'client.sess'
+
+export const MSSQL_USERNAME = process.env.MSSQL_USERNAME || 'sa'
+
+export const MSSQL_PASSWORD = process.env.MSSQL_PASSWORD || 'password!123#'
+
+export const MSSQL_HOSTNAME = process.env.MSSQL_HOSTNAME || 'localhost'
+
+export const MSSQL_DATABASE = process.env.MSSQL_DATABASE || 'nccrd'
+
+export const MSSQL_PORT = process.env.MSSQL_PORT || 1433

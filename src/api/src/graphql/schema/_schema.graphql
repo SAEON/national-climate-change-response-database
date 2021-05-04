@@ -5,7 +5,7 @@ scalar Money
 
 type User {
   id: ID!
-  username: String!
+  emailAddress: String!
 }
 
 type UserRole {

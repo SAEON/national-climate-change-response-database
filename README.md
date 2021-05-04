@@ -47,6 +47,19 @@ npm run install-dependencies
 ## Local development
 
 ```sh
+# Start a SQL Server instance (manually create the database)
+SQL Server
+docker run \
+--name sql-server \
+--restart always \
+-v /home/$USER:/host-mnt \
+-e 'ACCEPT_EULA=Y' \
+-e 'SA_PASSWORD=password!123#' \
+-e 'MSSQL_PID=Developer' \
+-p 1433:1433 \
+-d \
+mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+
 # Start a MongoDB server
 docker run --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:4.4.3
 

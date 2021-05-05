@@ -1,5 +1,4 @@
 export default {
-  id: async self => self._id,
   children: async (self, args, ctx) => {
     const { children = [], tree } = self
     const { findVocabulary } = ctx.mongo.dataFinders

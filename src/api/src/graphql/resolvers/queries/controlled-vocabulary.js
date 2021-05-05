@@ -1,6 +1,29 @@
 export default async (_, { root, tree }, ctx) => {
-  // const { findVocabulary } = ctx.mssql.dataFinders
-  const { findVocabulary } = ctx.mongo.dataFinders
-  const { trees, ...otherProps } = (await findVocabulary({ term: root, trees: tree }))[0] // eslint-disable-line
-  return Object.assign(otherProps, { tree })
+  const { query } = ctx.mssql
+
+  return (
+    await query(`
+    select
+    p.*,
+    children.id id
+    
+    from (
+      select
+      parent.id,
+      parent.term,
+      t.name tree
+      
+      from Vocabulary parent
+      join VocabularyXrefTree vxt on vxt.vocabularyId = parent.id
+      join VocabularyTrees t on t.id = vxt.vocabularyTreeId
+      
+      where
+      parent.term = '${root}'
+      and t.name = '${tree}'
+    ) p
+    join VocabularyXrefVocabulary vxv on vxv.parentId = p.id
+    join Vocabulary children on children.id = vxv.childId
+    
+    for json auto, without_array_wrapper`)
+  ).recordset[0]
 }

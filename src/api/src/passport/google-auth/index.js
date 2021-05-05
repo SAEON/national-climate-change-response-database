@@ -47,9 +47,9 @@ export default () => {
                 from Users u
                 join UserRoleXref roles on roles.userId = u.id
                 where googleId = '${googleProfile.sub}'
-                for json auto;
+                for json auto, without_array_wrapper;
               `)
-            ).recordset[0][0]
+            ).recordset[0]
 
             cb(null, user)
           } catch (error) {

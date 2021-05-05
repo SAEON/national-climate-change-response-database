@@ -1,127 +1,127 @@
 parent,term,tree
-,Hazard Family,Hazard
-Hazard Family,Biological,Hazard
-Hazard Family,Environmental degredation,Hazard
-Hazard Family,Man-made,Hazard
-Hazard Family,Natural ,Hazard
-Hazard Family,Other,Hazard
-Biological,Animal incidents,Hazard
-Biological,Epidemic in humans,Hazard
-Biological,Epizootics,Hazard
-Biological,Epidemic in plants,Hazard
-Biological,Insect infestation,Hazard
-Biological,Pandemics,Hazard
-Biological,Alien invasive plant infestation ,Hazard
-Environmental degredation,Biodiversity loss,Hazard
-Environmental degredation,Deforestation,Hazard
-Environmental degredation,Desertification,Hazard
-Environmental degredation,Erosion,Hazard
-Environmental degredation,Salinization,Hazard
-Environmental degredation,Wetland loss/ degradation,Hazard
-Man-made,"Leak, spill",Hazard
-Man-made,Pollution,Hazard
-Man-made,Technological,Hazard
-Man-made,Transportation accidents,Hazard
-Natural ,Climatological,Hazard
-Natural ,Extra-terrestrial,Hazard
-Natural ,Geophysical,Hazard
-Natural ,Hydrological,Hazard
-Natural ,Meteorological,Hazard
-Other,Social unrest,Hazard
-Biological,Animal incidents,Hazard
-Biological,Epidemic in humans ,Hazard
-Biological,Epizootics,Hazard
-Biological,Epidemic in plants,Hazard
-Biological,Insect infestation,Hazard
-Biological,Pandemics,Hazard
-Biological,Alien invasive plant infestation ,Hazard
-Environmental degredation,Biodiversity loss,Hazard
-Environmental degredation,Deforestation,Hazard
-Environmental degredation,Desertification,Hazard
-Environmental degredation,Erosion,Hazard
-Environmental degredation,Salinization,Hazard
-Environmental degredation,Wetland loss/ degradation,Hazard
-"Leak, spill",Chemical spill,Hazard
-"Leak, spill",Nuclear incident,Hazard
-"Leak, spill",Oil spill,Hazard
-"Leak, spill",Radiation contamination,Hazard
-Pollution,Water pollution,Hazard
-Pollution,Air pollution,Hazard
-Pollution,Terrestrial pollution,Hazard
-Technological,Fire,Hazard
-Technological,Industrial explosion,Hazard
-Technological,Mine disaster,Hazard
-Technological,Transportation infrastructure collapse,Hazard
-Technological,ICT and communication infrastructure collapse,Hazard
-Technological,Energy infrastructure collapse,Hazard
-Technological,Water and waste infrastructure collapse,Hazard
-Transportation accidents,Aviation accident,Hazard
-Transportation accidents,Rail accident,Hazard
-Transportation accidents,Road accident,Hazard
-Transportation accidents,Space accident ,Hazard
-Transportation accidents,Sea accident ,Hazard
-Climatological,Drought ,Hazard
-Climatological,Wildfire,Hazard
-Extra-terrestrial,Impact,Hazard
-Extra-terrestrial,Space weather,Hazard
-Geophysical,Earthquake,Hazard
-Geophysical,Mass movement by geological events (may overlap with landslide types),Hazard
-Geophysical,Geochemical hazards,Hazard
-Hydrological,Flood,Hazard
-Hydrological,Landslide,Hazard
-Hydrological,Wave action,Hazard
-Meteorological,Convective storm,Hazard
-Meteorological,Extratropical storm ,Hazard
-Meteorological,Extreme temperature,Hazard
-Meteorological,Fog,Hazard
-Meteorological,Tropical cyclone,Hazard
-Fire,Urban informal fire,Hazard
-Fire,Urban formal fire,Hazard
-Drought ,Agricultural drought,Hazard
-Drought ,Hydrological drought,Hazard
-Drought ,Meteorlogical drought,Hazard
-Wildfire,Veld fire,Hazard
-Wildfire,Indigenous forest fire,Hazard
-Wildfire,Plantation forest fire,Hazard
-Flood,Coastal flood,Hazard
-Flood,Flash flood,Hazard
-Flood,Riverine flood,Hazard
-Flood,Inland flood,Hazard
-Landslide,Debris avalanche ,Hazard
-Landslide,"Debris flow, mud flow, rock fall",Hazard
-Landslide,Subsidence,Hazard
-Wave action,Coastal erosion,Hazard
-Wave action,Shoreline change,Hazard
-Wave action,Storm surge,Hazard
-Convective storm,"Dust, sandstorm",Hazard
-Convective storm,Hail,Hazard
-Convective storm,Lightning,Hazard
-Convective storm,Rain,Hazard
-Convective storm,Sand,Hazard
-Convective storm,Snow,Hazard
-Convective storm,Tornado,Hazard
-Convective storm,Wind,Hazard
-Extreme temperature,Cold wave,Hazard
-Extreme temperature,Frost,Hazard
-Extreme temperature,Heat wave,Hazard
-Flood,Coastal flood,Hazard
-Flood,Flash flood,Hazard
-Flood,Riverine flood,Hazard
-Flood,Inland flood,Hazard
-Landslide,Debris avalanche ,Hazard
-Landslide,"Debris flow, mud flow, rock fall",Hazard
-Landslide,Subsidence,Hazard
-Wave action,Coastal erosion,Hazard
-Wave action,Shoreline change,Hazard
-Wave action,Storm surge,Hazard
-Convective storm,"Dust, sandstorm",Hazard
-Convective storm,Hail,Hazard
-Convective storm,Lightning,Hazard
-Convective storm,Rain,Hazard
-Convective storm,Sand,Hazard
-Convective storm,Snow,Hazard
-Convective storm,Tornado,Hazard
-Convective storm,Wind,Hazard
-Extreme temperature,Cold wave,Hazard
-Extreme temperature,Frost,Hazard
+,Hazard Family,hazards
+Hazard Family,Biological,hazards
+Hazard Family,Environmental degredation,hazards
+Hazard Family,Man-made,hazards
+Hazard Family,Natural ,hazards
+Hazard Family,Other,hazards
+Biological,Animal incidents,hazards
+Biological,Epidemic in humans,hazards
+Biological,Epizootics,hazards
+Biological,Epidemic in plants,hazards
+Biological,Insect infestation,hazards
+Biological,Pandemics,hazards
+Biological,Alien invasive plant infestation ,hazards
+Environmental degredation,Biodiversity loss,hazards
+Environmental degredation,Deforestation,hazards
+Environmental degredation,Desertification,hazards
+Environmental degredation,Erosion,hazards
+Environmental degredation,Salinization,hazards
+Environmental degredation,Wetland loss/ degradation,hazards
+Man-made,"Leak, spill",hazards
+Man-made,Pollution,hazards
+Man-made,Technological,hazards
+Man-made,Transportation accidents,hazards
+Natural ,Climatological,hazards
+Natural ,Extra-terrestrial,hazards
+Natural ,Geophysical,hazards
+Natural ,Hydrological,hazards
+Natural ,Meteorological,hazards
+Other,Social unrest,hazards
+Biological,Animal incidents,hazards
+Biological,Epidemic in humans ,hazards
+Biological,Epizootics,hazards
+Biological,Epidemic in plants,hazards
+Biological,Insect infestation,hazards
+Biological,Pandemics,hazards
+Biological,Alien invasive plant infestation ,hazards
+Environmental degredation,Biodiversity loss,hazards
+Environmental degredation,Deforestation,hazards
+Environmental degredation,Desertification,hazards
+Environmental degredation,Erosion,hazards
+Environmental degredation,Salinization,hazards
+Environmental degredation,Wetland loss/ degradation,hazards
+"Leak, spill",Chemical spill,hazards
+"Leak, spill",Nuclear incident,hazards
+"Leak, spill",Oil spill,hazards
+"Leak, spill",Radiation contamination,hazards
+Pollution,Water pollution,hazards
+Pollution,Air pollution,hazards
+Pollution,Terrestrial pollution,hazards
+Technological,Fire,hazards
+Technological,Industrial explosion,hazards
+Technological,Mine disaster,hazards
+Technological,Transportation infrastructure collapse,hazards
+Technological,ICT and communication infrastructure collapse,hazards
+Technological,Energy infrastructure collapse,hazards
+Technological,Water and waste infrastructure collapse,hazards
+Transportation accidents,Aviation accident,hazards
+Transportation accidents,Rail accident,hazards
+Transportation accidents,Road accident,hazards
+Transportation accidents,Space accident ,hazards
+Transportation accidents,Sea accident ,hazards
+Climatological,Drought ,hazards
+Climatological,Wildfire,hazards
+Extra-terrestrial,Impact,hazards
+Extra-terrestrial,Space weather,hazards
+Geophysical,Earthquake,hazards
+Geophysical,Mass movement by geological events (may overlap with landslide types),hazards
+Geophysical,Geochemical hazards,hazards
+Hydrological,Flood,hazards
+Hydrological,Landslide,hazards
+Hydrological,Wave action,hazards
+Meteorological,Convective storm,hazards
+Meteorological,Extratropical storm ,hazards
+Meteorological,Extreme temperature,hazards
+Meteorological,Fog,hazards
+Meteorological,Tropical cyclone,hazards
+Fire,Urban informal fire,hazards
+Fire,Urban formal fire,hazards
+Drought ,Agricultural drought,hazards
+Drought ,Hydrological drought,hazards
+Drought ,Meteorlogical drought,hazards
+Wildfire,Veld fire,hazards
+Wildfire,Indigenous forest fire,hazards
+Wildfire,Plantation forest fire,hazards
+Flood,Coastal flood,hazards
+Flood,Flash flood,hazards
+Flood,Riverine flood,hazards
+Flood,Inland flood,hazards
+Landslide,Debris avalanche ,hazards
+Landslide,"Debris flow, mud flow, rock fall",hazards
+Landslide,Subsidence,hazards
+Wave action,Coastal erosion,hazards
+Wave action,Shoreline change,hazards
+Wave action,Storm surge,hazards
+Convective storm,"Dust, sandstorm",hazards
+Convective storm,Hail,hazards
+Convective storm,Lightning,hazards
+Convective storm,Rain,hazards
+Convective storm,Sand,hazards
+Convective storm,Snow,hazards
+Convective storm,Tornado,hazards
+Convective storm,Wind,hazards
+Extreme temperature,Cold wave,hazards
+Extreme temperature,Frost,hazards
+Extreme temperature,Heat wave,hazards
+Flood,Coastal flood,hazards
+Flood,Flash flood,hazards
+Flood,Riverine flood,hazards
+Flood,Inland flood,hazards
+Landslide,Debris avalanche ,hazards
+Landslide,"Debris flow, mud flow, rock fall",hazards
+Landslide,Subsidence,hazards
+Wave action,Coastal erosion,hazards
+Wave action,Shoreline change,hazards
+Wave action,Storm surge,hazards
+Convective storm,"Dust, sandstorm",hazards
+Convective storm,Hail,hazards
+Convective storm,Lightning,hazards
+Convective storm,Rain,hazards
+Convective storm,Sand,hazards
+Convective storm,Snow,hazards
+Convective storm,Tornado,hazards
+Convective storm,Wind,hazards
+Extreme temperature,Cold wave,hazards
+Extreme temperature,Frost,hazards
 Extreme temperature,Heat wave,Hazard

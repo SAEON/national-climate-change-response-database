@@ -2,6 +2,7 @@ import { createReadStream } from 'fs'
 import { join } from 'path'
 import getCurrentDirectory from '../../../../lib/get-current-directory.js'
 import csv from 'csv'
+import { performance } from 'perf_hooks'
 const { parse } = csv
 
 const __dirname = getCurrentDirectory(import.meta)
@@ -9,15 +10,16 @@ const __dirname = getCurrentDirectory(import.meta)
 const VOCABULARIES = [
   'regions.csv',
   'hazards.csv',
-  'mitigation-sector.csv',
-  'mitigation-type.csv',
-  'sic-sector.csv',
+  'mitigation-sectors.csv',
+  'mitigation-types.csv',
+  'lead-sectors.csv',
 ]
 
 export default async (_, args, ctx) => {
-  const { Vocabulary } = await ctx.mongo.collections
+  const { query } = ctx.mssql
 
   try {
+    const t0 = performance.now()
     for (const VOCABULARY of VOCABULARIES) {
       console.info('Loading vocabulary', VOCABULARY, 'into database')
 
@@ -31,80 +33,69 @@ export default async (_, args, ctx) => {
         tree = tree.trim()
 
         /**
-         * Make sure that the term is in the
-         * database and includes a reference
-         * to this tree
+         * Make sure that the tree exists in the database
          */
-        const child = await Vocabulary.findOneAndUpdate(
-          { term },
-          {
-            $setOnInsert: {
-              term,
-              createdAt: new Date(),
-              createdBy: 'TODO',
-              children: [],
-            },
-            $set: {
-              modifiedAt: new Date(),
-              modifiedBy: 'TODO',
-            },
-            $addToSet: {
-              trees: tree,
-            },
-          },
-          {
-            returnOriginal: true,
-            upsert: true,
-          }
-        )
-
-        const childId = child.value?._id || child.lastErrorObject.upserted
+        await query(`
+          merge VocabularyTrees T
+          using (select '${tree}' name) S on T.name = S.name
+          when not matched then insert (name)
+          values ('${tree}');`)
 
         /**
-         * If parent is not defined, this is
-         * the root node - just return here
+         * Make sure that the terms (parent and child) exists in the database
          */
-        if (!parent) {
-          continue
-        }
+        await query(`
+          merge Vocabulary T
+          using (
+            select distinct *
+            from (
+              select '${term}' term
+              union
+              select '${parent}' term	
+            ) t
+            where term <> '' and term <> ''
+          ) S on T.term = S.term
+          when not matched then insert (term)
+          values (S.term);`)
 
         /**
-         * Make sure the parent is also a term
-         * in the database, that includes a
-         * reference to this term in the children
-         * array, and that the parent term also
-         * is associated with this tree.
-         *
-         * This just allows for rows in the CSV
-         * to be in any order (parent or child first)
+         * Make sure term is associated with this tree
          */
-        await Vocabulary.findOneAndUpdate(
-          { term: parent },
-          {
-            $setOnInsert: {
-              term: parent,
-              createdAt: new Date(),
-              createdBy: 'TODO',
-            },
-            $set: {
-              modifiedAt: new Date(),
-              modifiedBy: 'TODO',
-            },
-            $addToSet: {
-              trees: tree,
-              children: childId,
-            },
-          },
-          {
-            returnOriginal: false,
-            upsert: true,
-          }
-        )
+        await query(`
+          merge VocabularyXrefTree T
+          using (
+            select 
+              (select id from Vocabulary where term = '${term}') vocabularyId,
+              (select id from VocabularyTrees where name = '${tree}') vocabularyTreeId
+          ) S on S.vocabularyId = T.vocabularyId and S.vocabularyTreeId = T.vocabularyTreeId
+          when not matched then insert (vocabularyId, vocabularyTreeId)
+          values (S.vocabularyId, S.vocabularyTreeId);`)
+
+        /**
+         * Insert this tree link
+         */
+        await query(`
+          merge VocabularyXrefVocabulary T
+          using (
+            select * from (
+              select
+                (select id from Vocabulary where term = '${parent}') parentId,
+                (select id from Vocabulary where term = '${term}') childId,
+                (select id from VocabularyTrees where name = '${tree}') vocabularyTreeId
+            ) t where parentId <> ''
+          ) S on
+          S.parentId = T.parentId
+          and S.childId = T.childId
+          and S.vocabularyTreeId = T.vocabularyTreeId
+          when not matched then insert (parentId, childId, vocabularyTreeId)
+          values (S.parentId, S.childId, S.vocabularyTreeId);`)
       }
     }
 
-    console.info('Vocabularies loaded!')
-    return { okay: true }
+    const t1 = performance.now()
+    const runtime = `${Math.round((t1 - t0) / 1000, 2)} seconds`
+    console.info('Vocabularies loaded!', runtime)
+    return { okay: true, runtime }
   } catch (error) {
     return {
       okay: false,

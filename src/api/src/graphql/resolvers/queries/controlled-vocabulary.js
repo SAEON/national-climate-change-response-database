@@ -24,8 +24,8 @@ export default async (_, { root, tree }, ctx) => {
         parent.term = '${root}'
         and t.name = '${tree}'
       ) p
-      join VocabularyXrefVocabulary vxv on vxv.parentId = p.id and vxv.vocabularyTreeId = p.treeId
-      join Vocabulary children on children.id = vxv.childId
+      left outer join VocabularyXrefVocabulary vxv on vxv.parentId = p.id and vxv.vocabularyTreeId = p.treeId
+      left outer join Vocabulary children on children.id = vxv.childId
       
       for json auto, without_array_wrapper`)
   ).recordset[0]

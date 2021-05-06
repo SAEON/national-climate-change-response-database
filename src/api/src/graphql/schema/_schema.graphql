@@ -150,94 +150,11 @@ type Permission {
 # AR-AMS0005
 # }
 
-enum InterventionType {
-  # Mitigation :: Mitigation interventions are defined as ' actions aimed at reducing the extent or likelihood of global climate change through the reduction or displacement of greenhouse gas emissions (GHGs) (e.g. through emission reduction, energy efficiency or renewable energy projects').
-  Mitigation
-  # Adaptation :: Adaptation interventions are defined as 'actions preventing or minimising the negative effects and taking advantage of positive effects of global warming in addition to actions which would have occurred naturally or as a matter of course.
-  Adaptation
-  # Cross cutting :: Crosscutting interventions contain elements of both climate change adaptation and mitigation.
-  CrossCutting
-}
-
-enum InterventionStatus {
-  # Planned :: The concept for a project has been put forward but is not currently underway and may not specifically have funding.
-  Planned
-  # Adopted (Approved) :: The project has moved from the concept stage and specifications for implementation have been established. This project may have been assigned funding.
-  Adopted
-  # In Progress :: Infrastructure for the project is in the process of being established and the project has assigned funding.
-  InProgress
-  # Implemented (Operational) :: The project infrastructure has been completed and any remaining funding is now directed towards maintenance.
-  Implemented
-  # Published :: The project has been completed and the outcome described in professional documentation
-  Published
-  # Expired :: The project infrastructure is no longer useful or sustainable without additional funding or funding for the project has run out.
-  Expired
-  # Discontinued :: The project has been abandoned.
-  Discontinued
-}
-
-enum ProjectStatus {
-  # Operational :: Project is realising emissions reductions (e.g. equipment is inefficient/has been replaced).
-  Operational
-  # Under development :: Project has not begun to realise emissions reductions but is being constructed or has been registered/approved/funded.
-  UnderDevelopment
-  # Complete :: Project has ceased to realise emissions reductions.
-  Complete
-}
-
-enum ValidationStatus {
-  # Not accepted :: ### This is something that is currently undefined by DFFE but that they will have to decide on
-  NotAccepted
-  # Pending :: TODO
-  Pending
-  # Accepted :: TODO
-  Accepted
-}
-
-enum FundingStatus {
-  # Not funded :: The project manager is currently seeking funding or additional funding for the intervention
-  NotFunded
-  # Partially funded :: The intervention currently has some funding
-  PartiallyFunded
-  # Fully funded :: Funding is fully available for the entire life time of the intervention
-  FullyFunded
-}
-
-enum BudgetRanges {
-  # < R10k
-  R10KOrLess
-  # R10k - R50K
-  R10kToR50k
-  # R50k - R100k
-  R50kTo1000k
-  # R100k - R500k
-  R100kToR500k
-  # R500k - R1m
-  R500kToR1m
-  # R1m - R5m
-  R1mToR5m
-  # R5m - R10m
-  R5mToR10m
-  # R10m - R50m
-  R10mToR50m
-  # R50m - R100m
-  R50mToR100m
-  # > R100m
-  R100mOrMore
-}
-
-enum HostSector {
-  # Thing 1 :: @Amelia TODO
-  thing1
-  # Thing 2 :: @Amelia TODO
-  thing2
-}
-
-enum ProjectType {
-  # Research :: Research actions are studies conducted in South Africa intended to test the effectiveness or feasibility of some aspect of climate change response.
-  Research
-  # Applied :: Applied actions are actions carried out at scale based on previously tested and researched work.
-  Applied
+input ControlledVocabularyInput {
+  # Tree name :: The name of the tree this term is part of
+  tree: String!
+  # Term :: Vocabulary term
+  term: String!
 }
 
 input ProjectInput {
@@ -248,18 +165,20 @@ input ProjectInput {
   # Project manager :: Who is in charge of managing this project?
   projectManager: String
   # Project type :: Is this a research or applied project?
-  projectType: ProjectType!
+  projectType: ControlledVocabularyInput!
   # Intervention type :: What type of intervention does this project focus on?
-  interventionType: InterventionType!
+  interventionType: ControlledVocabularyInput!
   # Project status :: TODO Amelia
-  projectStatus: ProjectStatus!
+  projectStatus: ControlledVocabularyInput!
   # Funding status :: TODO Amelia
-  fundingStatus: FundingStatus!
+  fundingStatus: ControlledVocabularyInput!
   # Lead agent :: Lead contact agent
   leadAgent: String
+  # Host sector :: @amelia TODO
+  hostSector: ControlledVocabularyInput!
+  # Sub-host sector :: @amelia TODO
+  hostSubSector: ControlledVocabularyInput
   # Host organization :: Who is the main hosting organization?
-  # hostSector: TODO - from tree
-  # hostSubSector: TODO - from tree
   hostOrganisation: String
   # Host partner :: Who is the main hosting partner?
   hostPartner: String
@@ -278,11 +197,11 @@ input ProjectInput {
   # Project end date :: Round to the beginning or end of the year
   endDate: DateTime
   # Validation status :: Has this project been validated?
-  validationStatus: ValidationStatus!
+  validationStatus: ControlledVocabularyInput!
   # Validation Comments :: Any validation feedback?
   validationComments: String
   # Estimated budget :: What is the estimated budget for this project?
-  estimatedBudget: BudgetRanges!
+  estimatedBudget: ControlledVocabularyInput!
   # Budget (lower bound) :: What is the lower-bound of the estimated budget?
   budgetLower: Money
   # Budget (upper bound) :: What is the upper-bound of the estimated budget?
@@ -340,7 +259,7 @@ input MitigationInput {
   # ExecutiveStatus: ExecutiveStatus!
 
   # Intervention status :: @amelia TODO
-  status: InterventionStatus!
+  status: ControlledVocabularyInput!
 
   # CDMStatus: CDMStatus!
 

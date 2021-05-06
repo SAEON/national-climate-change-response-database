@@ -73,6 +73,6 @@ export default ({ field, value, updateValue, multiline }) => {
   }
 
   throw new Error(
-    `The GQL-type-to-form-input binder encountered an unknown GraphQL type - ${gqlType}`
+    `The GQL-type-to-form-input binder encountered an unknown GraphQL type - ${gqlType}. For field ${name}`
   )
 }

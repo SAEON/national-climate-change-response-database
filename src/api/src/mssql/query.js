@@ -34,7 +34,7 @@ export default async query =>
         abortTransactionOnError: true,
       },
     })
-    .then(pool => pool.query(query))
+    .then(pool => pool.request({ multiple: true }).query(query))
     .catch(error => {
       console.error(error)
       throw error

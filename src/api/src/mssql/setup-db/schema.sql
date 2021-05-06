@@ -47,20 +47,24 @@ create table UserRoleXref (
 
 -- create table Vocabulary (
 --   id bigint not null identity primary key,
---   term nvarchar(255) not null unique
+--   term nvarchar(255) not null unique,
+--   index ix_vocablulary_terms nonclustered (term)
 -- );
 
 -- create table VocabularyTrees (
 --   id bigint not null identity primary key,
 --   name nvarchar(255) not null unique,
---   description nvarchar(4000)
+--   description nvarchar(4000),
+--   index ix_vocablularyTres_name nonclustered (name)
 -- );
 
 -- create table VocabularyXrefTree (
 --   id bigint not null identity primary key,
 --   vocabularyId bigint not null foreign key references Vocabulary (id),
 --   vocabularyTreeId bigint not null foreign key references VocabularyTrees (id),
---   unique (vocabularyId, vocabularyTreeId)
+--   unique (vocabularyId, vocabularyTreeId),
+--   index ix_VocabularyXrefTree_vocabularyId nonclustered (vocabularyId),
+--   index ix_VocabularyXrefTree_vocabularyTreeId nonclustered (vocabularyTreeId)
 -- );
 
 -- create table VocabularyXrefVocabulary (
@@ -68,5 +72,8 @@ create table UserRoleXref (
 --   parentId bigint not null foreign key references Vocabulary (id),
 --   childId bigint not null foreign key references Vocabulary (id),
 --   vocabularyTreeId bigint not null foreign key references VocabularyTrees (id),
---   unique (parentId, childId, vocabularyTreeId)
+--   unique (parentId, childId, vocabularyTreeId),
+--   index ix_VocabularyXrefVocabulary_parentId nonclustered (parentId),
+--   index ix_VocabularyXrefVocabulary_childId nonclustered (childId),
+--   index ix_VocabularyXrefVocabulary_vocabularyTreeId nonclustered (vocabularyTreeId)
 -- );

@@ -4,6 +4,8 @@ export const makeDataFinders = () => {
   const findVocabulary = _findVocabulary()
 
   return {
-    findVocabulary: ({ term, tree }) => findVocabulary({ term, tree }),
+    findVocabulary: ({ ids, tree }) => {
+      return findVocabulary.load({ ids, tree })
+    },
   }
 }

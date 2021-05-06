@@ -1,9 +1,19 @@
 export default {
   children: async (self, args, ctx) => {
     const { children = [], tree } = self
-    const { findVocabulary } = ctx.mongo.dataFinders
+    const { findVocabulary } = ctx.mssql.dataFinders
+
+    const items = (
+      await findVocabulary({
+        ids: children,
+        tree,
+      })
+    )[0]
+
     return (
-      await findVocabulary({ _id: { $in: children }, trees: tree })
-    ).map(({ trees, ...otherProps }) => Object.assign(otherProps, { tree })) //eslint-disable-line
+      items?.map(({ children, ...record } = {}) => {
+        return Object.assign(record, { children: children?.map(({ id }) => id) || [] })
+      }) || []
+    )
   },
 }

@@ -50,30 +50,30 @@ export default () => {
             >
               <div style={{ padding: theme.spacing(2) }}>
                 {mitigationFields.map(field => {
-                  const { name, description, type } = field
+                  const { name: fieldName, description, type } = field
                   const [placeholder, helperText] =
                     description?.split('::').map(s => s.trim()) || []
                   const { name: inputType, ofType } = type
                   const gqlType = inputType || ofType.name
                   const isRequired = !inputType
-                  const value = form[name]
+                  const value = form[fieldName]
 
                   /**
                    * Controlled vocabulary
                    */
-                  if (name === 'hostSector') {
+                  if (fieldName === 'hostSector') {
                     return (
                       <ControlledVocabularyInput
-                        key={name}
+                        key={fieldName}
                         tree="mitigationSectors"
                         root="Mitigation sector"
-                        name={name}
+                        name={fieldName}
                         value={value}
                         error={isRequired && !value}
                         onChange={val =>
                           updateMitigationForm(
                             {
-                              [name]: val,
+                              [fieldName]: val,
                               hostSubSectorPrimary: undefined,
                               hostSubSectorSecondary: undefined,
                             },
@@ -84,20 +84,20 @@ export default () => {
                         helperText={helperText}
                       />
                     )
-                  } else if (name === 'hostSubSectorPrimary') {
+                  } else if (fieldName === 'hostSubSectorPrimary') {
                     if (form['hostSector']) {
                       return (
                         <ControlledVocabularyInput
-                          key={name}
+                          key={fieldName}
                           tree="mitigationSectors"
                           root={form['hostSector']}
-                          name={name}
+                          name={fieldName}
                           value={value}
                           error={isRequired && !value}
                           isRequired={isRequired}
                           onChange={val =>
                             updateMitigationForm(
-                              { [name]: val, hostSubSectorSecondary: undefined },
+                              { [fieldName]: val, hostSubSectorSecondary: undefined },
                               i
                             )
                           }
@@ -108,18 +108,18 @@ export default () => {
                     } else {
                       return null
                     }
-                  } else if (name === 'hostSubSectorSecondary') {
+                  } else if (fieldName === 'hostSubSectorSecondary') {
                     if (form['hostSubSectorPrimary']) {
                       return (
                         <ControlledVocabularyInput
-                          key={name}
+                          key={fieldName}
                           tree="mitigationSectors"
                           root={form['hostSubSectorPrimary']}
-                          name={name}
+                          name={fieldName}
                           value={value}
                           error={isRequired && !value}
                           isRequired={isRequired}
-                          onChange={val => updateMitigationForm({ [name]: val }, i)}
+                          onChange={val => updateMitigationForm({ [fieldName]: val }, i)}
                           placeholder={placeholder}
                           helperText={helperText}
                         />
@@ -132,16 +132,16 @@ export default () => {
                   /**
                    * Controlled vocabulary
                    */
-                  if (name === 'cdmMethodology') {
+                  if (fieldName === 'cdmMethodology') {
                     return (
                       <ControlledVocabularyInput
-                        key={name}
+                        key={fieldName}
                         tree="cdmMethodology"
                         root="CDM methodology"
-                        name={name}
+                        name={fieldName}
                         value={value}
                         error={isRequired && !value}
-                        onChange={val => updateMitigationForm({ [name]: val }, i)}
+                        onChange={val => updateMitigationForm({ [fieldName]: val }, i)}
                         placeholder={placeholder}
                         helperText={helperText}
                       />
@@ -151,16 +151,16 @@ export default () => {
                   /**
                    * Controlled vocabulary
                    */
-                  if (name === 'cdmExecutiveStatus') {
+                  if (fieldName === 'cdmExecutiveStatus') {
                     return (
                       <ControlledVocabularyInput
-                        key={name}
+                        key={fieldName}
                         tree="executiveStatus"
                         root="Executive status"
-                        name={name}
+                        name={fieldName}
                         value={value}
                         error={isRequired && !value}
-                        onChange={val => updateMitigationForm({ [name]: val }, i)}
+                        onChange={val => updateMitigationForm({ [fieldName]: val }, i)}
                         placeholder={placeholder}
                         helperText={helperText}
                       />
@@ -170,16 +170,16 @@ export default () => {
                   /**
                    * Controlled vocabulary
                    */
-                  if (name === 'interventionStatus') {
+                  if (fieldName === 'interventionStatus') {
                     return (
                       <ControlledVocabularyInput
-                        key={name}
+                        key={fieldName}
                         tree="interventionStatus"
                         root="Intervention status"
-                        name={name}
+                        name={fieldName}
                         value={value}
                         error={isRequired && !value}
-                        onChange={val => updateMitigationForm({ [name]: val }, i)}
+                        onChange={val => updateMitigationForm({ [fieldName]: val }, i)}
                         placeholder={placeholder}
                         helperText={helperText}
                       />
@@ -189,34 +189,37 @@ export default () => {
                   /**
                    * Controlled vocabulary
                    */
-                  if (name === 'mitigationType') {
+                  if (fieldName === 'mitigationType') {
                     return (
                       <ControlledVocabularyInput
-                        key={name}
+                        key={fieldName}
                         tree="mitigationTypes"
                         root="Type of Mitigation"
-                        name={name}
+                        name={fieldName}
                         value={value}
                         error={isRequired && !value}
                         onChange={val => {
-                          updateMitigationForm({ [name]: val, mitigationSubType: undefined }, i)
+                          updateMitigationForm(
+                            { [fieldName]: val, mitigationSubType: undefined },
+                            i
+                          )
                         }}
                         placeholder={placeholder}
                         helperText={helperText}
                       />
                     )
-                  } else if (name === 'mitigationSubType') {
+                  } else if (fieldName === 'mitigationSubType') {
                     if (form['mitigationType']) {
                       return (
                         <ControlledVocabularyInput
-                          key={name}
+                          key={fieldName}
                           tree="mitigationTypes"
                           root={form['mitigationType']}
-                          name={name}
+                          name={fieldName}
                           value={value}
                           error={isRequired && !value}
                           isRequired={isRequired}
-                          onChange={val => updateMitigationForm({ [name]: val }, i)}
+                          onChange={val => updateMitigationForm({ [fieldName]: val }, i)}
                           placeholder={placeholder}
                           helperText={helperText}
                         />
@@ -230,7 +233,7 @@ export default () => {
                    * Simple E-num lists
                    */
                   if (basicEnumFields.includes(gqlType)) {
-                    const value = form[name]
+                    const value = form[fieldName]
                     const enumValues = (type.enumValues || type.ofType.enumValues).map(
                       ({ name, description }) => {
                         return { name, description }
@@ -238,25 +241,25 @@ export default () => {
                     )
                     return (
                       <EnumField
-                        key={name}
+                        key={fieldName}
                         name={placeholder}
                         placeholder={placeholder}
                         helperText={helperText}
                         error={isRequired && !value}
-                        onChange={e => updateMitigationForm({ [name]: e.target.value }, i)}
+                        onChange={e => updateMitigationForm({ [fieldName]: e.target.value }, i)}
                         options={enumValues}
-                        value={form[name] || enumValues[0].name}
+                        value={form[fieldName] || enumValues[0].name}
                       />
                     )
                   }
 
                   return (
                     <GqlBoundFormInput
-                      key={name}
+                      key={fieldName}
                       field={field}
                       value={value || ''}
-                      updateValue={val => updateMitigationForm({ [name]: val }, i)}
-                      multiline={multilineFields.includes(name)}
+                      updateValue={val => updateMitigationForm({ [fieldName]: val }, i)}
+                      multiline={multilineFields.includes(fieldName)}
                     />
                   )
                 })}
@@ -267,6 +270,7 @@ export default () => {
       })}
       <div style={{ display: 'flex' }}>
         <Button
+          disableElevation
           variant="contained"
           onClick={addMitigationForm}
           endIcon={<PlusIcon />}

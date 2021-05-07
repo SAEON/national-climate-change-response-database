@@ -1,8 +1,27 @@
+# https://docs.google.com/spreadsheets/d/1elnulijv7HmTQMHraUGTxC7FNfJBuh6M-0E-xx54_x8/edit#gid=0
 input AdaptationInput {
   # Adaptation title :: This is for reference purposes
   title: String!
   # Description :: Short description of this adaptation component
   description: String
+  # Adaptation sector :: @amelia TODO
+  adaptationSector: ControlledVocabularyInput!
+  # Adaptation purpose :: @amelia TODO
+  adaptationPurpose: ControlledVocabularyInput!
+  # Start date :: @amelia TODO
+  startDate: DateTime
+  # End date :: @amelia TODO
+  endDate: DateTime
+  # Hazard Family :: @amelia TODO
+  hazardFamily: ControlledVocabularyInput!
+  # Hazard Subfamily :: @amelia TODO
+  hazardSubFamily: ControlledVocabularyInput
+  # Hazard :: @amelia TODO
+  hazard: ControlledVocabularyInput
+  # Sub hazard :: @amelia TODO
+  subHazard: ControlledVocabularyInput
+  # GPS point location(s) :: @amelia TODO
+  xy: [WKT_4326!]
 }
 
 type Adaptation {

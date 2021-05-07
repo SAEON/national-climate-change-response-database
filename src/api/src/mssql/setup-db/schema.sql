@@ -48,6 +48,7 @@ create table UserRoleXref (
 -- create table Vocabulary (
 --   id bigint not null identity primary key,
 --   term nvarchar(255) not null unique,
+--   description nvarchar(4000) null,
 --   index ix_vocablulary_terms nonclustered (term)
 -- );
 

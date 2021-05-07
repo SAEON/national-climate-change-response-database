@@ -23,26 +23,26 @@ export default () => {
       <CardHeader title={'Enter project details'} />
       <CardContent>
         {projectFields.map(field => {
-          const { name, description, type } = field
+          const { name: fieldName, description, type } = field
           const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
           const { name: inputType, ofType } = type
           const gqlType = inputType || ofType.name
           const isRequired = !inputType
-          const value = projectForm[name]
+          const value = projectForm[fieldName]
 
           /**
            * Controlled vocabulary
            */
-          if (name === 'validationStatus') {
+          if (fieldName === 'validationStatus') {
             return (
               <ControlledVocabularyInput
-                key={name}
+                key={fieldName}
                 tree="projectValidationStatus"
                 root="Validation Status"
-                name={name}
+                name={fieldName}
                 value={value}
                 error={isRequired && !value}
-                onChange={val => updateProjectForm({ [name]: val })}
+                onChange={val => updateProjectForm({ [fieldName]: val })}
                 placeholder={placeholder}
                 helperText={helperText}
               />
@@ -52,34 +52,34 @@ export default () => {
           /**
            * Controlled vocabulary
            */
-          if (name === 'hostSector') {
+          if (fieldName === 'hostSector') {
             return (
               <ControlledVocabularyInput
-                key={name}
+                key={fieldName}
                 tree="hostSectors"
                 root="Host sector"
-                name={name}
+                name={fieldName}
                 value={value}
                 error={isRequired && !value}
                 onChange={val => {
-                  updateProjectForm({ [name]: val, hostSubSector: undefined })
+                  updateProjectForm({ [fieldName]: val, hostSubSector: undefined })
                 }}
                 placeholder={placeholder}
                 helperText={helperText}
               />
             )
-          } else if (name === 'hostSubSector') {
+          } else if (fieldName === 'hostSubSector') {
             if (projectForm['hostSector']) {
               return (
                 <ControlledVocabularyInput
-                  key={name}
+                  key={fieldName}
                   tree="hostSectors"
                   root={projectForm['hostSector']}
-                  name={name}
+                  name={fieldName}
                   value={value}
                   isRequired={isRequired}
                   error={isRequired && !value}
-                  onChange={val => updateProjectForm({ [name]: val })}
+                  onChange={val => updateProjectForm({ [fieldName]: val })}
                   placeholder={placeholder}
                   helperText={helperText}
                 />
@@ -92,16 +92,16 @@ export default () => {
           /**
            * Controlled vocabulary
            */
-          if (name === 'interventionType') {
+          if (fieldName === 'interventionType') {
             return (
               <ControlledVocabularyInput
-                key={name}
+                key={fieldName}
                 tree="interventionTypes"
                 root="Intervention type"
-                name={name}
+                name={fieldName}
                 value={value}
                 error={isRequired && !value}
-                onChange={val => updateProjectForm({ [name]: val })}
+                onChange={val => updateProjectForm({ [fieldName]: val })}
                 placeholder={placeholder}
                 helperText={helperText}
               />
@@ -111,16 +111,16 @@ export default () => {
           /**
            * Controlled vocabulary
            */
-          if (name === 'projectType') {
+          if (fieldName === 'projectType') {
             return (
               <ControlledVocabularyInput
-                key={name}
+                key={fieldName}
                 tree="projectTypes"
                 root="Project type"
-                name={name}
+                name={fieldName}
                 value={value}
                 error={isRequired && !value}
-                onChange={val => updateProjectForm({ [name]: val })}
+                onChange={val => updateProjectForm({ [fieldName]: val })}
                 placeholder={placeholder}
                 helperText={helperText}
               />
@@ -130,16 +130,16 @@ export default () => {
           /**
            * Controlled vocabulary
            */
-          if (name === 'projectStatus') {
+          if (fieldName === 'projectStatus') {
             return (
               <ControlledVocabularyInput
-                key={name}
+                key={fieldName}
                 tree="projectStatus"
                 root="Project status"
-                name={name}
+                name={fieldName}
                 value={value}
                 error={isRequired && !value}
-                onChange={val => updateProjectForm({ [name]: val })}
+                onChange={val => updateProjectForm({ [fieldName]: val })}
                 placeholder={placeholder}
                 helperText={helperText}
               />
@@ -149,16 +149,16 @@ export default () => {
           /**
            * Controlled vocabulary
            */
-          if (name === 'estimatedBudget') {
+          if (fieldName === 'estimatedBudget') {
             return (
               <ControlledVocabularyInput
-                key={name}
+                key={fieldName}
                 tree="budgetRanges"
                 root="Estimated budget"
-                name={name}
+                name={fieldName}
                 value={value}
                 error={isRequired && !value}
-                onChange={val => updateProjectForm({ [name]: val })}
+                onChange={val => updateProjectForm({ [fieldName]: val })}
                 placeholder={placeholder}
                 helperText={helperText}
               />
@@ -168,16 +168,16 @@ export default () => {
           /**
            * Controlled vocabulary
            */
-          if (name === 'fundingStatus') {
+          if (fieldName === 'fundingStatus') {
             return (
               <ControlledVocabularyInput
-                key={name}
+                key={fieldName}
                 tree="projectFunding"
                 root="Funding status"
-                name={name}
+                name={fieldName}
                 value={value}
                 error={isRequired && !value}
-                onChange={val => updateProjectForm({ [name]: val })}
+                onChange={val => updateProjectForm({ [fieldName]: val })}
                 placeholder={placeholder}
                 helperText={helperText}
               />
@@ -195,12 +195,12 @@ export default () => {
             )
             return (
               <EnumField
-                key={name}
+                key={fieldName}
                 name={placeholder}
                 placeholder={placeholder}
                 helperText={helperText}
                 error={isRequired && !value}
-                onChange={e => updateProjectForm({ [name]: e.target.value })}
+                onChange={e => updateProjectForm({ [fieldName]: e.target.value })}
                 options={enumValues}
                 value={value || enumValues[0].name}
               />
@@ -209,11 +209,11 @@ export default () => {
 
           return (
             <GqlBoundFormInput
-              key={name}
+              key={fieldName}
               field={field}
               value={value || ''}
-              updateValue={val => updateProjectForm({ [name]: val })}
-              multiline={multilineFields.includes(name)}
+              updateValue={val => updateProjectForm({ [fieldName]: val })}
+              multiline={multilineFields.includes(fieldName)}
             />
           )
         })}

@@ -3,4 +3,14 @@ input ResearchInput {
   title: String!
   # Description :: Short description of this research component
   description: String
+  # Associated mitigation component :: @TODO
+  associatedMitigationComponent: String
+  # Research type :: @TODO
+  researchType: String
+  # Target audience :: @TODO
+  targetAudience: String
+  # author :: @TODO
+  author: String
+  # paper :: @TODO
+  paper: String
 }

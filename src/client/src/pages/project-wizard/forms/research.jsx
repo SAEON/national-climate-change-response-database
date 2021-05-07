@@ -1,5 +1,10 @@
 import { useContext } from 'react'
-import { GqlBoundFormInput, context as formContext, EnumField } from '../gql-form-binder'
+import {
+  GqlBoundFormInput,
+  context as formContext,
+  EnumField,
+  ControlledVocabularyInput,
+} from '../gql-form-binder'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import PlusIcon from 'mdi-react/PlusIcon'
@@ -44,7 +49,7 @@ export default () => {
           >
             <div style={{ padding: theme.spacing(2) }}>
               {researchFields.map(field => {
-                const { name, description, type } = field
+                const { name: fieldName, description, type } = field
                 const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
                 const { name: inputType, ofType } = type
                 const gqlType = inputType || ofType.name
@@ -54,7 +59,7 @@ export default () => {
                  * Simple E-num lists
                  */
                 if (basicEnumFields.includes(gqlType)) {
-                  const value = form[name]
+                  const value = form[fieldName]
                   const enumValues = (type.enumValues || type.ofType.enumValues).map(
                     ({ name, description }) => {
                       return { name, description }
@@ -62,25 +67,25 @@ export default () => {
                   )
                   return (
                     <EnumField
-                      key={name}
+                      key={fieldName}
                       name={placeholder}
                       placeholder={placeholder}
                       helperText={helperText}
                       error={isRequired && !value}
-                      onChange={e => updateResearchForm({ [name]: e.target.value }, i)}
+                      onChange={e => updateResearchForm({ [fieldName]: e.target.value }, i)}
                       options={enumValues}
-                      value={form[name] || enumValues[0].name} // TODO - default should be elsewhere
+                      value={form[fieldName] || enumValues[0].name} // TODO - default should be elsewhere
                     />
                   )
                 }
 
                 return (
                   <GqlBoundFormInput
-                    key={name}
+                    key={fieldName}
                     field={field}
-                    value={form[name] || ''}
-                    updateValue={val => updateResearchForm({ [name]: val }, i)}
-                    multiline={multilineFields.includes(name)}
+                    value={form[fieldName] || ''}
+                    updateValue={val => updateResearchForm({ [fieldName]: val }, i)}
+                    multiline={multilineFields.includes(fieldName)}
                   />
                 )
               })}
@@ -90,6 +95,7 @@ export default () => {
       ))}
       <div style={{ display: 'flex' }}>
         <Button
+          disableElevation
           variant="contained"
           onClick={addResearchForm}
           endIcon={<PlusIcon />}

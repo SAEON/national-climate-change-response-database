@@ -1,5 +1,5 @@
 input MitigationInput {
-  # Title :: Title of the specific mitigation intervention if there is more than one for a project.
+  # Title :: Title of the specific mitigation intervention.
   title: String!
   # Carbon credit :: Does this project produce carbon credits?
   carbonCredit: Boolean!
@@ -18,7 +18,7 @@ input MitigationInput {
   # Mitigation type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
   mitigationType: ControlledVocabularyInput!
   # Mitigation subtype :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
-  mitigationSubType: ControlledVocabularyInput!
+  mitigationSubType: ControlledVocabularyInput
   # Host Sector (IPCC) :: Select the IPCC host sector that best describes your project.
   hostSector: ControlledVocabularyInput!
   # Main SubSector :: Select the IPCC main subsector that best describes you project.

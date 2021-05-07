@@ -39,10 +39,8 @@ export default () =>
         for json auto`)
 
       /**
-       * Rows are wrapped in 2D array - so take the first item in this wrapper
-       *
-       * (without_array_wrapper seems to cause a parsing error in the mssql
-       * library for this query)
+       * Rows are wrapped in 2D array,
+       * take the first item in this wrapper
        **/
       const rows = results.recordset[0]
 

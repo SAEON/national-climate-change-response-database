@@ -44,7 +44,7 @@ export default ({ children }) => {
 
   const updateMitigationForm = useCallback((obj, i) => {
     setMitigationForms(forms =>
-      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, obj) : form))
+      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, { ...obj }) : form))
     )
   }, [])
 

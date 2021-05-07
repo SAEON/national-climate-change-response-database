@@ -202,7 +202,7 @@ export default () => {
                 error={isRequired && !value}
                 onChange={e => updateProjectForm({ [name]: e.target.value })}
                 options={enumValues}
-                value={value || enumValues[0].name} // TODO - default should be elsewhere
+                value={value || enumValues[0].name}
               />
             )
           }

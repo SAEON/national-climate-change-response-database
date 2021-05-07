@@ -3,6 +3,7 @@ import {
   GqlBoundFormInput,
   context as formContext,
   ControlledVocabularyInput,
+  EnumField,
 } from '../gql-form-binder'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -13,6 +14,8 @@ import FormIcon from 'mdi-react/PencilIcon'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 
 const multilineFields = ['description', 'volMethodology']
+
+const basicEnumFields = []
 
 export default () => {
   const theme = useTheme()
@@ -54,7 +57,6 @@ export default () => {
                   const gqlType = inputType || ofType.name
                   const isRequired = !inputType
                   const value = form[name]
-                  console.log('form', form)
 
                   /**
                    * Controlled vocabulary
@@ -68,9 +70,33 @@ export default () => {
                         name={name}
                         value={value}
                         error={isRequired && !value}
-                        onChange={val => updateMitigationForm({ [name]: val })}
+                        onChange={val => updateMitigationForm({ [name]: val }, i)}
                         placeholder={placeholder}
                         helperText={helperText}
+                      />
+                    )
+                  }
+
+                  /**
+                   * Simple E-num lists
+                   */
+                  if (basicEnumFields.includes(gqlType)) {
+                    const value = form[name]
+                    const enumValues = (type.enumValues || type.ofType.enumValues).map(
+                      ({ name, description }) => {
+                        return { name, description }
+                      }
+                    )
+                    return (
+                      <EnumField
+                        key={name}
+                        name={placeholder}
+                        placeholder={placeholder}
+                        helperText={helperText}
+                        error={isRequired && !value}
+                        onChange={e => updateMitigationForm({ [name]: e.target.value }, i)}
+                        options={enumValues}
+                        value={form[name] || enumValues[0].name}
                       />
                     )
                   }

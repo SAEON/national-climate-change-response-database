@@ -37,5 +37,4 @@ input MitigationInput {
 
 type Mitigation {
   id: ID!
-  title: String
 }

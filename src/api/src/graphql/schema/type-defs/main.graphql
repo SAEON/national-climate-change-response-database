@@ -44,12 +44,14 @@ type Query {
 
 type Mutation {
   updateVocabulary: JSON!
+  # Create a project
   createProject(
     projectForm: ProjectInput!
     mitigationForms: [MitigationInput!]
     adaptationForms: [AdaptationInput!]
     researchForms: [ResearchInput!]
   ): Project!
+  # Update a project
   updateProject(
     projectForm: ProjectInput!
     mitigationForms: [MitigationInput!]

@@ -4,3 +4,7 @@ input AdaptationInput {
   # Description :: Short description of this adaptation component
   description: String
 }
+
+type Adaptation {
+  id: ID!
+}

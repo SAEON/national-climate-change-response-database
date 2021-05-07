@@ -51,5 +51,4 @@ input ProjectInput {
 
 type Project {
   id: ID!
-  title: String
 }

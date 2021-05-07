@@ -1,0 +1,6 @@
+input ResearchInput {
+  # Research item title :: This is for reference purposes
+  title: String!
+  # Description :: Short description of this research component
+  description: String
+}

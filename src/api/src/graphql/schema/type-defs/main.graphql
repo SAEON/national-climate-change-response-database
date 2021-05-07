@@ -1,0 +1,59 @@
+scalar DateTime
+scalar JSON
+scalar Void
+scalar Money
+
+type User {
+  id: ID!
+  emailAddress: String!
+}
+
+type Role {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type Permission {
+  id: ID!
+  name: String!
+  description: String
+}
+
+input ControlledVocabularyInput {
+  tree: String!
+  term: String!
+}
+
+type ControlledVocabulary {
+  id: ID!
+  term: String!
+  children: [ControlledVocabulary!]
+  tree: String!
+}
+
+type Query {
+  projects(ids: [ID!]): [Project]!
+  roles: [Role!]!
+  permissions: [Permission!]!
+  controlledVocabulary(root: String!, tree: String!): ControlledVocabulary
+  users: [User!]
+}
+
+# type Subscription {}
+
+type Mutation {
+  updateVocabulary: JSON!
+  createProject(
+    projectForm: ProjectInput!
+    mitigationForms: [MitigationInput!]
+    adaptationForms: [AdaptationInput!]
+    researchForms: [ResearchInput!]
+  ): Project!
+  updateProject(
+    projectForm: ProjectInput!
+    mitigationForms: [MitigationInput!]
+    adaptationForms: [AdaptationInput!]
+    researchForms: [ResearchInput!]
+  ): Project!
+}

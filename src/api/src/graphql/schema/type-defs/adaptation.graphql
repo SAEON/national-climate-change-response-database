@@ -1,0 +1,6 @@
+input AdaptationInput {
+  # Adaptation title :: This is for reference purposes
+  title: String!
+  # Description :: Short description of this adaptation component
+  description: String
+}

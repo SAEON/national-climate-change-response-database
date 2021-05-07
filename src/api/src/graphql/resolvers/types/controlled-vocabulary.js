@@ -3,12 +3,10 @@ export default {
     const { children = [], tree } = self
     const { findVocabulary } = ctx.mssql.dataFinders
 
-    const items = (
-      await findVocabulary({
-        ids: children,
-        tree,
-      })
-    )[0]
+    const items = await findVocabulary({
+      ids: children,
+      tree,
+    })
 
     return (
       items?.map(({ children, ...record } = {}) => {

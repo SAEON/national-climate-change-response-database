@@ -20,136 +20,6 @@ type Permission {
   description: String
 }
 
-# enum CDMMethodoloy {
-# AM0001
-# AM0007
-# AM0009
-# AM0014
-# AM0017
-# AM0018
-# AM0019
-# AM0020
-# AM0021
-# AM0023
-# AM0024
-# AM0025
-# AM0026
-# AM0027
-# AM0028
-# AM0029
-# AM0030
-# AM0031
-# AM0034
-# AM0035
-# AM0036
-# AM0037
-# AM0038
-# AM0039
-# AM0041
-# AM0042
-# AM0043
-# AM0044
-# AM0045
-# AM0046
-# AM0047
-# AM0048
-# AM0049
-# AM0050
-# AM0051
-# AM0052
-# AM0053
-# AM0054
-# AM0055
-# AM0056
-# AM0057
-# AM0058
-# AM0059
-# AM0060
-# AM0061
-# AM0062
-# AM0063
-# AM0064
-# AM0065
-# AM0066
-# AM0067
-# AM0068
-# AM0069
-# AM0070
-# AM0071
-# AM0072
-# AM0073
-# AM0074
-# ACM0001
-# ACM0002
-# ACM0003
-# ACM0005
-# ACM0006
-# ACM0007
-# ACM0008
-# ACM0009
-# ACM0010
-# ACM0011
-# ACM0012
-# ACM0013
-# ACM0014
-# ACM0015
-# AR-AM0001
-# AR-AM0002
-# AR-AM0004
-# AR-AM0005
-# AR-AM0006
-# AR-AM0007
-# AR-AM0008
-# AR-AM0009
-# AR-AM0010
-# AR-ACM0001
-# AMS-I.A.
-# AMS-I.B.
-# AMS-I.C.
-# AMS-I.D.
-# AMS-I.E.
-# AMS-II.A.
-# AMS-II.B.
-# AMS-II.C.
-# AMS-II.D.
-# AMS-II.E.
-# AMS-II.F.
-# AMS-II.G.
-# AMS-II.H.
-# AMS-II.I.
-# AMS-II.J.
-# AMS-III.A.
-# AMS-III.B.
-# AMS-III.C.
-# AMS-III.D.
-# AMS-III.E.
-# AMS-III.F.
-# AMS-III.G.
-# AMS-III.H.
-# AMS-III.I.
-# AMS-III.J.
-# AMS-III.K.
-# AMS-III.L.
-# AMS-III.M.
-# AMS-III.N.
-# AMS-III.O.
-# AMS-III.P
-# AMS-III.Q
-# AMS-III.R.
-# AMS-III.S.
-# AMS-III.T.
-# AMS-III.U
-# AMS-III.V
-# AMS-III.W
-# AMS-III.X.
-# AMS-III.Y.
-# AR-AMS0001
-# AR-AMS0002
-# AR-AMS0003
-# AR-AMS0004
-# AR-AMS0005
-# }
-
 input ControlledVocabularyInput {
   # Tree name :: The name of the tree this term is part of
   tree: String!
@@ -208,20 +78,6 @@ input ProjectInput {
   budgetUpper: Money
 }
 
-input AdaptationInput {
-  # Adaptation title :: This is for reference purposes
-  title: String!
-  # Description :: Short description of this adaptation component
-  description: String
-}
-
-input ResearchInput {
-  # Research item title :: This is for reference purposes
-  title: String!
-  # Description :: Short description of this research component
-  description: String
-}
-
 input MitigationInput {
   # Title :: Title of the specific mitigation intervention if there is more than one for a project.
   title: String!
@@ -234,37 +90,43 @@ input MitigationInput {
   #  Verified Carbon Standard :: Does this intervention produce carbon credits through the Verified Carbon Standard market?
   vcs: Boolean!
   # Other carbon programme :: Does this mitigation intervention produce carbon credits through another carbon programme?
-  other: String!
+  otherCarbonCreditStandard: Boolean!
   # Programme method :: Please describe the programme.
-  otherDesc: String!
+  otherCarbonCreditStandardDescription: String!
   # CDM project number :: The code a project is given by the CDM once it is accepted.
   CDMProjectNumber: String!
-
   # Mitigation type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
-  # MitigationType: MitigationType!
-
+  mitigationType: ControlledVocabularyInput!
   # Mitigation subtype :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
-  # MitigationSubType: MitigationSubType!
-
+  mitigationSubType: ControlledVocabularyInput!
   # Host Sector (IPCC) :: Select the IPCC host sector that best describes your project.
-  # HostSector: HostSector!
-
+  hostSector: ControlledVocabularyInput!
   # Main SubSector :: Select the IPCC main subsector that best describes you project.
-  # HostMainSubSector: HostMainSubSector!
-
-  # SubSector :: Select the IPCC subsector that best describes your project.
-  # HostSubSector: HostSubSector!
-
-  # CDM Executive Board Status :: What is the CDM status of this project?
-  # ExecutiveStatus: ExecutiveStatus!
-
+  hostSubSectorPrimary: ControlledVocabularyInput
+  # Secondary SubSector :: Select the IPCC subsector that best describes your project.
+  hostSubSectorSecondary: ControlledVocabularyInput
   # Intervention status :: @amelia TODO
-  status: ControlledVocabularyInput!
-
-  # CDMStatus: CDMStatus!
-
+  interventionStatus: ControlledVocabularyInput!
   # CDM methodology :: Please select the CDM method used in your project.
-  # CDMMethodoloy: CDMMethodoloy!
+  cdmMethodology: ControlledVocabularyInput!
+  # CDM Executive Board Status :: What is the CDM status of this project?
+  cdmExecutiveStatus: ControlledVocabularyInput
+  # CDM status :: TODO - I'm not sure what this field is
+  CDMStatus: String
+}
+
+input AdaptationInput {
+  # Adaptation title :: This is for reference purposes
+  title: String!
+  # Description :: Short description of this adaptation component
+  description: String
+}
+
+input ResearchInput {
+  # Research item title :: This is for reference purposes
+  title: String!
+  # Description :: Short description of this research component
+  description: String
 }
 
 type Project {

@@ -61,7 +61,116 @@ export default () => {
                   /**
                    * Controlled vocabulary
                    */
-                  if (name === 'status') {
+                  if (name === 'hostSector') {
+                    return (
+                      <ControlledVocabularyInput
+                        key={name}
+                        tree="mitigationSectors"
+                        root="Mitigation sector"
+                        name={name}
+                        value={value}
+                        error={isRequired && !value}
+                        onChange={val =>
+                          updateMitigationForm(
+                            {
+                              [name]: val,
+                              hostSubSectorPrimary: undefined,
+                              hostSubSectorSecondary: undefined,
+                            },
+                            i
+                          )
+                        }
+                        placeholder={placeholder}
+                        helperText={helperText}
+                      />
+                    )
+                  } else if (name === 'hostSubSectorPrimary') {
+                    if (form['hostSector']) {
+                      return (
+                        <ControlledVocabularyInput
+                          key={name}
+                          tree="mitigationSectors"
+                          root={form['hostSector']}
+                          name={name}
+                          value={value}
+                          error={isRequired && !value}
+                          isRequired={isRequired}
+                          onChange={val =>
+                            updateMitigationForm(
+                              { [name]: val, hostSubSectorSecondary: undefined },
+                              i
+                            )
+                          }
+                          placeholder={placeholder}
+                          helperText={helperText}
+                        />
+                      )
+                    } else {
+                      return null
+                    }
+                  } else if (name === 'hostSubSectorSecondary') {
+                    if (form['hostSubSectorPrimary']) {
+                      return (
+                        <ControlledVocabularyInput
+                          key={name}
+                          tree="mitigationSectors"
+                          root={form['hostSubSectorPrimary']}
+                          name={name}
+                          value={value}
+                          error={isRequired && !value}
+                          isRequired={isRequired}
+                          onChange={val => updateMitigationForm({ [name]: val }, i)}
+                          placeholder={placeholder}
+                          helperText={helperText}
+                        />
+                      )
+                    } else {
+                      return null
+                    }
+                  }
+
+                  /**
+                   * Controlled vocabulary
+                   */
+                  if (name === 'cdmMethodology') {
+                    return (
+                      <ControlledVocabularyInput
+                        key={name}
+                        tree="cdmMethodology"
+                        root="CDM methodology"
+                        name={name}
+                        value={value}
+                        error={isRequired && !value}
+                        onChange={val => updateMitigationForm({ [name]: val }, i)}
+                        placeholder={placeholder}
+                        helperText={helperText}
+                      />
+                    )
+                  }
+
+                  /**
+                   * Controlled vocabulary
+                   */
+                  if (name === 'cdmExecutiveStatus') {
+                    return (
+                      <ControlledVocabularyInput
+                        key={name}
+                        tree="executiveStatus"
+                        root="Executive status"
+                        name={name}
+                        value={value}
+                        error={isRequired && !value}
+                        onChange={val => updateMitigationForm({ [name]: val }, i)}
+                        placeholder={placeholder}
+                        helperText={helperText}
+                      />
+                    )
+                  }
+
+                  /**
+                   * Controlled vocabulary
+                   */
+                  if (name === 'interventionStatus') {
                     return (
                       <ControlledVocabularyInput
                         key={name}
@@ -75,6 +184,46 @@ export default () => {
                         helperText={helperText}
                       />
                     )
+                  }
+
+                  /**
+                   * Controlled vocabulary
+                   */
+                  if (name === 'mitigationType') {
+                    return (
+                      <ControlledVocabularyInput
+                        key={name}
+                        tree="mitigationTypes"
+                        root="Type of Mitigation"
+                        name={name}
+                        value={value}
+                        error={isRequired && !value}
+                        onChange={val => {
+                          updateMitigationForm({ [name]: val, mitigationSubType: undefined }, i)
+                        }}
+                        placeholder={placeholder}
+                        helperText={helperText}
+                      />
+                    )
+                  } else if (name === 'mitigationSubType') {
+                    if (form['mitigationType']) {
+                      return (
+                        <ControlledVocabularyInput
+                          key={name}
+                          tree="mitigationTypes"
+                          root={form['mitigationType']}
+                          name={name}
+                          value={value}
+                          error={isRequired && !value}
+                          isRequired={isRequired}
+                          onChange={val => updateMitigationForm({ [name]: val }, i)}
+                          placeholder={placeholder}
+                          helperText={helperText}
+                        />
+                      )
+                    } else {
+                      return null
+                    }
                   }
 
                   /**

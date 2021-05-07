@@ -1,9 +1,9 @@
 parent,term,tree
-,hostSector,mitigationSectors
-hostSector,Energy,mitigationSectors
-hostSector,Industrial Processes and Product Use,mitigationSectors
-hostSector,Agriculture Forestry and Other Land Use,mitigationSectors
-hostSector,Waste,mitigationSectors
+,Mitigation sector,mitigationSectors
+Mitigation sector,Energy,mitigationSectors
+Mitigation sector,Industrial Processes and Product Use,mitigationSectors
+Mitigation sector,Agriculture Forestry and Other Land Use,mitigationSectors
+Mitigation sector,Waste,mitigationSectors
 Energy,Energy Industries,mitigationSectors
 Energy,Manufacturing Industries and Construction,mitigationSectors
 Energy,Transport,mitigationSectors

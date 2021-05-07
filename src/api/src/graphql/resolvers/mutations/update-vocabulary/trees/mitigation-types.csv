@@ -1,30 +1,30 @@
 parent,term,tree
-,typeOfProject,mitigationTypes
-typeOfProject,Afforestation,mitigationTypes
-typeOfProject,Agriculture,mitigationTypes
-typeOfProject,Biomass Energy,mitigationTypes
-typeOfProject,Biogas,mitigationTypes
-typeOfProject,Cement,mitigationTypes
-typeOfProject,Coal Bed Mine Methane,mitigationTypes
-typeOfProject,EE Households,mitigationTypes
-typeOfProject,EE Industry,mitigationTypes
-typeOfProject,EE Own Generation,mitigationTypes
-typeOfProject,EE Service,mitigationTypes
-typeOfProject,EE Supply Side,mitigationTypes
-typeOfProject,Energy Distribution,mitigationTypes
-typeOfProject,Fossil Fuel Switch,mitigationTypes
-typeOfProject,Fugitive Gases,mitigationTypes
-typeOfProject,Geothermal,mitigationTypes
-typeOfProject,HFCs,mitigationTypes
-typeOfProject,Hydro,mitigationTypes
-typeOfProject,Landfill Gas,mitigationTypes
-typeOfProject,N2O,mitigationTypes
-typeOfProject,PFCs,mitigationTypes
-typeOfProject,Reforestation,mitigationTypes
-typeOfProject,Solar,mitigationTypes
-typeOfProject,Tidal,mitigationTypes
-typeOfProject,Transport,mitigationTypes
-typeOfProject,Wind,mitigationTypes
+,Type of Mitigation,mitigationTypes
+Type of Mitigation,Afforestation,mitigationTypes
+Type of Mitigation,Agriculture,mitigationTypes
+Type of Mitigation,Biomass Energy,mitigationTypes
+Type of Mitigation,Biogas,mitigationTypes
+Type of Mitigation,Cement,mitigationTypes
+Type of Mitigation,Coal Bed Mine Methane,mitigationTypes
+Type of Mitigation,EE Households,mitigationTypes
+Type of Mitigation,EE Industry,mitigationTypes
+Type of Mitigation,EE Own Generation,mitigationTypes
+Type of Mitigation,EE Service,mitigationTypes
+Type of Mitigation,EE Supply Side,mitigationTypes
+Type of Mitigation,Energy Distribution,mitigationTypes
+Type of Mitigation,Fossil Fuel Switch,mitigationTypes
+Type of Mitigation,Fugitive Gases,mitigationTypes
+Type of Mitigation,Geothermal,mitigationTypes
+Type of Mitigation,HFCs,mitigationTypes
+Type of Mitigation,Hydro,mitigationTypes
+Type of Mitigation,Landfill Gas,mitigationTypes
+Type of Mitigation,N2O,mitigationTypes
+Type of Mitigation,PFCs,mitigationTypes
+Type of Mitigation,Reforestation,mitigationTypes
+Type of Mitigation,Solar,mitigationTypes
+Type of Mitigation,Tidal,mitigationTypes
+Type of Mitigation,Transport,mitigationTypes
+Type of Mitigation,Wind,mitigationTypes
 Biogas,Biogas Flaring,mitigationTypes
 Biogas,Biogas Power,mitigationTypes
 Biomass Energy,Agricultural residues: Mustard crop,mitigationTypes

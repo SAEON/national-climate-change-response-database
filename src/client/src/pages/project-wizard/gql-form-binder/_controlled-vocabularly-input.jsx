@@ -59,6 +59,10 @@ export default ({
 
   const { children: options } = data.controlledVocabulary
 
+  if (!options.length) {
+    return null
+  }
+
   return (
     <Fade in={Boolean(data)} key="data-in">
       <TextField

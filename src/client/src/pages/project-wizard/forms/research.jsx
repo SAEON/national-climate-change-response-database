@@ -1,10 +1,5 @@
 import { useContext } from 'react'
-import {
-  GqlBoundFormInput,
-  context as formContext,
-  EnumField,
-  ControlledVocabularyInput,
-} from '../gql-form-binder'
+import { GqlBoundFormInput, context as formContext, EnumField } from '../gql-form-binder'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import PlusIcon from 'mdi-react/PlusIcon'

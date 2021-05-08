@@ -11,10 +11,31 @@ input ProjectInput {
   interventionType: ControlledVocabularyInput!
   # Project status :: TODO Amelia
   projectStatus: ControlledVocabularyInput!
+  # Link :: Is there a URI that is associated with this project?
+  link: String
+  # Project start date :: Round to the beginning or end of the year
+  startDate: DateTime
+  # Project end date :: Round to the beginning or end of the year
+  endDate: DateTime
+
+  # Validation status :: Has this project been validated?
+  validationStatus: ControlledVocabularyInput!
+  # Validation Comments :: Any validation feedback?
+  validationComments: String
+
   # Funding status :: TODO Amelia
   fundingStatus: ControlledVocabularyInput!
-  # Lead agent :: Lead contact agent
-  leadAgent: String
+  # Funding organization :: Who is the main funding organization?
+  fundingOrganisation: String
+  # Funding partner :: Who is the main funding partner
+  fundingPartner: String
+  # Estimated budget :: What is the estimated budget for this project?
+  estimatedBudget: ControlledVocabularyInput!
+  # Budget (lower bound) :: What is the lower-bound of the estimated budget?
+  budgetLower: Money
+  # Budget (upper bound) :: What is the upper-bound of the estimated budget?
+  budgetUpper: Money
+
   # Host sector :: @amelia TODO
   hostSector: ControlledVocabularyInput!
   # Sub-host sector :: @amelia TODO
@@ -23,30 +44,12 @@ input ProjectInput {
   hostOrganisation: String
   # Host partner :: Who is the main hosting partner?
   hostPartner: String
-  # Funding organization :: Who is the main funding organization?
-  fundingOrganisation: String
-  # Funding partner :: Who is the main funding partner
-  fundingPartner: String
   # Alternative contact :: Who else can people contact?
   alternativeContact: String
   # Alternative contact email :: Contact details of the alternative contact
   alternativeContactEmail: String
-  # Link :: Is there a URI that is associated with this project?
-  link: String
-  # Project start date :: Round to the beginning or end of the year
-  startDate: DateTime
-  # Project end date :: Round to the beginning or end of the year
-  endDate: DateTime
-  # Validation status :: Has this project been validated?
-  validationStatus: ControlledVocabularyInput!
-  # Validation Comments :: Any validation feedback?
-  validationComments: String
-  # Estimated budget :: What is the estimated budget for this project?
-  estimatedBudget: ControlledVocabularyInput!
-  # Budget (lower bound) :: What is the lower-bound of the estimated budget?
-  budgetLower: Money
-  # Budget (upper bound) :: What is the upper-bound of the estimated budget?
-  budgetUpper: Money
+  # Lead agent :: Lead contact agent
+  leadAgent: String
 }
 
 type Project {

@@ -57,6 +57,7 @@
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.7",
     "sass-loader": "^11.0.1",
+    "sift": "^13.5.3",
     "style-loader": "^2.0.0",
     "subscriptions-transport-ws": "^0.9.18",
     "typeface-roboto": "1.1.13",

@@ -4,11 +4,11 @@ import {
   context as formContext,
   ControlledVocabularyInput,
   EnumField,
-} from '../gql-form-binder'
+} from '../../gql-form-binder'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import PlusIcon from 'mdi-react/PlusIcon'
-import Collapse from '../../../components/collapse'
+import Collapse from '../../../../components/collapse'
 import useTheme from '@material-ui/core/styles/useTheme'
 import FormIcon from 'mdi-react/PencilIcon'
 import DeleteIcon from 'mdi-react/DeleteIcon'

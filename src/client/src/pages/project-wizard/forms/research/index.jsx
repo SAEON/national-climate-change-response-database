@@ -7,6 +7,7 @@ import Collapse from '../../../../components/collapse'
 import useTheme from '@material-ui/core/styles/useTheme'
 import FormIcon from 'mdi-react/PencilIcon'
 import DeleteIcon from 'mdi-react/DeleteIcon'
+import RenderFields from './_render-fields'
 
 const multilineFields = ['description']
 

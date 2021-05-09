@@ -11,6 +11,11 @@ export default () => {
     <ContentNav
       navItems={[
         {
+          primaryText: 'Submit',
+          secondaryText: 'Submit project(s)',
+          Icon: AddProjectIcon,
+        },
+        {
           primaryText: 'Projects',
           secondaryText: 'View and edit projects',
           Icon: ViewProjectsIcon,
@@ -20,19 +25,14 @@ export default () => {
           secondaryText: 'Review project submissions',
           Icon: ReviewIcon,
         },
-        {
-          primaryText: 'Submit',
-          secondaryText: 'Submit project(s)',
-          Icon: AddProjectIcon,
-        },
       ]}
     >
       {({ activeIndex }) => {
         return (
           <>
-            {activeIndex === 0 && <Projects key={'view-projects'} />}
-            {activeIndex === 1 && <ReviewSubmissions key={'review-project-submissions'} />}
-            {activeIndex === 2 && <SubmitProject key={'submit-project'} />}
+            {activeIndex === 0 && <SubmitProject key={'submit-project'} />}
+            {activeIndex === 1 && <Projects key={'view-projects'} />}
+            {activeIndex === 2 && <ReviewSubmissions key={'review-project-submissions'} />}
           </>
         )
       }}

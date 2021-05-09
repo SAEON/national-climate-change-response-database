@@ -8,7 +8,7 @@ const Compose = memo(({ fields }) => {
       RenderField={RenderField}
       fields={fields}
       sections={{
-        'Project information': [
+        'Project details': [
           'title',
           'description',
           'projectManager',

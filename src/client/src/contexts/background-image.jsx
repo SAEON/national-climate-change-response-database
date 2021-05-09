@@ -7,6 +7,10 @@ import { isIE } from 'react-device-detect'
  * image is displayed throughout the application. This
  * is not yet fully implemented - current the background
  * is chosen at random.
+ *
+ * NOTE there is currently a Material-UI bug that means
+ * form controls will jump when a select is chosen: https://github.com/mui-org/material-ui/issues/17353
+ * when using background cover
  */
 
 const getBackgroundImagePath = () => {
@@ -31,7 +35,8 @@ export default ({ children }) => {
             bottom: 0,
             left: 0,
             right: 0,
-            backgroundSize: 'cover',
+            backgroundSize: 'auto',
+            backgroundPosition: 'left',
             backgroundImage: getBackgroundImagePath(),
             zIndex: -1,
             backgroundAttachment: 'fixed',

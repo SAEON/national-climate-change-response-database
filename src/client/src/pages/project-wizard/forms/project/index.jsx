@@ -7,7 +7,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import RenderField from './_render-field'
 import sift from 'sift'
 
-const Render = ({ title, fields, style = {} }) => {
+const RenderSection = ({ title, fields, style = {} }) => {
   const theme = useTheme()
 
   return (
@@ -71,7 +71,7 @@ const Compose = memo(({ fields }) => {
   return (
     <>
       {/* Basic fields */}
-      <Render
+      <RenderSection
         title="Project information"
         fields={fields.filter(
           sift({
@@ -83,7 +83,7 @@ const Compose = memo(({ fields }) => {
       />
 
       {/* Basic fields */}
-      <Render
+      <RenderSection
         style={{ marginTop: theme.spacing(2) }}
         title="Validation status"
         fields={fields.filter(
@@ -96,7 +96,7 @@ const Compose = memo(({ fields }) => {
       />
 
       {/* Funding fields */}
-      <Render
+      <RenderSection
         style={{ marginTop: theme.spacing(2) }}
         title="Funding information"
         fields={fields.filter(
@@ -109,7 +109,7 @@ const Compose = memo(({ fields }) => {
       />
 
       {/* Host fields */}
-      <Render
+      <RenderSection
         style={{ marginTop: theme.spacing(2) }}
         title="Host information"
         fields={fields.filter(

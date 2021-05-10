@@ -34,7 +34,10 @@ export default memo(
    * to context (otherwise there is a lag when
    * typing).
    *
-   * Don't re-render unless unmounted
+   * Don't re-render unless unmounted or the error
+   * state changes
    */
-  () => true
+  ({ error: a }, { error: b }) => {
+    return a === b
+  }
 )

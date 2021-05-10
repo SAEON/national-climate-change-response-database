@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState, useCallback, useMemo } from 'react'
+import { createContext, useState, useCallback, useMemo } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../components/loading'
 import Fade from '@material-ui/core/Fade'

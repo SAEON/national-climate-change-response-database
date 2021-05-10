@@ -2,14 +2,11 @@ import { useContext } from 'react'
 import {
   GqlBoundFormInput,
   context as formContext,
-  EnumField,
   ControlledVocabularyInput,
   LocationsInput,
 } from '../../gql-form-binder'
 
 const multilineFields = ['description']
-
-const basicEnumFields = []
 
 export default ({ field, i }) => {
   const { updateAdaptationForm, adaptationForms } = useContext(formContext)
@@ -148,28 +145,6 @@ export default ({ field, i }) => {
         onChange={val => updateAdaptationForm({ [fieldName]: val }, i)}
         placeholder={placeholder}
         helperText={helperText}
-      />
-    )
-  }
-
-  /**
-   * Simple E-num lists
-   */
-  if (basicEnumFields.includes(gqlType)) {
-    const enumValues = (type.enumValues || type.ofType.enumValues).map(({ name, description }) => {
-      return { name, description }
-    })
-    return (
-      <EnumField
-        i={i}
-        key={fieldName}
-        name={placeholder}
-        placeholder={placeholder}
-        helperText={helperText}
-        error={isRequired && !value}
-        onChange={e => updateAdaptationForm({ [fieldName]: e.target.value }, i)}
-        options={enumValues}
-        value={form[fieldName] || enumValues[0].name} // TODO - default should be elsewhere
       />
     )
   }

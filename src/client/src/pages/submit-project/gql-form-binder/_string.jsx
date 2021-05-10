@@ -1,42 +1,42 @@
-import { useMemo } from 'react'
+import { useMemo, memo } from 'react'
 import TextField from '@material-ui/core/TextField'
 import QuickForm from '../../../components/quick-form'
 import debounce from '../../../lib/debounce'
 
-export default ({
-  name,
-  placeholder,
-  helperText,
-  multiline,
-  rows,
-  error,
-  setValue,
-  value,
-  i = 0,
-}) => {
-  const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
+export default memo(
+  ({ name, placeholder, helperText, multiline, rows, error, setValue, value, i = 0 }) => {
+    const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
 
-  return (
-    <QuickForm effect={effect} value={value}>
-      {(update, { value }) => {
-        return (
-          <TextField
-            autoComplete="off"
-            onChange={e => update({ value: e.target.value })}
-            value={value}
-            error={error}
-            id={`${name}-${i}`}
-            label={name}
-            placeholder={placeholder}
-            helperText={helperText}
-            multiline={multiline}
-            rows={rows}
-            fullWidth
-            variant="outlined"
-            margin="normal"
-          />
-        )
-      }}
-    </QuickForm>
-  )
-}
+    return (
+      <QuickForm effect={effect} value={value}>
+        {(update, { value }) => {
+          return (
+            <TextField
+              autoComplete="off"
+              onChange={e => update({ value: e.target.value })}
+              value={value}
+              error={error}
+              id={`${name}-${i}`}
+              label={name}
+              placeholder={placeholder}
+              helperText={helperText}
+              multiline={multiline}
+              rows={rows}
+              fullWidth
+              variant="outlined"
+              margin="normal"
+            />
+          )
+        }}
+      </QuickForm>
+    )
+  },
+  /**
+   * State is managed internally, and synced
+   * to context (otherwise there is a lag when
+   * typing).
+   *
+   * Don't re-render unless unmounted
+   */
+  () => true
+)

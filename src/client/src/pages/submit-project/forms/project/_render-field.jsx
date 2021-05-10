@@ -2,19 +2,16 @@ import { useContext } from 'react'
 import {
   GqlBoundFormInput,
   context as formContext,
-  EnumField,
   ControlledVocabularyInput,
 } from '../../gql-form-binder'
 
 const multilineFields = ['description', 'validationComments']
-const basicEnumFields = []
 
 export default ({ field }) => {
   const { projectForm, updateProjectForm } = useContext(formContext)
   const { name: fieldName, description, type } = field
   const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
-  const { name: inputType, ofType } = type
-  const gqlType = inputType || ofType.name
+  const { name: inputType } = type
   const isRequired = !inputType
   const value = projectForm[fieldName]
 
@@ -168,27 +165,6 @@ export default ({ field }) => {
         onChange={val => updateProjectForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
-      />
-    )
-  }
-
-  /**
-   * Simple E-num lists
-   */
-  if (basicEnumFields.includes(gqlType)) {
-    const enumValues = (type.enumValues || type.ofType.enumValues).map(({ name, description }) => {
-      return { name, description }
-    })
-    return (
-      <EnumField
-        key={fieldName}
-        name={placeholder}
-        placeholder={placeholder}
-        helperText={helperText}
-        error={isRequired && !value}
-        onChange={e => updateProjectForm({ [fieldName]: e.target.value })}
-        options={enumValues}
-        value={value || enumValues[0].name}
       />
     )
   }

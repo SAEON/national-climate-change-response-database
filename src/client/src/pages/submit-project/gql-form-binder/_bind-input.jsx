@@ -3,9 +3,10 @@ import DateTimeField from './_datetime'
 import IntField from './_int'
 import MoneyField from './_money'
 import StringField from './_string'
+import EnumField from './_enum'
 
 export default ({ field, value, updateValue, multiline, i = 0 }) => {
-  const { name, description, type } = field
+  const { name: fieldName, description, type } = field
   const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType, ofType } = type
   const gqlType = inputType || ofType.name
@@ -21,7 +22,7 @@ export default ({ field, value, updateValue, multiline, i = 0 }) => {
         placeholder={placeholder}
         helperText={helperText}
         name={placeholder}
-        key={name}
+        key={fieldName}
         value={value}
         setValue={updateValue}
       />
@@ -33,12 +34,12 @@ export default ({ field, value, updateValue, multiline, i = 0 }) => {
       <DateTimeField
         i={i}
         error={isRequired && !value}
-        key={name}
+        key={fieldName}
         placeholder={placeholder}
         name={placeholder}
         helperText={helperText}
-        value={value || new Date()}
-        onChange={updateValue}
+        value={value || null} // null is allowed here
+        setValue={updateValue}
       />
     )
   }
@@ -51,7 +52,7 @@ export default ({ field, value, updateValue, multiline, i = 0 }) => {
         placeholder={placeholder}
         helperText={helperText}
         name={placeholder}
-        key={name}
+        key={fieldName}
         value={value || ''}
         setValue={updateValue}
       />
@@ -65,18 +66,36 @@ export default ({ field, value, updateValue, multiline, i = 0 }) => {
         placeholder={placeholder}
         helperText={helperText}
         name={placeholder}
-        key={name}
+        key={fieldName}
         value={value || 'false'}
-        onChange={e => updateValue(e.target.value)}
+        setValue={updateValue}
       />
     )
   }
 
   if (gqlType === 'Int') {
-    return <IntField key={name} />
+    return <IntField key={fieldName} />
+  }
+
+  if (type?.enumValues || type?.ofType?.enumValues) {
+    const enumValues = (type.enumValues || type.ofType.enumValues).map(({ name, description }) => {
+      return { name, description }
+    })
+    return (
+      <EnumField
+        key={fieldName}
+        name={placeholder}
+        placeholder={placeholder}
+        helperText={helperText}
+        error={isRequired && !value}
+        setValue={updateValue}
+        options={enumValues}
+        value={value || enumValues[0].name}
+      />
+    )
   }
 
   throw new Error(
-    `The GQL-type-to-form-input binder encountered an unknown GraphQL type - ${gqlType}. For field ${name}`
+    `The GQL-type-to-form-input binder encountered an unknown GraphQL type - ${gqlType}. For field ${fieldName}`
   )
 }

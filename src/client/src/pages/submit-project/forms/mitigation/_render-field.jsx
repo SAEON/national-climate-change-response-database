@@ -2,22 +2,17 @@ import { useContext } from 'react'
 import {
   GqlBoundFormInput,
   context as formContext,
-  EnumField,
   ControlledVocabularyInput,
 } from '../../gql-form-binder'
 
 const multilineFields = ['description', 'volMethodology', 'otherCarbonCreditStandardDescription']
 
-const basicEnumFields = []
-
 export default ({ field, i }) => {
   const { mitigationForms, updateMitigationForm } = useContext(formContext)
   const form = mitigationForms[i]
-
   const { name: fieldName, description, type } = field
   const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
-  const { name: inputType, ofType } = type
-  const gqlType = inputType || ofType.name
+  const { name: inputType } = type
   const isRequired = !inputType
   const value = form[fieldName]
 
@@ -184,29 +179,6 @@ export default ({ field, i }) => {
     } else {
       return null
     }
-  }
-
-  /**
-   * Simple E-num lists
-   */
-  if (basicEnumFields.includes(gqlType)) {
-    const value = form[fieldName]
-    const enumValues = (type.enumValues || type.ofType.enumValues).map(({ name, description }) => {
-      return { name, description }
-    })
-    return (
-      <EnumField
-        i={i}
-        key={fieldName}
-        name={placeholder}
-        placeholder={placeholder}
-        helperText={helperText}
-        error={isRequired && !value}
-        onChange={e => updateMitigationForm({ [fieldName]: e.target.value }, i)}
-        options={enumValues}
-        value={form[fieldName] || enumValues[0].name}
-      />
-    )
   }
 
   return (

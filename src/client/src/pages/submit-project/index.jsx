@@ -27,9 +27,15 @@ const useStyles = makeStyles(theme => ({
   completeAvatar: {
     backgroundColor: theme.palette.common.white,
   },
+  disabled: {
+    backgroundColor: theme.palette.error.light,
+  },
+  enabled: {
+    backgroundColor: theme.palette.success.light,
+  },
 }))
 
-const AvatarIcon = ({ i, complete, started }) => {
+const AvatarIcon = ({ i, complete, started, disabled, enabled }) => {
   const classes = useStyles()
 
   return (
@@ -37,6 +43,8 @@ const AvatarIcon = ({ i, complete, started }) => {
       className={clsx(classes.small, {
         [classes.started]: started && !complete,
         [classes.completeAvatar]: complete,
+        [classes.disabled]: disabled,
+        [classes.enabled]: enabled,
       })}
     >
       {!complete && i}
@@ -73,6 +81,8 @@ const Layout = () => {
     isStarted: researchFormsStarted,
   } = researchFormsValidation
 
+  const canSubmit = projectFormComplete
+
   return (
     <ContentNav
       navItems={[
@@ -105,9 +115,10 @@ const Layout = () => {
           ),
         },
         {
+          disabled: !canSubmit,
           primaryText: 'Submit',
           secondaryText: 'Review and submit project',
-          Icon: () => <AvatarIcon i={5} />,
+          Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={5} />,
         },
       ]}
       subNavChildren={({ setActiveIndex }) => {

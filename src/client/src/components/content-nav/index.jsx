@@ -23,13 +23,17 @@ export default ({ navItems, subNavChildren = null, children }) => {
     <Grid container spacing={2}>
       <Grid item xs={12} md={3}>
         <List style={{ padding: 0, display: 'flex', flexDirection: mdAndUp ? 'column' : 'row' }}>
-          {navItems.map(({ primaryText, secondaryText, Icon }, i) => (
+          {navItems.map(({ primaryText, secondaryText, Icon, disabled = false }, i) => (
             <Card
               variant="outlined"
               style={{ flexBasis: mdAndUp ? 'auto' : 0, flexGrow: 1 }}
+              className={clsx({
+                [classes.disabled]: disabled,
+              })}
               key={i}
             >
               <ButtonBase
+                disabled={disabled}
                 className={clsx({
                   [classes.active]: i === activeIndex,
                 })}

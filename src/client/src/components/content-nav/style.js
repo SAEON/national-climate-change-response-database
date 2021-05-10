@@ -6,5 +6,8 @@ export default makeStyles(theme => {
     active: {
       backgroundColor: fade(theme.palette.primary.main, 0.2),
     },
+    disabled: {
+      backgroundColor: theme.palette.grey[200],
+    },
   }
 })

@@ -7,7 +7,7 @@ const LoginPage = lazy(() => import('../../pages/login'))
 const AccessPage = lazy(() => import('../../pages/access'))
 const ProjectsPage = lazy(() => import('../../pages/projects'))
 const ProjectPage = lazy(() => import('../../pages/project'))
-const ProjectWizardPage = lazy(() => import('../../pages/project-wizard'))
+const SubmitProjectPage = lazy(() => import('../../pages/submit-project'))
 const DeploymentsPage = lazy(() => import('../../pages/deployments'))
 
 export default withRouter(() => {
@@ -51,12 +51,12 @@ export default withRouter(() => {
 
       {/* NEW PROJECT WIZARD */}
       <Route
-        key={'new-project-wizard'}
+        key={'submit-project'}
         path={'/projects/submission'}
         exact
         render={() => (
           <Transition tKey="wizard">
-            <ProjectWizardPage />
+            <SubmitProjectPage />
           </Transition>
         )}
       />

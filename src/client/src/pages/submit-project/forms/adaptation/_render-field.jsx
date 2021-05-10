@@ -161,6 +161,7 @@ export default ({ field, i }) => {
     })
     return (
       <EnumField
+        i={i}
         key={fieldName}
         name={placeholder}
         placeholder={placeholder}
@@ -179,6 +180,7 @@ export default ({ field, i }) => {
 
   return (
     <GqlBoundFormInput
+      i={i}
       key={fieldName}
       field={field}
       value={form[fieldName] || ''}

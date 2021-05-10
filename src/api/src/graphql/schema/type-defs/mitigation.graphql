@@ -4,36 +4,36 @@ input MitigationInput {
   # Description :: Description of this mitigation component in the context of the project
   description: String
   # Mitigation type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
-  mitigationType: ControlledVocabularyInput!
+  mitigationType: ControlledVocabularyInput
   # Mitigation subtype :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
   mitigationSubType: ControlledVocabularyInput
   # Intervention status :: @amelia TODO
-  interventionStatus: ControlledVocabularyInput!
+  interventionStatus: ControlledVocabularyInput
 
   # Carbon credit :: Does this project produce carbon credits?
-  carbonCredit: Boolean!
+  carbonCredit: Boolean
   # Voluntary methodology :: Describe the method used in the project.
   volMethodology: String
   #  Gold Standard :: Does this intervention produce carbon credits through the Gold Standard market?
-  goldStandard: Boolean!
+  goldStandard: Boolean
   #  Verified Carbon Standard :: Does this intervention produce carbon credits through the Verified Carbon Standard market?
-  vcs: Boolean!
+  vcs: Boolean
   # Other carbon programme :: Does this mitigation intervention produce carbon credits through another carbon programme?
-  otherCarbonCreditStandard: Boolean!
+  otherCarbonCreditStandard: Boolean
   # Programme method :: Please describe the programme.
-  otherCarbonCreditStandardDescription: String!
+  otherCarbonCreditStandardDescription: String
 
   # CDM project number :: The code a project is given by the CDM once it is accepted.
-  cdmProjectNumber: String!
+  cdmProjectNumber: String
   # CDM methodology :: Please select the CDM method used in your project.
-  cdmMethodology: ControlledVocabularyInput!
+  cdmMethodology: ControlledVocabularyInput
   # CDM Executive Board Status :: What is the CDM status of this project?
   cdmExecutiveStatus: ControlledVocabularyInput
   # CDM status :: TODO - I'm not sure what this field is
   cdmStatus: String
 
   # Host Sector (IPCC) :: Select the IPCC host sector that best describes your project.
-  hostSector: ControlledVocabularyInput!
+  hostSector: ControlledVocabularyInput
   # Main SubSector :: Select the IPCC main sub-sector that best describes you project.
   hostSubSectorPrimary: ControlledVocabularyInput
   # Secondary SubSector :: Select the IPCC sub-sector that best describes your project.

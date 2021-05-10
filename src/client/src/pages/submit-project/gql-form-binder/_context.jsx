@@ -1,7 +1,8 @@
-import { createContext, useEffect, useState, useCallback } from 'react'
+import { createContext, useEffect, useState, useCallback, useMemo } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../components/loading'
 import Fade from '@material-ui/core/Fade'
+import { getFormStatus, getMultiFormsStatus } from './_get-form-status'
 
 export const context = createContext()
 
@@ -33,60 +34,6 @@ export default ({ children }) => {
   const [mitigationForms, setMitigationForms] = useState([])
   const [adaptationForms, setAdaptationForms] = useState([])
   const [researchForms, setResearchForms] = useState([])
-
-  /* PROJECT FORM */
-
-  const updateProjectForm = useCallback(obj => {
-    setProjectForm(projectForm => Object.assign({ ...projectForm }, obj))
-  }, [])
-
-  /* MITIGATION FORMS */
-
-  const updateMitigationForm = useCallback((obj, i) => {
-    setMitigationForms(forms =>
-      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, { ...obj }) : form))
-    )
-  }, [])
-
-  const addMitigationForm = useCallback(() => {
-    setMitigationForms(forms => [...forms, {}])
-  }, [])
-
-  const removeMitigationForm = useCallback(i => {
-    setMitigationForms(forms => forms.filter((form, _i) => i !== _i))
-  }, [])
-
-  /* ADAPTATION FORMS */
-
-  const updateAdaptationForm = useCallback((obj, i) => {
-    setAdaptationForms(forms =>
-      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, obj) : form))
-    )
-  }, [])
-
-  const addAdaptationForm = useCallback(() => {
-    setAdaptationForms(forms => [...forms, {}])
-  }, [])
-
-  const removeAdaptationForm = useCallback(i => {
-    setAdaptationForms(forms => forms.filter((form, _i) => i !== _i))
-  }, [])
-
-  /* RESEARCH FORMS */
-
-  const updateResearchForm = useCallback((obj, i) => {
-    setResearchForms(forms =>
-      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, obj) : form))
-    )
-  }, [])
-
-  const addResearchForm = useCallback(() => {
-    setResearchForms(forms => [...forms, {}])
-  }, [])
-
-  const removeResearchForm = useCallback(i => {
-    setResearchForms(forms => forms.filter((form, _i) => i !== _i))
-  }, [])
 
   /* TYPE QUERY */
 
@@ -128,6 +75,80 @@ export default ({ children }) => {
   const adaptationFields = data?.adaptationFields.inputFields
   const researchFields = data?.researchFields.inputFields
 
+  /* PROJECT FORM */
+
+  const updateProjectForm = useCallback(obj => {
+    setProjectForm(projectForm => Object.assign({ ...projectForm }, obj))
+  }, [])
+
+  const projectFormValidation = useMemo(() => getFormStatus(projectFields, projectForm), [
+    projectFields,
+    projectForm,
+  ])
+
+  /* MITIGATION FORMS */
+
+  const updateMitigationForm = useCallback((obj, i) => {
+    setMitigationForms(forms =>
+      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, { ...obj }) : form))
+    )
+  }, [])
+
+  const addMitigationForm = useCallback(() => {
+    setMitigationForms(forms => [...forms, {}])
+  }, [])
+
+  const removeMitigationForm = useCallback(i => {
+    setMitigationForms(forms => forms.filter((form, _i) => i !== _i))
+  }, [])
+
+  const mitigationFormsValidation = useMemo(
+    () => getMultiFormsStatus(mitigationForms.map(form => getFormStatus(mitigationFields, form))),
+    [mitigationFields, mitigationForms]
+  )
+
+  /* ADAPTATION FORMS */
+
+  const updateAdaptationForm = useCallback((obj, i) => {
+    setAdaptationForms(forms =>
+      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, obj) : form))
+    )
+  }, [])
+
+  const addAdaptationForm = useCallback(() => {
+    setAdaptationForms(forms => [...forms, {}])
+  }, [])
+
+  const removeAdaptationForm = useCallback(i => {
+    setAdaptationForms(forms => forms.filter((form, _i) => i !== _i))
+  }, [])
+
+  const adaptationFormsValidation = useMemo(
+    () => getMultiFormsStatus(adaptationForms.map(form => getFormStatus(adaptationFields, form))),
+    [adaptationFields, adaptationForms]
+  )
+
+  /* RESEARCH FORMS */
+
+  const updateResearchForm = useCallback((obj, i) => {
+    setResearchForms(forms =>
+      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, obj) : form))
+    )
+  }, [])
+
+  const addResearchForm = useCallback(() => {
+    setResearchForms(forms => [...forms, {}])
+  }, [])
+
+  const removeResearchForm = useCallback(i => {
+    setResearchForms(forms => forms.filter((form, _i) => i !== _i))
+  }, [])
+
+  const researchFormsValidation = useMemo(
+    () => getMultiFormsStatus(researchForms.map(form => getFormStatus(researchFields, form))),
+    [researchFields, researchForms]
+  )
+
   /**
    * Update form on type-load
    */
@@ -166,9 +187,11 @@ export default ({ children }) => {
       value={{
         projectFields,
         projectForm,
+        projectFormValidation,
         updateProjectForm,
         mitigationFields,
         mitigationForms,
+        mitigationFormsValidation,
         updateMitigationForm,
         addMitigationForm,
         removeMitigationForm,
@@ -177,8 +200,10 @@ export default ({ children }) => {
         addAdaptationForm,
         removeAdaptationForm,
         adaptationForms,
+        adaptationFormsValidation,
         researchFields,
         researchForms,
+        researchFormsValidation,
         updateResearchForm,
         addResearchForm,
         removeResearchForm,

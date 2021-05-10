@@ -1,16 +1,16 @@
 input ProjectInput {
   # Project title :: Unique project name in line with programmatic inputs
-  title: String
+  title: String!
   # Project description :: Enter long text description here
   description: String!
   # Project manager :: Who is in charge of managing this project?
   projectManager: String
   # Project type :: Is this a research or applied project?
-  projectType: ControlledVocabularyInput!
+  projectType: ControlledVocabularyInput
   # Intervention type :: What type of intervention does this project focus on?
-  interventionType: ControlledVocabularyInput!
+  interventionType: ControlledVocabularyInput
   # Project status :: TODO Amelia
-  projectStatus: ControlledVocabularyInput!
+  projectStatus: ControlledVocabularyInput
   # Link :: Is there a URI that is associated with this project?
   link: String
   # Project start date :: Round to the beginning or end of the year
@@ -19,25 +19,25 @@ input ProjectInput {
   endDate: DateTime
 
   # Validation status :: Has this project been validated?
-  validationStatus: ControlledVocabularyInput!
+  validationStatus: ControlledVocabularyInput
   # Validation Comments :: Any validation feedback?
   validationComments: String
 
   # Funding status :: TODO Amelia
-  fundingStatus: ControlledVocabularyInput!
+  fundingStatus: ControlledVocabularyInput
   # Funding organization :: Who is the main funding organization?
   fundingOrganisation: String
   # Funding partner :: Who is the main funding partner
   fundingPartner: String
   # Estimated budget :: What is the estimated budget for this project?
-  estimatedBudget: ControlledVocabularyInput!
+  estimatedBudget: ControlledVocabularyInput
   # Budget (lower bound) :: What is the lower-bound of the estimated budget?
   budgetLower: Money
   # Budget (upper bound) :: What is the upper-bound of the estimated budget?
   budgetUpper: Money
 
   # Host sector :: @amelia TODO
-  hostSector: ControlledVocabularyInput!
+  hostSector: ControlledVocabularyInput
   # Sub-host sector :: @amelia TODO
   hostSubSector: ControlledVocabularyInput
   # Host organization :: Who is the main hosting organization?

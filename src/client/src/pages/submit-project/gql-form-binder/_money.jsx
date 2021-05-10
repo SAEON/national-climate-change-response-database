@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField'
 import QuickForm from '../../../components/quick-form'
 import debounce from '../../../lib/debounce'
 
-export default ({ name, placeholder, helperText, error, value, setValue }) => {
+export default ({ name, placeholder, helperText, error, value, setValue, i = 0 }) => {
   const effect = useMemo(() => debounce(({ value }) => setValue(value), 100), [setValue])
 
   return (
@@ -13,7 +13,7 @@ export default ({ name, placeholder, helperText, error, value, setValue }) => {
         return (
           <TextField
             autoComplete="off"
-            id={name}
+            id={`${name}-${i}`}
             label={name}
             placeholder={placeholder}
             helperText={helperText}

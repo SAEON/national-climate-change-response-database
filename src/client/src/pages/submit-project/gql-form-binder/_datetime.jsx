@@ -1,6 +1,6 @@
 import { DatePicker } from '@material-ui/pickers'
 
-export default ({ helperText, name, placeholder, error, value, onChange }) => (
+export default ({ helperText, name, placeholder, error, value, onChange, i = 0 }) => (
   <DatePicker
     fullWidth
     margin="normal"
@@ -8,6 +8,7 @@ export default ({ helperText, name, placeholder, error, value, onChange }) => (
     format="MM/dd/yyyy"
     placeholder={placeholder}
     label={name}
+    id={`${name}-${i}`}
     helperText={helperText}
     error={error}
     value={value}

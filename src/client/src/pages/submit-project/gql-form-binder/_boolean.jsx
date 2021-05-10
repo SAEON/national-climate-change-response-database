@@ -1,9 +1,9 @@
 import TextField from '@material-ui/core/TextField'
 import { MenuItem } from '@material-ui/core'
 
-export default ({ name, placeholder, helperText, error, value, onChange }) => (
+export default ({ name, placeholder, helperText, error, value, onChange, i = 0 }) => (
   <TextField
-    id={name}
+    id={`${name}-${i}`}
     select
     placeholder={placeholder}
     helperText={helperText}

@@ -5,15 +5,15 @@ input AdaptationInput {
   # Description :: Short description of this adaptation component
   description: String
   # Adaptation sector :: @amelia TODO
-  adaptationSector: ControlledVocabularyInput!
+  adaptationSector: ControlledVocabularyInput
   # Adaptation purpose :: @amelia TODO
-  adaptationPurpose: ControlledVocabularyInput!
+  adaptationPurpose: ControlledVocabularyInput
   # Start date :: @amelia TODO
   startDate: DateTime
   # End date :: @amelia TODO
   endDate: DateTime
   # Hazard Family :: @amelia TODO
-  hazardFamily: ControlledVocabularyInput!
+  hazardFamily: ControlledVocabularyInput
   # Hazard Subfamily :: @amelia TODO
   hazardSubFamily: ControlledVocabularyInput
   # Hazard :: @amelia TODO

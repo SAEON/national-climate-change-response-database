@@ -4,7 +4,7 @@ import IntField from './_int'
 import MoneyField from './_money'
 import StringField from './_string'
 
-export default ({ field, value, updateValue, multiline }) => {
+export default ({ field, value, updateValue, multiline, i = 0 }) => {
   const { name, description, type } = field
   const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType, ofType } = type
@@ -14,6 +14,7 @@ export default ({ field, value, updateValue, multiline }) => {
   if (gqlType === 'String') {
     return (
       <StringField
+        i={i}
         error={isRequired && !value}
         multiline={multiline}
         rows={multiline ? 4 : 1}
@@ -30,6 +31,7 @@ export default ({ field, value, updateValue, multiline }) => {
   if (gqlType === 'DateTime') {
     return (
       <DateTimeField
+        i={i}
         error={isRequired && !value}
         key={name}
         placeholder={placeholder}
@@ -44,6 +46,7 @@ export default ({ field, value, updateValue, multiline }) => {
   if (gqlType === 'Money') {
     return (
       <MoneyField
+        i={i}
         error={isRequired && !value}
         placeholder={placeholder}
         helperText={helperText}
@@ -58,6 +61,7 @@ export default ({ field, value, updateValue, multiline }) => {
   if (gqlType === 'Boolean') {
     return (
       <BooleanField
+        i={i}
         placeholder={placeholder}
         helperText={helperText}
         name={placeholder}

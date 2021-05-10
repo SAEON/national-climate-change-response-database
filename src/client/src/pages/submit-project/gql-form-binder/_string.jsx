@@ -3,7 +3,17 @@ import TextField from '@material-ui/core/TextField'
 import QuickForm from '../../../components/quick-form'
 import debounce from '../../../lib/debounce'
 
-export default ({ name, placeholder, helperText, multiline, rows, error, setValue, value }) => {
+export default ({
+  name,
+  placeholder,
+  helperText,
+  multiline,
+  rows,
+  error,
+  setValue,
+  value,
+  i = 0,
+}) => {
   const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
 
   return (
@@ -15,7 +25,7 @@ export default ({ name, placeholder, helperText, multiline, rows, error, setValu
             onChange={e => update({ value: e.target.value })}
             value={value}
             error={error}
-            id={name}
+            id={`${name}-${i}`}
             label={name}
             placeholder={placeholder}
             helperText={helperText}

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 import Fade from '@material-ui/core/Fade'
 
-const DEFAULT_VALUE = '(NONE)'
+const DEFAULT_VALUE = { term: '(NONE)' }
 
 export default ({
   root,
@@ -30,11 +30,12 @@ export default ({
           children {
             id
             term
+            tree
           }
         }
       }
     `,
-    { variables: { root, tree } }
+    { variables: { root: root.term || root, tree } }
   )
 
   if (loading) {
@@ -74,18 +75,18 @@ export default ({
         fullWidth
         onChange={e => {
           const { value } = e.target
-          if (value === DEFAULT_VALUE) {
+          if (value === DEFAULT_VALUE.term) {
             onChange(undefined)
           } else {
-            onChange(value)
+            onChange(options.find(({ term }) => term === value))
           }
         }}
         variant="outlined"
         margin="normal"
-        value={value}
-        error={isRequired ? value === DEFAULT_VALUE || error : error}
+        value={value.term}
+        error={isRequired ? value === DEFAULT_VALUE.term || error : error}
       >
-        {[{ term: '(NONE)' }, ...options].map(({ term }) => {
+        {[DEFAULT_VALUE, ...options].map(({ term }) => {
           return (
             <MenuItem key={term} value={term}>
               <Typography variant="overline">{term}</Typography>

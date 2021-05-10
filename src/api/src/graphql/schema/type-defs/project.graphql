@@ -2,7 +2,7 @@ input ProjectInput {
   # Project title :: Unique project name in line with programmatic inputs
   title: String!
   # Project description :: Enter long text description here
-  description: String!
+  description: String
   # Project manager :: Who is in charge of managing this project?
   projectManager: String
   # Project type :: Is this a research or applied project?

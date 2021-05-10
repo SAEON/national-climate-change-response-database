@@ -1,11 +1,5 @@
-export default async (_, { projectDetails }, ctx) => {
-  const { Projects } = await ctx.mongo.collections
+export default async (_, { projectForm, mitigationForms, adaptationForms, researchForms }, ctx) => {
+  const { query } = ctx.mssql
 
-  return (
-    await Projects.insertOne({
-      createdAt: new Date(),
-      createdBy: 'TODO',
-      ...projectDetails,
-    })
-  ).ops[0]
+  return { id: 1 }
 }

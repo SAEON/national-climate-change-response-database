@@ -149,25 +149,6 @@ export default ({ children }) => {
     [researchFields, researchForms]
   )
 
-  /**
-   * Update form on type-load
-   */
-  useEffect(() => {
-    if (projectFields) {
-      setProjectForm(
-        Object.fromEntries(
-          projectFields.map(({ name, type }) => {
-            const enumValues = type?.enumValues || type?.ofType?.enumValues
-            return [name, enumValues?.[0].name || '']
-          })
-        )
-      )
-    }
-    setMitigationForms([]) // TODO
-    setAdaptationForms([]) // TODO
-    setResearchForms([]) // TODO
-  }, [projectFields, mitigationFields, adaptationFields, researchFields])
-
   if (loading) {
     return (
       <Fade in={loading} key="loading-in">

@@ -6,10 +6,9 @@ export default ({ style }) => {
   return (
     <Tooltip title="Reset form" placement="top">
       <IconButton
-        style={style}
+        style={Object.assign({}, style)}
         size="small"
-        color="default"
-        variant="contained"
+        color="primary"
         onClick={() => window.location.reload()}
       >
         <RefreshIcon />

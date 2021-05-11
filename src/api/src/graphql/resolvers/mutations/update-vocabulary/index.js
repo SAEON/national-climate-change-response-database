@@ -32,7 +32,7 @@ export default async (_, args, ctx) => {
           merge VocabularyTrees T
           using (select '${tree}' name) S on T.name = S.name
           when not matched then insert (name)
-          values ('${tree}');`)
+          values (S.name);`)
 
         /**
          * Make sure that the terms (parent and child) exists in the database

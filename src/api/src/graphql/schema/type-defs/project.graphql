@@ -53,5 +53,5 @@ input ProjectInput {
 }
 
 type Project {
-  id: ID!
+  id: Int!
 }

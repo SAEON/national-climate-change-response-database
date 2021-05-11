@@ -5,18 +5,18 @@ scalar Money
 scalar WKT_4326
 
 type User {
-  id: ID!
+  id: Int!
   emailAddress: String!
 }
 
 type Role {
-  id: ID!
+  id: Int!
   name: String!
   description: String
 }
 
 type Permission {
-  id: ID!
+  id: Int!
   name: String!
   description: String
 }
@@ -27,14 +27,14 @@ input ControlledVocabularyInput {
 }
 
 type ControlledVocabulary {
-  id: ID!
+  id: Int!
   term: String!
   children: [ControlledVocabulary!]
   tree: String!
 }
 
 type Query {
-  projects(ids: [ID!]): [Project]!
+  projects(ids: [Int!]): [Project]!
   roles: [Role!]!
   permissions: [Permission!]!
   controlledVocabulary(root: String!, tree: String!): ControlledVocabulary

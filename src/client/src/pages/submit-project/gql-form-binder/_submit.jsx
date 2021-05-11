@@ -49,7 +49,7 @@ export default () => {
       },
       onCompleted: ({ createProject }) => {
         const { id } = createProject
-        history.push(`/projects/${id}`)
+        // history.push(`/projects/${id}`)
       },
     }
   )

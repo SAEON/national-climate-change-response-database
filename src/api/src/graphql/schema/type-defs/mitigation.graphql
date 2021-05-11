@@ -41,5 +41,5 @@ input MitigationInput {
 }
 
 type Mitigation {
-  id: ID!
+  id: Int!
 }

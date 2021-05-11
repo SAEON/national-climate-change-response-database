@@ -1,19 +1,52 @@
-/** User model **/
-
 -- Roles
-insert into Roles (name, description)
-values
-  ('admin', 'System administrator'),
-  ('dffe', 'Non-privileged user from DFFE');
+merge Roles t
+using (
+  select
+    'admin' name,
+    'System administrator' description
+  union
+  select
+    'dffe' name,
+    'Non-privileged user from DFFE' description
+) s on s.name = t.name
+when not matched then insert (name, description)
+  values (
+    s.name,
+    s.description
+  )
+when matched then update set
+	t.description = s.description;
 
 -- Permissions
-insert into [Permissions] (name, description)
-values
-  ('create-project', ''),
-  ('update-project', ''),
-  ('delete-project', ''),
-  ('view-users', ''),
-  ('update-users', '');
+merge Permissions t
+using (
+  select
+    'create-project' name,
+    null description
+  union
+  select
+    'update-project' name,
+    null description
+  union
+  select
+    'delete-project' name,
+    null description
+  union
+  select
+    'view-users' name,
+    null description
+  union
+  select
+    'update-users' name,
+    null description
+) s on s.name = t.name
+when not matched then insert (name, description)
+  values (
+    s.name,
+    s.description
+  )
+when matched then update set
+  t.description = s.description;
 
 -- PermissionRoleXref
 with xref as (
@@ -31,5 +64,10 @@ with xref as (
     join [Permissions] P on P.name in ('create-project', 'update-project', 'delete-project')
     where R.name = 'dffe'
 )
-insert into PermissionRoleXref (roleId, permissionId)
-select * from xref; 
+merge PermissionRoleXref t
+using (select * from xref) s on s.roleId = t.roleId and s.permissionId = t.permissionId
+when not matched then insert (roleId, permissionId)
+  values (
+    s.roleId,
+    s.permissionId
+  );

@@ -9,12 +9,19 @@ import Loading from './components/loading'
 if (!window.crypto) window.crypto = window.msCrypto // IE 11
 import 'cross-fetch/polyfill' // IE 11
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch' // IE 11
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider } from '@material-ui/core/styles'
+import theme from './theme'
 
 const App = lazy(() => import('./app'))
 
 render(
-  <Suspense fallback={<Loading />}>
-    <App />
-  </Suspense>,
+  <CssBaseline>
+    <ThemeProvider theme={theme}>
+      <Suspense fallback={<Loading />}>
+        <App />
+      </Suspense>
+    </ThemeProvider>
+  </CssBaseline>,
   document.getElementById('root')
 )

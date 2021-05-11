@@ -25,5 +25,5 @@ input AdaptationInput {
 }
 
 type Adaptation {
-  id: ID!
+  id: Int!
 }

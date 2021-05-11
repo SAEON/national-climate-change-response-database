@@ -32,8 +32,7 @@ export const NCCRD_API_ADDRESS_PORT = process.env.NCCRD_API_ADDRESS_PORT || 3000
 export const NCCRD_API_GQL_ADDRESS = `${NCCRD_API_ADDRESS}/graphql`
 
 export const NCCRD_API_ALLOWED_ORIGINS =
-  process.env.NCCRD_API_ALLOWED_ORIGINS ||
-  'http://localhost:3000,http://localhost:3001,http://localhost:8080'
+  process.env.NCCRD_API_ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'
 
 export const NCCRD_CLIENT_ID = process.env.NCCRD_CLIENT_ID || 'client.sess'
 
@@ -46,3 +45,5 @@ export const MSSQL_HOSTNAME = process.env.MSSQL_HOSTNAME || 'localhost'
 export const MSSQL_DATABASE = process.env.MSSQL_DATABASE || 'nccrd'
 
 export const MSSQL_PORT = process.env.MSSQL_PORT || 1433
+
+export const NCCRD_API_RESET_SCHEMA = (process.env.NCCRD_API_RESET_SCHEMA || 'false').toBoolean()

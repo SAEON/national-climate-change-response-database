@@ -1,6 +1,3 @@
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { ThemeProvider } from '@material-ui/core/styles'
-import theme from './theme'
 import ApolloProvider from './components/apollo'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
@@ -18,34 +15,30 @@ import Layout from './layout'
 
 export default () => {
   return (
-    <CssBaseline>
-      <ThemeProvider theme={theme}>
-        <ErrorBoundary>
-          <DetectDevice>
-            <NativeExtensions>
-              <ApolloProvider>
-                <ClientInfoProvider>
-                  <CookieConsent>
-                    <AuthenticationProvider>
-                      <AuthorizationProvider>
-                        <BackgroundImageProvider>
-                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <SnackbarProvider>
-                              <DefaultApplicationNotices>
-                                <Layout />
-                              </DefaultApplicationNotices>
-                            </SnackbarProvider>
-                          </MuiPickersUtilsProvider>
-                        </BackgroundImageProvider>
-                      </AuthorizationProvider>
-                    </AuthenticationProvider>
-                  </CookieConsent>
-                </ClientInfoProvider>
-              </ApolloProvider>
-            </NativeExtensions>
-          </DetectDevice>
-        </ErrorBoundary>
-      </ThemeProvider>
-    </CssBaseline>
+    <ErrorBoundary>
+      <DetectDevice>
+        <NativeExtensions>
+          <ApolloProvider>
+            <ClientInfoProvider>
+              <CookieConsent>
+                <AuthenticationProvider>
+                  <AuthorizationProvider>
+                    <BackgroundImageProvider>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <SnackbarProvider>
+                          <DefaultApplicationNotices>
+                            <Layout />
+                          </DefaultApplicationNotices>
+                        </SnackbarProvider>
+                      </MuiPickersUtilsProvider>
+                    </BackgroundImageProvider>
+                  </AuthorizationProvider>
+                </AuthenticationProvider>
+              </CookieConsent>
+            </ClientInfoProvider>
+          </ApolloProvider>
+        </NativeExtensions>
+      </DetectDevice>
+    </ErrorBoundary>
   )
 }

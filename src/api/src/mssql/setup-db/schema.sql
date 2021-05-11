@@ -146,6 +146,7 @@ create table VocabularyXrefVocabulary (
   id bigint not null identity primary key,
   parentId bigint not null foreign key references Vocabulary (id),
   childId bigint not null foreign key references Vocabulary (id),
+	-- TODO order
   vocabularyTreeId bigint not null foreign key references VocabularyTrees (id),
   unique (parentId, childId, vocabularyTreeId),
   index ix_VocabularyXrefVocabulary_parentId nonclustered (parentId),
@@ -154,3 +155,39 @@ create table VocabularyXrefVocabulary (
 );
 end
 
+-- Projects
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[Projects]')
+		and type = 'U'
+)
+begin
+create table Projects (
+  id bigint not null identity primary key,
+  title nvarchar(255) not null unique,
+  description nvarchar(4000),
+	projectManager nvarchar(255),
+	link nvarchar(255),
+	startDate date,
+	endDate date,
+	validationComments nvarchar(4000),
+	fundingOrganisation nvarchar(255),
+	fundingPartner nvarchar(255),
+	budgetLower money,
+	budgetUpper money,
+	hostOrganisation nvarchar(255),
+	hostPartner nvarchar(255),
+	alternativeContact nvarchar(255),
+	alternativeContactEmail nvarchar(255),
+	leadAgent nvarchar(255),
+	interventionTypeId bigint foreign key references VocabularyXrefVocabulary (id),
+	projectStatusId bigint foreign key references VocabularyXrefVocabulary (id),
+	validationStatusId bigint foreign key references VocabularyXrefVocabulary (id),	
+	fundingStatusId bigint foreign key references VocabularyXrefVocabulary (id),	
+	estimatedBudgetId bigint foreign key references VocabularyXrefVocabulary (id),	
+	hostSectorId bigint foreign key references VocabularyXrefVocabulary (id),
+	hostSubSectorId bigint foreign key references VocabularyXrefVocabulary (id)
+);
+end

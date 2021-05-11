@@ -1,6 +1,6 @@
 export default {
   children: async (self, args, ctx) => {
-    const { children = [], tree } = self
+    const { children = [], tree, term } = self
     const { findVocabulary } = ctx.mssql.dataFinders
 
     const items = await findVocabulary({
@@ -10,7 +10,10 @@ export default {
 
     return (
       items?.map(({ children, ...record } = {}) => {
-        return Object.assign(record, { children: children?.map(({ id }) => id) || [] })
+        return Object.assign(
+          { ...record, root: term },
+          { children: children?.map(({ id }) => id) || [] }
+        )
       }) || []
     )
   },

@@ -29,8 +29,9 @@ export default ({
           term
           children {
             id
-            term
             tree
+            term
+            root
           }
         }
       }

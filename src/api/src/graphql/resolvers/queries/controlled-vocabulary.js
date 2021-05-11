@@ -7,6 +7,7 @@ export default async (_, { root, tree }, ctx) => {
       p.id,
 	    p.term,
 	    p.tree,
+      '${root}' root,
       children.id id
       
       from (

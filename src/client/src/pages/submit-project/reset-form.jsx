@@ -1,26 +1,19 @@
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
+import Tooltip from '@material-ui/core/Tooltip'
+import IconButton from '@material-ui/core/IconButton'
 import RefreshIcon from 'mdi-react/RefreshIcon'
-import useTheme from '@material-ui/core/styles/useTheme'
 
-export default () => {
-  const theme = useTheme()
-
+export default ({ style }) => {
   return (
-    <Grid container spacing={2} style={{ marginTop: theme.spacing(2) }}>
-      <Grid item xs={12}>
-        <Button
-          fullWidth
-          size="large"
-          startIcon={<RefreshIcon />}
-          color="default"
-          variant="contained"
-          disableElevation
-          onClick={() => window.location.reload()}
-        >
-          Reset form
-        </Button>
-      </Grid>
-    </Grid>
+    <Tooltip title="Reset form" placement="top">
+      <IconButton
+        style={style}
+        size="small"
+        color="default"
+        variant="contained"
+        onClick={() => window.location.reload()}
+      >
+        <RefreshIcon />
+      </IconButton>
+    </Tooltip>
   )
 }

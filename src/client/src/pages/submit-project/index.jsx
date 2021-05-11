@@ -9,9 +9,10 @@ import ProjectForm from './forms/project'
 import MitigationForms from './forms/mitigation'
 import AdaptationForms from './forms/adaptation'
 import ResearchForms from './forms/research'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 import ResetForm from './reset-form'
 import CompleteIcon from 'mdi-react/CheckBoldIcon'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -55,7 +56,6 @@ const AvatarIcon = ({ i, complete, started, disabled, enabled }) => {
 
 const Layout = () => {
   const theme = useTheme()
-  const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
 
   const {
     projectFormValidation,
@@ -84,59 +84,80 @@ const Layout = () => {
   const canSubmit = projectFormComplete
 
   return (
-    <ContentNav
-      navItems={[
-        {
-          primaryText: 'Project',
-          secondaryText: 'Basic project details',
-          Icon: () => (
-            <AvatarIcon i={1} started={projectFormStarted} complete={projectFormComplete} />
-          ),
-        },
-        {
-          primaryText: 'Mitigation(s)',
-          secondaryText: 'Project mitigation details',
-          Icon: () => (
-            <AvatarIcon i={2} started={mitigationFormsStarted} complete={mitigationFormsComplete} />
-          ),
-        },
-        {
-          primaryText: 'Adaptation(s)',
-          secondaryText: 'Project adaptation details',
-          Icon: () => (
-            <AvatarIcon i={3} started={adaptationFormsStarted} complete={adaptationFormsComplete} />
-          ),
-        },
-        {
-          primaryText: 'Research',
-          secondaryText: 'Project research details',
-          Icon: () => (
-            <AvatarIcon i={4} started={researchFormsStarted} complete={researchFormsComplete} />
-          ),
-        },
-        {
-          disabled: !canSubmit,
-          primaryText: 'Submit',
-          secondaryText: 'Review and submit project',
-          Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={5} />,
-        },
-      ]}
-      subNavChildren={({ setActiveIndex }) => {
-        return mdAndUp && <ResetForm setActiveIndex={setActiveIndex} />
-      }}
-    >
-      {({ activeIndex }) => {
-        return (
-          <>
-            {activeIndex === 0 && <ProjectForm key="project-form" />}
-            {activeIndex === 1 && <MitigationForms key="mitigation-forms" />}
-            {activeIndex === 2 && <AdaptationForms key="adaptation-forms" />}
-            {activeIndex === 3 && <ResearchForms key="research-forms" />}
-            {activeIndex === 4 && <Submit key="submit" />}
-          </>
-        )
-      }}
-    </ContentNav>
+    <>
+      <AppBar
+        style={{
+          marginBottom: theme.spacing(2),
+          backgroundColor: theme.backgroundColor,
+          zIndex: 1000,
+        }}
+        variant="outlined"
+        position="relative"
+      >
+        <Toolbar variant="dense">
+          <ResetForm style={{ marginLeft: 'auto' }} />
+        </Toolbar>
+      </AppBar>
+
+      <ContentNav
+        navItems={[
+          {
+            primaryText: 'Project',
+            secondaryText: 'Basic project details',
+            Icon: () => (
+              <AvatarIcon i={1} started={projectFormStarted} complete={projectFormComplete} />
+            ),
+          },
+          {
+            primaryText: 'Mitigation(s)',
+            secondaryText: 'Project mitigation details',
+            Icon: () => (
+              <AvatarIcon
+                i={2}
+                started={mitigationFormsStarted}
+                complete={mitigationFormsComplete}
+              />
+            ),
+          },
+          {
+            primaryText: 'Adaptation(s)',
+            secondaryText: 'Project adaptation details',
+            Icon: () => (
+              <AvatarIcon
+                i={3}
+                started={adaptationFormsStarted}
+                complete={adaptationFormsComplete}
+              />
+            ),
+          },
+          {
+            primaryText: 'Research',
+            secondaryText: 'Project research details',
+            Icon: () => (
+              <AvatarIcon i={4} started={researchFormsStarted} complete={researchFormsComplete} />
+            ),
+          },
+          {
+            disabled: !canSubmit,
+            primaryText: 'Submit',
+            secondaryText: 'Review and submit project',
+            Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={5} />,
+          },
+        ]}
+      >
+        {({ activeIndex }) => {
+          return (
+            <>
+              {activeIndex === 0 && <ProjectForm key="project-form" />}
+              {activeIndex === 1 && <MitigationForms key="mitigation-forms" />}
+              {activeIndex === 2 && <AdaptationForms key="adaptation-forms" />}
+              {activeIndex === 3 && <ResearchForms key="research-forms" />}
+              {activeIndex === 4 && <Submit key="submit" />}
+            </>
+          )
+        }}
+      </ContentNav>
+    </>
   )
 }
 

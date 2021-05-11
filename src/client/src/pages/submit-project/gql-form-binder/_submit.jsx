@@ -7,6 +7,26 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { context as formContext } from './_context'
 
+const convertFormToInput = form =>
+  Object.fromEntries(
+    Object.entries(form).map(([field, value]) => {
+      if (value?.__typename === 'ControlledVocabulary') {
+        const { root, term, tree } = value
+        return [field, { root, term, tree }]
+      }
+
+      if (value === 'false') {
+        return [field, false]
+      }
+
+      if (value === 'true') {
+        return [field, true]
+      }
+
+      return [field, value]
+    })
+  )
+
 export default () => {
   const history = useHistory()
   const { projectForm, mitigationForms, adaptationForms, researchForms } = useContext(formContext)
@@ -66,7 +86,12 @@ export default () => {
           <Button
             onClick={() =>
               createProject({
-                variables: { projectForm, mitigationForms, adaptationForms, researchForms },
+                variables: {
+                  projectForm: convertFormToInput(projectForm),
+                  mitigationForms: mitigationForms.map(form => convertFormToInput(form)),
+                  adaptationForms: adaptationForms.map(form => convertFormToInput(form)),
+                  researchForms: researchForms.map(form => convertFormToInput(form)),
+                },
               })
             }
             variant="contained"

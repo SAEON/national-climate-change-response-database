@@ -70,12 +70,8 @@ export default async (_, { projectForm, mitigationForms, adaptationForms, resear
     select scope_identity() projectId;
 
     /**
-     * Insert adaptations
      * Insert mitigations
-     * Insert research
      */
-
-
 
     ${mitigationForms.map(({ simpleInput, vocabInput }) => {
       if (!simpleInput.length && !vocabInput.length) {
@@ -104,6 +100,14 @@ export default async (_, { projectForm, mitigationForms, adaptationForms, resear
         ),
       ].join(',')});`
     })}
+
+    /**
+     * Insert adaptations
+     */
+
+     /**
+      * Insert research
+      */
 
     /**
      * Return the new project id

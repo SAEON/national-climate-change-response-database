@@ -166,7 +166,7 @@ if not exists (
 begin
 create table Projects (
   id bigint not null identity primary key,
-  title nvarchar(255) not null unique,
+  title nvarchar(255),
   description nvarchar(4000),
 	projectManager nvarchar(255),
 	link nvarchar(255),
@@ -182,12 +182,13 @@ create table Projects (
 	alternativeContact nvarchar(255),
 	alternativeContactEmail nvarchar(255),
 	leadAgent nvarchar(255),
-	interventionTypeId bigint foreign key references VocabularyXrefVocabulary (id),
-	projectStatusId bigint foreign key references VocabularyXrefVocabulary (id),
-	validationStatusId bigint foreign key references VocabularyXrefVocabulary (id),	
-	fundingStatusId bigint foreign key references VocabularyXrefVocabulary (id),	
-	estimatedBudgetId bigint foreign key references VocabularyXrefVocabulary (id),	
-	hostSectorId bigint foreign key references VocabularyXrefVocabulary (id),
-	hostSubSectorId bigint foreign key references VocabularyXrefVocabulary (id)
+	projectType bigint foreign key references VocabularyXrefVocabulary (id),
+	interventionType bigint foreign key references VocabularyXrefVocabulary (id),
+	projectStatus bigint foreign key references VocabularyXrefVocabulary (id),
+	validationStatus bigint foreign key references VocabularyXrefVocabulary (id),	
+	fundingStatus bigint foreign key references VocabularyXrefVocabulary (id),	
+	estimatedBudget bigint foreign key references VocabularyXrefVocabulary (id),	
+	hostSector bigint foreign key references VocabularyXrefVocabulary (id),
+	hostSubSector bigint foreign key references VocabularyXrefVocabulary (id)
 );
 end

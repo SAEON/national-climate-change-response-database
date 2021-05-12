@@ -102,7 +102,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms, resear
             and t.name = '${tree}'
           )`
         ),
-      ].join(',')})`
+      ].join(',')});`
     })}
 
     /**

@@ -14,6 +14,29 @@ const filterFormInput = form => {
     )
 }
 
+const getInsertStmt = (table, simpleInput, vocabInput) => `
+  insert into ${table} (${[
+  ...simpleInput.map(([field]) => field),
+  ...vocabInput.map(([field]) => field),
+].join(',')})
+  values (${[
+    ...simpleInput.map(([, value]) => `'${value}'`),
+    ...vocabInput.map(
+      ([field, { root, tree, term }]) => `(
+        select
+        vxv.id ${field}
+        from VocabularyXrefVocabulary vxv
+        join Vocabulary p on p.id = vxv.parentId
+        join Vocabulary c on c.id = vxv.childId
+        join VocabularyTrees t on t.id = vxv.vocabularyTreeId
+        where
+        p.term = '${root}'
+        and c.term = '${term}'
+        and t.name = '${tree}'
+      )`
+    ),
+  ].join(',')});`
+
 export default async (_, { projectForm, mitigationForms, adaptationForms, researchForms }, ctx) => {
   const { query } = ctx.mssql
   projectForm = filterFormInput(projectForm)
@@ -21,110 +44,66 @@ export default async (_, { projectForm, mitigationForms, adaptationForms, resear
   adaptationForms = adaptationForms.map(form => filterFormInput(form))
   researchForms = researchForms.map(form => filterFormInput(form))
 
-  console.log('mitigation forms', JSON.stringify(mitigationForms, null, 2))
-  console.log('adaptation forms', adaptationForms)
-  console.log('research forms', researchForms)
-
   const sql = `
-  begin transaction T
-  begin try
+    begin transaction T
+    begin try
 
-  /**
-   * Create a temporary table
-   * to hold the projectId,
-   * referenced by mitigation
-   * and adaptation inserts
-   */
-  create table #scope(projectId int)
+      -- temp tables
+      drop table if exists #newProject;
+      create table #newProject(id int);
+      drop table if exists #newMitigations;
+      create table #newMitigations (i int, id int);
+      drop table if exists #newAdaptations;
+      create table #newAdaptations (i int, id int);
 
-  /**
-   * Insert Project
-   */
+      -- project
+      ${getInsertStmt('Projects', projectForm.simpleInput, projectForm.vocabInput)}
+      insert into #newProject (id)
+      select scope_identity() id;
 
-    insert into Projects (${[
-      ...projectForm.simpleInput.map(([field]) => field),
-      ...projectForm.vocabInput.map(([field]) => field),
-    ].join(',')})
-    values (${[
-      ...projectForm.simpleInput.map(([, value]) => `'${value}'`),
-      ...projectForm.vocabInput.map(
-        ([field, { root, tree, term }]) => `(
+      -- mitigations
+      ${mitigationForms
+        .map(({ simpleInput, vocabInput }, i) => {
+          if (!simpleInput.length && !vocabInput.length) return ''
+
+          return `
+          ${getInsertStmt('Mitigations', simpleInput, vocabInput)}
+          insert into #newMitigations (i, id)
           select
-          vxv.id ${field}
-          from VocabularyXrefVocabulary vxv
-          join Vocabulary p on p.id = vxv.parentId
-          join Vocabulary c on c.id = vxv.childId
-          join VocabularyTrees t on t.id = vxv.vocabularyTreeId
-          where
-          p.term = '${root}'
-          and c.term = '${term}'
-          and t.name = '${tree}'
-        )`
-      ),
-    ].join(',')});
+          ${i} i,
+          scope_identity() id;`
+        })
+        .join('\n')}
 
-    /**
-     * Keep track of the projectId
-     */
-    insert into #scope (projectId)
-    select scope_identity() projectId;
+      -- adaptations
+      ${adaptationForms
+        .map(({ simpleInput, vocabInput }, i) => {
+          if (!simpleInput.length && !vocabInput.length) return ''
 
-    /**
-     * Insert mitigations
-     */
+          return `
+          ${getInsertStmt('Adaptations', simpleInput, vocabInput)}
+          insert into #newAdaptations (i, id)
+          select
+          ${i} i,
+          scope_identity() id;`
+        })
+        .join('\n')}
 
-    ${mitigationForms.map(({ simpleInput, vocabInput }) => {
-      if (!simpleInput.length && !vocabInput.length) {
-        return ''
-      }
+      -- research
+      ${researchForms
+        .map(({ simpleInput, vocabInput }) => {
+          if (!simpleInput.length && !vocabInput.length) return ''
+          return getInsertStmt('Research', simpleInput, vocabInput)
+        })
+        .join('\n')}
 
-      return `insert into Mitigations (${[
-        ...simpleInput.map(([field]) => field),
-        ...vocabInput.map(([field]) => field),
-      ].join(',')})
-      values (${[
-        ...simpleInput.map(([, value]) => `'${value}'`),
-        ...vocabInput.map(
-          ([field, { root, tree, term }]) => `(
-            select
-            vxv.id ${field}
-            from VocabularyXrefVocabulary vxv
-            join Vocabulary p on p.id = vxv.parentId
-            join Vocabulary c on c.id = vxv.childId
-            join VocabularyTrees t on t.id = vxv.vocabularyTreeId
-            where
-            p.term = '${root}'
-            and c.term = '${term}'
-            and t.name = '${tree}'
-          )`
-        ),
-      ].join(',')});`
-    })}
-
-    /**
-     * Insert adaptations
-     */
-
-     /**
-      * Insert research
-      */
-
-    /**
-     * Return the new project id
-     */
-    select projectId from #scope;
-
-    commit transaction T
-  end try
-  begin catch
-    rollback transaction T
-  end catch`
-
-  console.log('query', sql)
+      select id from #newProject;
+      commit transaction T
+    end try
+    begin catch
+      rollback transaction T
+    end catch`
 
   const result = await query(sql)
-
-  console.log('result', result)
-
-  return { id: 1 }
+  return { id: result.recordset[0].id }
 }

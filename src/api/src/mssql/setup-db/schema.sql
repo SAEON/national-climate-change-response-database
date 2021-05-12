@@ -192,3 +192,81 @@ create table Projects (
 	hostSubSector bigint foreign key references VocabularyXrefVocabulary (id)
 );
 end
+
+-- Mitigations
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[Mitigations]')
+		and type = 'U'
+)
+begin
+create table Mitigations (
+  id bigint not null identity primary key,
+	title nvarchar(255),
+	description nvarchar(4000),
+	carbonCredit bit,
+	volMethodology nvarchar(255),
+	goldStandard bit,
+	vcs bit,
+	otherCarbonCreditStandard bit,
+	otherCarbonCreditStandardDescription nvarchar(4000),
+	cdmProjectNumber nvarchar(255),
+	cdmStatus nvarchar(255),
+	mitigationType bigint foreign key references VocabularyXrefVocabulary (id),
+	mitigationSubType bigint foreign key references VocabularyXrefVocabulary (id),
+	interventionStatus bigint foreign key references VocabularyXrefVocabulary (id),
+	cdmMethodology bigint foreign key references VocabularyXrefVocabulary (id),
+	cdmExecutiveStatus bigint foreign key references VocabularyXrefVocabulary (id),
+	hostSector bigint foreign key references VocabularyXrefVocabulary (id),
+	hostSubSectorPrimary bigint foreign key references VocabularyXrefVocabulary (id),
+	hostSubSectorSecondary bigint foreign key references VocabularyXrefVocabulary (id)
+);
+end
+
+-- Adaptations
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[Adaptations]')
+		and type = 'U'
+)
+begin
+create table Adaptations (
+  id bigint not null identity primary key,
+  title nvarchar(255),
+  description nvarchar(255),
+  startDate date,
+  endDate date,
+  adaptationSector bigint foreign key references VocabularyXrefVocabulary (id),
+  adaptationPurpose bigint foreign key references VocabularyXrefVocabulary (id),
+  hazardFamily bigint foreign key references VocabularyXrefVocabulary (id),
+  hazardSubFamily bigint foreign key references VocabularyXrefVocabulary (id),
+  hazard bigint foreign key references VocabularyXrefVocabulary (id),
+  subHazard bigint foreign key references VocabularyXrefVocabulary (id),
+  xy nvarchar(4000)
+);
+end
+
+-- Research
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[Research]')
+		and type = 'U'
+)
+begin
+create table Research (
+  id bigint not null identity primary key,
+  title nvarchar(255),
+  description nvarchar(4000),
+  associatedMitigationComponent nvarchar(255),
+  researchType nvarchar(255),
+  targetAudience nvarchar(255),
+  author nvarchar(255),
+  paper nvarchar(255),
+);
+end

@@ -7,7 +7,7 @@ import { NCCRD_API_RESET_SCHEMA } from '../../config.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 
-try {
+;(async () => {
   if (NCCRD_API_RESET_SCHEMA) {
     await loadFile(join(__dirname, './schema-drop.sql'))
       .then(sql => query(sql))
@@ -29,6 +29,6 @@ try {
     })
 
   await configureAdmins()
-} catch (error) {
-  throw error
-}
+})().catch(error => {
+  console.error('Unable to provision schema', error.message)
+})

@@ -1,6 +1,2 @@
 **/node_modules/**
 **/dist/**
-
-src/mongo/index.js
-src/mssql/setup-db/index.js
-src/mssql/_pool.js

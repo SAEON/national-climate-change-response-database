@@ -4,23 +4,23 @@ module.exports = {
     node: true,
     jest: true,
   },
-  extends: ["eslint:recommended"],
+  extends: ['eslint:recommended'],
   globals: {
     globalThis: false,
-    Atomics: "readonly",
-    SharedArrayBuffer: "readonly",
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
   },
-  parser: "@babel/eslint-parser",
+  parser: '@babel/eslint-parser',
   parserOptions: {
     requireConfigFile: false,
     ecmaFeatures: {
       modules: true,
     },
     ecmaVersion: 2021,
-    sourceType: "module",
+    sourceType: 'module',
   },
-  plugins: ["@babel"],
+  plugins: ['@babel'],
   rules: {
-    "no-prototype-builtins": 0,
+    'no-prototype-builtins': 0,
   },
-};
+}

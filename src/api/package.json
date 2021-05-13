@@ -7,6 +7,7 @@
     "start": "nodemon --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && TZ=utc node --trace-warnings --experimental-json-modules src'",
     "start:prod": "TZ=utc node --no-warnings --experimental-json-modules src",
     "lint": "eslint -c .eslintrc.cjs \"./**/*.{js,mjs,cjs}\"",
+    "rollup": "rimraf dist && rollup --config rollup.config.js && cp -r src/graphql/resolvers/mutations/update-vocabulary/trees dist/trees && cp -r src/graphql/schema/type-defs dist/type-defs && cp -r src/mssql/setup-db/*.sql dist/",
     "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
     "ncu": "ncu",
     "ncu -u": "ncu -u"
@@ -27,7 +28,8 @@
     "eslint": "^7.24.0",
     "nodemon": "^2.0.7",
     "npm-check-updates": "^11.4.1",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "rollup": "^2.47.0"
   },
   "dependencies": {
     "@koa/router": "^10.0.0",

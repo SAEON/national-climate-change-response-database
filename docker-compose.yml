@@ -1,7 +1,7 @@
 version: '3.8'
 
 networks:
-  catalogue_default:
+  nccs_default:
     name: $NCCRD_DOCKER_NETWORK
 
 volumes:
@@ -16,9 +16,9 @@ services:
     volumes: 
       - sql-server:/var/opt/mssql
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=$MSSQL_SA_PASSWORD
-      - MSSQL_PID=$MSSQL_PID
+      ACCEPT_EULA: Y
+      SA_PASSWORD: $MSSQL_SA_PASSWORD
+      MSSQL_PID: $MSSQL_PID
     ports:
       - 1433:1433
     networks:

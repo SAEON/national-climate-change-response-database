@@ -36,6 +36,6 @@ export const MSSQL_HOSTNAME = process.env.MSSQL_HOSTNAME || 'localhost'
 
 export const MSSQL_DATABASE = process.env.MSSQL_DATABASE || 'nccrd'
 
-export const MSSQL_PORT = process.env.MSSQL_PORT || 1433
+export const MSSQL_PORT = parseInt(process.env.MSSQL_PORT || 1433, 10)
 
 export const NCCRD_API_RESET_SCHEMA = (process.env.NCCRD_API_RESET_SCHEMA || 'false').toBoolean()

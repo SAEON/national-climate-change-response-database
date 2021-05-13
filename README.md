@@ -93,11 +93,7 @@ npm run start:bundled
 ## Deploy as Docker image
 ```sh
 # Create a docker image
-docker build -t nccrd . \
-  --build-arg NCCRD_DEPLOYMENT_ENV=production \
-  --build-arg NCCRD_API_NODE_ENV=production \
-  --build-arg MSSQL_HOSTNAME=sql-server \
-  --build-arg NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES=your-name@email.com
+docker build -t nccrd .
 
 # Create a docker network so that SQL Server is accessible from the docker container
 
@@ -105,8 +101,27 @@ docker build -t nccrd . \
 docker network create --driver bridge nccrd
 
 # Run as Docker container
-docker run --network nccrd --name nccrd -p 3000:3000 -d nccrd
+docker run \
+  --network nccrd \
+  --name nccrd \
+  -e 'NCCRD_DEPLOYMENT_ENV=development' \
+  -e 'NCCRD_API_NODE_ENV=development' \
+  -e 'MSSQL_HOSTNAME=sql-server' \
+  -e 'MSSQL_USERNAME=sa' \
+  -e 'MSSQL_PASSWORD=password!123#' \
+  -e 'MSSQL_DATABASE=nccrd' \
+  -e 'MSSQL_PORT=1433' \
+  -e 'NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES=name@email.com"' \
+  -e 'NCCRD_TECHNICAL_CONTACT=other-name@email.com' \
+  -e 'NCCRD_CLIENT_DEFAULT_NOTICES=Welcome to the National Climate Change Response Database!,info' \
+  -p 3000:3000 \
+  -d nccrd
+
+# NCCRD_API_NODE_ENV=production is for deployment behind an SSL-offloading proxy server
 ```
+
+## Deploy from published Docker image
+TODO
 
 ## Containerized deployment
 TODO

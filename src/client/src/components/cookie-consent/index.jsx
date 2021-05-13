@@ -11,8 +11,7 @@ export default ({ children }) => {
     <>
       <CookieConsent
         overlay={false}
-        overlayStyle={{ zIndex: 2000 }}
-        style={{ background: theme.palette.primary.dark }}
+        style={{ background: theme.palette.primary.dark, zIndex: 1200 }}
         ariaAcceptLabel="Allow cookies"
         ButtonComponent={forwardRef((props, ref) => {
           return (

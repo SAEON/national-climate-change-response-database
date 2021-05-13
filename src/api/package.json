@@ -48,7 +48,6 @@
     "koa-passport": "^4.1.4",
     "koa-session": "^6.2.0",
     "koa-static": "^5.0.0",
-    "mongodb": "^3.6.6",
     "mssql": "^6.3.1",
     "nanoid": "^3.1.22",
     "passport-google-oauth": "^2.0.0",

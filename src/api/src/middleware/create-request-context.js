@@ -1,4 +1,3 @@
-import { db as mongoDb, collections, getDataFinders } from '../mongo/index.js'
 import { makeDataFinders } from '../mssql/data-loaders/index.js'
 import query from '../mssql/query.js'
 import schema from '../graphql/schema/index.js'
@@ -9,12 +8,6 @@ export default app => async (ctx, next) => {
 
   app.context.gql = {
     schema,
-  }
-
-  app.context.mongo = {
-    db: mongoDb,
-    collections,
-    dataFinders: getDataFinders(), // Request level batching
   }
 
   app.context.mssql = {

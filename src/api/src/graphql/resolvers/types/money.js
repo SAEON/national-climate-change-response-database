@@ -14,7 +14,7 @@ export default new GraphQLScalarType({
       return value
     } catch (error) {
       console.GraphQLError(
-        'Failed to parse Money field data from MongoDB. This should not occur',
+        'Failed to parse Money field data from MSSQL. This should not occur',
         error
       )
     }

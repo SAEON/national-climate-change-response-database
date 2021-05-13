@@ -13,7 +13,7 @@ export default new GraphQLScalarType({
     try {
       return value
     } catch (error) {
-      console.GraphQLError('Failed to parse MongoDB date field. This should not occur', error)
+      console.GraphQLError('Failed to parse MSSQL date field. This should not occur', error)
     }
     return null
   },

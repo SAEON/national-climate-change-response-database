@@ -8,7 +8,7 @@
     "start:client": "npm --prefix src/client start",
     "start:bundled": "rimraf src/api/src/http/web/dist/ && npm --prefix src/client run build && mv src/client/dist/ src/api/src/http/web/dist/ && npm --prefix src/api run start:prod",
     "************ REPOSITORY TOOLING **********": "",
-    "doc": "doctoc README.md && doctoc src/README.md && doctoc src/api/README.md && doctoc src/client/README.md",
+    "doc": "doctoc README.md && doctoc src/README.md && doctoc src/api/README.md && doctoc src/client/README.md && doctoc platform/README.md && doctoc platform/centos/README.md",
     "install-dependencies": "TC=utc node scripts/install-dependencies.js",
     "************ PACKAGES **********": ""
   },

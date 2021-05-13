@@ -12,6 +12,7 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
   - [Local development](#local-development)
 - [Deployment](#deployment)
   - [Deploy bundled API + client](#deploy-bundled-api--client)
+  - [Containerized deployment](#containerized-deployment)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

@@ -1,0 +1,18 @@
+name: deployment@stable
+
+on:
+  push:
+    branches:
+      - stable
+
+jobs:
+  deploy:
+    runs-on: catalogue.saeon.ac.za
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: stable
+
+      - name: Deploy services
+        run: >-
+          echo hi

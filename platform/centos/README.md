@@ -15,8 +15,8 @@
   - [Install and configure firewalld](#install-and-configure-firewalld)
   - [Setup continuous deployment via GitHub Actions](#setup-continuous-deployment-via-github-actions)
     - [Install GitHub actions runner](#install-github-actions-runner)
-  - [Disable SELinux (or configure it correctly)](#disable-selinux-or-configure-it-correctly)
     - [Configure GitHub to use this runner](#configure-github-to-use-this-runner)
+  - [Disable SELinux (or configure it correctly)](#disable-selinux-or-configure-it-correctly)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -183,6 +183,8 @@ runner ALL=NOPASSWD: /home/runner/bin/installdependencies.sh
 
 # NOTE - after installing the runner, once CD is working, revoke this access!
 ```
+### Configure GitHub to use this runner
+Create a workflow file in the .github/workflows directory in this repository. Use the `stable.yml` file as a reference
 
 ## Disable SELinux (or configure it correctly)
 ```sh
@@ -196,6 +198,3 @@ SELINUX=disabled
 # Reboot the server
 reboot
 ```
-
-### Configure GitHub to use this runner
-Create a workflow file in the .github/workflows directory in this repository. Use the `stable.yml` file as a reference

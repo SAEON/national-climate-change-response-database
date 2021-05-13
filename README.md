@@ -121,7 +121,7 @@ docker run \
 ```
 
 ## Deploy from published Docker image
-TODO
+TODO 
 
 ## Containerized deployment
 TODO

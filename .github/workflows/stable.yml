@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: catalogue.saeon.ac.za
+    runs-on: nccrd.saeon.ac.za
     steps:
       - uses: actions/checkout@v2
         with:
@@ -15,4 +15,4 @@ jobs:
 
       - name: Deploy services
         run: >-
-          echo hi
+          /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

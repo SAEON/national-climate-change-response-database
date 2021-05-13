@@ -1,0 +1,40 @@
+version: '3.8'
+
+networks:
+  catalogue_default:
+    name: $NCCRD_DOCKER_NETWORK
+
+services:
+  sql-server:
+    container_name: sql-server
+    restart: always
+    image: $MSSQL_IMAGE
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=$MSSQL_SA_PASSWORD
+      - MSSQL_PID=$MSSQL_PID
+    ports:
+      -1433:1433
+    networks:
+      - $NCCRD_DOCKER_NETWORK
+
+  nccrd:
+    container_name: nccrd
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NCCRD_DEPLOYMENT_ENV=$NCCRD_DEPLOYMENT_ENV
+        NCCRD_API_NODE_ENV=$NCCRD_API_NODE_ENV
+        MSSQL_USERNAME=$MSSQL_USERNAME
+        MSSQL_PASSWORD=$MSSQL_PASSWORD
+        MSSQL_HOSTNAME=$MSSQL_HOSTNAME
+        MSSQL_DATABASE=$MSSQL_DATABASE
+        MSSQL_PORT=$MSSQL_PORT
+    ports:
+      - 3000:3000
+    depends_on: 
+      sql-server
+    networks: 
+      $NCCRD_DOCKER_NETWORK

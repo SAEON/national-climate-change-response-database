@@ -1,6 +1,6 @@
 import query from '../query.js'
 import { NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES } from '../../config.js'
-const DEFAULT_ADMINS = NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',')
+const DEFAULT_ADMINS = NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').filter(_ => _)
 
 export default async () => {
   if (DEFAULT_ADMINS.length) {

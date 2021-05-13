@@ -90,5 +90,23 @@ npm run install-dependencies
 npm run start:bundled
 ```
 
+## Deploy as Docker image
+```sh
+# Create a docker image
+docker build -t nccrd . \
+  --build-arg NCCRD_DEPLOYMENT_ENV=production \
+  --build-arg NCCRD_API_NODE_ENV=production \
+  --build-arg MSSQL_HOSTNAME=sql-server \
+  --build-arg NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES=your-name@email.com
+
+# Create a docker network so that SQL Server is accessible from the docker container
+
+# --network host should work on Linux, but not other OSes where Docker Engine is running virtualized
+docker network create --driver bridge nccrd
+
+# Run as Docker container
+docker run --network nccrd --name nccrd -p 3000:3000 -d nccrd
+```
+
 ## Containerized deployment
 TODO

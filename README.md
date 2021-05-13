@@ -104,6 +104,7 @@ docker network create --driver bridge nccrd
 docker run \
   --network nccrd \
   --name nccrd \
+  -e 'NCCRD_API_ADDRESS=http://localhost:3000' \
   -e 'NCCRD_DEPLOYMENT_ENV=development' \
   -e 'NCCRD_API_NODE_ENV=development' \
   -e 'MSSQL_HOSTNAME=sql-server' \

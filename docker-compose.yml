@@ -31,6 +31,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
+        NCCRD_API_ADDRESS: $NCCRD_API_ADDRESS
         NCCRD_DEPLOYMENT_ENV: $NCCRD_DEPLOYMENT_ENV
         NCCRD_API_NODE_ENV: $NCCRD_API_NODE_ENV
         MSSQL_USERNAME: $MSSQL_USERNAME

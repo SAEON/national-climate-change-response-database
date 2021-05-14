@@ -7,6 +7,8 @@ drop table if exists UserRoleXref;
 drop table if exists [Permissions];
 drop table if exists Roles;
 drop table if exists Users;
+drop table if exists ResearchXrefMitigation;
+drop table if exists ResearchXrefAdaptation;
 drop table if exists Mitigations;
 drop table if exists Adaptations;
 drop table if exists Research;

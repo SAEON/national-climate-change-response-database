@@ -88,9 +88,9 @@ const Layout = () => {
       <AppBar
         style={{
           marginBottom: theme.spacing(2),
-          backgroundColor: theme.backgroundColor,
           zIndex: 1000,
         }}
+        color="inherit"
         variant="outlined"
         position="relative"
       >

@@ -252,6 +252,40 @@ create table Adaptations (
 );
 end
 
+-- ResearchXrefMitigation
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[ResearchXrefMitigation]')
+		and type = 'U'
+)
+begin
+create table ResearchXrefMitigation (
+	id bigint not null identity primary key,
+	researchId bigint not null foreign key references Research (id),
+	mitigationId bigint not null foreign key references Mitigations (id),
+	unique (researchId, mitigationId)
+)
+end
+
+-- ResearchXrefAdaptation
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[ResearchXrefAdaptation]')
+		and type = 'U'
+)
+begin
+create table ResearchXrefAdaptation (
+	id bigint not null identity primary key,
+	researchId bigint not null foreign key references Research (id),
+	adaptationId bigint not null foreign key references Adaptations (id),
+	unique (researchId, adaptationId)
+)
+end
+
 -- Research
 if not exists (
 	select *
@@ -266,7 +300,6 @@ create table Research (
 	projectId bigint not null foreign key references Projects (id),
   title nvarchar(255),
   description nvarchar(4000),
-  associatedMitigationComponent nvarchar(255),
   researchType nvarchar(255),
   targetAudience nvarchar(255),
   author nvarchar(255),

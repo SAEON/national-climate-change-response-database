@@ -8,6 +8,10 @@ export default ({ field, i }) => {
   const form = researchForms[i]
   const { name: fieldName } = field
 
+  if (fieldName === 'associatedProjectComponent') {
+    return 'hi'
+  }
+
   return (
     <GqlBoundFormInput
       i={i}

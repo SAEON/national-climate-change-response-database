@@ -45,12 +45,12 @@ const Compose = memo(({ fields }) => {
                   'Research information': [
                     'title',
                     'description',
+                    'associatedProjectComponent',
                     'researchType',
                     'targetAudience',
                     'author',
                     'paper',
                   ],
-                  'Mitigation details': ['associatedMitigationComponent'],
                 }}
               />
             </div>

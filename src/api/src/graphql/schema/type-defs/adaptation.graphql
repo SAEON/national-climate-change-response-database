@@ -22,6 +22,18 @@ input AdaptationInput {
   subHazard: ControlledVocabularyInput
   # GPS point location(s) :: @amelia TODO
   xy: [WKT_4326!]
+  # Associated research :: Is this project component research or applied?
+  isResearch: Boolean
+  # Description :: Short description of this research component
+  researchDescription: String
+  # Research type :: @TODO
+  researchType: String
+  # Target audience :: @TODO
+  researchTargetAudience: String
+  # author :: @TODO
+  researchAuthor: String
+  # paper :: @TODO
+  researchPaper: String
 }
 
 type Adaptation {

@@ -11,6 +11,7 @@ create table Users (
   id bigint not null identity primary key,
   emailAddress nvarchar(255) not null unique,
   googleId nvarchar(255) unique,
+	saeonId nvarchar(255) unique
 );
 end
 
@@ -182,7 +183,6 @@ create table Projects (
 	alternativeContact nvarchar(255),
 	alternativeContactEmail nvarchar(255),
 	leadAgent nvarchar(255),
-	projectType bigint foreign key references VocabularyXrefVocabulary (id),
 	interventionType bigint foreign key references VocabularyXrefVocabulary (id),
 	projectStatus bigint foreign key references VocabularyXrefVocabulary (id),
 	validationStatus bigint foreign key references VocabularyXrefVocabulary (id),	
@@ -215,6 +215,11 @@ create table Mitigations (
 	otherCarbonCreditStandardDescription nvarchar(4000),
 	cdmProjectNumber nvarchar(255),
 	cdmStatus nvarchar(255),
+  researchDescription nvarchar(4000),
+  researchType nvarchar(255),
+  researchTargetAudience nvarchar(255),
+  researchAuthor nvarchar(255),
+  researchPaper nvarchar(255),	
 	mitigationType bigint foreign key references VocabularyXrefVocabulary (id),
 	mitigationSubType bigint foreign key references VocabularyXrefVocabulary (id),
 	interventionStatus bigint foreign key references VocabularyXrefVocabulary (id),
@@ -242,67 +247,17 @@ create table Adaptations (
   description nvarchar(255),
   startDate date,
   endDate date,
+	xy nvarchar(4000),
+  researchDescription nvarchar(4000),
+  researchType nvarchar(255),
+  researchTargetAudience nvarchar(255),
+  researchAuthor nvarchar(255),
+  researchPaper nvarchar(255),
   adaptationSector bigint foreign key references VocabularyXrefVocabulary (id),
   adaptationPurpose bigint foreign key references VocabularyXrefVocabulary (id),
   hazardFamily bigint foreign key references VocabularyXrefVocabulary (id),
   hazardSubFamily bigint foreign key references VocabularyXrefVocabulary (id),
   hazard bigint foreign key references VocabularyXrefVocabulary (id),
-  subHazard bigint foreign key references VocabularyXrefVocabulary (id),
-  xy nvarchar(4000)
-);
-end
-
--- ResearchXrefMitigation
-if not exists (
-	select *
-	from sys.objects
-	where
-		object_id = OBJECT_ID(N'[dbo].[ResearchXrefMitigation]')
-		and type = 'U'
-)
-begin
-create table ResearchXrefMitigation (
-	id bigint not null identity primary key,
-	researchId bigint not null foreign key references Research (id),
-	mitigationId bigint not null foreign key references Mitigations (id),
-	unique (researchId, mitigationId)
-)
-end
-
--- ResearchXrefAdaptation
-if not exists (
-	select *
-	from sys.objects
-	where
-		object_id = OBJECT_ID(N'[dbo].[ResearchXrefAdaptation]')
-		and type = 'U'
-)
-begin
-create table ResearchXrefAdaptation (
-	id bigint not null identity primary key,
-	researchId bigint not null foreign key references Research (id),
-	adaptationId bigint not null foreign key references Adaptations (id),
-	unique (researchId, adaptationId)
-)
-end
-
--- Research
-if not exists (
-	select *
-	from sys.objects
-	where
-		object_id = OBJECT_ID(N'[dbo].[Research]')
-		and type = 'U'
-)
-begin
-create table Research (
-  id bigint not null identity primary key,
-	projectId bigint not null foreign key references Projects (id),
-  title nvarchar(255),
-  description nvarchar(4000),
-  researchType nvarchar(255),
-  targetAudience nvarchar(255),
-  author nvarchar(255),
-  paper nvarchar(255),
+  subHazard bigint foreign key references VocabularyXrefVocabulary (id)
 );
 end

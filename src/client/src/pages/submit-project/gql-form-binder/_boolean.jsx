@@ -26,10 +26,10 @@ export default memo(
               onChange={e => update({ value: e.target.value })}
             >
               <MenuItem key={'false'} value={'false'}>
-                Not Validated
+                No
               </MenuItem>
               <MenuItem key={'true'} value={'true'}>
-                Validated
+                Yes
               </MenuItem>
             </TextField>
           )

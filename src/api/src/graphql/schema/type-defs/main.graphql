@@ -52,13 +52,11 @@ type Mutation {
     projectForm: ProjectInput!
     mitigationForms: [MitigationInput!]
     adaptationForms: [AdaptationInput!]
-    researchForms: [ResearchInput!]
   ): Project!
   # Update a project
   updateProject(
     projectForm: ProjectInput!
     mitigationForms: [MitigationInput!]
     adaptationForms: [AdaptationInput!]
-    researchForms: [ResearchInput!]
   ): Project!
 }

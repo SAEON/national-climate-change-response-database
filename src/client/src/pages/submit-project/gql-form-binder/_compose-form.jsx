@@ -33,7 +33,13 @@ export default ({
 
     if (!(set3.size === set1.size && set3.size === set2.size)) {
       throw new Error(
-        'Oops! The graphQL input type does not match the client form logic. You need to explicitly assign each input field into a group. Sorry this is a manual process! (But it is as easy as updating an array of field values in the form builder)'
+        `Oops! The graphQL input type does not match the client form logic. You need to explicitly assign each input field into a group. Sorry this is a manual process! (But it is as easy as updating an array of field values in the form builder)
+
+Fields:
+${JSON.stringify(_fields, null, 2)}
+
+Sections:
+${JSON.stringify(sections, null, 2)}`
       )
     }
   }

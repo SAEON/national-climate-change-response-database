@@ -33,7 +33,6 @@ export default ({ children }) => {
   const [projectForm, setProjectForm] = useState({})
   const [mitigationForms, setMitigationForms] = useState([])
   const [adaptationForms, setAdaptationForms] = useState([])
-  const [researchForms, setResearchForms] = useState([])
 
   /* TYPE QUERY */
 
@@ -44,7 +43,6 @@ export default ({ children }) => {
         $projectInputType: String!
         $adaptationInputType: String!
         $mitigationInputType: String!
-        $researchInputType: String!
       ) {
         projectFields: __type(name: $projectInputType) {
           ...CoreFields
@@ -55,9 +53,6 @@ export default ({ children }) => {
         adaptationFields: __type(name: $adaptationInputType) {
           ...CoreFields
         }
-        researchFields: __type(name: $researchInputType) {
-          ...CoreFields
-        }
       }
     `,
     {
@@ -65,7 +60,6 @@ export default ({ children }) => {
         projectInputType: 'ProjectInput',
         adaptationInputType: 'AdaptationInput',
         mitigationInputType: 'MitigationInput',
-        researchInputType: 'ResearchInput',
       },
     }
   )
@@ -73,7 +67,6 @@ export default ({ children }) => {
   const projectFields = data?.projectFields.inputFields
   const mitigationFields = data?.mitigationFields.inputFields
   const adaptationFields = data?.adaptationFields.inputFields
-  const researchFields = data?.researchFields.inputFields
 
   /* PROJECT FORM */
 
@@ -128,27 +121,6 @@ export default ({ children }) => {
     [adaptationFields, adaptationForms]
   )
 
-  /* RESEARCH FORMS */
-
-  const updateResearchForm = useCallback((obj, i) => {
-    setResearchForms(forms =>
-      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, obj) : form))
-    )
-  }, [])
-
-  const addResearchForm = useCallback(() => {
-    setResearchForms(forms => [...forms, {}])
-  }, [])
-
-  const removeResearchForm = useCallback(i => {
-    setResearchForms(forms => forms.filter((form, _i) => i !== _i))
-  }, [])
-
-  const researchFormsValidation = useMemo(
-    () => getMultiFormsStatus(researchForms.map(form => getFormStatus(researchFields, form))),
-    [researchFields, researchForms]
-  )
-
   if (loading) {
     return (
       <Fade in={loading} key="loading-in">
@@ -182,12 +154,6 @@ export default ({ children }) => {
         removeAdaptationForm,
         adaptationForms,
         adaptationFormsValidation,
-        researchFields,
-        researchForms,
-        researchFormsValidation,
-        updateResearchForm,
-        addResearchForm,
-        removeResearchForm,
       }}
     >
       <Fade in={Boolean(data)} key="data-in">

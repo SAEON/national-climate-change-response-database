@@ -110,20 +110,6 @@ export default async (_, { projectForm, mitigationForms, adaptationForms, resear
         })
         .join('\n')}
 
-      -- research
-      ${researchForms
-        .map(({ simpleInput, vocabInput }) => {
-          if (!simpleInput.length && !vocabInput.length) return ''
-
-          return getInsertStmt({
-            table: 'Research',
-            simpleInput: simpleInput,
-            vocabInput: vocabInput,
-            projectId: true,
-          })
-        })
-        .join('\n')}
-
       select id from #newProject;
       commit transaction T
     end try

@@ -8,7 +8,6 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import ProjectForm from './forms/project'
 import MitigationForms from './forms/mitigation'
 import AdaptationForms from './forms/adaptation'
-import ResearchForms from './forms/research'
 import ResetForm from './reset-form'
 import CompleteIcon from 'mdi-react/CheckBoldIcon'
 import AppBar from '@material-ui/core/AppBar'
@@ -61,7 +60,6 @@ const Layout = () => {
     projectFormValidation,
     mitigationFormsValidation,
     adaptationFormsValidation,
-    researchFormsValidation,
   } = useContext(formContext)
 
   const { isComplete: projectFormComplete, isStarted: projectFormStarted } = projectFormValidation
@@ -76,12 +74,8 @@ const Layout = () => {
     isStarted: adaptationFormsStarted,
   } = adaptationFormsValidation
 
-  const {
-    isComplete: researchFormsComplete,
-    isStarted: researchFormsStarted,
-  } = researchFormsValidation
-
   const canSubmit = projectFormComplete
+  // TODO disable research button if project type is not research
 
   return (
     <>
@@ -131,13 +125,6 @@ const Layout = () => {
             ),
           },
           {
-            primaryText: 'Research',
-            secondaryText: 'Project research details',
-            Icon: () => (
-              <AvatarIcon i={4} started={researchFormsStarted} complete={researchFormsComplete} />
-            ),
-          },
-          {
             disabled: !canSubmit,
             primaryText: 'Submit',
             secondaryText: 'Review and submit project',
@@ -151,7 +138,6 @@ const Layout = () => {
               {activeIndex === 0 && <ProjectForm key="project-form" />}
               {activeIndex === 1 && <MitigationForms key="mitigation-forms" />}
               {activeIndex === 2 && <AdaptationForms key="adaptation-forms" />}
-              {activeIndex === 3 && <ResearchForms key="research-forms" />}
               {activeIndex === 4 && <Submit key="submit" />}
             </>
           )

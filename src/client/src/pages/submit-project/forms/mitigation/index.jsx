@@ -69,6 +69,14 @@ const Compose = ({ fields }) => {
                       'hostSubSectorPrimary',
                       'hostSubSectorSecondary',
                     ],
+                    'Associated research': [
+                      'isResearch',
+                      'researchDescription',
+                      'researchType',
+                      'researchTargetAudience',
+                      'researchAuthor',
+                      'researchPaper',
+                    ],
                   }}
                 />
               </div>

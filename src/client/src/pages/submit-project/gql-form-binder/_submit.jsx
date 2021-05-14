@@ -29,7 +29,7 @@ const convertFormToInput = form =>
 
 export default () => {
   const history = useHistory()
-  const { projectForm, mitigationForms, adaptationForms, researchForms } = useContext(formContext)
+  const { projectForm, mitigationForms, adaptationForms } = useContext(formContext)
 
   const [createProject, { error, loading }] = useMutation(
     gql`
@@ -37,13 +37,11 @@ export default () => {
         $projectForm: ProjectInput!
         $mitigationForms: [MitigationInput!]
         $adaptationForms: [AdaptationInput!]
-        $researchForms: [ResearchInput!]
       ) {
         createProject(
           projectForm: $projectForm
           mitigationForms: $mitigationForms
           adaptationForms: $adaptationForms
-          researchForms: $researchForms
         ) {
           id
         }
@@ -90,7 +88,6 @@ export default () => {
                   projectForm: convertFormToInput(projectForm),
                   mitigationForms: mitigationForms.map(form => convertFormToInput(form)),
                   adaptationForms: adaptationForms.map(form => convertFormToInput(form)),
-                  researchForms: researchForms.map(form => convertFormToInput(form)),
                 },
               })
             }

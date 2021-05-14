@@ -3,10 +3,10 @@ import query from '../../mssql/query.js'
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth'
 import base64url from 'base64url'
 import {
+  NCCRD_API_ADDRESS,
   NCCRD_API_GOOGLE_CLIENT_SECRET,
   NCCRD_API_GOOGLE_CLIENT_ID,
   NCCRD_API_GOOGLE_OAUTH_REDIRECT_ADDRESS,
-  NCCRD_API_ADDRESS,
 } from '../../config.js'
 
 export default () => {

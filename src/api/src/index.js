@@ -23,6 +23,7 @@ import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
 import apolloServer from './graphql/index.js'
 import configureGoogleAuth from './passport/google-auth/index.js'
+import configureSaeonAuth from './passport/saeon-auth/index.js'
 import passportCookieConfig from './passport/cookie-config.js'
 import { NCCRD_API_ADDRESS_PORT, NCCRD_API_KEY } from './config.js'
 import getCurrentDirectory from './lib/get-current-directory.js'
@@ -32,6 +33,7 @@ const __dirname = getCurrentDirectory(import.meta)
 
 // Configure passport authentication
 const { login: googleLogin, authenticate: googleAuthenticate } = configureGoogleAuth()
+const { login: saeonLogin, authenticate: saeonAuthenticate } = configureSaeonAuth()
 
 // Configure static files server
 const SPA_PATH = path.join(__dirname, 'http/web/dist')
@@ -68,6 +70,8 @@ app
     new KoaRouter()
       .get('/http/client-info', clientInfoRoute)
       .get('/http/authenticate/redirect/google', googleAuthenticate, loginSuccessRoute) // passport
+      .get('/http/authenticate/redirect/saeon', saeonAuthenticate, loginSuccessRoute) // passport
+      .get('/http/login/saeon', saeonLogin) // passport
       .get('/http/login/google', googleLogin) // passport
       .get('/http/authenticate', authenticateRoute)
       .get('/http/logout', logoutRoute)

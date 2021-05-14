@@ -3,6 +3,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
 import Typography from '@material-ui/core/Typography'
 import GoogleAuth from './_google'
+import SAEONAuth from './_saeon'
 import getUriState from '../../lib/get-uri-state'
 
 export default () => {
@@ -29,6 +30,7 @@ export default () => {
         />
         <CardContent>
           <GoogleAuth redirect={redirect} />
+          <SAEONAuth redirect={redirect} />
         </CardContent>
       </Card>
     </main>

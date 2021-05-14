@@ -5,8 +5,6 @@ input ProjectInput {
   description: String
   # Project manager :: Who is in charge of managing this project?
   projectManager: String
-  # Project type :: Is this a research or applied project?
-  projectType: ControlledVocabularyInput
   # Intervention type :: What type of intervention does this project focus on?
   interventionType: ControlledVocabularyInput
   # Project status :: TODO Amelia

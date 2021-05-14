@@ -54,6 +54,14 @@ const Compose = memo(({ fields }) => {
                     ],
                     'Hazard details': ['hazardFamily', 'hazardSubFamily', 'hazard', 'subHazard'],
                     'Location information': ['xy'],
+                    'Associated research': [
+                      'isResearch',
+                      'researchDescription',
+                      'researchType',
+                      'researchTargetAudience',
+                      'researchAuthor',
+                      'researchPaper',
+                    ],
                   }}
                 />
               </div>

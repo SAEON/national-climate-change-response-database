@@ -12,7 +12,6 @@ const Compose = memo(({ fields }) => {
           'title',
           'description',
           'projectManager',
-          'projectType',
           'interventionType',
           'projectStatus',
           'link',

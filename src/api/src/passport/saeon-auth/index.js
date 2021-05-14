@@ -84,7 +84,14 @@ export default () => {
 
     return {
       authenticate: async (ctx, next) => {
-        console.log('authenticate called')
+        console.log(
+          'authenticate called',
+          `${SAEON_AUTH_ADDRESS}/oauth2/token`,
+          `${SAEON_AUTH_ADDRESS}/oauth2/auth`,
+          SAEON_AUTH_CLIENT_ID,
+          SAEON_AUTH_CLIENT_SECRET,
+          SAEON_AUTH_OAUTH_REDIRECT_ADDRESS
+        )
         return passport.authenticate('provider')(ctx, next)
       },
       login: async (ctx, next) => {

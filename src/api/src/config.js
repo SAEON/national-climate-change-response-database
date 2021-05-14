@@ -13,7 +13,7 @@ export const SAEON_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
 
 export const SAEON_AUTH_CLIENT_SECRET = process.env.SAEON_AUTH_CLIENT_SECRET || ''
 export const SAEON_AUTH_CLIENT_ID = process.env.SAEON_AUTH_CLIENT_ID || 'SAEON.NCCIS'
-export const SAEON_AUTH_CLIENT_SCOPES = process.env.SAEON_AUTH_CLIENT_SCOPES || 'SAEON.NCCIS,openid'
+export const SAEON_AUTH_CLIENT_SCOPES = process.env.SAEON_AUTH_CLIENT_SCOPES || 'SAEON.NCCIS'
 export const SAEON_AUTH_OAUTH_REDIRECT_ADDRESS =
   process.env.SAEON_AUTH_OAUTH_REDIRECT_ADDRESS ||
   'http://localhost:3000/http/authenticate/redirect/saeon'

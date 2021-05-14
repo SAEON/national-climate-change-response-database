@@ -6,13 +6,7 @@ const { NCCRD_DEPLOYMENT_ENV } = config
 
 const MASKED_FIELDS =
   NCCRD_DEPLOYMENT_ENV === 'production'
-    ? [
-        'NCCRD_API_KEY',
-        'NCCRD_API_GOOGLE_CLIENT_ID',
-        'NCCRD_API_GOOGLE_CLIENT_SECRET',
-        'MSSQL_USERNAME',
-        'MSSQL_PASSWORD',
-      ]
+    ? ['NCCRD_API_KEY', 'SAEON_AUTH_CLIENT_SECRET', 'MSSQL_USERNAME', 'MSSQL_PASSWORD']
     : []
 
 console.log(

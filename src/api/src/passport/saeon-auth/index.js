@@ -84,11 +84,13 @@ export default () => {
 
     return {
       authenticate: async (ctx, next) => {
+        console.log('authenticate called')
         return passport.authenticate('provider')(ctx, next)
       },
       login: async (ctx, next) => {
+        console.log('login called')
         /**
-         * If /http/login/google is called without a 'redirect'
+         * If /http/login is called without a 'redirect'
          * query param, then the result is 'undefined' as
          * a string
          */

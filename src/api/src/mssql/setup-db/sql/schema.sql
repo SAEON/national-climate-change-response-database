@@ -204,6 +204,7 @@ if not exists (
 begin
 create table Mitigations (
   id bigint not null identity primary key,
+	projectId bigint not null foreign key references Projects (id),
 	title nvarchar(255),
 	description nvarchar(4000),
 	carbonCredit bit,
@@ -236,6 +237,7 @@ if not exists (
 begin
 create table Adaptations (
   id bigint not null identity primary key,
+	projectId bigint not null foreign key references Projects (id),
   title nvarchar(255),
   description nvarchar(255),
   startDate date,
@@ -261,6 +263,7 @@ if not exists (
 begin
 create table Research (
   id bigint not null identity primary key,
+	projectId bigint not null foreign key references Projects (id),
   title nvarchar(255),
   description nvarchar(4000),
   associatedMitigationComponent nvarchar(255),

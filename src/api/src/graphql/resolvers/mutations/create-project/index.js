@@ -14,12 +14,16 @@ const filterFormInput = form => {
     )
 }
 
-const getInsertStmt = (table, simpleInput, vocabInput) => `
+const getInsertStmt = ({ table, simpleInput, vocabInput, projectId = false }) => `
   insert into ${table} (${[
+  projectId && 'projectId',
   ...simpleInput.map(([field]) => field),
   ...vocabInput.map(([field]) => field),
-].join(',')})
+]
+  .filter(_ => _)
+  .join(',')})
   values (${[
+    projectId && ` (select id from #newProject) `,
     ...simpleInput.map(([, value]) => `'${value}'`),
     ...vocabInput.map(
       ([field, { root, tree, term }]) => `(
@@ -35,7 +39,9 @@ const getInsertStmt = (table, simpleInput, vocabInput) => `
         and t.name = '${tree}'
       )`
     ),
-  ].join(',')});`
+  ]
+    .filter(_ => _)
+    .join(',')});`
 
 export default async (_, { projectForm, mitigationForms, adaptationForms, researchForms }, ctx) => {
   const { query } = ctx.mssql
@@ -57,7 +63,12 @@ export default async (_, { projectForm, mitigationForms, adaptationForms, resear
       create table #newAdaptations (i int, id int);
 
       -- project
-      ${getInsertStmt('Projects', projectForm.simpleInput, projectForm.vocabInput)}
+      ${getInsertStmt({
+        table: 'Projects',
+        simpleInput: projectForm.simpleInput,
+        vocabInput: projectForm.vocabInput,
+      })}
+
       insert into #newProject (id)
       select scope_identity() id;
 
@@ -67,7 +78,12 @@ export default async (_, { projectForm, mitigationForms, adaptationForms, resear
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
-          ${getInsertStmt('Mitigations', simpleInput, vocabInput)}
+          ${getInsertStmt({
+            table: 'Mitigations',
+            simpleInput: simpleInput,
+            vocabInput: vocabInput,
+            projectId: true,
+          })}
           insert into #newMitigations (i, id)
           select
           ${i} i,
@@ -81,7 +97,12 @@ export default async (_, { projectForm, mitigationForms, adaptationForms, resear
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
-          ${getInsertStmt('Adaptations', simpleInput, vocabInput)}
+          ${getInsertStmt({
+            table: 'Adaptations',
+            simpleInput: simpleInput,
+            vocabInput: vocabInput,
+            projectId: true,
+          })}
           insert into #newAdaptations (i, id)
           select
           ${i} i,
@@ -93,7 +114,13 @@ export default async (_, { projectForm, mitigationForms, adaptationForms, resear
       ${researchForms
         .map(({ simpleInput, vocabInput }) => {
           if (!simpleInput.length && !vocabInput.length) return ''
-          return getInsertStmt('Research', simpleInput, vocabInput)
+
+          return getInsertStmt({
+            table: 'Research',
+            simpleInput: simpleInput,
+            vocabInput: vocabInput,
+            projectId: true,
+          })
         })
         .join('\n')}
 
@@ -103,6 +130,8 @@ export default async (_, { projectForm, mitigationForms, adaptationForms, resear
     begin catch
       rollback transaction T
     end catch`
+
+  console.log(sql)
 
   const result = await query(sql)
   return { id: result.recordset[0].id }

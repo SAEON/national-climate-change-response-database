@@ -9,20 +9,20 @@ const __dirname = getCurrentDirectory(import.meta)
 
 ;(async () => {
   if (NCCRD_API_RESET_SCHEMA) {
-    await loadFile(join(__dirname, './schema-drop.sql'))
+    await loadFile(join(__dirname, './sql/schema-drop.sql'))
       .then(sql => query(sql))
       .then(() => {
         console.info('SQL Schema dropped!')
       })
   }
 
-  await loadFile(join(__dirname, './schema.sql'))
+  await loadFile(join(__dirname, './sql/schema.sql'))
     .then(sql => query(sql))
     .then(() => {
       console.info('SQL Schema created (or already exists)')
     })
 
-  await loadFile(join(__dirname, './seeds.sql'))
+  await loadFile(join(__dirname, './sql/seeds.sql'))
     .then(sql => query(sql))
     .then(() => {
       console.info('SQL Database seeds inserted!')

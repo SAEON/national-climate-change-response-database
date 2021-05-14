@@ -3,7 +3,6 @@ import { Route, Switch, withRouter } from 'react-router-dom'
 import Transition from './_transition'
 
 const HomePage = lazy(() => import('../../pages/home'))
-const LoginPage = lazy(() => import('../../pages/login'))
 const AccessPage = lazy(() => import('../../pages/access'))
 const ProjectsPage = lazy(() => import('../../pages/projects'))
 const ProjectPage = lazy(() => import('../../pages/project'))
@@ -81,18 +80,6 @@ export default withRouter(() => {
         render={() => (
           <Transition tKey="deployments">
             <DeploymentsPage />
-          </Transition>
-        )}
-      />
-
-      {/* LOGIN */}
-      <Route
-        key={'login'}
-        path={'/login'}
-        exact
-        render={() => (
-          <Transition tKey="login">
-            <LoginPage />
           </Transition>
         )}
       />

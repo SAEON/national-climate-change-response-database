@@ -87,11 +87,20 @@ export default () => {
         return passport.authenticate('provider')(ctx, next)
       },
       login: async (ctx, next) => {
+        /**
+         * If /http/login/google is called without a 'redirect'
+         * query param, then the result is 'undefined' as
+         * a string
+         */
+        const redirect = ctx.request.query.redirect
+          ? ctx.request.query.redirect == 'undefined'
+            ? `${NCCRD_API_ADDRESS}`
+            : ctx.request.query.redirect
+          : NCCRD_API_ADDRESS
+
         return passport.authenticate('provider', {
           scope: SAEON_AUTH_CLIENT_SCOPES.split(','),
-          state: base64url(
-            JSON.stringify({ redirect: ctx.request.query.redirect || NCCRD_API_ADDRESS })
-          ),
+          state: base64url(JSON.stringify({ redirect })),
         })(ctx, next)
       },
     }

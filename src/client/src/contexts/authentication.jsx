@@ -1,11 +1,9 @@
-import { useState, useEffect, useContext, createContext } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import { NCCRD_API_HTTP_ADDRESS } from '../config'
-import { context as clientInfoContext } from './client-info'
 
 export const context = createContext()
 
 export default ({ children }) => {
-  const { origin: NCCRD_CLIENT_ADDRESS } = useContext(clientInfoContext)
   const [userInfo, setUserInfo] = useState(false)
   const [authenticating, setAuthenticating] = useState(false)
 
@@ -13,7 +11,7 @@ export default ({ children }) => {
     if (userInfo) {
       return true
     } else {
-      window.location.href = `${NCCRD_CLIENT_ADDRESS}/login?redirect=${window.location.href}`
+      window.location.href = `${NCCRD_API_HTTP_ADDRESS}/login?redirect=${window.location.href}`
     }
   }
 

@@ -39,7 +39,7 @@ export default () => {
       {window.location.pathname !== '/login' && !authenticated && (
         <MuiLink
           style={{ marginLeft: 'auto' }}
-          href={`${NCCRD_API_HTTP_ADDRESS}/login/saeon?redirect=${window.location.href}`}
+          href={`${NCCRD_API_HTTP_ADDRESS}/login?redirect=${window.location.href}`}
         >
           <Typography style={{ paddingRight: theme.spacing(1) }} variant="overline">
             Log in

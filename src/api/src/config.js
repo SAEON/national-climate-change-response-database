@@ -11,15 +11,9 @@ export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.ac.za'
 export const CATALOGUE_API_ODP_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
 export const SAEON_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
 
-export const NCCRD_API_GOOGLE_CLIENT_ID = process.env.NCCRD_API_GOOGLE_CLIENT_ID || ''
-export const NCCRD_API_GOOGLE_CLIENT_SECRET = process.env.NCCRD_API_GOOGLE_CLIENT_SECRET || ''
-export const NCCRD_API_GOOGLE_OAUTH_REDIRECT_ADDRESS =
-  process.env.NCCRD_API_GOOGLE_OAUTH_REDIRECT_ADDRESS ||
-  'http://localhost:3000/http/authenticate/redirect/google'
-
 export const SAEON_AUTH_CLIENT_SECRET = process.env.SAEON_AUTH_CLIENT_SECRET || ''
-export const SAEON_AUTH_CLIENT_ID = process.env.SAEON_AUTH_CLIENT_ID || ''
-export const SAEON_AUTH_CLIENT_SCOPES = process.env.SAEON_AUTH_CLIENT_SCOPES || ''
+export const SAEON_AUTH_CLIENT_ID = process.env.SAEON_AUTH_CLIENT_ID || 'SAEON.NCCIS'
+export const SAEON_AUTH_CLIENT_SCOPES = process.env.SAEON_AUTH_CLIENT_SCOPES || 'SAEON.NCCIS,openid'
 export const SAEON_AUTH_OAUTH_REDIRECT_ADDRESS =
   process.env.SAEON_AUTH_OAUTH_REDIRECT_ADDRESS ||
   'http://localhost:3000/http/authenticate/redirect/saeon'

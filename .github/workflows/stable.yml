@@ -15,6 +15,7 @@ jobs:
 
       - name: Deploy services
         run: >-
+          NCCRD_API_RESET_SCHEMA=true
           SAEON_AUTH_CLIENT_SECRET="${{ secrets.SAEON_AUTH_CLIENT_SECRET}}"
           SAEON_AUTH_OAUTH_REDIRECT_ADDRESS="https://nccrd.saeon.ac.za/http/authenticate/redirect/saeon"
           NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES="zach@saeon.ac.za"

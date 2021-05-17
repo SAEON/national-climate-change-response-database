@@ -27,14 +27,17 @@ export default () => {
           callbackURL: SAEON_AUTH_OAUTH_REDIRECT_ADDRESS,
         },
         async (token, tokenSecret, _, cb) => {
-          const { email: saeonEmail, sub: saeonId } = await fetch(
-            `${SAEON_AUTH_ADDRESS}/userinfo`,
-            {
-              headers: {
-                Authorization: `bearer ${token}`,
-              },
-            }
-          ).then(res => res.json())
+          console.info('saeon login call', token, tokenSecret)
+
+          const profile = await fetch(`${SAEON_AUTH_ADDRESS}/userinfo`, {
+            headers: {
+              Authorization: `bearer ${token}`,
+            },
+          }).then(res => res.json())
+
+          console.info('profile result', profile)
+
+          const { email: saeonEmail, sub: saeonId } = profile
 
           try {
             await query(`

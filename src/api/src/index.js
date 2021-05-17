@@ -86,7 +86,7 @@ apolloServer.installSubscriptionHandlers(httpServer)
 
 // Start public HTTP server
 httpServer.listen(NCCRD_API_ADDRESS_PORT, () => {
-  console.log(`NCCRD API server ready`)
-  console.log(`NCCRD GraphQL server ready`)
-  console.log(`NCCRD GraphQL subscriptions server ready`)
+  console.info(`NCCRD API server ready`)
+  console.info(`NCCRD GraphQL server ready`)
+  console.info(`NCCRD GraphQL subscriptions server ready`)
 })

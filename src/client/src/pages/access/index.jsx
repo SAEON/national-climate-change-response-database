@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
+import Loading from '../../components/loading'
 import ContentNav from '../../components/content-nav'
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import RolesIcon from 'mdi-react/AccountLockIcon'
@@ -38,7 +39,11 @@ export default () => {
   const { isAuthorized } = useContext(authorizationContext)
 
   if (!isAuthenticated) {
-    return null
+    return <Loading />
+  }
+
+  if (!isAuthorized('admin')) {
+    throw new Error('This page requires administrator authorization')
   }
 
   return (

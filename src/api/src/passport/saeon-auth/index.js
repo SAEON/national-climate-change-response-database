@@ -29,18 +29,17 @@ export default () => {
         async (token, tokenSecret, _, cb) => {
           console.info('saeon login call', token, tokenSecret)
 
-          const profile = await fetch(`${SAEON_AUTH_ADDRESS}/userinfo`, {
-            headers: {
-              Authorization: `bearer ${token}`,
-            },
-          }).then(res => res.json())
-
-          console.info('profile result', profile)
-
-          const { email: saeonEmail, sub: saeonId } = profile
+          const { email: saeonEmail, sub: saeonId } = await fetch(
+            `${SAEON_AUTH_ADDRESS}/userinfo`,
+            {
+              headers: {
+                Authorization: `bearer ${token}`,
+              },
+            }
+          ).then(res => res.json())
 
           try {
-            const result = await query(`
+            await query(`
               with currentUser as (
                 select
                 '${saeonEmail}' emailAddress,
@@ -57,21 +56,17 @@ export default () => {
               when not matched by target
               then insert (emailAddress, saeonId) values (source.emailAddress, source.saeonId);`)
 
-            console.log('one', result)
-
             const user = (
               await query(`
                 select
                 u.*,
                 roles.roleId id
                 from Users u
-                join UserRoleXref roles on roles.userId = u.id
+                left outer join UserRoleXref roles on roles.userId = u.id
                 where saeonId = '${saeonId}'
                 for json auto, without_array_wrapper;
               `)
             ).recordset[0]
-
-            console.log('user', user)
 
             cb(null, user)
           } catch (error) {
@@ -91,12 +86,8 @@ export default () => {
     })
 
     return {
-      authenticate: async (ctx, next) => {
-        console.log('authenticate called')
-        return passport.authenticate('provider')(ctx, next)
-      },
+      authenticate: async (ctx, next) => passport.authenticate('provider')(ctx, next),
       login: async (ctx, next) => {
-        console.log('login called')
         /**
          * If /http/login is called without a 'redirect'
          * query param, then the result is 'undefined' as

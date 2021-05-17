@@ -9,7 +9,7 @@ const MASKED_FIELDS =
     ? ['NCCRD_API_KEY', 'SAEON_AUTH_CLIENT_SECRET', 'MSSQL_USERNAME', 'MSSQL_PASSWORD']
     : []
 
-console.log(
+console.info(
   'Configuration',
   Object.fromEntries(
     Object.entries(config)

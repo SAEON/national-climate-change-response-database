@@ -3,6 +3,8 @@ export default async ctx => {
   const userAgent = ctx.request.headers['user-agent']
   const origin = ctx.request.headers['origin'] || ''
 
+  console.log(ctx.request.headers)
+
   ctx.body = {
     ipAddress,
     userAgent,

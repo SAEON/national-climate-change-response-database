@@ -43,12 +43,11 @@ const getInsertStmt = ({ table, simpleInput, vocabInput, projectId = false }) =>
     .filter(_ => _)
     .join(',')});`
 
-export default async (_, { projectForm, mitigationForms, adaptationForms, researchForms }, ctx) => {
+export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx) => {
   const { query } = ctx.mssql
   projectForm = filterFormInput(projectForm)
   mitigationForms = mitigationForms.map(form => filterFormInput(form))
   adaptationForms = adaptationForms.map(form => filterFormInput(form))
-  researchForms = researchForms.map(form => filterFormInput(form))
 
   const sql = `
     begin transaction T

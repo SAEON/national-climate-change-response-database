@@ -31,5 +31,5 @@ const __dirname = getCurrentDirectory(import.meta)
   await configureAdmins()
 })().catch(error => {
   console.error('Unable to provision schema', error.message)
-  throw error
+  process.exit(1)
 })

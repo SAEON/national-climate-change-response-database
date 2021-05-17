@@ -72,6 +72,11 @@ npm run start:client
 ```
 
 # Deployment
+Node.js applications typically include an HTTP server bound to localhost, with HTTP requests proxy-passed to this localhost address. This is fairly simple using Nginx, Apache, IIS, etc. The intention behind this software is that the React client is bundled and copied into the Node.js API, so that both the client and the API are available via a single Node.js process. Load balancing should be straight forward (if required) - Just run multiple instances of the application. When using the 'default' deployment mechanism note the following:
+
+1. API calls are gzipped by the Node.js application, but served static files are NOT
+2. No caching policy is set by the Node.js server when static files are requested
+3. The HTTP `origin` header should be set explicitly by the proxy server and should be the domain by which the application is served from
 
 ## Deploy bundled API + client
 The easiest way to deploy the application is to serve the React.js static files from the koa.js server. Note that compression IS enabled for API calls (HTTP and GraphQL), but is NOT enabled for static files since this would be better done via a webserver. To start this app in a production environment:
@@ -125,7 +130,11 @@ docker run \
 ```
 
 ## Deploy from published Docker image
-TODO 
+Use the same `docker run` command as specified above. Currently there is no plan to publish a public Docker image of this source code, if so this document will be updated to indicate the name of the docker image
 
-## Containerized deployment
-TODO
+## Deploy using Docker-compose
+Refer to the [docker-compose.yml](docker-compose.yml) file for a deployment configuration that includes SQL Server, which can be used via the following command (with default configuration values defined in [docker-compose.env](docker-compose.yml)):
+
+```sh
+docker-compose --env-file docker-compose.env up -d --force-recreate --build
+```

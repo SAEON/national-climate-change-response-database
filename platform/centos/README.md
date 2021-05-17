@@ -146,6 +146,8 @@ platform/centos/nginx/nginx.conf => /etc/nginx/nginx.conf (overwrite the existin
 platform/centos/nginx/nccrd.conf => /etc/nginx/conf.d/nccrd.conf (change <hostname> to the correct hostname)
 ```
 
+*NOTE - **Did you replace <hostname> in nccrd.conf??***
+
 ## Install and configure firewalld
 ```sh
 ssh <user>@<hostname>

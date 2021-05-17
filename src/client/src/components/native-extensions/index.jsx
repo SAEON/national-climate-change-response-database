@@ -22,6 +22,7 @@ export default ({ children }) => {
         .join(' ')
     }
 
+    // eslint-disable-next-line no-extend-native
     String.prototype.toBoolean = function () {
       return this.toLowerCase() === 'true'
     }

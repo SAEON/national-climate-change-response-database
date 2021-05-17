@@ -8,6 +8,14 @@ import {
 
 const multilineFields = ['description']
 
+const researchFormFields = [
+  'researchDescription',
+  'researchType',
+  'researchTargetAudience',
+  'researchAuthor',
+  'researchPaper',
+]
+
 export default ({ field, i }) => {
   const { updateAdaptationForm, adaptationForms } = useContext(formContext)
   const form = adaptationForms[i]
@@ -151,6 +159,33 @@ export default ({ field, i }) => {
 
   if (gqlType === 'WKT_4326') {
     return 'hi'
+  }
+
+  if (researchFormFields.includes(fieldName)) {
+    if (!(form['isResearch'] || '').toBoolean()) {
+      return null
+    }
+  }
+
+  if (fieldName === 'isResearch') {
+    return (
+      <GqlBoundFormInput
+        i={i}
+        key={fieldName}
+        field={field}
+        value={value || ''}
+        updateValue={val =>
+          updateAdaptationForm(
+            {
+              [fieldName]: val,
+              ...Object.fromEntries(researchFormFields.map(field => [field, undefined])),
+            },
+            i
+          )
+        }
+        multiline={multilineFields.includes(fieldName)}
+      />
+    )
   }
 
   return (

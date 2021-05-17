@@ -7,6 +7,14 @@ import {
 
 const multilineFields = ['description', 'volMethodology', 'otherCarbonCreditStandardDescription']
 
+const researchFormFields = [
+  'researchDescription',
+  'researchType',
+  'researchTargetAudience',
+  'researchAuthor',
+  'researchPaper',
+]
+
 export default ({ field, i }) => {
   const { mitigationForms, updateMitigationForm } = useContext(formContext)
   const form = mitigationForms[i]
@@ -179,6 +187,33 @@ export default ({ field, i }) => {
     } else {
       return null
     }
+  }
+
+  if (researchFormFields.includes(fieldName)) {
+    if (!(form['isResearch'] || '').toBoolean()) {
+      return null
+    }
+  }
+
+  if (fieldName === 'isResearch') {
+    return (
+      <GqlBoundFormInput
+        i={i}
+        key={fieldName}
+        field={field}
+        value={value || ''}
+        updateValue={val =>
+          updateMitigationForm(
+            {
+              [fieldName]: val,
+              ...Object.fromEntries(researchFormFields.map(field => [field, undefined])),
+            },
+            i
+          )
+        }
+        multiline={multilineFields.includes(fieldName)}
+      />
+    )
   }
 
   return (

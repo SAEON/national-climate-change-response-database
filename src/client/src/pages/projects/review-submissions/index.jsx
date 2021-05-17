@@ -36,7 +36,10 @@ export default () => {
       </Grid>
       {data.projects.map(({ id }) => (
         <Grid key={id} item xs={12}>
-          <Card variant="outlined" style={{ width: '100%' }}>
+          <Card
+            variant="outlined"
+            style={{ width: '100%', backgroundColor: theme.backgroundColor }}
+          >
             <CardHeader title={id} />
             <CardContent>
               <Typography>Project details here</Typography>

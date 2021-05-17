@@ -1,9 +1,9 @@
 export default {
   children: async (self, args, ctx) => {
     const { children = [], tree, term } = self
-    const { findVocabulary } = ctx.mssql.dataFinders
+    const { searchVocabularyTree } = ctx.mssql.dataFinders
 
-    const items = await findVocabulary({
+    const items = await searchVocabularyTree({
       ids: children,
       tree,
     })

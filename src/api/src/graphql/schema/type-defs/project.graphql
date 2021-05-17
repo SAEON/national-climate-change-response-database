@@ -52,4 +52,31 @@ input ProjectInput {
 
 type Project {
   id: Int!
+  title: String!
+  description: String
+  projectManager: String
+  link: String
+  startDate: DateTime
+  endDate: DateTime
+  validationComments: String
+  fundingOrganisation: String
+  fundingPartner: String
+  budgetLower: Money
+  budgetUpper: Money
+  hostOrganisation: String
+  hostPartner: String
+  alternativeContact: String
+  alternativeContactEmail: String
+  leadAgent: String
+
+  interventionType: String
+  projectStatus: String
+  validationStatus: String
+  fundingStatus: String
+  estimatedBudget: String
+  hostSector: String
+  hostSubSector: String
+
+  mitigations: [Mitigation!]
+  adaptations: [Adaptation!]
 }

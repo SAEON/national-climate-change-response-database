@@ -1,11 +1,12 @@
+import _searchVocabularyTree from './_search-vocabulary-tree.js'
 import _findVocabulary from './_find-vocabulary.js'
 
 export const makeDataFinders = () => {
+  const searchVocabularyTree = _searchVocabularyTree()
   const findVocabulary = _findVocabulary()
 
   return {
-    findVocabulary: ({ ids, tree }) => {
-      return findVocabulary.load({ ids, tree })
-    },
+    searchVocabularyTree: ({ ids, tree }) => searchVocabularyTree.load({ ids, tree }),
+    findVocabulary: id => findVocabulary.load(id),
   }
 }

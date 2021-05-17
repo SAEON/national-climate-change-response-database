@@ -55,4 +55,28 @@ input MitigationInput {
 
 type Mitigation {
   id: Int!
+  title: String
+  description: String
+  carbonCredit: Boolean
+  volMethodology: String
+  goldStandard: Boolean
+  vcs: Boolean
+  otherCarbonCreditStandard: Boolean
+  otherCarbonCreditStandardDescription: String
+  cdmProjectNumber: String
+  cdmStatus: String
+  isResearch: Boolean
+  researchDescription: String
+  researchType: String
+  researchTargetAudience: String
+  researchAuthor: String
+  researchPaper: String
+  mitigationType: String
+  mitigationSubType: String
+  interventionStatus: String
+  cdmMethodology: String
+  cdmExecutiveStatus: String
+  hostSector: String
+  hostSubSectorPrimary: String
+  hostSubSectorSecondary: String
 }

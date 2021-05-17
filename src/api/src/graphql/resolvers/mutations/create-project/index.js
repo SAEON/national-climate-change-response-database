@@ -56,10 +56,6 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
       -- temp tables
       drop table if exists #newProject;
       create table #newProject(id int);
-      drop table if exists #newMitigations;
-      create table #newMitigations (i int, id int);
-      drop table if exists #newAdaptations;
-      create table #newAdaptations (i int, id int);
 
       -- project
       ${getInsertStmt({
@@ -73,7 +69,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
 
       -- mitigations
       ${mitigationForms
-        .map(({ simpleInput, vocabInput }, i) => {
+        .map(({ simpleInput, vocabInput }) => {
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
@@ -82,17 +78,13 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
             simpleInput: simpleInput,
             vocabInput: vocabInput,
             projectId: true,
-          })}
-          insert into #newMitigations (i, id)
-          select
-          ${i} i,
-          scope_identity() id;`
+          })}`
         })
         .join('\n')}
 
       -- adaptations
       ${adaptationForms
-        .map(({ simpleInput, vocabInput }, i) => {
+        .map(({ simpleInput, vocabInput }) => {
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
@@ -101,11 +93,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
             simpleInput: simpleInput,
             vocabInput: vocabInput,
             projectId: true,
-          })}
-          insert into #newAdaptations (i, id)
-          select
-          ${i} i,
-          scope_identity() id;`
+          })}`
         })
         .join('\n')}
 
@@ -115,8 +103,6 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
     begin catch
       rollback transaction T
     end catch`
-
-  console.log(sql)
 
   const result = await query(sql)
   return { id: result.recordset[0].id }

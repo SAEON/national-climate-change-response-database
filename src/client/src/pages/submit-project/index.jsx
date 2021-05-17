@@ -128,7 +128,7 @@ const Layout = () => {
             disabled: !canSubmit,
             primaryText: 'Submit',
             secondaryText: 'Review and submit project',
-            Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={5} />,
+            Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={4} />,
           },
         ]}
       >
@@ -138,7 +138,7 @@ const Layout = () => {
               {activeIndex === 0 && <ProjectForm key="project-form" />}
               {activeIndex === 1 && <MitigationForms key="mitigation-forms" />}
               {activeIndex === 2 && <AdaptationForms key="adaptation-forms" />}
-              {activeIndex === 4 && <Submit key="submit" />}
+              {activeIndex === 3 && <Submit key="submit" />}
             </>
           )
         }}

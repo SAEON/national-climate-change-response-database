@@ -1,6 +1,10 @@
 {
   "cSpell.words": [
-    "NCCRD"
+    "NCCRD",
+    "cdmes",
+    "cdmm",
+    "hssp",
+    "hsss"
   ],
   "eslint.workingDirectories": ["src/api", "src/client"]
 }

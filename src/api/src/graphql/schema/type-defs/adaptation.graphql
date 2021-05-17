@@ -38,4 +38,21 @@ input AdaptationInput {
 
 type Adaptation {
   id: Int!
+  title: String!
+  description: String
+  startDate: DateTime
+  endDate: DateTime
+  xy: [WKT_4326!]
+  isResearch: Boolean
+  researchDescription: String
+  researchType: String
+  researchTargetAudience: String
+  researchAuthor: String
+  researchPaper: String
+  adaptationSector: String
+  adaptationPurpose: String
+  hazardFamily: String
+  hazardSubFamily: String
+  hazard: String
+  subHazard: String
 }

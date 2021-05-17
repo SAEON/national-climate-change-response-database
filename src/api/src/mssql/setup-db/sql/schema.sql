@@ -8,7 +8,7 @@ if not exists (
 )
 begin
 create table Users (
-  id bigint not null identity primary key,
+  id int not null identity primary key,
   emailAddress nvarchar(255) not null unique,
   googleId nvarchar(255) unique,
 	saeonId nvarchar(255) unique
@@ -25,7 +25,7 @@ if not exists (
 )
 begin
 create table Roles (
-  id bigint not null identity primary key,
+  id int not null identity primary key,
   [name] nvarchar(255) not null unique,
   description nvarchar(4000)
 );
@@ -41,7 +41,7 @@ if not exists (
 )
 begin
 create table Permissions (
-  id bigint not null identity primary key,
+  id int not null identity primary key,
   [name] nvarchar(255) not null unique,
   description nvarchar(4000)
 );
@@ -57,9 +57,9 @@ if not exists (
 )
 begin
 create table PermissionRoleXref (
-  id bigint not null identity primary key,
-  roleId bigint not null foreign key references Roles (id),
-  permissionId bigint not null foreign key references [Permissions] (id),
+  id int not null identity primary key,
+  roleId int not null foreign key references Roles (id),
+  permissionId int not null foreign key references [Permissions] (id),
   unique (roleId, permissionId)
 );
 end
@@ -74,9 +74,9 @@ if not exists (
 )
 begin
 create table UserRoleXref (
-  id bigint not null identity primary key,
-  userId bigint not null foreign key references Users (id),
-  roleId bigint not null foreign key references Roles (id),
+  id int not null identity primary key,
+  userId int not null foreign key references Users (id),
+  roleId int not null foreign key references Roles (id),
   unique (userId, roleId)
 );
 end
@@ -91,7 +91,7 @@ if not exists (
 )
 begin
 create table Vocabulary (
-  id bigint not null identity primary key,
+  id int not null identity primary key,
   term nvarchar(255) not null unique,
   description nvarchar(4000) null,
   index ix_vocablulary_terms nonclustered (term)
@@ -108,7 +108,7 @@ if not exists (
 )
 begin
 create table VocabularyTrees (
-  id bigint not null identity primary key,
+  id int not null identity primary key,
   name nvarchar(255) not null unique,
   description nvarchar(4000),
   index ix_vocablularyTres_name nonclustered (name)
@@ -125,9 +125,9 @@ if not exists (
 )
 begin
 create table VocabularyXrefTree (
-  id bigint not null identity primary key,
-  vocabularyId bigint not null foreign key references Vocabulary (id),
-  vocabularyTreeId bigint not null foreign key references VocabularyTrees (id),
+  id int not null identity primary key,
+  vocabularyId int not null foreign key references Vocabulary (id),
+  vocabularyTreeId int not null foreign key references VocabularyTrees (id),
   unique (vocabularyId, vocabularyTreeId),
   index ix_VocabularyXrefTree_vocabularyId nonclustered (vocabularyId),
   index ix_VocabularyXrefTree_vocabularyTreeId nonclustered (vocabularyTreeId)
@@ -144,11 +144,11 @@ if not exists (
 )
 begin
 create table VocabularyXrefVocabulary (
-  id bigint not null identity primary key,
-  parentId bigint not null foreign key references Vocabulary (id),
-  childId bigint not null foreign key references Vocabulary (id),
+  id int not null identity primary key,
+  parentId int not null foreign key references Vocabulary (id),
+  childId int not null foreign key references Vocabulary (id),
 	-- TODO order
-  vocabularyTreeId bigint not null foreign key references VocabularyTrees (id),
+  vocabularyTreeId int not null foreign key references VocabularyTrees (id),
   unique (parentId, childId, vocabularyTreeId),
   index ix_VocabularyXrefVocabulary_parentId nonclustered (parentId),
   index ix_VocabularyXrefVocabulary_childId nonclustered (childId),
@@ -166,7 +166,7 @@ if not exists (
 )
 begin
 create table Projects (
-  id bigint not null identity primary key,
+  id int not null identity primary key,
   title nvarchar(255),
   description nvarchar(4000),
 	projectManager nvarchar(255),
@@ -183,13 +183,13 @@ create table Projects (
 	alternativeContact nvarchar(255),
 	alternativeContactEmail nvarchar(255),
 	leadAgent nvarchar(255),
-	interventionType bigint foreign key references VocabularyXrefVocabulary (id),
-	projectStatus bigint foreign key references VocabularyXrefVocabulary (id),
-	validationStatus bigint foreign key references VocabularyXrefVocabulary (id),	
-	fundingStatus bigint foreign key references VocabularyXrefVocabulary (id),	
-	estimatedBudget bigint foreign key references VocabularyXrefVocabulary (id),	
-	hostSector bigint foreign key references VocabularyXrefVocabulary (id),
-	hostSubSector bigint foreign key references VocabularyXrefVocabulary (id)
+	interventionType int foreign key references VocabularyXrefVocabulary (id),
+	projectStatus int foreign key references VocabularyXrefVocabulary (id),
+	validationStatus int foreign key references VocabularyXrefVocabulary (id),	
+	fundingStatus int foreign key references VocabularyXrefVocabulary (id),	
+	estimatedBudget int foreign key references VocabularyXrefVocabulary (id),	
+	hostSector int foreign key references VocabularyXrefVocabulary (id),
+	hostSubSector int foreign key references VocabularyXrefVocabulary (id)
 );
 end
 
@@ -203,8 +203,8 @@ if not exists (
 )
 begin
 create table Mitigations (
-  id bigint not null identity primary key,
-	projectId bigint not null foreign key references Projects (id),
+  id int not null identity primary key,
+	projectId int not null foreign key references Projects (id),
 	title nvarchar(255),
 	description nvarchar(4000),
 	carbonCredit bit,
@@ -215,19 +215,20 @@ create table Mitigations (
 	otherCarbonCreditStandardDescription nvarchar(4000),
 	cdmProjectNumber nvarchar(255),
 	cdmStatus nvarchar(255),
+	isResearch bit default 0,
   researchDescription nvarchar(4000),
   researchType nvarchar(255),
   researchTargetAudience nvarchar(255),
   researchAuthor nvarchar(255),
   researchPaper nvarchar(255),	
-	mitigationType bigint foreign key references VocabularyXrefVocabulary (id),
-	mitigationSubType bigint foreign key references VocabularyXrefVocabulary (id),
-	interventionStatus bigint foreign key references VocabularyXrefVocabulary (id),
-	cdmMethodology bigint foreign key references VocabularyXrefVocabulary (id),
-	cdmExecutiveStatus bigint foreign key references VocabularyXrefVocabulary (id),
-	hostSector bigint foreign key references VocabularyXrefVocabulary (id),
-	hostSubSectorPrimary bigint foreign key references VocabularyXrefVocabulary (id),
-	hostSubSectorSecondary bigint foreign key references VocabularyXrefVocabulary (id)
+	mitigationType int foreign key references VocabularyXrefVocabulary (id),
+	mitigationSubType int foreign key references VocabularyXrefVocabulary (id),
+	interventionStatus int foreign key references VocabularyXrefVocabulary (id),
+	cdmMethodology int foreign key references VocabularyXrefVocabulary (id),
+	cdmExecutiveStatus int foreign key references VocabularyXrefVocabulary (id),
+	hostSector int foreign key references VocabularyXrefVocabulary (id),
+	hostSubSectorPrimary int foreign key references VocabularyXrefVocabulary (id),
+	hostSubSectorSecondary int foreign key references VocabularyXrefVocabulary (id)
 );
 end
 
@@ -241,23 +242,24 @@ if not exists (
 )
 begin
 create table Adaptations (
-  id bigint not null identity primary key,
-	projectId bigint not null foreign key references Projects (id),
+  id int not null identity primary key,
+	projectId int not null foreign key references Projects (id),
   title nvarchar(255),
   description nvarchar(255),
   startDate date,
   endDate date,
 	xy nvarchar(4000),
+	isResearch bit default 0,
   researchDescription nvarchar(4000),
   researchType nvarchar(255),
   researchTargetAudience nvarchar(255),
   researchAuthor nvarchar(255),
   researchPaper nvarchar(255),
-  adaptationSector bigint foreign key references VocabularyXrefVocabulary (id),
-  adaptationPurpose bigint foreign key references VocabularyXrefVocabulary (id),
-  hazardFamily bigint foreign key references VocabularyXrefVocabulary (id),
-  hazardSubFamily bigint foreign key references VocabularyXrefVocabulary (id),
-  hazard bigint foreign key references VocabularyXrefVocabulary (id),
-  subHazard bigint foreign key references VocabularyXrefVocabulary (id)
+  adaptationSector int foreign key references VocabularyXrefVocabulary (id),
+  adaptationPurpose int foreign key references VocabularyXrefVocabulary (id),
+  hazardFamily int foreign key references VocabularyXrefVocabulary (id),
+  hazardSubFamily int foreign key references VocabularyXrefVocabulary (id),
+  hazard int foreign key references VocabularyXrefVocabulary (id),
+  subHazard int foreign key references VocabularyXrefVocabulary (id)
 );
 end

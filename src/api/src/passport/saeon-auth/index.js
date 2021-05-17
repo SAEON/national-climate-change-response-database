@@ -40,7 +40,7 @@ export default () => {
           const { email: saeonEmail, sub: saeonId } = profile
 
           try {
-            await query(`
+            const result = await query(`
               with currentUser as (
                 select
                 '${saeonEmail}' emailAddress,
@@ -57,6 +57,8 @@ export default () => {
               when not matched by target
               then insert (emailAddress, saeonId) values (source.emailAddress, source.saeonId);`)
 
+            console.log('one', result)
+
             const user = (
               await query(`
                 select
@@ -69,8 +71,11 @@ export default () => {
               `)
             ).recordset[0]
 
+            console.log('user', user)
+
             cb(null, user)
           } catch (error) {
+            console.error('Error authenticating', error.message)
             cb(error, null)
           }
         }

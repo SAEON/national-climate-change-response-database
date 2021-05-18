@@ -95,6 +95,8 @@ export default ({ children }) => {
     setMitigationForms(forms => forms.filter((form, _i) => i !== _i))
   }, [])
 
+  const resetMitigationForms = useCallback(() => setMitigationForms(() => []), [])
+
   const mitigationFormsValidation = useMemo(
     () => getMultiFormsStatus(mitigationForms.map(form => getFormStatus(mitigationFields, form))),
     [mitigationFields, mitigationForms]
@@ -115,6 +117,8 @@ export default ({ children }) => {
   const removeAdaptationForm = useCallback(i => {
     setAdaptationForms(forms => forms.filter((form, _i) => i !== _i))
   }, [])
+
+  const resetAdaptationForms = useCallback(() => setAdaptationForms(() => []), [])
 
   const adaptationFormsValidation = useMemo(
     () => getMultiFormsStatus(adaptationForms.map(form => getFormStatus(adaptationFields, form))),
@@ -148,10 +152,12 @@ export default ({ children }) => {
         updateMitigationForm,
         addMitigationForm,
         removeMitigationForm,
+        resetMitigationForms,
         adaptationFields,
         updateAdaptationForm,
         addAdaptationForm,
         removeAdaptationForm,
+        resetAdaptationForms,
         adaptationForms,
         adaptationFormsValidation,
       }}

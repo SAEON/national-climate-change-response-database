@@ -27,8 +27,6 @@ export default () => {
           callbackURL: SAEON_AUTH_OAUTH_REDIRECT_ADDRESS,
         },
         async (token, tokenSecret, _, cb) => {
-          console.info('saeon login call', token, tokenSecret)
-
           const { email: saeonEmail, sub: saeonId } = await fetch(
             `${SAEON_AUTH_ADDRESS}/userinfo`,
             {

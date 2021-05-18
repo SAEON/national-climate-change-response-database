@@ -57,6 +57,7 @@ const Layout = () => {
   const theme = useTheme()
 
   const {
+    projectForm,
     projectFormValidation,
     mitigationFormsValidation,
     adaptationFormsValidation,
@@ -74,8 +75,15 @@ const Layout = () => {
     isStarted: adaptationFormsStarted,
   } = adaptationFormsValidation
 
-  const canSubmit = projectFormComplete
-  // TODO disable research button if project type is not research
+  const mitigationsRequired = ['mitigation', 'cross cutting'].includes(
+    projectForm['interventionType']?.term.toLowerCase()
+  )
+
+  const adaptationsRequired = ['adaptation', 'cross cutting'].includes(
+    projectForm['interventionType']?.term.toLowerCase()
+  )
+
+  let canSubmit = projectFormComplete
 
   return (
     <>
@@ -103,6 +111,7 @@ const Layout = () => {
             ),
           },
           {
+            disabled: !mitigationsRequired,
             primaryText: 'Mitigation(s)',
             secondaryText: 'Project mitigation details',
             Icon: () => (
@@ -114,6 +123,7 @@ const Layout = () => {
             ),
           },
           {
+            disabled: !adaptationsRequired,
             primaryText: 'Adaptation(s)',
             secondaryText: 'Project adaptation details',
             Icon: () => (

@@ -10,6 +10,7 @@ drop table if exists Users;
 drop table if exists Mitigations;
 drop table if exists Adaptations;
 drop table if exists Projects;
+drop table if exists Geometries;
 -- drop table if exists VocabularyXrefVocabulary;
 -- drop table if exists VocabularyXrefTree;
 -- drop table if exists VocabularyTrees;

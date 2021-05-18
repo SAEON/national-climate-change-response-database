@@ -263,3 +263,21 @@ create table Adaptations (
   subHazard int foreign key references VocabularyXrefVocabulary (id)
 );
 end
+
+-- Geometries
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[Geometries]')
+		and type = 'U'
+)
+begin
+create table Geometries (
+  id int not null identity primary key,
+	name nvarchar(255) not null,
+	description nvarchar(4000),
+	[geometry] geometry not null,
+	[geometry_simplified] geometry null
+);
+end

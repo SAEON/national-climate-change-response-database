@@ -8,7 +8,9 @@ import {
 const multilineFields = ['description', 'validationComments']
 
 export default ({ field }) => {
-  const { projectForm, updateProjectForm } = useContext(formContext)
+  const { projectForm, updateProjectForm, resetMitigationForms, resetAdaptationForms } = useContext(
+    formContext
+  )
   const { name: fieldName, description, type } = field
   const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType } = type
@@ -86,7 +88,17 @@ export default ({ field }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateProjectForm({ [fieldName]: val })}
+        onChange={val => {
+          updateProjectForm({ [fieldName]: val })
+
+          if (val?.term.toLowerCase() === 'adaptation' || !val?.term) {
+            resetMitigationForms()
+          }
+
+          if (val?.term.toLowerCase() === 'mitigation' || !val?.term) {
+            resetAdaptationForms()
+          }
+        }}
         placeholder={placeholder}
         helperText={helperText}
       />

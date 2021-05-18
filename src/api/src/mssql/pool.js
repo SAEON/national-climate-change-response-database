@@ -42,7 +42,7 @@ export default ({
     },
   })
 
-  return async (sql) => {
+  return async sql => {
     const request = (await pool.connect()).request()
     request.stream = true
     request.on('error', error => cb(error, null))
@@ -50,20 +50,14 @@ export default ({
     request.on('done', result => cb(null, null, true))
 
     return function iterate() {
-
-      return {
-
-      }
+      return {}
     }
   }
-
-  
 
   return (sql, cb) =>
     pool.connect().then(pool => {
       const request = pool.request()
       request.stream = true
-
 
       return request.query(sql).catch(error => {
         console.error(error)
@@ -71,10 +65,9 @@ export default ({
       })
     })
 
-    return function iterator() {
-      return {
-
-        next: 
-      }
+  return function iterator() {
+    return {
+      next: 'hi',
     }
+  }
 }

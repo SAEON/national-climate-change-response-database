@@ -14,29 +14,31 @@ const filterFormInput = form => {
     )
 }
 
-const getInsertStmt = ({ table, simpleInput, vocabInput, projectId = false }) => `
-  insert into ${table} (${[
+const getSanitizedInsertStmt = ({ table, simpleInput, vocabInput, projectId = false }) => `
+  insert into [${table}] (${[
   projectId && 'projectId',
-  ...simpleInput.map(([field]) => field),
-  ...vocabInput.map(([field]) => field),
+  ...simpleInput.map(([field]) => `[${field}]`),
+  ...vocabInput.map(([field]) => `[${field}]`),
 ]
   .filter(_ => _)
   .join(',')})
   values (${[
     projectId && ` (select id from #newProject) `,
-    ...simpleInput.map(([, value]) => `'${value}'`),
+    ...simpleInput.map(
+      ([, value]) => `'${typeof value === 'string' ? value.replaceAll("'", "''") : value}'`
+    ),
     ...vocabInput.map(
       ([field, { root, tree, term }]) => `(
         select
-        vxv.id ${field}
+        vxv.id [${field}]
         from VocabularyXrefVocabulary vxv
         join Vocabulary p on p.id = vxv.parentId
         join Vocabulary c on c.id = vxv.childId
         join VocabularyTrees t on t.id = vxv.vocabularyTreeId
         where
-        p.term = '${root}'
-        and c.term = '${term}'
-        and t.name = '${tree}'
+        p.term = '${root.replaceAll("'", "''")}'
+        and c.term = '${term.replaceAll("'", "''")}'
+        and t.name = '${tree.replaceAll("'", "''")}'
       )`
     ),
   ]
@@ -58,7 +60,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
       create table #newProject(id int);
 
       -- project
-      ${getInsertStmt({
+      ${getSanitizedInsertStmt({
         table: 'Projects',
         simpleInput: projectForm.simpleInput,
         vocabInput: projectForm.vocabInput,
@@ -73,7 +75,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
-          ${getInsertStmt({
+          ${getSanitizedInsertStmt({
             table: 'Mitigations',
             simpleInput: simpleInput,
             vocabInput: vocabInput,
@@ -88,7 +90,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
-          ${getInsertStmt({
+          ${getSanitizedInsertStmt({
             table: 'Adaptations',
             simpleInput: simpleInput,
             vocabInput: vocabInput,

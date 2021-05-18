@@ -1,3 +1,5 @@
+import { format } from 'sql-formatter'
+
 const filterFormInput = form => {
   return Object.entries(form)
     .filter(([, value]) => value)
@@ -105,6 +107,8 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
     begin catch
       rollback transaction T
     end catch`
+
+  console.info('\nSQL Query', `\n\n${format(sql, { language: 'tsql' })}\n`)
 
   const result = await query(sql)
   return { id: result.recordset[0].id }

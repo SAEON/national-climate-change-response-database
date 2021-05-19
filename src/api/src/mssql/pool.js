@@ -16,6 +16,7 @@ export default ({
   server = MSSQL_HOSTNAME,
   database = MSSQL_DATABASE,
   port = MSSQL_PORT,
+  batchSize = 100,
 } = {}) => {
   const pool = new ConnectionPool({
     user,
@@ -43,31 +44,53 @@ export default ({
   })
 
   return async sql => {
-    const request = (await pool.connect()).request()
+    let done = false
+
+    const connection = await pool.connect()
+    const request = connection.request()
     request.stream = true
-    request.on('error', error => cb(error, null))
-    request.on('row', row => cb(null, row))
-    request.on('done', result => cb(null, null, true))
+    request.query(sql)
 
-    return function iterate() {
-      return {}
-    }
-  }
+    return (async function iterate() {
+      const rows = []
 
-  return (sql, cb) =>
-    pool.connect().then(pool => {
-      const request = pool.request()
-      request.stream = true
+      await new Promise((resolve, reject) => {
+        if (done) resolve()
 
-      return request.query(sql).catch(error => {
-        console.error(error)
-        throw error
+        const rowListener = row => {
+          rows.push(row)
+          if (rows.length >= batchSize) {
+            request.pause()
+            request.off('row', rowListener)
+            request.off('done', doneListener)
+            request.off('error', errorListener)
+            resolve()
+          }
+        }
+
+        const errorListener = error => {
+          reject(error)
+        }
+
+        const doneListener = result => {
+          done = result
+          resolve()
+        }
+
+        request.on('row', rowListener)
+        request.on('done', doneListener)
+        request.on('error', errorListener)
       })
-    })
 
-  return function iterator() {
-    return {
-      next: 'hi',
-    }
+      return {
+        next: () => {
+          request.resume()
+          return iterate()
+        },
+        done: !rows.length && Boolean(done),
+        result: done,
+        rows,
+      }
+    })()
   }
 }

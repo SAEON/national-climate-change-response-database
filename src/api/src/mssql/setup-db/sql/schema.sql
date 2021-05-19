@@ -275,7 +275,8 @@ if not exists (
 begin
 create table Geometries (
   id int not null identity primary key,
-	name nvarchar(255) not null,
+	name nvarchar(255) not null unique,
+	shortname nvarchar(10) null unique,
 	description nvarchar(4000),
 	[geometry] geometry not null,
 	[geometry_simplified] geometry null

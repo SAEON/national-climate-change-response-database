@@ -36,8 +36,10 @@ input AdaptationInput {
   researchPaper: String
   # Province :: Select province
   province: ControlledVocabularyInput
-  # Region :: Select region
-  region: ControlledVocabularyInput
+  # District municipality :: Select district municipality
+  districtMunicipality: ControlledVocabularyInput
+  # Local municipality :: Select local municipality
+  localMunicipality: ControlledVocabularyInput
 }
 
 type Adaptation {

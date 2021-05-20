@@ -39,29 +39,48 @@ export default ({ field, i }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateAdaptationForm({ [fieldName]: val, region: undefined }, i)}
+        onChange={val =>
+          updateAdaptationForm(
+            { [fieldName]: val, districtMunicipality: undefined, localMunicipality: undefined },
+            i
+          )
+        }
         placeholder={placeholder}
         helperText={helperText}
       />
     )
-  } else if (fieldName === 'region') {
-    if (form['province']) {
-      return (
-        <ControlledVocabularyInput
-          key={fieldName}
-          tree="regions"
-          root={form['province']}
-          name={fieldName}
-          value={value}
-          error={isRequired && !value}
-          onChange={val => updateAdaptationForm({ [fieldName]: val }, i)}
-          placeholder={placeholder}
-          helperText={helperText}
-        />
-      )
-    } else {
-      return null
-    }
+  } else if (fieldName === 'districtMunicipality') {
+    if (!form.province) return null
+    return (
+      <ControlledVocabularyInput
+        key={fieldName}
+        tree="regions"
+        root={form.province}
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val =>
+          updateAdaptationForm({ [fieldName]: val, localMunicipality: undefined }, i)
+        }
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  } else if (fieldName === 'localMunicipality') {
+    if (!form.districtMunicipality) return null
+    return (
+      <ControlledVocabularyInput
+        key={fieldName}
+        tree="regions"
+        root={form.districtMunicipality}
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateAdaptationForm({ [fieldName]: val }, i)}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
   }
 
   /**

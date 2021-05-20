@@ -53,7 +53,7 @@ const Compose = memo(({ fields }) => {
                       'endDate',
                     ],
                     'Hazard details': ['hazardFamily', 'hazardSubFamily', 'hazard', 'subHazard'],
-                    'Location information': ['xy'],
+                    Location: ['province', 'region', 'xy'],
                     'Associated research': [
                       'isResearch',
                       'researchDescription',

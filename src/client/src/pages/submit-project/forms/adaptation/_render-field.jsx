@@ -28,6 +28,43 @@ export default ({ field, i }) => {
   const value = form[fieldName]
 
   /**
+   * Controlled vocabulary
+   */
+  if (fieldName === 'province') {
+    return (
+      <ControlledVocabularyInput
+        key={fieldName}
+        tree="regions"
+        root="South Africa"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateAdaptationForm({ [fieldName]: val, region: undefined }, i)}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  } else if (fieldName === 'region') {
+    if (form['province']) {
+      return (
+        <ControlledVocabularyInput
+          key={fieldName}
+          tree="regions"
+          root={form['province']}
+          name={fieldName}
+          value={value}
+          error={isRequired && !value}
+          onChange={val => updateAdaptationForm({ [fieldName]: val }, i)}
+          placeholder={placeholder}
+          helperText={helperText}
+        />
+      )
+    } else {
+      return null
+    }
+  }
+
+  /**
    * WKT_4326
    */
   if (fieldName === 'xy') {

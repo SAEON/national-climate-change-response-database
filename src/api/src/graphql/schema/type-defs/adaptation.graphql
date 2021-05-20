@@ -34,6 +34,10 @@ input AdaptationInput {
   researchAuthor: String
   # paper :: @TODO
   researchPaper: String
+  # Province :: Select province
+  province: ControlledVocabularyInput
+  # Region :: Select region
+  region: ControlledVocabularyInput
 }
 
 type Adaptation {

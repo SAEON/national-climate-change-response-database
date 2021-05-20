@@ -282,3 +282,20 @@ create table Geometries (
 	[geometry_simplified] geometry null
 );
 end
+
+-- GeometryXrefVocabularyTreeX
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[GeometryXrefVocabularyTreeX]')
+		and type = 'U'
+)
+begin
+create table GeometryXrefVocabularyTreeX (
+  id int not null identity primary key,
+	vocabularyXrefTreeId int not null foreign key references VocabularyXrefTree (id),
+	geometryId int not null foreign key references Geometries (id),
+	unique (vocabularyXrefTreeId, geometryId)
+);
+end

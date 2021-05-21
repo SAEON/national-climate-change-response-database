@@ -183,13 +183,13 @@ create table Projects (
 	alternativeContact nvarchar(255),
 	alternativeContactEmail nvarchar(255),
 	leadAgent nvarchar(255),
-	interventionType int foreign key references VocabularyXrefVocabulary (id),
-	projectStatus int foreign key references VocabularyXrefVocabulary (id),
-	validationStatus int foreign key references VocabularyXrefVocabulary (id),	
-	fundingStatus int foreign key references VocabularyXrefVocabulary (id),	
-	estimatedBudget int foreign key references VocabularyXrefVocabulary (id),	
-	hostSector int foreign key references VocabularyXrefVocabulary (id),
-	hostSubSector int foreign key references VocabularyXrefVocabulary (id)
+	interventionType int foreign key references VocabularyXrefTree (id),
+	projectStatus int foreign key references VocabularyXrefTree (id),
+	validationStatus int foreign key references VocabularyXrefTree (id),	
+	fundingStatus int foreign key references VocabularyXrefTree (id),	
+	estimatedBudget int foreign key references VocabularyXrefTree (id),	
+	hostSector int foreign key references VocabularyXrefTree (id),
+	hostSubSector int foreign key references VocabularyXrefTree (id)
 );
 end
 
@@ -221,14 +221,14 @@ create table Mitigations (
   researchTargetAudience nvarchar(255),
   researchAuthor nvarchar(255),
   researchPaper nvarchar(255),	
-	mitigationType int foreign key references VocabularyXrefVocabulary (id),
-	mitigationSubType int foreign key references VocabularyXrefVocabulary (id),
-	interventionStatus int foreign key references VocabularyXrefVocabulary (id),
-	cdmMethodology int foreign key references VocabularyXrefVocabulary (id),
-	cdmExecutiveStatus int foreign key references VocabularyXrefVocabulary (id),
-	hostSector int foreign key references VocabularyXrefVocabulary (id),
-	hostSubSectorPrimary int foreign key references VocabularyXrefVocabulary (id),
-	hostSubSectorSecondary int foreign key references VocabularyXrefVocabulary (id)
+	mitigationType int foreign key references VocabularyXrefTree (id),
+	mitigationSubType int foreign key references VocabularyXrefTree (id),
+	interventionStatus int foreign key references VocabularyXrefTree (id),
+	cdmMethodology int foreign key references VocabularyXrefTree (id),
+	cdmExecutiveStatus int foreign key references VocabularyXrefTree (id),
+	hostSector int foreign key references VocabularyXrefTree (id),
+	hostSubSectorPrimary int foreign key references VocabularyXrefTree (id),
+	hostSubSectorSecondary int foreign key references VocabularyXrefTree (id)
 );
 end
 
@@ -255,12 +255,12 @@ create table Adaptations (
   researchTargetAudience nvarchar(255),
   researchAuthor nvarchar(255),
   researchPaper nvarchar(255),
-  adaptationSector int foreign key references VocabularyXrefVocabulary (id),
-  adaptationPurpose int foreign key references VocabularyXrefVocabulary (id),
-  hazardFamily int foreign key references VocabularyXrefVocabulary (id),
-  hazardSubFamily int foreign key references VocabularyXrefVocabulary (id),
-  hazard int foreign key references VocabularyXrefVocabulary (id),
-  subHazard int foreign key references VocabularyXrefVocabulary (id)
+  adaptationSector int foreign key references VocabularyXrefTree (id),
+  adaptationPurpose int foreign key references VocabularyXrefTree (id),
+  hazardFamily int foreign key references VocabularyXrefTree (id),
+  hazardSubFamily int foreign key references VocabularyXrefTree (id),
+  hazard int foreign key references VocabularyXrefTree (id),
+  subHazard int foreign key references VocabularyXrefTree (id)
 );
 end
 

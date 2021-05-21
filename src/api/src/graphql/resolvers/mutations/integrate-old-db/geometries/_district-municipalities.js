@@ -4,7 +4,6 @@ export default async ctx => {
   const { query } = ctx.mssql
   const createIterator = createPool({ database: 'VMS', batchSize: 1 })
 
-  // Provinces
   let iterator = await createIterator('select * from districts')
   while (!iterator.done) {
     const { rows, next } = iterator

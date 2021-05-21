@@ -1,4 +1,4 @@
-import { format } from 'sql-formatter'
+import logSql from '../../../../lib/log-sql.js'
 
 const filterFormInput = form => {
   return Object.entries(form)
@@ -30,17 +30,17 @@ const getSanitizedInsertStmt = ({ table, simpleInput, vocabInput, projectId = fa
       ([, value]) => `'${typeof value === 'string' ? value.replaceAll("'", "''") : value}'`
     ),
     ...vocabInput.map(
-      ([field, { root, tree, term }]) => `(
+      ([field, { tree, term }]) => `(
         select
-        vxv.id [${field}]
-        from VocabularyXrefVocabulary vxv
-        join Vocabulary p on p.id = vxv.parentId
-        join Vocabulary c on c.id = vxv.childId
-        join VocabularyTrees t on t.id = vxv.vocabularyTreeId
+        vxt.id [${field}]
+
+        from VocabularyTrees t
+        join VocabularyXrefTree vxt on vxt.vocabularyTreeId = t.id
+        join Vocabulary v on v.id = vxt.vocabularyId
+
         where
-        p.term = '${root.replaceAll("'", "''")}'
-        and c.term = '${term.replaceAll("'", "''")}'
-        and t.name = '${tree.replaceAll("'", "''")}'
+        t.name = '${tree.replaceAll("'", "''")}'
+        and v.term = '${term.replaceAll("'", "''")}'
       )`
     ),
   ]
@@ -108,7 +108,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
       rollback transaction T
     end catch`
 
-  console.info('\nSQL Query', `\n\n${format(sql, { language: 'tsql' })}\n`)
+  logSql(sql, 'Create project')
 
   const result = await query(sql)
   return { id: result.recordset[0].id }

@@ -1,11 +1,12 @@
 import DataLoader from 'dataloader'
 import query from '../query.js'
 import sift from 'sift'
+import logSql from '../../lib/log-sql.js'
 
 export default () =>
   new DataLoader(
     async keys => {
-      const results = await query(`
+      const sql = `
         select
         p.id,
         p.term,
@@ -36,7 +37,11 @@ export default () =>
         left outer join VocabularyXrefVocabulary vxv on vxv.parentId = p.id and vxv.vocabularyTreeId = p.treeId
         left outer join Vocabulary children on children.id = vxv.childId
         
-        for json auto`)
+        for json auto`
+
+      logSql(sql, 'Search vocabulary tree')
+
+      const results = await query(sql)
 
       /**
        * Rows are wrapped in 2D array,

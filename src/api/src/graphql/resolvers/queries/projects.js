@@ -86,7 +86,10 @@ export default async (_, { ids = undefined }, ctx) => {
         hazardFamily hazardFamilyId,
         hazardSubFamily hazardSubFamilyId,
         hazard hazardId,
-        subHazard subHazardId
+        subHazard subHazardId,
+        province provinceId,
+        districtMunicipality districtMunicipalityId,
+        localMunicipality localMunicipalityId
       from Adaptations a
     )
     

@@ -43,7 +43,7 @@ export default async ctx => {
         using (
           select
             ( select
-              v.id
+              vxt.id
               from Vocabulary v
               join VocabularyXrefTree vxt on vxt.vocabularyId = v.id
               join VocabularyTrees t on vxt.vocabularyTreeId = t.id

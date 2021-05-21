@@ -80,6 +80,9 @@ export default ({ id }) => {
             hazardSubFamily
             hazard
             subHazard
+            province
+            districtMunicipality
+            localMunicipality
           }
         }
       }

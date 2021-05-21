@@ -61,4 +61,7 @@ type Adaptation {
   hazardSubFamily: String
   hazard: String
   subHazard: String
+  province: String
+  districtMunicipality: String
+  localMunicipality: String
 }

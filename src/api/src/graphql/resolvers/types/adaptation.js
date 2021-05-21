@@ -1,10 +1,27 @@
 import finder from '../../../lib/find-vocabulary-helper.js'
 
+const vocabularyFields = [
+  'adaptationSector',
+  'adaptationPurpose',
+  'hazardFamily',
+  'hazardSubFamily',
+  'hazard',
+  'subHazard',
+  'province',
+  'districtMunicipality',
+  'localMunicipality',
+]
+
 export default {
-  adaptationSector: async ({ adaptationSectorId }, _, ctx) => finder(ctx, adaptationSectorId),
-  adaptationPurpose: async ({ adaptationPurposeId }, _, ctx) => finder(ctx, adaptationPurposeId),
-  hazardFamily: async ({ hazardFamilyId }, _, ctx) => finder(ctx, hazardFamilyId),
-  hazardSubFamily: async ({ hazardSubFamilyId }, _, ctx) => finder(ctx, hazardSubFamilyId),
-  hazard: async ({ hazardId }, _, ctx) => finder(ctx, hazardId),
-  subHazard: async ({ subHazardId }, _, ctx) => finder(ctx, subHazardId),
+  ...Object.fromEntries(
+    vocabularyFields.map(field => {
+      return [
+        field,
+        async (self, _, ctx) => {
+          const id = self[`${field}Id`]
+          return await finder(ctx, id)
+        },
+      ]
+    })
+  ),
 }

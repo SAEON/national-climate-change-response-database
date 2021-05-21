@@ -19,3 +19,11 @@ if (!String.prototype.replaceAll) {
     return this.replace(new RegExp(str, 'g'), newStr)
   }
 }
+
+global.sanitizeSqlValue = value => {
+  if (typeof value === 'string') {
+    return value.replaceAll("'", "''")
+  }
+
+  return value
+}

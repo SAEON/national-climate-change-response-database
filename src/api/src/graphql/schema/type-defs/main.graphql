@@ -33,6 +33,7 @@ type ControlledVocabulary {
   children: [ControlledVocabulary!]
   tree: String!
   root: String!
+  geometry(simplified: Boolean): WKT_4326
 }
 
 type Query {

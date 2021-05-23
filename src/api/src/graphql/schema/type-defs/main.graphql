@@ -36,12 +36,37 @@ type ControlledVocabulary {
   geometry(simplified: Boolean): WKT_4326
 }
 
+input VocabularyFilterInput {
+  field: String!
+  term: String!
+}
+
+input MitigationFiltersInput {
+  ids: [Int!]
+  vocabularyFilters: [VocabularyFilterInput!]
+}
+
+input AdaptationFiltersInput {
+  ids: [Int!]
+  vocabularyFilters: [VocabularyFilterInput!]
+}
+
 type Query {
-  projects(ids: [Int!]): [Project]!
-  roles: [Role!]!
-  permissions: [Permission!]!
+  # Search projects
+  projects(
+    ids: [Int!]
+    vocabularyFilters: [VocabularyFilterInput!]
+    mitigationFilters: MitigationFiltersInput
+    adaptationFilters: AdaptationFiltersInput
+  ): [Project]!
+  # Search vocabulary tress
   controlledVocabulary(root: String!, tree: String!): ControlledVocabulary
+  # Search users
   users: [User!]
+  # Search roles
+  roles: [Role!]!
+  # Search permissions
+  permissions: [Permission!]!
 }
 
 # type Subscription {}

@@ -87,7 +87,7 @@ export default ({ field, i }) => {
    * WKT_4326
    */
   if (fieldName === 'xy') {
-    return <LocationsInput key={fieldName} />
+    return <LocationsInput form={form} key={fieldName} />
   }
 
   /**

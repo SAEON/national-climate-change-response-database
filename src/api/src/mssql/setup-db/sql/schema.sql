@@ -189,7 +189,10 @@ create table Projects (
 	fundingStatus int foreign key references VocabularyXrefTree (id),	
 	estimatedBudget int foreign key references VocabularyXrefTree (id),	
 	hostSector int foreign key references VocabularyXrefTree (id),
-	hostSubSector int foreign key references VocabularyXrefTree (id)
+	hostSubSector int foreign key references VocabularyXrefTree (id),
+	province int foreign key references VocabularyXrefTree (id),
+	districtMunicipality int foreign key references VocabularyXrefTree (id),
+	localMunicipality int foreign key references VocabularyXrefTree (id)	
 );
 end
 
@@ -260,10 +263,7 @@ create table Adaptations (
   hazardFamily int foreign key references VocabularyXrefTree (id),
   hazardSubFamily int foreign key references VocabularyXrefTree (id),
   hazard int foreign key references VocabularyXrefTree (id),
-  subHazard int foreign key references VocabularyXrefTree (id),
-	province int foreign key references VocabularyXrefTree (id),
-	districtMunicipality int foreign key references VocabularyXrefTree (id),
-	localMunicipality int foreign key references VocabularyXrefTree (id)
+  subHazard int foreign key references VocabularyXrefTree (id)
 );
 end
 

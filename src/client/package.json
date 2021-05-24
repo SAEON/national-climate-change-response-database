@@ -49,6 +49,7 @@
     "mdi-react": "^7.5.0",
     "node-sass": "^5.0.0",
     "notistack": "^1.0.5",
+    "ol": "^6.5.0",
     "react": "^17.0.2",
     "react-cookie-consent": "^6.2.3",
     "react-device-detect": "^1.17.0",

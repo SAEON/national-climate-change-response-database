@@ -20,6 +20,61 @@ export default ({ field }) => {
   /**
    * Controlled vocabulary
    */
+  if (fieldName === 'province') {
+    return (
+      <ControlledVocabularyInput
+        key={fieldName}
+        tree="regions"
+        root="South Africa"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val =>
+          updateProjectForm({
+            [fieldName]: val,
+            districtMunicipality: undefined,
+            localMunicipality: undefined,
+          })
+        }
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  } else if (fieldName === 'districtMunicipality') {
+    if (!projectForm.province) return null
+    return (
+      <ControlledVocabularyInput
+        key={fieldName}
+        tree="regions"
+        root={projectForm.province}
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateProjectForm({ [fieldName]: val, localMunicipality: undefined })}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  } else if (fieldName === 'localMunicipality') {
+    if (!projectForm.districtMunicipality) return null
+    return (
+      <ControlledVocabularyInput
+        key={fieldName}
+        tree="regions"
+        root={projectForm.districtMunicipality}
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateProjectForm({ [fieldName]: val })}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  }
+
+  /**
+   * Controlled vocabulary
+   */
   if (fieldName === 'validationStatus') {
     return (
       <ControlledVocabularyInput

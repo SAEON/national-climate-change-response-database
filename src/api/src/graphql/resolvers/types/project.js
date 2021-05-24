@@ -8,6 +8,9 @@ const vocabularyFields = [
   'estimatedBudget',
   'hostSector',
   'hostSubSector',
+  'province',
+  'districtMunicipality',
+  'localMunicipality',
 ]
 
 export default {

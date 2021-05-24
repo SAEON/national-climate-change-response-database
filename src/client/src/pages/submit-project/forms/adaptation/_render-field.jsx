@@ -3,7 +3,7 @@ import {
   GqlBoundFormInput,
   context as formContext,
   ControlledVocabularyInput,
-  LocationsInput,
+  LocationsPicker,
 } from '../../gql-form-binder'
 
 const multilineFields = ['description']
@@ -28,66 +28,10 @@ export default ({ field, i }) => {
   const value = form[fieldName]
 
   /**
-   * Controlled vocabulary
-   */
-  if (fieldName === 'province') {
-    return (
-      <ControlledVocabularyInput
-        key={fieldName}
-        tree="regions"
-        root="South Africa"
-        name={fieldName}
-        value={value}
-        error={isRequired && !value}
-        onChange={val =>
-          updateAdaptationForm(
-            { [fieldName]: val, districtMunicipality: undefined, localMunicipality: undefined },
-            i
-          )
-        }
-        placeholder={placeholder}
-        helperText={helperText}
-      />
-    )
-  } else if (fieldName === 'districtMunicipality') {
-    if (!form.province) return null
-    return (
-      <ControlledVocabularyInput
-        key={fieldName}
-        tree="regions"
-        root={form.province}
-        name={fieldName}
-        value={value}
-        error={isRequired && !value}
-        onChange={val =>
-          updateAdaptationForm({ [fieldName]: val, localMunicipality: undefined }, i)
-        }
-        placeholder={placeholder}
-        helperText={helperText}
-      />
-    )
-  } else if (fieldName === 'localMunicipality') {
-    if (!form.districtMunicipality) return null
-    return (
-      <ControlledVocabularyInput
-        key={fieldName}
-        tree="regions"
-        root={form.districtMunicipality}
-        name={fieldName}
-        value={value}
-        error={isRequired && !value}
-        onChange={val => updateAdaptationForm({ [fieldName]: val }, i)}
-        placeholder={placeholder}
-        helperText={helperText}
-      />
-    )
-  }
-
-  /**
    * WKT_4326
    */
   if (fieldName === 'xy') {
-    return <LocationsInput form={form} key={fieldName} />
+    return <LocationsPicker key={fieldName} />
   }
 
   /**

@@ -11,4 +11,5 @@ export default createMuiTheme({
   overrides: overrides(defaultTheme),
   ...custom(defaultTheme),
   backgroundColor: fade(defaultTheme.palette.common.white, 0.9),
+  border: `1px solid ${fade(defaultTheme.palette.common.black, 0.12)}`,
 })

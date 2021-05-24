@@ -34,12 +34,6 @@ input AdaptationInput {
   researchAuthor: String
   # paper :: @TODO
   researchPaper: String
-  # Province :: Select province
-  province: ControlledVocabularyInput
-  # District municipality :: Select district municipality
-  districtMunicipality: ControlledVocabularyInput
-  # Local municipality :: Select local municipality
-  localMunicipality: ControlledVocabularyInput
 }
 
 type Adaptation {
@@ -61,7 +55,4 @@ type Adaptation {
   hazardSubFamily: String
   hazard: String
   subHazard: String
-  province: String
-  districtMunicipality: String
-  localMunicipality: String
 }

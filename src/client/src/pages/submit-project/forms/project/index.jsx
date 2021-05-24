@@ -18,6 +18,7 @@ const Compose = memo(({ fields }) => {
           'startDate',
           'endDate',
         ],
+        'Bounding location': ['province', 'districtMunicipality', 'localMunicipality'],
         'Validation status': ['validationStatus', 'validationComments'],
         'Funding information': [
           'fundingStatus',

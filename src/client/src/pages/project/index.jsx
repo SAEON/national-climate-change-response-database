@@ -34,6 +34,9 @@ export default ({ id }) => {
           estimatedBudget
           hostSector
           hostSubSector
+          province
+          districtMunicipality
+          localMunicipality
           mitigations {
             id
             title
@@ -80,9 +83,6 @@ export default ({ id }) => {
             hazardSubFamily
             hazard
             subHazard
-            province
-            districtMunicipality
-            localMunicipality
           }
         }
       }

@@ -48,6 +48,13 @@ input ProjectInput {
   alternativeContactEmail: String
   # Lead agent :: Lead contact agent
   leadAgent: String
+
+  # Province :: Select province
+  province: ControlledVocabularyInput
+  # District municipality :: Select district municipality
+  districtMunicipality: ControlledVocabularyInput
+  # Local municipality :: Select local municipality
+  localMunicipality: ControlledVocabularyInput
 }
 
 type Project {
@@ -76,6 +83,10 @@ type Project {
   estimatedBudget: String
   hostSector: String
   hostSubSector: String
+
+  province: String
+  districtMunicipality: String
+  localMunicipality: String
 
   mitigations: [Mitigation!]
   adaptations: [Adaptation!]

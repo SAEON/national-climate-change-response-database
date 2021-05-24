@@ -46,7 +46,10 @@ export default async (
         p.fundingStatus fundingStatusId,
         p.estimatedBudget estimatedBudgetId,
         p.hostSector hostSectorId,
-        p.hostSubSector hostSubSectorId
+        p.hostSubSector hostSubSectorId,
+        p.province provinceId,
+        p.districtMunicipality districtMunicipalityId,
+        p.localMunicipality localMunicipalityId
 
       from Projects p
       left join VocabularyXrefTree [it] on [it].id = p.interventionType
@@ -56,6 +59,9 @@ export default async (
       left join VocabularyXrefTree [eb] on [eb].id = p.estimatedBudget
       left join VocabularyXrefTree [hs] on [hs].id = p.hostSector
       left join VocabularyXrefTree [hss] on [hss].id = p.hostSubSector
+      left join VocabularyXrefTree [pr] on [pr].id = p.province
+      left join VocabularyXrefTree [dm] on [dm].id = p.districtMunicipality
+      left join VocabularyXrefTree [lm] on [lm].id = p.localMunicipality
       left join Vocabulary interventionType on interventionType.id = [it].vocabularyId
       left join Vocabulary projectStatus on projectStatus.id = [ps].vocabularyId
       left join Vocabulary validationStatus on validationStatus.id = [vs].vocabularyId
@@ -63,6 +69,9 @@ export default async (
       left join Vocabulary estimatedBudget on estimatedBudget.id = [eb].vocabularyId
       left join Vocabulary hostSector on hostSector.id = [hs].vocabularyId
       left join Vocabulary hostSubSector on hostSubSector.id = [hss].vocabularyId
+      left join Vocabulary province on province.id = [pr].vocabularyId      
+      left join Vocabulary districtMunicipality on districtMunicipality.id = [dm].vocabularyId      
+      left join Vocabulary localMunicipality on localMunicipality.id = [lm].vocabularyId        
 
       where
         ${ids.length ? `p.id in (${ids.join(',')})` : '1 = 1'}
@@ -151,10 +160,7 @@ export default async (
         a.hazardFamily hazardFamilyId,
         a.hazardSubFamily hazardSubFamilyId,
         a.hazard hazardId,
-        a.subHazard subHazardId,
-        a.province provinceId,
-        a.districtMunicipality districtMunicipalityId,
-        a.localMunicipality localMunicipalityId
+        a.subHazard subHazardId
 
       from Adaptations a
 

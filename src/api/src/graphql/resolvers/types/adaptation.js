@@ -7,9 +7,6 @@ const vocabularyFields = [
   'hazardSubFamily',
   'hazard',
   'subHazard',
-  'province',
-  'districtMunicipality',
-  'localMunicipality',
 ]
 
 export default {

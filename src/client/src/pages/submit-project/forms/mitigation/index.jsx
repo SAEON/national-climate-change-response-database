@@ -51,6 +51,14 @@ const Compose = ({ fields }) => {
                       'interventionStatus',
                     ],
                     'Location(s)': ['yx'],
+                    'Associated research': [
+                      'isResearch',
+                      'researchDescription',
+                      'researchType',
+                      'researchTargetAudience',
+                      'researchAuthor',
+                      'researchPaper',
+                    ],
                     'Carbon credit program': [
                       'carbonCredit',
                       'volMethodology',
@@ -69,14 +77,6 @@ const Compose = ({ fields }) => {
                       'hostSector',
                       'hostSubSectorPrimary',
                       'hostSubSectorSecondary',
-                    ],
-                    'Associated research': [
-                      'isResearch',
-                      'researchDescription',
-                      'researchType',
-                      'researchTargetAudience',
-                      'researchAuthor',
-                      'researchPaper',
                     ],
                   }}
                 />

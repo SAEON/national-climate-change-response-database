@@ -1,4 +1,4 @@
-import { createContext, useRef, useLayoutEffect, useMemo } from 'react'
+import { createContext, useRef, useEffect, useMemo } from 'react'
 import Map from 'ol/Map'
 import View from 'ol/View'
 import LayerGroup from 'ol/layer/Group'
@@ -30,7 +30,7 @@ export default ({ children }) => {
     })
   }, [])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     map.setTarget(mapDomRef.current)
 
     return () => {

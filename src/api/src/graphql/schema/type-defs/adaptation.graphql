@@ -21,7 +21,7 @@ input AdaptationInput {
   # Sub hazard :: @amelia TODO
   subHazard: ControlledVocabularyInput
   # GPS point location(s) :: @amelia TODO
-  xy: [WKT_4326!]
+  yx: WKT_4326
   # Associated research :: Is this project component research or applied?
   isResearch: Boolean
   # Description :: Short description of this research component
@@ -42,7 +42,7 @@ type Adaptation {
   description: String
   startDate: DateTime
   endDate: DateTime
-  xy: [WKT_4326!]
+  yx: WKT_4326
   isResearch: Boolean
   researchDescription: String
   researchType: String

@@ -4,6 +4,15 @@ import WithBoundingRegion from './with-bounding-region'
 import Map, { GeometryLayer } from '../../../../components/ol-react'
 import Picker from './picker'
 import useTheme from '@material-ui/core/styles/useTheme'
+import Toolbar from './toolbar'
+
+var arraysMatch = function (arr1, arr2) {
+  if (arr1.length !== arr2.length) return false
+  for (var i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) return false
+  }
+  return true
+}
 
 const LocationBounds = memo(
   ({ localMunicipality, districtMunicipality, province, onChange, points, setPoints }) => {
@@ -16,27 +25,32 @@ const LocationBounds = memo(
     }
 
     return (
-      <WithBoundingRegion boundingRegions={boundingRegions}>
-        {({ geometry }) => {
-          const fenceId = 'input-fence'
-          return (
-            <div style={{ width: '100%', height: 400, border: theme.border }}>
-              <Map>
-                <>
-                  {geometry && <GeometryLayer id={fenceId} geometry={geometry} />}
-                  <Picker
-                    setPoints={setPoints}
-                    fenceGeometry={geometry}
-                    fenceId={fenceId}
-                    onChange={onChange}
-                    points={points}
-                  />
-                </>
-              </Map>
-            </div>
-          )
-        }}
-      </WithBoundingRegion>
+      <>
+        <WithBoundingRegion boundingRegions={boundingRegions}>
+          {({ geometry }) => {
+            const fenceId = 'input-fence'
+            return (
+              <div
+                style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}
+              >
+                <Map>
+                  <>
+                    {geometry && <GeometryLayer id={fenceId} geometry={geometry} />}
+                    <Picker
+                      setPoints={setPoints}
+                      fenceGeometry={geometry}
+                      fenceId={fenceId}
+                      onChange={onChange}
+                      points={points}
+                    />
+                    <Toolbar setPoints={setPoints} />
+                  </>
+                </Map>
+              </div>
+            )
+          }}
+        </WithBoundingRegion>
+      </>
     )
   },
   (a, b) => {
@@ -44,7 +58,7 @@ const LocationBounds = memo(
     if (a.localMunicipality !== b.localMunicipality) _memo = false
     if (a.districtMunicipality !== b.districtMunicipality) _memo = false
     if (a.province !== b.province) _memo = false
-    if (a.points !== b.points) _memo = false
+    if (!arraysMatch(a.points, b.points)) _memo = false
     return _memo
   }
 )

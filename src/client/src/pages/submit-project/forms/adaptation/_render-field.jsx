@@ -34,9 +34,10 @@ export default ({ field, i }) => {
     return (
       <LocationsPicker
         onChange={(y, x) => {
-          console.log('points from map', [y, x])
+          updateAdaptationForm({ [fieldName]: [...(form[fieldName] || []), [y, x]] }, i)
         }}
-        points={form[fieldName]}
+        setPoints={points => updateAdaptationForm({ [fieldName]: points }, i)}
+        points={form[fieldName] || []}
         key={fieldName}
       />
     )

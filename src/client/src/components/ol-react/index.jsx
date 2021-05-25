@@ -3,7 +3,7 @@ import Map from 'ol/Map'
 import View from 'ol/View'
 import LayerGroup from 'ol/layer/Group'
 import { defaults as defaultControls } from 'ol/control'
-import baseLayer from './layers/terrestris-base-map'
+import baseLayer from './layers/osm'
 export { default as GeometryLayer } from './_geometry-layer'
 
 export const context = createContext()

@@ -30,8 +30,16 @@ export default ({ field, i }) => {
   /**
    * WKT_4326
    */
-  if (fieldName === 'xy') {
-    return <LocationsPicker key={fieldName} />
+  if (fieldName === 'yx') {
+    return (
+      <LocationsPicker
+        onChange={(y, x) => {
+          console.log('points from map', [y, x])
+        }}
+        points={form[fieldName]}
+        key={fieldName}
+      />
+    )
   }
 
   /**

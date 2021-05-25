@@ -50,6 +50,7 @@ const Compose = ({ fields }) => {
                       'mitigationSubType',
                       'interventionStatus',
                     ],
+                    'Location(s)': ['yx'],
                     'Carbon credit program': [
                       'carbonCredit',
                       'volMethodology',

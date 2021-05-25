@@ -5,6 +5,8 @@ import VectorSource from 'ol/source/Vector'
 import VectorLayer from 'ol/layer/Vector'
 import LayerGroup from 'ol/layer/Group'
 
+const _wkt = new WKT()
+
 export default ({ id, geometry: wkt }) => {
   const { map } = useContext(mapContext)
 
@@ -15,7 +17,7 @@ export default ({ id, geometry: wkt }) => {
       id,
       source: new VectorSource({
         features: [
-          new WKT().readFeature(wkt, {
+          _wkt.readFeature(wkt, {
             dataProjection: 'EPSG:4326',
             featureProjection: 'EPSG:4326',
           }),

@@ -6,10 +6,21 @@ import CardHeader from '@material-ui/core/CardHeader'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { context as formContext } from './_context'
+import { stringify } from 'wkt'
 
 const convertFormToInput = form =>
   Object.fromEntries(
     Object.entries(form).map(([field, value]) => {
+      if (field === 'yx') {
+        return [
+          field,
+          stringify({
+            type: 'GeometryCollection',
+            geometries: (value || []).map(coordinates => ({ type: 'Point', coordinates })),
+          }),
+        ]
+      }
+
       if (value?.__typename === 'ControlledVocabulary') {
         const { root, term, tree } = value
         return [field, { root, term, tree }]
@@ -67,7 +78,7 @@ export default () => {
       },
       onCompleted: ({ createProject }) => {
         const { id } = createProject
-        history.push(`/projects/${id}`)
+        // history.push(`/projects/${id}`)
       },
     }
   )

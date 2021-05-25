@@ -22,7 +22,7 @@ export default async (
     ;with
 
     _projects as (
-      select distinct
+      select
         p.id,
         p.title,
         p.[description],
@@ -84,7 +84,7 @@ export default async (
     ),
     
     _mitigations as (
-      select distinct
+      select
         m.id,
         m.projectId,
         m.title,
@@ -93,6 +93,7 @@ export default async (
         m.volMethodology,
         m.goldStandard,
         m.vcs,
+        m.yx.STAsText() yx,
         m.otherCarbonCreditStandard,
         m.otherCarbonCreditStandardDescription,
         m.cdmProjectNumber,
@@ -148,7 +149,7 @@ export default async (
         a.description,
         a.startDate,
         a.endDate,
-        a.xy,
+        a.yx.STAsText() yx,
         a.isResearch,
         a.researchDescription,
         a.researchType,

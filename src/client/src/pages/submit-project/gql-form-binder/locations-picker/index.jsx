@@ -43,7 +43,7 @@ const LocationBounds = memo(
                       onChange={onChange}
                       points={points}
                     />
-                    <Toolbar setPoints={setPoints} />
+                    <Toolbar points={points} setPoints={setPoints} />
                   </>
                 </Map>
               </div>

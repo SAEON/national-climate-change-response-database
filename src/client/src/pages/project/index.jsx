@@ -45,6 +45,7 @@ export default ({ id }) => {
             volMethodology
             goldStandard
             vcs
+            yx
             otherCarbonCreditStandard
             otherCarbonCreditStandardDescription
             cdmProjectNumber
@@ -70,7 +71,7 @@ export default ({ id }) => {
             description
             startDate
             endDate
-            xy
+            yx
             isResearch
             researchDescription
             researchType

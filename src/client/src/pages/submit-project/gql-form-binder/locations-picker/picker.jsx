@@ -1,4 +1,4 @@
-import { useContext, useEffect, useCallback, useMemo } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 import { context as mapContext } from '../../../../components/ol-react'
 import { useSnackbar } from 'notistack'
 import VectorSource from 'ol/source/Vector'
@@ -11,14 +11,11 @@ import WKT from 'ol/format/WKT'
 
 const _wkt = new WKT()
 
-var draw
-
 export default ({ onChange, points = [], setPoints, fenceGeometry = undefined }) => {
   const { enqueueSnackbar } = useSnackbar()
   const { map } = useContext(mapContext)
   const source = useMemo(() => new VectorSource({ wrapX: false }), [])
-  const mouseenter = useCallback(() => map.addInteraction(draw), [map])
-  const mouseleave = useCallback(() => map.removeInteraction(draw), [map])
+  const awaitGeometryFunction = useRef(null)
 
   const fence = useMemo(() => {
     if (!fenceGeometry) return null
@@ -27,6 +24,52 @@ export default ({ onChange, points = [], setPoints, fenceGeometry = undefined })
       featureProjection: 'EPSG:4326',
     })
   }, [fenceGeometry])
+
+  const draw = useMemo(
+    () =>
+      new Draw({
+        type: 'Point',
+        source,
+        geometryFunction: ([y, x]) => {
+          awaitGeometryFunction.current = new Promise(resolve => {
+            if (fence && !fence.intersectsCoordinate([y, x])) {
+              enqueueSnackbar('Point input must be within bounds of the selected project region', {
+                variant: 'warning',
+              })
+            }
+            resolve()
+          })
+          onChange(y, x)
+        },
+      }),
+    [source, fence, enqueueSnackbar, onChange]
+  )
+
+  const mouseenter = useCallback(() => {
+    let added = false
+    map
+      .getInteractions()
+      .getArray()
+      .forEach(interaction => {
+        if (interaction.constructor === Draw) {
+          added = true
+        }
+      })
+    if (!added) {
+      map.addInteraction(draw)
+    }
+  }, [draw, map])
+
+  const mouseleave = useCallback(() => {
+    map
+      .getInteractions()
+      .getArray()
+      .forEach(interaction => {
+        if (interaction.constructor === Draw) {
+          map.removeInteraction(interaction)
+        }
+      })
+  }, [map])
 
   /**
    * Points
@@ -101,19 +144,6 @@ export default ({ onChange, points = [], setPoints, fenceGeometry = undefined })
    * box, delete box, etc.
    */
   useEffect(() => {
-    draw = new Draw({
-      type: 'Point',
-      source,
-      geometryFunction: ([y, x]) => {
-        if (fence && !fence.intersectsCoordinate([y, x])) {
-          enqueueSnackbar('Point input must be within bounds of the selected project region', {
-            variant: 'warning',
-          })
-        }
-        onChange(y, x)
-      },
-    })
-
     map.addInteraction(draw)
     map.getViewport().addEventListener('mouseenter', mouseenter)
     map.getViewport().addEventListener('mouseleave', mouseleave)
@@ -121,10 +151,9 @@ export default ({ onChange, points = [], setPoints, fenceGeometry = undefined })
     return () => {
       map.getViewport().removeEventListener('mouseenter', mouseenter)
       map.getViewport().removeEventListener('mouseleave', mouseleave)
-      map.removeInteraction(draw)
-      draw = undefined
+      awaitGeometryFunction.current?.then(() => map.removeInteraction(draw))
     }
-  }, [map, mouseenter, mouseleave, source, onChange, enqueueSnackbar, fence])
+  }, [map, draw, mouseenter, mouseleave])
 
   return null
 }

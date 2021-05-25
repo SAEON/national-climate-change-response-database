@@ -4,7 +4,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-export default ({ setPoints }) => {
+export default ({ points, setPoints }) => {
   const theme = useTheme()
   return (
     <Card
@@ -21,7 +21,7 @@ export default ({ setPoints }) => {
     >
       <Tooltip title={'Remove all points'}>
         <span>
-          <IconButton size="small" onClick={() => setPoints([])}>
+          <IconButton disabled={!points.length} size="small" onClick={() => setPoints([])}>
             <DeleteIcon />
           </IconButton>
         </span>

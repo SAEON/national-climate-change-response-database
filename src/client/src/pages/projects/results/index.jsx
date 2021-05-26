@@ -3,44 +3,24 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import { useQuery, gql } from '@apollo/client'
-import Loading from '../../../components/loading'
-import Fade from '@material-ui/core/Fade'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-export default () => {
+export default ({ projects }) => {
   const theme = useTheme()
 
-  const { error, loading, data } = useQuery(gql`
-    query projects {
-      projects {
-        id
-      }
-    }
-  `)
-
-  if (loading) {
+  if (!projects.length) {
     return (
-      <Fade in={loading} key="loading-in">
-        <div>
-          <Loading />
-        </div>
-      </Fade>
+      <Card variant="outlined" style={{ width: '100%', backgroundColor: theme.backgroundColor }}>
+        <CardContent>
+          <Typography>No projects</Typography>
+        </CardContent>
+      </Card>
     )
-  }
-
-  if (error) {
-    throw error
   }
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Card variant="outlined" style={{ width: '100%' }}>
-          Filters will go here
-        </Card>
-      </Grid>
-      {data.projects.map(({ id }) => (
+      {projects.map(({ id }) => (
         <Grid key={id} item xs={12}>
           <Card
             variant="outlined"

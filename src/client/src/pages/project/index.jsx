@@ -73,6 +73,7 @@ export default ({ id }) => {
             endDate
             yx
             isResearch
+            interventionStatus
             researchDescription
             researchType
             researchTargetAudience

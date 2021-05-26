@@ -1,41 +1,123 @@
-import ContentNav from '../../components/content-nav'
-import ViewProjectsIcon from 'mdi-react/DatabaseSearchIcon'
-import AddProjectIcon from 'mdi-react/DatabaseAddIcon'
-import ReviewIcon from 'mdi-react/DatabaseCheckIcon'
-import Projects from './project-list'
-import SubmitProject from './submit-project'
-import ReviewSubmissions from './review-submissions'
+import { gql, useQuery } from '@apollo/client'
+import Filters from './filters'
+import Header from './header'
+import Projects from './results'
+import Grid from '@material-ui/core/Grid'
+import Loading from '../../components/loading'
+import Hidden from '@material-ui/core/Hidden'
 
 export default () => {
+  const { error, loading, data } = useQuery(gql`
+    query projects {
+      projects {
+        id
+        title
+        description
+        projectManager
+        link
+        startDate
+        endDate
+        validationComments
+        fundingOrganisation
+        fundingPartner
+        budgetLower
+        budgetUpper
+        hostOrganisation
+        hostPartner
+        alternativeContact
+        alternativeContactEmail
+        leadAgent
+        interventionType
+        projectStatus
+        validationStatus
+        fundingStatus
+        estimatedBudget
+        hostSector
+        hostSubSector
+        province
+        districtMunicipality
+        localMunicipality
+        mitigations {
+          id
+          title
+          description
+          carbonCredit
+          volMethodology
+          goldStandard
+          vcs
+          yx
+          otherCarbonCreditStandard
+          otherCarbonCreditStandardDescription
+          cdmProjectNumber
+          cdmStatus
+          isResearch
+          researchDescription
+          researchType
+          researchTargetAudience
+          researchAuthor
+          researchPaper
+          mitigationType
+          mitigationSubType
+          interventionStatus
+          cdmMethodology
+          cdmExecutiveStatus
+          hostSector
+          hostSubSectorPrimary
+          hostSubSectorSecondary
+        }
+        adaptations {
+          id
+          title
+          description
+          startDate
+          endDate
+          yx
+          isResearch
+          interventionStatus
+          researchDescription
+          researchType
+          researchTargetAudience
+          researchAuthor
+          researchPaper
+          adaptationSector
+          adaptationPurpose
+          hazardFamily
+          hazardSubFamily
+          hazard
+          subHazard
+        }
+      }
+    }
+  `)
+
+  if (loading) {
+    return <Loading />
+  }
+
+  if (error) {
+    throw error
+  }
+
   return (
-    <ContentNav
-      navItems={[
-        {
-          primaryText: 'Submit',
-          secondaryText: 'Submit project(s)',
-          Icon: AddProjectIcon,
-        },
-        {
-          primaryText: 'Projects',
-          secondaryText: 'View and edit projects',
-          Icon: ViewProjectsIcon,
-        },
-        {
-          primaryText: 'Review',
-          secondaryText: 'Review project submissions',
-          Icon: ReviewIcon,
-        },
-      ]}
-    >
-      {({ activeIndex }) => {
-        return (
-          <>
-            {activeIndex === 0 && <SubmitProject key={'submit-project'} />}
-            {activeIndex === 1 && <Projects key={'view-projects'} />}
-            {activeIndex === 2 && <ReviewSubmissions key={'review-project-submissions'} />}
-          </>
-        )
-      }}
-    </ContentNav>
+    <Grid container direction="row" spacing={2}>
+      {/* FILTERS */}
+      <Hidden smDown>
+        <Grid container item md={4} spacing={1}>
+          <Grid item>
+            <Filters />
+          </Grid>
+        </Grid>
+      </Hidden>
+
+      {/* RESULTS */}
+      <Grid container direction="column" item xs style={{ flexGrow: 1 }} spacing={1}>
+        <Grid item>
+          <Header />
+        </Grid>
+        <Grid item>
+          <Projects projects={data.projects} />
+        </Grid>
+      </Grid>
+    </Grid>
   )
 }

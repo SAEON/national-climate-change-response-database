@@ -86,74 +86,65 @@ const Layout = () => {
   let canSubmit = projectFormComplete
 
   return (
-    <>
-      <AppBar
-        style={{
-          marginBottom: theme.spacing(2),
-          zIndex: 1000,
-        }}
-        color="inherit"
-        variant="outlined"
-        position="relative"
-      >
-        <Toolbar variant="dense">
-          <ResetForm style={{ marginLeft: 'auto' }} />
-        </Toolbar>
-      </AppBar>
-
-      <ContentNav
-        navItems={[
-          {
-            primaryText: 'Project',
-            secondaryText: 'Basic project details',
-            Icon: () => (
-              <AvatarIcon i={1} started={projectFormStarted} complete={projectFormComplete} />
-            ),
-          },
-          {
-            disabled: !mitigationsRequired,
-            primaryText: 'Mitigation(s)',
-            secondaryText: 'Project mitigation details',
-            Icon: () => (
-              <AvatarIcon
-                i={2}
-                started={mitigationFormsStarted}
-                complete={mitigationFormsComplete}
-              />
-            ),
-          },
-          {
-            disabled: !adaptationsRequired,
-            primaryText: 'Adaptation(s)',
-            secondaryText: 'Project adaptation details',
-            Icon: () => (
-              <AvatarIcon
-                i={3}
-                started={adaptationFormsStarted}
-                complete={adaptationFormsComplete}
-              />
-            ),
-          },
-          {
-            disabled: !canSubmit,
-            primaryText: 'Submit',
-            secondaryText: 'Review and submit project',
-            Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={4} />,
-          },
-        ]}
-      >
-        {({ activeIndex }) => {
-          return (
-            <>
-              {activeIndex === 0 && <ProjectForm key="project-form" />}
-              {activeIndex === 1 && <MitigationForms key="mitigation-forms" />}
-              {activeIndex === 2 && <AdaptationForms key="adaptation-forms" />}
-              {activeIndex === 3 && <Submit key="submit" />}
-            </>
-          )
-        }}
-      </ContentNav>
-    </>
+    <ContentNav
+      subNavChildren={() => (
+        <AppBar
+          style={{
+            marginTop: theme.spacing(2),
+            zIndex: 1000,
+          }}
+          color="inherit"
+          variant="outlined"
+          position="relative"
+        >
+          <Toolbar variant="dense">
+            <ResetForm style={{ marginLeft: 'auto' }} />
+          </Toolbar>
+        </AppBar>
+      )}
+      navItems={[
+        {
+          primaryText: 'Project',
+          secondaryText: 'Basic project details',
+          Icon: () => (
+            <AvatarIcon i={1} started={projectFormStarted} complete={projectFormComplete} />
+          ),
+        },
+        {
+          disabled: !mitigationsRequired,
+          primaryText: 'Mitigation(s)',
+          secondaryText: 'Project mitigation details',
+          Icon: () => (
+            <AvatarIcon i={2} started={mitigationFormsStarted} complete={mitigationFormsComplete} />
+          ),
+        },
+        {
+          disabled: !adaptationsRequired,
+          primaryText: 'Adaptation(s)',
+          secondaryText: 'Project adaptation details',
+          Icon: () => (
+            <AvatarIcon i={3} started={adaptationFormsStarted} complete={adaptationFormsComplete} />
+          ),
+        },
+        {
+          disabled: !canSubmit,
+          primaryText: 'Submit',
+          secondaryText: 'Review and submit project',
+          Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={4} />,
+        },
+      ]}
+    >
+      {({ activeIndex }) => {
+        return (
+          <>
+            {activeIndex === 0 && <ProjectForm key="project-form" />}
+            {activeIndex === 1 && <MitigationForms key="mitigation-forms" />}
+            {activeIndex === 2 && <AdaptationForms key="adaptation-forms" />}
+            {activeIndex === 3 && <Submit key="submit" />}
+          </>
+        )
+      }}
+    </ContentNav>
   )
 }
 

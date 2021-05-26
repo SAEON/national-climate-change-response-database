@@ -46,6 +46,25 @@ export default ({ field, i }) => {
   /**
    * Controlled vocabulary
    */
+  if (fieldName === 'interventionStatus') {
+    return (
+      <ControlledVocabularyInput
+        key={fieldName}
+        tree="actionStatus"
+        root="Status"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateAdaptationForm({ [fieldName]: val }, i)}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  }
+
+  /**
+   * Controlled vocabulary
+   */
   if (fieldName === 'adaptationSector') {
     return (
       <ControlledVocabularyInput

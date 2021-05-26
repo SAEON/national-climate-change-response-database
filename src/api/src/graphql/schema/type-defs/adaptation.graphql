@@ -12,6 +12,8 @@ input AdaptationInput {
   startDate: DateTime
   # End date :: @amelia TODO
   endDate: DateTime
+  # Intervention status :: @amelia TODO
+  interventionStatus: ControlledVocabularyInput
   # Hazard Family :: @amelia TODO
   hazardFamily: ControlledVocabularyInput
   # Hazard Subfamily :: @amelia TODO
@@ -42,6 +44,7 @@ type Adaptation {
   description: String
   startDate: DateTime
   endDate: DateTime
+  interventionStatus: String
   yx: WKT_4326
   isResearch: Boolean
   researchDescription: String

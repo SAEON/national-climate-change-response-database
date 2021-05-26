@@ -49,6 +49,7 @@ const Compose = memo(({ fields }) => {
                       'description',
                       'adaptationPurpose',
                       'adaptationSector',
+                      'interventionStatus',
                       'startDate',
                       'endDate',
                     ],

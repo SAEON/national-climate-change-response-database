@@ -154,8 +154,8 @@ export default ({ field, i }) => {
     return (
       <ControlledVocabularyInput
         key={fieldName}
-        tree="interventionStatus"
-        root="Intervention status"
+        tree="actionStatus"
+        root="Status"
         name={fieldName}
         value={value}
         error={isRequired && !value}

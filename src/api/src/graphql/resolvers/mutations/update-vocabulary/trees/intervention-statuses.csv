@@ -1,9 +1,0 @@
-parent,term,tree
-,Intervention status,interventionStatus
-Intervention status,Planned,interventionStatus
-Intervention status,Adopted,interventionStatus
-Intervention status,InProgress,interventionStatus
-Intervention status,Implemented,interventionStatus
-Intervention status,Published,interventionStatus
-Intervention status,Expired,interventionStatus
-Intervention status,Discontinued,interventionStatus

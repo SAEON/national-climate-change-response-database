@@ -1,0 +1,9 @@
+parent,term,tree
+,Status,actionStatus
+Status,Planned,actionStatus
+Status,Adopted (Approved),actionStatus
+Status,In Progress,actionStatus
+Status,Implemented (Operational),actionStatus
+Status,Published,actionStatus
+Status,Expired,actionStatus
+Status,Discontinued,actionStatus

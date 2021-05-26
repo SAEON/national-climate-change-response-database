@@ -14,7 +14,7 @@ create table Users (
 	saeonId nvarchar(255) null
 );
 
-`create unique index users_unique_googleId on Users(googleId) where googleId is not null;`
+create unique index users_unique_googleId on Users(googleId) where googleId is not null;
 create unique index users_unique_saeonId on Users(saeonId) where saeonId is not null;
 end
 

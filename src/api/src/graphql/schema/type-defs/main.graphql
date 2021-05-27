@@ -58,6 +58,8 @@ type Query {
     vocabularyFilters: [VocabularyFilterInput!]
     mitigationFilters: MitigationFiltersInput
     adaptationFilters: AdaptationFiltersInput
+    # Deduplicate results (useful when only a selection of fields required)
+    distinct: Boolean
   ): [Project]!
   # Search vocabulary tress
   controlledVocabulary(root: String!, tree: String!): ControlledVocabulary

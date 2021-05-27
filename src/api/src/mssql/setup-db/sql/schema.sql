@@ -262,6 +262,7 @@ create table Adaptations (
   researchTargetAudience nvarchar(255),
   researchAuthor nvarchar(255),
   researchPaper nvarchar(255),
+	interventionStatus int foreign key references VocabularyXrefTree (id),
   adaptationSector int foreign key references VocabularyXrefTree (id),
   adaptationPurpose int foreign key references VocabularyXrefTree (id),
   hazardFamily int foreign key references VocabularyXrefTree (id),

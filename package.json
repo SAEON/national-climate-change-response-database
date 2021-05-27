@@ -8,7 +8,7 @@
     "start:client": "npm --prefix src/client start",
     "*************** DEPLOYMENTS *************": "",
     "start:bundled": "rimraf src/api/src/http/web/dist/ && npm --prefix src/client run build && mv src/client/dist/ src/api/src/http/web/dist/ && npm --prefix src/api run start:prod",
-    "pkg": "pkg src/api/dist/index.cjs --out-path binaries",
+    "pkg": "npm --prefix src/api run pkg",
     "************ REPOSITORY TOOLING **********": "",
     "doc": "doctoc README.md && doctoc src/README.md && doctoc src/api/README.md && doctoc src/client/README.md && doctoc platform/README.md && doctoc platform/centos/README.md",
     "install-dependencies": "TC=utc node scripts/install-dependencies.js",
@@ -26,7 +26,6 @@
   "homepage": "https://github.com/SAEON/national-climate-change-systems#readme",
   "devDependencies": {
     "doctoc": "^2.0.0",
-    "pkg": "^5.1.0",
     "rimraf": "^3.0.2"
   }
 }

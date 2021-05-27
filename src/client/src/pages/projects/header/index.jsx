@@ -10,7 +10,7 @@ export default ({ MobileFilters, projects }) => {
 
   return (
     <AppBar
-      style={{ backgroundColor: theme.backgroundColor }}
+      style={{ backgroundColor: theme.backgroundColor, zIndex: 999 }}
       variant="outlined"
       position="relative"
     >

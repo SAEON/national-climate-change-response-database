@@ -125,7 +125,7 @@ docker run \
   -e 'SAEON_AUTH_CLIENT_SECRET=' \
   -e 'NCCRD_HOSTNAME=http://localhost:3000' \
   -e 'NCCRD_DEPLOYMENT_ENV=development' \
-  -e 'NCCRD_API_NODE_ENV=development' \
+  -e 'NCCRD_SSL_ENV=development' \
   -e 'MSSQL_HOSTNAME=sql-server' \
   -e 'MSSQL_USERNAME=sa' \
   -e 'MSSQL_PASSWORD=password!123#' \
@@ -137,7 +137,7 @@ docker run \
   -p 3000:3000 \
   -d nccrd
 
-# NCCRD_API_NODE_ENV=production is for deployment behind an SSL-offloading proxy server
+# NCCRD_SSL_ENV=production is for deployment behind an SSL-offloading proxy server
 ```
 
 ## Deploy from published Docker image

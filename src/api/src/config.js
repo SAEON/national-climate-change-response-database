@@ -20,7 +20,7 @@ export const SAEON_AUTH_OAUTH_REDIRECT_ADDRESS = `${NCCRD_HOSTNAME}/http/authent
 
 export const NCCRD_DEPLOYMENT_ENV = process.env.NCCRD_DEPLOYMENT_ENV || 'development'
 
-export const NCCRD_API_NODE_ENV = process.env.NCCRD_API_NODE_ENV || 'development'
+export const NCCRD_SSL_ENV = process.env.NCCRD_SSL_ENV || 'development'
 
 export const NCCRD_PORT = process.env.NCCRD_PORT || 3000
 
@@ -44,3 +44,5 @@ export const MSSQL_PORT = parseInt(process.env.MSSQL_PORT || 1433, 10)
 export const LOG_SQL_QUERIES = (process.env.LOG_SQL_QUERIES || 'true').toBoolean()
 
 export const NCCRD_API_RESET_SCHEMA = (process.env.NCCRD_API_RESET_SCHEMA || 'false').toBoolean()
+
+export const NODE_ENV = process.env.NODE_ENV

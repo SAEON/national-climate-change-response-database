@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { NCCRD_API_NODE_ENV, NCCRD_CLIENT_ID } from '../config.js'
+import { NCCRD_SSL_ENV, NCCRD_CLIENT_ID } from '../config.js'
 
 export default async (ctx, next) => {
   if (!ctx.cookies.get(NCCRD_CLIENT_ID)) {
@@ -14,8 +14,8 @@ export default async (ctx, next) => {
       {
         signed: true,
         httpOnly: true,
-        secure: NCCRD_API_NODE_ENV === 'development' ? false : true,
-        sameSite: NCCRD_API_NODE_ENV === 'development' ? 'lax' : 'none',
+        secure: NCCRD_SSL_ENV === 'development' ? false : true,
+        sameSite: NCCRD_SSL_ENV === 'development' ? 'lax' : 'none',
       }
     )
   }

@@ -13,7 +13,10 @@
     "pkg": "rimraf binaries/ && npm run build:bundled && npm --prefix src/api run rollup && pkg package.json --compress GZip",
     "************ REPOSITORY TOOLING **********": "",
     "doc": "doctoc README.md && doctoc src/README.md && doctoc src/api/README.md && doctoc src/client/README.md && doctoc platform/README.md && doctoc platform/centos/README.md",
-    "install-dependencies": "TC=utc node scripts/install-dependencies.js"
+    "check-dependency-updates": "TC=utc node scripts/manage-dependencies.js",
+    "install-dependencies": "TC=utc node scripts/install-dependencies.js",
+    "ncu": "ncu",
+    "ncu -u": "ncu -u"    
   },
   "bin": "src/api/bin/index.cjs",
   "pkg": {

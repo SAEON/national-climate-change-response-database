@@ -12,6 +12,7 @@
     "start:bundled": "npm run build:bundled && npm --prefix src/api run start:prod",
     "pkg": "rimraf binaries/ && npm run build:bundled && npm --prefix src/api run rollup && pkg package.json --compress GZip",
     "************ REPOSITORY TOOLING **********": "",
+    "clean-installed-files": "find . -name node_modules -type d -exec rm -rv {} + && find . -name package-lock.json -type f -delete",
     "doc": "doctoc README.md && doctoc src/README.md && doctoc src/api/README.md && doctoc src/client/README.md && doctoc platform/README.md && doctoc platform/centos/README.md",
     "check-dependency-updates": "TC=utc node scripts/manage-dependencies.js",
     "install-dependencies": "TC=utc node scripts/install-dependencies.js",

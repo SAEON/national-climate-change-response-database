@@ -12,7 +12,13 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
   - [Local development](#local-development)
 - [Deployment](#deployment)
   - [Deploy bundled API + client](#deploy-bundled-api--client)
-  - [Containerized deployment](#containerized-deployment)
+  - [Deploy as Docker image](#deploy-as-docker-image)
+  - [Deploy from published Docker image](#deploy-from-published-docker-image)
+  - [Deploy using Docker-compose](#deploy-using-docker-compose)
+  - [Build an executable from the source code](#build-an-executable-from-the-source-code)
+- [Running the application as an executable](#running-the-application-as-an-executable)
+  - [Run the application on Mac or Linux](#run-the-application-on-mac-or-linux)
+  - [Run the application on Windows Server](#run-the-application-on-windows-server)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

@@ -26,8 +26,9 @@ const getSanitizedInsertStmt = ({ table, simpleInput, vocabInput, projectId = fa
   .join(',')})
   values (${[
     projectId && ` (select id from #newProject) `,
-    ...simpleInput.map(([key, value]) =>
-      key === 'yx' ? `geometry::STGeomFromText('${value}', 4326)` : `'${sanitizeSqlValue(value)}'` // eslint-disable-line
+    ...simpleInput.map(
+      ([key, value]) =>
+        key === 'yx' ? `geometry::STGeomFromText('${value}', 4326)` : `'${sanitizeSqlValue(value)}'` // eslint-disable-line
     ),
     ...vocabInput.map(
       ([field, { tree, term }]) => `(

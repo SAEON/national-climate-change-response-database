@@ -17,8 +17,9 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
   - [Deploy using Docker-compose](#deploy-using-docker-compose)
   - [Build an executable from the source code](#build-an-executable-from-the-source-code)
 - [Running the application as an executable](#running-the-application-as-an-executable)
-  - [Run the application on Mac or Linux](#run-the-application-on-mac-or-linux)
-  - [Run the application on Windows Server](#run-the-application-on-windows-server)
+  - [Linux & Mac](#linux--mac)
+  - [Windows](#windows)
+  - [With a configuration file](#with-a-configuration-file)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -174,18 +175,60 @@ npm run pkg
 Executables for Mac, Linux and Windows will be placed in the `binaries/` folder. These executables can be started directly (see below for configuration)
 
 # Running the application as an executable
-Binary executables are built automatically for Windows, Max, and Linux. Download the latest version of the built application from [TODO](TODO).
+Binary executables are built automatically for Windows, Max, and Linux on every commit to the `stable` branch. Download the latest version of the built application from [TODO](TODO), and start the executable from a terminal. The examples below show how to start the application with the correct SQL Server configuration (and other configurable properties). Alternatively, placing a `.env` file in the same folder as the executable will result in configuring the application on startup.
 
-## Run the application on Mac or Linux
-Open a terminal, and run the following shell command:
+## Linux & Mac
 ```sh
-ENV1=value ENV2=value ./nccrd
+LOG_SQL_QUERIES=true \
+MSSQL_DATABASE='nccrd' \
+MSSQL_HOSTNAME='localhost' \
+MSSQL_PASSWORD='password!123#' \
+MSSQL_PORT=1433 \
+MSSQL_USERNAME='sa' \
+NCCRD_API_RESET_SCHEMA=false \
+NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES='' \
+NCCRD_DEPLOYMENT_ENV='production' \
+NCCRD_SSL_ENV='development' \
+NCCRD_HOSTNAME='http://localhost:3000' \
+NCCRD_PORT=3000 \
+SAEON_AUTH_CLIENT_SECRET='<secret>' \
+nccrd-<linux or mac>
 ```
 
-## Run the application on Windows Server
-Open a powershell terminal and run the following command:
+## Windows
+Open a **powershell** terminal and run the following command:
+
 ```powershell
-$env:MSSQL_DATABASE="test";
-$env:MSSQL_HOSTNAME="other";
+$env:LOG_SQL_QUERIES="true";
+$env:MSSQL_DATABASE="nccrd";
+$env:MSSQL_HOSTNAME="localhost";
+$env:MSSQL_PASSWORD="password!123#";
+$env:MSSQL_PORT="1433";
+$env:MSSQL_USERNAME="sa";
+$env:NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES="your-email@host.com";
+$env:NCCRD_DEPLOYMENT_ENV="production";
+$env:NCCRD_SSL_ENV="development";
+$env:NCCRD_HOSTNAME="http://localhost:3000";
+$env:NCCRD_PORT="3000";
+$env:SAEON_AUTH_CLIENT_SECRET="<secret>";
 .\nccrd-win.exe
+```
+
+## With a configuration file
+Make sure there is a `.env` file in the same directory as the executable. Add configuration values to the file in the format below and then start the executable (double click on Windows)
+
+```txt
+LOG_SQL_QUERIES=true
+MSSQL_DATABASE='nccrd'
+MSSQL_HOSTNAME='localhost'
+MSSQL_PASSWORD='password!123#'
+MSSQL_PORT=1433
+MSSQL_USERNAME='sa'
+NCCRD_API_RESET_SCHEMA=false
+NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES=''
+NCCRD_DEPLOYMENT_ENV='production'
+NCCRD_SSL_ENV='development'
+NCCRD_HOSTNAME='http://localhost:3000'
+NCCRD_PORT=3000
+SAEON_AUTH_CLIENT_SECRET='<secret>'
 ```

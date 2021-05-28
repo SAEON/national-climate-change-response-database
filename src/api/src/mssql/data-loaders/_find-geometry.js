@@ -27,7 +27,11 @@ export default () =>
         join Geometries g on g.id = gx.geometryId
 
         where
-          t.name in (${[...new Set(trees)].map(tree => `'${sanitizeSqlValue(tree)}'`).join(',') /* eslint-disable-line */})
+          t.name in (${
+            [...new Set(trees)]
+              .map(tree => `'${sanitizeSqlValue(tree)}'`)
+              .join(',') /* eslint-disable-line */
+          })
           and vxt.vocabularyId in (${[...new Set(vocabularyIds)].join(',')})`
 
       logSql(sql, 'Find geometry')

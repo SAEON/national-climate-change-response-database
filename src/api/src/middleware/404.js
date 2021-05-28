@@ -9,6 +9,6 @@ export default async (ctx, next) => {
     }
   } catch (err) {
     ctx.status = err.status || 500
-    ctx.body = `${packageJson.name}, v${packageJson.version}\n\n404\n\nWelcome to the NCCRD API. There is no resource at this path - if you are trying to serve the React App on the route API path, please look at the README file in api/src/http/web.`
+    ctx.body = `${packageJson.name}, v${packageJson.version}\n\n404\n\nWelcome to the NCCRD API. There is no resource at this path - did you copy the client build to src/client-dist in the API folder before starting the application?`
   }
 }

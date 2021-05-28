@@ -44,5 +44,3 @@ export const MSSQL_PORT = parseInt(process.env.MSSQL_PORT || 1433, 10)
 export const LOG_SQL_QUERIES = (process.env.LOG_SQL_QUERIES || 'true').toBoolean()
 
 export const NCCRD_API_RESET_SCHEMA = (process.env.NCCRD_API_RESET_SCHEMA || 'false').toBoolean()
-
-export const NODE_ENV = process.env.NODE_ENV

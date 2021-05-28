@@ -175,7 +175,7 @@ npm run pkg
 Executables for Mac, Linux and Windows will be placed in the `binaries/` folder. These executables can be started directly (see below for configuration)
 
 # Running the application as an executable
-Binary executables are built automatically for Windows, Max, and Linux on every commit to the `stable` branch. Download the latest version of the built application from [TODO](TODO), and start the executable from a terminal. The examples below show how to start the application with the correct SQL Server configuration (and other configurable properties). Alternatively, placing a `.env` file in the same folder as the executable will result in configuring the application on startup.
+Binary executables are built automatically for Windows, Max, and Linux on every commit to the `stable` branch. Download the latest version of the built application from [the releases page](https://github.com/SAEON/national-climate-change-systems/releases), and start the executable from a terminal. The examples below show how to start the application with the correct SQL Server configuration (and other configurable properties). Alternatively, placing a `.env` file in the same folder as the executable will result in configuring the application on startup.
 
 ## Linux & Mac
 ```sh

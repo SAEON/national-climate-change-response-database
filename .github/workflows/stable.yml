@@ -31,5 +31,6 @@ jobs:
     
     steps:
       - name: Test
-        run: >-
+        run: |
           echo hi
+          echo hi 2

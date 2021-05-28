@@ -40,7 +40,7 @@ export default ({ fields, table, ids, vocabularyFilters }) => {
       ${vocabularyFilters.length ? 'and ' : ''}
       ${vocabularyFilters
         .map(({ field: joinAlias, term }) => {
-          return `[${joinAlias}].term = '${sanitizeSqlValue(term)}'`
+          return `[${joinAlias}].term = '${sanitizeSqlValue(term) /* eslint-disable-line */}'`
         })
         .join(' and ')}`
 }

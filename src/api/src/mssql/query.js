@@ -32,6 +32,7 @@ export default async query =>
         encrypt: true,
         appName: packageJson.name,
         abortTransactionOnError: true,
+        trustServerCertificate: true,
       },
     })
     .then(pool => pool.request({ multiple: true }).query(query))

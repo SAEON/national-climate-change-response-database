@@ -40,6 +40,7 @@ export default ({
       encrypt: true,
       appName: packageJson.name,
       abortTransactionOnError: true,
+      trustServerCertificate: true,
     },
   })
 

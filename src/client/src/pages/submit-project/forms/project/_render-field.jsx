@@ -8,9 +8,8 @@ import {
 const multilineFields = ['description', 'validationComments']
 
 export default ({ field }) => {
-  const { projectForm, updateProjectForm, resetMitigationForms, resetAdaptationForms } = useContext(
-    formContext
-  )
+  const { projectForm, updateProjectForm, resetMitigationForms, resetAdaptationForms } =
+    useContext(formContext)
   const { name: fieldName, description, type } = field
   const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType } = type

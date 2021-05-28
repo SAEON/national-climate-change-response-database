@@ -14,4 +14,8 @@ exec(`npm --prefix ${REPOSITORY_PATH} ${NPM_SCRIPTS.install}`)
  * Install service dependencies
  */
 const SERVICES_PATH = normalize(join(__dirname, '../src'))
-apply({ PATH: SERVICES_PATH, script: NPM_SCRIPTS.install, args: ['--legacy-peer-deps'] })
+apply({
+  PATH: SERVICES_PATH,
+  script: NPM_SCRIPTS.install,
+  args: ['--legacy-peer-deps'],
+})

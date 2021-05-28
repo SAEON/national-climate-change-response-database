@@ -27,7 +27,7 @@ const getSanitizedInsertStmt = ({ table, simpleInput, vocabInput, projectId = fa
   values (${[
     projectId && ` (select id from #newProject) `,
     ...simpleInput.map(([key, value]) =>
-      key === 'yx' ? `geometry::STGeomFromText('${value}', 4326)` : `'${sanitizeSqlValue(value)}'`
+      key === 'yx' ? `geometry::STGeomFromText('${value}', 4326)` : `'${sanitizeSqlValue(value)}'` // eslint-disable-line
     ),
     ...vocabInput.map(
       ([field, { tree, term }]) => `(
@@ -39,8 +39,8 @@ const getSanitizedInsertStmt = ({ table, simpleInput, vocabInput, projectId = fa
         join Vocabulary v on v.id = vxt.vocabularyId
 
         where
-        t.name = '${sanitizeSqlValue(tree)}'
-        and v.term = '${sanitizeSqlValue(term)}'
+        t.name = '${sanitizeSqlValue(tree) /* eslint-disable-line */}' 
+        and v.term = '${sanitizeSqlValue(term) /* eslint-disable-line */}'
       )`
     ),
   ]

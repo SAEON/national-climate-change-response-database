@@ -21,7 +21,11 @@ export default ({
 }) => {
   const theme = useTheme()
 
-  const { error: gqlError, loading, data } = useQuery(
+  const {
+    error: gqlError,
+    loading,
+    data,
+  } = useQuery(
     gql`
       query controlledVocabulary($root: String!, $tree: String!) {
         controlledVocabulary(root: $root, tree: $tree) {

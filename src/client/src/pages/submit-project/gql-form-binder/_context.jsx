@@ -74,10 +74,10 @@ export default ({ children }) => {
     setProjectForm(projectForm => Object.assign({ ...projectForm }, obj))
   }, [])
 
-  const projectFormValidation = useMemo(() => getFormStatus(projectFields, projectForm), [
-    projectFields,
-    projectForm,
-  ])
+  const projectFormValidation = useMemo(
+    () => getFormStatus(projectFields, projectForm),
+    [projectFields, projectForm]
+  )
 
   /* MITIGATION FORMS */
 

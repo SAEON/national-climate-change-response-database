@@ -1,3 +1,4 @@
-node_modules
-package-lock.json
-src/http/web/dist/*
+**/node_modules/**
+**/package-lock.json
+**/client-dist/**
+bin

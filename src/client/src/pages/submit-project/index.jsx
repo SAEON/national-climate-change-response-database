@@ -65,15 +65,11 @@ const Layout = () => {
 
   const { isComplete: projectFormComplete, isStarted: projectFormStarted } = projectFormValidation
 
-  const {
-    isComplete: mitigationFormsComplete,
-    isStarted: mitigationFormsStarted,
-  } = mitigationFormsValidation
+  const { isComplete: mitigationFormsComplete, isStarted: mitigationFormsStarted } =
+    mitigationFormsValidation
 
-  const {
-    isComplete: adaptationFormsComplete,
-    isStarted: adaptationFormsStarted,
-  } = adaptationFormsValidation
+  const { isComplete: adaptationFormsComplete, isStarted: adaptationFormsStarted } =
+    adaptationFormsValidation
 
   const mitigationsRequired = ['mitigation', 'cross cutting'].includes(
     projectForm['interventionType']?.term.toLowerCase()

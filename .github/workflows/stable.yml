@@ -30,7 +30,6 @@ jobs:
     runs-on: nccrd.saeon.ac.za
     
     steps:
-      - name: Test
+      - name: Build Docker image
         run: |
-          npm run install-dependencies
-          ls -ls
+          docker image build -t nccrd-exes -f pkg.Dockerfile .

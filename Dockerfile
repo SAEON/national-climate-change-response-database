@@ -65,7 +65,7 @@ ENV NCCRD_HOSTNAME=$NCCRD_HOSTNAME
 
 WORKDIR /app
 COPY src/api .
-COPY --from=client /app/dist src/http/web/dist
+COPY --from=client /app/dist src/client-dist
 RUN npm ci --only=production
 EXPOSE 3000
 

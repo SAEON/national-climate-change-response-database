@@ -30,11 +30,11 @@ jobs:
     runs-on: nccrd.saeon.ac.za
     
     steps:
-      - name: Build binaries
+      - name: Build binaries via Docker
         run: |
           docker image build -t nccrd-binaries -f pkg.Dockerfile .
 
-      - name: Get binaries
+      - name: Get binaries from Docker context
         run: |
           docker cp $(docker create --rm nccrd-binaries):/app/binaries/ ./
       

@@ -3,8 +3,8 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const packageJson = require('./package.json')
-const dotenv = require('dotenv').config({ path: path.join(__dirname, './.env') })
 const fs = require('fs')
+const dotenv = require('dotenv').config({ path: path.join(__dirname, './.env') })
 
 let { NODE_ENV: mode, NCCRD_DEPLOYMENT_ENV = 'local' } = process.env
 
@@ -78,7 +78,7 @@ module.exports = () => {
           PACKAGE_DESCRIPTION: JSON.stringify(packageJson.description),
           PACKAGE_KEYWORDS: JSON.stringify(packageJson.keywords),
           ...Object.fromEntries(
-            Object.entries(dotenv.parsed)
+            Object.entries(dotenv.parsed || {})
               .filter(([key]) => key !== 'NCCRD_DEPLOYMENT_ENV')
               .map(([key, value]) => [key, JSON.stringify(value)])
           ),

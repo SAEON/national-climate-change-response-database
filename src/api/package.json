@@ -7,18 +7,12 @@
     "start": "nodemon --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && TZ=utc node --trace-warnings --experimental-json-modules src'",
     "start:prod": "TZ=utc node --no-warnings --experimental-json-modules src",
     "lint": "eslint -c .eslintrc.cjs \"./**/*.{js,mjs,cjs}\"",
-    "rollup": "rimraf bin && rollup --config rollup.config.js && cp -r src/graphql/resolvers/mutations/update-vocabulary/trees bin/trees && cp -r src/graphql/schema/type-defs bin/type-defs && cp -r src/mssql/setup-db/sql bin/sql",
+    "rollup": "rimraf bin && rollup --config rollup.config.js && cp -r src/graphql/resolvers/mutations/update-vocabulary/trees bin/trees && cp -r src/graphql/schema/type-defs bin/type-defs && cp -r src/mssql/setup-db/sql bin/sql && cp -r src/client-dist bin/client-dist",
     "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
     "ncu": "ncu",
-    "ncu -u": "ncu -u",
-    "pkg": "rimraf bin/ && npm run rollup && pkg package.json"
+    "ncu -u": "ncu -u"
   },
   "bin": "bin/index.cjs",
-  "pkg": {
-    "assets":["bin/trees/**/*", "bin/type-defs/**/*", "bin/sql/**/*"],
-    "targets": [ "node14-linux-x64" ],
-    "outputPath": "binaries"
-  },  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SAEON/national-climate-change-systems.git"
@@ -35,7 +29,6 @@
     "eslint": "^7.24.0",
     "nodemon": "^2.0.7",
     "npm-check-updates": "^11.4.1",
-    "pkg": "^5.2.1",
     "prettier": "^2.2.1",
     "rollup": "^2.47.0"
   },

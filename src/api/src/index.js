@@ -24,7 +24,7 @@ import loginSuccessRoute from './http/login-success.js'
 import apolloServer from './graphql/index.js'
 import configureSaeonAuth from './passport/saeon-auth/index.js'
 import passportCookieConfig from './passport/cookie-config.js'
-import { NCCRD_API_ADDRESS_PORT, NCCRD_API_KEY } from './config.js'
+import { NCCRD_PORT, NCCRD_API_KEY } from './config.js'
 import getCurrentDirectory from './lib/get-current-directory.js'
 import path from 'path'
 
@@ -34,7 +34,7 @@ const __dirname = getCurrentDirectory(import.meta)
 const { login: saeonLogin, authenticate: saeonAuthenticate } = configureSaeonAuth()
 
 // Configure static files server
-const SPA_PATH = path.join(__dirname, 'http/web/dist')
+const SPA_PATH = path.join(__dirname, 'client-dist')
 const reactClient = new Koa()
 reactClient.use(serve(SPA_PATH))
 
@@ -85,7 +85,7 @@ apolloServer.applyMiddleware({ app: app })
 apolloServer.installSubscriptionHandlers(httpServer)
 
 // Start public HTTP server
-httpServer.listen(NCCRD_API_ADDRESS_PORT, () => {
+httpServer.listen(NCCRD_PORT, () => {
   console.info(`NCCRD API server ready`)
   console.info(`NCCRD GraphQL server ready`)
   console.info(`NCCRD GraphQL subscriptions server ready`)

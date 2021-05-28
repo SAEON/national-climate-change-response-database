@@ -4,7 +4,7 @@ import query from '../../mssql/query.js'
 import { OAuth2Strategy } from 'passport-oauth'
 import base64url from 'base64url'
 import {
-  NCCRD_API_ADDRESS,
+  NCCRD_HOSTNAME,
   SAEON_AUTH_CLIENT_SECRET,
   SAEON_AUTH_CLIENT_ID,
   SAEON_AUTH_CLIENT_SCOPES,
@@ -93,9 +93,9 @@ export default () => {
          */
         const redirect = ctx.request.query.redirect
           ? ctx.request.query.redirect == 'undefined'
-            ? `${NCCRD_API_ADDRESS}`
+            ? `${NCCRD_HOSTNAME}`
             : ctx.request.query.redirect
-          : NCCRD_API_ADDRESS
+          : NCCRD_HOSTNAME
 
         return passport.authenticate('provider', {
           scope: SAEON_AUTH_CLIENT_SCOPES.split(','),

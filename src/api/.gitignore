@@ -1,6 +1,4 @@
 node_modules/
 .env
-dist/
+client-dist/
 bin/
-binaries/**
-!binaries/README.md

@@ -1,7 +1,7 @@
-import { NCCRD_API_ADDRESS } from '../config.js'
+import { NCCRD_HOSTNAME } from '../config.js'
 
 export default async ctx => {
-  const { redirect = NCCRD_API_ADDRESS } = ctx.request.query
+  const { redirect = NCCRD_HOSTNAME } = ctx.request.query
   ctx.session = null
   ctx.redirect(redirect)
 }

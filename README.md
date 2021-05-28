@@ -49,17 +49,16 @@ npm run install-dependencies
 
 ```sh
 # Start a SQL Server instance (manually create the database)
-SQL Server
-docker run \
---name sql-server \
---restart always \
--v /home/$USER:/host-mnt \
--e 'ACCEPT_EULA=Y' \
--e 'SA_PASSWORD=password!123#' \
--e 'MSSQL_PID=Developer' \
--p 1433:1433 \
--d \
-mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+  docker run \
+  --name sql-server \
+  --restart always \
+  -v /home/$USER:/host-mnt \
+  -e 'ACCEPT_EULA=Y' \
+  -e 'SA_PASSWORD=password!123#' \
+  -e 'MSSQL_PID=Developer' \
+  -p 1433:1433 \
+  -d \
+  mcr.microsoft.com/mssql/server:2017-latest-ubuntu
 
 # Start a MongoDB server
 docker run --name mongo --restart always -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password -d -p 27017:27017 mongo:4.4.3
@@ -72,14 +71,26 @@ npm run start:client
 ```
 
 # Deployment
-Node.js applications typically include an HTTP server bound to localhost, with HTTP requests proxy-passed to this localhost address. This is fairly simple using Nginx, Apache, IIS, etc. The intention behind this software is that the React client is bundled and copied into the Node.js API, so that both the client and the API are available via a single Node.js process. Load balancing should be straight forward (if required) - Just run multiple instances of the application. When using the 'default' deployment mechanism note the following:
+This project comprises a server (Node.js application) as well as a website (React.js static files). These services are separate in terms of how the source code is laid out. Both services need to be deployed together. Node.js applications typically include an HTTP server bound to localhost, with HTTP requests proxy-passed to this localhost address. The static website first needs to be built from the source code, and then served from a webserver. Proxy-passing to a Node.js server and serving static files is fairly straightforward using Nginx, Apache, IIS, etc.
 
-1. API calls are gzipped by the Node.js application, but served static files are NOT
-2. No caching policy is set by the Node.js server when static files are requested
-3. The HTTP `origin` header should be set explicitly by the proxy server and should be the domain by which the application is served from
+Several mechanisms are available to deploy this project from source code:
+
+1. Install Node.js on a server, and then run the API and serve the (built) client separately
+2. Build a docker image that will serve the API and client together
+3. Use Docker-compose to setup a deployment that includes the API, client, and Sql Server
+4. Package the API and client into a single executable that can be started on any server
 
 ## Deploy bundled API + client
-The easiest way to deploy the application is to serve the React.js static files from the koa.js server. Note that compression IS enabled for API calls (HTTP and GraphQL), but is NOT enabled for static files since this would be better done via a webserver. To start this app in a production environment:
+The easiest way to deploy the application from source code is to serve the React.js static files from the Node.js server. Note the following:
+
+1. API (`/http` and `/graphql`) calls are gzipped by the Node.js application, but **static files are NOT** (configure this in your webserver)
+2. No caching policy is set by the Node.js server when static files are requested (also configure this in your webserver)
+3. The HTTP `origin` header should be set explicitly by the proxy server and should be the domain by which the application is served from
+
+Refer to this [this Nginx configuration file](platform/centos/nginx/nginx.conf) and [this Nginx server block](platform/centos/nginx/nccrd.conf) for an example of how to configure a webserver to set caching headers and compress static files.
+
+
+To start this app in a production environment:
 
 ```sh
 # Install Node.js 14.16.x on the server (https://nodejs.org/en/)
@@ -112,7 +123,7 @@ docker run \
   -e 'SAEON_AUTH_CLIENT_ID=' \
   -e 'SAEON_AUTH_CLIENT_SCOPES=' \
   -e 'SAEON_AUTH_CLIENT_SECRET=' \
-  -e 'NCCRD_API_ADDRESS=http://localhost:3000' \
+  -e 'NCCRD_HOSTNAME=http://localhost:3000' \
   -e 'NCCRD_DEPLOYMENT_ENV=development' \
   -e 'NCCRD_API_NODE_ENV=development' \
   -e 'MSSQL_HOSTNAME=sql-server' \
@@ -137,4 +148,38 @@ Refer to the [docker-compose.yml](docker-compose.yml) file for a deployment conf
 
 ```sh
 docker-compose --env-file docker-compose.env up -d --force-recreate --build
+```
+
+## Build an executable from the source code
+```sh
+# Install Node.js 14.16.x on the server (https://nodejs.org/en/)
+
+# Clone the repository if not already done
+git clone ... nccrd
+cd nccrd
+
+# Install dependencies if not already done
+npm run install-dependencies
+
+# Create the executables
+npm run pkg
+```
+
+Executables for Mac, Linux and Windows will be placed in the `binaries/` folder. These executables can be started directly (see below for configuration)
+
+# Running the application as an executable
+Binary executables are built automatically for Windows, Max, and Linux. Download the latest version of the built application from [TODO](TODO).
+
+## Run the application on Mac or Linux
+Open a terminal, and run the following shell command:
+```sh
+ENV1=value ENV2=value ./nccrd
+```
+
+## Run the application on Windows Server
+Open a powershell terminal and run the following command:
+```powershell
+$env:MSSQL_DATABASE="test";
+$env:MSSQL_HOSTNAME="other";
+.\nccrd-win.exe
 ```

@@ -1,4 +1,11 @@
+node_modules
+binaries
+
 src/api/node_modules
-src/client/node_modules
+src/api/bin
+src/api/src/client-dist
 src/api/.env
+
+src/client/node_modules
+src/client/dist
 src/client/.env

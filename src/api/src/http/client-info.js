@@ -1,7 +1,9 @@
+import { NCCRD_HOSTNAME } from '../config.js'
+
 export default async ctx => {
   const ipAddress = ctx.request.headers['X-Real-IP'] || ctx.request.ip
   const userAgent = ctx.request.headers['user-agent']
-  const origin = ctx.request.headers['origin'] || ''
+  const origin = ctx.request.headers['origin'] || NCCRD_HOSTNAME
 
   ctx.body = {
     ipAddress,

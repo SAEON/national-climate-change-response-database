@@ -11,22 +11,20 @@ export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.ac.za'
 export const CATALOGUE_API_ODP_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
 export const SAEON_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
 
+export const NCCRD_HOSTNAME = process.env.NCCRD_HOSTNAME || 'http://localhost:3000'
+
 export const SAEON_AUTH_CLIENT_SECRET = process.env.SAEON_AUTH_CLIENT_SECRET || ''
 export const SAEON_AUTH_CLIENT_ID = process.env.SAEON_AUTH_CLIENT_ID || 'SAEON.NCCIS'
 export const SAEON_AUTH_CLIENT_SCOPES = process.env.SAEON_AUTH_CLIENT_SCOPES || 'SAEON.NCCIS'
-export const SAEON_AUTH_OAUTH_REDIRECT_ADDRESS =
-  process.env.SAEON_AUTH_OAUTH_REDIRECT_ADDRESS ||
-  'http://localhost:3000/http/authenticate/redirect/saeon'
+export const SAEON_AUTH_OAUTH_REDIRECT_ADDRESS = `${NCCRD_HOSTNAME}/http/authenticate/redirect/saeon`
 
 export const NCCRD_DEPLOYMENT_ENV = process.env.NCCRD_DEPLOYMENT_ENV || 'development'
 
 export const NCCRD_API_NODE_ENV = process.env.NCCRD_API_NODE_ENV || 'development'
 
-export const NCCRD_API_ADDRESS = process.env.NCCRD_API_ADDRESS || 'http://localhost:3000'
+export const NCCRD_PORT = process.env.NCCRD_PORT || 3000
 
-export const NCCRD_API_ADDRESS_PORT = process.env.NCCRD_API_ADDRESS_PORT || 3000
-
-export const NCCRD_API_GQL_ADDRESS = `${NCCRD_API_ADDRESS}/graphql`
+export const NCCRD_API_GQL_ADDRESS = `${NCCRD_HOSTNAME}/graphql`
 
 export const NCCRD_API_ALLOWED_ORIGINS =
   process.env.NCCRD_API_ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001'

@@ -33,3 +33,17 @@ jobs:
       - name: Build binaries
         run: |
           docker image build -t nccrd-binaries -f pkg.Dockerfile .
+
+      - name: Get binaries
+        run: |
+          docker cp $(docker create --rm nccrd-binaries):/app/binaries/ ./
+      
+      - name: Publish release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            binaries/nccrd-linux
+            binaries/nccrd-macos
+            binaries/nccrd-win.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_NCCRD_RELEASES }}

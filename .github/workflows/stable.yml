@@ -32,5 +32,5 @@ jobs:
     steps:
       - name: Test
         run: |
-          echo hi
-          echo hi 2
+          npm run install-dependencies
+          ls -ls

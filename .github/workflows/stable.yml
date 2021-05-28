@@ -6,6 +6,14 @@ on:
       - stable
 
 jobs:
+
+  source-code:
+    runs-on: nccrd.saeon.ac.za
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: stable  
+
   # deploy:
   #   runs-on: nccrd.saeon.ac.za
   #   steps:
@@ -21,12 +29,9 @@ jobs:
   #         /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
 
   pkg-releases:
-    runs-on: nccrd.saeon.ac.za
+    needs: [source-code]
+    
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: stable
-
       - name: Test
         run: >-
           echo hi

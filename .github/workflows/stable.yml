@@ -23,6 +23,10 @@ jobs:
   pkg-releases:
     runs-on: nccrd.saeon.ac.za
     steps:
-      name: test
-      run: >-
-        echo hi
+      - uses: actions/checkout@v2
+        with:
+          ref: stable
+
+      - name: Test
+        run: >-
+          echo hi

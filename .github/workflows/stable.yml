@@ -38,7 +38,7 @@ jobs:
         run: |
           docker cp $(docker create --rm nccrd-binaries):/app/binaries/ ./
       
-      - name: Publish release
+      - name: Publish binaries
         uses: softprops/action-gh-release@v1
         with:
           files: |
@@ -47,3 +47,8 @@ jobs:
             binaries/nccrd-win.exe
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_NCCRD_RELEASES }}
+
+      - name: Clean up
+        run: |
+          docker image rm nccrd-binaries
+          rm -rf binaries

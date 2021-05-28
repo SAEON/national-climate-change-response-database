@@ -8,6 +8,7 @@
     "hssp",
     "hsss",
     "notistack",
+    "softprops",
     "terrestris"
   ],
   "eslint.workingDirectories": ["src/api", "src/client"]

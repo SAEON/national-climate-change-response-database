@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - '*'
-    branches:
-      - stable
 
 jobs:
 
@@ -38,8 +36,3 @@ jobs:
             binaries/nccrd-win.exe
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_NCCRD_RELEASES }}
-
-      - name: Clean up
-        run: |
-          docker image rm nccrd-binaries
-          rm -rf binaries

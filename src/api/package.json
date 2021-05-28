@@ -20,19 +20,19 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^7.27.0",
+    "nodemon": "^2.0.7",
+    "npm-check-updates": "^11.5.13",
+    "prettier": "^2.3.0"
+  },
+  "dependencies": {
+    "rollup": "^2.50.3",
     "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
     "@babel/eslint-parser": "^7.14.3",
     "@babel/eslint-plugin": "^7.13.16",
     "@babel/preset-env": "^7.14.2",
     "@rollup/plugin-json": "^4.1.0",
-    "eslint": "^7.27.0",
-    "nodemon": "^2.0.7",
-    "npm-check-updates": "^11.5.13",
-    "prettier": "^2.3.0",
-    "rollup": "^2.50.3"
-  },
-  "dependencies": {
     "@koa/router": "^10.0.0",
     "apollo-server-koa": "2.25",
     "cookie": "^0.4.1",

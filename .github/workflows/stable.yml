@@ -30,6 +30,6 @@ jobs:
     runs-on: nccrd.saeon.ac.za
     
     steps:
-      - name: Build Docker image
+      - name: Build binaries
         run: |
-          docker image build -t nccrd-exes -f pkg.Dockerfile .
+          docker image build -t nccrd-binaries -f pkg.Dockerfile .

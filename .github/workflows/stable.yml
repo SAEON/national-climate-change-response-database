@@ -30,6 +30,7 @@ jobs:
 
   pkg-releases:
     needs: [source-code]
+    runs-on: nccrd.saeon.ac.za
     
     steps:
       - name: Test

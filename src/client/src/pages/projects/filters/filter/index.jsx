@@ -83,7 +83,7 @@ export default ({ type, title }) => {
                 )
               })
             ) : (
-              <Typography variant="overline">(No values)</Typography>
+              <Typography variant="overline">(No filters available)</Typography>
             )}
           </Box>
         </Paper>

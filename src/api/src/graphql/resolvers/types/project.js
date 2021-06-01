@@ -14,10 +14,7 @@ const vocabularyFields = [
 ]
 
 export default {
-  mitigations: async ({ mitigations = [] }) => {
-    console.log('mitigations', mitigations)
-    return mitigations
-  },
+  mitigations: async ({ mitigations = [] }) => mitigations,
   adaptations: async ({ adaptations = [] }) => adaptations,
   ...Object.fromEntries(
     vocabularyFields.map(field => {

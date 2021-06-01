@@ -18,7 +18,7 @@ export default withRouter(() => {
         path={'/'}
         exact
         render={() => (
-          <Transition tKey="home">
+          <Transition nowrap tKey="home">
             <HomePage />
           </Transition>
         )}

@@ -8,7 +8,7 @@ export { default as GeometryLayer } from './_geometry-layer'
 
 export const context = createContext()
 
-export default ({ children }) => {
+export default ({ children = [] }) => {
   const mapDomRef = useRef(null)
 
   const map = useMemo(() => {

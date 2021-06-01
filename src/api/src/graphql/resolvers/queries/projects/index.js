@@ -29,11 +29,10 @@ export default async (
 ) => {
   const { query } = ctx.mssql
 
-  // TODO - merge field types
   const {
     project: projectFields,
-    mitigations: mitigationsFields,
-    adaptations: adaptationsFields,
+    mitigations: mitigationsFields = [],
+    adaptations: adaptationsFields = [],
   } = getFieldSelections(
     info.fieldNodes.find(({ name }) => (name.value = 'projects')).selectionSet.selections
   )
@@ -74,21 +73,29 @@ export default async (
     )
     
     select ${distinct ? 'distinct' : ''}
-      ${getFinalProjection({ fields: projectFields, table: 'p' })},
-      ( 
-        select ${distinct ? 'distinct' : ''}
-          ${getFinalProjection({
-            fields: mitigationsFields,
-            table: 'm',
-          })} from _mitigations m where m.projectId = p.id for json path
-      ) mitigations,
-      (
-         select ${distinct ? 'distinct' : ''}
-          ${getFinalProjection({
-            fields: adaptationsFields,
-            table: 'a',
-          })} from _adaptations a where a.projectId = p.id for json path 
-      ) adaptations
+      ${getFinalProjection({ fields: projectFields, table: 'p' })}
+      ${
+        mitigationsFields.length
+          ? `,( 
+              select ${distinct ? 'distinct' : ''}
+                ${getFinalProjection({
+                  fields: mitigationsFields,
+                  table: 'm',
+                })} from _mitigations m where m.projectId = p.id for json path
+            ) mitigations`
+          : ''
+      }
+      ${
+        adaptationsFields.length
+          ? `,(
+              select ${distinct ? 'distinct' : ''}
+              ${getFinalProjection({
+                fields: adaptationsFields,
+                table: 'a',
+              })} from _adaptations a where a.projectId = p.id for json path 
+            ) adaptations`
+          : ''
+      }
     
     from _projects p
     

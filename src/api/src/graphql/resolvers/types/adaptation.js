@@ -5,6 +5,7 @@ const vocabularyFields = [
   'adaptationPurpose',
   'hazardFamily',
   'hazardSubFamily',
+  'interventionStatus',
   'hazard',
   'subHazard',
 ]

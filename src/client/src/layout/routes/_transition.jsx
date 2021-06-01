@@ -1,19 +1,24 @@
 import { Suspense } from 'react'
 import Fade from '@material-ui/core/Fade'
 import Loading from '../../components/loading'
-import Box from '@material-ui/core/Box'
-import Container from '@material-ui/core/Container'
+import Wrapper from '../../components/page-wrapper'
 
-export default ({ children, tKey }) => {
+export default ({ children, tKey, nowrap }) => {
+  if (nowrap) {
+    return (
+      <Fade key={tKey} in={true}>
+        <div>
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </div>
+      </Fade>
+    )
+  }
+
   return (
     <Fade key={tKey} in={true}>
       <div>
         <Suspense fallback={<Loading />}>
-          <Container>
-            <Box py={2} paddingBottom={8}>
-              {children}
-            </Box>
-          </Container>
+          <Wrapper>{children}</Wrapper>
         </Suspense>
       </div>
     </Fade>

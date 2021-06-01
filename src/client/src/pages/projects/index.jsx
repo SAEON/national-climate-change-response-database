@@ -5,6 +5,7 @@ import Projects from './results'
 import Grid from '@material-ui/core/Grid'
 import Loading from '../../components/loading'
 import Hidden from '@material-ui/core/Hidden'
+import Wrapper from '../../components/page-wrapper'
 
 export default () => {
   const { error, loading, data } = useQuery(
@@ -139,28 +140,28 @@ export default () => {
 
   const { projects, filters } = data
 
-  console.log('filters', filters)
-
   return (
-    <Grid container direction="row" spacing={2}>
-      {/* FILTERS */}
-      <Hidden smDown>
-        <Grid container item md={4} spacing={1}>
-          <Grid item>
-            <Filters />
+    <>
+      <Header projects={projects} MobileFilters={Filters} filters={filters} />
+      <Wrapper>
+        <Grid container direction="row" spacing={2}>
+          {/* FILTERS */}
+          <Hidden smDown>
+            <Grid container item md={4} spacing={1}>
+              <Grid xs item>
+                <Filters filters={filters} />
+              </Grid>
+            </Grid>
+          </Hidden>
+
+          {/* RESULTS */}
+          <Grid container direction="column" item xs style={{ flexGrow: 1 }} spacing={1}>
+            <Grid item>
+              <Projects projects={projects} />
+            </Grid>
           </Grid>
         </Grid>
-      </Hidden>
-
-      {/* RESULTS */}
-      <Grid container direction="column" item xs style={{ flexGrow: 1 }} spacing={1}>
-        <Grid item>
-          <Header projects={projects} MobileFilters={Filters} />
-        </Grid>
-        <Grid item>
-          <Projects projects={projects} />
-        </Grid>
-      </Grid>
-    </Grid>
+      </Wrapper>
+    </>
   )
 }

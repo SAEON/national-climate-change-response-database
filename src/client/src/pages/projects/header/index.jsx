@@ -5,19 +5,12 @@ import MobileSideMenu from './mobile-side-menu'
 import Hidden from '@material-ui/core/Hidden'
 import Typography from '@material-ui/core/Typography'
 
-export default ({ MobileFilters, projects }) => {
+export default ({ MobileFilters, filters, projects }) => {
   const theme = useTheme()
 
   return (
-    <AppBar
-      style={{ backgroundColor: theme.backgroundColor, zIndex: 999 }}
-      variant="outlined"
-      position="relative"
-    >
-      <Toolbar
-        style={{ paddingLeft: theme.spacing(2), paddingRight: theme.spacing(1) }}
-        variant="dense"
-      >
+    <AppBar color="inherit" variant="outlined" position="sticky">
+      <Toolbar style={{ paddingLeft: theme.spacing(2), paddingRight: theme.spacing(1) }}>
         {/* RESULT COUNT */}
         <Typography variant="overline" color="primary">
           {projects.length} project{projects.length === 1 ? '' : 's'}
@@ -27,7 +20,7 @@ export default ({ MobileFilters, projects }) => {
 
         {/* MOBILE FILTERS */}
         <Hidden mdUp>
-          <MobileSideMenu Filters={MobileFilters} />
+          <MobileSideMenu Filters={MobileFilters} filters={filters} />
         </Hidden>
       </Toolbar>
     </AppBar>

@@ -5,7 +5,7 @@ import CloseIcon from 'mdi-react/CloseIcon'
 import IconButton from '@material-ui/core/IconButton'
 import FilterIcon from 'mdi-react/FilterIcon'
 
-export default ({ Filters }) => {
+export default ({ Filters, filters }) => {
   const [showSidebar, setShowSidebar] = useState(false)
 
   return (
@@ -22,7 +22,7 @@ export default ({ Filters }) => {
           <IconButton aria-label="Toggle search filters" onClick={() => setShowSidebar(false)}>
             <CloseIcon />
           </IconButton>
-          <Filters />
+          <Filters filters={filters} />
         </Grid>
       </Drawer>
       <IconButton onClick={() => setShowSidebar(true)} size="small">

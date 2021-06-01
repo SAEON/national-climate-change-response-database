@@ -59,6 +59,11 @@ const Compose = ({ fields }) => {
                       'researchAuthor',
                       'researchPaper',
                     ],
+                    'Energy & emissions': [
+                      'energyOrEmissionsData',
+                      '__energyCalculator',
+                      '__emissionsCalculator',
+                    ],
                     'Carbon credit program': [
                       'carbonCredit',
                       'volMethodology',

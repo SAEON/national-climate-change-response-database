@@ -22,6 +22,7 @@ export default ({
     const _fields = Object.entries(sections)
       .map(([, fields]) => fields)
       .flat()
+      .filter(field => !field.match(/^__/))
 
     const set1 = new Set(_fields)
     const set2 = new Set(fields.map(({ name }) => name))
@@ -66,7 +67,12 @@ ${JSON.stringify(sections, null, 2)}`
             cardContentStyle={cardContentStyle}
             cardHeaderStyle={cardHeaderStyle}
             title={title}
-            fields={sectionFields.map(_name => _sectionFields.find(({ name }) => _name === name))}
+            fields={sectionFields.map(_name => {
+              if (_name.match(/^__/)) {
+                return { name: _name, type: { name: 'dynamic' } }
+              }
+              return _sectionFields.find(({ name }) => _name === name)
+            })}
             RenderField={RenderField}
           />
         )

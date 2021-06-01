@@ -1,4 +1,4 @@
-import Submit from './submit-project-2'
+import Submit from './submit-project'
 import Wrapper from './_wrapper'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { fade } from '@material-ui/core/styles/colorManipulator'

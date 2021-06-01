@@ -62,13 +62,12 @@ export default () => {
           Explore climate mitigation and adaptation projects
         </Typography>
         <Typography style={{ color: fade(theme.palette.common.black, 0.9) }} variant="body1">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-          been the industrys standard dummy text ever since the 1500s, when an unknown printer took
-          a galley of type and scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting, remaining essentially
-          unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
-          Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
-          PageMaker including versions of Lorem Ipsum.
+          South Africa is projected to face a higher frequency of climate related disasters that are
+          increasing in intensity, and these events are likely to be associated with impacts that
+          are on par with, if not worse than those already experienced (Engelbrecht et al. 2018
+          Third National Communication to UNFCCC). The National Climate Change Response Database and
+          was intended as a resource to inform anyone currently working on climate change adaptation
+          or mitigation on past, current and future climate change responses.
         </Typography>
       </Grid>
     </Grid>

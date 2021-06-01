@@ -32,6 +32,9 @@ input MitigationInput {
   # CDM status :: TODO - I'm not sure what this field is
   cdmStatus: String
 
+  # Mitigation data :: Does the project have energy or emissions data?
+  energyOrEmissionsData: ControlledVocabularyInput
+
   # Host Sector (IPCC) :: Select the IPCC host sector that best describes your project.
   hostSector: ControlledVocabularyInput
   # Main SubSector :: Select the IPCC main sub-sector that best describes you project.

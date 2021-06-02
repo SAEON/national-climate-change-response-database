@@ -2,6 +2,7 @@ import { WithControlledVocabulary } from '../../../../gql-form-binder'
 import Multiselect from '../../../../../../components/multiselect'
 import { DatePicker } from '@material-ui/pickers'
 import Grid from '@material-ui/core/Grid'
+import InputTable from './input-table'
 
 export default ({ calculator = {}, updateCalculator = {} }) => {
   const { renewableTypes = [], startYear = null, endYear = null } = calculator
@@ -78,6 +79,9 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
           />
         </Grid>
       </Grid>
+
+      {/* INPUT TABLE */}
+      <InputTable calculator={calculator} updateCalculator={updateCalculator} />
     </>
   )
 }

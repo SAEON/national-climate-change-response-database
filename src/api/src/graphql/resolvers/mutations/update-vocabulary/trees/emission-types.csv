@@ -1,0 +1,7 @@
+parent,term,tree
+,Emission,emissionTypes
+Emission,Combustion,emissionTypes
+Emission,Process,emissionTypes
+Emission,Fugitive emissions,emissionTypes
+Emission,"Agriculture, forrestry, and fisheries",emissionTypes
+Emission,Waste,emissionTypes

@@ -6,10 +6,11 @@ import OutlinedInput from '@material-ui/core/OutlinedInput'
 import Box from '@material-ui/core/Box'
 import MenuItem from '@material-ui/core/MenuItem'
 import Checkbox from '@material-ui/core/Checkbox'
+import FormHelperText from '@material-ui/core/FormHelperText'
 import ListItemText from '@material-ui/core/ListItemText'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-export default ({ id, options, value, setValue, label }) => {
+export default ({ id, options, value, setValue, label, helperText = '' }) => {
   const theme = useTheme()
 
   return (
@@ -38,6 +39,7 @@ export default ({ id, options, value, setValue, label }) => {
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
               {selected.map(value => (
                 <Chip
+                  size="small"
                   color="primary"
                   key={value}
                   label={value}
@@ -54,6 +56,7 @@ export default ({ id, options, value, setValue, label }) => {
             </MenuItem>
           ))}
         </Select>
+        <FormHelperText style={{ marginLeft: 14 }}>{helperText}</FormHelperText>
       </FormControl>
     </div>
   )

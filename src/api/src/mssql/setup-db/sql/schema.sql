@@ -240,6 +240,22 @@ create table Mitigations (
 );
 end
 
+-- MitigationXrefRenewableType
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[MitigationXrefRenewableType]')
+		and type = 'U'
+)
+begin
+create table MitigationXrefRenewableType (
+	id int not null identity primary key,
+	mitigationId int not null foreign key references Mitigations (id),
+	vocabularyXrefTreeId int not null foreign key references VocabularyXrefTree (id)
+)
+end
+
 -- Adaptations
 if not exists (
 	select *

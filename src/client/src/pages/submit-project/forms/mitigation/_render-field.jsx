@@ -5,8 +5,8 @@ import {
   ControlledVocabularyInput,
   LocationsPicker,
 } from '../../gql-form-binder'
-import EnergyCalculator from './energy-calculator'
-import EmissionsCalculator from './emissions-calculator'
+import EnergyCalculator from './calculators/energy'
+import EmissionsCalculator from './calculators/emissions'
 
 const multilineFields = ['description', 'volMethodology', 'otherCarbonCreditStandardDescription']
 
@@ -67,7 +67,13 @@ export default ({ field, i }) => {
    */
   if (fieldName === '__energyCalculator') {
     if (form.energyOrEmissionsData?.term === 'Energy') {
-      return <EnergyCalculator />
+      return (
+        <EnergyCalculator
+          key={fieldName}
+          calculator={form[fieldName] || {}}
+          updateCalculator={calculator => updateMitigationForm({ [fieldName]: calculator }, i)}
+        />
+      )
     } else {
       return null
     }
@@ -78,7 +84,13 @@ export default ({ field, i }) => {
    */
   if (fieldName === '__emissionsCalculator') {
     if (form.energyOrEmissionsData?.term === 'Emissions') {
-      return <EmissionsCalculator />
+      return (
+        <EmissionsCalculator
+          key={fieldName}
+          calculator={form[fieldName] || {}}
+          updateCalculator={calculator => updateMitigationForm({ [fieldName]: calculator }, i)}
+        />
+      )
     } else {
       return null
     }

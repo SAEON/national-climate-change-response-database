@@ -20,9 +20,13 @@ export default () => {
           style={{ color: fade(theme.palette.common.white, 0.9), marginBottom: theme.spacing(2) }}
           variant="body1"
         >
-          The South African National Climate Change Response Database is a system designed for DFFE,
-          in order to record and report upon the mitigation, adaptation and research projects
-          related to climate change in South Africa.
+          South Africa is projected to face a higher frequency of climate related disasters that are
+          increasing in intensity, and these events are likely to be associated with impacts that
+          are on par with, if not worse than those already experienced (Engelbrecht et al. 2018
+          Third National Communication to UNFCCC). The National Climate Change Response Database is
+          intended as a resource to inform anyone currently working on climate change adaptation or
+          mitigation on past, current and future climate change response efforts across South
+          Africa.
         </Typography>
       </Grid>
       <Grid item sm={6} style={{ flexGrow: 1 }}>

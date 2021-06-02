@@ -15,3 +15,4 @@ export { default as ControlledVocabularyInput } from './_controlled-vocabulary-i
 export { default as LocationsPicker } from './locations-picker'
 export { default as FormSection } from './_form-section'
 export { default as ComposeForm } from './_compose-form'
+export { default as WithControlledVocabulary } from './_with-controlled-vocabulary'

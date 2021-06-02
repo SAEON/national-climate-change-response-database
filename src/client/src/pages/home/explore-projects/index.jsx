@@ -62,12 +62,13 @@ export default () => {
           Explore climate mitigation and adaptation projects
         </Typography>
         <Typography style={{ color: fade(theme.palette.common.black, 0.9) }} variant="body1">
-          South Africa is projected to face a higher frequency of climate related disasters that are
-          increasing in intensity, and these events are likely to be associated with impacts that
-          are on par with, if not worse than those already experienced (Engelbrecht et al. 2018
-          Third National Communication to UNFCCC). The National Climate Change Response Database and
-          was intended as a resource to inform anyone currently working on climate change adaptation
-          or mitigation on past, current and future climate change responses.
+          Through the NCCRD each project in the database is broken down into several key areas
+          including a general project overview, a description of the funding provided for the
+          project, and the details of specific adaptation and mitigation intervention/s in the
+          project. For each intervention, additional details are supplied depending on if the
+          intervention is considered an applied or research action. Research interventions are
+          studies to test some aspect of project implementation whereas applied projects can be
+          implemented or rolled out directly at a variety of scales.
         </Typography>
       </Grid>
     </Grid>

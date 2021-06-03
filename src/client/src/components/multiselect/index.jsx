@@ -14,7 +14,7 @@ export default ({ id, options, value, setValue, label, helperText = '' }) => {
   const theme = useTheme()
 
   return (
-    <div>
+    <div style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(1) }}>
       <FormControl fullWidth>
         <InputLabel id={`${id}-label`} style={{ top: value.length ? -8 : -5, left: 12 }}>
           {label}

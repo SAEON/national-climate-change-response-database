@@ -13,7 +13,7 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
       {/* DATE RANGE */}
       <Grid container spacing={2}>
         {/* START DATE */}
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
           <DatePicker
             fullWidth
             inputVariant="outlined"
@@ -21,7 +21,7 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             clearable
             autoOk
             minDate="1990"
-            maxDate="2099"
+            maxDate="2089"
             variant="dialog"
             views={['year']}
             animateYearScrolling
@@ -58,7 +58,7 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
         </Grid>
 
         {/* END DATE */}
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
           <DatePicker
             fullWidth
             inputVariant="outlined"
@@ -67,7 +67,7 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             variant="dialog"
             autoOk
             minDate="1990"
-            maxDate="2099"
+            maxDate="2089"
             views={['year']}
             animateYearScrolling
             format="yyyy"

@@ -2,16 +2,14 @@ import Typography from '@material-ui/core/Typography'
 import { DataGrid } from '@material-ui/data-grid'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-const columns = [
+const defaultColumns = [
   { field: 'year', headerName: 'Year', editable: false, width: 120 },
-  { field: 'notes', headerName: 'Notes', type: 'string', editable: true, width: 200 },
-  { field: 'annualKwh', headerName: 'Annual kWh', type: 'number', editable: true, width: 180 },
   {
-    field: 'annualKwhPurchaseReduction',
-    headerName: 'Annual reduction in electricity purchased from the grid (kWh)',
-    type: 'number',
+    field: 'notes',
+    headerName: 'Notes',
+    type: 'string',
     editable: true,
-    width: 320,
+    width: 180,
   },
 ]
 
@@ -28,9 +26,15 @@ export const getNumericCellValue = ({ startYear, type, currentYear, grid, field 
 
 export default ({ calculator, updateCalculator }) => {
   const theme = useTheme()
-  const { renewableTypes = [], startYear = null, endYear = null, grid = {} } = calculator
+  const {
+    emissionTypes = [],
+    chemicals = [],
+    startYear = null,
+    endYear = null,
+    grid = {},
+  } = calculator
 
-  if (!renewableTypes.length || !startYear || !endYear) {
+  if (!emissionTypes.length || !chemicals.length || !startYear || !endYear) {
     return null
   }
 
@@ -44,26 +48,39 @@ export default ({ calculator, updateCalculator }) => {
 
   const years = new Array(yearCount).fill(null).map((_, i) => _start + i)
 
-  return renewableTypes.map(type => {
+  return emissionTypes.map(type => {
+    const columns = [
+      ...defaultColumns,
+      ...chemicals.map(chemical => {
+        return {
+          field: chemical,
+          headerName: `${chemical} (T/yr)`,
+          type: 'number',
+          editable: true,
+          width: 250,
+        }
+      }),
+    ]
+
     const rows = years.map(year => {
       return {
         id: year,
         year,
         notes: grid?.[type]?.[year]?.notes || '',
-        annualKwh: getNumericCellValue({
-          startYear: _start,
-          currentYear: year,
-          type,
-          grid,
-          field: 'annualKwh',
-        }),
-        annualKwhPurchaseReduction: getNumericCellValue({
-          startYear: _start,
-          currentYear: year,
-          type,
-          grid,
-          field: 'annualKwhPurchaseReduction',
-        }),
+        ...Object.fromEntries(
+          chemicals.map(chemical => {
+            return [
+              chemical,
+              getNumericCellValue({
+                startYear: _start,
+                currentYear: year,
+                type,
+                grid,
+                field: chemical,
+              }),
+            ]
+          })
+        ),
       }
     })
 
@@ -73,7 +90,7 @@ export default ({ calculator, updateCalculator }) => {
           variant="overline"
           style={{ textAlign: 'center', margin: theme.spacing(2), display: 'block' }}
         >
-          Enter {type} energy usage
+          Enter {type} emissions data
         </Typography>
         <div style={{ height: rows.length <= 6 ? rows.length * 52 + 58 : 300, width: '100%' }}>
           <DataGrid

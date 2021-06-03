@@ -6,9 +6,10 @@ import { performance } from 'perf_hooks'
 const { parse } = csv
 
 const __dirname = getCurrentDirectory(import.meta)
-const VOCABULARIES = readdirSync(join(__dirname, './trees')).sort()
 
 export default async (_, args, ctx) => {
+  const VOCABULARIES = readdirSync(join(__dirname, './trees')).sort()
+
   const { query } = ctx.mssql
 
   try {

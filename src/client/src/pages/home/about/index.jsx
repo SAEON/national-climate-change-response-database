@@ -16,6 +16,8 @@ export default () => {
         >
           Welcome to the National Climate Change Response Database
         </Typography>
+      </Grid>
+      <Grid item sm={6} style={{ flexGrow: 1 }}>
         <Typography
           style={{ color: fade(theme.palette.common.white, 0.9), marginBottom: theme.spacing(2) }}
           variant="body1"
@@ -28,11 +30,6 @@ export default () => {
           mitigation on past, current and future climate change response efforts across South
           Africa.
         </Typography>
-      </Grid>
-      <Grid item sm={6} style={{ flexGrow: 1 }}>
-        <div style={{ minHeight: 300, height: '100%', boxShadow: theme.shadows[9] }}>
-          <OlReact />
-        </div>
       </Grid>
     </Grid>
   )

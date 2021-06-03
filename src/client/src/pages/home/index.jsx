@@ -4,6 +4,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import About from './about'
 import Explore from './explore-projects'
+// import Map from './map'
 
 export default () => {
   const theme = useTheme()
@@ -19,6 +20,9 @@ export default () => {
           <About />
         </Wrapper>
       </div>
+      {/* <div style={{ backgroundColor: bg1 }}>
+        <Map />
+      </div> */}
       <div style={{ backgroundColor: bg2 }}>
         <Wrapper>
           <Explore />

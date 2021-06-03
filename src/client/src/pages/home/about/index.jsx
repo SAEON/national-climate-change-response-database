@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { fade } from '@material-ui/core/styles/colorManipulator'
-import OlReact from '../../../components/ol-react'
+// import OlReact from '../../../components/ol-react'
 
 export default () => {
   const theme = useTheme()

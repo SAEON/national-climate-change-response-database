@@ -9,30 +9,6 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
 
   return (
     <>
-      <WithControlledVocabulary root="Energy source" tree="renewableTypes">
-        {({ options }) => {
-          return (
-            <Multiselect
-              id="energy-calculator"
-              options={options.map(({ term }) => term)}
-              value={renewableTypes}
-              helperText="Select all applicable renewable energy types"
-              label={'Renewable energy types'}
-              setValue={value =>
-                updateCalculator(
-                  Object.assign(
-                    { ...calculator },
-                    {
-                      renewableTypes: value,
-                    }
-                  )
-                )
-              }
-            />
-          )
-        }}
-      </WithControlledVocabulary>
-
       {/* DATE RANGE */}
       <Grid container spacing={2}>
         {/* START DATE */}
@@ -42,6 +18,8 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             inputVariant="outlined"
             margin="normal"
             clearable
+            autoOk
+            minDate="1980"
             variant="dialog"
             views={['year']}
             animateYearScrolling
@@ -65,6 +43,8 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             margin="normal"
             clearable
             variant="dialog"
+            autoOk
+            minDate="1980"
             views={['year']}
             animateYearScrolling
             format="yyyy"
@@ -79,6 +59,30 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
           />
         </Grid>
       </Grid>
+
+      <WithControlledVocabulary root="Energy source" tree="renewableTypes">
+        {({ options }) => {
+          return (
+            <Multiselect
+              id="energy-calculator"
+              options={options.map(({ term }) => term)}
+              value={renewableTypes}
+              helperText="Select all applicable renewable energy types"
+              label={'Renewable energy types'}
+              setValue={value =>
+                updateCalculator(
+                  Object.assign(
+                    { ...calculator },
+                    {
+                      renewableTypes: value,
+                    }
+                  )
+                )
+              }
+            />
+          )
+        }}
+      </WithControlledVocabulary>
 
       {/* INPUT TABLE */}
       <InputTable calculator={calculator} updateCalculator={updateCalculator} />

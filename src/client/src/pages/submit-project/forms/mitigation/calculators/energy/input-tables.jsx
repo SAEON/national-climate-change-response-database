@@ -1,15 +1,13 @@
 import Typography from '@material-ui/core/Typography'
 import { DataGrid } from '@material-ui/data-grid'
 import useTheme from '@material-ui/core/styles/useTheme'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
 
 const columns = [
   { field: 'year', headerName: 'Year', editable: false, width: 120 },
   { field: 'notes', headerName: 'Notes', type: 'string', editable: true, width: 180 },
-  { field: 'totalKwh', headerName: 'Annual total kWh', type: 'number', editable: true, width: 250 },
+  { field: 'annualKwh', headerName: 'Annual kWh', type: 'number', editable: true, width: 250 },
   {
-    field: 'annualPurchaseReductionKwh',
+    field: 'annualKwhPurchaseReduction',
     headerName: 'Annual reduction in electricity purchased from the grid (kWh)',
     type: 'number',
     editable: true,
@@ -17,7 +15,7 @@ const columns = [
   },
 ]
 
-const getValue = ({ startYear, type, currentYear, grid, field }) => {
+export const getNumericCellValue = ({ startYear, type, currentYear, grid, field }) => {
   for (let _currentYear = currentYear; _currentYear >= startYear; _currentYear--) {
     const val = grid?.[type]?.[_currentYear]?.[field]
     if (val) {
@@ -52,25 +50,23 @@ export default ({ calculator, updateCalculator }) => {
         id: year,
         year,
         notes: grid?.[type]?.[year]?.notes || '',
-        totalKwh: getValue({
+        annualKwh: getNumericCellValue({
           startYear: _start,
           currentYear: year,
           type,
           grid,
-          field: 'totalKwh',
+          field: 'annualKwh',
         }),
-        annualPurchaseReductionKwh: getValue({
+        annualKwhPurchaseReduction: getNumericCellValue({
           startYear: _start,
           currentYear: year,
           type,
           grid,
-          field: 'annualPurchaseReductionKwh',
+          field: 'annualKwhPurchaseReduction',
         }),
       }
     })
 
-    console.log('rows', rows)
-    // TODO - add back pagination controls if last page
     return (
       <div key={type}>
         <Typography
@@ -81,15 +77,6 @@ export default ({ calculator, updateCalculator }) => {
         </Typography>
         <div style={{ height: 300, width: '100%' }}>
           <DataGrid
-            components={{
-              Footer: () => {
-                return (
-                  <AppBar position="relative" variant="outlined" color="primary">
-                    <Toolbar variant="dense">hi</Toolbar>
-                  </AppBar>
-                )
-              },
-            }}
             pageSize={100}
             rows={rows}
             columns={columns}

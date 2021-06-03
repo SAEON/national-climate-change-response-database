@@ -1,6 +1,8 @@
 import { createContext } from 'react'
 import { NCCRD_CLIENT_BACKGROUNDS } from '../config'
 import { isIE } from 'react-device-detect'
+import clsx from 'clsx'
+import useTheme from '@material-ui/core/styles/useTheme'
 
 /**
  * Provides some measure of control over which background
@@ -24,9 +26,11 @@ const getBackgroundImagePath = () => {
 export const BgImageContext = createContext()
 
 export default ({ children }) => {
+  const theme = useTheme()
+
   return (
     <>
-      {!isIE && (
+      {/* {!isIE && (
         <div
           id="bg"
           style={{
@@ -42,7 +46,29 @@ export default ({ children }) => {
             backgroundAttachment: 'fixed',
           }}
         />
-      )}
+      )} */}
+
+      <div
+        id="bg"
+        style={{
+          position: 'fixed',
+          background: `radial-gradient(${theme.palette.primary.dark}, #1f1013)`,
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <div className={clsx('light', 'x1')}></div>
+        <div className={clsx('light', 'x2')}></div>
+        <div className={clsx('light', 'x3')}></div>
+        <div className={clsx('light', 'x4')}></div>
+        <div className={clsx('light', 'x5')}></div>
+        <div className={clsx('light', 'x6')}></div>
+        <div className={clsx('light', 'x7')}></div>
+        <div className={clsx('light', 'x8')}></div>
+        <div className={clsx('light', 'x9')}></div>
+      </div>
 
       {children}
     </>

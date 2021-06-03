@@ -1,52 +1,6 @@
 import logSql from '../../../../lib/log-sql.js'
-
-const filterFormInput = form => {
-  return Object.entries(form)
-    .filter(([, value]) => value)
-    .reduce(
-      (entries, [key, value]) => {
-        if (Object.prototype.toString.call(value) === '[object Object]') {
-          entries.vocabInput.push([key, value])
-        } else {
-          entries.simpleInput.push([key, value])
-        }
-        return entries
-      },
-      { simpleInput: [], vocabInput: [] }
-    )
-}
-
-const getSanitizedInsertStmt = ({ table, simpleInput, vocabInput, projectId = false }) => `
-  insert into [${table}] (${[
-  projectId && 'projectId',
-  ...simpleInput.map(([field]) => `[${field}]`),
-  ...vocabInput.map(([field]) => `[${field}]`),
-]
-  .filter(_ => _)
-  .join(',')})
-  values (${[
-    projectId && ` (select id from #newProject) `,
-    ...simpleInput.map(
-      ([key, value]) =>
-        key === 'yx' ? `geometry::STGeomFromText('${value}', 4326)` : `'${sanitizeSqlValue(value)}'` // eslint-disable-line
-    ),
-    ...vocabInput.map(
-      ([field, { tree, term }]) => `(
-        select
-        vxt.id [${field}]
-
-        from VocabularyTrees t
-        join VocabularyXrefTree vxt on vxt.vocabularyTreeId = t.id
-        join Vocabulary v on v.id = vxt.vocabularyId
-
-        where
-        t.name = '${sanitizeSqlValue(tree) /* eslint-disable-line */}' 
-        and v.term = '${sanitizeSqlValue(term) /* eslint-disable-line */}'
-      )`
-    ),
-  ]
-    .filter(_ => _)
-    .join(',')});`
+import filterFormInput from './filter-form-input.js'
+import makeInsertStmt from './make-insert-statement.js'
 
 export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx) => {
   const { query } = ctx.mssql
@@ -63,7 +17,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
       create table #newProject(id int);
 
       -- project
-      ${getSanitizedInsertStmt({
+      ${makeInsertStmt({
         table: 'Projects',
         simpleInput: projectForm.simpleInput,
         vocabInput: projectForm.vocabInput,
@@ -78,7 +32,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
-          ${getSanitizedInsertStmt({
+          ${makeInsertStmt({
             table: 'Mitigations',
             simpleInput: simpleInput,
             vocabInput: vocabInput,
@@ -93,7 +47,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
-          ${getSanitizedInsertStmt({
+          ${makeInsertStmt({
             table: 'Adaptations',
             simpleInput: simpleInput,
             vocabInput: vocabInput,

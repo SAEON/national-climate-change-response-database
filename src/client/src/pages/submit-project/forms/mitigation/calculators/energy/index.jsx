@@ -6,7 +6,7 @@ import InputTables from './input-tables'
 import SummaryTable from './summary-table'
 
 export default ({ calculator = {}, updateCalculator = {} }) => {
-  const { renewableTypes = [], startYear = null, endYear = null } = calculator
+  const { renewableTypes = [], startYear = null, endYear = null, grid = {} } = calculator
 
   return (
     <>
@@ -20,7 +20,8 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             margin="normal"
             clearable
             autoOk
-            minDate="1980"
+            minDate="1990"
+            maxDate="2099"
             variant="dialog"
             views={['year']}
             animateYearScrolling
@@ -31,7 +32,15 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             helperText={'What year did/will the mitigation project start?'}
             value={startYear}
             onChange={value =>
-              updateCalculator(Object.assign({ ...calculator }, { startYear: value }))
+              updateCalculator(
+                Object.assign(
+                  { ...calculator },
+                  {
+                    startYear: value,
+                    grid: undefined,
+                  }
+                )
+              )
             }
           />
         </Grid>
@@ -45,7 +54,8 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             clearable
             variant="dialog"
             autoOk
-            minDate="1980"
+            minDate="1990"
+            maxDate="2099"
             views={['year']}
             animateYearScrolling
             format="yyyy"
@@ -55,7 +65,9 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             helperText={'What year did/will the mitigation project end?'}
             value={endYear}
             onChange={value =>
-              updateCalculator(Object.assign({ ...calculator }, { endYear: value }))
+              updateCalculator(
+                Object.assign({ ...calculator }, { endYear: value, grid: undefined })
+              )
             }
           />
         </Grid>

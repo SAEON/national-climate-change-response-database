@@ -36,7 +36,7 @@ export default ({ calculator, updateCalculator }) => {
 
   const _start = new Date(startYear).getFullYear()
   const _end = new Date(endYear).getFullYear()
-  const yearCount = _end - _start
+  const yearCount = _end - _start + 1
 
   if (yearCount < 1) {
     return null
@@ -75,13 +75,14 @@ export default ({ calculator, updateCalculator }) => {
         >
           Calculate {type} energy usage
         </Typography>
-        <div style={{ height: 300, width: '100%' }}>
+        <div style={{ height: rows.length <= 6 ? rows.length * 52 + 58 : 300, width: '100%' }}>
           <DataGrid
             pageSize={100}
             rows={rows}
             columns={columns}
-            onEditCellChangeCommitted={({ id, field, props }) =>
-              updateCalculator(
+            hideFooter={rows.length < 100 ? true : false}
+            onEditCellChangeCommitted={({ id, field, props }) => {
+              return updateCalculator(
                 Object.assign(
                   { ...calculator },
                   {
@@ -89,11 +90,14 @@ export default ({ calculator, updateCalculator }) => {
                       { ...grid },
                       {
                         [type]: Object.assign(
-                          { ...grid[type] },
+                          { ...(grid?.[type] || {}) },
                           {
-                            [id]: {
-                              [field]: props.value,
-                            },
+                            [id]: Object.assign(
+                              { ...(grid?.[type]?.[id] || {}) },
+                              {
+                                [field]: props.value,
+                              }
+                            ),
                           }
                         ),
                       }
@@ -101,7 +105,7 @@ export default ({ calculator, updateCalculator }) => {
                   }
                 )
               )
-            }
+            }}
           />
         </div>
       </div>

@@ -107,7 +107,7 @@ const Layout = () => {
           ),
         },
         {
-          disabled: false, // !mitigationsRequired,
+          disabled: !mitigationsRequired,
           primaryText: 'Mitigation(s)',
           secondaryText: 'Project mitigation details',
           Icon: () => (

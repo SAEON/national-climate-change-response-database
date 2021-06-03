@@ -14,8 +14,13 @@ export default memo(
             <DatePicker
               fullWidth
               margin="normal"
+              inputVariant="outlined"
               clearable
-              format="MM/dd/yyyy"
+              autoOk
+              minDate="1990"
+              maxDate="2089"
+              format="yyyy"
+              views={['year']}
               placeholder={placeholder}
               label={name}
               id={`${name}-${i}`}

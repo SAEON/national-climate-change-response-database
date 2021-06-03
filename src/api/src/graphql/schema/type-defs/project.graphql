@@ -11,9 +11,9 @@ input ProjectInput {
   projectStatus: ControlledVocabularyInput
   # Link :: Is there a URI that is associated with this project?
   link: String
-  # Project start date :: Round to the beginning or end of the year
+  # Project start year :: When did / is the project expected to start?
   startDate: DateTime
-  # Project end date :: Round to the beginning or end of the year
+  # Project end year :: When did / is the project expected to end?
   endDate: DateTime
 
   # Validation status :: Has this project been validated?

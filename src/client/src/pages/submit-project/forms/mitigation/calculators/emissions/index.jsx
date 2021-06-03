@@ -33,7 +33,7 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             format="yyyy"
             placeholder={'Start year'}
             label={'Start year'}
-            id="energy-calculator-mitigation-start"
+            id="emissions-calculator-mitigation-start"
             helperText={'What year did/will the mitigation project start?'}
             value={startYear}
             onChange={value =>
@@ -78,7 +78,7 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             format="yyyy"
             placeholder={'End year'}
             label={'End year'}
-            id="energy-calculator-mitigation-end"
+            id="emissions-calculator-mitigation-end"
             helperText={'What year did/will the mitigation project end?'}
             value={endYear}
             onChange={value =>

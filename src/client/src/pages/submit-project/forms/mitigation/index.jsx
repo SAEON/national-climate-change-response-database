@@ -43,11 +43,6 @@ const Compose = ({ fields }) => {
                   cardContentStyle={{ paddingLeft: 0, paddingRight: 0 }}
                   cardHeaderStyle={{ paddingLeft: 0, paddingRight: 0 }}
                   sections={{
-                    'Energy & emissions': [
-                      'energyOrEmissionsData',
-                      '__energyCalculator',
-                      '__emissionsCalculator',
-                    ],
                     'Mitigation information': [
                       'title',
                       'description',
@@ -56,6 +51,7 @@ const Compose = ({ fields }) => {
                       'interventionStatus',
                     ],
                     'Location(s)': ['yx'],
+
                     'Associated research': [
                       'isResearch',
                       'researchDescription',
@@ -63,6 +59,11 @@ const Compose = ({ fields }) => {
                       'researchTargetAudience',
                       'researchAuthor',
                       'researchPaper',
+                    ],
+                    'Energy/emissions data': [
+                      'energyOrEmissionsData',
+                      '__energyCalculator',
+                      '__emissionsCalculator',
                     ],
                     'Carbon credit program': [
                       'carbonCredit',

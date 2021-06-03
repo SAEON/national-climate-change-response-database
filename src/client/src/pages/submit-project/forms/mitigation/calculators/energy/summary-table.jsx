@@ -23,12 +23,12 @@ const columns = [
 
 export default ({ calculator }) => {
   const theme = useTheme()
-  const { grid, startYear: _startYear, endYear: _endYear } = calculator
+  const { grid = {}, startYear: _startYear, endYear: _endYear } = calculator
 
   /**
    * No numerical values entered yet
    */
-  if (!grid) {
+  if (!Object.keys(grid).length) {
     return null
   }
 

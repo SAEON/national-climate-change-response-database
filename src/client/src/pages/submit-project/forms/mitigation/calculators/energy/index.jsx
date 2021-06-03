@@ -37,7 +37,19 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
                   { ...calculator },
                   {
                     startYear: value,
-                    grid: undefined,
+                    grid: Object.fromEntries(
+                      Object.entries(grid).map(([renewableType, info]) => {
+                        return [
+                          renewableType,
+                          Object.fromEntries(
+                            Object.entries(info).filter(([year]) => {
+                              const valueYear = new Date(value).getFullYear()
+                              return year >= valueYear
+                            })
+                          ),
+                        ]
+                      })
+                    ),
                   }
                 )
               )
@@ -66,7 +78,25 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             value={endYear}
             onChange={value =>
               updateCalculator(
-                Object.assign({ ...calculator }, { endYear: value, grid: undefined })
+                Object.assign(
+                  { ...calculator },
+                  {
+                    endYear: value,
+                    grid: Object.fromEntries(
+                      Object.entries(grid).map(([renewableType, info]) => {
+                        return [
+                          renewableType,
+                          Object.fromEntries(
+                            Object.entries(info).filter(([year]) => {
+                              const valueYear = new Date(value).getFullYear()
+                              return year <= valueYear
+                            })
+                          ),
+                        ]
+                      })
+                    ),
+                  }
+                )
               )
             }
           />

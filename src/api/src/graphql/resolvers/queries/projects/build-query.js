@@ -8,12 +8,40 @@ export const getProjection = ({ table, fields }) => {
 
         if (field === 'yx') return `[${table}].yx.STAsText() yx`
 
-        if (field === 'energyData')
+        if (field === 'emissionsData') {
+          return `( 
+            select
+            e.year,
+            e.notes,
+            v.term,
+            ( select
+              v.term name,
+              x.tonnesPerYear
+              from EmissionsDataXrefVocabTreeX x
+              join VocabularyXrefTree vxt on vxt.id = x.chemical
+              join Vocabulary v on v.id = vxt.vocabularyId
+
+              where x.emissionsDataId = e.id
+              for json path ) emissions
+
+            from EmissionsData e
+            join VocabularyXrefTree vxt on vxt.id = e.emissionType
+            join Vocabulary v on v.id = vxt.vocabularyId
+            
+            where
+            e.mitigationId = [Mitigations].id
+
+            for json path
+           ) emissionsData`
+        }
+
+        if (field === 'energyData') {
           return `(
             select
             e.year,
             e.annualKwh,
             e.annualKwhPurchaseReduction,
+            e.notes,
             v.term
             
             from EnergyData e
@@ -25,6 +53,7 @@ export const getProjection = ({ table, fields }) => {
 
             for json path
           ) energyData`
+        }
 
         return `[${table}].[${field}]`
       })

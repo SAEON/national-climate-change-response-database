@@ -56,6 +56,7 @@ export default () => {
             researchDescription
             energyOrEmissionsData
             energyData
+            emissionsData
             researchType
             researchTargetAudience
             researchAuthor

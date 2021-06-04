@@ -82,6 +82,7 @@ type Mitigation {
   yx: WKT_4326
   energyOrEmissionsData: String
   energyData: JSON
+  emissionsData: JSON
   researchTargetAudience: String
   researchAuthor: String
   researchPaper: String

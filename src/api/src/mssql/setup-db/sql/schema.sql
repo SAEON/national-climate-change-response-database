@@ -291,6 +291,7 @@ create table EmissionsDataXrefVocabTreeX (
   id int not null identity primary key,
 	emissionsDataId int not null foreign key references EmissionsData (id),
 	chemical int not null foreign key references VocabularyXrefTree (id),
+	tonnesPerYear int not null
 );
 end
 

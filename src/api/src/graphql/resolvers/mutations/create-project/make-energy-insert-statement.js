@@ -25,7 +25,6 @@ export default (energyData, i) => {
                 join Vocabulary v on v.id = vxt.vocabularyId
                 where t.name = 'renewableTypes'
                 and v.term = '${sanitizeSqlValue(energyType) /* eslint-disable-line */}' 
-
               ) energyType,
               ${year} year,
               ${annualKwh} annualKwh,

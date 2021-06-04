@@ -29,6 +29,10 @@ const convertFormToInput = form =>
        */
 
       if (field === 'energyData') {
+        if (form.energyOrEmissionsData?.term !== 'Energy') {
+          return [field, undefined]
+        }
+
         return [
           field,
           fixGridValues({
@@ -39,13 +43,10 @@ const convertFormToInput = form =>
       }
 
       if (field === 'emissionsData') {
-        console.log(
-          'emissions data',
-          fixGridValues({
-            fields: [...value.chemicals.map(c => c), 'notes'],
-            calculator: value,
-          })
-        )
+        if (form.energyOrEmissionsData?.term !== 'Emissions') {
+          return [field, undefined]
+        }
+
         return [
           field,
           fixGridValues({
@@ -112,7 +113,7 @@ export default () => {
       },
       onCompleted: ({ createProject }) => {
         const { id } = createProject
-        // history.push(`/projects/${id}`)
+        history.push(`/projects/${id}`)
       },
     }
   )

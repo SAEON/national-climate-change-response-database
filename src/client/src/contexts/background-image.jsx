@@ -1,6 +1,8 @@
 import { createContext } from 'react'
 import useTheme from '@material-ui/core/styles/useTheme'
 
+// TODO these look fun: https://coolbackgrounds.io/
+
 export const BgImageContext = createContext()
 
 export default ({ children }) => {

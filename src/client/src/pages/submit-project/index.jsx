@@ -79,7 +79,10 @@ const Layout = () => {
     projectForm['interventionType']?.term.toLowerCase()
   )
 
-  let canSubmit = projectFormComplete
+  let canSubmit = true
+  if (!projectFormComplete) canSubmit = false
+  if (mitigationsRequired && !mitigationFormsComplete) canSubmit = false
+  if (adaptationsRequired && !adaptationFormsComplete) canSubmit = false
 
   return (
     <ContentNav

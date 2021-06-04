@@ -9,12 +9,13 @@ export default (energyData, i) => {
         [energyType],
         [year],
         [annualKwh],
-        [annualKwhPurchaseReduction]
+        [annualKwhPurchaseReduction],
+        [notes]
       )
       ${Object.entries(energyData)
         .map(([energyType, info]) =>
           Object.entries(info).map(
-            ([year, { annualKwh, annualKwhPurchaseReduction }]) => `
+            ([year, { annualKwh, annualKwhPurchaseReduction, notes }]) => `
             select
               ( select id from #newMitigation where i = ${i} ) mitigationId,
               (
@@ -28,7 +29,8 @@ export default (energyData, i) => {
               ) energyType,
               ${year} year,
               ${annualKwh} annualKwh,
-              ${annualKwhPurchaseReduction} annualKwhPurchaseReduction`
+              ${annualKwhPurchaseReduction} annualKwhPurchaseReduction,
+              '${sanitizeSqlValue(notes) /* eslint-disable-line */}' notes`
           )
         )
         .flat()

@@ -17,16 +17,18 @@ export default ({ fields, calculator }) => {
           Object.fromEntries(
             fields.map(field => [
               field,
-              parseInt(
-                getNumericCellValue({
-                  startYear,
-                  currentYear,
-                  field,
-                  type,
-                  grid,
-                }),
-                10
-              ),
+              field === 'notes'
+                ? grid[type][currentYear]?.notes || ''
+                : parseInt(
+                    getNumericCellValue({
+                      startYear,
+                      currentYear,
+                      field,
+                      type,
+                      grid,
+                    }),
+                    10
+                  ),
             ])
           ),
         ])

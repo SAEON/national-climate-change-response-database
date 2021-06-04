@@ -255,7 +255,42 @@ create table EnergyData (
 	energyType int not null foreign key references VocabularyXrefTree (id),
 	year int not null,
 	annualKwh int not null default 0,
-	annualKwhPurchaseReduction int not null default 0
+	annualKwhPurchaseReduction int not null default 0,
+	notes nvarchar(4000) null
+);
+end
+
+-- EmissionsData
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[EmissionsData]')
+		and type = 'U'
+)
+begin
+create table EmissionsData (
+  id int not null identity primary key,
+	mitigationId int not null foreign key references Mitigations (id),
+	emissionType int not null foreign key references VocabularyXrefTree (id),
+	year int not null,
+	notes nvarchar(4000) null
+);
+end
+
+-- EmissionsDataXrefVocabTreeX
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[EmissionsDataXrefVocabTreeX]')
+		and type = 'U'
+)
+begin
+create table EmissionsDataXrefVocabTreeX (
+  id int not null identity primary key,
+	emissionsDataId int not null foreign key references EmissionsData (id),
+	chemical int not null foreign key references VocabularyXrefTree (id),
 );
 end
 

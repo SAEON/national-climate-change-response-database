@@ -2,6 +2,7 @@ import logSql from '../../../../lib/log-sql.js'
 import filterFormInput from './filter-form-input.js'
 import makeInsertStmt from './make-insert-statement.js'
 import makeEnergyInsertStmt from './make-energy-insert-statement.js'
+import makeEmissionsInsertStmts from './make-emissions-insert-statements.js'
 
 export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx) => {
   const { query } = ctx.mssql
@@ -31,7 +32,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
 
       -- mitigations
       ${mitigationForms
-        .map(({ simpleInput, vocabInput, energyData }, i) => {
+        .map(({ simpleInput, vocabInput, energyData, emissionsData }, i) => {
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
@@ -47,7 +48,8 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
               scope_identity() id,
               ${i} i;
               
-            ${makeEnergyInsertStmt(energyData, i)}`
+            ${makeEnergyInsertStmt(energyData, i)}
+            ${makeEmissionsInsertStmts(emissionsData, i)}`
         })
         .join('\n')}
 

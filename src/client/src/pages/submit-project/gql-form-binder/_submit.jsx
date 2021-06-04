@@ -32,7 +32,24 @@ const convertFormToInput = form =>
         return [
           field,
           fixGridValues({
-            fields: ['annualKwh', 'annualKwhPurchaseReduction'],
+            fields: ['annualKwh', 'annualKwhPurchaseReduction', 'notes'],
+            calculator: value,
+          }),
+        ]
+      }
+
+      if (field === 'emissionsData') {
+        console.log(
+          'emissions data',
+          fixGridValues({
+            fields: [...value.chemicals.map(c => c), 'notes'],
+            calculator: value,
+          })
+        )
+        return [
+          field,
+          fixGridValues({
+            fields: [...value.chemicals.map(c => c), 'notes'],
             calculator: value,
           }),
         ]
@@ -95,7 +112,7 @@ export default () => {
       },
       onCompleted: ({ createProject }) => {
         const { id } = createProject
-        history.push(`/projects/${id}`)
+        // history.push(`/projects/${id}`)
       },
     }
   )

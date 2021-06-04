@@ -62,8 +62,8 @@ const Compose = ({ fields }) => {
                     ],
                     'Energy/emissions data': [
                       'energyOrEmissionsData',
-                      '__energyCalculator',
-                      '__emissionsCalculator',
+                      'energyData',
+                      'emissionsData',
                     ],
                     'Carbon credit program': [
                       'carbonCredit',

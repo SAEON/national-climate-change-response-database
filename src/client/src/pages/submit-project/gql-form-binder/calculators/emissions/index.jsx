@@ -1,12 +1,17 @@
-import { WithControlledVocabulary } from '../../../../gql-form-binder'
-import Multiselect from '../../../../../../components/multiselect'
+import WithControlledVocabulary from '../../_with-controlled-vocabulary'
+import Multiselect from '../../../../../components/multiselect'
 import { DatePicker } from '@material-ui/pickers'
 import Grid from '@material-ui/core/Grid'
 import InputTables from './input-tables'
-import SummaryTable from './summary-table'
 
 export default ({ calculator = {}, updateCalculator = {} }) => {
-  const { renewableTypes = [], startYear = null, endYear = null, grid = {} } = calculator
+  const {
+    emissionTypes = [],
+    chemicals = [],
+    startYear = null,
+    endYear = null,
+    grid = {},
+  } = calculator
 
   return (
     <>
@@ -28,7 +33,7 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             format="yyyy"
             placeholder={'Start year'}
             label={'Start year'}
-            id="energy-calculator-mitigation-start"
+            id="emissions-calculator-mitigation-start"
             helperText={'What year did/will the mitigation project start?'}
             value={startYear}
             onChange={value =>
@@ -73,7 +78,7 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
             format="yyyy"
             placeholder={'End year'}
             label={'End year'}
-            id="energy-calculator-mitigation-end"
+            id="emissions-calculator-mitigation-end"
             helperText={'What year did/will the mitigation project end?'}
             value={endYear}
             onChange={value =>
@@ -103,21 +108,47 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
         </Grid>
       </Grid>
 
-      <WithControlledVocabulary root="Energy source" tree="renewableTypes">
+      {/* EMISSION CATEGORIES */}
+      <WithControlledVocabulary root="Emission" tree="emissionTypes">
         {({ options }) => {
           return (
             <Multiselect
-              id="energy-calculator"
+              id="emissions-calculator-types"
               options={options.map(({ term }) => term)}
-              value={renewableTypes}
-              helperText="Select all applicable renewable energy types"
-              label={'Renewable energy types'}
+              value={emissionTypes}
+              helperText="Select all applicable emissions types"
+              label={'Emissions types'}
               setValue={value =>
                 updateCalculator(
                   Object.assign(
                     { ...calculator },
                     {
-                      renewableTypes: value,
+                      emissionTypes: value,
+                    }
+                  )
+                )
+              }
+            />
+          )
+        }}
+      </WithControlledVocabulary>
+
+      {/* EMISSION CHEMICALS */}
+      <WithControlledVocabulary root="Chemical" tree="emissions">
+        {({ options }) => {
+          return (
+            <Multiselect
+              id="emissions-calculator-chemicals"
+              options={options.map(({ term }) => term)}
+              value={chemicals}
+              helperText="Select all applicable emission chemicals"
+              label={'Emission chemicals'}
+              setValue={value =>
+                updateCalculator(
+                  Object.assign(
+                    { ...calculator },
+                    {
+                      chemicals: value,
                     }
                   )
                 )
@@ -129,9 +160,6 @@ export default ({ calculator = {}, updateCalculator = {} }) => {
 
       {/* INPUT TABLES */}
       <InputTables calculator={calculator} updateCalculator={updateCalculator} />
-
-      {/* SUMMARY TABLE */}
-      <SummaryTable calculator={calculator} />
     </>
   )
 }

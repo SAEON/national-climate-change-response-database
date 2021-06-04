@@ -1,17 +1,5 @@
 import finder from '../../../lib/find-vocabulary-helper.js'
-
-const vocabularyFields = [
-  'interventionType',
-  'projectStatus',
-  'validationStatus',
-  'fundingStatus',
-  'estimatedBudget',
-  'hostSector',
-  'hostSubSector',
-  'province',
-  'districtMunicipality',
-  'localMunicipality',
-]
+import { Projects as vocabularyFields } from '../vocabulary-fields.js'
 
 export default {
   mitigations: async ({ mitigations = [] }) => mitigations,

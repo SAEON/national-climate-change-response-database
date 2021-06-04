@@ -240,20 +240,23 @@ create table Mitigations (
 );
 end
 
--- MitigationXrefRenewableType
+-- EnergyData
 if not exists (
 	select *
 	from sys.objects
 	where
-		object_id = OBJECT_ID(N'[dbo].[MitigationXrefRenewableType]')
+		object_id = OBJECT_ID(N'[dbo].[EnergyData]')
 		and type = 'U'
 )
 begin
-create table MitigationXrefRenewableType (
-	id int not null identity primary key,
+create table EnergyData (
+  id int not null identity primary key,
 	mitigationId int not null foreign key references Mitigations (id),
-	vocabularyXrefTreeId int not null foreign key references VocabularyXrefTree (id)
-)
+	energyType int not null foreign key references VocabularyXrefTree (id),
+	year int not null,
+	annualKwh int not null default 0,
+	annualKwhPurchaseReduction int not null default 0
+);
 end
 
 -- Adaptations

@@ -1,15 +1,5 @@
 import finder from '../../../lib/find-vocabulary-helper.js'
-
-const vocabularyFields = [
-  'mitigationType',
-  'mitigationSubType',
-  'interventionStatus',
-  'cdmMethodology',
-  'cdmExecutiveStatus',
-  'hostSector',
-  'hostSubSectorPrimary',
-  'hostSubSectorSecondary',
-]
+import { Mitigations as vocabularyFields } from '../vocabulary-fields.js'
 
 export default {
   ...Object.fromEntries(

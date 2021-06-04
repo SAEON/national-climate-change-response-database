@@ -1,4 +1,4 @@
-const Projects = [
+export const Projects = [
   'interventionType',
   'projectStatus',
   'validationStatus',
@@ -11,7 +11,7 @@ const Projects = [
   'localMunicipality',
 ]
 
-const Mitigations = [
+export const Mitigations = [
   'mitigationType',
   'mitigationSubType',
   'interventionStatus',
@@ -20,9 +20,10 @@ const Mitigations = [
   'hostSector',
   'hostSubSectorPrimary',
   'hostSubSectorSecondary',
+  'energyOrEmissionsData',
 ]
 
-const Adaptations = [
+export const Adaptations = [
   'adaptationSector',
   'adaptationPurpose',
   'interventionStatus',
@@ -32,7 +33,7 @@ const Adaptations = [
   'subHazard',
 ]
 
-const vocabularyFields = {
+export const vocabularyFields = {
   Projects,
   p: Projects,
   Mitigations,

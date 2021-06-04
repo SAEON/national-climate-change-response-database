@@ -57,6 +57,11 @@ input MitigationInput {
   researchAuthor: String
   # paper :: @TODO
   researchPaper: String
+
+  # Energy data :: Input mitigation energy data
+  energyData: JSON
+  # Emissions data :: Input mitigation emissions data
+  emissionsData: JSON
 }
 
 type Mitigation {
@@ -75,6 +80,8 @@ type Mitigation {
   researchDescription: String
   researchType: String
   yx: WKT_4326
+  energyOrEmissionsData: String
+  energyData: JSON
   researchTargetAudience: String
   researchAuthor: String
   researchPaper: String

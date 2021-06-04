@@ -1,6 +1,7 @@
 import logSql from '../../../../lib/log-sql.js'
 import filterFormInput from './filter-form-input.js'
 import makeInsertStmt from './make-insert-statement.js'
+import makeEnergyInsertStmt from './make-energy-insert-statement.js'
 
 export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx) => {
   const { query } = ctx.mssql
@@ -15,6 +16,8 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
       -- temp tables
       drop table if exists #newProject;
       create table #newProject(id int);
+      drop table if exists #newMitigation;
+      create table #newMitigation(id int, i int);
 
       -- project
       ${makeInsertStmt({
@@ -28,16 +31,23 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
 
       -- mitigations
       ${mitigationForms
-        .map(({ simpleInput, vocabInput }) => {
+        .map(({ simpleInput, vocabInput, energyData }, i) => {
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
-          ${makeInsertStmt({
-            table: 'Mitigations',
-            simpleInput: simpleInput,
-            vocabInput: vocabInput,
-            projectId: true,
-          })}`
+            ${makeInsertStmt({
+              table: 'Mitigations',
+              simpleInput: simpleInput,
+              vocabInput: vocabInput,
+              projectId: true,
+            })}
+            
+            insert into #newMitigation (id, i)
+            select
+              scope_identity() id,
+              ${i} i;
+              
+            ${makeEnergyInsertStmt(energyData, i)}`
         })
         .join('\n')}
 

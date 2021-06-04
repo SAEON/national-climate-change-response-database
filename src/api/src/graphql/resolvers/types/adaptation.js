@@ -1,14 +1,5 @@
 import finder from '../../../lib/find-vocabulary-helper.js'
-
-const vocabularyFields = [
-  'adaptationSector',
-  'adaptationPurpose',
-  'hazardFamily',
-  'hazardSubFamily',
-  'interventionStatus',
-  'hazard',
-  'subHazard',
-]
+import { Adaptations as vocabularyFields } from '../vocabulary-fields.js'
 
 export default {
   ...Object.fromEntries(

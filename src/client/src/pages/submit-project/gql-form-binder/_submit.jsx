@@ -7,6 +7,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { context as formContext } from './_context'
 import { stringify } from 'wkt'
+import fixGridValues from './calculators/fix-grid-values'
 
 const convertFormToInput = form =>
   Object.fromEntries(
@@ -17,6 +18,22 @@ const convertFormToInput = form =>
           stringify({
             type: 'GeometryCollection',
             geometries: (value || []).map(coordinates => ({ type: 'Point', coordinates })),
+          }),
+        ]
+      }
+
+      /**
+       * All dynamic values that the grid displays
+       * need to be explicitly set before being
+       * submitted
+       */
+
+      if (field === 'energyData') {
+        return [
+          field,
+          fixGridValues({
+            fields: ['annualKwh', 'annualKwhPurchaseReduction'],
+            calculator: value,
           }),
         ]
       }

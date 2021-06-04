@@ -52,6 +52,8 @@ export default ({ id }) => {
             cdmStatus
             isResearch
             researchDescription
+            energyOrEmissionsData
+            energyData
             researchType
             researchTargetAudience
             researchAuthor

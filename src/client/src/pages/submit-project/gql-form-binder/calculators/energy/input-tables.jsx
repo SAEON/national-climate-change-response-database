@@ -1,6 +1,7 @@
 import Typography from '@material-ui/core/Typography'
 import { DataGrid } from '@material-ui/data-grid'
 import useTheme from '@material-ui/core/styles/useTheme'
+import getNumericCellValue from '../get-numeric-cell-value.js'
 
 const columns = [
   { field: 'year', headerName: 'Year', editable: false, width: 120 },
@@ -14,17 +15,6 @@ const columns = [
     width: 320,
   },
 ]
-
-export const getNumericCellValue = ({ startYear, type, currentYear, grid, field }) => {
-  for (let _currentYear = currentYear; _currentYear >= startYear; _currentYear--) {
-    const val = grid?.[type]?.[_currentYear]?.[field]
-    if (val) {
-      return val
-    }
-  }
-
-  return 0
-}
 
 export default ({ calculator, updateCalculator }) => {
   const theme = useTheme()

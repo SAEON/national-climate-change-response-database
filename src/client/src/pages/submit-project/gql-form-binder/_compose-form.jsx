@@ -3,6 +3,24 @@ import FormSection from './_form-section'
 import { NCCRD_DEPLOYMENT_ENV } from '../../../config'
 import sift from 'sift'
 
+/**
+ * Note the "sections" property and how it works with the "fields" property!
+ *
+ * <ComposeForm
+ *  sections={{
+ *   "Title": [list of field names]
+ *  }}
+ *  fields={gql fields}
+ * />
+ *
+ * By default fields defined in the sections need to match the fields
+ * returned by the GraphQL query for the input types. BUT this can be
+ * limiting if you want to have a form section with fields that are NOT
+ * in the input type.
+ *
+ * To achieve this, any field names that start with "__" or passed back to
+ * the render component
+ */
 export default ({
   fields,
   RenderField,

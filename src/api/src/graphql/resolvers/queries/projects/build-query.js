@@ -1,11 +1,31 @@
-import vocabularyFields from './vocabulary-fields.js'
+import vocabularyFields from '../../vocabulary-fields.js'
 
 export const getProjection = ({ table, fields }) => {
   return `
     ${fields
       .map(field => {
         if (vocabularyFields[table].includes(field)) return `[${table}].[${field}] [${field}Id]`
+
         if (field === 'yx') return `[${table}].yx.STAsText() yx`
+
+        if (field === 'energyData')
+          return `(
+            select
+            e.year,
+            e.annualKwh,
+            e.annualKwhPurchaseReduction,
+            v.term
+            
+            from EnergyData e
+            join VocabularyXrefTree vxt on vxt.id = e.energyType
+            join Vocabulary v on v.id = vxt.vocabularyId
+
+            where
+            e.mitigationId = [Mitigations].id
+
+            for json path
+          ) energyData`
+
         return `[${table}].[${field}]`
       })
       .join(',')}`

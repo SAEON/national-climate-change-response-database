@@ -4,6 +4,12 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import Loading from '../../../components/loading'
 import Typography from '@material-ui/core/Typography'
 
+/**
+ * TODO
+ * This component is called by multiple other components.
+ * But the result is that one result is cached incorrectly
+ */
+
 export default ({ children, root, tree }) => {
   const theme = useTheme()
 
@@ -11,10 +17,8 @@ export default ({ children, root, tree }) => {
     gql`
       query controlledVocabulary($root: String!, $tree: String!) {
         controlledVocabulary(root: $root, tree: $tree) {
-          id
           term
           children {
-            id
             term
             tree
             root

@@ -101,13 +101,13 @@ export default async (
     
     where exists
       ${
-        mitigationFilters
+        mitigationFilters?.length
           ? `( select 1 from _mitigations m where m.projectId = p.id  )`
           : '( select 1 )'
       }
       ${
-        adaptationFilters
-          ? `and where exists ( select 1 from _adaptations a where a.projectId = p.id )`
+        adaptationFilters?.length
+          ? `and exists ( select 1 from _adaptations a where a.projectId = p.id )`
           : ''
       }
     

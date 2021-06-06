@@ -1,15 +1,17 @@
+import { useContext } from 'react'
+import { context as filterContext } from '../context'
 import reduceFilters from './reduce-filters'
-import Filter from './filter'
+import FilterSection from './filter-section'
 
-export default ({ filters: _filters }) => {
-  console.log(_filters) // TODO adaptation.interventionStatus not showing
+export default () => {
+  const { filters: _filters } = useContext(filterContext)
   const filters = reduceFilters(_filters)
 
   return (
     <>
-      <Filter type={filters.project} title="Project filters" />
-      <Filter type={filters.mitigation} title="Mitigation filters" />
-      <Filter type={filters.adaptation} title="Adaptation filters" />
+      <FilterSection filters={filters.project} entityContext="Project" />
+      <FilterSection filters={filters.mitigation} entityContext="Mitigation" />
+      <FilterSection filters={filters.adaptation} entityContext="Adaptation" />
     </>
   )
 }

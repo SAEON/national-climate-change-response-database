@@ -1,14 +1,4 @@
-import { useState } from 'react'
-import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
-import MenuItem from '@material-ui/core/MenuItem'
-import Collapse from '@material-ui/core/Collapse'
-import Paper from '@material-ui/core/Paper'
-import Box from '@material-ui/core/Box'
-import FilterHeader from './_header'
-import useTheme from '@material-ui/core/styles/useTheme'
-
-const KEY_TO_HUMAN = {
+export default {
   projectStatus: { name: 'Project status', helperText: 'Project status' },
   interventionType: { name: 'Intervention type', helperText: 'Intervention type' },
   interventionStatus: { name: 'Intervention status', helperText: 'Intervention status' },
@@ -42,52 +32,4 @@ const KEY_TO_HUMAN = {
   hazardSubFamily: { name: 'Hazard sub-family', helperText: 'Hazard sub-family' },
   hazard: { name: 'Hazard', helperText: 'Hazard' },
   subHazard: { name: 'Sub-hazard', helperText: 'Sub-hazard' },
-}
-
-export default ({ type, title }) => {
-  const [collapsed, setCollapsed] = useState(true)
-  const theme = useTheme()
-
-  const inputs = Object.entries(type)
-
-  return (
-    <div>
-      <FilterHeader title={title} collapsed={collapsed} setCollapsed={setCollapsed} />
-      <Collapse
-        style={{ width: '100%' }}
-        key={`result-list-collapse-${title}`}
-        unmountOnExit
-        in={!collapsed}
-      >
-        <Paper style={{ backgroundColor: theme.backgroundColor }}>
-          <Box px={3} py={2}>
-            {inputs.length ? (
-              inputs.map(([field, values]) => {
-                return (
-                  <TextField
-                    key={field}
-                    id={`project-filter-${field}`}
-                    select
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    label={KEY_TO_HUMAN[field].name}
-                    helperText={KEY_TO_HUMAN[field].helperText}
-                  >
-                    {values.map(value => (
-                      <MenuItem key={value}>
-                        <Typography variant="overline">{value}</Typography>
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )
-              })
-            ) : (
-              <Typography variant="overline">(No filters available)</Typography>
-            )}
-          </Box>
-        </Paper>
-      </Collapse>
-    </div>
-  )
 }

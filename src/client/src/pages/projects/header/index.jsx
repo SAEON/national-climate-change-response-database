@@ -1,11 +1,14 @@
+import { useContext } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import useTheme from '@material-ui/core/styles/useTheme'
 import MobileSideMenu from './mobile-side-menu'
 import Hidden from '@material-ui/core/Hidden'
 import Typography from '@material-ui/core/Typography'
+import { context as filterContext } from '../context'
 
-export default ({ MobileFilters, filters, projects }) => {
+export default ({ MobileFilters }) => {
+  const { filters, projects } = useContext(filterContext)
   const theme = useTheme()
 
   return (

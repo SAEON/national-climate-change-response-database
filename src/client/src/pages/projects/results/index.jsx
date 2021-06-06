@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import { context as filterContext } from '../context'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
@@ -5,7 +7,8 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-export default ({ projects }) => {
+export default () => {
+  const { projects } = useContext(filterContext)
   const theme = useTheme()
 
   if (!projects.length) {

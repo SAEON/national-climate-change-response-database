@@ -8,7 +8,7 @@ on:
 jobs:
 
   source-code:
-    runs-on: ubuntu-latest
+    runs-on: nccrd.saeon.ac.za
     steps:
       - uses: actions/checkout@v2
         with:
@@ -16,7 +16,7 @@ jobs:
 
   pkg-releases:
     needs: [source-code]
-    runs-on: ubuntu-latest
+    runs-on: nccrd.saeon.ac.za
     
     steps:
       - name: Build binaries via Docker

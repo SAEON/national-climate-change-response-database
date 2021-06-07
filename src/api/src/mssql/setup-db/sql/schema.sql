@@ -186,6 +186,7 @@ create table Projects (
 	alternativeContact nvarchar(255),
 	alternativeContactEmail nvarchar(255),
 	leadAgent nvarchar(255),
+	deletedAt date,
 	interventionType int foreign key references VocabularyXrefTree (id),
 	projectStatus int foreign key references VocabularyXrefTree (id),
 	validationStatus int foreign key references VocabularyXrefTree (id),	
@@ -195,7 +196,7 @@ create table Projects (
 	hostSubSector int foreign key references VocabularyXrefTree (id),
 	province int foreign key references VocabularyXrefTree (id),
 	districtMunicipality int foreign key references VocabularyXrefTree (id),
-	localMunicipality int foreign key references VocabularyXrefTree (id)	
+	localMunicipality int foreign key references VocabularyXrefTree (id)
 );
 end
 
@@ -228,6 +229,7 @@ create table Mitigations (
   researchTargetAudience nvarchar(255),
   researchAuthor nvarchar(255),
   researchPaper nvarchar(255),
+	deletedAt date,
 	energyOrEmissionsData int foreign key references VocabularyXrefTree (id),
 	mitigationType int foreign key references VocabularyXrefTree (id),
 	mitigationSubType int foreign key references VocabularyXrefTree (id),
@@ -256,7 +258,8 @@ create table EnergyData (
 	year int not null,
 	annualKwh int not null default 0,
 	annualKwhPurchaseReduction int not null default 0,
-	notes nvarchar(4000) null
+	notes nvarchar(4000) null,
+	deletedAt date
 );
 end
 
@@ -274,7 +277,8 @@ create table EmissionsData (
 	mitigationId int not null foreign key references Mitigations (id),
 	emissionType int not null foreign key references VocabularyXrefTree (id),
 	year int not null,
-	notes nvarchar(4000) null
+	notes nvarchar(4000) null,
+	deletedAt date
 );
 end
 
@@ -291,7 +295,8 @@ create table EmissionsDataXrefVocabTreeX (
   id int not null identity primary key,
 	emissionsDataId int not null foreign key references EmissionsData (id),
 	chemical int not null foreign key references VocabularyXrefTree (id),
-	tonnesPerYear int not null
+	tonnesPerYear int not null,
+	deletedAt date
 );
 end
 
@@ -318,6 +323,7 @@ create table Adaptations (
   researchTargetAudience nvarchar(255),
   researchAuthor nvarchar(255),
   researchPaper nvarchar(255),
+	deletedAt date,
 	interventionStatus int foreign key references VocabularyXrefTree (id),
   adaptationSector int foreign key references VocabularyXrefTree (id),
   adaptationPurpose int foreign key references VocabularyXrefTree (id),

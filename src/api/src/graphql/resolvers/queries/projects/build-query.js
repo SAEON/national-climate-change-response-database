@@ -84,7 +84,7 @@ export default ({ fields, table, ids, vocabularyFilters }) => {
         })
         .join('\n')}
         
-    where
+    where [${table}].deletedAt is null and
       ${ids.length ? `[${table}].id in (${ids.join(',')})` : '1 = 1'}
       ${vocabularyFilters.length ? 'and ' : ''}
       ${vocabularyFilters

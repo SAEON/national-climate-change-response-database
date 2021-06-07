@@ -4,6 +4,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import { Link, useLocation } from 'react-router-dom'
 import MuiLink from '@material-ui/core/Link'
 import navItems from './nav-items'
+import EditIcon from 'mdi-react/EditIcon'
 
 const useStyles = makeStyles(theme => ({
   link: {
@@ -41,6 +42,9 @@ export default function IconBreadcrumbs() {
         })}
 
       {tree.slice(-1).map(({ label, Icon } = {}) => {
+        if (label === 'Edit') {
+          Icon = EditIcon
+        }
         return (
           <Typography key={label} color="textPrimary" className={classes.link}>
             {Icon && <Icon className={classes.icon} />}

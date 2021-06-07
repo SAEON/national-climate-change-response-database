@@ -56,20 +56,6 @@ export default ({ children }) => {
           id
           title
           description
-          projectManager
-          link
-          startDate
-          endDate
-          validationComments
-          fundingOrganisation
-          fundingPartner
-          budgetLower
-          budgetUpper
-          hostOrganisation
-          hostPartner
-          alternativeContact
-          alternativeContactEmail
-          leadAgent
           interventionType
           projectStatus
           validationStatus
@@ -82,26 +68,6 @@ export default ({ children }) => {
           localMunicipality
           mitigations {
             id
-            title
-            description
-            carbonCredit
-            volMethodology
-            goldStandard
-            vcs
-            yx
-            otherCarbonCreditStandard
-            otherCarbonCreditStandardDescription
-            cdmProjectNumber
-            cdmStatus
-            isResearch
-            researchDescription
-            energyOrEmissionsData
-            energyData
-            emissionsData
-            researchType
-            researchTargetAudience
-            researchAuthor
-            researchPaper
             mitigationType
             mitigationSubType
             interventionStatus
@@ -113,20 +79,9 @@ export default ({ children }) => {
           }
           adaptations {
             id
-            title
-            description
-            startDate
-            endDate
-            yx
-            isResearch
-            interventionStatus
-            researchDescription
-            researchType
-            researchTargetAudience
-            researchAuthor
-            researchPaper
             adaptationSector
             adaptationPurpose
+            interventionStatus
             hazardFamily
             hazardSubFamily
             hazard

@@ -12,17 +12,21 @@ export default ({ Filters, filters }) => {
     <>
       <Drawer
         id="mobile-filters-menu"
-        PaperProps={{ style: { maxWidth: '100%' } }}
-        anchor="right"
+        PaperProps={{ style: { width: '100%' } }}
+        anchor="left"
         open={showSidebar}
         onOpen={() => setShowSidebar(true)}
         onClose={() => setShowSidebar(false)}
       >
-        <Grid item xs={12}>
-          <IconButton aria-label="Toggle search filters" onClick={() => setShowSidebar(false)}>
-            <CloseIcon />
-          </IconButton>
-          <Filters filters={filters} />
+        <Grid container>
+          <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <IconButton aria-label="Toggle search filters" onClick={() => setShowSidebar(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Grid>
+          <Grid item xs={12}>
+            <Filters filters={filters} />
+          </Grid>
         </Grid>
       </Drawer>
       <IconButton onClick={() => setShowSidebar(true)} size="small">

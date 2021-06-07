@@ -14,12 +14,14 @@ const DEFAULT_VALUE = '(None)'
 
 export default ({ filters, entityContext }) => {
   const title = `${entityContext} filters`
-  const [collapsed, setCollapsed] = useState(true)
   const theme = useTheme()
   const context = useContext(filterContext)
   const setFilter = context[`set${entityContext}Filter`]
   const availableFilters = Object.entries(filters)
   const activeFilters = context.filterContext[`${entityContext}Filters`]
+  const [collapsed, setCollapsed] = useState(
+    !Object.entries(activeFilters).filter(([, value]) => value).length
+  )
 
   return (
     <div>

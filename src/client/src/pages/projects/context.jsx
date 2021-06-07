@@ -1,6 +1,7 @@
 import { useState, createContext, useCallback } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
+import Fade from '@material-ui/core/Fade'
 
 export const context = createContext()
 
@@ -38,8 +39,6 @@ export default ({ children }) => {
   const setProjectFilter = useCallback(obj => setFilter(obj, 'Project'), [setFilter])
   const setMitigationFilter = useCallback(obj => setFilter(obj, 'Mitigation'), [setFilter])
   const setAdaptationFilter = useCallback(obj => setFilter(obj, 'Adaptation'), [setFilter])
-
-  console.log('d', normalizeVocabularyFilters(filterContext.AdaptationFilters))
 
   const { error, loading, data } = useQuery(
     gql`
@@ -188,7 +187,11 @@ export default ({ children }) => {
   )
 
   if (loading) {
-    return <Loading />
+    return (
+      <Fade key="loading-in" in={Boolean(loading)}>
+        <Loading />
+      </Fade>
+    )
   }
 
   if (error) {
@@ -208,7 +211,9 @@ export default ({ children }) => {
         setAdaptationFilter,
       }}
     >
-      {children}
+      <Fade in={Boolean(data)} key="data-in">
+        <div>{children}</div>
+      </Fade>
     </context.Provider>
   )
 }

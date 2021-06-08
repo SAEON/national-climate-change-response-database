@@ -1,37 +1,28 @@
-import { cloneElement, forwardRef } from 'react'
+import { forwardRef } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import BannerToolbar from './banner/toolbar'
-import Banner, { IMAGE_HEIGHT, HideOnScroll } from './banner'
+import Banner, { IMAGE_HEIGHT } from './banner'
 import Divider from '@material-ui/core/Divider'
 import ApplicationToolbar from './appbar'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-
-const ElevationScroll = ({ children }) => {
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0,
-  })
-
-  return cloneElement(children, {
-    elevation: trigger ? 4 : 0,
-  })
-}
+import { ElevationOnScroll, HideOnScroll } from './scroll-animations'
 
 export default forwardRef((props, ref) => {
   return (
     <div ref={ref}>
-      <ElevationScroll {...props}>
+      <ElevationOnScroll>
         <AppBar color="inherit">
-          <Banner {...props} />
+          <HideOnScroll contentRef={props.contentRef}>
+            <Banner {...props} />
+          </HideOnScroll>
           <Divider />
           <ApplicationToolbar />
           <Divider />
         </AppBar>
-      </ElevationScroll>
+      </ElevationOnScroll>
 
       {/* Push content down below banner and toolbar */}
-      <HideOnScroll>
+      <HideOnScroll contentRef={props.contentRef}>
         <BannerToolbar>
           <div style={{ minHeight: IMAGE_HEIGHT }}></div>
         </BannerToolbar>

@@ -6,12 +6,16 @@ import Footer from './footer'
 
 export default props => {
   const [ref, setRef] = useState(null)
+  const [contentRef, setContentRef] = useState(null)
 
   return (
     <Router>
-      <Header {...props} ref={el => setRef(el)} />
+      <Header {...props} contentRef={contentRef} ref={el => setRef(el)} />
       {ref && (
-        <div style={{ position: 'relative', minHeight: `calc(100% - ${ref.offsetHeight}px)` }}>
+        <div
+          ref={el => setContentRef(el)}
+          style={{ position: 'relative', minHeight: `calc(100% - ${ref.offsetHeight}px)` }}
+        >
           <Routes />
           <Footer />
         </div>

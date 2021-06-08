@@ -12,9 +12,9 @@ input ProjectInput {
   # Link :: Is there a URI that is associated with this project?
   link: String
   # Project start year :: When did / is the project expected to start?
-  startDate: DateTime
+  startYear: DateTime
   # Project end year :: When did / is the project expected to end?
-  endDate: DateTime
+  endYear: DateTime
 
   # Validation status :: Has this project been validated?
   validationStatus: ControlledVocabularyInput
@@ -34,14 +34,14 @@ input ProjectInput {
   # Budget (upper bound) :: What is the upper-bound of the estimated budget?
   budgetUpper: Money
 
+  # Host partner :: Who is the main hosting partner?
+  hostPartner: String
+  # Host organization :: Who is the main hosting organization?
+  hostOrganisation: String
   # Host sector :: @amelia TODO
   hostSector: ControlledVocabularyInput
   # Sub-host sector :: @amelia TODO
   hostSubSector: ControlledVocabularyInput
-  # Host organization :: Who is the main hosting organization?
-  hostOrganisation: String
-  # Host partner :: Who is the main hosting partner?
-  hostPartner: String
   # Alternative contact :: Who else can people contact?
   alternativeContact: String
   # Alternative contact email :: Contact details of the alternative contact
@@ -63,8 +63,8 @@ type Project {
   description: String
   projectManager: String
   link: String
-  startDate: DateTime
-  endDate: DateTime
+  startYear: DateTime
+  endYear: DateTime
   validationComments: String
   fundingOrganisation: String
   fundingPartner: String
@@ -90,4 +90,7 @@ type Project {
 
   mitigations: [Mitigation!]
   adaptations: [Adaptation!]
+
+  updatedAt: DateTime
+  updatedBy: User
 }

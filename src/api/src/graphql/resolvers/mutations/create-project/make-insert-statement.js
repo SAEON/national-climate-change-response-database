@@ -13,7 +13,7 @@ values (${[
       return `geometry::STGeomFromText('${value}', 4326)`
     }
 
-    if (key === 'startDate' || key === 'endDate') {
+    if (key === 'startYear' || key === 'endYear') {
       return new Date(value).getFullYear()
     }
 

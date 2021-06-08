@@ -14,10 +14,6 @@ export const ElevationOnScroll = ({ children }) => {
 }
 
 export const HideOnScroll = ({ children, contentRef }) => {
-  const contentHeight = contentRef?.offsetHeight
-  const windowHeight = window.innerHeight
-  const availableHeight = windowHeight - contentHeight
-
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -27,8 +23,11 @@ export const HideOnScroll = ({ children, contentRef }) => {
     return null
   }
 
+  const availableHeight = window.innerHeight - contentRef.offsetHeight
+  const collapsedHeight = availableHeight < 0 ? 0 : availableHeight
+
   return (
-    <Collapse collapsedHeight={availableHeight < 0 ? 0 : availableHeight} in={!trigger}>
+    <Collapse collapsedHeight={collapsedHeight} in={!trigger}>
       <div>{children}</div>
     </Collapse>
   )

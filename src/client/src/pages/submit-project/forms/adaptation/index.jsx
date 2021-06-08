@@ -50,8 +50,8 @@ const Compose = memo(({ fields }) => {
                       'adaptationPurpose',
                       'adaptationSector',
                       'interventionStatus',
-                      'startDate',
-                      'endDate',
+                      'startYear',
+                      'endYear',
                     ],
                     'Location(s)': ['yx'],
                     'Associated research': [

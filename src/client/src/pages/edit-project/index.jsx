@@ -15,8 +15,8 @@ export default ({ id }) => {
           description
           projectManager
           link
-          startDate
-          endDate
+          startYear
+          endYear
           validationComments
           fundingOrganisation
           fundingPartner
@@ -72,8 +72,8 @@ export default ({ id }) => {
             id
             title
             description
-            startDate
-            endDate
+            startYear
+            endYear
             yx
             isResearch
             interventionStatus

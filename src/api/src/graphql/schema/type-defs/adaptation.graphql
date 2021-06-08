@@ -9,9 +9,9 @@ input AdaptationInput {
   # Adaptation purpose :: @amelia TODO
   adaptationPurpose: ControlledVocabularyInput
   # Start date :: @amelia TODO
-  startDate: DateTime
+  startYear: DateTime
   # End date :: @amelia TODO
-  endDate: DateTime
+  endYear: DateTime
   # Intervention status :: @amelia TODO
   interventionStatus: ControlledVocabularyInput
   # Hazard Family :: @amelia TODO
@@ -42,8 +42,8 @@ type Adaptation {
   id: Int!
   title: String!
   description: String
-  startDate: DateTime
-  endDate: DateTime
+  startYear: DateTime
+  endYear: DateTime
   interventionStatus: String
   yx: WKT_4326
   isResearch: Boolean

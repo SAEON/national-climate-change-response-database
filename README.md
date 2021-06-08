@@ -45,8 +45,8 @@ sudo apt-get install -y nodejs
 
 ```sh
 # Download the source code
-git clone git@github.com:SAEON/catalogue.git catalogue
-cd catalogue
+git clone <repository> nccs
+cd nccs
 
 # Install package dependencies (this might take several minutes on the first run)
 npm run install-dependencies

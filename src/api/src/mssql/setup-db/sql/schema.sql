@@ -174,8 +174,8 @@ create table Projects (
   description nvarchar(4000),
 	projectManager nvarchar(255),
 	link nvarchar(255),
-	startDate int,
-	endDate int,
+	startYear int,
+	endYear int,
 	validationComments nvarchar(4000),
 	fundingOrganisation nvarchar(255),
 	fundingPartner nvarchar(255),
@@ -196,7 +196,11 @@ create table Projects (
 	hostSubSector int foreign key references VocabularyXrefTree (id),
 	province int foreign key references VocabularyXrefTree (id),
 	districtMunicipality int foreign key references VocabularyXrefTree (id),
-	localMunicipality int foreign key references VocabularyXrefTree (id)
+	localMunicipality int foreign key references VocabularyXrefTree (id),
+	createdBy int foreign key references Users (id),
+	createdAt date,
+	updatedBy int foreign key references Users (id),
+	updatedAt date
 );
 end
 
@@ -238,7 +242,11 @@ create table Mitigations (
 	cdmExecutiveStatus int foreign key references VocabularyXrefTree (id),
 	hostSector int foreign key references VocabularyXrefTree (id),
 	hostSubSectorPrimary int foreign key references VocabularyXrefTree (id),
-	hostSubSectorSecondary int foreign key references VocabularyXrefTree (id)
+	hostSubSectorSecondary int foreign key references VocabularyXrefTree (id),
+	createdBy int foreign key references Users (id),
+	createdAt date,
+	updatedBy int foreign key references Users (id),
+	updatedAt date	
 );
 end
 
@@ -314,8 +322,8 @@ create table Adaptations (
 	projectId int not null foreign key references Projects (id),
   title nvarchar(255),
   description nvarchar(255),
-  startDate int,
-  endDate int,
+  startYear int,
+  endYear int,
 	yx geometry,
 	isResearch bit default 0,
   researchDescription nvarchar(4000),
@@ -330,7 +338,11 @@ create table Adaptations (
   hazardFamily int foreign key references VocabularyXrefTree (id),
   hazardSubFamily int foreign key references VocabularyXrefTree (id),
   hazard int foreign key references VocabularyXrefTree (id),
-  subHazard int foreign key references VocabularyXrefTree (id)
+  subHazard int foreign key references VocabularyXrefTree (id),
+	createdBy int foreign key references Users (id),
+	createdAt date,
+	updatedBy int foreign key references Users (id),
+	updatedAt date	
 );
 end
 

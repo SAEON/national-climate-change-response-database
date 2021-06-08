@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import MuiLink from '@material-ui/core/Link'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
@@ -10,13 +11,24 @@ import useTheme from '@material-ui/core/styles/useTheme'
 export const IMAGE_HEIGHT = 93
 
 export const HideOnScroll = ({ children }) => {
+  const [_trigger, set_Trigger] = useState(false)
+
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
   })
 
+  let timer = useRef(null)
+
+  useEffect(() => {
+    clearTimeout(timer?.current)
+    timer.current = setTimeout(() => {
+      set_Trigger(trigger)
+    }, 100)
+  }, [trigger])
+
   return (
-    <Collapse in={!trigger}>
+    <Collapse in={!_trigger}>
       <div>{children}</div>
     </Collapse>
   )

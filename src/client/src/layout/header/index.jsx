@@ -7,12 +7,12 @@ import Divider from '@material-ui/core/Divider'
 import ApplicationToolbar from './appbar'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 
-const ElevationScroll = props => {
-  const { children } = props
+const ElevationScroll = ({ children }) => {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
   })
+
   return cloneElement(children, {
     elevation: trigger ? 4 : 0,
   })

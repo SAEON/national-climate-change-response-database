@@ -88,5 +88,5 @@ type Mutation {
     mitigationForms: [MitigationInput!]
     adaptationForms: [AdaptationInput!]
   ): Project!
-  deleteProject(id: ID!): Project
+  deleteProject(id: Int!): Int
 }

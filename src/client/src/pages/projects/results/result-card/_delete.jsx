@@ -33,9 +33,9 @@ export default ({ id }) => {
         placement: 'top',
         title: 'Delete this project',
       }}
-      Button={closeFn => (
+      Button={openFn => (
         <Button
-          onClick={closeFn}
+          onClick={openFn}
           startIcon={<DeleteIcon size={18} />}
           color="primary"
           size="small"

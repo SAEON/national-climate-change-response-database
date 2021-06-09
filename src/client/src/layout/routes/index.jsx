@@ -55,7 +55,7 @@ export default withRouter(() => {
         path={'/projects/submission'}
         exact
         render={() => (
-          <Transition tKey="wizard">
+          <Transition nowrap tKey="wizard">
             <SubmitProjectPage />
           </Transition>
         )}
@@ -79,7 +79,7 @@ export default withRouter(() => {
         path={'/projects/:id+'}
         exact
         render={props => (
-          <Transition tKey="project">
+          <Transition nowrap tKey="project">
             <ProjectPage id={props.match.params.id} {...props} />
           </Transition>
         )}

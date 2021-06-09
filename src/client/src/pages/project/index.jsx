@@ -1,6 +1,8 @@
 import { useQuery, gql } from '@apollo/client'
 import Loading from '../../components/loading'
+import Header from './header'
 import Render from './render'
+import Wrapper from '../../components/page-wrapper'
 
 export default ({ id }) => {
   const { error, loading, data } = useQuery(
@@ -100,13 +102,7 @@ export default ({ id }) => {
     throw error
   }
 
-  const {
-    __typename, // eslint-disable-line
-    id: _id, // eslint-disable-line
-    mitigations,
-    adaptations,
-    ...project
-  } = data.projects[0] || undefined
+  const { mitigations, adaptations, ...project } = data.projects[0] || undefined
 
   if (!project) {
     throw new Error(
@@ -115,38 +111,43 @@ export default ({ id }) => {
   }
 
   return (
-    <Render
-      mitigationSections={{}}
-      adaptationSections={{}}
-      projectSections={{
-        'Project information': [
-          'title',
-          'description',
-          'projectManager',
-          'link',
-          'startYear',
-          'endYear',
-          'alternativeContact',
-          'alternativeContactEmail',
-          'leadAgent',
-          'interventionType',
-          'projectStatus',
-        ],
-        Location: ['province', 'districtMunicipality', 'localMunicipality'],
-        'Review status': ['validationComments', 'validationStatus'],
-        'Financial information': [
-          'fundingOrganisation',
-          'fundingPartner',
-          'fundingStatus',
-          'estimatedBudget',
-          'budgetLower',
-          'budgetUpper',
-        ],
-        'Host information': ['hostOrganisation', 'hostPartner', 'hostSector', 'hostSubSector'],
-      }}
-      project={project}
-      mitigations={mitigations}
-      adaptations={adaptations}
-    />
+    <>
+      <Header {...project} />
+      <Wrapper>
+        <Render
+          mitigationSections={{}}
+          adaptationSections={{}}
+          projectSections={{
+            'Project information': [
+              'title',
+              'description',
+              'projectManager',
+              'link',
+              'startYear',
+              'endYear',
+              'alternativeContact',
+              'alternativeContactEmail',
+              'leadAgent',
+              'interventionType',
+              'projectStatus',
+            ],
+            Location: ['province', 'districtMunicipality', 'localMunicipality'],
+            'Review status': ['validationComments', 'validationStatus'],
+            'Financial information': [
+              'fundingOrganisation',
+              'fundingPartner',
+              'fundingStatus',
+              'estimatedBudget',
+              'budgetLower',
+              'budgetUpper',
+            ],
+            'Host information': ['hostOrganisation', 'hostPartner', 'hostSector', 'hostSubSector'],
+          }}
+          project={project}
+          mitigations={mitigations}
+          adaptations={adaptations}
+        />
+      </Wrapper>
+    </>
   )
 }

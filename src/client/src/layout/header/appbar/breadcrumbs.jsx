@@ -35,7 +35,19 @@ export default function IconBreadcrumbs() {
       {tree.length > 1 &&
         tree.slice(0, -1).map(({ label, Icon, to }) => {
           return (
-            <MuiLink component={Link} key={label} color="inherit" to={to} className={classes.link}>
+            <MuiLink
+              component={Link}
+              key={label}
+              color="inherit"
+              to={
+                to ||
+                tree
+                  .slice(1, -1)
+                  .map(({ to, label }) => to || label)
+                  .join('/')
+              }
+              className={classes.link}
+            >
               {Icon && <Icon size={18} className={classes.icon} />}
               {label}
             </MuiLink>

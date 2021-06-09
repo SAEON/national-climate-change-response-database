@@ -4,11 +4,12 @@ import Toolbar from '@material-ui/core/Toolbar'
 import useTheme from '@material-ui/core/styles/useTheme'
 import MobileSideMenu from './_mobile-side-menu'
 import Hidden from '@material-ui/core/Hidden'
-import Typography from '@material-ui/core/Typography'
 import { context as filterContext } from '../context'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import SubmitProject from './_submit-project'
 import DownloadData from './_download-data'
+import Pagination from './pagination'
+import Divider from '@material-ui/core/Divider'
 
 const AnimateVariant = ({ children }) =>
   cloneElement(children, {
@@ -21,7 +22,7 @@ const AnimateVariant = ({ children }) =>
   })
 
 export default ({ MobileFilters }) => {
-  const { filters, projects } = useContext(filterContext)
+  const { filters } = useContext(filterContext)
   const theme = useTheme()
 
   return (
@@ -42,17 +43,30 @@ export default ({ MobileFilters }) => {
           {/* MOBILE FILTERS */}
           <Hidden mdUp>
             <MobileSideMenu Filters={MobileFilters} filters={filters} />
-            <div style={{ marginRight: theme.spacing(2) }} />
+            <Divider
+              flexItem
+              orientation="vertical"
+              style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+            />
           </Hidden>
-          {/* RESULT COUNT */}
-          <Typography variant="overline" color="primary">
-            {projects.length} project{projects.length === 1 ? '' : 's'}
-          </Typography>
 
-          <div style={{ marginLeft: 'auto' }} />
+          {/* SUBMIT PROJECT */}
           <SubmitProject />
-          <div style={{ marginLeft: theme.spacing(1) }} />
-          <DownloadData />
+
+          {/* DOWNLOAD PROJECT DATA */}
+          <div style={{ marginLeft: theme.spacing(2) }} />
+          <Hidden xsDown>
+            <DownloadData />
+          </Hidden>
+
+          {/* Pagination */}
+          <div style={{ marginLeft: 'auto' }} />
+          <Divider
+            flexItem
+            orientation="vertical"
+            style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+          />
+          <Pagination />
         </Toolbar>
       </AnimateVariant>
     </AppBar>

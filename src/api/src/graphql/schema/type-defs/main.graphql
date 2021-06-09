@@ -54,6 +54,8 @@ input AdaptationFiltersInput {
 type Query {
   # Search projects
   projects(
+    limit: Int
+    offset: Int
     ids: [Int!]
     vocabularyFilters: [VocabularyFilterInput!]
     mitigationFilters: MitigationFiltersInput

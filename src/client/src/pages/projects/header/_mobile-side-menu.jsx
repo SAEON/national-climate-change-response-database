@@ -30,7 +30,7 @@ export default ({ Filters, filters }) => {
         </Grid>
       </Drawer>
       <IconButton onClick={() => setShowSidebar(true)} size="small">
-        <FilterIcon size={20} />
+        <FilterIcon size={18} />
       </IconButton>
     </>
   )

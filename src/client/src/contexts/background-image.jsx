@@ -19,6 +19,9 @@ export default ({ children }) => {
           bottom: 0,
           left: 0,
           right: 0,
+          backgroundSize: 'auto',
+          backgroundPosition: 'left',
+          backgroundAttachment: 'fixed',
         }}
       />
 

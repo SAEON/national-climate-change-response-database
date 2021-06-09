@@ -9,11 +9,12 @@ import EditIcon from 'mdi-react/EditIcon'
 const useStyles = makeStyles(theme => ({
   link: {
     display: 'flex',
+    alignItems: 'center',
   },
   icon: {
     marginRight: theme.spacing(0.5),
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
   },
 }))
 
@@ -35,7 +36,7 @@ export default function IconBreadcrumbs() {
         tree.slice(0, -1).map(({ label, Icon, to }) => {
           return (
             <MuiLink component={Link} key={label} color="inherit" to={to} className={classes.link}>
-              {Icon && <Icon className={classes.icon} />}
+              {Icon && <Icon size={18} className={classes.icon} />}
               {label}
             </MuiLink>
           )
@@ -47,7 +48,7 @@ export default function IconBreadcrumbs() {
         }
         return (
           <Typography key={label} color="textPrimary" className={classes.link}>
-            {Icon && <Icon className={classes.icon} />}
+            {Icon && <Icon size={18} className={classes.icon} />}
             {label}
           </Typography>
         )

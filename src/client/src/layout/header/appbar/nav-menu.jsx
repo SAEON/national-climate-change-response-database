@@ -15,7 +15,7 @@ export default () => {
         aria-haspopup="true"
         onClick={e => setAnchorEl(e.currentTarget)}
       >
-        <MenuIcon />
+        <MenuIcon size={18} />
       </IconButton>
 
       {/* MENU */}

@@ -18,7 +18,7 @@ export default forwardRef(({ onClick, label, to, Icon, exact = false, href }, re
           to={to}
           href={href}
         >
-          <ListItemIcon>{<Icon color={match ? 'primary' : 'inherit'} />}</ListItemIcon>
+          <ListItemIcon>{<Icon size={18} color={match ? 'primary' : 'inherit'} />}</ListItemIcon>
           <ListItemText primary={label} />
         </MenuItem>
       )

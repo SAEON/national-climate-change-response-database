@@ -1,11 +1,8 @@
 import { useQuery, gql } from '@apollo/client'
 import Loading from '../../components/loading'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Render from './render'
 
 export default ({ id }) => {
-  const theme = useTheme()
   const { error, loading, data } = useQuery(
     gql`
       query projects($ids: [Int!]) {
@@ -103,11 +100,53 @@ export default ({ id }) => {
     throw error
   }
 
+  const {
+    __typename, // eslint-disable-line
+    id: _id, // eslint-disable-line
+    mitigations,
+    adaptations,
+    ...project
+  } = data.projects[0] || undefined
+
+  if (!project) {
+    throw new Error(
+      `Unable to find a project with the ID ${id}. Please contact the system administrator if you think this is an error.`
+    )
+  }
+
   return (
-    <Card style={{ backgroundColor: theme.backgroundColor }} variant="outlined">
-      <CardContent>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      </CardContent>
-    </Card>
+    <Render
+      mitigationSections={{}}
+      adaptationSections={{}}
+      projectSections={{
+        'Project information': [
+          'title',
+          'description',
+          'projectManager',
+          'link',
+          'startYear',
+          'endYear',
+          'alternativeContact',
+          'alternativeContactEmail',
+          'leadAgent',
+          'interventionType',
+          'projectStatus',
+        ],
+        Location: ['province', 'districtMunicipality', 'localMunicipality'],
+        'Review status': ['validationComments', 'validationStatus'],
+        'Financial information': [
+          'fundingOrganisation',
+          'fundingPartner',
+          'fundingStatus',
+          'estimatedBudget',
+          'budgetLower',
+          'budgetUpper',
+        ],
+        'Host information': ['hostOrganisation', 'hostPartner', 'hostSector', 'hostSubSector'],
+      }}
+      project={project}
+      mitigations={mitigations}
+      adaptations={adaptations}
+    />
   )
 }

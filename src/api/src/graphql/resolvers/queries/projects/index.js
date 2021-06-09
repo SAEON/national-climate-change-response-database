@@ -18,6 +18,8 @@ import buildQuery, { getFinalProjection } from './build-query.js'
 export default async (
   _,
   {
+    limit = undefined,
+    offset = undefined,
     ids = [],
     vocabularyFilters = [],
     mitigationFilters = undefined,
@@ -27,6 +29,7 @@ export default async (
   ctx,
   info
 ) => {
+  let isPaginated = false
   const { query } = ctx.mssql
 
   const {
@@ -36,6 +39,23 @@ export default async (
   } = getFieldSelections(
     info.fieldNodes.find(({ name }) => (name.value = 'projects')).selectionSet.selections
   )
+
+  /**
+   * Validate pagination args (if included)
+   */
+  if (typeof limit === 'number' || typeof offset === 'number') {
+    if (isNaN(parseInt(limit, 10)) || isNaN(parseInt(offset, 10))) {
+      throw new Error(
+        'Either BOTH limit and offset args must be defined, or NEITHER must be defined'
+      )
+    }
+
+    if (!projectFields.includes('id')) {
+      throw new Error('If limit & offset are specified, then the field selection MUST include id')
+    }
+
+    isPaginated = true
+  }
 
   const _projectFields = [...new Set([...projectFields, 'id'])]
   const _mitigationsFields = [...new Set([...(mitigationsFields || []), 'projectId'])]
@@ -110,10 +130,19 @@ export default async (
           ? `and exists ( select 1 from _adaptations a where a.projectId = p.id )`
           : ''
       }
+
+      ${
+        isPaginated
+          ? `
+            order by id asc
+            offset ${offset} rows
+            fetch next ${limit} rows only`
+          : ''
+      }      
     
     for json path;`
 
-  logSql(sql, 'Projects')
+  logSql(sql, 'Fetch projects')
   const result = await query(sql)
   const rows = result.recordset[0]
   return rows || []

@@ -30,7 +30,7 @@ export default () => {
       {/* NAVIGATION MENU */}
       <NavMenu />
 
-      {smAndUp && <Divider orientation="vertical" flexItem style={{ margin: theme.spacing(2) }} />}
+      {smAndUp && <Divider orientation="vertical" flexItem style={{ margin: theme.spacing(1) }} />}
 
       {/* BREADCRUMBS */}
       {smAndUp && <Breadcrumbs />}

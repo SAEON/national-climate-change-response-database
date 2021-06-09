@@ -5,6 +5,8 @@ import Fade from '@material-ui/core/Fade'
 
 export const context = createContext()
 
+const PAGE_SIZE = 20
+
 const normalizeVocabularyFilters = f =>
   Object.entries(f)
     .filter(([, term]) => term)
@@ -14,6 +16,7 @@ const normalizeVocabularyFilters = f =>
     }))
 
 export default ({ children }) => {
+  const [currentPage, setCurrentPage] = useState(0)
   const [filterContext, setFilterContext] = useState({
     ProjectFilters: {},
     MitigationFilters: {},
@@ -47,8 +50,12 @@ export default ({ children }) => {
         $vocabularyFilters: [VocabularyFilterInput!]
         $mitigationFilters: MitigationFiltersInput
         $adaptationFilters: AdaptationFiltersInput
+        $limit: Int
+        $offset: Int
       ) {
         projects: projects(
+          limit: $limit
+          offset: $offset
           vocabularyFilters: $vocabularyFilters
           mitigationFilters: $mitigationFilters
           adaptationFilters: $adaptationFilters
@@ -129,6 +136,8 @@ export default ({ children }) => {
     `,
     {
       variables: {
+        limit: PAGE_SIZE,
+        offset: currentPage * PAGE_SIZE,
         distinct: true,
         vocabularyFilters: normalizeVocabularyFilters(filterContext.ProjectFilters),
         mitigationFilters: {
@@ -159,6 +168,10 @@ export default ({ children }) => {
     <context.Provider
       value={{
         filterContext,
+        currentPage,
+        pageSize: PAGE_SIZE,
+        previousPage: currentPage === 0 ? undefined : () => setCurrentPage(p => p - 1),
+        nextPage: () => setCurrentPage(p => p + 1),
         projects,
         filters,
         setProjectFilter,

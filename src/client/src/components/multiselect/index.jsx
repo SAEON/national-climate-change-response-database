@@ -10,7 +10,7 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 import ListItemText from '@material-ui/core/ListItemText'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-export default ({ id, options, value, setValue, label, helperText = '' }) => {
+export default ({ id, options, value, setValue, label, helperText = '', chipProps = {} }) => {
   const theme = useTheme()
 
   return (
@@ -31,21 +31,26 @@ export default ({ id, options, value, setValue, label, helperText = '' }) => {
             },
           }}
           onChange={e => {
+            e.stopPropagation()
             const { value } = e.target
             setValue(value)
           }}
           input={<OutlinedInput id={`${id}-input-label`} label={label} />}
           renderValue={selected => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-              {selected.map(value => (
-                <Chip
-                  size="small"
-                  color="primary"
-                  key={value}
-                  label={value}
-                  style={{ marginRight: theme.spacing(1) }}
-                />
-              ))}
+              {selected.map(value => {
+                const { style, ...props } = chipProps
+                return (
+                  <Chip
+                    size="small"
+                    color="primary"
+                    key={value}
+                    label={value}
+                    style={{ marginRight: theme.spacing(1), ...style }}
+                    {...props}
+                  />
+                )
+              })}
             </Box>
           )}
         >

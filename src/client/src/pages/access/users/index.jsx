@@ -1,39 +1,19 @@
 import { useContext } from 'react'
 import { context as authContext } from '../../../contexts/authorization'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import { gql, useQuery } from '@apollo/client'
-import Loading from '../../../components/loading'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { context as userRolesContext } from '../context'
+import Table from './_table'
 
 export default ({ access }) => {
+  const { users } = useContext(userRolesContext)
   const { isAuthorized } = useContext(authContext)
+
   if (!isAuthorized(access)) {
     return null
   }
 
-  const theme = useTheme()
-
-  const { error, loading, data } = useQuery(gql`
-    query users {
-      users {
-        id
-        emailAddress
-      }
-    }
-  `)
-
-  if (loading) {
-    return <Loading />
-  }
-
-  if (error) {
-    throw error
-  }
-
   return (
-    <Card style={{ width: '100%', backgroundColor: theme.backgroundColor }} variant="outlined">
-      <CardContent>{JSON.stringify(data)}</CardContent>
-    </Card>
+    <div style={{ height: 800, width: '100%', position: 'relative' }}>
+      <Table users={users} />
+    </div>
   )
 }

@@ -9,6 +9,10 @@ import PermissionsIcon from 'mdi-react/AxisLockIcon'
 import Users from './users'
 import Roles from './roles'
 import Permissions from './permissions'
+import Wrapper from '../../components/page-wrapper'
+import ToolbarHeader from '../../components/toolbar-header'
+import AccessDenied from '../../components/access-denied'
+import UserRolesProvider from './context'
 
 const navItems = [
   {
@@ -43,18 +47,27 @@ export default () => {
   }
 
   if (!isAuthorized('admin')) {
-    throw new Error('This page requires administrator authorization')
+    return (
+      <Wrapper>
+        <AccessDenied requiredMinimumRole="admin" />
+      </Wrapper>
+    )
   }
 
   return (
-    <ContentNav navItems={navItems.filter(({ access }) => isAuthorized(access))}>
-      {({ activeIndex }) => {
-        return navItems
-          .filter(({ access }) => isAuthorized(access))
-          .map(({ Component, primaryText, access }, i) =>
-            activeIndex === i ? <Component access={access} key={primaryText} /> : null
-          )
-      }}
-    </ContentNav>
+    <UserRolesProvider>
+      <ToolbarHeader></ToolbarHeader>
+      <Wrapper>
+        <ContentNav navItems={navItems.filter(({ access }) => isAuthorized(access))}>
+          {({ activeIndex }) => {
+            return navItems
+              .filter(({ access }) => isAuthorized(access))
+              .map(({ Component, primaryText, access }, i) =>
+                activeIndex === i ? <Component access={access} key={primaryText} /> : null
+              )
+          }}
+        </ContentNav>
+      </Wrapper>
+    </UserRolesProvider>
   )
 }

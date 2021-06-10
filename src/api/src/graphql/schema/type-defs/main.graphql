@@ -7,6 +7,7 @@ scalar WKT_4326
 type User {
   id: Int!
   emailAddress: String!
+  roles: [Role!]!
 }
 
 type Role {
@@ -90,5 +91,8 @@ type Mutation {
     mitigationForms: [MitigationInput!]
     adaptationForms: [AdaptationInput!]
   ): Project!
+  # Delete a project
   deleteProject(id: Int!): Int
+  # Assign roles to users
+  assignUserRoles(userId: Int!, roleIds: [Int!]!): User!
 }

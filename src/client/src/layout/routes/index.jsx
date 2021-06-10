@@ -31,7 +31,7 @@ export default withRouter(() => {
         path={'/access'}
         exact
         render={() => (
-          <Transition tKey="access">
+          <Transition nowrap tKey="access">
             <AccessPage />
           </Transition>
         )}
@@ -91,7 +91,7 @@ export default withRouter(() => {
         path={'/deployments'}
         exact
         render={() => (
-          <Transition tKey="deployments">
+          <Transition nowrap tKey="deployments">
             <DeploymentsPage />
           </Transition>
         )}

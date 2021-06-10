@@ -6,7 +6,7 @@ export default ({ project, mitigations, adaptations, projectSections }) => {
     <Grid container spacing={2}>
       {Object.entries(projectSections).map(([title, fieldNames]) => {
         return (
-          <Grid item xs={12} key={title}>
+          <Grid item xs={12} md={6} key={title}>
             <Card
               title={title}
               json={Object.fromEntries(

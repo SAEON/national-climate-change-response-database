@@ -26,8 +26,12 @@ export default ({ navItems, subNavChildren = null, children }) => {
           {navItems.map(({ primaryText, secondaryText, Icon, disabled = false }, i) => (
             <Card
               variant="outlined"
-              style={{ flexBasis: mdAndUp ? 'auto' : 0, flexGrow: 1 }}
-              className={clsx({
+              style={{
+                flexBasis: mdAndUp ? 'auto' : 0,
+                flexGrow: 1,
+                border: 'none',
+              }}
+              className={clsx(classes.card, {
                 [classes.disabled]: disabled,
               })}
               key={i}

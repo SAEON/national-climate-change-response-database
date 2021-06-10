@@ -8,7 +8,7 @@ export default ({ title, json }) => {
   const theme = useTheme()
 
   return (
-    <Card style={{ backgroundColor: theme.backgroundColor }} variant="outlined">
+    <Card style={{ backgroundColor: theme.backgroundColor, height: '100%' }} variant="outlined">
       <CardHeader title={title} />
       <CardContent>
         <FormattedObject>{json}</FormattedObject>

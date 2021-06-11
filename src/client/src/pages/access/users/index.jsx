@@ -5,14 +5,14 @@ import Table from './_table'
 
 export default ({ access }) => {
   const { users } = useContext(userRolesContext)
-  const { isAuthorized } = useContext(authContext)
+  const { hasRole } = useContext(authContext)
 
-  if (!isAuthorized(access)) {
+  if (!hasRole(access)) {
     return null
   }
 
   return (
-    <div style={{ height: 800, width: '100%', position: 'relative' }}>
+    <div style={{ width: '100%', position: 'relative' }}>
       <Table users={users} />
     </div>
   )

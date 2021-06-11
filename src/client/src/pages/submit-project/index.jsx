@@ -3,17 +3,16 @@ import ContentNav from '../../components/content-nav'
 import Avatar from '@material-ui/core/Avatar'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import clsx from 'clsx'
+import { context as authenticationContext } from '../../contexts/authentication'
 import GraphQLFormProvider, { Submit, context as formContext } from './gql-form-binder'
-import useTheme from '@material-ui/core/styles/useTheme'
 import ProjectForm from './forms/project'
 import MitigationForms from './forms/mitigation'
 import AdaptationForms from './forms/adaptation'
 import ResetForm from './reset-form'
 import CompleteIcon from 'mdi-react/CheckBoldIcon'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
 import Header from './header'
 import Wrapper from '../../components/page-wrapper'
+import Loading from '../../components/loading'
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -56,8 +55,6 @@ const AvatarIcon = ({ i, complete, started, disabled, enabled }) => {
 }
 
 const Layout = () => {
-  const theme = useTheme()
-
   const {
     projectForm,
     projectFormValidation,
@@ -149,8 +146,16 @@ const Layout = () => {
   )
 }
 
-export default () => (
-  <GraphQLFormProvider>
-    <Layout />
-  </GraphQLFormProvider>
-)
+export default () => {
+  const isAuthenticated = useContext(authenticationContext).authenticate()
+
+  if (!isAuthenticated) {
+    return <Loading />
+  }
+
+  return (
+    <GraphQLFormProvider>
+      <Layout />
+    </GraphQLFormProvider>
+  )
+}

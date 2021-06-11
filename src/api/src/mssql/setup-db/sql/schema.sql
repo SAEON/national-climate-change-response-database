@@ -197,6 +197,7 @@ create table Projects (
 	province int foreign key references VocabularyXrefTree (id),
 	districtMunicipality int foreign key references VocabularyXrefTree (id),
 	localMunicipality int foreign key references VocabularyXrefTree (id),
+	userId int not null foreign key references Users (id),
 	createdBy int foreign key references Users (id),
 	createdAt date,
 	updatedBy int foreign key references Users (id),

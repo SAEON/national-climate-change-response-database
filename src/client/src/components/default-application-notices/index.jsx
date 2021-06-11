@@ -9,12 +9,12 @@ import { context as authContext } from '../../contexts/authentication'
  */
 export default ({ children }) => {
   const { enqueueSnackbar } = useSnackbar()
-  const { userInfo } = useContext(authContext)
+  const { user } = useContext(authContext)
 
   useEffect(() => {
-    if (!userInfo) return
-    enqueueSnackbar(`Welcome back ${userInfo.emailAddress}`, { variant: 'info' })
-  }, [enqueueSnackbar, userInfo])
+    if (!user) return
+    enqueueSnackbar(`Welcome back ${user.emailAddress}`, { variant: 'info' })
+  }, [enqueueSnackbar, user])
 
   useEffect(
     () =>

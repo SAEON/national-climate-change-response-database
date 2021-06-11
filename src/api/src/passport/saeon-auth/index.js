@@ -1,6 +1,7 @@
 import passport from 'koa-passport'
 import fetch from 'node-fetch'
 import query from '../../mssql/query.js'
+import logSql from '../../lib/log-sql.js'
 import { OAuth2Strategy } from 'passport-oauth'
 import base64url from 'base64url'
 import {
@@ -37,35 +38,50 @@ export default () => {
           ).then(res => res.json())
 
           try {
-            await query(`
-              with currentUser as (
-                select
-                '${saeonEmail}' emailAddress,
-                '${saeonId}' saeonId
-              )
-              
-              merge Users as target
-              using currentUser as source
-              on target.emailAddress = source.emailAddress
-              
-              when matched and coalesce(target.saeonId, '') <> source.saeonId
-              then update set target.saeonId = source.saeonId
-              
-              when not matched by target
-              then insert (emailAddress, saeonId) values (source.emailAddress, source.saeonId);`)
+            const sql = `
+              begin transaction T
+              begin try
+                with currentUser as (
+                  select
+                  '${sanitizeSqlValue(saeonEmail)}' emailAddress,
+                  '${sanitizeSqlValue(saeonId)}' saeonId
+                )
+                
+                merge Users as target
+                using currentUser as source on target.emailAddress = source.emailAddress
+                when matched and coalesce(target.saeonId, '') <> source.saeonId
+                  then update set target.saeonId = source.saeonId
+                when not matched by target
+                  then insert (emailAddress, saeonId) values (source.emailAddress, source.saeonId);
+                  
+                insert into UserRoleXref (userId, roleId)
+                select distinct
+                  u.id userId,
+                  ( select id from Roles r where r.name = 'public') roleId
+                  from Users u
+                where
+                  u.emailAddress = '${sanitizeSqlValue(saeonEmail)}'
+                  and not exists (
+                    select 1
+                    from UserRoleXref
+                    where userId = u.id
+                  );
 
-            const user = (
-              await query(`
                 select
-                u.*,
-                roles.roleId id
+                *
                 from Users u
-                left outer join UserRoleXref roles on roles.userId = u.id
-                where saeonId = '${saeonId}'
+                where saeonId = '${sanitizeSqlValue(saeonId)}'
                 for json auto, without_array_wrapper;
-              `)
-            ).recordset[0]
 
+                commit transaction T                
+              end try
+              begin catch
+                  rollback transaction T
+              end catch`
+
+            logSql(sql, 'Authenticate user')
+            const result = await query(sql)
+            const user = result.recordset[0]
             cb(null, user)
           } catch (error) {
             console.error('Error authenticating', error.message)

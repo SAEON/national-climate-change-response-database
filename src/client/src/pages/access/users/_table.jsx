@@ -4,7 +4,6 @@ import { gql, useMutation } from '@apollo/client'
 import { DataGrid } from '@material-ui/data-grid'
 import useTheme from '@material-ui/core/styles/useTheme'
 import Multiselect from '../../../components/multiselect'
-import Loading from '../../../components/loading'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import clsx from 'clsx'
@@ -15,13 +14,18 @@ export default ({ users }) => {
   const theme = useTheme()
   const classes = useStyles()
 
-  const [assignUserRoles, { error, loading }] = useMutation(gql`
-    mutation assignUserRoles($userId: Int!, $roleIds: [Int!]!) {
-      assignUserRoles(userId: $userId, roleIds: $roleIds) {
-        id
+  const [assignUserRoles, { error, loading }] = useMutation(
+    gql`
+      mutation assignUserRoles($userId: Int!, $roleIds: [Int!]!) {
+        assignUserRoles(userId: $userId, roleIds: $roleIds) {
+          id
+          roles {
+            id
+          }
+        }
       }
-    }
-  `)
+    `
+  )
 
   if (error) {
     throw error
@@ -29,16 +33,15 @@ export default ({ users }) => {
 
   return (
     <>
-      {loading && (
-        <div style={{ position: 'absolute', width: '100%' }}>
-          <Loading />
-        </div>
-      )}
-      <Card style={{ width: '100%', backgroundColor: theme.backgroundColor }} variant="outlined">
+      <Card
+        style={{ width: '100%', backgroundColor: theme.backgroundColor, border: 'none' }}
+        variant="outlined"
+      >
         <CardContent style={{ padding: 0 }}>
-          <div style={{ height: 800 }}>
+          <div style={{ height: 1000 }}>
             <DataGrid
-              rowHeight={theme.spacing(6)}
+              pageSize={25}
+              rowHeight={theme.spacing(5)}
               rows={users.map(({ id, emailAddress, roles }) => {
                 return {
                   id,
@@ -58,7 +61,12 @@ export default ({ users }) => {
                   renderCell: ({ value, row: { id: userId } }) => {
                     return (
                       <Multiselect
-                        chipProps={{ variant: 'outlined', style: { textTransform: 'uppercase' } }}
+                        loading={loading}
+                        chipProps={{
+                          variant: 'outlined',
+                          color: label => (label === 'admin' ? 'secondary' : 'primary'),
+                          style: { textTransform: 'uppercase', position: 'relative', top: -2 },
+                        }}
                         id={`multiselect-${userId}`}
                         options={roles.map(({ name }) => name)}
                         value={value.map(({ name }) => name)}

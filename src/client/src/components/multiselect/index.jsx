@@ -9,8 +9,18 @@ import Checkbox from '@material-ui/core/Checkbox'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import ListItemText from '@material-ui/core/ListItemText'
 import useTheme from '@material-ui/core/styles/useTheme'
+import Loading from '../../components/loading'
 
-export default ({ id, options, value, setValue, label, helperText = '', chipProps = {} }) => {
+export default ({
+  id,
+  options,
+  value,
+  setValue,
+  label,
+  helperText = '',
+  chipProps = {},
+  loading = false,
+}) => {
   const theme = useTheme()
 
   return (
@@ -26,6 +36,11 @@ export default ({ id, options, value, setValue, label, helperText = '', chipProp
           multiple
           value={value}
           MenuProps={{
+            MenuListProps: {
+              style: {
+                padding: 0,
+              },
+            },
             PaperProps: {
               style: {},
             },
@@ -39,11 +54,12 @@ export default ({ id, options, value, setValue, label, helperText = '', chipProp
           renderValue={selected => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
               {selected.map(value => {
-                const { style, ...props } = chipProps
+                const { style, color = undefined, ...props } = chipProps
+                const _color = typeof color === 'function' ? color(value) : color || 'primary'
                 return (
                   <Chip
                     size="small"
-                    color="primary"
+                    color={_color}
                     key={value}
                     label={value}
                     style={{ marginRight: theme.spacing(1), ...style }}
@@ -60,6 +76,7 @@ export default ({ id, options, value, setValue, label, helperText = '', chipProp
               <ListItemText primary={option} />
             </MenuItem>
           ))}
+          {loading ? <Loading /> : null}
         </Select>
         <FormHelperText style={{ marginLeft: 14 }}>{helperText}</FormHelperText>
       </FormControl>

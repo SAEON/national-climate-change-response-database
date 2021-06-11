@@ -4,11 +4,11 @@ import { NCCRD_API_HTTP_ADDRESS } from '../config'
 export const context = createContext()
 
 export default ({ children }) => {
-  const [userInfo, setUserInfo] = useState(false)
+  const [user, setUser] = useState(false)
   const [authenticating, setAuthenticating] = useState(false)
 
   const authenticate = () => {
-    if (userInfo) {
+    if (user) {
       return true
     } else {
       window.location.href = `${NCCRD_API_HTTP_ADDRESS}/login?redirect=${window.location.href}`
@@ -26,8 +26,8 @@ export default ({ children }) => {
           mode: 'cors',
           signal: abortController.signal,
         })
-        const userInfo = await response.json()
-        setUserInfo(userInfo)
+        const user = await response.json()
+        setUser(user)
         setAuthenticating(false)
       } catch (error) {
         throw new Error('Error authenticating user ::' + error.message)
@@ -42,7 +42,7 @@ export default ({ children }) => {
   return (
     <context.Provider
       value={{
-        userInfo,
+        user,
         authenticating,
         authenticate,
       }}

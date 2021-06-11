@@ -8,6 +8,10 @@ using (
   select
     'dffe' name,
     'Non-privileged user from DFFE' description
+  union
+  select
+    'public' name,
+    'Default role for unmanaged users'
 ) s on s.name = t.name
 when not matched then insert (name, description)
   values (
@@ -37,6 +41,14 @@ using (
     null description
   union
   select
+    'view-all-projects' name,
+    null description
+  union 
+  select
+    'change-project-owner' name,
+    null description
+  union    
+  select
     'update-users' name,
     null description
 ) s on s.name = t.name
@@ -54,15 +66,21 @@ with xref as (
     R.id roleId,
     P.id permissionId
     from Roles R
-    cross join [Permissions] P
+    cross join Permissions P
     where R.name = 'admin'
 	union
 	select
     R.id roleId,
     P.id permissionId
     from Roles R
-    join [Permissions] P on P.name in ('create-project', 'update-project', 'delete-project')
+    join Permissions P on P.name in ('create-project', 'update-project', 'delete-project', 'view-all-projects')
     where R.name = 'dffe'
+  union
+  select
+    R.id roleId,
+    P.id permissionId
+    from Roles R
+    join Permissions P on P.name in ('create-project', 'update-project', 'delete-project')
 )
 merge PermissionRoleXref t
 using (select * from xref) s on s.roleId = t.roleId and s.permissionId = t.permissionId

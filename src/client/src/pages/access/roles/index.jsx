@@ -1,38 +1,52 @@
 import { useContext } from 'react'
 import { context as authContext } from '../../../contexts/authorization'
-import Card from '@material-ui/core/Card'
+import { context as accessContext } from '../context'
 import CardContent from '@material-ui/core/CardContent'
-import { gql, useQuery } from '@apollo/client'
-import Loading from '../../../components/loading'
 import useTheme from '@material-ui/core/styles/useTheme'
+import Grid from '@material-ui/core/Grid'
+import { DataGrid } from '@material-ui/data-grid'
+import Collapse from '../../../components/collapse'
 
 export default ({ access }) => {
-  const { isAuthorized } = useContext(authContext)
-  if (!isAuthorized(access)) {
+  const theme = useTheme()
+  const { hasRole } = useContext(authContext)
+  const { roles } = useContext(accessContext)
+  if (!hasRole(access)) {
     return null
   }
 
-  const theme = useTheme()
-
-  const { error, loading, data } = useQuery(gql`
-    query roles {
-      roles {
-        id
-      }
-    }
-  `)
-
-  if (loading) {
-    return <Loading />
-  }
-
-  if (error) {
-    throw error
-  }
-
   return (
-    <Card style={{ width: '100%', backgroundColor: theme.backgroundColor }} variant="outlined">
-      <CardContent>{JSON.stringify(data)}</CardContent>
-    </Card>
+    <Grid container spacing={2}>
+      {roles.map(({ name, description, permissions }) => {
+        return (
+          <Grid key={name} item xs={12}>
+            <Collapse
+              cardStyle={{ border: 'none' }}
+              title={`${name.toUpperCase()} permissions`}
+              subheader={description}
+            >
+              <CardContent style={{ padding: 0 }}>
+                <div style={{ height: 400 }}>
+                  <DataGrid
+                    pageSize={25}
+                    rowHeight={theme.spacing(5)}
+                    columns={[
+                      { field: 'id', headerName: 'ID', width: 90 },
+                      { field: 'name', headerName: 'Name', width: 200 },
+                      { field: 'description', headerName: 'Description', width: 550 },
+                    ]}
+                    rows={permissions.map(({ id, name, description }) => ({
+                      id,
+                      name,
+                      description,
+                    }))}
+                  />
+                </div>
+              </CardContent>
+            </Collapse>
+          </Grid>
+        )
+      })}
+    </Grid>
   )
 }

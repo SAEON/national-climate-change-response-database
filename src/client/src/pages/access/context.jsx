@@ -8,12 +8,6 @@ export const context = createContext()
 export default ({ children }) => {
   const { loading, error, data } = useQuery(gql`
     query {
-      roles {
-        id
-        name
-        description
-      }
-
       users {
         id
         emailAddress
@@ -22,6 +16,23 @@ export default ({ children }) => {
           name
           description
         }
+      }
+
+      roles {
+        id
+        name
+        description
+        permissions {
+          id
+          name
+          description
+        }
+      }
+
+      permissions {
+        id
+        name
+        description
       }
     }
   `)
@@ -38,7 +49,7 @@ export default ({ children }) => {
     throw error
   }
 
-  const { users, roles } = data
+  const { users, roles, permissions } = data
 
-  return <context.Provider value={{ users, roles }}>{children}</context.Provider>
+  return <context.Provider value={{ users, roles, permissions }}>{children}</context.Provider>
 }

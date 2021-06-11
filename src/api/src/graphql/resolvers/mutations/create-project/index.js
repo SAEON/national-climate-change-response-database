@@ -1,11 +1,21 @@
 import logSql from '../../../../lib/log-sql.js'
 import filterFormInput from './filter-form-input.js'
-import makeInsertStmt from './make-insert-statement.js'
+import {
+  makeAdaptationsInsertStmt,
+  makeProjectInsertStmt,
+  makeMitigationsInsertStmt,
+} from './make-insert-statements.js'
 import makeEnergyInsertStmt from './make-energy-insert-statement.js'
 import makeEmissionsInsertStmts from './make-emissions-insert-statements.js'
 
 export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx) => {
-  const { query } = ctx.mssql
+  const { user, mssql, PERMISSIONS } = ctx
+  const { query } = mssql
+
+  await user.ensurePermission({ ctx, permission: PERMISSIONS.createProject })
+  const userId = user.info(ctx).id
+  const now = new Date().toISOString()
+
   projectForm = filterFormInput(projectForm)
   mitigationForms = mitigationForms.map(form => filterFormInput(form))
   adaptationForms = adaptationForms.map(form => filterFormInput(form))
@@ -21,10 +31,11 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
       create table #newMitigation(id int, i int);
 
       -- project
-      ${makeInsertStmt({
-        table: 'Projects',
+      ${makeProjectInsertStmt({
         simpleInput: projectForm.simpleInput,
         vocabInput: projectForm.vocabInput,
+        userId,
+        now,
       })}
 
       insert into #newProject (id)
@@ -36,8 +47,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
-            ${makeInsertStmt({
-              table: 'Mitigations',
+            ${makeMitigationsInsertStmt({
               simpleInput: simpleInput,
               vocabInput: vocabInput,
               projectId: true,
@@ -59,8 +69,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
           if (!simpleInput.length && !vocabInput.length) return ''
 
           return `
-          ${makeInsertStmt({
-            table: 'Adaptations',
+          ${makeAdaptationsInsertStmt({
             simpleInput: simpleInput,
             vocabInput: vocabInput,
             projectId: true,

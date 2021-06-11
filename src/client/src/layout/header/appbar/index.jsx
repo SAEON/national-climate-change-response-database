@@ -14,7 +14,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 export default () => {
   const theme = useTheme()
-  const { userInfo: authenticated } = useContext(authenticationContext)
+  const { user } = useContext(authenticationContext)
   const { origin: NCCRD_CLIENT_ADDRESS } = useContext(clientInfoContext)
   useLocation() // Trigger re-render on location changes
   const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
@@ -36,7 +36,7 @@ export default () => {
       {smAndUp && <Breadcrumbs />}
 
       {/* LOG IN */}
-      {window.location.pathname !== '/login' && !authenticated && (
+      {window.location.pathname !== '/login' && !user && (
         <MuiLink
           style={{ marginLeft: 'auto' }}
           href={`${NCCRD_API_HTTP_ADDRESS}/login?redirect=${window.location.href}`}
@@ -47,13 +47,13 @@ export default () => {
         </MuiLink>
       )}
       {/* LOG OUT */}
-      {authenticated && (
+      {user && (
         <MuiLink
           style={{ marginLeft: 'auto' }}
           href={`${NCCRD_API_HTTP_ADDRESS}/logout?redirect=${NCCRD_CLIENT_ADDRESS}`}
         >
           <Typography style={{ paddingRight: theme.spacing(1) }} variant="overline">
-            Log out {smAndUp && `(${authenticated.emailAddress})`}
+            Log out {smAndUp && `(${user.emailAddress})`}
           </Typography>
         </MuiLink>
       )}

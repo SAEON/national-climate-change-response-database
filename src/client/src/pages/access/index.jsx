@@ -14,39 +14,39 @@ import ToolbarHeader from '../../components/toolbar-header'
 import AccessDenied from '../../components/access-denied'
 import UserRolesProvider from './context'
 
-const navItems = [
+const sections = [
   {
     primaryText: 'Users',
-    secondaryText: 'Manage users directly',
+    secondaryText: 'Manage application users',
     Icon: UsersIcon,
-    access: 'admin',
+    requiredRole: 'admin',
     Component: Users,
   },
   {
     primaryText: 'Roles',
-    secondaryText: 'Assign users to roles',
+    secondaryText: 'Manage application roles',
     Icon: RolesIcon,
-    access: 'admin',
+    requiredRole: 'admin',
     Component: Roles,
   },
   {
     primaryText: 'Permissions',
-    secondaryText: 'Assign permissions to roles',
+    secondaryText: 'Manage application permissions',
     Icon: PermissionsIcon,
-    access: 'admin',
+    requiredRole: 'admin',
     Component: Permissions,
   },
 ]
 
 export default () => {
   const isAuthenticated = useContext(authenticationContext).authenticate()
-  const { isAuthorized } = useContext(authorizationContext)
+  const { hasRole } = useContext(authorizationContext)
 
   if (!isAuthenticated) {
     return <Loading />
   }
 
-  if (!isAuthorized('admin')) {
+  if (!hasRole('admin')) {
     return (
       <Wrapper>
         <AccessDenied requiredMinimumRole="admin" />
@@ -58,12 +58,12 @@ export default () => {
     <UserRolesProvider>
       <ToolbarHeader></ToolbarHeader>
       <Wrapper>
-        <ContentNav navItems={navItems.filter(({ access }) => isAuthorized(access))}>
+        <ContentNav navItems={sections.filter(({ requiredRole }) => hasRole(requiredRole))}>
           {({ activeIndex }) => {
-            return navItems
-              .filter(({ access }) => isAuthorized(access))
-              .map(({ Component, primaryText, access }, i) =>
-                activeIndex === i ? <Component access={access} key={primaryText} /> : null
+            return sections
+              .filter(({ requiredRole }) => hasRole(requiredRole))
+              .map(({ Component, primaryText, requiredRole }, i) =>
+                activeIndex === i ? <Component access={requiredRole} key={primaryText} /> : null
               )
           }}
         </ContentNav>

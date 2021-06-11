@@ -11,17 +11,23 @@ import useTheme from '@material-ui/core/styles/useTheme'
 export default ({
   children,
   title,
+  subheader = undefined,
   Icon = undefined,
   avatarStyle = {},
   defaultExpanded = false,
   actions = [],
+  cardStyle = {},
 }) => {
   const theme = useTheme()
   const [collapsed, setCollapsed] = useState(!defaultExpanded)
 
   return (
-    <Card variant="outlined" style={{ width: '100%', backgroundColor: theme.backgroundColor }}>
+    <Card
+      variant="outlined"
+      style={{ width: '100%', backgroundColor: theme.backgroundColor, ...cardStyle }}
+    >
       <CardHeader
+        subheader={subheader || ''}
         style={{ cursor: 'pointer' }}
         onClick={() => setCollapsed(!collapsed)}
         avatar={

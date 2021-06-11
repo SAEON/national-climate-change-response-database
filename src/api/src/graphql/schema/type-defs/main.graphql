@@ -8,12 +8,14 @@ type User {
   id: Int!
   emailAddress: String!
   roles: [Role!]!
+  permissions: [Permission!]!
 }
 
 type Role {
   id: Int!
   name: String!
   description: String
+  permissions: [Permission!]!
 }
 
 type Permission {
@@ -67,7 +69,7 @@ type Query {
   # Search vocabulary tress
   controlledVocabulary(root: String!, tree: String!): ControlledVocabulary
   # Search users
-  users: [User!]
+  users(ids: [Int!]): [User!]
   # Search roles
   roles: [Role!]!
   # Search permissions

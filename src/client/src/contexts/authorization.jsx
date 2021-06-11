@@ -1,45 +1,55 @@
 import { useContext, createContext } from 'react'
-import { useQuery } from '@apollo/client'
 import Loading from '../components/loading'
-import { gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import { context as authenticationContext } from './authentication'
 
 export const context = createContext()
 
-export default ({ children }) => {
-  const { userInfo } = useContext(authenticationContext)
-  const roles = userInfo?.roles
+const checkRole = (user, role) => Boolean(user?.roles.find(({ name }) => name === role))
 
-  const { loading, data } = useQuery(gql`
-    query roles {
-      roles {
-        id
-        name
-        description
+export default ({ children }) => {
+  const { user: sessionUser } = useContext(authenticationContext)
+  const { loading, data } = useQuery(
+    gql`
+      query ($ids: [Int!]) {
+        users(ids: $ids) {
+          id
+          roles {
+            id
+            name
+            description
+          }
+          permissions {
+            id
+            name
+            description
+          }
+        }
       }
+    `,
+    {
+      variables: {
+        ids: [sessionUser?.id || 0],
+      },
     }
-  `)
+  )
 
   if (loading) {
     return <Loading />
   }
 
-  const applicationRoles = data?.roles
-  const adminRoleId = applicationRoles && applicationRoles.find(({ name }) => name === 'admin').id
+  const {
+    users: [user],
+  } = data || { users: [] }
 
   return (
     <context.Provider
       value={{
-        applicationRoles,
-        isAuthenticated: Boolean(userInfo),
-        isAdmin: Boolean(
-          adminRoleId && roles?.map(({ id }) => id).includes(parseInt(adminRoleId, 10))
-        ),
-        isAuthorized: (..._roles) => {
-          if (!applicationRoles) return false
-          const roleId = applicationRoles.find(({ name }) => _roles.includes(name)).id
-          return roles?.map(({ id }) => id).includes(parseInt(roleId, 10))
-        },
+        isAuthenticated: Boolean(sessionUser),
+        isAdmin: checkRole(user, 'admin'),
+        hasRole: role => checkRole(user, role),
+        hasPermission: permission =>
+          Boolean(user?.permissions.find(({ name }) => name === permission)),
       }}
     >
       {children}

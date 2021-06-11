@@ -42,6 +42,7 @@ export default async ctx => {
       alternativeContactEmail,
       link,
       updatedBy,
+      userId,
       updatedAt,
       validationComments,
       budgetLower,
@@ -91,6 +92,9 @@ export default async ctx => {
               ( select id from Users where emailAddress = '${sanitizeSqlValue(
                 updatedBy
               )}' ) updatedBy,
+              ( select id from Users where emailAddress = '${sanitizeSqlValue(
+                updatedBy
+              )}' ) userId,
               '${sanitizeSqlValue(new Date(updatedAt).toISOString())}' updatedAt,
               '${sanitizeSqlValue(validationComments)}' validationComments,
               '${sanitizeSqlValue(budgetLower || '')}' budgetLower,
@@ -111,6 +115,7 @@ export default async ctx => {
             alternativeContactEmail,
             link,
             updatedBy,
+            userId,
             updatedAt,
             validationComments,
             budgetLower,
@@ -131,6 +136,7 @@ export default async ctx => {
             s.alternativeContactEmail,
             s.link,
             s.updatedBy,
+            s.userId,
             s.updatedAt,
             s.validationComments,
             s.budgetLower,

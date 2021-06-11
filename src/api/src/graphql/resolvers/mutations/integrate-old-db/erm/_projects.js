@@ -42,7 +42,6 @@ export default async ctx => {
       alternativeContactEmail,
       link,
       updatedBy,
-      userId,
       updatedAt,
       validationComments,
       budgetLower,

@@ -4,6 +4,8 @@ create-project,Create a new project
 delete-project,Delete a project
 update-project,Update a project
 update-users,Update user objects
+assign-role,Assign role to user
+assign-permission,Assign permission to role
 view-users,View users
 view-permissions,View permissions
 view-roles,View  roles

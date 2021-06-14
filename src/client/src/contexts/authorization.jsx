@@ -5,8 +5,6 @@ import { context as authenticationContext } from './authentication'
 
 export const context = createContext()
 
-const checkRole = (user, role) => Boolean(user?.roles.find(({ name }) => name === role))
-
 export default ({ children }) => {
   const { user: sessionUser } = useContext(authenticationContext)
   const { loading, data } = useQuery(

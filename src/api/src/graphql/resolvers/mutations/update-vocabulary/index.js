@@ -31,7 +31,7 @@ export default async (_, args, ctx) => {
          */
         await query(`
           merge VocabularyTrees T
-          using (select '${tree}' name) S on T.name = S.name
+          using (select '${sanitizeSqlValue(tree)}' name) S on T.name = S.name
           when not matched then insert (name)
           values (S.name);`)
 
@@ -43,9 +43,9 @@ export default async (_, args, ctx) => {
           using (
             select distinct *
             from (
-              select '${term}' term
+              select '${sanitizeSqlValue(term)}' term
               union
-              select '${parent}' term	
+              select '${sanitizeSqlValue(parent)}' term	
             ) t
             where term <> '' and term <> ''
           ) S on T.term = S.term
@@ -59,8 +59,10 @@ export default async (_, args, ctx) => {
           merge VocabularyXrefTree T
           using (
             select 
-              (select id from Vocabulary where term = '${term}') vocabularyId,
-              (select id from VocabularyTrees where name = '${tree}') vocabularyTreeId
+              (select id from Vocabulary where term = '${sanitizeSqlValue(term)}') vocabularyId,
+              (select id from VocabularyTrees where name = '${sanitizeSqlValue(
+                tree
+              )}') vocabularyTreeId
           ) S on S.vocabularyId = T.vocabularyId and S.vocabularyTreeId = T.vocabularyTreeId
           when not matched then insert (vocabularyId, vocabularyTreeId)
           values (S.vocabularyId, S.vocabularyTreeId);`)
@@ -73,9 +75,11 @@ export default async (_, args, ctx) => {
           using (
             select * from (
               select
-                (select id from Vocabulary where term = '${parent}') parentId,
-                (select id from Vocabulary where term = '${term}') childId,
-                (select id from VocabularyTrees where name = '${tree}') vocabularyTreeId
+                (select id from Vocabulary where term = '${sanitizeSqlValue(parent)}') parentId,
+                (select id from Vocabulary where term = '${sanitizeSqlValue(term)}') childId,
+                (select id from VocabularyTrees where name = '${sanitizeSqlValue(
+                  tree
+                )}') vocabularyTreeId
             ) t where parentId <> ''
           ) S on
           S.parentId = T.parentId

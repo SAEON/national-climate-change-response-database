@@ -1,8 +1,10 @@
 import logSql from '../../../lib/log-sql.js'
 
 export default async (self, { ids = [] }, ctx) => {
-  await ctx.user.ensureAdmin(ctx)
-  const { query } = ctx.mssql
+  const { user, mssql, PERMISSIONS } = ctx
+  const { query } = mssql
+
+  await user.ensurePermission({ ctx, permission: PERMISSIONS.viewUsers })
 
   const sql = `
   select

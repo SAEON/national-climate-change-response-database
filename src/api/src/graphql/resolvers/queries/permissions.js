@@ -1,5 +1,9 @@
 export default async (self, args, ctx) => {
-  await ctx.user.ensureAdmin(ctx)
-  const { query } = ctx.mssql
-  return (await query('select * from [Permissions]')).recordset
+  const { user, mssql, PERMISSIONS } = ctx
+  const { query } = mssql
+
+  await user.ensurePermission({ ctx, permission: PERMISSIONS.viewPermissions })
+
+  const result = await query('select * from [Permissions]')
+  return result.recordset
 }

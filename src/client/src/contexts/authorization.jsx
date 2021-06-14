@@ -46,8 +46,6 @@ export default ({ children }) => {
     <context.Provider
       value={{
         isAuthenticated: Boolean(sessionUser),
-        isAdmin: checkRole(user, 'admin'),
-        hasRole: role => checkRole(user, role),
         hasPermission: permission =>
           Boolean(user?.permissions.find(({ name }) => name === permission)),
       }}

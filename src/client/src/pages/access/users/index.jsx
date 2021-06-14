@@ -3,11 +3,11 @@ import { context as authContext } from '../../../contexts/authorization'
 import { context as userRolesContext } from '../context'
 import Table from './_table'
 
-export default ({ access }) => {
+export default ({ permission }) => {
   const { users } = useContext(userRolesContext)
-  const { hasRole } = useContext(authContext)
+  const { hasPermission } = useContext(authContext)
 
-  if (!hasRole(access)) {
+  if (!hasPermission(permission)) {
     return null
   }
 

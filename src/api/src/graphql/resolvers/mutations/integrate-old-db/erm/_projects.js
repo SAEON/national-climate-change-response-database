@@ -91,9 +91,7 @@ export default async ctx => {
               ( select id from Users where emailAddress = '${sanitizeSqlValue(
                 updatedBy
               )}' ) updatedBy,
-              ( select id from Users where emailAddress = '${sanitizeSqlValue(
-                updatedBy
-              )}' ) userId,
+              ( select id from Users where emailAddress = '${sanitizeSqlValue(updatedBy)}' ) userId,
               '${sanitizeSqlValue(new Date(updatedAt).toISOString())}' updatedAt,
               '${sanitizeSqlValue(validationComments)}' validationComments,
               '${sanitizeSqlValue(budgetLower || '')}' budgetLower,

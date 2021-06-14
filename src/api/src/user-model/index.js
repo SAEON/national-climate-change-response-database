@@ -1,4 +1,3 @@
-import ensureRole from './_ensure-role.js'
 import ensureAuthenticated from './_ensure-authenticated.js'
 import ensurePermission from './_ensure-permission.js'
 
@@ -9,7 +8,15 @@ export const ROLES = {
 }
 
 export const PERMISSIONS = {
+  // API routes
   createProject: 'create-project',
+  viewPermissions: 'view-permissions',
+  viewRoles: 'view-roles',
+  viewUsers: 'view-users',
+
+  // UI routes
+  'view/Access': 'view-/access',
+  'view/Deployments': 'view-/deployments',
 }
 
 export default {
@@ -18,11 +25,6 @@ export default {
 
   // Authentication
   ensureAuthenticated: ctx => ensureAuthenticated(ctx),
-
-  // Role-based authorization
-  ensureRole: ({ ctx, role }) => ensureRole(ctx, role),
-  ensureDffe: ctx => ensureRole(ctx, ROLES.dffe),
-  ensureAdmin: ctx => ensureRole(ctx, ROLES.admin),
 
   // Permission-based authorization
   ensurePermission: ({ ctx, permission }) => ensurePermission(ctx, permission),

@@ -19,37 +19,37 @@ const sections = [
     primaryText: 'Users',
     secondaryText: 'Manage application users',
     Icon: UsersIcon,
-    requiredRole: 'admin',
+    requiredPermission: 'view-users',
     Component: Users,
   },
   {
     primaryText: 'Roles',
     secondaryText: 'Manage application roles',
     Icon: RolesIcon,
-    requiredRole: 'admin',
+    requiredPermission: 'view-roles',
     Component: Roles,
   },
   {
     primaryText: 'Permissions',
     secondaryText: 'Manage application permissions',
     Icon: PermissionsIcon,
-    requiredRole: 'admin',
+    requiredPermission: 'view-permissions',
     Component: Permissions,
   },
 ]
 
 export default () => {
   const isAuthenticated = useContext(authenticationContext).authenticate()
-  const { hasRole } = useContext(authorizationContext)
+  const { hasPermission } = useContext(authorizationContext)
 
   if (!isAuthenticated) {
     return <Loading />
   }
 
-  if (!hasRole('admin')) {
+  if (!hasPermission('view-/access')) {
     return (
       <Wrapper>
-        <AccessDenied requiredMinimumRole="admin" />
+        <AccessDenied requiredPermission="Admin" />
       </Wrapper>
     )
   }
@@ -58,12 +58,16 @@ export default () => {
     <UserRolesProvider>
       <ToolbarHeader></ToolbarHeader>
       <Wrapper>
-        <ContentNav navItems={sections.filter(({ requiredRole }) => hasRole(requiredRole))}>
+        <ContentNav
+          navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
+        >
           {({ activeIndex }) => {
             return sections
-              .filter(({ requiredRole }) => hasRole(requiredRole))
-              .map(({ Component, primaryText, requiredRole }, i) =>
-                activeIndex === i ? <Component access={requiredRole} key={primaryText} /> : null
+              .filter(({ requiredPermission }) => hasPermission(requiredPermission))
+              .map(({ Component, primaryText, requiredPermission }, i) =>
+                activeIndex === i ? (
+                  <Component permission={requiredPermission} key={primaryText} />
+                ) : null
               )
           }}
         </ContentNav>

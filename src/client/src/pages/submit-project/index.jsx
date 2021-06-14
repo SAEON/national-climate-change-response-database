@@ -4,6 +4,7 @@ import Avatar from '@material-ui/core/Avatar'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import clsx from 'clsx'
 import { context as authenticationContext } from '../../contexts/authentication'
+import { context as authorizationContext } from '../../contexts/authorization'
 import GraphQLFormProvider, { Submit, context as formContext } from './gql-form-binder'
 import ProjectForm from './forms/project'
 import MitigationForms from './forms/mitigation'
@@ -13,6 +14,7 @@ import CompleteIcon from 'mdi-react/CheckBoldIcon'
 import Header from './header'
 import Wrapper from '../../components/page-wrapper'
 import Loading from '../../components/loading'
+import AccessDenied from '../../components/access-denied'
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -148,9 +150,14 @@ const Layout = () => {
 
 export default () => {
   const isAuthenticated = useContext(authenticationContext).authenticate()
+  const { hasPermission } = useContext(authorizationContext)
 
   if (!isAuthenticated) {
     return <Loading />
+  }
+
+  if (!hasPermission('create-project')) {
+    return <AccessDenied requiredPermission="create-project" />
   }
 
   return (

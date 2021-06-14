@@ -1,23 +1,11 @@
 import ensureAuthenticated from './_ensure-authenticated.js'
 import ensurePermission from './_ensure-permission.js'
+import _ROLES from './_roles.js'
+import _PERMISSIONS from './_permissions.js'
 
-export const ROLES = {
-  dffe: 'dffe',
-  admin: 'admin',
-  public: 'public',
-}
+export const ROLES = _ROLES
 
-export const PERMISSIONS = {
-  // API routes
-  createProject: 'create-project',
-  viewPermissions: 'view-permissions',
-  viewRoles: 'view-roles',
-  viewUsers: 'view-users',
-
-  // UI routes
-  'view/Access': 'view-/access',
-  'view/Deployments': 'view-/deployments',
-}
+export const PERMISSIONS = _PERMISSIONS
 
 export default {
   // User info

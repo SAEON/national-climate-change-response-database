@@ -35,7 +35,7 @@ export const MSSQL_USERNAME = process.env.MSSQL_USERNAME || 'sa'
 
 export const MSSQL_PASSWORD = process.env.MSSQL_PASSWORD || 'password!123#'
 
-export const MSSQL_HOSTNAME = process.env.MSSQL_HOSTNAME || 'localhost'
+export const MSSQL_HOSTNAME = process.env.MSSQL_HOSTNAME || '127.0.0.1'
 
 export const MSSQL_DATABASE = process.env.MSSQL_DATABASE || 'nccrd'
 

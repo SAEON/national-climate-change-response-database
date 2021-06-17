@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Deploy services
         run: >-
-          NCCRD_API_RESET_SCHEMA=true
+          NCCRD_API_RESET_SCHEMA=false
           SAEON_AUTH_CLIENT_SECRET="${{ secrets.SAEON_AUTH_CLIENT_SECRET}}"
           NCCRD_HOSTNAME="https://nccrd.saeon.ac.za"
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

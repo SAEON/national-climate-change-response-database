@@ -6,6 +6,7 @@ import { context as filterContext } from '../context'
 import SubmitProject from './_submit-project'
 import DownloadData from './_download-data'
 import Pagination from './pagination'
+import UserProjects from './_user-projects'
 import Divider from '@material-ui/core/Divider'
 import ToolbarHeader from '../../../components/toolbar-header'
 
@@ -33,6 +34,21 @@ export default ({ MobileFilters }) => {
       <Hidden xsDown>
         <DownloadData />
       </Hidden>
+
+      <Divider
+        flexItem
+        orientation="vertical"
+        style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+      />
+
+      {/* USER PROJECTS */}
+      <UserProjects />
+
+      <Divider
+        flexItem
+        orientation="vertical"
+        style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+      />
 
       {/* Pagination */}
       <div style={{ marginLeft: 'auto' }} />

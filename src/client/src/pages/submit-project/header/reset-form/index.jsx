@@ -2,7 +2,7 @@ import IconButton from '@material-ui/core/IconButton'
 import RefreshIcon from 'mdi-react/RefreshIcon'
 import Button from '@material-ui/core/Button'
 import Hidden from '@material-ui/core/Hidden'
-import MessageDialogue from '../../components/message-dialogue'
+import MessageDialogue from '../../../../components/message-dialogue'
 
 export default () => {
   return (

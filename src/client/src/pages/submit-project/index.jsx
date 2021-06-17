@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, lazy, Suspense } from 'react'
 import ContentNav from '../../components/content-nav'
 import Avatar from '@material-ui/core/Avatar'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -7,14 +7,14 @@ import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import GraphQLFormProvider, { Submit, context as formContext } from './gql-form-binder'
 import ProjectForm from './forms/project'
-import MitigationForms from './forms/mitigation'
-import AdaptationForms from './forms/adaptation'
-import ResetForm from './reset-form'
 import CompleteIcon from 'mdi-react/CheckBoldIcon'
 import Header from './header'
 import Wrapper from '../../components/page-wrapper'
 import Loading from '../../components/loading'
 import AccessDenied from '../../components/access-denied'
+
+const MitigationForms = lazy(() => import('./forms/mitigation'))
+const AdaptationForms = lazy(() => import('./forms/adaptation'))
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -87,9 +87,7 @@ const Layout = () => {
 
   return (
     <>
-      <Header>
-        <ResetForm style={{ marginLeft: 'auto' }} />
-      </Header>
+      <Header />
       <Wrapper>
         <ContentNav
           navItems={[
@@ -136,8 +134,16 @@ const Layout = () => {
             return (
               <>
                 {activeIndex === 0 && <ProjectForm key="project-form" />}
-                {activeIndex === 1 && <MitigationForms key="mitigation-forms" />}
-                {activeIndex === 2 && <AdaptationForms key="adaptation-forms" />}
+                {activeIndex === 1 && (
+                  <Suspense fallback={<Loading />}>
+                    <MitigationForms key="mitigation-forms" />
+                  </Suspense>
+                )}
+                {activeIndex === 2 && (
+                  <Suspense fallback={<Loading />}>
+                    <AdaptationForms key="adaptation-forms" />
+                  </Suspense>
+                )}
                 {activeIndex === 3 && <Submit key="submit" />}
               </>
             )

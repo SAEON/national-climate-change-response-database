@@ -20,4 +20,5 @@ export default [
     to: '/deployments',
   },
   { label: 'Access', Icon: UsersIcon, to: '/access', authorization: ['admin'] },
+  { label: 'Users', Icon: UsersIcon, to: '/users', authorization: ['admin'], excludeFromNav: true },
 ]

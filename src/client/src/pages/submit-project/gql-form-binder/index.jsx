@@ -1,7 +1,5 @@
+import { lazy, Suspense } from 'react'
 import { default as GraphQLFormProvider, context as _context } from './_context'
-
-export default GraphQLFormProvider
-export const context = _context
 
 export { default as BooleanField } from './_boolean'
 export { default as DateTimeField } from './_datetime'
@@ -13,6 +11,17 @@ export { default as GqlBoundFormInput } from './_bind-input'
 export { default as Submit } from './_submit'
 export { default as ControlledVocabularySelect } from './_controlled-vocabulary-select'
 export { default as ControlledVocabularySelectMultiple } from './_controlled-vocabulary-select-multiple'
-export { default as LocationsPicker } from './locations-picker'
 export { default as FormSection } from './_form-section'
 export { default as ComposeForm } from './_compose-form'
+
+const LocationsPicker_ = lazy(() => import('./locations-picker'))
+
+export const LocationsPicker = props => (
+  <Suspense fallback={null}>
+    <LocationsPicker_ {...props} />
+  </Suspense>
+)
+
+export const context = _context
+
+export default GraphQLFormProvider

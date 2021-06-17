@@ -9,6 +9,8 @@ const ProjectPage = lazy(() => import('../../pages/project'))
 const EditProjectPage = lazy(() => import('../../pages/edit-project'))
 const SubmitProjectPage = lazy(() => import('../../pages/submit-project'))
 const DeploymentsPage = lazy(() => import('../../pages/deployments'))
+const UserProjectsPage = lazy(() => import('../../pages/user-projects'))
+const UsersPage = lazy(() => import('../../pages/users'))
 
 export default withRouter(() => {
   return (
@@ -21,6 +23,29 @@ export default withRouter(() => {
         render={() => (
           <Transition nowrap tKey="home">
             <HomePage />
+          </Transition>
+        )}
+      />
+
+      {/* USER PROJECTs */}
+      <Route
+        key={'user-projects'}
+        path={'/users/:id/projects'}
+        exact
+        render={props => (
+          <Transition nowrap tKey="user-projects">
+            <UserProjectsPage id={props.match.params.id} {...props} />
+          </Transition>
+        )}
+      />
+
+      {/* USERs */}
+      <Route
+        key={'users'}
+        path={'/users'}
+        render={() => (
+          <Transition nowrap tKey="users">
+            <UsersPage />
           </Transition>
         )}
       />

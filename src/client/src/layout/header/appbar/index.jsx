@@ -24,13 +24,19 @@ export default () => {
       disableGutters
       style={{
         display: 'flex',
-        padding: theme.spacing(1),
       }}
     >
       {/* NAVIGATION MENU */}
+      <div style={{ marginLeft: theme.spacing(2) }} />
       <NavMenu />
 
-      {smAndUp && <Divider orientation="vertical" flexItem style={{ margin: theme.spacing(1) }} />}
+      {smAndUp && (
+        <Divider
+          flexItem
+          orientation="vertical"
+          style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+        />
+      )}
 
       {/* BREADCRUMBS */}
       {smAndUp && <Breadcrumbs />}

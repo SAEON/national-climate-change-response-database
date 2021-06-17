@@ -43,6 +43,7 @@ export default ({ children }) => {
   return (
     <context.Provider
       value={{
+        user,
         isAuthenticated: Boolean(sessionUser),
         hasPermission: permission =>
           Boolean(user?.permissions.find(({ name }) => name === permission)),

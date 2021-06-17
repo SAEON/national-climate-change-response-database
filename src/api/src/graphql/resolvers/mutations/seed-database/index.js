@@ -13,7 +13,10 @@ import loadVocabularies from './vocabularies/index.js'
   await seedUserModel(query).then(() => console.info('User model seeded!'))
   await seedAdmins(query).then(() => console.info('Admin users seeded!'))
   await seedSysAdmins(query).then(() => console.info('System admin users seeded!'))
-})()
+})().catch(error => {
+  console.error(error.message)
+  process.exit(1)
+})
 
 export default async (
   self,

@@ -5,7 +5,7 @@ export default async query => {
   if (DEFAULT_SYSADMINS.length) {
     try {
       await query(`
-        begin transaction ProvisionUsers
+        begin transaction ProvisionSysAdminUsers
         begin try
     
           -- Users
@@ -29,10 +29,10 @@ export default async query => {
           when not matched then insert (userId, roleId)
           values (s.userId, s.roleId);
         
-        commit transaction ProvisionUsers;
+        commit transaction ProvisionSysAdminUsers;
         end try
         begin catch
-          rollback transaction ProvisionUsers
+          rollback transaction ProvisionSysAdminUsers
         end catch`)
     } catch (error) {
       console.error('Unable to provision users', error.message)

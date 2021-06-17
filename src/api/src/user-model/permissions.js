@@ -9,6 +9,7 @@ export default {
   deleteProject: 'delete-project',
   migrateDatabase: 'migrate-database',
   seedDatabase: 'seed-database',
+  uploadTemplate: 'upload-template',
 
   // UI routes
   'view/Access': 'view-/access',

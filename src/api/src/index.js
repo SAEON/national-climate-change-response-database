@@ -7,6 +7,7 @@ import mount from 'koa-mount'
 import KoaRouter from '@koa/router'
 import koaCompress from 'koa-compress'
 import koaBody from 'koa-bodyparser'
+import formidable from 'koa2-formidable'
 import koaSession from 'koa-session'
 import koaPassport from 'koa-passport'
 import zlib from 'zlib'
@@ -20,6 +21,7 @@ import clientInfoRoute from './http/client-info.js'
 import authenticateRoute from './http/authenticate.js'
 import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
+import uploadTemplateRoute from './http/upload-template.js'
 import apolloServer from './graphql/index.js'
 import configureSaeonAuth from './passport/saeon-auth/index.js'
 import passportCookieConfig from './passport/cookie-config.js'
@@ -56,6 +58,7 @@ app
       '/graphql'
     )
   ) // Only compress the http / graphql api responses
+  .use(formidable())
   .use(koaBody())
   .use(koaSession(passportCookieConfig, app))
   .use(cors)
@@ -70,6 +73,7 @@ app
       .get('/http/login', saeonLogin) // passport
       .get('/http/authenticate', authenticateRoute)
       .get('/http/logout', logoutRoute)
+      .post('/http/upload-template', uploadTemplateRoute)
       .routes()
   )
   .use(fourOfour)

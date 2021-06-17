@@ -8,10 +8,7 @@ import IconButton from '@material-ui/core/IconButton'
 import { context as authContext } from '../../../contexts/authorization'
 
 export default () => {
-  const {
-    isAuthenticated,
-    user: { id },
-  } = useContext(authContext)
+  const { isAuthenticated, user: { id = undefined } = {} } = useContext(authContext)
 
   if (!isAuthenticated) {
     return null

@@ -5,6 +5,7 @@ import _schema from './schema/index.js'
 export const schema = _schema
 
 export default new ApolloServer({
+  uploads: false,
   schema,
   introspection: true,
   playground: {

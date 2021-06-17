@@ -2,6 +2,7 @@ import logSql from '../lib/log-sql.js'
 
 export default async (ctx, name) => {
   const { query } = ctx.mssql
+  console.log('hi', ctx.userInfo)
 
   if (!ctx.userInfo) {
     ctx.throw(401)
@@ -24,6 +25,8 @@ export default async (ctx, name) => {
   logSql(sql, 'Check user permissions')
   const result = await query(sql)
   const isAuthorized = Boolean(result.recordset.length)
+
+  console.log('hi')
 
   if (!isAuthorized) {
     ctx.throw(403)

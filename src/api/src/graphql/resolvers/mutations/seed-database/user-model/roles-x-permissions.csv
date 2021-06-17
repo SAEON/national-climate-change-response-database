@@ -1,4 +1,5 @@
 role,permission
+sysadmin,upload-template
 sysadmin,seed-database
 sysadmin,migrate-database
 sysadmin,change-project-owner
@@ -13,6 +14,7 @@ sysadmin,view-permissions
 sysadmin,view-roles
 sysadmin,view-/access
 sysadmin,view-/deployments
+admin,upload-template
 admin,change-project-owner
 admin,create-project
 admin,delete-project

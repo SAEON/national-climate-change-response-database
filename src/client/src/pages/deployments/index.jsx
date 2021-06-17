@@ -3,9 +3,10 @@ import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Loading from '../../components/loading'
 import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 import Wrapper from '../../components/page-wrapper'
-import ToolbarHeader from '../../components/toolbar-header'
 import AccessDenied from '../../components/access-denied'
+import Header from './header'
 
 export default () => {
   const isAuthenticated = useContext(authenticationContext).authenticate()
@@ -25,8 +26,12 @@ export default () => {
 
   return (
     <>
-      <ToolbarHeader></ToolbarHeader>
+      <Header />
       <Wrapper>
+        <Card>
+          <CardContent>hi</CardContent>
+        </Card>
+        <div style={{ margin: 16 }} />
         <Card>
           This page will shows a list of deployments. Each tenant is basically a form that allows
           for (1) specifying a project filter (2) uploading a logo and (3) defining a domain name

@@ -68,7 +68,9 @@ export default ({ users }) => {
                           style: { textTransform: 'uppercase', position: 'relative', top: -2 },
                         }}
                         id={`multiselect-${userId}`}
-                        options={roles.map(({ name }) => name)}
+                        options={roles
+                          .filter(({ name }) => name !== 'sysadmin')
+                          .map(({ name }) => name)}
                         value={value.map(({ name }) => name)}
                         setValue={roleNames => {
                           assignUserRoles({

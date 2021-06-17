@@ -1,0 +1,13 @@
+name,description
+change-project-owner,"Change project's owner"
+create-project,Create a new project
+delete-project,Delete a project
+update-project,Update a project
+update-users,Update user objects
+assign-role,Assign role to user
+assign-permission,Assign permission to role
+view-users,View users
+view-permissions,View permissions
+view-roles,View  roles
+view-/access,"View the /access route on the UI"
+view-/deployments,"View the /deployments route on the UI"

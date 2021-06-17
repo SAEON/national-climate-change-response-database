@@ -1,0 +1,4 @@
+name,description
+admin,System administrator
+dffe,Non-privileged user from DFFE
+public,Default role for unmanaged users

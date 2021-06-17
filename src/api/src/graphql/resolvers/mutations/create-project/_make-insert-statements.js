@@ -44,7 +44,7 @@ export const makeProjectInsertStmt = ({
       ),
       userId,
       userId,
-      `'${sanitizeSqlValue(now)}'`,
+      `'${sanitizeSqlValue(now)}'`, // eslint-disable-line
     ]
       .filter(_ => _)
       .join(',')});`

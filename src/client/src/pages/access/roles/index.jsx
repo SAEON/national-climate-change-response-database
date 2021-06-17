@@ -7,11 +7,11 @@ import Grid from '@material-ui/core/Grid'
 import { DataGrid } from '@material-ui/data-grid'
 import Collapse from '../../../components/collapse'
 
-export default ({ access }) => {
+export default ({ permission }) => {
   const theme = useTheme()
-  const { hasRole } = useContext(authContext)
+  const { hasPermission } = useContext(authContext)
   const { roles } = useContext(accessContext)
-  if (!hasRole(access)) {
+  if (!hasPermission(permission)) {
     return null
   }
 

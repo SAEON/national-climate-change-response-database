@@ -1,18 +1,17 @@
 import logSql from '../../../../lib/log-sql.js'
-import filterFormInput from './filter-form-input.js'
+import filterFormInput from './_filter-form-input.js'
 import {
   makeAdaptationsInsertStmt,
   makeProjectInsertStmt,
   makeMitigationsInsertStmt,
-} from './make-insert-statements.js'
-import makeEnergyInsertStmt from './make-energy-insert-statement.js'
-import makeEmissionsInsertStmts from './make-emissions-insert-statements.js'
+} from './_make-insert-statements.js'
+import makeEnergyInsertStmt from './_make-energy-insert-statement.js'
+import makeEmissionsInsertStmts from './_make-emissions-insert-statements.js'
 
 export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx) => {
-  const { user, mssql, PERMISSIONS } = ctx
+  const { user, mssql } = ctx
   const { query } = mssql
 
-  await user.ensurePermission({ ctx, permission: PERMISSIONS.createProject })
   const userId = user.info(ctx).id
   const now = new Date().toISOString()
 

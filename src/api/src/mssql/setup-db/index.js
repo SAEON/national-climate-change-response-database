@@ -4,6 +4,7 @@ import getCurrentDirectory from '../../lib/get-current-directory.js'
 import query from '../query.js'
 import configureAdmins from './_admins.js'
 import { NCCRD_API_RESET_SCHEMA } from '../../config.js'
+import seedAuthorization from './authorization-seeds/index.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 
@@ -22,11 +23,7 @@ const __dirname = getCurrentDirectory(import.meta)
       console.info('SQL Schema created (or already exists)')
     })
 
-  await loadFile(join(__dirname, './sql/seeds.sql'))
-    .then(sql => query(sql))
-    .then(() => {
-      console.info('SQL Database seeds inserted!')
-    })
+  await seedAuthorization().then(() => console.info('Database seeded!'))
 
   await configureAdmins()
 })().catch(error => {

@@ -6,11 +6,12 @@ import CardContent from '@material-ui/core/CardContent'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { DataGrid } from '@material-ui/data-grid'
 
-export default ({ access }) => {
+export default ({ permission }) => {
   const theme = useTheme()
-  const { hasRole } = useContext(authContext)
+  const { hasPermission } = useContext(authContext)
   const { permissions } = useContext(accessContext)
-  if (!hasRole(access)) {
+
+  if (!hasPermission(permission)) {
     return null
   }
 

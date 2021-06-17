@@ -9,16 +9,16 @@ import AccessDenied from '../../components/access-denied'
 
 export default () => {
   const isAuthenticated = useContext(authenticationContext).authenticate()
-  const { hasRole } = useContext(authorizationContext)
+  const { hasPermission } = useContext(authorizationContext)
 
   if (!isAuthenticated) {
     return <Loading />
   }
 
-  if (!hasRole('admin')) {
+  if (!hasPermission('view-/deployments')) {
     return (
       <Wrapper>
-        <AccessDenied requiredMinimumRole="admin" />
+        <AccessDenied requiredPermission="view-/deployments" />
       </Wrapper>
     )
   }

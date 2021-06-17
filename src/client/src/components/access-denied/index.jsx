@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent'
 import useTheme from '@material-ui/core/styles/useTheme'
 import Typography from '@material-ui/core/Typography'
 
-export default ({ requiredMinimumRole = 'NA' }) => {
+export default ({ requiredPermission = 'NA' }) => {
   const theme = useTheme()
 
   return (
@@ -26,8 +26,8 @@ export default ({ requiredMinimumRole = 'NA' }) => {
         title={<Typography variant="h4">No Access</Typography>}
       />
       <CardContent>
-        You do not have sufficient access rights to view this resource (required role:{' '}
-        {requiredMinimumRole}). Please contact a system administrator if you need access to this
+        You do not have sufficient access rights to view this resource (required permission:{' '}
+        {requiredPermission}). Please contact a system administrator if you need access to this
         resource
       </CardContent>
     </Card>

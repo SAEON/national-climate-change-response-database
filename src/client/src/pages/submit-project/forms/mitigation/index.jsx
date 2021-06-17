@@ -8,6 +8,8 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import FormIcon from 'mdi-react/PencilIcon'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 import RenderField from './_render-field'
+import Tooltip from '@material-ui/core/Tooltip'
+import Grid from '@material-ui/core/Grid'
 
 const Compose = memo(
   ({ form, i, removeForm, fields }) => {
@@ -106,17 +108,39 @@ const RenderForms = memo(
       {forms.map((form, i) => (
         <Form key={i} i={i} fields={fields} removeForm={removeForm} />
       ))}
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button
-          variant="contained"
-          onClick={addForm}
-          startIcon={<PlusIcon />}
-          size="large"
-          color="inherit"
-        >
-          Add details
-        </Button>
-      </div>
+      <Grid container spacing={2} justify="flex-end">
+        <Grid item xs={12} sm={6} md={3}>
+          <Tooltip title="Remove last entry">
+            <span>
+              <Button
+                fullWidth
+                variant="contained"
+                disabled={!forms.length}
+                onClick={() => removeForm(forms.length - 1)}
+                startIcon={<DeleteIcon />}
+                size="large"
+                color="inherit"
+              >
+                Remove details
+              </Button>
+            </span>
+          </Tooltip>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Tooltip title="Add details form">
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={addForm}
+              startIcon={<PlusIcon />}
+              size="large"
+              color="inherit"
+            >
+              Add details
+            </Button>
+          </Tooltip>
+        </Grid>
+      </Grid>
     </>
   ),
   ({ forms: a }, { forms: b }) => {

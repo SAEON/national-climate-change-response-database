@@ -1,7 +1,8 @@
 import { useContext, memo } from 'react'
 import { context as formContext, ComposeForm } from '../../gql-form-binder'
 import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
+import Grid from '@material-ui/core/Grid'
 import PlusIcon from 'mdi-react/PlusIcon'
 import Collapse from '../../../../components/collapse'
 import useTheme from '@material-ui/core/styles/useTheme'
@@ -10,7 +11,7 @@ import DeleteIcon from 'mdi-react/DeleteIcon'
 import RenderField from './_render-field'
 
 const Compose = memo(
-  ({ i, form, fields, removeForm }) => {
+  ({ i, form, fields }) => {
     const theme = useTheme()
 
     return (
@@ -19,17 +20,6 @@ const Compose = memo(
           avatarStyle={{ backgroundColor: theme.palette.primary.light }}
           Icon={FormIcon}
           title={form.title || 'No title'}
-          actions={[
-            <IconButton
-              onClick={e => {
-                e.stopPropagation()
-                removeForm(i)
-              }}
-              key="delete"
-            >
-              <DeleteIcon />
-            </IconButton>,
-          ]}
         >
           <div style={{ padding: theme.spacing(2) }}>
             <ComposeForm
@@ -86,20 +76,42 @@ const Form = ({ i, fields, removeForm }) => {
 const RenderForms = memo(
   ({ fields, forms, addForm, removeForm }) => (
     <>
-      {forms.map((form, i) => (
-        <Form key={i} i={i} fields={fields} removeForm={removeForm} />
+      {forms.map((_, i) => (
+        <Form key={i} i={i} fields={fields} />
       ))}
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button
-          variant="contained"
-          onClick={addForm}
-          startIcon={<PlusIcon />}
-          size="large"
-          color="inherit"
-        >
-          Add details
-        </Button>
-      </div>
+      <Grid container spacing={2} justify="flex-end">
+        <Grid item xs={12} sm={6} md={3}>
+          <Tooltip title="Remove last entry">
+            <span>
+              <Button
+                fullWidth
+                variant="contained"
+                disabled={!forms.length}
+                onClick={() => removeForm(forms.length - 1)}
+                startIcon={<DeleteIcon />}
+                size="large"
+                color="inherit"
+              >
+                Remove details
+              </Button>
+            </span>
+          </Tooltip>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Tooltip title="Add details form">
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={addForm}
+              startIcon={<PlusIcon />}
+              size="large"
+              color="inherit"
+            >
+              Add details
+            </Button>
+          </Tooltip>
+        </Grid>
+      </Grid>
     </>
   ),
   ({ forms: a }, { forms: b }) => {

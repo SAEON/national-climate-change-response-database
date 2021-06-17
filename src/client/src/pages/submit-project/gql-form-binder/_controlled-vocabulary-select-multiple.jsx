@@ -3,22 +3,19 @@ import Fade from '@material-ui/core/Fade'
 import useTheme from '@material-ui/core/styles/useTheme'
 import Loading from '../../../components/loading'
 import Typography from '@material-ui/core/Typography'
+import Multiselect from '../../../components/multiselect'
 
-/**
- * TODO
- * This component is called by multiple other components.
- * But the result is that one result is cached incorrectly
- */
-
-export default ({ children, root, tree }) => {
+export default ({ root, tree, value, setValue, helperText, label, id }) => {
   const theme = useTheme()
 
   const { error, loading, data } = useQuery(
     gql`
       query controlledVocabulary($root: String!, $tree: String!) {
         controlledVocabulary(root: $root, tree: $tree) {
+          id
           term
           children {
+            id
             term
             tree
             root
@@ -54,9 +51,20 @@ export default ({ children, root, tree }) => {
     throw error
   }
 
+  const options = data.controlledVocabulary.children
+
   return (
     <Fade in={Boolean(data)} key="data-in">
-      <div>{children({ options: data.controlledVocabulary.children })}</div>
+      <div>
+        <Multiselect
+          id={id}
+          options={options.map(({ term }) => term)}
+          value={value}
+          helperText={helperText}
+          label={label}
+          setValue={setValue}
+        />
+      </div>
     </Fade>
   )
 }

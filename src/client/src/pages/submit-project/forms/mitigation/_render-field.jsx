@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import {
   GqlBoundFormInput,
   context as formContext,
-  ControlledVocabularyInput,
+  ControlledVocabularySelect,
   LocationsPicker,
 } from '../../gql-form-binder'
 import EnergyCalculator from '../../gql-form-binder/calculators/energy'
@@ -48,7 +48,7 @@ export default ({ field, i }) => {
    */
   if (fieldName === 'energyOrEmissionsData') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="mitigationData"
         root="Mitigation data"
@@ -101,7 +101,7 @@ export default ({ field, i }) => {
    */
   if (fieldName === 'hostSector') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="mitigationSectors"
         root="Mitigation sector"
@@ -125,7 +125,7 @@ export default ({ field, i }) => {
   } else if (fieldName === 'hostSubSectorPrimary') {
     if (form['hostSector']) {
       return (
-        <ControlledVocabularyInput
+        <ControlledVocabularySelect
           key={fieldName}
           tree="mitigationSectors"
           root={form['hostSector']}
@@ -146,7 +146,7 @@ export default ({ field, i }) => {
   } else if (fieldName === 'hostSubSectorSecondary') {
     if (form['hostSubSectorPrimary']) {
       return (
-        <ControlledVocabularyInput
+        <ControlledVocabularySelect
           key={fieldName}
           tree="mitigationSectors"
           root={form['hostSubSectorPrimary']}
@@ -169,7 +169,7 @@ export default ({ field, i }) => {
    */
   if (fieldName === 'cdmMethodology') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="cdmMethodology"
         root="CDM methodology"
@@ -188,7 +188,7 @@ export default ({ field, i }) => {
    */
   if (fieldName === 'cdmExecutiveStatus') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="executiveStatus"
         root="Executive status"
@@ -207,7 +207,7 @@ export default ({ field, i }) => {
    */
   if (fieldName === 'interventionStatus') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="actionStatus"
         root="Status"
@@ -226,7 +226,7 @@ export default ({ field, i }) => {
    */
   if (fieldName === 'mitigationType') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="mitigationTypes"
         root="Type of Mitigation"
@@ -243,7 +243,7 @@ export default ({ field, i }) => {
   } else if (fieldName === 'mitigationSubType') {
     if (form['mitigationType']) {
       return (
-        <ControlledVocabularyInput
+        <ControlledVocabularySelect
           key={fieldName}
           tree="mitigationTypes"
           root={form['mitigationType']}

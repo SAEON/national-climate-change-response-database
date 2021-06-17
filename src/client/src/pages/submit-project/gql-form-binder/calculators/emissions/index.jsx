@@ -1,6 +1,5 @@
 import { memo, useMemo } from 'react'
-import WithControlledVocabulary from '../../_with-controlled-vocabulary'
-import Multiselect from '../../../../../components/multiselect'
+import ControlledVocabularySelectMultiple from '../../_controlled-vocabulary-select-multiple'
 import { DatePicker } from '@material-ui/pickers'
 import Grid from '@material-ui/core/Grid'
 import InputTables from './input-tables'
@@ -121,54 +120,44 @@ export default memo(
               </Grid>
 
               {/* EMISSION CATEGORIES */}
-              <WithControlledVocabulary root="Emission" tree="emissionTypes">
-                {({ options }) => {
-                  return (
-                    <Multiselect
-                      id="emissions-calculator-types"
-                      options={options.map(({ term }) => term)}
-                      value={emissionTypes}
-                      helperText="Select all applicable emissions types"
-                      label={'Emissions types'}
-                      setValue={value =>
-                        update({
-                          calculator: Object.assign(
-                            { ...calculator },
-                            {
-                              emissionTypes: value,
-                            }
-                          ),
-                        })
+              <ControlledVocabularySelectMultiple
+                id="emissions-calculator-types"
+                helperText="Select all applicable emissions types"
+                label={'Emissions types'}
+                root="Emission"
+                tree="emissionTypes"
+                value={emissionTypes}
+                setValue={value =>
+                  update({
+                    calculator: Object.assign(
+                      { ...calculator },
+                      {
+                        emissionTypes: value,
                       }
-                    />
-                  )
-                }}
-              </WithControlledVocabulary>
+                    ),
+                  })
+                }
+              />
 
               {/* EMISSION CHEMICALS */}
-              <WithControlledVocabulary root="Chemical" tree="emissions">
-                {({ options }) => {
-                  return (
-                    <Multiselect
-                      id="emissions-calculator-chemicals"
-                      options={options.map(({ term }) => term)}
-                      value={chemicals}
-                      helperText="Select all applicable emission chemicals"
-                      label={'Emission chemicals'}
-                      setValue={value =>
-                        update({
-                          calculator: Object.assign(
-                            { ...calculator },
-                            {
-                              chemicals: value,
-                            }
-                          ),
-                        })
+              <ControlledVocabularySelectMultiple
+                id="emissions-calculator-chemicals"
+                helperText="Select all applicable emission chemicals"
+                label={'Emission chemicals'}
+                root="Chemical"
+                tree="emissions"
+                value={chemicals}
+                setValue={value =>
+                  update({
+                    calculator: Object.assign(
+                      { ...calculator },
+                      {
+                        chemicals: value,
                       }
-                    />
-                  )
-                }}
-              </WithControlledVocabulary>
+                    ),
+                  })
+                }
+              />
 
               {/* INPUT TABLES */}
               <InputTables

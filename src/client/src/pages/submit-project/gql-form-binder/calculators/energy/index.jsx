@@ -1,6 +1,5 @@
 import { memo, useMemo } from 'react'
-import WithControlledVocabulary from '../../_with-controlled-vocabulary'
-import Multiselect from '../../../../../components/multiselect'
+import ControlledVocabularySelectMultiple from '../../_controlled-vocabulary-select-multiple'
 import { DatePicker } from '@material-ui/pickers'
 import Grid from '@material-ui/core/Grid'
 import InputTables from './input-tables'
@@ -115,29 +114,24 @@ export default memo(
                 </Grid>
               </Grid>
 
-              <WithControlledVocabulary root="Energy source" tree="renewableTypes">
-                {({ options }) => {
-                  return (
-                    <Multiselect
-                      id="energy-calculator"
-                      options={options.map(({ term }) => term)}
-                      value={renewableTypes}
-                      helperText="Select all applicable renewable energy types"
-                      label={'Renewable energy types'}
-                      setValue={value =>
-                        update({
-                          calculator: Object.assign(
-                            { ...calculator },
-                            {
-                              renewableTypes: value,
-                            }
-                          ),
-                        })
+              <ControlledVocabularySelectMultiple
+                id="energy-calculator"
+                helperText="Select all applicable renewable energy types"
+                label={'Renewable energy types'}
+                root="Energy source"
+                tree="renewableTypes"
+                value={renewableTypes}
+                setValue={value =>
+                  update({
+                    calculator: Object.assign(
+                      { ...calculator },
+                      {
+                        renewableTypes: value,
                       }
-                    />
-                  )
-                }}
-              </WithControlledVocabulary>
+                    ),
+                  })
+                }
+              />
 
               {/* INPUT TABLES */}
               <InputTables

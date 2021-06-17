@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import {
   GqlBoundFormInput,
   context as formContext,
-  ControlledVocabularyInput,
+  ControlledVocabularySelect,
 } from '../../gql-form-binder'
 
 const multilineFields = ['description', 'validationComments']
@@ -21,7 +21,7 @@ export default ({ field }) => {
    */
   if (fieldName === 'province') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="regions"
         root="South Africa"
@@ -42,7 +42,7 @@ export default ({ field }) => {
   } else if (fieldName === 'districtMunicipality') {
     if (!projectForm.province) return null
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="regions"
         root={projectForm.province}
@@ -57,7 +57,7 @@ export default ({ field }) => {
   } else if (fieldName === 'localMunicipality') {
     if (!projectForm.districtMunicipality) return null
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="regions"
         root={projectForm.districtMunicipality}
@@ -76,7 +76,7 @@ export default ({ field }) => {
    */
   if (fieldName === 'validationStatus') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="projectValidationStatus"
         root="Validation Status"
@@ -95,7 +95,7 @@ export default ({ field }) => {
    */
   if (fieldName === 'hostSector') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="hostSectors"
         root="Host sector"
@@ -112,7 +112,7 @@ export default ({ field }) => {
   } else if (fieldName === 'hostSubSector') {
     if (projectForm['hostSector']) {
       return (
-        <ControlledVocabularyInput
+        <ControlledVocabularySelect
           key={fieldName}
           tree="hostSectors"
           root={projectForm['hostSector']}
@@ -135,7 +135,7 @@ export default ({ field }) => {
    */
   if (fieldName === 'interventionType') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="interventionTypes"
         root="Intervention type"
@@ -164,7 +164,7 @@ export default ({ field }) => {
    */
   if (fieldName === 'projectType') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="projectTypes"
         root="Project type"
@@ -183,7 +183,7 @@ export default ({ field }) => {
    */
   if (fieldName === 'projectStatus') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="actionStatus"
         root="Status"
@@ -202,7 +202,7 @@ export default ({ field }) => {
    */
   if (fieldName === 'estimatedBudget') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="budgetRanges"
         root="Estimated budget"
@@ -221,7 +221,7 @@ export default ({ field }) => {
    */
   if (fieldName === 'fundingStatus') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="projectFunding"
         root="Funding status"

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import {
   GqlBoundFormInput,
   context as formContext,
-  ControlledVocabularyInput,
+  ControlledVocabularySelect,
   LocationsPicker,
 } from '../../gql-form-binder'
 
@@ -48,7 +48,7 @@ export default ({ field, i }) => {
    */
   if (fieldName === 'interventionStatus') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="actionStatus"
         root="Status"
@@ -67,7 +67,7 @@ export default ({ field, i }) => {
    */
   if (fieldName === 'adaptationSector') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="adaptationSectors"
         root="Adaptation sector"
@@ -86,7 +86,7 @@ export default ({ field, i }) => {
    */
   if (fieldName === 'hazardFamily') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="hazards"
         root="Hazard family"
@@ -111,7 +111,7 @@ export default ({ field, i }) => {
   } else if (fieldName === 'hazardSubFamily') {
     if (form['hazardFamily']) {
       return (
-        <ControlledVocabularyInput
+        <ControlledVocabularySelect
           key={fieldName}
           tree="hazards"
           root={form['hazardFamily']}
@@ -131,7 +131,7 @@ export default ({ field, i }) => {
   } else if (fieldName === 'hazard') {
     if (form['hazardSubFamily']) {
       return (
-        <ControlledVocabularyInput
+        <ControlledVocabularySelect
           key={fieldName}
           tree="hazards"
           root={form['hazardSubFamily']}
@@ -149,7 +149,7 @@ export default ({ field, i }) => {
   } else if (fieldName === 'subHazard') {
     if (form['hazard']) {
       return (
-        <ControlledVocabularyInput
+        <ControlledVocabularySelect
           key={fieldName}
           tree="hazards"
           root={form['hazard']}
@@ -171,7 +171,7 @@ export default ({ field, i }) => {
    */
   if (fieldName === 'adaptationPurpose') {
     return (
-      <ControlledVocabularyInput
+      <ControlledVocabularySelect
         key={fieldName}
         tree="adaptationPurpose"
         root="Adaptation purpose"

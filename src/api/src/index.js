@@ -1,6 +1,5 @@
 import './lib/native-extensions.js'
 import './lib/log-config.js'
-import './mssql/setup-db/index.js'
 import { createServer } from 'http'
 import Koa from 'koa'
 import serve from 'koa-static'

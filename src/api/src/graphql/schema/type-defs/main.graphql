@@ -79,8 +79,8 @@ type Query {
 # type Subscription {}
 
 type Mutation {
-  integrateOldDb(geometry: Boolean, erm: Boolean): JSON!
-  updateVocabulary: JSON!
+  migrateDatabase(dropSchema: Boolean): JSON!
+  seedDatabase(userModel: Boolean, erm: Boolean, geometries: Boolean, vocabularies: Boolean): JSON!
   # Create a project
   createProject(
     projectForm: ProjectInput!

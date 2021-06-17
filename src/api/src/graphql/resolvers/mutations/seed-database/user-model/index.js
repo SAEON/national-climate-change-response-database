@@ -1,14 +1,13 @@
 import { join } from 'path'
-import logSql from '../../../lib/log-sql.js'
-import getCurrentDirectory from '../../../lib/get-current-directory.js'
+import logSql from '../../../../../lib/log-sql.js'
+import getCurrentDirectory from '../../../../../lib/get-current-directory.js'
 import { createReadStream } from 'fs'
 import csv from 'csv'
-import query from '../../query.js'
 const { parse } = csv
 
 const __dirname = getCurrentDirectory(import.meta)
 
-const upsertRoles = async () => {
+const upsertRoles = async query => {
   console.info('Seeding roles')
   const parser = createReadStream(join(__dirname, './roles.csv')).pipe(parse({ columns: true }))
 
@@ -36,7 +35,7 @@ const upsertRoles = async () => {
   }
 }
 
-const upsertPermissions = async () => {
+const upsertPermissions = async query => {
   console.info('Seeding permissions')
   const parser = createReadStream(join(__dirname, './permissions.csv')).pipe(
     parse({ columns: true })
@@ -66,7 +65,7 @@ const upsertPermissions = async () => {
   }
 }
 
-const upsertPermissionsXrefRoles = async () => {
+const upsertPermissionsXrefRoles = async query => {
   console.info('Seeding role permissions')
   const parser = createReadStream(join(__dirname, './roles-x-permissions.csv')).pipe(
     parse({ columns: true })
@@ -96,8 +95,8 @@ const upsertPermissionsXrefRoles = async () => {
   }
 }
 
-export default async () => {
-  await upsertRoles()
-  await upsertPermissions()
-  await upsertPermissionsXrefRoles()
+export default async query => {
+  await upsertRoles(query)
+  await upsertPermissions(query)
+  await upsertPermissionsXrefRoles(query)
 }

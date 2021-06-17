@@ -1,6 +1,7 @@
 import createPool from '../../../../../mssql/pool.js'
 
 export default async ctx => {
+  console.info('Loading district municipalities')
   const { query } = ctx.mssql
   const createIterator = createPool({ database: 'VMS', batchSize: 1 })
 

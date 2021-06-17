@@ -7,6 +7,8 @@ export default {
   viewUsers: 'view-users',
   assignRole: 'assign-role',
   deleteProject: 'delete-project',
+  migrateDatabase: 'migrate-database',
+  seedDatabase: 'seed-database',
 
   // UI routes
   'view/Access': 'view-/access',

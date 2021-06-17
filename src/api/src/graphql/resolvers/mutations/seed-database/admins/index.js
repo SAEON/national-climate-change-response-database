@@ -1,8 +1,7 @@
-import query from '../query.js'
-import { NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES } from '../../config.js'
+import { NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES } from '../../../../../config.js'
 const DEFAULT_ADMINS = NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').filter(_ => _)
 
-export default async () => {
+export default async query => {
   if (DEFAULT_ADMINS.length) {
     try {
       await query(`

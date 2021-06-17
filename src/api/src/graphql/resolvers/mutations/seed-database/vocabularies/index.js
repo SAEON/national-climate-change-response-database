@@ -1,13 +1,13 @@
 import { createReadStream, readdirSync } from 'fs'
 import { join } from 'path'
-import getCurrentDirectory from '../../../../lib/get-current-directory.js'
+import getCurrentDirectory from '../../../../../lib/get-current-directory.js'
 import csv from 'csv'
 import { performance } from 'perf_hooks'
 const { parse } = csv
 
 const __dirname = getCurrentDirectory(import.meta)
 
-export default async (_, args, ctx) => {
+export default async ctx => {
   const VOCABULARIES = readdirSync(join(__dirname, './trees')).sort()
 
   const { query } = ctx.mssql

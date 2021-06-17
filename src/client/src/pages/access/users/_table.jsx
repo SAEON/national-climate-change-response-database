@@ -64,7 +64,7 @@ export default ({ users }) => {
                         loading={loading}
                         chipProps={{
                           variant: 'outlined',
-                          color: label => (label === 'admin' ? 'secondary' : 'primary'),
+                          color: label => (label.includes('admin') ? 'secondary' : 'primary'),
                           style: { textTransform: 'uppercase', position: 'relative', top: -2 },
                         }}
                         id={`multiselect-${userId}`}

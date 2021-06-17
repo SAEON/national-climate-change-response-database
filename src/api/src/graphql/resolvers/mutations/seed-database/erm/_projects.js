@@ -7,6 +7,7 @@ import { readFile } from 'fs'
 const __dirname = getCurrentDirectory(import.meta)
 
 export default async ctx => {
+  console.info('Loading ERM projects')
   const { query } = ctx.mssql
   const createIterator = createPool({ database: 'NCCRD_ERM', batchSize: 1 })
 
@@ -20,11 +21,8 @@ export default async ctx => {
     })
   )
 
-  let i = 0
-
   let iterator = await createIterator(sql)
   while (!iterator.done) {
-    console.info('Inserting row from REM', i)
     const { rows, next } = iterator
 
     for (const {
@@ -153,7 +151,6 @@ export default async ctx => {
         logSql(sql)
         process.exit(1)
       }
-      i++
     }
 
     iterator = await next()

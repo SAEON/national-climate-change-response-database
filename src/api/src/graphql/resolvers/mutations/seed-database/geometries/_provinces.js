@@ -1,21 +1,22 @@
 import createPool from '../../../../../mssql/pool.js'
 
 export default async ctx => {
+  console.info('Loading provincial geometries')
   const { query } = ctx.mssql
   const createIterator = createPool({ database: 'VMS', batchSize: 1 })
 
-  let iterator = await createIterator('select * from local_municipalities')
+  let iterator = await createIterator('select * from provinces')
   while (!iterator.done) {
     const { rows, next } = iterator
 
     for (const {
-      WKT_MN: geometry,
-      WKT_MN_simple: geometry_simplified,
-      mn_code: name,
-      municname: shortname,
+      WKT_PR: geometry,
+      WKT_PR_simple: geometry_simplified,
+      PR_NAME: name,
+      PR_MDB_C: shortname,
     } of rows) {
       await query(`
-        begin transaction local_municipal_geometries
+        begin transaction province_geometries
         begin try
 
           merge Geometries t
@@ -66,10 +67,10 @@ export default async ctx => {
           s.geometryId
         );
 
-        commit transaction local_municipal_geometries;
+        commit transaction province_geometries;
         end try
         begin catch
-          rollback transaction local_municipal_geometries;
+          rollback transaction province_geometries;
         end catch`)
     }
 

@@ -1,4 +1,6 @@
 name,description
+seed-database,Seed the database
+migrate-database,Run database migrations
 change-project-owner,"Change project's owner"
 create-project,Create a new project
 delete-project,Delete a project

@@ -3,20 +3,21 @@ import { join, normalize, sep } from 'path'
 import { SUBMISSION_TEMPLATES_DIRECTORY } from '../config.js'
 
 export default async ctx => {
-  const { PERMISSIONS, user } = ctx
+  const { PERMISSIONS, user, mssql } = ctx
+  const { query } = mssql
   const { ensurePermission } = user
   await ensurePermission({ ctx, permission: PERMISSIONS.uploadTemplate })
 
   const { path, name } = ctx.request.files['project-upload-excel-template']
-  const filename = normalize(join(SUBMISSION_TEMPLATES_DIRECTORY, `.${sep}${name}`))
+  const filePath = normalize(join(SUBMISSION_TEMPLATES_DIRECTORY, `.${sep}${name}`))
 
-  /**
-   * The file must not exist. Therefore the stat() fn call
-   * MUST fail for this to be a valid upload
-   */
   try {
+    /**
+     * The file must not exist. Therefore the stat() fn call
+     * MUST fail for this to be a valid upload
+     */
     await new Promise((resolve, reject) => {
-      stat(filename, error => {
+      stat(filePath, error => {
         if (error) {
           resolve(false)
         } else {
@@ -30,11 +31,27 @@ export default async ctx => {
     })
 
     const readStream = createReadStream(path)
-    const writeStream = createWriteStream(filename)
+    const writeStream = createWriteStream(filePath)
 
-    readStream.pipe(writeStream)
-    readStream.on('error', () => console.log('Read error'))
-    writeStream.on('error', error => console.log('Write error', error))
+    await new Promise((resolve, reject) => {
+      readStream.pipe(writeStream).on('finish', () => resolve())
+      readStream.on('error', error => reject(error))
+      writeStream.on('error', error => reject(error))
+    })
+
+    /**
+     * Register this template in the DB
+     * This allows for determining which is the
+     * correct template users must download and
+     * keeping track of old templates
+     */
+    await query(`
+      insert into ExcelSubmissionTemplates (filePath, createdBy, createdAt)
+      values (
+        '${sanitizeSqlValue(filePath)}',
+        ${user.info(ctx).id},
+        '${new Date().toISOString()}'
+      );`)
 
     ctx.response.status = 201
     ctx.body = 'File upload successful'

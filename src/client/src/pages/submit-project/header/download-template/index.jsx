@@ -1,12 +1,29 @@
 import Icon from 'mdi-react/FileDownloadIcon'
 import Button from '@material-ui/core/Button'
 import MessageDialogue from '../../../../components/message-dialogue'
+import Link from '@material-ui/core/Link'
+import Typography from '@material-ui/core/Typography'
+import useTheme from '@material-ui/core/styles/useTheme'
+import { NCCRD_API_HTTP_ADDRESS } from '../../../../config'
 
 export default () => {
+  const theme = useTheme()
+
   return (
     <MessageDialogue
       title="Download Excel template"
-      text="Download the project-submission Excel template for individual submission and/or bulk submission"
+      text={
+        <>
+          <Typography style={{ marginBottom: theme.spacing(2) }} variant="body2">
+            You can submit filled-in Excel templates on this page.
+          </Typography>
+          <Typography variant="body2">
+            Please note that the template has to be filled in exactly as downloaded, otherwise
+            submissions will be rejected. If you would like to change the template in any way please
+            contact a systems administrator.
+          </Typography>
+        </>
+      }
       tooltipProps={{
         placement: 'bottom',
         title: 'Download Excel submission template',
@@ -28,6 +45,10 @@ export default () => {
       Actions={[
         closeFn => (
           <Button
+            component={Link}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`${NCCRD_API_HTTP_ADDRESS}/download-template`}
             key="submit-project-by-excel-template"
             startIcon={<Icon size={18} />}
             onClick={e => {
@@ -38,7 +59,7 @@ export default () => {
             variant="contained"
             disableElevation
           >
-            Confirm
+            Download
           </Button>
         ),
       ]}

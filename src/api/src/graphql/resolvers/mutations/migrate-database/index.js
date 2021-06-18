@@ -12,7 +12,7 @@ const __dirname = getCurrentDirectory(import.meta)
  * Initial schema
  */
 ;(async () => {
-  await loadFile(join(__dirname, './sql/create-schema.sql'))
+  await loadFile(join(__dirname, './sql/schema.sql'))
     .then(sql => query(sql))
     .then(() => console.info('Schema created (or already exists)'))
 })()

@@ -22,7 +22,7 @@ export default () => {
             color="primary"
             startIcon={<Icon size={18} />}
           >
-            Upload project(s)
+            Upload project(s) template
           </Button>
         )
       }}

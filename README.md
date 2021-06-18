@@ -20,6 +20,7 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
   - [Linux & Mac](#linux--mac)
   - [Windows](#windows)
   - [With a configuration file](#with-a-configuration-file)
+- [System migrations](#system-migrations)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -128,6 +129,7 @@ docker run \
   -e 'SAEON_AUTH_CLIENT_SECRET=' \
   -e 'NCCRD_HOSTNAME=http://localhost:3000' \
   -e 'NCCRD_DEPLOYMENT_ENV=development' \
+  -e 'FILES_DIRECTORY=' \
   -e 'NCCRD_SSL_ENV=development' \
   -e 'MSSQL_HOSTNAME=sql-server' \
   -e 'MSSQL_USERNAME=sa' \
@@ -182,6 +184,7 @@ MSSQL_PASSWORD='password!123#' \
 MSSQL_PORT=1433 \
 MSSQL_USERNAME='sa' \
 NCCRD_API_RESET_SCHEMA=false \
+FILES_DIRECTORY= \
 NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES='' \
 NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES='' \
 NCCRD_DEPLOYMENT_ENV='production' \
@@ -202,6 +205,7 @@ $env:MSSQL_HOSTNAME="localhost";
 $env:MSSQL_PASSWORD="password!123#";
 $env:MSSQL_PORT="1433";
 $env:MSSQL_USERNAME="sa";
+$env:FILES_DIRECTORY="";
 $env:NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES="your-email@host.com";
 $env:NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES="your-email2@host.com";
 $env:NCCRD_DEPLOYMENT_ENV="production";
@@ -222,6 +226,7 @@ MSSQL_HOSTNAME='localhost'
 MSSQL_PASSWORD='password!123#'
 MSSQL_PORT=1433
 MSSQL_USERNAME='sa'
+FILES_DIRECTORY=''
 NCCRD_API_RESET_SCHEMA=false
 NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES=''
 NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES=''
@@ -231,3 +236,9 @@ NCCRD_HOSTNAME='http://localhost:3000'
 NCCRD_PORT=3000
 SAEON_AUTH_CLIENT_SECRET='<secret>'
 ```
+
+# System migrations
+Moving a deployment from one system to another is fairly straightforward - just move the application server, restore the database and update configuration. However there is are a couple caveats:
+
+1. Don't forget to move the uploads directory to the environment! Look at the configuration value `FILES_DIRECTORY` on your current deployment to see where files are uploaded to
+2. **file uploads are referenced in SQL Server via absolute paths. As such, you will need to update the file paths referenced in Sql Server**

@@ -9,7 +9,9 @@ const __dirname = getCurrentDirectory(import.meta)
 
 const upsertRoles = async query => {
   console.info('Seeding roles')
-  const parser = createReadStream(join(__dirname, './roles.csv')).pipe(parse({ columns: true }))
+  const parser = createReadStream(join(__dirname, './auth-config/roles.csv')).pipe(
+    parse({ columns: true })
+  )
 
   for await (let { name, description = '' } of parser) {
     name = name.trim()
@@ -37,7 +39,7 @@ const upsertRoles = async query => {
 
 const upsertPermissions = async query => {
   console.info('Seeding permissions')
-  const parser = createReadStream(join(__dirname, './permissions.csv')).pipe(
+  const parser = createReadStream(join(__dirname, './auth-config/permissions.csv')).pipe(
     parse({ columns: true })
   )
 
@@ -67,7 +69,7 @@ const upsertPermissions = async query => {
 
 const upsertPermissionsXrefRoles = async query => {
   console.info('Seeding role permissions')
-  const parser = createReadStream(join(__dirname, './roles-x-permissions.csv')).pipe(
+  const parser = createReadStream(join(__dirname, './auth-config/roles-x-permissions.csv')).pipe(
     parse({ columns: true })
   )
 

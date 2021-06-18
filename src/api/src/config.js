@@ -53,7 +53,7 @@ export const MSSQL_PORT = parseInt(process.env.MSSQL_PORT || 1433, 10)
 export const LOG_SQL_QUERIES = (process.env.LOG_SQL_QUERIES || 'true').toBoolean()
 
 export const FILES_DIRECTORY = normalize(
-  process.env.FILES_DIRECTORY || join(__dirname, `..${sep}file-assets`)
+  process.env.FILES_DIRECTORY || join(__dirname, `..${sep}assets`)
 )
 
 export const SUBMISSION_TEMPLATES_DIRECTORY = normalize(

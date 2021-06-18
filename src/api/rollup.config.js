@@ -8,6 +8,7 @@ export default {
     'koa-static',
     'koa-mount',
     '@koa/router',
+    'koa2-formidable',
     'koa-compress',
     'koa-bodyparser',
     'koa-session',

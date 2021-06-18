@@ -11,8 +11,8 @@ export default ({ children }) => {
 
   const { loading, data } = useQuery(
     gql`
-      query ($ids: [Int!]) {
-        users(ids: $ids) {
+      query user($id: Int!) {
+        user(id: $id) {
           id
           roles {
             id
@@ -29,7 +29,7 @@ export default ({ children }) => {
     `,
     {
       variables: {
-        ids: [sessionUser?.id],
+        id: sessionUser?.id || 0,
       },
     }
   )
@@ -40,9 +40,7 @@ export default ({ children }) => {
     return <Loading />
   }
 
-  const {
-    users: [user],
-  } = data || { users: [] }
+  const { user } = data || {}
 
   return (
     <context.Provider

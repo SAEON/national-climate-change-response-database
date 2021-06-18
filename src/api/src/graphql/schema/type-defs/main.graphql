@@ -70,6 +70,7 @@ type Query {
   controlledVocabulary(root: String!, tree: String!): ControlledVocabulary
   # Search users
   users(ids: [Int!]): [User!]
+  user(id: Int!): User
   # Search roles
   roles: [Role!]!
   # Search permissions

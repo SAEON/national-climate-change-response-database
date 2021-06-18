@@ -1,12 +1,7 @@
 import logSql from '../../../lib/log-sql.js'
 
 export default async (self, { ids = [] }, ctx) => {
-  const { user, mssql, PERMISSIONS } = ctx
-  const { query } = mssql
-
-  if (!ids.includes(user.info(ctx).id)) {
-    await user.ensurePermission({ ctx, permission: PERMISSIONS.viewUsers })
-  }
+  const { query } = ctx.mssql
 
   const sql = `
   select

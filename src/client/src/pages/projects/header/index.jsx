@@ -33,13 +33,20 @@ export default ({ MobileFilters }) => {
       <div style={{ marginLeft: theme.spacing(2) }} />
       <Hidden xsDown>
         <DownloadData />
+        <Divider
+          flexItem
+          orientation="vertical"
+          style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+        />
       </Hidden>
 
-      <Divider
-        flexItem
-        orientation="vertical"
-        style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
-      />
+      <Hidden smUp>
+        <Divider
+          flexItem
+          orientation="vertical"
+          style={{ marginLeft: theme.spacing(0), marginRight: theme.spacing(2) }}
+        />
+      </Hidden>
 
       {/* USER PROJECTS */}
       <UserProjects />

@@ -51,7 +51,14 @@ export default ({ root, tree, value, setValue, helperText, label, id }) => {
     throw error
   }
 
-  const options = data.controlledVocabulary.children
+  let options
+  try {
+    options = data.controlledVocabulary.children
+  } catch {
+    throw new Error(
+      'Unable to retrieve the vocabulary lists - please make sure that the database is seeded correctly'
+    )
+  }
 
   return (
     <Fade in={Boolean(data)} key="data-in">

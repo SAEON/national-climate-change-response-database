@@ -68,7 +68,14 @@ export default ({
     throw gqlError
   }
 
-  const options = data.controlledVocabulary.children
+  let options
+  try {
+    options = data.controlledVocabulary.children
+  } catch {
+    throw new Error(
+      'Unable to retrieve the vocabulary lists - please make sure that the database is seeded correctly'
+    )
+  }
 
   if (!options.length) {
     return null

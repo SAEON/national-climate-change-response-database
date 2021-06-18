@@ -27,14 +27,14 @@ export default () => {
       }}
     >
       {/* NAVIGATION MENU */}
-      <div style={{ marginLeft: theme.spacing(2) }} />
+      <div style={{ marginLeft: theme.spacing(1) }} />
       <NavMenu />
 
       {smAndUp && (
         <Divider
           flexItem
           orientation="vertical"
-          style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+          style={{ marginLeft: theme.spacing(1), marginRight: theme.spacing(2) }}
         />
       )}
 

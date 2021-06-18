@@ -1,21 +1,45 @@
-import { createReadStream, createWriteStream } from 'fs'
-import { join } from 'path'
-import getCurrentDirectory from '../lib/get-current-directory.js'
-
-const __dirname = getCurrentDirectory(import.meta)
+import { createReadStream, createWriteStream, stat } from 'fs'
+import { join, normalize, sep } from 'path'
+import { SUBMISSION_TEMPLATES_DIRECTORY } from '../config.js'
 
 export default async ctx => {
   const { PERMISSIONS, user } = ctx
   const { ensurePermission } = user
   await ensurePermission({ ctx, permission: PERMISSIONS.uploadTemplate })
 
-  const { path, name, type } = ctx.request.files['project-upload-excel-template']
-  const read = createReadStream(path)
-  const write = createWriteStream(join(__dirname, './text.xlsx'))
-  read.pipe(write)
+  const { path, name } = ctx.request.files['project-upload-excel-template']
+  const filename = normalize(join(SUBMISSION_TEMPLATES_DIRECTORY, `.${sep}${name}`))
 
-  read.on('error', () => console.log('Read error'))
-  write.on('error', error => console.log('Write error', error))
+  /**
+   * The file must not exist. Therefore the stat() fn call
+   * MUST fail for this to be a valid upload
+   */
+  try {
+    await new Promise((resolve, reject) => {
+      stat(filename, error => {
+        if (error) {
+          resolve(false)
+        } else {
+          reject(
+            new Error(
+              'This file already exists. Please include the upload date in the file name so that versions can be identified uniquely'
+            )
+          )
+        }
+      })
+    })
 
-  ctx.body = 'success'
+    const readStream = createReadStream(path)
+    const writeStream = createWriteStream(filename)
+
+    readStream.pipe(writeStream)
+    readStream.on('error', () => console.log('Read error'))
+    writeStream.on('error', error => console.log('Write error', error))
+
+    ctx.response.status = 201
+    ctx.body = 'File upload successful'
+  } catch (error) {
+    ctx.response.status = 409
+    ctx.body = error.message
+  }
 }

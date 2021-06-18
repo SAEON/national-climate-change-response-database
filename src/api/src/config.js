@@ -1,5 +1,11 @@
+import { join, normalize, sep } from 'path'
+import { mkdirSync, rmdirSync } from 'fs'
 import { config } from 'dotenv'
+import getCurrentDirectory from './lib/get-current-directory.js'
+import ensureDirectory from './lib/ensure-directory.js'
 config()
+
+const __dirname = getCurrentDirectory(import.meta)
 
 export const NCCRD_API_KEY =
   process.env.NCCRD_API_KEY || '7cwANClfrqqNFmpOmcP0OzWDzdcras0EdIqD3RAUUCU='
@@ -45,3 +51,34 @@ export const MSSQL_DATABASE = process.env.MSSQL_DATABASE || 'nccrd'
 export const MSSQL_PORT = parseInt(process.env.MSSQL_PORT || 1433, 10)
 
 export const LOG_SQL_QUERIES = (process.env.LOG_SQL_QUERIES || 'true').toBoolean()
+
+export const FILES_DIRECTORY = normalize(
+  join(__dirname, `..${sep}`, process.env.FILE_ASSETS_PATH || `.${sep}file-assets`)
+)
+
+export const SUBMISSION_TEMPLATES_DIRECTORY = normalize(
+  join(FILES_DIRECTORY, `.${sep}submission-templates`)
+)
+
+export const SUBMITTED_TEMPLATES_DIRECTORY = normalize(
+  join(FILES_DIRECTORY, `.${sep}submitted-templates`)
+)
+
+/**
+ * Ensure data directory exists
+ */
+try {
+  ensureDirectory(FILES_DIRECTORY)
+  ensureDirectory(SUBMISSION_TEMPLATES_DIRECTORY)
+  ensureDirectory(SUBMITTED_TEMPLATES_DIRECTORY)
+  mkdirSync(join(FILES_DIRECTORY, '.test-write-permissions'))
+  rmdirSync(join(FILES_DIRECTORY, '.test-write-permissions'))
+} catch (error) {
+  console.error(
+    'Please create directory',
+    FILES_DIRECTORY,
+    'that can be used by the current process',
+    error
+  )
+  process.exit(1)
+}

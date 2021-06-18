@@ -62,7 +62,7 @@ export default async ctx => {
           using (
             select
             id userId,
-            ( select id from Roles where name = 'dffe' ) roleId
+            ( select id from Roles where name = 'public' ) roleId
             from Users
             where emailAddress = '${updatedBy}'
           ) s on s.userId = t.userId and s.roleId = t.roleId

@@ -7,7 +7,7 @@ import PERMISSIONS from '../../../user-model/permissions.js'
 import authorize from '../../../user-model/authorize.js'
 
 export default {
-  users: authorize(PERMISSIONS.viewUsers)(users),
+  users: users,
   roles: authorize(PERMISSIONS.viewRoles)(roles),
   permissions: authorize(PERMISSIONS.viewPermissions)(permissions),
   projects,

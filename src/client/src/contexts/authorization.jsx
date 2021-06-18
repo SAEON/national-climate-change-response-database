@@ -27,7 +27,7 @@ export default ({ children }) => {
     `,
     {
       variables: {
-        ids: [sessionUser?.id || 0],
+        ids: [sessionUser?.id],
       },
     }
   )

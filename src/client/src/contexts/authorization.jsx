@@ -32,6 +32,9 @@ export default ({ children }) => {
     }
   )
 
+  console.log('session user', sessionUser)
+  console.log('user data', data)
+
   if (loading) {
     return <Loading />
   }

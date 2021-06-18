@@ -2,6 +2,7 @@
  * ORDER IS IMPORTANT!
  */
  
+drop table if exists ExcelSubmissionTemplates;
 drop table if exists EmissionsDataXrefVocabTreeX;
 drop table if exists EmissionsData;
 drop table if exists EnergyData;
@@ -19,4 +20,3 @@ drop table if exists UserRoleXref;
 drop table if exists [Permissions];
 drop table if exists Roles;
 drop table if exists Users;
-drop table if exists ExcelSubmissionTemplates;

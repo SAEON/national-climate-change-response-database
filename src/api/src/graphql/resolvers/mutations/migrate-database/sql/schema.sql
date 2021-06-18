@@ -397,7 +397,7 @@ begin
 create table ExcelSubmissionTemplates (
   id int not null identity primary key,
 	createdBy int not null foreign key references Users (id),
-	filePath nvarchar(4000) not null unique,
+	filePath nvarchar(500) not null unique,
 	createdAt datetime2 not null
 );
 end

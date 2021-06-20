@@ -7,8 +7,6 @@ networks:
 volumes:
   sql-server:
     driver: local
-  nccrd:
-    driver: local
 
 services:
   sql-server:
@@ -29,7 +27,7 @@ services:
   nccrd:
     container_name: nccrd
     volumes:
-      - nccrd:/app
+      - /opt/nccrd-assets:/nccrd-assets
     restart: always
     build:
       context: .

@@ -7,7 +7,6 @@ export const context = createContext()
 
 export default ({ children }) => {
   const { user: sessionUser } = useContext(authenticationContext)
-  console.log('session user', sessionUser)
 
   const { loading, data } = useQuery(
     gql`
@@ -33,8 +32,6 @@ export default ({ children }) => {
       },
     }
   )
-
-  console.log('user data', data)
 
   if (loading) {
     return <Loading />

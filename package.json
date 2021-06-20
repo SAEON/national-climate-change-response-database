@@ -8,7 +8,7 @@
     "start:api": "npm --prefix src/api start",
     "start:client": "npm --prefix src/client start",
     "*************** DEPLOYMENTS & BUILDS *************": "",
-    "build:bundled": "rimraf src/api/src/client-dist/ && NCCRD_DEPLOYMENT_ENV=production npm --prefix src/client run build && mv src/client/dist/ src/api/src/client-dist/",
+    "build:bundled": "rimraf src/api/src/client-dist/ && NCCRD_HOSTNAME=origin NCCRD_DEPLOYMENT_ENV=production npm --prefix src/client run build && mv src/client/dist/ src/api/src/client-dist/",
     "start:bundled": "npm run build:bundled && npm --prefix src/api run start:prod",
     "pkg": "rimraf binaries/ && npm run build:bundled && npm --prefix src/api run rollup && pkg package.json --compress GZip",
     "************ REPOSITORY TOOLING **********": "",

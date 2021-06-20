@@ -6,7 +6,7 @@ ARG NCCRD_CLIENT_DEFAULT_NOTICES
 ARG NCCRD_TECHNICAL_CONTACT
 ARG NCCRD_HOSTNAME
 
-WORKDIR /app
+WORKDIR /nccrd-client
 
 RUN echo "" > .env
 RUN echo "NCCRD_DEPLOYMENT_ENV=$NCCRD_DEPLOYMENT_ENV" >> .env
@@ -74,7 +74,7 @@ ENV NCCRD_HOSTNAME=$NCCRD_HOSTNAME
 
 WORKDIR /app
 COPY src/api .
-COPY --from=client /app/dist src/client-dist
+COPY --from=client /nccrd-client/dist src/client-dist
 RUN npm ci --only=production
 EXPOSE 3000
 

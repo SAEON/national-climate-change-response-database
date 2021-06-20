@@ -6,7 +6,7 @@ const packageJson = require('./package.json')
 const fs = require('fs')
 const dotenv = require('dotenv').config({ path: path.join(__dirname, './.env') })
 
-let { NODE_ENV: mode, NCCRD_DEPLOYMENT_ENV = 'local' } = process.env
+let { NODE_ENV: mode, NCCRD_DEPLOYMENT_ENV = 'local', NCCRD_HOSTNAME = '' } = process.env
 
 module.exports = () => {
   const output = 'dist'
@@ -74,6 +74,7 @@ module.exports = () => {
         'process.env': {
           NODE_ENV: JSON.stringify(mode),
           NCCRD_DEPLOYMENT_ENV: JSON.stringify(NCCRD_DEPLOYMENT_ENV),
+          NCCRD_HOSTNAME: JSON.stringify(NCCRD_HOSTNAME),
           PACKAGE_NAME: JSON.stringify(packageJson.name),
           PACKAGE_DESCRIPTION: JSON.stringify(packageJson.description),
           PACKAGE_KEYWORDS: JSON.stringify(packageJson.keywords),

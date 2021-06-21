@@ -5,11 +5,23 @@ import LayerGroup from 'ol/layer/Group'
 import { defaults as defaultControls } from 'ol/control'
 import baseLayer from './layers/osm'
 export { default as GeometryLayer } from './_geometry-layer'
+import MousePosition from 'ol/control/MousePosition'
+import { createStringXY } from 'ol/coordinate'
 
 export const context = createContext()
 
 export default ({ children = [] }) => {
   const mapDomRef = useRef(null)
+
+  const mousePositionControl = useMemo(
+    () =>
+      new MousePosition({
+        coordinateFormat: createStringXY(4),
+        projection: 'EPSG:4326',
+        undefinedHTML: '&nbsp;',
+      }),
+    []
+  )
 
   const map = useMemo(() => {
     return new Map({
@@ -21,14 +33,14 @@ export default ({ children = [] }) => {
         rotateOptions: false,
         rotate: false,
         attribution: false,
-      }).extend([]),
+      }).extend([mousePositionControl]),
       view: new View({
         center: [23, -29],
         zoom: 5.5,
         projection: 'EPSG:4326',
       }),
     })
-  }, [])
+  }, [mousePositionControl])
 
   useEffect(() => {
     map.setTarget(mapDomRef.current)

@@ -12,7 +12,6 @@ import WKT from 'ol/format/WKT'
 const _wkt = new WKT()
 
 export default ({ onChange, points = [], setPoints, fenceGeometry = undefined }) => {
-  console.log('rendering picker')
   const { enqueueSnackbar } = useSnackbar()
   const { map } = useContext(mapContext)
   const source = useMemo(() => new VectorSource({ wrapX: false }), [])

@@ -6,6 +6,8 @@ export default async ctx => {
   const { query } = mssql
   const { ensurePermission } = user
   await ensurePermission({ ctx, permission: PERMISSIONS.createProject })
+  const { id = undefined } = ctx.query
+  console.log('id', id)
 
   /**
    * Get path of most recent Excel template
@@ -15,6 +17,7 @@ export default async ctx => {
     select top 1
       filePath
     from ExcelSubmissionTemplates
+    ${id ? `where id = '${sanitizeSqlValue(id)}'` : ''}
     order by createdAt desc`)
   ).recordset[0].filePath
 

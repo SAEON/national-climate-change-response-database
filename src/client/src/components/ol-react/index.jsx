@@ -18,6 +18,7 @@ export default ({ children = [] }) => {
       new MousePosition({
         coordinateFormat: createStringXY(4),
         projection: 'EPSG:4326',
+        className: 'map-mouse-position',
         undefinedHTML: '&nbsp;',
       }),
     []

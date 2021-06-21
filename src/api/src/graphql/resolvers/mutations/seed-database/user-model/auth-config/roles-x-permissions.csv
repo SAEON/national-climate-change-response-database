@@ -1,4 +1,5 @@
 role,permission
+sysadmin,view-submission-templates
 sysadmin,validate-submission
 sysadmin,upload-template
 sysadmin,seed-database
@@ -15,6 +16,7 @@ sysadmin,view-permissions
 sysadmin,view-roles
 sysadmin,view-/access
 sysadmin,view-/deployments
+admin,view-submission-templates
 admin,validate-submission
 admin,upload-template
 admin,change-project-owner

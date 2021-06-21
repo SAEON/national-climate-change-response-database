@@ -4,6 +4,7 @@ import _findGeometry from './_find-geometry.js'
 import _findUserRoles from './_find-user-roles.js'
 import _findRolePermissions from './_find-role-permissions.js'
 import _findUserPermissions from './_find-user-permissions.js'
+import _findSubmissionTemplateUsers from './_find-submission-template-users.js'
 
 export const makeDataFinders = () => {
   const searchVocabularyTree = _searchVocabularyTree()
@@ -12,6 +13,7 @@ export const makeDataFinders = () => {
   const findUserRoles = _findUserRoles()
   const findRolePermissions = _findRolePermissions()
   const findUserPermissions = _findUserPermissions()
+  const findSubmissionTemplateUsers = _findSubmissionTemplateUsers()
 
   return {
     searchVocabularyTree: ({ ids, tree }) => searchVocabularyTree.load({ ids, tree }),
@@ -21,5 +23,6 @@ export const makeDataFinders = () => {
     findRolePermissions: roleId => findRolePermissions.load(roleId),
     findGeometry: ({ vocabularyId, tree, simplified = true }) =>
       findGeometry.load({ vocabularyId, tree, simplified }),
+    findSubmissionTemplateUsers: userId => findSubmissionTemplateUsers.load(userId),
   }
 }

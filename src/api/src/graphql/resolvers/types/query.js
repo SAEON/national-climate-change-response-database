@@ -6,11 +6,13 @@ import controlledVocabulary from '../queries/controlled-vocabulary.js'
 import PERMISSIONS from '../../../user-model/permissions.js'
 import authorize from '../../../user-model/authorize.js'
 import user from '../queries/user.js'
+import submissionTemplates from '../queries/submission-templates.js'
 
 export default {
   users: authorize(PERMISSIONS.viewUsers)(users),
   roles: authorize(PERMISSIONS.viewRoles)(roles),
   permissions: authorize(PERMISSIONS.viewPermissions)(permissions),
+  submissionTemplates: authorize(PERMISSIONS.viewSubmissionTemplates)(submissionTemplates),
   projects,
   user,
   controlledVocabulary,

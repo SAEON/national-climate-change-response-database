@@ -56,7 +56,16 @@ input AdaptationFiltersInput {
   vocabularyFilters: [VocabularyFilterInput!]
 }
 
+type SubmissionTemplate {
+  id: Int!
+  createdBy: User!
+  createdAt: DateTime!
+  filePath: String!
+}
+
 type Query {
+  # Get a list of all the the Excel submission templates that have been uploaded
+  submissionTemplates: [SubmissionTemplate!]!
   # Search projects
   projects(
     limit: Int

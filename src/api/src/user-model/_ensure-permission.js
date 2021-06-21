@@ -21,7 +21,7 @@ export default async (ctx, ...permissions) => {
     where userId = ${userId}
     and p.name in (${permissions.map(name => `'${sanitizeSqlValue(name)}'`).join(',')});`
 
-  logSql(sql, 'Check user permissions', true)
+  logSql(sql, 'Check user permissions')
   const result = await query(sql)
   const isAuthorized = Boolean(result.recordset.length)
 

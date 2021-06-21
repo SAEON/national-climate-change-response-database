@@ -15,7 +15,7 @@ export default async (self, { id }, ctx) => {
   from Users u
   where u.id = ${id}`
 
-  logSql(sql, 'Find users', true)
+  logSql(sql, 'Find users')
   const result = await query(sql)
   return result.recordset[0]
 }

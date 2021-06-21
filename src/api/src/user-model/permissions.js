@@ -11,6 +11,7 @@ export default {
   seedDatabase: 'seed-database',
   uploadTemplate: 'upload-template',
   validateSubmission: 'validate-submission',
+  viewSubmissionTemplates: 'view-submission-templates',
 
   // UI routes
   'view/Access': 'view-/access',

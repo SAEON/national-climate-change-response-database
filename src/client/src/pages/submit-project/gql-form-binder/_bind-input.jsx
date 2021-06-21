@@ -5,7 +5,7 @@ import MoneyField from './_money'
 import StringField from './_string'
 import EnumField from './_enum'
 
-export default ({ field, value, updateValue, multiline, i = 0 }) => {
+export default ({ field, value, disabled = false, updateValue, multiline, i = 0 }) => {
   const { name: fieldName, description, type } = field
   const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType, ofType } = type
@@ -16,6 +16,7 @@ export default ({ field, value, updateValue, multiline, i = 0 }) => {
     return (
       <StringField
         i={i}
+        disabled={disabled}
         error={isRequired && !value}
         multiline={multiline}
         rows={multiline ? 4 : 1}
@@ -33,6 +34,7 @@ export default ({ field, value, updateValue, multiline, i = 0 }) => {
     return (
       <DateTimeField
         i={i}
+        disabled={disabled}
         error={isRequired && !value}
         key={fieldName}
         placeholder={placeholder}
@@ -48,6 +50,7 @@ export default ({ field, value, updateValue, multiline, i = 0 }) => {
     return (
       <MoneyField
         i={i}
+        disabled={disabled}
         error={isRequired && !value}
         placeholder={placeholder}
         helperText={helperText}
@@ -63,6 +66,7 @@ export default ({ field, value, updateValue, multiline, i = 0 }) => {
     return (
       <BooleanField
         i={i}
+        disabled={disabled}
         placeholder={placeholder}
         helperText={helperText}
         name={placeholder}
@@ -83,6 +87,7 @@ export default ({ field, value, updateValue, multiline, i = 0 }) => {
     })
     return (
       <EnumField
+        disabled={disabled}
         key={fieldName}
         name={placeholder}
         placeholder={placeholder}

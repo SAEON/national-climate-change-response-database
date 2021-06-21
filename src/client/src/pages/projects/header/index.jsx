@@ -51,12 +51,6 @@ export default ({ MobileFilters }) => {
       {/* USER PROJECTS */}
       <UserProjects />
 
-      <Divider
-        flexItem
-        orientation="vertical"
-        style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
-      />
-
       {/* Pagination */}
       <div style={{ marginLeft: 'auto' }} />
       <Divider

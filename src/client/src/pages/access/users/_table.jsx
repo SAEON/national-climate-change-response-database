@@ -42,21 +42,34 @@ export default ({ users }) => {
             <DataGrid
               pageSize={25}
               rowHeight={theme.spacing(5)}
-              rows={users.map(({ id, emailAddress, roles }) => {
+              rows={users.map(({ id, emailAddress, name, familyName, roles }) => {
                 return {
                   id,
                   emailAddress,
-                  roles: roles,
+                  name,
+                  familyName,
+                  roles,
                 }
               })}
               columns={[
-                { field: 'id', headerName: 'ID', width: 90 },
-                { field: 'emailAddress', headerName: 'Email Address', width: 350 },
+                {
+                  field: 'id',
+                  sortable: false,
+                  filterable: false,
+                  disableColumnMenu: true,
+                  headerName: 'ID',
+                  width: 50,
+                },
+                { field: 'emailAddress', headerName: 'Email Address', width: 220 },
+                { field: 'name', headerName: 'Name', width: 130 },
+                { field: 'familyName', headerName: 'Family name', width: 160 },
                 {
                   field: 'roles',
                   headerName: 'Roles',
                   sortable: false,
-                  width: 400,
+                  filterable: false,
+                  flex: 1,
+                  disableColumnMenu: true,
                   cellClassName: () => clsx(classes.cell),
                   renderCell: ({ value, row: { id: userId } }) => {
                     return (

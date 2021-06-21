@@ -4,7 +4,18 @@ import QuickForm from '../../../components/quick-form'
 import debounce from '../../../lib/debounce'
 
 export default memo(
-  ({ name, placeholder, helperText, multiline, rows, error, setValue, value, i = 0 }) => {
+  ({
+    name,
+    placeholder,
+    disabled = false,
+    helperText,
+    multiline,
+    rows,
+    error,
+    setValue,
+    value,
+    i = 0,
+  }) => {
     const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
 
     return (
@@ -15,6 +26,7 @@ export default memo(
               autoComplete="off"
               onChange={e => update({ value: e.target.value })}
               value={value}
+              disabled={disabled}
               error={error}
               id={`${name}-${i}`}
               label={name}

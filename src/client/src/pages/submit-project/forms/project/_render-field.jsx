@@ -4,10 +4,12 @@ import {
   context as formContext,
   ControlledVocabularySelect,
 } from '../../gql-form-binder'
+import { context as authContext } from '../../../../contexts/authorization'
 
 const multilineFields = ['description', 'validationComments']
 
 export default ({ field }) => {
+  const { hasPermission } = useContext(authContext)
   const { projectForm, updateProjectForm, resetMitigationForms, resetAdaptationForms } =
     useContext(formContext)
   const { name: fieldName, description, type } = field
@@ -81,11 +83,28 @@ export default ({ field }) => {
         tree="projectValidationStatus"
         root="Validation Status"
         name={fieldName}
+        disabled={!hasPermission('validate-submission')}
         value={value}
         error={isRequired && !value}
         onChange={val => updateProjectForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
+      />
+    )
+  }
+
+  /**
+   * Validation comments (limited user access)
+   */
+  if (fieldName === 'validationComments') {
+    return (
+      <GqlBoundFormInput
+        key={fieldName}
+        field={field}
+        value={value || ''}
+        disabled={!hasPermission('validate-submission')}
+        updateValue={val => updateProjectForm({ [fieldName]: val })}
+        multiline={multilineFields.includes(fieldName)}
       />
     )
   }

@@ -19,6 +19,7 @@ export default ({
   label,
   helperText = '',
   chipProps = {},
+  disabled = false,
   loading = false,
 }) => {
   const theme = useTheme()
@@ -30,6 +31,7 @@ export default ({
           {label}
         </InputLabel>
         <Select
+          disabled={disabled}
           fullWidth
           labelId={`${id}-label`}
           id={`${id}-multi-select`}

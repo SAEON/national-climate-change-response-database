@@ -11,6 +11,7 @@ assign-role,Assign role to user
 assign-permission,Assign permission to role
 view-users,View users
 view-permissions,View permissions
-view-roles,View  roles
+view-roles,View roles
 view-/access,"View the /access route on the UI"
 view-/deployments,"View the /deployments route on the UI"
+validate-submission,Validate project submissions

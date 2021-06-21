@@ -10,6 +10,7 @@ export default {
   migrateDatabase: 'migrate-database',
   seedDatabase: 'seed-database',
   uploadTemplate: 'upload-template',
+  validateSubmission: 'validate-submission',
 
   // UI routes
   'view/Access': 'view-/access',

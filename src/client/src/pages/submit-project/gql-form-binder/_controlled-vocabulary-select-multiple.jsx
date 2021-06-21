@@ -5,7 +5,7 @@ import Loading from '../../../components/loading'
 import Typography from '@material-ui/core/Typography'
 import Multiselect from '../../../components/multiselect'
 
-export default ({ root, tree, value, setValue, helperText, label, id }) => {
+export default ({ root, tree, disabled = false, value, setValue, helperText, label, id }) => {
   const theme = useTheme()
 
   const { error, loading, data } = useQuery(
@@ -65,6 +65,7 @@ export default ({ root, tree, value, setValue, helperText, label, id }) => {
       <div>
         <Multiselect
           id={id}
+          disabled={disabled}
           options={options.map(({ term }) => term)}
           value={value}
           helperText={helperText}

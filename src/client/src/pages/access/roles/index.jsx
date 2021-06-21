@@ -25,15 +25,29 @@ export default ({ permission }) => {
               title={`${name.toUpperCase()} permissions`}
               subheader={description}
             >
-              <CardContent style={{ padding: 0 }}>
+              <CardContent>
                 <div style={{ height: 400 }}>
                   <DataGrid
                     pageSize={25}
                     rowHeight={theme.spacing(5)}
                     columns={[
-                      { field: 'id', headerName: 'ID', width: 90 },
+                      {
+                        field: 'id',
+                        sortable: false,
+                        filterable: false,
+                        headerName: 'ID',
+                        width: 50,
+                        disableColumnMenu: true,
+                      },
                       { field: 'name', headerName: 'Name', width: 200 },
-                      { field: 'description', headerName: 'Description', width: 550 },
+                      {
+                        field: 'description',
+                        headerName: 'Description',
+                        flex: 1,
+                        sortable: false,
+                        filterable: false,
+                        disableColumnMenu: true,
+                      },
                     ]}
                     rows={permissions.map(({ id, name, description }) => ({
                       id,

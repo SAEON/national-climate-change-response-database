@@ -28,14 +28,16 @@ export default () => {
           callbackURL: SAEON_AUTH_OAUTH_REDIRECT_ADDRESS,
         },
         async (token, tokenSecret, _, cb) => {
-          const { email: saeonEmail, sub: saeonId } = await fetch(
-            `${SAEON_AUTH_ADDRESS}/userinfo`,
-            {
-              headers: {
-                Authorization: `bearer ${token}`,
-              },
-            }
-          ).then(res => res.json())
+          const {
+            email: saeonEmail,
+            sub: saeonId,
+            family_name = '',
+            given_name = '',
+          } = await fetch(`${SAEON_AUTH_ADDRESS}/userinfo`, {
+            headers: {
+              Authorization: `bearer ${token}`,
+            },
+          }).then(res => res.json())
 
           try {
             const sql = `
@@ -44,15 +46,24 @@ export default () => {
                 with currentUser as (
                   select
                   '${sanitizeSqlValue(saeonEmail)}' emailAddress,
-                  '${sanitizeSqlValue(saeonId)}' saeonId
+                  '${sanitizeSqlValue(saeonId)}' saeonId,
+                  '${sanitizeSqlValue(given_name)}' name,
+                  '${sanitizeSqlValue(family_name)}' familyName
                 )
-                
                 merge Users as target
                 using currentUser as source on target.emailAddress = source.emailAddress
-                when matched and coalesce(target.saeonId, '') <> source.saeonId
-                  then update set target.saeonId = source.saeonId
-                when not matched by target
-                  then insert (emailAddress, saeonId) values (source.emailAddress, source.saeonId);
+                when matched and coalesce(target.saeonId, '') <> source.saeonId then update
+                  set
+                    target.saeonId = source.saeonId,
+                    target.name = source.name,
+                    target.familyName = source.familyName
+                when not matched by target then insert (emailAddress, saeonId, name, familyName)
+                  values (
+                    source.emailAddress,
+                    source.saeonId,
+                    source.name,
+                    source.familyName
+                  );
                   
                 insert into UserRoleXref (userId, roleId)
                 select distinct

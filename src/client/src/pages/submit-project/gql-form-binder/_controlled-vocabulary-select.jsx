@@ -18,6 +18,7 @@ export default ({
   onChange,
   value = DEFAULT_VALUE,
   isRequired = false,
+  disabled = false,
 }) => {
   const theme = useTheme()
 
@@ -87,6 +88,7 @@ export default ({
         <TextField
           id={name}
           select
+          disabled={disabled}
           label={placeholder}
           placeholder={placeholder}
           helperText={helperText}

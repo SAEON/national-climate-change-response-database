@@ -7,6 +7,8 @@ scalar WKT_4326
 type User {
   id: Int!
   emailAddress: String!
+  name: String
+  familyName: String
   roles: [Role!]!
   permissions: [Permission!]!
 }

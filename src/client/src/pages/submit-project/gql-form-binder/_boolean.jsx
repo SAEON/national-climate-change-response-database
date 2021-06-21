@@ -5,7 +5,7 @@ import { MenuItem } from '@material-ui/core'
 import debounce from '../../../lib/debounce'
 
 export default memo(
-  ({ name, placeholder, helperText, error, value, setValue, i = 0 }) => {
+  ({ name, placeholder, disabled = false, helperText, error, value, setValue, i = 0 }) => {
     const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
 
     return (
@@ -18,6 +18,7 @@ export default memo(
               placeholder={placeholder}
               helperText={helperText}
               fullWidth
+              disabled={disabled}
               variant="outlined"
               margin="normal"
               label={name}

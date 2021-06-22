@@ -79,7 +79,7 @@ export default ({ points, setPoints, addPoint, fenceGeometry, fenceId }) => {
       disableColumnSelector
       components={{
         Footer: () => (
-          <AppBar variant="outlined" color="inherit" position="relative">
+          <AppBar variant="outlined" color="default" position="relative">
             <Toolbar
               variant="dense"
               style={{

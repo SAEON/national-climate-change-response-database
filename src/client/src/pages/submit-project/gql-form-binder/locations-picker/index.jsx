@@ -55,7 +55,7 @@ const LocationBounds = memo(
 
     return (
       <>
-        <AppBar style={{ zIndex: 1 }} variant="outlined" color="inherit" position="relative">
+        <AppBar style={{ zIndex: 1 }} variant="outlined" color="default" position="relative">
           <Tabs
             indicatorColor="primary"
             textColor="primary"

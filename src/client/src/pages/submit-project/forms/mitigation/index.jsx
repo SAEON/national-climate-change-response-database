@@ -47,7 +47,6 @@ const Compose = memo(
                   'mitigationSubType',
                   'interventionStatus',
                 ],
-                'Location(s)': ['yx'],
                 'Associated research': [
                   'isResearch',
                   'researchDescription',

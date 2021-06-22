@@ -3,7 +3,6 @@ import {
   GqlBoundFormInput,
   context as formContext,
   ControlledVocabularySelect,
-  LocationsPicker,
 } from '../../gql-form-binder'
 import EnergyCalculator from '../../gql-form-binder/calculators/energy'
 import EmissionsCalculator from '../../gql-form-binder/calculators/emissions'
@@ -26,22 +25,6 @@ export default ({ field, i }) => {
   const { name: inputType } = type
   const isRequired = !inputType
   const value = form[fieldName]
-
-  /**
-   * WKT_4326
-   */
-  if (fieldName === 'yx') {
-    return (
-      <LocationsPicker
-        onChange={(y, x) => {
-          updateMitigationForm({ [fieldName]: [...(form[fieldName] || []), [y, x]] }, i)
-        }}
-        setPoints={points => updateMitigationForm({ [fieldName]: points }, i)}
-        points={form[fieldName] || []}
-        key={fieldName}
-      />
-    )
-  }
 
   /**
    * Controlled vocabulary

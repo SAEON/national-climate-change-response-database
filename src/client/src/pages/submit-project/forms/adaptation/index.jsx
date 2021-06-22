@@ -49,7 +49,6 @@ const Compose = memo(
                   'startYear',
                   'endYear',
                 ],
-                'Location(s)': ['yx'],
                 'Associated research': [
                   'isResearch',
                   'researchDescription',

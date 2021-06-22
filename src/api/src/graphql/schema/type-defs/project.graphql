@@ -55,6 +55,8 @@ input ProjectInput {
   districtMunicipality: ControlledVocabularyInput
   # Local municipality :: Select local municipality
   localMunicipality: ControlledVocabularyInput
+  # GPS point location(s) :: Include relevant point locations
+  yx: WKT_4326
 }
 
 type Project {
@@ -87,6 +89,7 @@ type Project {
   province: String
   districtMunicipality: String
   localMunicipality: String
+  yx: WKT_4326
 
   mitigations: [Mitigation!]
   adaptations: [Adaptation!]

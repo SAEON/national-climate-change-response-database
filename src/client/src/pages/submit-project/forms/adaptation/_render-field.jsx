@@ -3,7 +3,6 @@ import {
   GqlBoundFormInput,
   context as formContext,
   ControlledVocabularySelect,
-  LocationsPicker,
 } from '../../gql-form-binder'
 
 const multilineFields = ['description']
@@ -26,22 +25,6 @@ export default ({ field, i }) => {
   const gqlType = inputType || ofType.name
   const isRequired = !inputType
   const value = form[fieldName]
-
-  /**
-   * WKT_4326
-   */
-  if (fieldName === 'yx') {
-    return (
-      <LocationsPicker
-        onChange={(y, x) => {
-          updateAdaptationForm({ [fieldName]: [...(form[fieldName] || []), [y, x]] }, i)
-        }}
-        setPoints={points => updateAdaptationForm({ [fieldName]: points }, i)}
-        points={form[fieldName] || []}
-        key={fieldName}
-      />
-    )
-  }
 
   /**
    * Controlled vocabulary

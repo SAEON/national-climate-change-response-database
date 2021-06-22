@@ -42,9 +42,6 @@ input MitigationInput {
   # Secondary SubSector :: Select the IPCC sub-sector that best describes your project.
   hostSubSectorSecondary: ControlledVocabularyInput
 
-  # GPS point location(s) :: @amelia TODO
-  yx: WKT_4326
-
   # Associated research :: Is this project component research or applied?
   isResearch: Boolean
   # Description :: Short description of this research component
@@ -79,7 +76,6 @@ type Mitigation {
   isResearch: Boolean
   researchDescription: String
   researchType: String
-  yx: WKT_4326
   energyOrEmissionsData: String
   energyData: JSON
   emissionsData: JSON

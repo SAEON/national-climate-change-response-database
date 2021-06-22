@@ -68,13 +68,11 @@ const LocationBounds = memo(
           </Tabs>
         </AppBar>
         <TabPanel value={activeTabIndex} index={0}>
-          <WithBoundingRegion boundingRegions={boundingRegions}>
-            {({ geometry }) => {
-              const fenceId = 'input-fence'
-              return (
-                <div
-                  style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}
-                >
+          <div style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}>
+            <WithBoundingRegion boundingRegions={boundingRegions}>
+              {({ geometry }) => {
+                const fenceId = 'input-fence'
+                return (
                   <Map>
                     <>
                       {geometry && <GeometryLayer id={fenceId} geometry={geometry} />}
@@ -88,19 +86,17 @@ const LocationBounds = memo(
                       <Toolbar points={points} setPoints={setPoints} />
                     </>
                   </Map>
-                </div>
-              )
-            }}
-          </WithBoundingRegion>
+                )
+              }}
+            </WithBoundingRegion>
+          </div>
         </TabPanel>
         <TabPanel value={activeTabIndex} index={1}>
-          <WithBoundingRegion boundingRegions={boundingRegions}>
-            {geometry => {
-              const fenceId = 'input-fence'
-              return (
-                <div
-                  style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}
-                >
+          <div style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}>
+            <WithBoundingRegion boundingRegions={boundingRegions}>
+              {geometry => {
+                const fenceId = 'input-fence'
+                return (
                   <ListInput
                     setPoints={setPoints}
                     fenceGeometry={geometry}
@@ -108,10 +104,10 @@ const LocationBounds = memo(
                     addPoint={onChange}
                     points={points}
                   />
-                </div>
-              )
-            }}
-          </WithBoundingRegion>
+                )
+              }}
+            </WithBoundingRegion>
+          </div>
         </TabPanel>
       </>
     )

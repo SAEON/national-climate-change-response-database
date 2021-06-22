@@ -3,6 +3,7 @@ import {
   GqlBoundFormInput,
   context as formContext,
   ControlledVocabularySelect,
+  LocationsPicker,
 } from '../../gql-form-binder'
 import { context as authContext } from '../../../../contexts/authorization'
 
@@ -17,6 +18,22 @@ export default ({ field }) => {
   const { name: inputType } = type
   const isRequired = !inputType
   const value = projectForm[fieldName]
+
+  /**
+   * WKT_4326
+   */
+  if (fieldName === 'yx') {
+    return (
+      <LocationsPicker
+        onChange={(y, x) => {
+          updateProjectForm({ [fieldName]: [...(projectForm[fieldName] || []), [y, x]] })
+        }}
+        setPoints={points => updateProjectForm({ [fieldName]: points })}
+        points={projectForm[fieldName] || []}
+        key={fieldName}
+      />
+    )
+  }
 
   /**
    * Controlled vocabulary

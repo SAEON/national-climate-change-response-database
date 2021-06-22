@@ -17,9 +17,9 @@ const researchFormFields = [
   'researchPaper',
 ]
 
-export default ({ field, i }) => {
-  const { mitigationForms, updateMitigationForm } = useContext(formContext)
-  const form = mitigationForms[i]
+export default ({ field }) => {
+  const { mitigationDetailsForm: form, updateMitigationDetailsForm: updateForm } =
+    useContext(formContext)
   const { name: fieldName, description, type } = field
   const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType } = type
@@ -38,7 +38,7 @@ export default ({ field, i }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateMitigationForm({ [fieldName]: val }, i)}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -54,7 +54,7 @@ export default ({ field, i }) => {
         <EnergyCalculator
           key={fieldName}
           calculator={form[fieldName] || {}}
-          updateCalculator={calculator => updateMitigationForm({ [fieldName]: calculator }, i)}
+          updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
         />
       )
     } else {
@@ -71,7 +71,7 @@ export default ({ field, i }) => {
         <EmissionsCalculator
           key={fieldName}
           calculator={form[fieldName] || {}}
-          updateCalculator={calculator => updateMitigationForm({ [fieldName]: calculator }, i)}
+          updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
         />
       )
     } else {
@@ -92,14 +92,11 @@ export default ({ field, i }) => {
         value={value}
         error={isRequired && !value}
         onChange={val =>
-          updateMitigationForm(
-            {
-              [fieldName]: val,
-              hostSubSectorPrimary: undefined,
-              hostSubSectorSecondary: undefined,
-            },
-            i
-          )
+          updateForm({
+            [fieldName]: val,
+            hostSubSectorPrimary: undefined,
+            hostSubSectorSecondary: undefined,
+          })
         }
         placeholder={placeholder}
         helperText={helperText}
@@ -116,9 +113,7 @@ export default ({ field, i }) => {
           value={value}
           error={isRequired && !value}
           isRequired={isRequired}
-          onChange={val =>
-            updateMitigationForm({ [fieldName]: val, hostSubSectorSecondary: undefined }, i)
-          }
+          onChange={val => updateForm({ [fieldName]: val, hostSubSectorSecondary: undefined })}
           placeholder={placeholder}
           helperText={helperText}
         />
@@ -137,7 +132,7 @@ export default ({ field, i }) => {
           value={value}
           error={isRequired && !value}
           isRequired={isRequired}
-          onChange={val => updateMitigationForm({ [fieldName]: val }, i)}
+          onChange={val => updateForm({ [fieldName]: val })}
           placeholder={placeholder}
           helperText={helperText}
         />
@@ -159,7 +154,7 @@ export default ({ field, i }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateMitigationForm({ [fieldName]: val }, i)}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -178,7 +173,7 @@ export default ({ field, i }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateMitigationForm({ [fieldName]: val }, i)}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -197,7 +192,7 @@ export default ({ field, i }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateMitigationForm({ [fieldName]: val }, i)}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -217,7 +212,7 @@ export default ({ field, i }) => {
         value={value}
         error={isRequired && !value}
         onChange={val => {
-          updateMitigationForm({ [fieldName]: val, mitigationSubType: undefined }, i)
+          updateForm({ [fieldName]: val, mitigationSubType: undefined })
         }}
         placeholder={placeholder}
         helperText={helperText}
@@ -234,7 +229,7 @@ export default ({ field, i }) => {
           value={value}
           error={isRequired && !value}
           isRequired={isRequired}
-          onChange={val => updateMitigationForm({ [fieldName]: val }, i)}
+          onChange={val => updateForm({ [fieldName]: val })}
           placeholder={placeholder}
           helperText={helperText}
         />
@@ -253,18 +248,14 @@ export default ({ field, i }) => {
   if (fieldName === 'isResearch') {
     return (
       <GqlBoundFormInput
-        i={i}
         key={fieldName}
         field={field}
         value={value || ''}
         updateValue={val =>
-          updateMitigationForm(
-            {
-              [fieldName]: val,
-              ...Object.fromEntries(researchFormFields.map(field => [field, undefined])),
-            },
-            i
-          )
+          updateForm({
+            [fieldName]: val,
+            ...Object.fromEntries(researchFormFields.map(field => [field, undefined])),
+          })
         }
         multiline={multilineFields.includes(fieldName)}
       />
@@ -273,11 +264,10 @@ export default ({ field, i }) => {
 
   return (
     <GqlBoundFormInput
-      i={i}
       key={fieldName}
       field={field}
       value={value || ''}
-      updateValue={val => updateMitigationForm({ [fieldName]: val }, i)}
+      updateValue={val => updateForm({ [fieldName]: val })}
       multiline={multilineFields.includes(fieldName)}
     />
   )

@@ -2,7 +2,7 @@ import { createContext, useState, useCallback, useMemo } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../components/loading'
 import Fade from '@material-ui/core/Fade'
-import { getFormStatus, getMultiFormsStatus } from './_get-form-status'
+import getFormStatus from './_get-form-status'
 
 export const context = createContext()
 
@@ -30,9 +30,9 @@ const CORE_FIELDS = gql`
 `
 
 export default ({ children }) => {
-  const [projectForm, setProjectForm] = useState({})
-  const [mitigationForms, setMitigationForms] = useState([])
-  const [adaptationForms, setAdaptationForms] = useState([])
+  const [generalDetailsForm, setGeneralDetailsForm] = useState({})
+  const [mitigationDetailsForm, setMitigationDetailsForm] = useState({})
+  const [adaptationDetailsForm, setAdaptationDetailsForm] = useState({})
 
   /* TYPE QUERY */
 
@@ -70,59 +70,39 @@ export default ({ children }) => {
 
   /* PROJECT FORM */
 
-  const updateProjectForm = useCallback(obj => {
-    setProjectForm(projectForm => Object.assign({ ...projectForm }, obj))
+  const updateGeneralDetailsForm = useCallback(obj => {
+    setGeneralDetailsForm(form => Object.assign({ ...form }, obj))
   }, [])
 
-  const projectFormValidation = useMemo(
-    () => getFormStatus(projectFields, projectForm),
-    [projectFields, projectForm]
+  const generalDetailsFormValidation = useMemo(
+    () => getFormStatus(projectFields, generalDetailsForm),
+    [projectFields, generalDetailsForm]
   )
 
   /* MITIGATION FORMS */
 
-  const updateMitigationForm = useCallback((obj, i) => {
-    setMitigationForms(forms =>
-      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, { ...obj }) : form))
-    )
+  const updateMitigationDetailsForm = useCallback(obj => {
+    setMitigationDetailsForm(form => Object.assign({ ...form }, obj))
   }, [])
 
-  const addMitigationForm = useCallback(() => {
-    setMitigationForms(forms => [...forms, {}])
-  }, [])
-
-  const removeMitigationForm = useCallback(i => {
-    setMitigationForms(forms => forms.filter((form, _i) => i !== _i))
-  }, [])
-
-  const resetMitigationForms = useCallback(() => setMitigationForms(() => []), [])
+  const resetMitigationDetailsForm = useCallback(() => setMitigationDetailsForm({}), [])
 
   const mitigationFormsValidation = useMemo(
-    () => getMultiFormsStatus(mitigationForms.map(form => getFormStatus(mitigationFields, form))),
-    [mitigationFields, mitigationForms]
+    () => getFormStatus(mitigationFields, mitigationDetailsForm),
+    [mitigationFields, mitigationDetailsForm]
   )
 
   /* ADAPTATION FORMS */
 
-  const updateAdaptationForm = useCallback((obj, i) => {
-    setAdaptationForms(forms =>
-      forms.map((form, _i) => (i === _i ? Object.assign({ ...form }, obj) : form))
-    )
+  const updateAdaptationDetailsForm = useCallback(obj => {
+    setAdaptationDetailsForm(form => Object.assign({ ...form }, obj))
   }, [])
 
-  const addAdaptationForm = useCallback(() => {
-    setAdaptationForms(forms => [...forms, {}])
-  }, [])
-
-  const removeAdaptationForm = useCallback(i => {
-    setAdaptationForms(forms => forms.filter((form, _i) => i !== _i))
-  }, [])
-
-  const resetAdaptationForms = useCallback(() => setAdaptationForms(() => []), [])
+  const resetAdaptationDetailsForm = useCallback(() => setAdaptationDetailsForm({}), [])
 
   const adaptationFormsValidation = useMemo(
-    () => getMultiFormsStatus(adaptationForms.map(form => getFormStatus(adaptationFields, form))),
-    [adaptationFields, adaptationForms]
+    () => getFormStatus(adaptationFields, adaptationDetailsForm),
+    [adaptationFields, adaptationDetailsForm]
   )
 
   if (loading) {
@@ -143,22 +123,18 @@ export default ({ children }) => {
     <context.Provider
       value={{
         projectFields,
-        projectForm,
-        projectFormValidation,
-        updateProjectForm,
+        generalDetailsForm,
+        generalDetailsFormValidation,
+        updateGeneralDetailsForm,
         mitigationFields,
-        mitigationForms,
+        mitigationDetailsForm,
         mitigationFormsValidation,
-        updateMitigationForm,
-        addMitigationForm,
-        removeMitigationForm,
-        resetMitigationForms,
+        updateMitigationDetailsForm,
+        resetMitigationDetailsForm,
         adaptationFields,
-        updateAdaptationForm,
-        addAdaptationForm,
-        removeAdaptationForm,
-        resetAdaptationForms,
-        adaptationForms,
+        updateAdaptationDetailsForm,
+        resetAdaptationDetailsForm,
+        adaptationDetailsForm,
         adaptationFormsValidation,
       }}
     >

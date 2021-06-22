@@ -6,15 +6,15 @@ import clsx from 'clsx'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import GraphQLFormProvider, { Submit, context as formContext } from './gql-form-binder'
-import ProjectForm from './forms/project'
 import CompleteIcon from 'mdi-react/CheckBoldIcon'
 import Header from './header'
 import Wrapper from '../../components/page-wrapper'
 import Loading from '../../components/loading'
 import AccessDenied from '../../components/access-denied'
 
-const MitigationForms = lazy(() => import('./forms/mitigation'))
-const AdaptationForms = lazy(() => import('./forms/adaptation'))
+const GeneralDetailsForm = lazy(() => import('./forms/general-details'))
+const MitigationDetailsForm = lazy(() => import('./forms/mitigation-details'))
+const AdaptationDetailsForm = lazy(() => import('./forms/adaptation-details'))
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -58,32 +58,33 @@ const AvatarIcon = ({ i, complete, started, disabled, enabled }) => {
 
 const Layout = () => {
   const {
-    projectForm,
-    projectFormValidation,
+    generalDetailsForm,
+    generalDetailsFormValidation,
     mitigationFormsValidation,
     adaptationFormsValidation,
   } = useContext(formContext)
 
-  const { isComplete: projectFormComplete, isStarted: projectFormStarted } = projectFormValidation
+  const { isComplete: generalDetailsFormComplete, isStarted: generalDetailsFormStarted } =
+    generalDetailsFormValidation
 
-  const { isComplete: mitigationFormsComplete, isStarted: mitigationFormsStarted } =
+  const { isComplete: mitigationDetailsFormComplete, isStarted: mitigationDetailsFormStarted } =
     mitigationFormsValidation
 
-  const { isComplete: adaptationFormsComplete, isStarted: adaptationFormsStarted } =
+  const { isComplete: adaptationDetailsFormComplete, isStarted: adaptationDetailsFormStarted } =
     adaptationFormsValidation
 
   const mitigationsRequired = ['mitigation', 'cross cutting'].includes(
-    projectForm['interventionType']?.term.toLowerCase()
+    generalDetailsForm['interventionType']?.term.toLowerCase()
   )
 
   const adaptationsRequired = ['adaptation', 'cross cutting'].includes(
-    projectForm['interventionType']?.term.toLowerCase()
+    generalDetailsForm['interventionType']?.term.toLowerCase()
   )
 
   let canSubmit = true
-  if (!projectFormComplete) canSubmit = false
-  if (mitigationsRequired && !mitigationFormsComplete) canSubmit = false
-  if (adaptationsRequired && !adaptationFormsComplete) canSubmit = false
+  if (!generalDetailsFormComplete) canSubmit = false
+  if (mitigationsRequired && !mitigationDetailsFormComplete) canSubmit = false
+  if (adaptationsRequired && !adaptationDetailsFormComplete) canSubmit = false
 
   return (
     <>
@@ -95,7 +96,11 @@ const Layout = () => {
               primaryText: 'General',
               secondaryText: 'Basic project details',
               Icon: () => (
-                <AvatarIcon i={1} started={projectFormStarted} complete={projectFormComplete} />
+                <AvatarIcon
+                  i={1}
+                  started={generalDetailsFormStarted}
+                  complete={generalDetailsFormComplete}
+                />
               ),
             },
             {
@@ -105,8 +110,8 @@ const Layout = () => {
               Icon: () => (
                 <AvatarIcon
                   i={2}
-                  started={mitigationFormsStarted}
-                  complete={mitigationFormsComplete}
+                  started={mitigationDetailsFormStarted}
+                  complete={mitigationDetailsFormComplete}
                 />
               ),
             },
@@ -117,8 +122,8 @@ const Layout = () => {
               Icon: () => (
                 <AvatarIcon
                   i={3}
-                  started={adaptationFormsStarted}
-                  complete={adaptationFormsComplete}
+                  started={adaptationDetailsFormStarted}
+                  complete={adaptationDetailsFormComplete}
                 />
               ),
             },
@@ -133,15 +138,19 @@ const Layout = () => {
           {({ activeIndex }) => {
             return (
               <>
-                {activeIndex === 0 && <ProjectForm key="project-form" />}
+                {activeIndex === 0 && (
+                  <Suspense fallback={<Loading />}>
+                    <GeneralDetailsForm key="project-form" />
+                  </Suspense>
+                )}
                 {activeIndex === 1 && (
                   <Suspense fallback={<Loading />}>
-                    <MitigationForms key="mitigation-forms" />
+                    <MitigationDetailsForm key="mitigation-form" />
                   </Suspense>
                 )}
                 {activeIndex === 2 && (
                   <Suspense fallback={<Loading />}>
-                    <AdaptationForms key="adaptation-forms" />
+                    <AdaptationDetailsForm key="adaptation-form" />
                   </Suspense>
                 )}
                 {activeIndex === 3 && <Submit key="submit" />}

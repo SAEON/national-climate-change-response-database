@@ -15,10 +15,8 @@ const researchFormFields = [
   'researchPaper',
 ]
 
-export default ({ field, i }) => {
-  const { updateAdaptationForm, adaptationForms } = useContext(formContext)
-  const form = adaptationForms[i]
-
+export default ({ field }) => {
+  const { updateAdaptationDetailsForm, adaptationDetailsForm: form } = useContext(formContext)
   const { name: fieldName, description, type } = field
   const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType, ofType } = type
@@ -38,7 +36,7 @@ export default ({ field, i }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateAdaptationForm({ [fieldName]: val }, i)}
+        onChange={val => updateAdaptationDetailsForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -57,7 +55,7 @@ export default ({ field, i }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateAdaptationForm({ [fieldName]: val }, i)}
+        onChange={val => updateAdaptationDetailsForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -77,15 +75,12 @@ export default ({ field, i }) => {
         value={value}
         error={isRequired && !value}
         onChange={val =>
-          updateAdaptationForm(
-            {
-              [fieldName]: val,
-              hazardSubFamily: undefined,
-              hazard: undefined,
-              subHazard: undefined,
-            },
-            i
-          )
+          updateAdaptationDetailsForm({
+            [fieldName]: val,
+            hazardSubFamily: undefined,
+            hazard: undefined,
+            subHazard: undefined,
+          })
         }
         placeholder={placeholder}
         helperText={helperText}
@@ -102,7 +97,11 @@ export default ({ field, i }) => {
           value={value}
           error={isRequired && !value}
           onChange={val =>
-            updateAdaptationForm({ [fieldName]: val, hazard: undefined, subHazard: undefined }, i)
+            updateAdaptationDetailsForm({
+              [fieldName]: val,
+              hazard: undefined,
+              subHazard: undefined,
+            })
           }
           placeholder={placeholder}
           helperText={helperText}
@@ -121,7 +120,7 @@ export default ({ field, i }) => {
           name={fieldName}
           value={value}
           error={isRequired && !value}
-          onChange={val => updateAdaptationForm({ [fieldName]: val, subHazard: undefined }, i)}
+          onChange={val => updateAdaptationDetailsForm({ [fieldName]: val, subHazard: undefined })}
           placeholder={placeholder}
           helperText={helperText}
         />
@@ -139,7 +138,7 @@ export default ({ field, i }) => {
           name={fieldName}
           value={value}
           error={isRequired && !value}
-          onChange={val => updateAdaptationForm({ [fieldName]: val }, i)}
+          onChange={val => updateAdaptationDetailsForm({ [fieldName]: val })}
           placeholder={placeholder}
           helperText={helperText}
         />
@@ -161,7 +160,7 @@ export default ({ field, i }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateAdaptationForm({ [fieldName]: val }, i)}
+        onChange={val => updateAdaptationDetailsForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -181,18 +180,14 @@ export default ({ field, i }) => {
   if (fieldName === 'isResearch') {
     return (
       <GqlBoundFormInput
-        i={i}
         key={fieldName}
         field={field}
         value={value || ''}
         updateValue={val =>
-          updateAdaptationForm(
-            {
-              [fieldName]: val,
-              ...Object.fromEntries(researchFormFields.map(field => [field, undefined])),
-            },
-            i
-          )
+          updateAdaptationDetailsForm({
+            [fieldName]: val,
+            ...Object.fromEntries(researchFormFields.map(field => [field, undefined])),
+          })
         }
         multiline={multilineFields.includes(fieldName)}
       />
@@ -201,11 +196,10 @@ export default ({ field, i }) => {
 
   return (
     <GqlBoundFormInput
-      i={i}
       key={fieldName}
       field={field}
       value={form[fieldName] || ''}
-      updateValue={val => updateAdaptationForm({ [fieldName]: val }, i)}
+      updateValue={val => updateAdaptationDetailsForm({ [fieldName]: val })}
       multiline={multilineFields.includes(fieldName)}
     />
   )

@@ -1,4 +1,4 @@
-export const getFormStatus = (fields, form) => {
+export default (fields, form) => {
   const requiredFields = (
     fields?.map(({ name: fieldName, type }) => {
       const { ofType } = type
@@ -19,9 +19,3 @@ export const getFormStatus = (fields, form) => {
     }, true),
   }
 }
-
-export const getMultiFormsStatus = forms => ({
-  forms,
-  isStarted: Boolean(forms.length),
-  isComplete: forms.length ? forms.reduce((acc, c) => (!acc ? false : c.isComplete), true) : false,
-})

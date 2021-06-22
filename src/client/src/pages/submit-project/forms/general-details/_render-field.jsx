@@ -11,13 +11,17 @@ const multilineFields = ['description', 'validationComments']
 
 export default ({ field }) => {
   const { hasPermission } = useContext(authContext)
-  const { projectForm, updateProjectForm, resetMitigationForms, resetAdaptationForms } =
-    useContext(formContext)
+  const {
+    generalDetailsForm: form,
+    updateGeneralDetailsForm: updateForm,
+    resetMitigationDetailsForm,
+    resetAdaptationDetailsForm,
+  } = useContext(formContext)
   const { name: fieldName, description, type } = field
   const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType } = type
   const isRequired = !inputType
-  const value = projectForm[fieldName]
+  const value = form[fieldName]
 
   /**
    * WKT_4326
@@ -26,10 +30,10 @@ export default ({ field }) => {
     return (
       <LocationsPicker
         onChange={(y, x) => {
-          updateProjectForm({ [fieldName]: [...(projectForm[fieldName] || []), [y, x]] })
+          updateForm({ [fieldName]: [...(form[fieldName] || []), [y, x]] })
         }}
-        setPoints={points => updateProjectForm({ [fieldName]: points })}
-        points={projectForm[fieldName] || []}
+        setPoints={points => updateForm({ [fieldName]: points })}
+        points={form[fieldName] || []}
         key={fieldName}
       />
     )
@@ -48,7 +52,7 @@ export default ({ field }) => {
         value={value}
         error={isRequired && !value}
         onChange={val =>
-          updateProjectForm({
+          updateForm({
             [fieldName]: val,
             districtMunicipality: undefined,
             localMunicipality: undefined,
@@ -59,31 +63,31 @@ export default ({ field }) => {
       />
     )
   } else if (fieldName === 'districtMunicipality') {
-    if (!projectForm.province) return null
+    if (!form.province) return null
     return (
       <ControlledVocabularySelect
         key={fieldName}
         tree="regions"
-        root={projectForm.province}
+        root={form.province}
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateProjectForm({ [fieldName]: val, localMunicipality: undefined })}
+        onChange={val => updateForm({ [fieldName]: val, localMunicipality: undefined })}
         placeholder={placeholder}
         helperText={helperText}
       />
     )
   } else if (fieldName === 'localMunicipality') {
-    if (!projectForm.districtMunicipality) return null
+    if (!form.districtMunicipality) return null
     return (
       <ControlledVocabularySelect
         key={fieldName}
         tree="regions"
-        root={projectForm.districtMunicipality}
+        root={form.districtMunicipality}
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateProjectForm({ [fieldName]: val })}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -103,7 +107,7 @@ export default ({ field }) => {
         disabled={!hasPermission('validate-submission')}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateProjectForm({ [fieldName]: val })}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -120,7 +124,7 @@ export default ({ field }) => {
         field={field}
         value={value || ''}
         disabled={!hasPermission('validate-submission')}
-        updateValue={val => updateProjectForm({ [fieldName]: val })}
+        updateValue={val => updateForm({ [fieldName]: val })}
         multiline={multilineFields.includes(fieldName)}
       />
     )
@@ -139,24 +143,24 @@ export default ({ field }) => {
         value={value}
         error={isRequired && !value}
         onChange={val => {
-          updateProjectForm({ [fieldName]: val, hostSubSector: undefined })
+          updateForm({ [fieldName]: val, hostSubSector: undefined })
         }}
         placeholder={placeholder}
         helperText={helperText}
       />
     )
   } else if (fieldName === 'hostSubSector') {
-    if (projectForm['hostSector']) {
+    if (form['hostSector']) {
       return (
         <ControlledVocabularySelect
           key={fieldName}
           tree="hostSectors"
-          root={projectForm['hostSector']}
+          root={form['hostSector']}
           name={fieldName}
           value={value}
           isRequired={isRequired}
           error={isRequired && !value}
-          onChange={val => updateProjectForm({ [fieldName]: val })}
+          onChange={val => updateForm({ [fieldName]: val })}
           placeholder={placeholder}
           helperText={helperText}
         />
@@ -179,14 +183,14 @@ export default ({ field }) => {
         value={value}
         error={isRequired && !value}
         onChange={val => {
-          updateProjectForm({ [fieldName]: val })
+          updateForm({ [fieldName]: val })
 
           if (val?.term.toLowerCase() === 'adaptation' || !val?.term) {
-            resetMitigationForms()
+            resetMitigationDetailsForm()
           }
 
           if (val?.term.toLowerCase() === 'mitigation' || !val?.term) {
-            resetAdaptationForms()
+            resetAdaptationDetailsForm()
           }
         }}
         placeholder={placeholder}
@@ -207,7 +211,7 @@ export default ({ field }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateProjectForm({ [fieldName]: val })}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -226,7 +230,7 @@ export default ({ field }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateProjectForm({ [fieldName]: val })}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -245,7 +249,7 @@ export default ({ field }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateProjectForm({ [fieldName]: val })}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -264,7 +268,7 @@ export default ({ field }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateProjectForm({ [fieldName]: val })}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -276,7 +280,7 @@ export default ({ field }) => {
       key={fieldName}
       field={field}
       value={value || ''}
-      updateValue={val => updateProjectForm({ [fieldName]: val })}
+      updateValue={val => updateForm({ [fieldName]: val })}
       multiline={multilineFields.includes(fieldName)}
     />
   )

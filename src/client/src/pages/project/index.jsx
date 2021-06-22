@@ -36,15 +36,13 @@ export default ({ id }) => {
           province
           districtMunicipality
           localMunicipality
+          yx
           mitigations {
             id
-            title
-            description
             carbonCredit
             volMethodology
             goldStandard
             vcs
-            yx
             otherCarbonCreditStandard
             otherCarbonCreditStandardDescription
             cdmProjectNumber
@@ -69,11 +67,8 @@ export default ({ id }) => {
           }
           adaptations {
             id
-            title
-            description
             startYear
             endYear
-            yx
             isResearch
             interventionStatus
             researchDescription

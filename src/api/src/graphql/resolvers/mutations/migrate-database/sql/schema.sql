@@ -220,8 +220,6 @@ begin
 create table Mitigations (
   id int not null identity primary key,
 	projectId int not null foreign key references Projects (id),
-	title nvarchar(255),
-	description nvarchar(4000),
 	carbonCredit bit,
 	volMethodology nvarchar(255),
 	goldStandard bit,
@@ -323,8 +321,6 @@ begin
 create table Adaptations (
   id int not null identity primary key,
 	projectId int not null foreign key references Projects (id),
-  title nvarchar(255),
-  description nvarchar(255),
   startYear int,
   endYear int,
 	isResearch bit default 0,

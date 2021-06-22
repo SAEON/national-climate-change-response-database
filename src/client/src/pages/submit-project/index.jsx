@@ -92,7 +92,7 @@ const Layout = () => {
         <ContentNav
           navItems={[
             {
-              primaryText: 'Project',
+              primaryText: 'General',
               secondaryText: 'Basic project details',
               Icon: () => (
                 <AvatarIcon i={1} started={projectFormStarted} complete={projectFormComplete} />
@@ -100,7 +100,7 @@ const Layout = () => {
             },
             {
               disabled: !mitigationsRequired,
-              primaryText: 'Mitigation(s)',
+              primaryText: 'Mitigation details',
               secondaryText: 'Project mitigation details',
               Icon: () => (
                 <AvatarIcon
@@ -112,7 +112,7 @@ const Layout = () => {
             },
             {
               disabled: !adaptationsRequired,
-              primaryText: 'Adaptation(s)',
+              primaryText: 'Adaptation details',
               secondaryText: 'Project adaptation details',
               Icon: () => (
                 <AvatarIcon

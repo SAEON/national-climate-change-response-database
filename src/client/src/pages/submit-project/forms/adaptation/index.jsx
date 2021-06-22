@@ -41,8 +41,6 @@ const Compose = memo(
               cardHeaderStyle={{ paddingLeft: 0, paddingRight: 0 }}
               sections={{
                 'Adaptation details': [
-                  'title',
-                  'description',
                   'adaptationPurpose',
                   'adaptationSector',
                   'interventionStatus',

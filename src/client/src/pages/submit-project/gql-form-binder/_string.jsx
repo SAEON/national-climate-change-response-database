@@ -14,7 +14,6 @@ export default memo(
     error,
     setValue,
     value,
-    i = 0,
   }) => {
     const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
 
@@ -28,7 +27,7 @@ export default memo(
               value={value}
               disabled={disabled}
               error={error}
-              id={`${name}-${i}`}
+              id={`${name}`}
               label={name}
               placeholder={placeholder}
               helperText={helperText}

@@ -219,7 +219,7 @@ if not exists (
 begin
 create table Mitigations (
   id int not null identity primary key,
-	projectId int not null foreign key references Projects (id),
+	projectId int not null unique foreign key references Projects (id),
 	carbonCredit bit,
 	volMethodology nvarchar(255),
 	goldStandard bit,
@@ -320,7 +320,7 @@ if not exists (
 begin
 create table Adaptations (
   id int not null identity primary key,
-	projectId int not null foreign key references Projects (id),
+	projectId int not null unique foreign key references Projects (id),
   startYear int,
   endYear int,
 	isResearch bit default 0,

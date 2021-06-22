@@ -5,7 +5,7 @@ import QuickForm from '../../../components/quick-form'
 import debounce from '../../../lib/debounce'
 
 export default memo(
-  ({ name, placeholder, disabled = false, helperText, error, value, setValue, i = 0 }) => {
+  ({ name, placeholder, disabled = false, helperText, error, value, setValue }) => {
     const effect = useMemo(() => debounce(({ value }) => setValue(value), 100), [setValue])
 
     return (
@@ -14,7 +14,7 @@ export default memo(
           return (
             <TextField
               autoComplete="off"
-              id={`${name}-${i}`}
+              id={`${name}`}
               label={name}
               disabled={disabled}
               placeholder={placeholder}

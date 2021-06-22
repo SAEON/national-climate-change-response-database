@@ -11,6 +11,7 @@ type User {
   familyName: String
   roles: [Role!]!
   permissions: [Permission!]!
+  projects: [Project!]!
 }
 
 type Role {

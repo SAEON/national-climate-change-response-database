@@ -75,7 +75,8 @@ const convertFormToInput = form =>
 
 export default () => {
   const history = useHistory()
-  const { projectForm, mitigationForms, adaptationForms } = useContext(formContext)
+  const { generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm } =
+    useContext(formContext)
 
   const [createProject, { error, loading }] = useMutation(
     gql`
@@ -113,7 +114,7 @@ export default () => {
       },
       onCompleted: ({ createProject }) => {
         const { id } = createProject
-        history.push(`/projects/${id}`)
+        // history.push(`/projects/${id}`)
       },
     }
   )
@@ -131,9 +132,9 @@ export default () => {
             onClick={() =>
               createProject({
                 variables: {
-                  projectForm: convertFormToInput(projectForm),
-                  mitigationForms: mitigationForms.map(form => convertFormToInput(form)),
-                  adaptationForms: adaptationForms.map(form => convertFormToInput(form)),
+                  projectForm: convertFormToInput(generalDetailsForm),
+                  mitigationForms: convertFormToInput(mitigationDetailsForm),
+                  adaptationForms: convertFormToInput(adaptationDetailsForm),
                 },
               })
             }

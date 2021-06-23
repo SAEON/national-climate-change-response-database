@@ -54,25 +54,27 @@ const LocationBounds = memo(
     }
 
     return (
-      <>
-        <AppBar style={{ zIndex: 1 }} variant="outlined" color="default" position="relative">
-          <Tabs
-            indicatorColor="primary"
-            textColor="primary"
-            value={activeTabIndex}
-            onChange={(e, i) => setActiveTabIndex(i)}
-            aria-label="Location picker"
-          >
-            <Tab label="Map input" {...a11yProps(0)} />
-            <Tab label="List input" {...a11yProps(1)} />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={activeTabIndex} index={0}>
-          <div style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}>
-            <WithBoundingRegion boundingRegions={boundingRegions}>
-              {({ geometry }) => {
-                const fenceId = 'input-fence'
-                return (
+      <WithBoundingRegion boundingRegions={boundingRegions}>
+        {({ geometry }) => {
+          const fenceId = 'input-fence'
+          return (
+            <>
+              <AppBar style={{ zIndex: 1 }} variant="outlined" color="default" position="relative">
+                <Tabs
+                  indicatorColor="primary"
+                  textColor="primary"
+                  value={activeTabIndex}
+                  onChange={(e, i) => setActiveTabIndex(i)}
+                  aria-label="Location picker"
+                >
+                  <Tab label="Map input" {...a11yProps(0)} />
+                  <Tab label="List input" {...a11yProps(1)} />
+                </Tabs>
+              </AppBar>
+              <TabPanel value={activeTabIndex} index={0}>
+                <div
+                  style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}
+                >
                   <Map>
                     <>
                       {geometry && <GeometryLayer id={fenceId} geometry={geometry} />}
@@ -86,17 +88,12 @@ const LocationBounds = memo(
                       <Toolbar points={points} setPoints={setPoints} />
                     </>
                   </Map>
-                )
-              }}
-            </WithBoundingRegion>
-          </div>
-        </TabPanel>
-        <TabPanel value={activeTabIndex} index={1}>
-          <div style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}>
-            <WithBoundingRegion boundingRegions={boundingRegions}>
-              {geometry => {
-                const fenceId = 'input-fence'
-                return (
+                </div>
+              </TabPanel>
+              <TabPanel value={activeTabIndex} index={1}>
+                <div
+                  style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}
+                >
                   <ListInput
                     setPoints={setPoints}
                     fenceGeometry={geometry}
@@ -104,12 +101,12 @@ const LocationBounds = memo(
                     addPoint={onChange}
                     points={points}
                   />
-                )
-              }}
-            </WithBoundingRegion>
-          </div>
-        </TabPanel>
-      </>
+                </div>
+              </TabPanel>
+            </>
+          )
+        }}
+      </WithBoundingRegion>
     )
   },
   (a, b) => {

@@ -1,24 +1,24 @@
 input ProjectInput {
   # Project name :: What is the name of the project?
-  title: String!
+  title: String
   # Project description :: Enter long text description here
   description: String
   # Intervention type :: Indicate the type of intervention this project focuses on? :: interventionTypes
-  interventionType: ControlledVocabularyInput!
+  interventionType: ControlledVocabularyInput
   # Project start year :: Start date of project
-  startYear: DateTime!
+  startYear: DateTime
   # Project end year :: End date of project
-  endYear: DateTime!
+  endYear: DateTime
   # Link to project website :: Is there a URI that is associated with this project?
   link: String
 
   # Implementation status :: At what stage is this project? :: actionStatus
   implementationStatus: ControlledVocabularyInput
   # Implementing organization :: Who is implementing the project?
-  implementingOrganization: String!
+  implementingOrganization: String
 
   # Funding organization :: Who is the main funding organization?
-  fundingOrganisation: String!
+  fundingOrganisation: String
   # Type of funding :: Domestic or international sources(Grant or Loan) :: fundingTypes
   fundingType: ControlledVocabularyInput
 
@@ -28,7 +28,7 @@ input ProjectInput {
   estimatedBudget: ControlledVocabularyInput
 
   # Province :: Select province :: regions
-  province: ControlledVocabularyInput!
+  province: ControlledVocabularyInput
   # District municipality :: Select district municipality :: regions
   districtMunicipality: ControlledVocabularyInput
   # Local municipality :: Select local municipality :: regions
@@ -37,21 +37,21 @@ input ProjectInput {
   yx: WKT_4326
 
   # Name :: What is the project manager's full name ?
-  projectManagerName: String!
+  projectManagerName: String
   # Company/organization :: What company/organization does the project manager belong to?
-  projectManagerOrganization: String!
+  projectManagerOrganization: String
   # Position :: What position does the project manager hold?
-  projectManagerPosition: String!
+  projectManagerPosition: String
   # Email address :: What is the project manager's email address?
-  projectManagerEmail: String!
+  projectManagerEmail: String
   # Telephone number :: What is the project managers telephone number?
-  projectManagerTelephone: String!
+  projectManagerTelephone: String
   # Mobile number :: What is the project manager's mobile number?
   projectManagerMobile: String
   # Physical address :: What is the project manager's physical address? (press shft + enter for newline)
-  projectManagerPhysicalAddress: String!
+  projectManagerPhysicalAddress: String
   # Postal address :: What is the project manager's postal address? (press shft + enter for newline)
-  projectManagerPostalAddress: String!
+  projectManagerPostalAddress: String
 
   # Validation status :: Has this project been validated? :: projectValidationStatus
   validationStatus: ControlledVocabularyInput
@@ -62,33 +62,33 @@ input ProjectInput {
 type Project {
   id: Int!
 
-  title: String!
+  title: String
   description: String
-  interventionType: String!
+  interventionType: String
   link: String
   implementationStatus: String
-  implementingOrganization: String!
-  fundingOrganisation: String!
+  implementingOrganization: String
+  fundingOrganisation: String
   fundingType: String
   actualBudget: Money
   estimatedBudget: String
-  province: String!
+  province: String
   districtMunicipality: String
   localMunicipality: String
   yx: WKT_4326
-  projectManagerName: String!
-  projectManagerOrganization: String!
-  projectManagerPosition: String!
-  projectManagerEmail: String!
-  projectManagerTelephone: String!
+  projectManagerName: String
+  projectManagerOrganization: String
+  projectManagerPosition: String
+  projectManagerEmail: String
+  projectManagerTelephone: String
   projectManagerMobile: String
-  projectManagerPhysicalAddress: String!
-  projectManagerPostalAddress: String!
+  projectManagerPhysicalAddress: String
+  projectManagerPostalAddress: String
   validationStatus: String
   validationComments: String
 
-  mitigations: [Mitigation!]
-  adaptations: [Adaptation!]
+  mitigations: [Mitigation]
+  adaptations: [Adaptation]
 
   updatedAt: DateTime
   updatedBy: User

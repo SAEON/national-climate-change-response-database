@@ -1,13 +1,13 @@
 input MitigationInput {
   # Select host sector :: Select the IPCC host sector that best describes your project. :: mitigationSectors
-  hostSector: ControlledVocabularyInput!
+  hostSector: ControlledVocabularyInput
   # Select main sub-sector :: Select the IPCC main sub-sector that best describes you project. :: mitigationSectors
   hostSubSectorPrimary: ControlledVocabularyInput
   # Select secondary sub-sector :: Select the IPCC sub-sector that best describes your project. :: mitigationSectors
   hostSubSectorSecondary: ControlledVocabularyInput
 
   # Select the type of project :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationTypes
-  mitigationType: ControlledVocabularyInput!
+  mitigationType: ControlledVocabularyInput
 
   # Select the project sub-type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationTypes
   mitigationSubType: ControlledVocabularyInput
@@ -74,7 +74,7 @@ input MitigationInput {
 type Mitigation {
   id: Int!
 
-  hostSector: String!
+  hostSector: String
   hostSubSectorPrimary: String
   hostSubSectorSecondary: String
 

@@ -7,7 +7,12 @@ import {
 } from '../../gql-form-binder'
 import { context as authContext } from '../../../../contexts/authorization'
 
-const multilineFields = ['description', 'validationComments']
+const multilineFields = [
+  'description',
+  'validationComments',
+  'projectManagerPhysicalAddress',
+  'projectManagerPostalAddress',
+]
 
 export default ({ field }) => {
   const { hasPermission } = useContext(authContext)
@@ -133,46 +138,6 @@ export default ({ field }) => {
   /**
    * Controlled vocabulary
    */
-  if (fieldName === 'hostSector') {
-    return (
-      <ControlledVocabularySelect
-        key={fieldName}
-        tree="hostSectors"
-        root="Host sector"
-        name={fieldName}
-        value={value}
-        error={isRequired && !value}
-        onChange={val => {
-          updateForm({ [fieldName]: val, hostSubSector: undefined })
-        }}
-        placeholder={placeholder}
-        helperText={helperText}
-      />
-    )
-  } else if (fieldName === 'hostSubSector') {
-    if (form['hostSector']) {
-      return (
-        <ControlledVocabularySelect
-          key={fieldName}
-          tree="hostSectors"
-          root={form['hostSector']}
-          name={fieldName}
-          value={value}
-          isRequired={isRequired}
-          error={isRequired && !value}
-          onChange={val => updateForm({ [fieldName]: val })}
-          placeholder={placeholder}
-          helperText={helperText}
-        />
-      )
-    } else {
-      return null
-    }
-  }
-
-  /**
-   * Controlled vocabulary
-   */
   if (fieldName === 'interventionType') {
     return (
       <ControlledVocabularySelect
@@ -202,26 +167,7 @@ export default ({ field }) => {
   /**
    * Controlled vocabulary
    */
-  if (fieldName === 'projectType') {
-    return (
-      <ControlledVocabularySelect
-        key={fieldName}
-        tree="projectTypes"
-        root="Project type"
-        name={fieldName}
-        value={value}
-        error={isRequired && !value}
-        onChange={val => updateForm({ [fieldName]: val })}
-        placeholder={placeholder}
-        helperText={helperText}
-      />
-    )
-  }
-
-  /**
-   * Controlled vocabulary
-   */
-  if (fieldName === 'projectStatus') {
+  if (fieldName === 'implementationStatus') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
@@ -259,12 +205,12 @@ export default ({ field }) => {
   /**
    * Controlled vocabulary
    */
-  if (fieldName === 'fundingStatus') {
+  if (fieldName === 'fundingType') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="projectFunding"
-        root="Funding status"
+        tree="fundingTypes"
+        root="Funding type"
         name={fieldName}
         value={value}
         error={isRequired && !value}

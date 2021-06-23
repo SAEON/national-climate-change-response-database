@@ -1,95 +1,87 @@
 input ProjectInput {
-  # Project title :: Unique project name in line with programmatic inputs
+  # Project name :: What is the name of the project?
   title: String!
   # Project description :: Enter long text description here
   description: String
-  # Project manager :: Who is in charge of managing this project?
-  projectManager: String
-  # Intervention type :: What type of intervention does this project focus on?
-  interventionType: ControlledVocabularyInput
-  # Project status :: TODO Amelia
-  projectStatus: ControlledVocabularyInput
-  # Link :: Is there a URI that is associated with this project?
+  # Intervention type :: Indicate the type of intervention this project focuses on? :: interventionTypes
+  interventionType: ControlledVocabularyInput!
+  # Link to project website :: Is there a URI that is associated with this project?
   link: String
-  # Project start year :: When did / is the project expected to start?
-  startYear: DateTime
-  # Project end year :: When did / is the project expected to end?
-  endYear: DateTime
 
-  # Validation status :: Has this project been validated?
-  validationStatus: ControlledVocabularyInput
-  # Validation Comments :: Any validation feedback?
-  validationComments: String
+  # Implementation status :: At what stage is this project? :: actionStatus
+  implementationStatus: ControlledVocabularyInput
+  # Implementing organization :: Who is implementing the project?
+  implementingOrganization: String!
 
-  # Funding status :: TODO Amelia
-  fundingStatus: ControlledVocabularyInput
   # Funding organization :: Who is the main funding organization?
-  fundingOrganisation: String
-  # Funding partner :: Who is the main funding partner
-  fundingPartner: String
-  # Estimated budget :: What is the estimated budget for this project?
+  fundingOrganisation: String!
+  # Type of funding :: Domestic or international sources(Grant or Loan) :: fundingTypes
+  fundingType: ControlledVocabularyInput
+
+  # Actual budget :: Do you know the actual project budget?
+  actualBudget: Money
+  # Estimated budget :: If you don't know the actual budget, please provide an estimate :: budgetRanges
   estimatedBudget: ControlledVocabularyInput
-  # Budget (lower bound) :: What is the lower-bound of the estimated budget?
-  budgetLower: Money
-  # Budget (upper bound) :: What is the upper-bound of the estimated budget?
-  budgetUpper: Money
 
-  # Host partner :: Who is the main hosting partner?
-  hostPartner: String
-  # Host organization :: Who is the main hosting organization?
-  hostOrganisation: String
-  # Host sector :: @amelia TODO
-  hostSector: ControlledVocabularyInput
-  # Sub-host sector :: @amelia TODO
-  hostSubSector: ControlledVocabularyInput
-  # Alternative contact :: Who else can people contact?
-  alternativeContact: String
-  # Alternative contact email :: Contact details of the alternative contact
-  alternativeContactEmail: String
-  # Lead agent :: Lead contact agent
-  leadAgent: String
-
-  # Province :: Select province
-  province: ControlledVocabularyInput
-  # District municipality :: Select district municipality
+  # Province :: Select province :: regions
+  province: ControlledVocabularyInput!
+  # District municipality :: Select district municipality :: regions
   districtMunicipality: ControlledVocabularyInput
-  # Local municipality :: Select local municipality
+  # Local municipality :: Select local municipality :: regions
   localMunicipality: ControlledVocabularyInput
   # GPS point location(s) :: Include relevant point locations
   yx: WKT_4326
+
+  # Name :: What is the project manager's full name ?
+  projectManagerName: String!
+  # Company/organization :: What company/organization does the project manager belong to?
+  projectManagerOrganization: String!
+  # Position :: What position does the project manager hold?
+  projectManagerPosition: String!
+  # Email address :: What is the project manager's email address?
+  projectManagerEmail: String!
+  # Telephone number :: What is the project managers telephone number?
+  projectManagerTelephone: String!
+  # Mobile number :: What is the project manager's mobile number?
+  projectManagerMobile: String
+  # Physical address :: What is the project manager's physical address? (press shft + enter for newline)
+  projectManagerPhysicalAddress: String!
+  # Postal address :: What is the project manager's postal address? (press shft + enter for newline)
+  projectManagerPostalAddress: String!
+
+  # Validation status :: Has this project been validated? :: projectValidationStatus
+  validationStatus: ControlledVocabularyInput
+  # Validation Comments :: Any validation feedback?
+  validationComments: String
 }
 
 type Project {
   id: Int!
+
   title: String!
   description: String
-  projectManager: String
+  interventionType: String!
   link: String
-  startYear: DateTime
-  endYear: DateTime
-  validationComments: String
-  fundingOrganisation: String
-  fundingPartner: String
-  budgetLower: Money
-  budgetUpper: Money
-  hostOrganisation: String
-  hostPartner: String
-  alternativeContact: String
-  alternativeContactEmail: String
-  leadAgent: String
-
-  interventionType: String
-  projectStatus: String
-  validationStatus: String
-  fundingStatus: String
+  implementationStatus: String
+  implementingOrganization: String!
+  fundingOrganisation: String!
+  fundingType: String
+  actualBudget: Money
   estimatedBudget: String
-  hostSector: String
-  hostSubSector: String
-
-  province: String
+  province: String!
   districtMunicipality: String
   localMunicipality: String
   yx: WKT_4326
+  projectManagerName: String!
+  projectManagerOrganization: String!
+  projectManagerPosition: String!
+  projectManagerEmail: String!
+  projectManagerTelephone: String!
+  projectManagerMobile: String
+  projectManagerPhysicalAddress: String!
+  projectManagerPostalAddress: String!
+  validationStatus: String
+  validationComments: String
 
   mitigations: [Mitigation!]
   adaptations: [Adaptation!]

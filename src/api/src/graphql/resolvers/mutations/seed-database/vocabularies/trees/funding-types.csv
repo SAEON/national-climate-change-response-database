@@ -1,0 +1,5 @@
+parent,term,tree
+,Funding type,fundingTypes
+Funding type,National,fundingTypes
+Funding type,International grant,fundingTypes
+Funding type,International loan,fundingTypes

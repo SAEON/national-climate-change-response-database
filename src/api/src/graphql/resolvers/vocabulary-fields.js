@@ -1,14 +1,12 @@
 export const Projects = [
   'interventionType',
-  'projectStatus',
-  'validationStatus',
-  'fundingStatus',
+  'implementationStatus',
+  'fundingType',
   'estimatedBudget',
-  'hostSector',
-  'hostSubSector',
   'province',
   'districtMunicipality',
   'localMunicipality',
+  'validationStatus',
 ]
 
 export const Mitigations = [

@@ -6,6 +6,11 @@ input MitigationInput {
   # Intervention status :: @amelia TODO
   interventionStatus: ControlledVocabularyInput
 
+  # Project start year :: When did / is the project expected to start?
+  startYear: DateTime
+  # Project end year :: When did / is the project expected to end?
+  endYear: DateTime
+
   # Carbon credit :: Does this project produce carbon credits?
   carbonCredit: Boolean
   # Voluntary methodology :: Describe the method used in the project.

@@ -1,0 +1,10 @@
+parent,term,tree
+,Unit,mitigationUnits
+Unit,"Energy: kWh generated",mitigationUnits
+Unit,"Energy: MW installed capacity",mitigationUnits
+Unit,"Energy: kWh savings",mitigationUnits
+Unit,"MJ savings",mitigationUnits
+Unit,"Waste: Percentage of waste recycled",mitigationUnits
+Unit,"Waste: Waste avoided",mitigationUnits
+Unit,"AFOLU: Number of hectares planted ",mitigationUnits
+Unit,"IPPU: Reduced Nitrous Oxide",mitigationUnits

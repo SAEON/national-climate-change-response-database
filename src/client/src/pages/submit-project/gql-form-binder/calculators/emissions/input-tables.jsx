@@ -1,7 +1,7 @@
 import Typography from '@material-ui/core/Typography'
 import { DataGrid } from '@material-ui/data-grid'
 import useTheme from '@material-ui/core/styles/useTheme'
-import getNumericCellValue from '../get-numeric-cell-value.js'
+import getCellValue from '../get-cell-value.js'
 
 const defaultColumns = [
   { field: 'year', headerName: 'Year', editable: false, width: 120 },
@@ -10,7 +10,7 @@ const defaultColumns = [
     headerName: 'Notes',
     type: 'string',
     editable: true,
-    width: 180,
+    flex: 1,
   },
 ]
 
@@ -61,7 +61,7 @@ export default ({ calculator, updateCalculator }) => {
           chemicals.map(chemical => {
             return [
               chemical,
-              getNumericCellValue({
+              getCellValue({
                 startYear: _start,
                 currentYear: year,
                 type,

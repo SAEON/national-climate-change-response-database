@@ -1,11 +1,11 @@
 import Typography from '@material-ui/core/Typography'
 import { DataGrid } from '@material-ui/data-grid'
 import useTheme from '@material-ui/core/styles/useTheme'
-import getNumericCellValue from '../get-numeric-cell-value.js'
+import getCellValue from '../get-cell-value.js'
 
 const columns = [
   { field: 'year', headerName: 'Year', editable: false, width: 120 },
-  { field: 'notes', headerName: 'Notes', type: 'string', editable: true, width: 200 },
+  { field: 'notes', headerName: 'Notes', type: 'string', editable: true, flex: 1 },
   { field: 'annualKwh', headerName: 'Annual kWh', type: 'number', editable: true, width: 180 },
   {
     field: 'annualKwhPurchaseReduction',
@@ -40,14 +40,14 @@ export default ({ calculator, updateCalculator }) => {
         id: year,
         year,
         notes: grid?.[type]?.[year]?.notes || '',
-        annualKwh: getNumericCellValue({
+        annualKwh: getCellValue({
           startYear: _start,
           currentYear: year,
           type,
           grid,
           field: 'annualKwh',
         }),
-        annualKwhPurchaseReduction: getNumericCellValue({
+        annualKwhPurchaseReduction: getCellValue({
           startYear: _start,
           currentYear: year,
           type,

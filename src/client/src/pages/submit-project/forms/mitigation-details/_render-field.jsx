@@ -6,6 +6,7 @@ import {
 } from '../../gql-form-binder'
 import EnergyCalculator from '../../gql-form-binder/calculators/energy'
 import EmissionsCalculator from '../../gql-form-binder/calculators/emissions'
+import ProgressCalculator from '../../gql-form-binder/calculators/progress'
 
 const multilineFields = ['description', 'volMethodology', 'otherCarbonCreditStandardDescription']
 
@@ -25,6 +26,16 @@ export default ({ field }) => {
   const { name: inputType } = type
   const isRequired = !inputType
   const value = form[fieldName]
+
+  if (fieldName === 'achievedProgress') {
+    return (
+      <ProgressCalculator
+        key={fieldName}
+        calculator={form[fieldName] || {}}
+        updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
+      />
+    )
+  }
 
   /**
    * Energy input & calculator
@@ -58,9 +69,17 @@ export default ({ field }) => {
    * (Hidden for now)
    */
   if (fieldName === 'hasEmissionsData') {
-    return null
+    return (
+      <GqlBoundFormInput
+        key={fieldName}
+        field={field}
+        value={value || ''}
+        updateValue={val => updateForm({ [fieldName]: val, energyData: undefined })}
+        multiline={multilineFields.includes(fieldName)}
+      />
+    )
   } else if (fieldName === 'emissionsData') {
-    if (form.hasEmissionsData) {
+    if (form.hasEmissionsData?.toBoolean()) {
       return (
         <EmissionsCalculator
           key={fieldName}

@@ -47,6 +47,9 @@ input MitigationInput {
   # Voluntary methodology :: Describe the method used in the project.
   carbonCreditVoluntaryMethodology: String
 
+  # Achieved progress :: Achieved progress by project
+  achievedProgress: JSON
+
   # Energy data :: Does the project have energy data?
   hasEnergyData: Boolean
   # Energy data :: Input mitigation energy data

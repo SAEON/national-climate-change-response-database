@@ -1,4 +1,4 @@
-import getNumericCellValue from './get-numeric-cell-value.js'
+import getCellValue from './get-cell-value.js'
 
 export default ({ fields, calculator }) => {
   const { grid = {}, startYear: _startYear, endYear: _endYear } = calculator
@@ -14,7 +14,7 @@ export default ({ fields, calculator }) => {
         (columns, [currentYear]) => {
           fields.forEach(field => {
             columns[field] += parseInt(
-              getNumericCellValue({
+              getCellValue({
                 startYear,
                 currentYear,
                 field,

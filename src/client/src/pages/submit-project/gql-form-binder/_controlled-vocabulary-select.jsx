@@ -10,9 +10,9 @@ const DEFAULT_VALUE = { term: '(NONE)' }
 export default ({
   root,
   tree,
-  name,
-  placeholder,
-  helperText,
+  name = '',
+  placeholder = '',
+  helperText = '',
   error,
   onChange,
   value = DEFAULT_VALUE,
@@ -89,6 +89,7 @@ export default ({
       helperText={helperText}
       fullWidth
       onChange={e => {
+        e.stopPropagation()
         const { value } = e.target
         if (value === DEFAULT_VALUE.term) {
           onChange(undefined)

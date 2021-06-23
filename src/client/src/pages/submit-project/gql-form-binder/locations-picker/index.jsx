@@ -120,8 +120,13 @@ const LocationBounds = memo(
 )
 
 export default ({ onChange, points, setPoints }) => {
-  const { projectForm } = useContext(formContext)
+  const { generalDetailsForm } = useContext(formContext)
   return (
-    <LocationBounds {...projectForm} onChange={onChange} points={points} setPoints={setPoints} />
+    <LocationBounds
+      onChange={onChange}
+      points={points}
+      setPoints={setPoints}
+      {...generalDetailsForm}
+    />
   )
 }

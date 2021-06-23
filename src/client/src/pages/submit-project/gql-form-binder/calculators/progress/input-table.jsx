@@ -80,14 +80,12 @@ export default ({ calculator, updateCalculator }) => {
               disableColumnMenu: true,
               cellClassName: () => clsx(classes.cell),
               renderCell: ({ row: { id, achievedUnit } }) => {
-                console.log('hi', achievedUnit)
                 return (
                   <ControlledVocabularySelect
                     tree={'mitigationUnits'}
                     root="Unit"
                     value={achievedUnit}
                     onChange={value => {
-                      console.log(value)
                       updateCalculator(
                         Object.assign(
                           { ...calculator },
@@ -161,7 +159,7 @@ export default ({ calculator, updateCalculator }) => {
               headerName: 'Expenditure in (ZAR)',
               type: 'number',
               editable: true,
-              flex: 1,
+              width: 350,
             },
           ]}
           rows={rows2}

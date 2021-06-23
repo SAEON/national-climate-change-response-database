@@ -29,8 +29,8 @@ export default memo(
                     margin="normal"
                     clearable
                     autoOk
-                    minDate="1990"
-                    maxDate="2089"
+                    minDate={'2000'}
+                    maxDate={new Date().getFullYear().toString()}
                     variant="dialog"
                     views={['year']}
                     animateYearScrolling
@@ -64,8 +64,8 @@ export default memo(
                     clearable
                     variant="dialog"
                     autoOk
-                    minDate="1990"
-                    maxDate="2089"
+                    minDate={'2000'}
+                    maxDate={new Date().getFullYear().toString()}
                     views={['year']}
                     animateYearScrolling
                     format="yyyy"

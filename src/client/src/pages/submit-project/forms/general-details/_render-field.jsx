@@ -23,7 +23,7 @@ export default ({ field }) => {
     resetAdaptationDetailsForm,
   } = useContext(formContext)
   const { name: fieldName, description, type } = field
-  const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
+  const [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType } = type
   const isRequired = !inputType
   const value = form[fieldName]
@@ -51,7 +51,7 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="regions"
+        tree={tree}
         root="South Africa"
         name={fieldName}
         value={value}
@@ -72,7 +72,7 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="regions"
+        tree={tree}
         root={form.province}
         name={fieldName}
         value={value}
@@ -87,7 +87,7 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="regions"
+        tree={tree}
         root={form.districtMunicipality}
         name={fieldName}
         value={value}
@@ -106,7 +106,7 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="projectValidationStatus"
+        tree={tree}
         root="Validation Status"
         name={fieldName}
         disabled={!hasPermission('validate-submission')}
@@ -142,7 +142,7 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="interventionTypes"
+        tree={tree}
         root="Intervention type"
         name={fieldName}
         value={value}
@@ -171,7 +171,7 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="actionStatus"
+        tree={tree}
         root="Status"
         name={fieldName}
         value={value}
@@ -190,7 +190,7 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="budgetRanges"
+        tree={tree}
         root="Estimated budget"
         name={fieldName}
         value={value}
@@ -209,7 +209,7 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="fundingTypes"
+        tree={tree}
         root="Funding type"
         name={fieldName}
         value={value}

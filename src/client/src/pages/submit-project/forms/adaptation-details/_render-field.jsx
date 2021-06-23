@@ -16,27 +16,66 @@ const researchFormFields = [
 ]
 
 export default ({ field }) => {
-  const { updateAdaptationDetailsForm, adaptationDetailsForm: form } = useContext(formContext)
+  const { updateAdaptationDetailsForm: updateForm, adaptationDetailsForm: form } =
+    useContext(formContext)
   const { name: fieldName, description, type } = field
-  const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
-  const { name: inputType, ofType } = type
-  const gqlType = inputType || ofType.name
+  const [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
+  const { name: inputType } = type
   const isRequired = !inputType
   const value = form[fieldName]
 
   /**
    * Controlled vocabulary
    */
-  if (fieldName === 'interventionStatus') {
+  if (fieldName === 'correspondingNationalPolicy') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="actionStatus"
-        root="Status"
+        tree={tree}
+        root="Adaptation policies"
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateAdaptationDetailsForm({ [fieldName]: val })}
+        onChange={val =>
+          updateForm({ [fieldName]: val, correspondingSubNationalPolicy: undefined })
+        }
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  } else if (fieldName === 'correspondingSubNationalPolicy') {
+    if (form.correspondingNationalPolicy) {
+      return (
+        <ControlledVocabularySelect
+          key={fieldName}
+          tree={tree}
+          root={form.correspondingNationalPolicy}
+          name={fieldName}
+          value={value}
+          error={isRequired && !value}
+          onChange={val => updateForm({ [fieldName]: val })}
+          placeholder={placeholder}
+          helperText={helperText}
+        />
+      )
+    } else {
+      return null
+    }
+  }
+
+  /**
+   * Controlled vocabulary
+   */
+  if (fieldName === 'correspondingAction') {
+    return (
+      <ControlledVocabularySelect
+        key={fieldName}
+        tree={tree}
+        root="Action"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -50,12 +89,12 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="adaptationSectors"
+        tree={tree}
         root="Adaptation sector"
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateAdaptationDetailsForm({ [fieldName]: val })}
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -69,13 +108,13 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="hazards"
+        tree={tree}
         root="Hazard family"
         name={fieldName}
         value={value}
         error={isRequired && !value}
         onChange={val =>
-          updateAdaptationDetailsForm({
+          updateForm({
             [fieldName]: val,
             hazardSubFamily: undefined,
             hazard: undefined,
@@ -91,13 +130,13 @@ export default ({ field }) => {
       return (
         <ControlledVocabularySelect
           key={fieldName}
-          tree="hazards"
+          tree={tree}
           root={form['hazardFamily']}
           name={fieldName}
           value={value}
           error={isRequired && !value}
           onChange={val =>
-            updateAdaptationDetailsForm({
+            updateForm({
               [fieldName]: val,
               hazard: undefined,
               subHazard: undefined,
@@ -115,12 +154,12 @@ export default ({ field }) => {
       return (
         <ControlledVocabularySelect
           key={fieldName}
-          tree="hazards"
+          tree={tree}
           root={form['hazardSubFamily']}
           name={fieldName}
           value={value}
           error={isRequired && !value}
-          onChange={val => updateAdaptationDetailsForm({ [fieldName]: val, subHazard: undefined })}
+          onChange={val => updateForm({ [fieldName]: val, subHazard: undefined })}
           placeholder={placeholder}
           helperText={helperText}
         />
@@ -133,12 +172,12 @@ export default ({ field }) => {
       return (
         <ControlledVocabularySelect
           key={fieldName}
-          tree="hazards"
+          tree={tree}
           root={form['hazard']}
           name={fieldName}
           value={value}
           error={isRequired && !value}
-          onChange={val => updateAdaptationDetailsForm({ [fieldName]: val })}
+          onChange={val => updateForm({ [fieldName]: val })}
           placeholder={placeholder}
           helperText={helperText}
         />
@@ -148,43 +187,20 @@ export default ({ field }) => {
     }
   }
 
-  /**
-   * Controlled vocabulary
-   */
-  if (fieldName === 'adaptationPurpose') {
-    return (
-      <ControlledVocabularySelect
-        key={fieldName}
-        tree="adaptationPurpose"
-        root="Adaptation purpose"
-        name={fieldName}
-        value={value}
-        error={isRequired && !value}
-        onChange={val => updateAdaptationDetailsForm({ [fieldName]: val })}
-        placeholder={placeholder}
-        helperText={helperText}
-      />
-    )
-  }
-
-  if (gqlType === 'WKT_4326') {
-    return 'hi'
-  }
-
   if (researchFormFields.includes(fieldName)) {
-    if (!(form['isResearch'] || '').toBoolean()) {
+    if (!(form['hasResearch'] || '').toBoolean()) {
       return null
     }
   }
 
-  if (fieldName === 'isResearch') {
+  if (fieldName === 'hasResearch') {
     return (
       <GqlBoundFormInput
         key={fieldName}
         field={field}
         value={value || ''}
         updateValue={val =>
-          updateAdaptationDetailsForm({
+          updateForm({
             [fieldName]: val,
             ...Object.fromEntries(researchFormFields.map(field => [field, undefined])),
           })
@@ -199,7 +215,7 @@ export default ({ field }) => {
       key={fieldName}
       field={field}
       value={form[fieldName] || ''}
-      updateValue={val => updateAdaptationDetailsForm({ [fieldName]: val })}
+      updateValue={val => updateForm({ [fieldName]: val })}
       multiline={multilineFields.includes(fieldName)}
     />
   )

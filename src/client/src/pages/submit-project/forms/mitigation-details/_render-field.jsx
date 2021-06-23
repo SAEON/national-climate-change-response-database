@@ -21,7 +21,7 @@ export default ({ field }) => {
   const { mitigationDetailsForm: form, updateMitigationDetailsForm: updateForm } =
     useContext(formContext)
   const { name: fieldName, description, type } = field
-  const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
+  const [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType } = type
   const isRequired = !inputType
   const value = form[fieldName]
@@ -80,7 +80,7 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="mitigationSectors"
+        tree={tree}
         root="Mitigation sector"
         name={fieldName}
         value={value}
@@ -97,12 +97,12 @@ export default ({ field }) => {
       />
     )
   } else if (fieldName === 'hostSubSectorPrimary') {
-    if (form['hostSector']) {
+    if (form.hostSector) {
       return (
         <ControlledVocabularySelect
           key={fieldName}
-          tree="mitigationSectors"
-          root={form['hostSector']}
+          tree={tree}
+          root={form.hostSector}
           name={fieldName}
           value={value}
           error={isRequired && !value}
@@ -116,12 +116,12 @@ export default ({ field }) => {
       return null
     }
   } else if (fieldName === 'hostSubSectorSecondary') {
-    if (form['hostSubSectorPrimary']) {
+    if (form.hostSubSectorPrimary) {
       return (
         <ControlledVocabularySelect
           key={fieldName}
-          tree="mitigationSectors"
-          root={form['hostSubSectorPrimary']}
+          tree={tree}
+          root={form.hostSubSectorPrimary}
           name={fieldName}
           value={value}
           error={isRequired && !value}
@@ -138,13 +138,12 @@ export default ({ field }) => {
 
   /**
    * Controlled vocabulary
-   * checked
    */
   if (fieldName === 'correspondingNationalPolicy') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="mitigationPolicies"
+        tree={tree}
         root="Mitigation policies"
         name={fieldName}
         value={value}
@@ -161,7 +160,7 @@ export default ({ field }) => {
       return (
         <ControlledVocabularySelect
           key={fieldName}
-          tree="mitigationPolicies"
+          tree={tree}
           root={form.correspondingNationalPolicy}
           name={fieldName}
           value={value}
@@ -178,13 +177,12 @@ export default ({ field }) => {
 
   /**
    * Controlled vocabulary
-   * checked
    */
   if (fieldName === 'coBenefitEconomic') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="coBenefits"
+        tree={tree}
         root="Economic"
         name={fieldName}
         value={value}
@@ -198,13 +196,12 @@ export default ({ field }) => {
 
   /**
    * Controlled vocabulary
-   * checked
    */
   if (fieldName === 'mitigationProgramme') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="mitigationProgramme"
+        tree={tree}
         root="Programme"
         name={fieldName}
         value={value}
@@ -218,13 +215,12 @@ export default ({ field }) => {
 
   /**
    * Controlled vocabulary
-   * checked
    */
   if (fieldName === 'coBenefitEnvironmental') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="coBenefits"
+        tree={tree}
         root="Environmental"
         name={fieldName}
         value={value}
@@ -238,13 +234,12 @@ export default ({ field }) => {
 
   /**
    * Controlled vocabulary
-   * checked
    */
   if (fieldName === 'coBenefitSocial') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="coBenefits"
+        tree={tree}
         root="Social"
         name={fieldName}
         value={value}
@@ -258,13 +253,12 @@ export default ({ field }) => {
 
   /**
    * Controlled vocabulary
-   * checked
    */
   if (fieldName === 'carbonCreditVoluntaryOrganization') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="carbonCreditVoluntaryOrganizations"
+        tree={tree}
         root="Organization"
         name={fieldName}
         value={value}
@@ -278,13 +272,12 @@ export default ({ field }) => {
 
   /**
    * Controlled vocabulary
-   * checked
    */
   if (fieldName === 'carbonCreditCdmMethodology') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="cdmMethodology"
+        tree={tree}
         root="CDM methodology"
         name={fieldName}
         value={value}
@@ -298,13 +291,12 @@ export default ({ field }) => {
 
   /**
    * Controlled vocabulary
-   * checked
    */
   if (fieldName === 'carbonCreditCdmExecutiveStatus') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="executiveStatus"
+        tree={tree}
         root="Executive status"
         name={fieldName}
         value={value}
@@ -318,13 +310,12 @@ export default ({ field }) => {
 
   /**
    * Controlled vocabulary
-   * checked
    */
   if (fieldName === 'carbonCreditStandard') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="carbonCreditStandards"
+        tree={tree}
         root="Carbon credit standard"
         name={fieldName}
         value={value}
@@ -343,7 +334,7 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="executiveStatus"
+        tree={tree}
         root="Executive status"
         name={fieldName}
         value={value}
@@ -362,7 +353,7 @@ export default ({ field }) => {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree="mitigationTypes"
+        tree={tree}
         root="Type of Mitigation"
         name={fieldName}
         value={value}
@@ -379,7 +370,7 @@ export default ({ field }) => {
       return (
         <ControlledVocabularySelect
           key={fieldName}
-          tree="mitigationTypes"
+          tree={tree}
           root={form.mitigationType}
           name={fieldName}
           value={value}
@@ -396,7 +387,7 @@ export default ({ field }) => {
   }
 
   if (researchFormFields.includes(fieldName)) {
-    if (!(form['hasResearch'] || '').toBoolean()) {
+    if (!(form.hasResearch || '').toBoolean()) {
       return null
     }
   }

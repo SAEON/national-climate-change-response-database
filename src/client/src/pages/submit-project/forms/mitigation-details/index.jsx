@@ -48,6 +48,10 @@ const Compose = memo(({ fields }) => {
   )
 })
 
+/**
+ * Don't render ComposeForm directly,
+ * as that will trigger many re-renders
+ */
 export default () => {
   const { mitigationFields } = useContext(formContext)
   return <Compose fields={mitigationFields} />

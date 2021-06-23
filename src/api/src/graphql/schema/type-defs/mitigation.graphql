@@ -65,9 +65,9 @@ input MitigationInput {
   researchType: String
   # Target audience :: Who is the target audience?
   researchTargetAudience: String
-  # author :: Who is the primary author?
+  # Author :: Who is the primary author?
   researchAuthor: String
-  # paper :: What is the title of the paper?
+  # Paper :: What is the title of the paper?
   researchPaper: String
 }
 

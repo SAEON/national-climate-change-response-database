@@ -29,8 +29,9 @@ export const Mitigations = [
 
 export const Adaptations = [
   'adaptationSector',
-  'adaptationPurpose',
-  'interventionStatus',
+  'correspondingNationalPolicy',
+  'correspondingSubNationalPolicy',
+  'correspondingAction',
   'hazardFamily',
   'hazardSubFamily',
   'hazard',

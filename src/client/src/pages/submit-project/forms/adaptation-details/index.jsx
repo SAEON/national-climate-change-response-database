@@ -9,29 +9,33 @@ const Compose = memo(({ fields }) => {
       fields={fields}
       sections={{
         'Adaptation details': [
-          'adaptationPurpose',
           'adaptationSector',
-          'interventionStatus',
-          'startYear',
-          'endYear',
+          'correspondingNationalPolicy',
+          'correspondingSubNationalPolicy',
+          'correspondingAction',
         ],
+        'Climate impact': [
+          'observedClimateChangeImpacts',
+          'addressedClimateChangeImpact',
+          'responseImpact',
+        ],
+        'Hazard details': ['hazardFamily', 'hazardSubFamily', 'hazard', 'subHazard'],
         'Associated research': [
-          'isResearch',
+          'hasResearch',
           'researchDescription',
           'researchType',
           'researchTargetAudience',
           'researchAuthor',
           'researchPaper',
         ],
-        'Hazard details': ['hazardFamily', 'hazardSubFamily', 'hazard', 'subHazard'],
       }}
     />
   )
 })
 
 /**
- * This component should only render if the
- * number of forms changes
+ * Don't render ComposeForm directly,
+ * as that will trigger many re-renders
  */
 export default () => {
   const { adaptationFields } = useContext(formContext)

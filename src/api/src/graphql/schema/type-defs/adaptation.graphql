@@ -1,52 +1,63 @@
-# https://docs.google.com/spreadsheets/d/1elnulijv7HmTQMHraUGTxC7FNfJBuh6M-0E-xx54_x8/edit#gid=0
 input AdaptationInput {
-  # Adaptation sector :: @amelia TODO
-  adaptationSector: ControlledVocabularyInput
-  # Adaptation purpose :: @amelia TODO
-  adaptationPurpose: ControlledVocabularyInput
-  # Start date :: @amelia TODO
-  startYear: DateTime
-  # End date :: @amelia TODO
-  endYear: DateTime
-  # Intervention status :: @amelia TODO
-  interventionStatus: ControlledVocabularyInput
-  # Hazard Family :: @amelia TODO
+  # Adaptation sector :: Select the adaptation sector :: adaptationSectors
+  adaptationSector: ControlledVocabularyInput!
+  # Corresponding national policy :: Indicate the national policy or strategy that the measure is responding to :: adaptationPolicies
+  correspondingNationalPolicy: ControlledVocabularyInput
+  # Corresponding sub-national policy :: Indicate the sub-national policy or strategy that the measure is responding to :: adaptationPolicies
+  correspondingSubNationalPolicy: ControlledVocabularyInput
+  # Indicate the corresponding intervention, goal, or target :: Please select an appropriate value based on your other form inputs above :: adaptationActions
+  correspondingAction: ControlledVocabularyInput
+
+  # Hazard Family :: Select hazard family :: hazards
   hazardFamily: ControlledVocabularyInput
-  # Hazard Subfamily :: @amelia TODO
+  # Hazard Subfamily :: Select hazard subfamily :: hazards
   hazardSubFamily: ControlledVocabularyInput
-  # Hazard :: @amelia TODO
+  # Hazard :: Select hazard :: hazards
   hazard: ControlledVocabularyInput
-  # Sub hazard :: @amelia TODO
+  # Sub hazard :: Select sub hazard :: hazards
   subHazard: ControlledVocabularyInput
+
+  # Observed climate change impacts :: What climate change impacts have been observed?
+  observedClimateChangeImpacts: String
+  # Addressed climate change impact :: Which observed climate change impact is the response addressing?
+  addressedClimateChangeImpact: String
+  # Impact of response :: What has been the impact of the response in reducing climate change impacts?
+  responseImpact: String
+
   # Associated research :: Is this project component research or applied?
-  isResearch: Boolean
+  hasResearch: Boolean
   # Description :: Short description of this research component
   researchDescription: String
-  # Research type :: @TODO
+  # Research type :: What kind of research is it?
   researchType: String
-  # Target audience :: @TODO
+  # Target audience :: Who is the target audience?
   researchTargetAudience: String
-  # author :: @TODO
+  # Author :: Who is the primary author?
   researchAuthor: String
-  # paper :: @TODO
+  # Paper :: What is the title of the paper?
   researchPaper: String
 }
 
 type Adaptation {
   id: Int!
-  startYear: DateTime
-  endYear: DateTime
-  interventionStatus: String
-  isResearch: Boolean
+  adaptationSector: String
+  correspondingNationalPolicy: String
+  correspondingSubNationalPolicy: String
+  correspondingAction: String
+
+  hazardFamily: String
+  hazardSubFamily: String
+  hazard: String
+  subHazard: String
+
+  observedClimateChangeImpacts: String
+  addressedClimateChangeImpact: String
+  responseImpact: String
+
+  hasResearch: Boolean
   researchDescription: String
   researchType: String
   researchTargetAudience: String
   researchAuthor: String
   researchPaper: String
-  adaptationSector: String
-  adaptationPurpose: String
-  hazardFamily: String
-  hazardSubFamily: String
-  hazard: String
-  subHazard: String
 }

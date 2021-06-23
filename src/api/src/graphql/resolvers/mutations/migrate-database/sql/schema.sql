@@ -97,7 +97,7 @@ if not exists (
 begin
 create table Vocabulary (
   id int not null identity primary key,
-  term nvarchar(255) not null unique,
+  term nvarchar(2000) not null unique,
   description nvarchar(4000) null,
   index ix_vocablulary_terms nonclustered (term)
 );

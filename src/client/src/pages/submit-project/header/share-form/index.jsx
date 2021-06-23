@@ -11,7 +11,7 @@ export default () => {
       text={'Use this link to come back to the form later, and continue editing it'}
       tooltipProps={{
         placement: 'bottom',
-        title: 'Reset form',
+        title: 'Share form',
       }}
       Button={openFn => {
         return (

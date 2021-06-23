@@ -5,6 +5,7 @@ import UploadProject from './submit-template'
 import useTheme from '@material-ui/core/styles/useTheme'
 import Divider from '@material-ui/core/Divider'
 import Hidden from '@material-ui/core/Hidden'
+import ShareForm from './share-form'
 
 export default () => {
   const theme = useTheme()
@@ -23,6 +24,14 @@ export default () => {
       </Hidden>
 
       <div style={{ marginRight: 'auto' }} />
+
+      <Divider
+        flexItem
+        orientation="vertical"
+        style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+      />
+
+      <ShareForm />
 
       <Divider
         flexItem

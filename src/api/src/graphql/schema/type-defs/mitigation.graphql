@@ -1,92 +1,116 @@
 input MitigationInput {
-  # Mitigation type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
-  mitigationType: ControlledVocabularyInput
-  # Mitigation subtype :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.)
-  mitigationSubType: ControlledVocabularyInput
-  # Intervention status :: @amelia TODO
-  interventionStatus: ControlledVocabularyInput
+  # Select host sector :: Select the IPCC host sector that best describes your project. :: mitigationSectors
+  hostSector: ControlledVocabularyInput!
+  # Select main sub-sector :: Select the IPCC main sub-sector that best describes you project. :: mitigationSectors
+  hostSubSectorPrimary: ControlledVocabularyInput
+  # Select secondary sub-sector :: Select the IPCC sub-sector that best describes your project. :: mitigationSectors
+  hostSubSectorSecondary: ControlledVocabularyInput
 
-  # Project start year :: When did / is the project expected to start?
-  startYear: DateTime
-  # Project end year :: When did / is the project expected to end?
-  endYear: DateTime
+  # Select the type of project :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationTypes
+  mitigationType: ControlledVocabularyInput!
+
+  # Select the project sub-type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationTypes
+  mitigationSubType: ControlledVocabularyInput
+
+  # Select the mitigation program the project is linked to :: A programme is a high level support measure that support mitigation actions/project types above e.g 1A1 REIPPP :: mitigationProgramme
+  mitigationProgramme: ControlledVocabularyInput
+  # Corresponding national policy :: Indicate the national policy or strategy that the measure is responding to :: mitigationPolicies
+  correspondingNationalPolicy: ControlledVocabularyInput
+  # Corresponding sub-national policy :: Indicate the sub-national policy or strategy that the measure is responding to :: mitigationPolicies
+  correspondingSubNationalPolicy: ControlledVocabularyInput
+  # Primary intended outcome :: Primary intended outcome (Indicate the expected or achieved goals)
+  primaryIntendedOutcome: String
+
+  # Environmental co-benefit :: Select co-benefit :: coBenefits
+  coBenefitEnvironmental: ControlledVocabularyInput
+  # Environmental co-benefit description :: Please indicate the quantified environmental benefits from the project :: coBenefits
+  coBenefitEnvironmentalDescription: String
+  # Social co-benefit :: Select co-benefit :: coBenefits
+  coBenefitSocial: ControlledVocabularyInput
+  # Social co-benefit description :: Please indicate the quantified social benefits from the project
+  coBenefitSocialDescription: String
+  # Economic co-benefit :: Select co-benefit :: coBenefits
+  coBenefitEconomic: ControlledVocabularyInput
+  # Economic co-benefit description :: Please indicate the quantified social benefits from the project
+  coBenefitEconomicDescription: String
 
   # Carbon credit :: Does this project produce carbon credits?
   carbonCredit: Boolean
+  # CDM or Voluntary :: Which carbon-credit standard does this project use? :: carbonCreditStandards
+  carbonCreditStandard: ControlledVocabularyInput
+  # CDM Executive Board Status :: What is the CDM status of this project? :: executiveStatus
+  carbonCreditCdmExecutiveStatus: ControlledVocabularyInput
+  # CDM methodology :: Please select the CDM method used in your project. :: cdmMethodology
+  carbonCreditCdmMethodology: ControlledVocabularyInput
+  # Organization Issuing Credits :: Which organization issues the voluntary carbon credits? :: carbonCreditVoluntaryOrganizations
+  carbonCreditVoluntaryOrganization: ControlledVocabularyInput
   # Voluntary methodology :: Describe the method used in the project.
-  volMethodology: String
-  #  Gold Standard :: Does this intervention produce carbon credits through the Gold Standard market?
-  goldStandard: Boolean
-  #  Verified Carbon Standard :: Does this intervention produce carbon credits through the Verified Carbon Standard market?
-  vcs: Boolean
-  # Other carbon programme :: Does this mitigation intervention produce carbon credits through another carbon programme?
-  otherCarbonCreditStandard: Boolean
-  # Programme method :: Please describe the programme.
-  otherCarbonCreditStandardDescription: String
+  carbonCreditVoluntaryMethodology: String
 
-  # CDM project number :: The code a project is given by the CDM once it is accepted.
-  cdmProjectNumber: String
-  # CDM methodology :: Please select the CDM method used in your project.
-  cdmMethodology: ControlledVocabularyInput
-  # CDM Executive Board Status :: What is the CDM status of this project?
-  cdmExecutiveStatus: ControlledVocabularyInput
-  # CDM status :: TODO - I'm not sure what this field is
-  cdmStatus: String
-
-  # Mitigation data :: Does the project have energy or emissions data?
-  energyOrEmissionsData: ControlledVocabularyInput
-
-  # Host Sector (IPCC) :: Select the IPCC host sector that best describes your project.
-  hostSector: ControlledVocabularyInput
-  # Main SubSector :: Select the IPCC main sub-sector that best describes you project.
-  hostSubSectorPrimary: ControlledVocabularyInput
-  # Secondary SubSector :: Select the IPCC sub-sector that best describes your project.
-  hostSubSectorSecondary: ControlledVocabularyInput
-
-  # Associated research :: Is this project component research or applied?
-  isResearch: Boolean
-  # Description :: Short description of this research component
-  researchDescription: String
-  # Research type :: @TODO
-  researchType: String
-  # Target audience :: @TODO
-  researchTargetAudience: String
-  # author :: @TODO
-  researchAuthor: String
-  # paper :: @TODO
-  researchPaper: String
-
+  # Energy data :: Does the project have energy data?
+  hasEnergyData: Boolean
   # Energy data :: Input mitigation energy data
   energyData: JSON
+
+  # Emissions data :: Does the project have emissions data?
+  hasEmissionsData: Boolean
   # Emissions data :: Input mitigation emissions data
   emissionsData: JSON
+
+  # Associated research :: Is this project component research or applied?
+  hasResearch: Boolean
+  # Description :: Short description of this research component
+  researchDescription: String
+  # Research type :: What kind of research is it?
+  researchType: String
+  # Target audience :: Who is the target audience?
+  researchTargetAudience: String
+  # author :: Who is the primary author?
+  researchAuthor: String
+  # paper :: What is the title of the paper?
+  researchPaper: String
 }
 
 type Mitigation {
   id: Int!
+
+  hostSector: String!
+  hostSubSectorPrimary: String
+  hostSubSectorSecondary: String
+
+  mitigationType: String!
+
+  mitigationSubType: String
+
+  mitigationProgramme: String
+  correspondingNationalPolicy: String
+  correspondingSubNationalPolicy: String
+  primaryIntendedOutcome: String
+
+  coBenefitEnvironmental: String
+  coBenefitEnvironmentalDescription: String
+  coBenefitSocial: String
+  coBenefitSocialDescription: String
+  coBenefitEconomic: String
+  coBenefitEconomicDescription: String
+
   carbonCredit: Boolean
-  volMethodology: String
-  goldStandard: Boolean
-  vcs: Boolean
-  otherCarbonCreditStandard: Boolean
-  otherCarbonCreditStandardDescription: String
-  cdmProjectNumber: String
-  cdmStatus: String
-  isResearch: Boolean
+  carbonCreditStandard: String
+  carbonCreditCdmExecutiveStatus: String
+  carbonCreditCdmMethodology: String
+  carbonCreditVoluntaryOrganization: String
+  carbonCreditVoluntaryMethodology: String
+
+  hasEnergyData: Boolean
+  energyData: JSON
+
+  hasEmissionsData: Boolean
+  emissionsData: JSON
+
+  hasResearch: Boolean
   researchDescription: String
   researchType: String
-  energyOrEmissionsData: String
-  energyData: JSON
-  emissionsData: JSON
   researchTargetAudience: String
   researchAuthor: String
   researchPaper: String
-  mitigationType: String
-  mitigationSubType: String
-  interventionStatus: String
-  cdmMethodology: String
-  cdmExecutiveStatus: String
-  hostSector: String
-  hostSubSectorPrimary: String
-  hostSubSectorSecondary: String
 }

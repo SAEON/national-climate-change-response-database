@@ -13,6 +13,8 @@ const Compose = memo(({ fields }) => (
         'interventionType',
         'implementationStatus',
         'implementingOrganization',
+        'startYear',
+        'endYear',
         'link',
       ],
       'Project funding': ['fundingOrganisation', 'fundingType', 'actualBudget', 'estimatedBudget'],

@@ -21,15 +21,7 @@ import sift from 'sift'
  * To achieve this, any field names that start with "__" or passed back to
  * the render component
  */
-export default ({
-  fields,
-  RenderField,
-  sections,
-  formNumber = 0,
-  cardStyle = {},
-  cardContentStyle = {},
-  cardHeaderStyle = {},
-}) => {
+export default ({ fields, RenderField, sections, formNumber = 0, hideSections = [] }) => {
   const theme = useTheme()
 
   /**
@@ -74,16 +66,15 @@ ${JSON.stringify(sections, null, 2)}`
           })
         )
 
+        if (hideSections.includes(title)) {
+          return null
+        }
+
         return (
           <FormSection
             formNumber={formNumber}
             key={title}
-            cardStyle={Object.assign(
-              { marginTop: i === 0 ? 'inherit' : theme.spacing(2) },
-              cardStyle
-            )}
-            cardContentStyle={cardContentStyle}
-            cardHeaderStyle={cardHeaderStyle}
+            cardStyle={{ marginTop: i === 0 ? 'inherit' : theme.spacing(2) }}
             title={title}
             fields={sectionFields.map(_name => {
               if (_name.match(/^__/)) {

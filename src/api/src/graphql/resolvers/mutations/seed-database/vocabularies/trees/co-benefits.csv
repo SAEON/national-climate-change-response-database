@@ -1,0 +1,35 @@
+parent,term,tree
+
+,Co-benefit,coBenefits
+Co-benefit,Environmental,coBenefits
+Co-benefit,Social,coBenefits
+Co-benefit,Economic,coBenefits
+
+Environmental,"Improved local air quality",coBenefits
+Environmental,"Energy security",coBenefits
+Environmental,"Sustainable natural resource use and access",coBenefits
+Environmental,"Reduce waste disposal costs",coBenefits
+Environmental,"Conserve space in existing landfills",coBenefits
+Environmental,"Improved resiliency of the ecosystem",coBenefits
+Environmental,"Wetland rehabilitation, protection and sustainable use",coBenefits
+Environmental,"Reduction in fuel consumption",coBenefits
+Environmental,"Reliable and efficient public transport",coBenefits
+Environmental,"Tonnes of waste (organic and inorganic) diverted from landfill",coBenefits
+
+Social,"Promotion of basic services",coBenefits
+Social,"Promotion of gender equality",coBenefits
+Social,"Income assets distribution",coBenefits
+Social,"Women and youth empowerment",coBenefits
+Social,"Rural social upliftment",coBenefits
+Social,"Provision of basic services",coBenefits
+Social,"skills development relating to energy efficiency Job creation",coBenefits
+
+Economic,"Improved investments/productivity",coBenefits
+Economic,"Technology development, diffusion and transfer",coBenefits
+Economic,"Resource efficiency",coBenefits
+Economic,"Energy cost savings ",coBenefits
+Economic,"Jobs created ",coBenefits
+Economic,"SMMEs created or lost",coBenefits
+Economic,"New skills generated",coBenefits
+Economic,"Local investment (Rands)",coBenefits
+Economic,"Municipal revenues ",coBenefits

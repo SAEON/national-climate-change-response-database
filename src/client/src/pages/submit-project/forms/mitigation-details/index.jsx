@@ -7,32 +7,42 @@ const Compose = memo(({ fields }) => {
     <ComposeForm
       RenderField={RenderField}
       fields={fields}
+      hideSections={['Emissions data']}
       sections={{
-        'Mitigation information': ['mitigationType', 'mitigationSubType', 'interventionStatus'],
+        'Mitigation type': ['mitigationType', 'mitigationSubType'],
+        'Mitigation sector': ['hostSector', 'hostSubSectorPrimary', 'hostSubSectorSecondary'],
+        'Policy information': [
+          'mitigationProgramme',
+          'correspondingNationalPolicy',
+          'correspondingSubNationalPolicy',
+          'primaryIntendedOutcome',
+        ],
+        'Co-benefit information': [
+          'coBenefitEnvironmental',
+          'coBenefitEnvironmentalDescription',
+          'coBenefitSocial',
+          'coBenefitSocialDescription',
+          'coBenefitEconomic',
+          'coBenefitEconomicDescription',
+        ],
+        'Carbon credit information': [
+          'carbonCredit',
+          'carbonCreditStandard',
+          'carbonCreditCdmExecutiveStatus',
+          'carbonCreditCdmMethodology',
+          'carbonCreditVoluntaryOrganization',
+          'carbonCreditVoluntaryMethodology',
+        ],
         'Associated research': [
-          'isResearch',
+          'hasResearch',
           'researchDescription',
           'researchType',
           'researchTargetAudience',
           'researchAuthor',
           'researchPaper',
         ],
-        'Energy/emissions data': ['energyOrEmissionsData', 'energyData', 'emissionsData'],
-        'Carbon credit program': [
-          'carbonCredit',
-          'volMethodology',
-          'goldStandard',
-          'vcs',
-          'otherCarbonCreditStandard',
-          'otherCarbonCreditStandardDescription',
-        ],
-        'CDM information': [
-          'cdmProjectNumber',
-          'cdmMethodology',
-          'cdmExecutiveStatus',
-          'cdmStatus',
-        ],
-        'IPCC information': ['hostSector', 'hostSubSectorPrimary', 'hostSubSectorSecondary'],
+        'Energy data': ['hasEnergyData', 'energyData'],
+        'Emissions data': ['hasEmissionsData', 'emissionsData'],
       }}
     />
   )

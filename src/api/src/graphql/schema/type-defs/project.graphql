@@ -5,6 +5,10 @@ input ProjectInput {
   description: String
   # Intervention type :: Indicate the type of intervention this project focuses on? :: interventionTypes
   interventionType: ControlledVocabularyInput!
+  # Project start year :: Start date of project
+  startYear: DateTime!
+  # Project end year :: End date of project
+  endYear: DateTime!
   # Link to project website :: Is there a URI that is associated with this project?
   link: String
 

@@ -18,7 +18,7 @@ export default async ctx => {
       console.info('Loading vocabulary', VOCABULARY, 'into database')
 
       const parser = createReadStream(join(__dirname, `./trees/${VOCABULARY}`)).pipe(
-        parse({ columns: true })
+        parse({ columns: true, skipEmptyLines: true })
       )
 
       for await (let { parent, term, tree } of parser) {

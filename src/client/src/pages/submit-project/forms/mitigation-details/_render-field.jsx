@@ -27,29 +27,20 @@ export default ({ field }) => {
   const value = form[fieldName]
 
   /**
-   * Controlled vocabulary
-   */
-  if (fieldName === 'energyOrEmissionsData') {
-    return (
-      <ControlledVocabularySelect
-        key={fieldName}
-        tree="mitigationData"
-        root="Mitigation data"
-        name={fieldName}
-        value={value}
-        error={isRequired && !value}
-        onChange={val => updateForm({ [fieldName]: val })}
-        placeholder={placeholder}
-        helperText={helperText}
-      />
-    )
-  }
-
-  /**
    * Energy input & calculator
    */
-  if (fieldName === 'energyData') {
-    if (form.energyOrEmissionsData?.term === 'Energy') {
+  if (fieldName === 'hasEnergyData') {
+    return (
+      <GqlBoundFormInput
+        key={fieldName}
+        field={field}
+        value={value || ''}
+        updateValue={val => updateForm({ [fieldName]: val, energyData: undefined })}
+        multiline={multilineFields.includes(fieldName)}
+      />
+    )
+  } else if (fieldName === 'energyData') {
+    if (form.hasEnergyData?.toBoolean()) {
       return (
         <EnergyCalculator
           key={fieldName}
@@ -64,9 +55,12 @@ export default ({ field }) => {
 
   /**
    * Emissions input & calculator
+   * (Hidden for now)
    */
-  if (fieldName === 'emissionsData') {
-    if (form.energyOrEmissionsData?.term === 'Emissions') {
+  if (fieldName === 'hasEmissionsData') {
+    return null
+  } else if (fieldName === 'emissionsData') {
+    if (form.hasEmissionsData) {
       return (
         <EmissionsCalculator
           key={fieldName}
@@ -144,13 +138,194 @@ export default ({ field }) => {
 
   /**
    * Controlled vocabulary
+   * checked
    */
-  if (fieldName === 'cdmMethodology') {
+  if (fieldName === 'correspondingNationalPolicy') {
+    return (
+      <ControlledVocabularySelect
+        key={fieldName}
+        tree="mitigationPolicies"
+        root="Mitigation policies"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val =>
+          updateForm({ [fieldName]: val, correspondingSubNationalPolicy: undefined })
+        }
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  } else if (fieldName === 'correspondingSubNationalPolicy') {
+    if (form.correspondingNationalPolicy) {
+      return (
+        <ControlledVocabularySelect
+          key={fieldName}
+          tree="mitigationPolicies"
+          root={form.correspondingNationalPolicy}
+          name={fieldName}
+          value={value}
+          error={isRequired && !value}
+          onChange={val => updateForm({ [fieldName]: val })}
+          placeholder={placeholder}
+          helperText={helperText}
+        />
+      )
+    } else {
+      return null
+    }
+  }
+
+  /**
+   * Controlled vocabulary
+   * checked
+   */
+  if (fieldName === 'coBenefitEconomic') {
+    return (
+      <ControlledVocabularySelect
+        key={fieldName}
+        tree="coBenefits"
+        root="Economic"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateForm({ [fieldName]: val })}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  }
+
+  /**
+   * Controlled vocabulary
+   * checked
+   */
+  if (fieldName === 'mitigationProgramme') {
+    return (
+      <ControlledVocabularySelect
+        key={fieldName}
+        tree="mitigationProgramme"
+        root="Programme"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateForm({ [fieldName]: val })}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  }
+
+  /**
+   * Controlled vocabulary
+   * checked
+   */
+  if (fieldName === 'coBenefitEnvironmental') {
+    return (
+      <ControlledVocabularySelect
+        key={fieldName}
+        tree="coBenefits"
+        root="Environmental"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateForm({ [fieldName]: val })}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  }
+
+  /**
+   * Controlled vocabulary
+   * checked
+   */
+  if (fieldName === 'coBenefitSocial') {
+    return (
+      <ControlledVocabularySelect
+        key={fieldName}
+        tree="coBenefits"
+        root="Social"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateForm({ [fieldName]: val })}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  }
+
+  /**
+   * Controlled vocabulary
+   * checked
+   */
+  if (fieldName === 'carbonCreditVoluntaryOrganization') {
+    return (
+      <ControlledVocabularySelect
+        key={fieldName}
+        tree="carbonCreditVoluntaryOrganizations"
+        root="Organization"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateForm({ [fieldName]: val })}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  }
+
+  /**
+   * Controlled vocabulary
+   * checked
+   */
+  if (fieldName === 'carbonCreditCdmMethodology') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
         tree="cdmMethodology"
         root="CDM methodology"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateForm({ [fieldName]: val })}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  }
+
+  /**
+   * Controlled vocabulary
+   * checked
+   */
+  if (fieldName === 'carbonCreditCdmExecutiveStatus') {
+    return (
+      <ControlledVocabularySelect
+        key={fieldName}
+        tree="executiveStatus"
+        root="Executive status"
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateForm({ [fieldName]: val })}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
+  }
+
+  /**
+   * Controlled vocabulary
+   * checked
+   */
+  if (fieldName === 'carbonCreditStandard') {
+    return (
+      <ControlledVocabularySelect
+        key={fieldName}
+        tree="carbonCreditStandards"
+        root="Carbon credit standard"
         name={fieldName}
         value={value}
         error={isRequired && !value}
@@ -183,25 +358,6 @@ export default ({ field }) => {
   /**
    * Controlled vocabulary
    */
-  if (fieldName === 'interventionStatus') {
-    return (
-      <ControlledVocabularySelect
-        key={fieldName}
-        tree="actionStatus"
-        root="Status"
-        name={fieldName}
-        value={value}
-        error={isRequired && !value}
-        onChange={val => updateForm({ [fieldName]: val })}
-        placeholder={placeholder}
-        helperText={helperText}
-      />
-    )
-  }
-
-  /**
-   * Controlled vocabulary
-   */
   if (fieldName === 'mitigationType') {
     return (
       <ControlledVocabularySelect
@@ -219,12 +375,12 @@ export default ({ field }) => {
       />
     )
   } else if (fieldName === 'mitigationSubType') {
-    if (form['mitigationType']) {
+    if (form.mitigationType) {
       return (
         <ControlledVocabularySelect
           key={fieldName}
           tree="mitigationTypes"
-          root={form['mitigationType']}
+          root={form.mitigationType}
           name={fieldName}
           value={value}
           error={isRequired && !value}
@@ -240,12 +396,12 @@ export default ({ field }) => {
   }
 
   if (researchFormFields.includes(fieldName)) {
-    if (!(form['isResearch'] || '').toBoolean()) {
+    if (!(form['hasResearch'] || '').toBoolean()) {
       return null
     }
   }
 
-  if (fieldName === 'isResearch') {
+  if (fieldName === 'hasResearch') {
     return (
       <GqlBoundFormInput
         key={fieldName}

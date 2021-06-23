@@ -10,15 +10,21 @@ export const Projects = [
 ]
 
 export const Mitigations = [
-  'mitigationType',
-  'mitigationSubType',
-  'interventionStatus',
-  'cdmMethodology',
-  'cdmExecutiveStatus',
   'hostSector',
   'hostSubSectorPrimary',
   'hostSubSectorSecondary',
-  'energyOrEmissionsData',
+  'mitigationType',
+  'mitigationSubType',
+  'mitigationProgramme',
+  'correspondingNationalPolicy',
+  'correspondingSubNationalPolicy',
+  'coBenefitEnvironmental',
+  'coBenefitSocial',
+  'coBenefitEconomic',
+  'carbonCreditStandard',
+  'carbonCreditCdmExecutiveStatus',
+  'carbonCreditCdmMethodology',
+  'carbonCreditVoluntaryOrganization',
 ]
 
 export const Adaptations = [

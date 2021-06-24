@@ -71,7 +71,7 @@ export default () => {
                   mitigationDetailsForm: Object.keys(mitigationDetailsForm).length
                     ? convertFormToInput(mitigationDetailsForm)
                     : undefined,
-                  adaptationDetailsForms: Object.keys(adaptationDetailsForm).length
+                  adaptationDetailsForm: Object.keys(adaptationDetailsForm).length
                     ? convertFormToInput(adaptationDetailsForm)
                     : undefined,
                 },

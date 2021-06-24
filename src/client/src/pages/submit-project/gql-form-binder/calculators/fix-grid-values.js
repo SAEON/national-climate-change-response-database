@@ -17,6 +17,7 @@ const type1 = ({ fields, calculator }) => {
   const startYear = new Date(_startYear).getFullYear()
   const endYear = new Date(_endYear).getFullYear()
   const yearCount = endYear - startYear + 1
+  if (yearCount < 1 || isNaN(yearCount)) return
   const years = new Array(yearCount).fill(null).map((_, i) => [startYear + i, null])
 
   return Object.fromEntries(
@@ -71,11 +72,8 @@ const fixProgressCalculatorGrids = ({ calculator }) => {
   const startYear = new Date(_startYear).getFullYear()
   const endYear = new Date(_endYear).getFullYear()
   const yearCount = endYear - startYear + 1
+  if (yearCount < 1 || isNaN(yearCount)) return
   const years = new Array(yearCount).fill(null).map((_, i) => [startYear + i, null])
-
-  window.getCellValue = getCellValue
-  window.grid1 = grid1
-  window.years = years
 
   return {
     /**

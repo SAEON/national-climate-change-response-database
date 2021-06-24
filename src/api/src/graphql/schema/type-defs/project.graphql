@@ -3,36 +3,19 @@ input ProjectInput {
   title: String
   # Project description :: Enter long text description here
   description: String
-  # Intervention type :: Indicate the type of intervention this project focuses on? :: interventionTypes
-  interventionType: ControlledVocabularyInput!
   # Project start year :: Start date of project
   startYear: DateTime
   # Project end year :: End date of project
   endYear: DateTime
   # Link to project website :: Is there a URI that is associated with this project?
   link: String
-
-  # Implementation status :: At what stage is this project? :: actionStatus
-  implementationStatus: ControlledVocabularyInput
   # Implementing organization :: Who is implementing the project?
   implementingOrganization: String
-
   # Funding organization :: Who is the main funding organization?
   fundingOrganisation: String
-  # Type of funding :: Domestic or international sources(Grant or Loan) :: fundingTypes
-  fundingType: ControlledVocabularyInput
-
   # Actual budget :: Do you know the actual project budget?
   actualBudget: Money
-  # Estimated budget :: If you don't know the actual budget, please provide an estimate :: budgetRanges
-  estimatedBudget: ControlledVocabularyInput
 
-  # Province :: Select province :: regions
-  province: ControlledVocabularyInput
-  # District municipality :: Select district municipality :: regions
-  districtMunicipality: ControlledVocabularyInput
-  # Local municipality :: Select local municipality :: regions
-  localMunicipality: ControlledVocabularyInput
   # GPS point location(s) :: Include relevant point locations
   yx: WKT_4326
 
@@ -52,16 +35,29 @@ input ProjectInput {
   projectManagerPhysicalAddress: String
   # Postal address :: What is the project manager's postal address? (press shft + enter for newline)
   projectManagerPostalAddress: String
-
-  # Validation status :: Has this project been validated? :: projectValidationStatus
-  validationStatus: ControlledVocabularyInput
   # Validation Comments :: Any validation feedback?
   validationComments: String
+
+  # Estimated budget :: If you don't know the actual budget, please provide an estimate :: budgetRanges
+  estimatedBudget: ControlledVocabularyInput
+  # Intervention type :: Indicate the type of intervention this project focuses on? :: interventionTypes
+  interventionType: ControlledVocabularyInput!
+  # Implementation status :: At what stage is this project? :: actionStatus
+  implementationStatus: ControlledVocabularyInput
+  # Type of funding :: Domestic or international sources(Grant or Loan) :: fundingTypes
+  fundingType: ControlledVocabularyInput
+  # Province :: Select province :: regions
+  province: ControlledVocabularyInput
+  # District municipality :: Select district municipality :: regions
+  districtMunicipality: ControlledVocabularyInput
+  # Local municipality :: Select local municipality :: regions
+  localMunicipality: ControlledVocabularyInput
+  # Validation status :: Has this project been validated? :: projectValidationStatus
+  validationStatus: ControlledVocabularyInput
 }
 
 type Project {
   id: Int!
-
   title: String
   description: String
   interventionType: String
@@ -87,8 +83,8 @@ type Project {
   validationStatus: String
   validationComments: String
 
-  mitigations: [Mitigation]
-  adaptations: [Adaptation]
+  mitigation: Mitigation
+  adaptation: Adaptation
 
   updatedAt: DateTime
   updatedBy: User

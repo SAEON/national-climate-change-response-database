@@ -69,14 +69,12 @@ type Query {
   submissionTemplates: [SubmissionTemplate!]!
   # Search projects
   projects(
-    limit: Int
-    offset: Int
     ids: [Int!]
     vocabularyFilters: [VocabularyFilterInput!]
     mitigationFilters: MitigationFiltersInput
     adaptationFilters: AdaptationFiltersInput
-    # Deduplicate results (useful when only a selection of fields required)
-    distinct: Boolean
+    limit: Int
+    offset: Int
   ): [Project]!
   # Search vocabulary tress
   controlledVocabulary(root: String!, tree: String!): ControlledVocabulary

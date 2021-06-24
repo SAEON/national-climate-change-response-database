@@ -18,27 +18,17 @@ import buildQuery, { getFinalProjection } from './build-query.js'
 export default async (
   _,
   {
-    limit = undefined,
-    offset = undefined,
     ids = [],
     vocabularyFilters = [],
     mitigationFilters = undefined,
     adaptationFilters = undefined,
-    distinct = false,
+    limit = undefined,
+    offset = undefined,
   },
-  ctx,
-  info
+  ctx
 ) => {
   let isPaginated = false
   const { query } = ctx.mssql
-
-  const {
-    project: projectFields,
-    mitigations: mitigationsFields = [],
-    adaptations: adaptationsFields = [],
-  } = getFieldSelections(
-    info.fieldNodes.find(({ name }) => (name.value = 'projects')).selectionSet.selections
-  )
 
   /**
    * Validate pagination args (if included)
@@ -50,16 +40,8 @@ export default async (
       )
     }
 
-    if (!projectFields.includes('id')) {
-      throw new Error('If limit & offset are specified, then the field selection MUST include id')
-    }
-
     isPaginated = true
   }
-
-  const _projectFields = [...new Set([...projectFields, 'id'])]
-  const _mitigationsFields = [...new Set([...(mitigationsFields || []), 'projectId'])]
-  const _adaptationsFields = [...new Set([...(adaptationsFields || []), 'projectId'])]
 
   const { ids: mitigationIds = [], vocabularyFilters: mitigationVocabularyFilters = [] } =
     mitigationFilters || {}
@@ -68,82 +50,15 @@ export default async (
     adaptationFilters || {}
 
   const sql = `
-    ;with
-
-    _projects as (
-      ${buildQuery({ fields: _projectFields, table: 'Projects', ids, vocabularyFilters })}
-    ),
-    
-    _mitigations as (
-      ${buildQuery({
-        fields: _mitigationsFields,
-        table: 'Mitigations',
-        ids: mitigationIds,
-        vocabularyFilters: mitigationVocabularyFilters,
-      })}
-    ),
-    
-    _adaptations as (
-      ${buildQuery({
-        fields: _adaptationsFields,
-        table: 'Adaptations',
-        ids: adaptationIds,
-        vocabularyFilters: adaptationVocabularyFilters,
-      })}
-    )
-    
-    select ${distinct ? 'distinct' : ''}
-      ${getFinalProjection({ fields: projectFields, table: 'p' })}
-      ${
-        mitigationsFields.length
-          ? `,( 
-              select ${distinct ? 'distinct' : ''}
-                ${getFinalProjection({
-                  fields: mitigationsFields,
-                  table: 'm',
-                })} from _mitigations m where m.projectId = p.id for json path
-            ) mitigations`
-          : ''
-      }
-      ${
-        adaptationsFields.length
-          ? `,(
-              select ${distinct ? 'distinct' : ''}
-              ${getFinalProjection({
-                fields: adaptationsFields,
-                table: 'a',
-              })} from _adaptations a where a.projectId = p.id for json path 
-            ) adaptations`
-          : ''
-      }
-    
-    from _projects p
-    
-    where exists
-      ${
-        mitigationIds.length || mitigationVocabularyFilters.length
-          ? `( select 1 from _mitigations m where m.projectId = p.id  )`
-          : '( select 1 )'
-      }
-      ${
-        adaptationIds.length || adaptationVocabularyFilters.length
-          ? `and exists ( select 1 from _adaptations a where a.projectId = p.id )`
-          : ''
-      }
-
-      ${
-        isPaginated
-          ? `
-            order by id asc
-            offset ${offset} rows
-            fetch next ${limit} rows only`
-          : ''
-      }      
-    
-    for json path;`
+    select *
+    from Projects
+    where
+      deletedAt is null`
 
   logSql(sql, 'Fetch projects')
+
   const result = await query(sql)
-  const rows = result.recordset[0]
-  return rows || []
+  console.log(result.recordset)
+
+  return result.recordset
 }

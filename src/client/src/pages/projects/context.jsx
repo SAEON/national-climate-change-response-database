@@ -46,14 +46,13 @@ export default ({ children }) => {
   const { error, loading, data } = useQuery(
     gql`
       query projects(
-        $distinct: Boolean
         $vocabularyFilters: [VocabularyFilterInput!]
         $mitigationFilters: MitigationFiltersInput
         $adaptationFilters: AdaptationFiltersInput
         $limit: Int
         $offset: Int
       ) {
-        projects: projects(
+        projects(
           limit: $limit
           offset: $offset
           vocabularyFilters: $vocabularyFilters
@@ -64,73 +63,27 @@ export default ({ children }) => {
           title
           description
           interventionType
-          projectStatus
-          validationStatus
-          fundingStatus
+          link
+          implementationStatus
+          implementingOrganization
+          fundingOrganisation
+          fundingType
+          actualBudget
           estimatedBudget
-          hostSector
-          hostSubSector
           province
           districtMunicipality
           localMunicipality
-          mitigations {
-            id
-            mitigationType
-            mitigationSubType
-            interventionStatus
-            cdmMethodology
-            cdmExecutiveStatus
-            hostSector
-            hostSubSectorPrimary
-            hostSubSectorSecondary
-          }
-          adaptations {
-            id
-            adaptationSector
-            adaptationPurpose
-            interventionStatus
-            hazardFamily
-            hazardSubFamily
-            hazard
-            subHazard
-          }
-        }
-
-        filters: projects(
-          distinct: $distinct
-          vocabularyFilters: $vocabularyFilters
-          mitigationFilters: $mitigationFilters
-          adaptationFilters: $adaptationFilters
-        ) {
-          interventionType
-          projectStatus
+          yx
+          projectManagerName
+          projectManagerOrganization
+          projectManagerPosition
+          projectManagerEmail
+          projectManagerTelephone
+          projectManagerMobile
+          projectManagerPhysicalAddress
+          projectManagerPostalAddress
           validationStatus
-          fundingStatus
-          estimatedBudget
-          hostSector
-          hostSubSector
-          province
-          districtMunicipality
-          localMunicipality
-          mitigations {
-            mitigationType
-            mitigationSubType
-            interventionStatus
-            cdmMethodology
-            cdmExecutiveStatus
-            hostSector
-            hostSubSectorPrimary
-            hostSubSectorSecondary
-          }
-          adaptations {
-            adaptationSector
-            adaptationPurpose
-            interventionStatus
-            hazardFamily
-            hazardSubFamily
-            hazard
-            subHazard
-          }
+          validationComments
         }
       }
     `,
@@ -138,7 +91,6 @@ export default ({ children }) => {
       variables: {
         limit: PAGE_SIZE,
         offset: currentPage * PAGE_SIZE,
-        distinct: true,
         vocabularyFilters: normalizeVocabularyFilters(filterContext.ProjectFilters),
         mitigationFilters: {
           vocabularyFilters: normalizeVocabularyFilters(filterContext.MitigationFilters),
@@ -162,7 +114,7 @@ export default ({ children }) => {
     throw error
   }
 
-  const { projects, filters } = data
+  const { projects } = data
 
   return (
     <context.Provider
@@ -173,7 +125,7 @@ export default ({ children }) => {
         previousPage: currentPage === 0 ? undefined : () => setCurrentPage(p => p - 1),
         nextPage: () => setCurrentPage(p => p + 1),
         projects,
-        filters,
+        filters: [],
         setProjectFilter,
         setMitigationFilter,
         setAdaptationFilter,

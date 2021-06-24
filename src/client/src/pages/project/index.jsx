@@ -12,77 +12,28 @@ export default ({ id }) => {
           id
           title
           description
-          projectManager
-          link
-          startYear
-          endYear
-          validationComments
-          fundingOrganisation
-          fundingPartner
-          budgetLower
-          budgetUpper
-          hostOrganisation
-          hostPartner
-          alternativeContact
-          alternativeContactEmail
-          leadAgent
           interventionType
-          projectStatus
-          validationStatus
-          fundingStatus
+          link
+          implementationStatus
+          implementingOrganization
+          fundingOrganisation
+          fundingType
+          actualBudget
           estimatedBudget
-          hostSector
-          hostSubSector
           province
           districtMunicipality
           localMunicipality
           yx
-          mitigations {
-            id
-            carbonCredit
-            volMethodology
-            goldStandard
-            vcs
-            otherCarbonCreditStandard
-            otherCarbonCreditStandardDescription
-            cdmProjectNumber
-            cdmStatus
-            isResearch
-            researchDescription
-            energyOrEmissionsData
-            energyData
-            emissionsData
-            researchType
-            researchTargetAudience
-            researchAuthor
-            researchPaper
-            mitigationType
-            mitigationSubType
-            interventionStatus
-            cdmMethodology
-            cdmExecutiveStatus
-            hostSector
-            hostSubSectorPrimary
-            hostSubSectorSecondary
-          }
-          adaptations {
-            id
-            startYear
-            endYear
-            isResearch
-            interventionStatus
-            researchDescription
-            researchType
-            researchTargetAudience
-            researchAuthor
-            researchPaper
-            adaptationSector
-            adaptationPurpose
-            hazardFamily
-            hazardSubFamily
-            hazard
-            subHazard
-          }
+          projectManagerName
+          projectManagerOrganization
+          projectManagerPosition
+          projectManagerEmail
+          projectManagerTelephone
+          projectManagerMobile
+          projectManagerPhysicalAddress
+          projectManagerPostalAddress
+          validationStatus
+          validationComments
         }
       }
     `,

@@ -1,6 +1,6 @@
 input MitigationInput {
   # Select host sector :: Select the IPCC host sector that best describes your project. :: mitigationSectors
-  hostSector: ControlledVocabularyInput
+  hostSector: ControlledVocabularyInput!
   # Select main sub-sector :: Select the IPCC main sub-sector that best describes you project. :: mitigationSectors
   hostSubSectorPrimary: ControlledVocabularyInput
   # Select secondary sub-sector :: Select the IPCC sub-sector that best describes your project. :: mitigationSectors
@@ -48,7 +48,7 @@ input MitigationInput {
   carbonCreditVoluntaryMethodology: String
 
   # Achieved progress :: Achieved progress by project
-  achievedProgress: JSON
+  progressData: JSON
 
   # Energy data :: Does the project have energy data?
   hasEnergyData: Boolean

@@ -1,4 +1,4 @@
-export default (energyData, i) => {
+export default energyData => {
   if (!energyData) {
     return ''
   }
@@ -17,11 +17,11 @@ export default (energyData, i) => {
           Object.entries(info).map(
             ([year, { annualKwh, annualKwhPurchaseReduction, notes }]) => `
             select
-              ( select id from #newMitigation where i = ${i} ) mitigationId,
+              ( select id from #newMitigation ) mitigationId,
               (
                 select vxt.id
-                from VocabularyTrees t
-                join VocabularyXrefTree vxt on vxt.vocabularyTreeId = t.id
+                from Trees t
+                join VocabularyXrefTree vxt on vxt.treeId = t.id
                 join Vocabulary v on v.id = vxt.vocabularyId
                 where t.name = 'renewableTypes'
                 and v.term = '${sanitizeSqlValue(energyType) /* eslint-disable-line */}' 

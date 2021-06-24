@@ -97,22 +97,22 @@ if not exists (
 begin
 create table Vocabulary (
   id int not null identity primary key,
-  term nvarchar(2000) not null unique,
+  term nvarchar(850) not null unique,
   description nvarchar(4000) null,
   index ix_vocablulary_terms nonclustered (term)
 );
 end
 
--- VocabularyTrees
+-- Trees
 if not exists (
 	select *
 	from sys.objects
 	where
-		object_id = OBJECT_ID(N'[dbo].[VocabularyTrees]')
+		object_id = OBJECT_ID(N'[dbo].[Trees]')
 		and type = 'U'
 )
 begin
-create table VocabularyTrees (
+create table Trees (
   id int not null identity primary key,
   name nvarchar(255) not null unique,
   description nvarchar(4000),
@@ -132,10 +132,10 @@ begin
 create table VocabularyXrefTree (
   id int not null identity primary key,
   vocabularyId int not null foreign key references Vocabulary (id),
-  vocabularyTreeId int not null foreign key references VocabularyTrees (id),
-  unique (vocabularyId, vocabularyTreeId),
+  treeId int not null foreign key references Trees (id),
+  unique (vocabularyId, treeId),
   index ix_VocabularyXrefTree_vocabularyId nonclustered (vocabularyId),
-  index ix_VocabularyXrefTree_vocabularyTreeId nonclustered (vocabularyTreeId)
+  index ix_VocabularyXrefTree_vocabularyTreeId nonclustered (treeId)
 );
 end
 
@@ -153,11 +153,11 @@ create table VocabularyXrefVocabulary (
   parentId int not null foreign key references Vocabulary (id),
   childId int not null foreign key references Vocabulary (id),
 	-- TODO order
-  vocabularyTreeId int not null foreign key references VocabularyTrees (id),
-  unique (parentId, childId, vocabularyTreeId),
+  treeId int not null foreign key references Trees (id),
+  unique (parentId, childId, treeId),
   index ix_VocabularyXrefVocabulary_parentId nonclustered (parentId),
   index ix_VocabularyXrefVocabulary_childId nonclustered (childId),
-  index ix_VocabularyXrefVocabulary_vocabularyTreeId nonclustered (vocabularyTreeId)
+  index ix_VocabularyXrefVocabulary_vocabularyTreeId nonclustered (treeId)
 );
 end
 
@@ -188,7 +188,7 @@ create table Projects (
 	alternativeContact nvarchar(255),
 	alternativeContactEmail nvarchar(255),
 	leadAgent nvarchar(255),
-	deletedAt date,
+	deletedAt datetime2,
 	interventionType int foreign key references VocabularyXrefTree (id),
 	projectStatus int foreign key references VocabularyXrefTree (id),
 	validationStatus int foreign key references VocabularyXrefTree (id),	
@@ -234,7 +234,7 @@ create table Mitigations (
   researchTargetAudience nvarchar(255),
   researchAuthor nvarchar(255),
   researchPaper nvarchar(255),
-	deletedAt date,
+	deletedAt datetime2,
 	energyOrEmissionsData int foreign key references VocabularyXrefTree (id),
 	mitigationType int foreign key references VocabularyXrefTree (id),
 	mitigationSubType int foreign key references VocabularyXrefTree (id),
@@ -248,6 +248,43 @@ create table Mitigations (
 	createdAt date,
 	updatedBy int foreign key references Users (id),
 	updatedAt date	
+);
+end
+
+-- ProgressData
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[ProgressData]')
+		and type = 'U'
+)
+begin
+create table ProgressData (
+  id int not null identity primary key,
+	mitigationId int not null foreign key references Mitigations (id),
+	year int not null,
+	achieved int not null default 0,
+	achievedUnit int not null foreign key references VocabularyXrefTree (id),
+	deletedAt datetime2
+);
+end
+
+-- ExpenditureData
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[ExpenditureData]')
+		and type = 'U'
+)
+begin
+create table ExpenditureData (
+  id int not null identity primary key,
+	mitigationId int not null foreign key references Mitigations (id),
+	year int not null,
+	expenditureZar money default 0,
+	deletedAt datetime2
 );
 end
 
@@ -268,7 +305,7 @@ create table EnergyData (
 	annualKwh int not null default 0,
 	annualKwhPurchaseReduction int not null default 0,
 	notes nvarchar(4000) null,
-	deletedAt date
+	deletedAt datetime2
 );
 end
 
@@ -287,7 +324,7 @@ create table EmissionsData (
 	emissionType int not null foreign key references VocabularyXrefTree (id),
 	year int not null,
 	notes nvarchar(4000) null,
-	deletedAt date
+	deletedAt datetime2
 );
 end
 
@@ -305,7 +342,7 @@ create table EmissionsDataXrefVocabTreeX (
 	emissionsDataId int not null foreign key references EmissionsData (id),
 	chemical int not null foreign key references VocabularyXrefTree (id),
 	tonnesPerYear int not null,
-	deletedAt date
+	deletedAt datetime2
 );
 end
 
@@ -329,7 +366,7 @@ create table Adaptations (
   researchTargetAudience nvarchar(255),
   researchAuthor nvarchar(255),
   researchPaper nvarchar(255),
-	deletedAt date,
+	deletedAt datetime2,
 	interventionStatus int foreign key references VocabularyXrefTree (id),
   adaptationSector int foreign key references VocabularyXrefTree (id),
   adaptationPurpose int foreign key references VocabularyXrefTree (id),

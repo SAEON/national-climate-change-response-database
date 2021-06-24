@@ -1,6 +1,6 @@
 input AdaptationInput {
   # Adaptation sector :: Select the adaptation sector :: adaptationSectors
-  adaptationSector: ControlledVocabularyInput
+  adaptationSector: ControlledVocabularyInput!
   # Corresponding national policy :: Indicate the national policy or strategy that the measure is responding to :: adaptationPolicies
   correspondingNationalPolicy: ControlledVocabularyInput
   # Corresponding sub-national policy :: Indicate the sub-national policy or strategy that the measure is responding to :: adaptationPolicies

@@ -19,13 +19,13 @@ export default async (_, { root, tree }, ctx) => {
         
         from Vocabulary parent
         join VocabularyXrefTree vxt on vxt.vocabularyId = parent.id
-        join VocabularyTrees t on t.id = vxt.vocabularyTreeId
+        join Trees t on t.id = vxt.treeId
         
         where
         parent.term = '${root}'
         and t.name = '${tree}'
       ) p
-      left outer join VocabularyXrefVocabulary vxv on vxv.parentId = p.id and vxv.vocabularyTreeId = p.treeId
+      left outer join VocabularyXrefVocabulary vxv on vxv.parentId = p.id and vxv.treeId = p.treeId
       left outer join Vocabulary children on children.id = vxv.childId
       
       for json auto, without_array_wrapper`)

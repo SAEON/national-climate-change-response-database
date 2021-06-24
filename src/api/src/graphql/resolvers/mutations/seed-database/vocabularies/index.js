@@ -30,7 +30,7 @@ export default async ctx => {
          * Make sure that the tree exists in the database
          */
         await query(`
-          merge VocabularyTrees T
+          merge Trees T
           using (select '${sanitizeSqlValue(tree)}' name) S on T.name = S.name
           when not matched then insert (name)
           values (S.name);`)
@@ -60,12 +60,10 @@ export default async ctx => {
           using (
             select 
               (select id from Vocabulary where term = '${sanitizeSqlValue(term)}') vocabularyId,
-              (select id from VocabularyTrees where name = '${sanitizeSqlValue(
-                tree
-              )}') vocabularyTreeId
-          ) S on S.vocabularyId = T.vocabularyId and S.vocabularyTreeId = T.vocabularyTreeId
-          when not matched then insert (vocabularyId, vocabularyTreeId)
-          values (S.vocabularyId, S.vocabularyTreeId);`)
+              (select id from Trees where name = '${sanitizeSqlValue(tree)}') treeId
+          ) S on S.vocabularyId = T.vocabularyId and S.treeId = T.treeId
+          when not matched then insert (vocabularyId, treeId)
+          values (S.vocabularyId, S.treeId);`)
 
         /**
          * Insert this tree link
@@ -77,16 +75,14 @@ export default async ctx => {
               select
                 (select id from Vocabulary where term = '${sanitizeSqlValue(parent)}') parentId,
                 (select id from Vocabulary where term = '${sanitizeSqlValue(term)}') childId,
-                (select id from VocabularyTrees where name = '${sanitizeSqlValue(
-                  tree
-                )}') vocabularyTreeId
+                (select id from Trees where name = '${sanitizeSqlValue(tree)}') treeId
             ) t where parentId <> ''
           ) S on
           S.parentId = T.parentId
           and S.childId = T.childId
-          and S.vocabularyTreeId = T.vocabularyTreeId
-          when not matched then insert (parentId, childId, vocabularyTreeId)
-          values (S.parentId, S.childId, S.vocabularyTreeId);`)
+          and S.treeId = T.treeId
+          when not matched then insert (parentId, childId, treeId)
+          values (S.parentId, S.childId, S.treeId);`)
       }
     }
 

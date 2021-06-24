@@ -1,4 +1,4 @@
-export default (emissionsData, i) => {
+export default emissionsData => {
   if (!emissionsData) {
     return ''
   }
@@ -15,11 +15,11 @@ export default (emissionsData, i) => {
         Object.entries(annualData).map(
           ([year, { notes }]) => `
           select
-            ( select id from #newMitigation where i = ${i} ) mitigationId,
+            ( select top 1 id from #newMitigation ) mitigationId,
             (
               select vxt.id
-              from VocabularyTrees t
-              join VocabularyXrefTree vxt on vxt.vocabularyTreeId = t.id
+              from Trees t
+              join VocabularyXrefTree vxt on vxt.treeId = t.id
               join Vocabulary v on v.id = vxt.vocabularyId
               where t.name = 'emissionTypes'
               and v.term = '${sanitizeSqlValue(emissionType) /* eslint-disable-line */}' 
@@ -51,19 +51,19 @@ export default (emissionsData, i) => {
                       id
                       from EmissionsData
                       where year = ${year}
-                      and mitigationId = ( select id from #newMitigation where i = ${i} )
+                      and mitigationId = ( select top 1 id from #newMitigation )
                       and emissionType = (
                         select vxt.id
-                        from VocabularyTrees t
-                        join VocabularyXrefTree vxt on vxt.vocabularyTreeId = t.id
+                        from Trees t
+                        join VocabularyXrefTree vxt on vxt.treeId = t.id
                         join Vocabulary v on v.id = vxt.vocabularyId
                         where t.name = 'emissionTypes'
                         and v.term = '${sanitizeSqlValue(emissionType) /* eslint-disable-line */}' 
                       )
                     ) emissionsDataId,
                     ( select vxt.id
-                      from VocabularyTrees t
-                      join VocabularyXrefTree vxt on vxt.vocabularyTreeId = t.id
+                      from Trees t
+                      join VocabularyXrefTree vxt on vxt.treeId = t.id
                       join Vocabulary v on v.id = vxt.vocabularyId
                       where t.name = 'emissions'
                       and v.term = '${

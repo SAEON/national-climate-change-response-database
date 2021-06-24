@@ -27,7 +27,7 @@ export default ({ field }) => {
   const isRequired = !inputType
   const value = form[fieldName]
 
-  if (fieldName === 'achievedProgress') {
+  if (fieldName === 'progressData') {
     return (
       <ProgressCalculator
         key={fieldName}

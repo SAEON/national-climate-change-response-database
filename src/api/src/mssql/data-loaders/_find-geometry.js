@@ -22,7 +22,7 @@ export default () =>
           t.name tree,
           ${[...new Set(fields)].map(field => `[${field}].STAsText() [${field}]`).join(',')}
         from VocabularyXrefTree vxt
-        join VocabularyTrees t on t.id = vxt.vocabularyTreeId
+        join Trees t on t.id = vxt.treeId
         join GeometryXrefVocabularyTreeX gx on gx.vocabularyXrefTreeId = vxt.id
         join Geometries g on g.id = gx.geometryId
 

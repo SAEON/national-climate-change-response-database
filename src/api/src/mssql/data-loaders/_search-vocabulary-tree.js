@@ -22,7 +22,7 @@ export default () =>
         
           from Vocabulary parent
           join VocabularyXrefTree vxt on vxt.vocabularyId = parent.id
-          join VocabularyTrees t on t.id = vxt.vocabularyTreeId
+          join Trees t on t.id = vxt.treeId
         
           where
           parent.id in (${
@@ -34,7 +34,7 @@ export default () =>
           })
           and t.name in (${[...new Set(keys.map(({ tree }) => `'${tree}'`))].join(',') || null})
         ) p
-        left outer join VocabularyXrefVocabulary vxv on vxv.parentId = p.id and vxv.vocabularyTreeId = p.treeId
+        left outer join VocabularyXrefVocabulary vxv on vxv.parentId = p.id and vxv.treeId = p.treeId
         left outer join Vocabulary children on children.id = vxv.childId
         
         for json auto`

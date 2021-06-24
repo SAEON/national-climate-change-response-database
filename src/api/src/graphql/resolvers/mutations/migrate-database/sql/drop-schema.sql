@@ -4,6 +4,8 @@
  
 drop table if exists ExcelSubmissionTemplates;
 drop table if exists EmissionsDataXrefVocabTreeX;
+drop table if exists ProgressData;
+drop table if exists ExpenditureData;
 drop table if exists EmissionsData;
 drop table if exists EnergyData;
 drop table if exists Mitigations;
@@ -13,7 +15,7 @@ drop table if exists GeometryXrefVocabularyTreeX;
 drop table if exists Geometries;
 drop table if exists VocabularyXrefVocabulary;
 drop table if exists VocabularyXrefTree;
-drop table if exists VocabularyTrees;
+drop table if exists Trees;
 drop table if exists Vocabulary;
 drop table if exists PermissionRoleXref;
 drop table if exists UserRoleXref;

@@ -63,7 +63,7 @@ export default ({ calculator, updateCalculator }) => {
         variant="overline"
         style={{ textAlign: 'center', margin: theme.spacing(2), display: 'block' }}
       >
-        Progress calculator
+        Achievement reporting
       </Typography>
       <div style={{ height: rows1.length <= 6 ? rows1.length * 52 + 58 : 300, width: '100%' }}>
         <DataGrid
@@ -147,7 +147,7 @@ export default ({ calculator, updateCalculator }) => {
         variant="overline"
         style={{ textAlign: 'center', margin: theme.spacing(2), display: 'block' }}
       >
-        Effects calculator
+        Project expenditure
       </Typography>
       <div style={{ height: rows2.length <= 6 ? rows2.length * 52 + 58 : 300, width: '100%' }}>
         <DataGrid

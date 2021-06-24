@@ -7,6 +7,8 @@ import {
 } from './_make-insert-statements.js'
 import makeEnergyInsertStmt from './_make-energy-insert-statement.js'
 import makeEmissionsInsertStmts from './_make-emissions-insert-statements.js'
+import makeProgressInsertStmt from './_make-progress-insert-statement.js'
+import makeExpenditureInsertStmt from './_make-expenditure-insert-statement.js'
 
 const limitedPermissionFields = {
   project: [
@@ -15,16 +17,25 @@ const limitedPermissionFields = {
   ],
 }
 
-export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx) => {
+export default async (
+  _,
+  { generalDetailsForm, mitigationDetailsForm = {}, adaptationDetailsForm = {} },
+  ctx
+) => {
   const { user, mssql } = ctx
   const { query } = mssql
 
   const userId = user.info(ctx).id
   const now = new Date().toISOString()
 
-  projectForm = normalizeFormInput(projectForm)
-  mitigationForms = mitigationForms.map(form => normalizeFormInput(form))
-  adaptationForms = adaptationForms.map(form => normalizeFormInput(form))
+  /**
+   * Get the form values in a useful way
+   * to turn them into an insertion query
+   */
+
+  generalDetailsForm = normalizeFormInput(generalDetailsForm)
+  mitigationDetailsForm = normalizeFormInput(mitigationDetailsForm)
+  adaptationDetailsForm = normalizeFormInput(adaptationDetailsForm)
 
   /**
    * Some fields can only be filled in by admin users
@@ -43,6 +54,10 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
     user.ensurePermissions({ ctx, permissions: requiredPermissions })
   }
 
+  /**
+   * Create the insertion query
+   */
+
   const sql = `
     begin transaction T
     begin try
@@ -51,12 +66,12 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
       drop table if exists #newProject;
       create table #newProject(id int);
       drop table if exists #newMitigation;
-      create table #newMitigation(id int, i int);
+      create table #newMitigation(id int);
 
       -- project
       ${makeProjectInsertStmt({
-        simpleInput: projectForm.simpleInput,
-        vocabInput: projectForm.vocabInput,
+        simpleInput: generalDetailsForm.simpleInput,
+        vocabInput: generalDetailsForm.vocabInput,
         userId,
         now,
       })}
@@ -65,40 +80,26 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
       select scope_identity() id;
 
       -- mitigations
-      ${mitigationForms
-        .map(({ simpleInput, vocabInput, energyData, emissionsData }, i) => {
-          if (!simpleInput.length && !vocabInput.length) return ''
+      ${makeMitigationsInsertStmt({
+        simpleInput: mitigationDetailsForm.simpleInput,
+        vocabInput: mitigationDetailsForm.vocabInput,
+        projectId: true,
+      })}
 
-          return `
-            ${makeMitigationsInsertStmt({
-              simpleInput: simpleInput,
-              vocabInput: vocabInput,
-              projectId: true,
-            })}
-            
-            insert into #newMitigation (id, i)
-            select
-              scope_identity() id,
-              ${i} i;
-              
-            ${makeEnergyInsertStmt(energyData, i)}
-            ${makeEmissionsInsertStmts(emissionsData, i)}`
-        })
-        .join('\n')}
+      insert into #newMitigation (id)
+      select scope_identity() id;
+        
+      ${makeEnergyInsertStmt(mitigationDetailsForm.energyData)}
+      ${makeEmissionsInsertStmts(mitigationDetailsForm.emissionsData)}
+      ${makeProgressInsertStmt(mitigationDetailsForm.progressData?.grid1)}
+      ${makeExpenditureInsertStmt(mitigationDetailsForm.progressData?.grid2)}
 
       -- adaptations
-      ${adaptationForms
-        .map(({ simpleInput, vocabInput }) => {
-          if (!simpleInput.length && !vocabInput.length) return ''
-
-          return `
-          ${makeAdaptationsInsertStmt({
-            simpleInput: simpleInput,
-            vocabInput: vocabInput,
-            projectId: true,
-          })}`
-        })
-        .join('\n')}
+      ${makeAdaptationsInsertStmt({
+        simpleInput: adaptationDetailsForm.simpleInput,
+        vocabInput: adaptationDetailsForm.vocabInput,
+        projectId: true,
+      })}
 
       select id from #newProject;
       commit transaction T
@@ -107,7 +108,7 @@ export default async (_, { projectForm, mitigationForms, adaptationForms }, ctx)
       rollback transaction T
     end catch`
 
-  logSql(sql, 'Create project')
+  logSql(sql, 'Create project', true)
 
   const result = await query(sql)
   return { id: result.recordset[0].id }

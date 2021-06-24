@@ -47,7 +47,7 @@ export default async ctx => {
               vxt.id
               from Vocabulary v
               join VocabularyXrefTree vxt on vxt.vocabularyId = v.id
-              join VocabularyTrees t on vxt.vocabularyTreeId = t.id
+              join Trees t on vxt.treeId = t.id
               where
               t.name = 'regions'
               and v.term = '${name}'

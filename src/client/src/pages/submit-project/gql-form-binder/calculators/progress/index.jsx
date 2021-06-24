@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react'
 import { DatePicker } from '@material-ui/pickers'
 import Grid from '@material-ui/core/Grid'
-import InputTables from './input-table'
+import InputTables from './input-tables'
 import QuickForm from '../../../../../components/quick-form'
 import debounce from '../../../../../lib/debounce'
 

@@ -1,6 +1,17 @@
 import getCellValue from './get-cell-value.js'
 
-export default ({ fields, calculator }) => {
+/**
+ * TYPE ONE
+ *
+ * grid {
+ *   type {
+ *     year {
+ *       ... fields
+ *     }
+ *   }
+ * }
+ */
+const type1 = ({ fields, calculator }) => {
   const { grid = {}, startYear: _startYear, endYear: _endYear } = calculator
 
   const startYear = new Date(_startYear).getFullYear()
@@ -35,4 +46,113 @@ export default ({ fields, calculator }) => {
       ),
     ])
   )
+}
+
+/**
+ * PROGRESS CALCULATORS
+ * {
+ *   grid1 {
+ *     year {
+ *      ... fields
+ *     }
+ *   }
+ *
+ *   grid2 {
+ *     year {
+ *       ... fields
+ *     }
+ *   }
+ * }
+ */
+
+const fixProgressCalculatorGrids = ({ calculator }) => {
+  const { grid1 = {}, grid2 = {}, startYear: _startYear, endYear: _endYear } = calculator
+
+  const startYear = new Date(_startYear).getFullYear()
+  const endYear = new Date(_endYear).getFullYear()
+  const yearCount = endYear - startYear + 1
+  const years = new Array(yearCount).fill(null).map((_, i) => [startYear + i, null])
+
+  window.getCellValue = getCellValue
+  window.grid1 = grid1
+  window.years = years
+
+  return {
+    /**
+     * Mitigation achievement
+     * fields:
+     *   - achieved
+     *   - achievedUnit
+     */
+    grid1: Object.fromEntries(
+      years.map(([currentYear]) => [
+        currentYear,
+        Object.fromEntries(
+          ['achieved', 'achievedUnit'].map(field => [
+            field,
+            field === 'achievedUnit'
+              ? getCellValue({
+                  calculator: 'progress',
+                  startYear,
+                  currentYear,
+                  field,
+                  grid: grid1,
+                })
+              : parseInt(
+                  getCellValue({
+                    calculator: 'progress',
+                    startYear,
+                    currentYear,
+                    field,
+                    grid: grid1,
+                  }),
+                  10
+                ),
+          ])
+        ),
+      ])
+    ),
+    /**
+     * Expenditure
+     * fields:
+     *   - expenditureZar
+     */
+    grid2: Object.fromEntries(
+      years.map(([currentYear]) => [
+        currentYear,
+        Object.fromEntries(
+          ['expenditureZar'].map(field => [
+            field,
+            parseFloat(
+              getCellValue({
+                calculator: 'progress',
+                startYear,
+                currentYear,
+                field,
+                grid: grid2,
+              })
+            ),
+          ])
+        ),
+      ])
+    ),
+  }
+}
+
+export default ({ calculatorType = 'type1', ...args }) => {
+  if (calculatorType === 'type1') {
+    return type1({ ...args })
+  }
+
+  if (calculatorType === 'energy') {
+    return type1({ ...args })
+  }
+
+  if (calculatorType === 'emissions') {
+    return type1({ ...args })
+  }
+
+  if (calculatorType === 'progress') {
+    return fixProgressCalculatorGrids({ ...args })
+  }
 }

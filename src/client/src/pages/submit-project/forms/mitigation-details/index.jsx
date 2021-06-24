@@ -9,7 +9,7 @@ const Compose = memo(({ fields }) => {
       fields={fields}
       hideSections={['Emissions data', 'Energy data']}
       sections={{
-        'Progress calculator': ['achievedProgress'],
+        'Progress calculator': ['progressData'],
         'Host sector': ['hostSector', 'hostSubSectorPrimary', 'hostSubSectorSecondary'],
         'Mitigation type': ['mitigationType', 'mitigationSubType'],
         'Policy information': [

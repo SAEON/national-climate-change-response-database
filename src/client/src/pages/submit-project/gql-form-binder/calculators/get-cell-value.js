@@ -9,7 +9,7 @@
  *   }
  * }
  */
-const typeOneCalculator = ({ startYear, type, currentYear, grid, field }) => {
+const type1 = ({ startYear, type, currentYear, grid, field }) => {
   if (field === 'notes') {
     return grid?.[type]?.[currentYear]?.[field] || ''
   }
@@ -33,7 +33,7 @@ const typeOneCalculator = ({ startYear, type, currentYear, grid, field }) => {
  *   }
  * }
  */
-const typeTwoCalculator = ({ startYear, currentYear, grid, field }) => {
+const type2 = ({ startYear, currentYear, grid, field }) => {
   for (let _currentYear = currentYear; _currentYear >= startYear; _currentYear--) {
     const val = grid?.[_currentYear]?.[field]
     if (val) {
@@ -48,20 +48,24 @@ const typeTwoCalculator = ({ startYear, currentYear, grid, field }) => {
   return 0
 }
 
-export default ({ calculator = 'energy', ...args }) => {
+export default ({ calculator = 'type1', ...args }) => {
+  if (calculator === 'type1') {
+    return type1({ ...args })
+  }
+
   if (calculator === 'energy') {
-    return typeOneCalculator({ ...args })
+    return type1({ ...args })
   }
 
   if (calculator === 'emissions') {
-    return typeOneCalculator({ ...args })
+    return type1({ ...args })
   }
 
   if (calculator === 'progress') {
-    return typeTwoCalculator({ ...args })
+    return type2({ ...args })
   }
 
   if (calculator === 'expenditure') {
-    return typeTwoCalculator({ ...args })
+    return type2({ ...args })
   }
 }

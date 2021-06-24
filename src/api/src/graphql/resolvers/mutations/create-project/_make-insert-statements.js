@@ -4,7 +4,8 @@ export const makeProjectInsertStmt = ({
   projectId = false,
   userId,
   now,
-}) => `
+}) => {
+  return `
     insert into [Projects] (${[
       projectId && 'projectId',
       ...simpleInput.map(([field]) => `[${field}]`),
@@ -33,8 +34,8 @@ export const makeProjectInsertStmt = ({
           select
           vxt.id [${field}]
 
-          from VocabularyTrees t
-          join VocabularyXrefTree vxt on vxt.vocabularyTreeId = t.id
+          from Trees t
+          join VocabularyXrefTree vxt on vxt.treeId = t.id
           join Vocabulary v on v.id = vxt.vocabularyId
 
           where
@@ -48,81 +49,95 @@ export const makeProjectInsertStmt = ({
     ]
       .filter(_ => _)
       .join(',')});`
+}
 
-export const makeMitigationsInsertStmt = ({ simpleInput, vocabInput, projectId = false }) => `
-  insert into [Mitigations] (${[
-    projectId && 'projectId',
-    ...simpleInput.map(([field]) => `[${field}]`),
-    ...vocabInput.map(([field]) => `[${field}]`),
-  ]
-    .filter(_ => _)
-    .join(',')})
-  values (${[
-    projectId && ` (select id from #newProject) `,
-    ...simpleInput.map(([key, value]) => {
-      if (key === 'yx') {
-        return `geometry::STGeomFromText('${value}', 4326)`
-      }
+export const makeMitigationsInsertStmt = ({ simpleInput, vocabInput, projectId = false } = {}) => {
+  if (!simpleInput.length && !vocabInput.length) {
+    return ''
+  }
 
-      if (key === 'startYear' || key === 'endYear') {
-        return new Date(value).getFullYear()
-      }
+  return `
+    insert into [Mitigations] (${[
+      projectId && 'projectId',
+      ...simpleInput.map(([field]) => `[${field}]`),
+      ...vocabInput.map(([field]) => `[${field}]`),
+    ]
+      .filter(_ => _)
+      .join(',')})
+    values (${[
+      projectId && ` (select id from #newProject) `,
+      ...simpleInput.map(([key, value]) => {
+        if (key === 'yx') {
+          return `geometry::STGeomFromText('${value}', 4326)`
+        }
 
-      return `'${sanitizeSqlValue(value)}'` // eslint-disable-line
-    }),
-    ...vocabInput.map(
-      ([field, { tree, term }]) => `(
-        select
-        vxt.id [${field}]
+        if (key === 'startYear' || key === 'endYear') {
+          return new Date(value).getFullYear()
+        }
 
-        from VocabularyTrees t
-        join VocabularyXrefTree vxt on vxt.vocabularyTreeId = t.id
-        join Vocabulary v on v.id = vxt.vocabularyId
+        return `'${sanitizeSqlValue(value)}'` // eslint-disable-line
+      }),
+      ...vocabInput.map(
+        ([field, { tree, term }]) => `(
+          select
+          vxt.id [${field}]
 
-        where
-        t.name = '${sanitizeSqlValue(tree) /* eslint-disable-line */}' 
-        and v.term = '${sanitizeSqlValue(term) /* eslint-disable-line */}'
-      )`
-    ),
-  ]
-    .filter(_ => _)
-    .join(',')});`
+          from Trees t
+          join VocabularyXrefTree vxt on vxt.treeId = t.id
+          join Vocabulary v on v.id = vxt.vocabularyId
 
-export const makeAdaptationsInsertStmt = ({ simpleInput, vocabInput, projectId = false }) => `
-  insert into [Adaptations] (${[
-    projectId && 'projectId',
-    ...simpleInput.map(([field]) => `[${field}]`),
-    ...vocabInput.map(([field]) => `[${field}]`),
-  ]
-    .filter(_ => _)
-    .join(',')})
-  values (${[
-    projectId && ` (select id from #newProject) `,
-    ...simpleInput.map(([key, value]) => {
-      if (key === 'yx') {
-        return `geometry::STGeomFromText('${value}', 4326)`
-      }
+          where
+          t.name = '${sanitizeSqlValue(tree) /* eslint-disable-line */}' 
+          and v.term = '${sanitizeSqlValue(term) /* eslint-disable-line */}'
+        )`
+      ),
+    ]
+      .filter(_ => _)
+      .join(',')});`
+}
 
-      if (key === 'startYear' || key === 'endYear') {
-        return new Date(value).getFullYear()
-      }
+export const makeAdaptationsInsertStmt = ({ simpleInput, vocabInput, projectId = false }) => {
+  console.log('s', simpleInput, vocabInput)
+  if (!simpleInput.length && !vocabInput.length) {
+    return ''
+  }
 
-      return `'${sanitizeSqlValue(value)}'` // eslint-disable-line
-    }),
-    ...vocabInput.map(
-      ([field, { tree, term }]) => `(
-        select
-        vxt.id [${field}]
+  return `
+    insert into [Adaptations] (${[
+      projectId && 'projectId',
+      ...simpleInput.map(([field]) => `[${field}]`),
+      ...vocabInput.map(([field]) => `[${field}]`),
+    ]
+      .filter(_ => _)
+      .join(',')})
+    values (${[
+      projectId && ` (select id from #newProject) `,
+      ...simpleInput.map(([key, value]) => {
+        if (key === 'yx') {
+          return `geometry::STGeomFromText('${value}', 4326)`
+        }
 
-        from VocabularyTrees t
-        join VocabularyXrefTree vxt on vxt.vocabularyTreeId = t.id
-        join Vocabulary v on v.id = vxt.vocabularyId
+        if (key === 'startYear' || key === 'endYear') {
+          return new Date(value).getFullYear()
+        }
 
-        where
-        t.name = '${sanitizeSqlValue(tree) /* eslint-disable-line */}' 
-        and v.term = '${sanitizeSqlValue(term) /* eslint-disable-line */}'
-      )`
-    ),
-  ]
-    .filter(_ => _)
-    .join(',')});`
+        return `'${sanitizeSqlValue(value)}'` // eslint-disable-line
+      }),
+      ...vocabInput.map(
+        ([field, { tree, term }]) => `(
+          select
+          vxt.id [${field}]
+
+          from Trees t
+          join VocabularyXrefTree vxt on vxt.treeId = t.id
+          join Vocabulary v on v.id = vxt.vocabularyId
+
+          where
+          t.name = '${sanitizeSqlValue(tree) /* eslint-disable-line */}' 
+          and v.term = '${sanitizeSqlValue(term) /* eslint-disable-line */}'
+        )`
+      ),
+    ]
+      .filter(_ => _)
+      .join(',')});`
+}

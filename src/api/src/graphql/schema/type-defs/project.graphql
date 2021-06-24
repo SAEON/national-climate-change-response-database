@@ -4,7 +4,7 @@ input ProjectInput {
   # Project description :: Enter long text description here
   description: String
   # Intervention type :: Indicate the type of intervention this project focuses on? :: interventionTypes
-  interventionType: ControlledVocabularyInput
+  interventionType: ControlledVocabularyInput!
   # Project start year :: Start date of project
   startYear: DateTime
   # Project end year :: End date of project

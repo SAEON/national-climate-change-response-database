@@ -265,7 +265,7 @@ create table ProgressData (
 	mitigationId int not null foreign key references Mitigations (id),
 	year int not null,
 	achieved int not null default 0,
-	achievedUnit int not null foreign key references VocabularyXrefTree (id),
+	achievedUnit int null foreign key references VocabularyXrefTree (id),
 	deletedAt datetime2
 );
 end

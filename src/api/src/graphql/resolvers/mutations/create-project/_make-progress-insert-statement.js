@@ -16,20 +16,20 @@ export default progressData => {
           year,
           {
             achieved,
-            achievedUnit: { id: vocabularyId, tree },
+            achievedUnit: { id: vocabularyId = 0, tree = 'none' },
           },
         ]) => `
           select
             ( select id from #newMitigation ) mitigationId,
             ${year} year,
             ${achieved} achieved,
-            (
+            coalesce((
               select vxt.id
               from Trees t
               join VocabularyXrefTree vxt on vxt.treeId = t.id
               where t.name = '${sanitizeSqlValue(tree) /* eslint-disable-line */}'
               and vxt.vocabularyId = ${vocabularyId}
-            ) achievedUnit`
+            ), null) achievedUnit`
       )
       .join('\n union \n')};`
 

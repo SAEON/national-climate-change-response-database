@@ -79,35 +79,33 @@ export default ({ calculator, updateCalculator }) => {
               filterable: false,
               disableColumnMenu: true,
               cellClassName: () => clsx(classes.cell),
-              renderCell: ({ row: { id, achievedUnit } }) => {
-                return (
-                  <ControlledVocabularySelect
-                    tree={'mitigationUnits'}
-                    root="Unit"
-                    value={achievedUnit}
-                    onChange={value => {
-                      updateCalculator(
-                        Object.assign(
-                          { ...calculator },
-                          {
-                            grid1: Object.assign(
-                              { ...grid1 },
-                              {
-                                [id]: Object.assign(
-                                  { ...(grid1?.[id] || {}) },
-                                  {
-                                    achievedUnit: value,
-                                  }
-                                ),
-                              }
-                            ),
-                          }
-                        )
+              renderCell: ({ row: { id, achievedUnit } }) => (
+                <ControlledVocabularySelect
+                  tree={'mitigationUnits'}
+                  root="Unit"
+                  value={achievedUnit.term ? achievedUnit : { term: '(NONE)' }}
+                  onChange={value => {
+                    updateCalculator(
+                      Object.assign(
+                        { ...calculator },
+                        {
+                          grid1: Object.assign(
+                            { ...grid1 },
+                            {
+                              [id]: Object.assign(
+                                { ...(grid1?.[id] || {}) },
+                                {
+                                  achievedUnit: value,
+                                }
+                              ),
+                            }
+                          ),
+                        }
                       )
-                    }}
-                  />
-                )
-              },
+                    )
+                  }}
+                />
+              ),
             },
             {
               field: 'achieved',

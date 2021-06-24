@@ -108,7 +108,7 @@ export default async (
       rollback transaction T
     end catch`
 
-  logSql(sql, 'Create project', true)
+  logSql(sql, 'Create project')
 
   const result = await query(sql)
   return { id: result.recordset[0].id }

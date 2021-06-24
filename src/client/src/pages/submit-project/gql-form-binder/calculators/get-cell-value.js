@@ -42,7 +42,7 @@ const type2 = ({ startYear, currentYear, grid, field }) => {
   }
 
   if (field === 'achievedUnit') {
-    return { term: '(NONE)' }
+    return { term: undefined }
   }
 
   return 0

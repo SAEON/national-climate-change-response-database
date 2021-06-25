@@ -1,11 +1,11 @@
 input ProjectInput {
-  # Project name :: What is the name of the project?
+  # Title ::
   title: String
-  # Project description :: Enter long text description here
+  # Description :: Please describe the project including aims, objective, methodology used, life expectancy and outcome. The outcome should be the actual or desired outcome of the project, such as findings of research, levels of emissions or energy savings, level of resilience achieved, human capital potential, other environmental, social and economic benefits.
   description: String
-  # Project start year :: Start date of project
+  # Start year :: Project life span
   startYear: DateTime
-  # Project end year :: End date of project
+  # End year :: Project life span
   endYear: DateTime
   # Link to project website :: Is there a URI that is associated with this project?
   link: String
@@ -19,32 +19,30 @@ input ProjectInput {
   # GPS point location(s) :: Include relevant point locations
   yx: WKT_4326
 
-  # Name :: What is the project manager's full name ?
+  # Name ::
   projectManagerName: String
-  # Company/organization :: What company/organization does the project manager belong to?
+  # Company/organization ::
   projectManagerOrganization: String
-  # Position :: What position does the project manager hold?
+  # Position :: What position does the project manager hold at the company?
   projectManagerPosition: String
-  # Email address :: What is the project manager's email address?
+  # Email address ::
   projectManagerEmail: String
-  # Telephone number :: What is the project managers telephone number?
+  # Telephone number ::
   projectManagerTelephone: String
-  # Mobile number :: What is the project manager's mobile number?
+  # Mobile number ::
   projectManagerMobile: String
-  # Physical address :: What is the project manager's physical address? (press shft + enter for newline)
-  projectManagerPhysicalAddress: String
-  # Postal address :: What is the project manager's postal address? (press shft + enter for newline)
-  projectManagerPostalAddress: String
   # Validation Comments :: Any validation feedback?
   validationComments: String
+  # City / Town
+  cityOrTown: String
 
-  # Estimated budget :: If you don't know the actual budget, please provide an estimate :: budgetRanges
+  # Estimated budget range :: If you don't know the actual budget, please provide a range estimate :: budgetRanges
   estimatedBudget: ControlledVocabularyInput
-  # Intervention type :: Indicate the type of intervention this project focuses on? :: interventionTypes
+  # Indicate the type of measure :: Mitigation measures are defined as ' actions aimed at reducing the extent or likelihood of global climate change through the reduction or diplacement of greenhouse gas emissions (GHGs) (e.g. through emission reduction, energy efficiency or renewable energy projects'.\n\nAdaptation measures are defined as 'actions preventing or minimising the negative effects and taking advantage of positive effects of global warming in addition to actions which would have occurred naturally or as a matter of course.\n\nCross-cutting Measures that contain elements of both adaptation and mitigation :: interventionTypes
   interventionType: ControlledVocabularyInput!
-  # Implementation status :: At what stage is this project? :: actionStatus
+  # Implementation status :: Operational - Ongoing project \nPlanned project - Project has not begun but is being constructed or has been registered/approved/funded\nComplete - The project has been finalized\nDiscontinued - planned project terminated :: actionStatus
   implementationStatus: ControlledVocabularyInput
-  # Type of funding :: Domestic or international sources(Grant or Loan) :: fundingTypes
+  # Type of funding :: @Delani TODO :: fundingTypes
   fundingType: ControlledVocabularyInput
   # Province :: Select province :: regions
   province: ControlledVocabularyInput
@@ -71,6 +69,7 @@ type Project {
   province: String
   districtMunicipality: String
   localMunicipality: String
+  cityOrTown: String
   yx: WKT_4326
   projectManagerName: String
   projectManagerOrganization: String
@@ -78,8 +77,6 @@ type Project {
   projectManagerEmail: String
   projectManagerTelephone: String
   projectManagerMobile: String
-  projectManagerPhysicalAddress: String
-  projectManagerPostalAddress: String
   validationStatus: String
   validationComments: String
 

@@ -7,10 +7,10 @@ const Compose = memo(({ fields }) => (
     RenderField={RenderField}
     fields={fields}
     sections={{
-      'Project details': [
+      'Project overview': [
         'title',
-        'description',
         'interventionType',
+        'description',
         'implementationStatus',
         'implementingOrganization',
         'startYear',
@@ -18,7 +18,13 @@ const Compose = memo(({ fields }) => (
         'link',
       ],
       'Project funding': ['fundingOrganisation', 'fundingType', 'actualBudget', 'estimatedBudget'],
-      'Geographic location(s)': ['province', 'districtMunicipality', 'localMunicipality', 'yx'],
+      'Geographic location(s)': [
+        'province',
+        'districtMunicipality',
+        'localMunicipality',
+        'cityOrTown',
+        'yx',
+      ],
       'Project manager': [
         'projectManagerName',
         'projectManagerOrganization',
@@ -26,10 +32,8 @@ const Compose = memo(({ fields }) => (
         'projectManagerEmail',
         'projectManagerTelephone',
         'projectManagerMobile',
-        'projectManagerPhysicalAddress',
-        'projectManagerPostalAddress',
       ],
-      'Validation status (administrators only)': ['validationStatus', 'validationComments'],
+      'Validation status': ['validationStatus', 'validationComments'],
     }}
   />
 ))

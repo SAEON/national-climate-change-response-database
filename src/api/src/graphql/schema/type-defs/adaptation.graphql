@@ -8,14 +8,10 @@ input AdaptationInput {
   # Indicate the corresponding intervention, goal, or target :: Please select an appropriate value based on your other form inputs above :: adaptationActions
   correspondingAction: ControlledVocabularyInput
 
-  # Hazard Family :: Select hazard family :: hazards
-  hazardFamily: ControlledVocabularyInput
-  # Hazard Subfamily :: Select hazard subfamily :: hazards
-  hazardSubFamily: ControlledVocabularyInput
   # Hazard :: Select hazard :: hazards
   hazard: ControlledVocabularyInput
-  # Sub hazard :: Select sub hazard :: hazards
-  subHazard: ControlledVocabularyInput
+  # Hazard description :: Please describe the hazard
+  otherHazard: String
 
   # Observed climate change impacts :: What climate change impacts have been observed?
   observedClimateChangeImpacts: String
@@ -45,10 +41,8 @@ type Adaptation {
   correspondingSubNationalPolicy: String
   correspondingAction: String
 
-  hazardFamily: String
-  hazardSubFamily: String
   hazard: String
-  subHazard: String
+  otherHazard: String
 
   observedClimateChangeImpacts: String
   addressedClimateChangeImpact: String

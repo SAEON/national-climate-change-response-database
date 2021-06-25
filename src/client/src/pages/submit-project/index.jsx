@@ -73,11 +73,11 @@ const Layout = () => {
   const { isComplete: adaptationDetailsFormComplete, isStarted: adaptationDetailsFormStarted } =
     adaptationFormsValidation
 
-  const mitigationsRequired = ['mitigation', 'cross cutting'].includes(
+  const mitigationsRequired = ['mitigation'].includes(
     generalDetailsForm['interventionType']?.term.toLowerCase()
   )
 
-  const adaptationsRequired = ['adaptation', 'cross cutting'].includes(
+  const adaptationsRequired = ['adaptation'].includes(
     generalDetailsForm['interventionType']?.term.toLowerCase()
   )
 

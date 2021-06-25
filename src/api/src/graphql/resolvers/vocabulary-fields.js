@@ -32,10 +32,7 @@ export const Adaptations = [
   'correspondingNationalPolicy',
   'correspondingSubNationalPolicy',
   'correspondingAction',
-  'hazardFamily',
-  'hazardSubFamily',
   'hazard',
-  'subHazard',
 ]
 
 export default {

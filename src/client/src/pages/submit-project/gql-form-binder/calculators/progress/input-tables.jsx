@@ -23,21 +23,24 @@ export default ({ calculator, updateCalculator }) => {
     return null
   }
 
-  const years = new Array(yearCount).fill(null).map((_, i) => _start + i)
+  const years = new Array(yearCount)
+    .fill(null)
+    .map((_, i) => _start + i)
+    .reverse()
 
   const rows1 = years.map(year => ({
     id: year,
     year,
     achieved: getCellValue({
       calculator: 'progress',
-      startYear: _start,
+      endYear: _end,
       currentYear: year,
       grid: grid1,
       field: 'achieved',
     }),
     achievedUnit: getCellValue({
       calculator: 'progress',
-      startYear: _start,
+      endYear: _end,
       currentYear: year,
       grid: grid1,
       field: 'achievedUnit',
@@ -49,7 +52,7 @@ export default ({ calculator, updateCalculator }) => {
     year,
     expenditureZar: getCellValue({
       calculator: 'expenditure',
-      startYear: _start,
+      endYear: _end,
       currentYear: year,
       grid: grid2,
       field: 'expenditureZar',
@@ -61,15 +64,40 @@ export default ({ calculator, updateCalculator }) => {
       {/* SECTOR ACHIEVEMENTS CALCULATOR */}
       <Typography
         variant="overline"
-        style={{ textAlign: 'center', margin: theme.spacing(2), display: 'block' }}
+        style={{
+          textAlign: 'center',
+          marginTop: theme.spacing(2),
+          marginRight: theme.spacing(2),
+          marginLeft: theme.spacing(2),
+          display: 'block',
+        }}
       >
         Achievement reporting
+      </Typography>
+      <Typography
+        variant="caption"
+        style={{
+          display: 'block',
+          textAlign: 'center',
+          fontStyle: 'italic',
+          marginBottom: theme.spacing(2),
+        }}
+      >
+        e.g a Number of Kilowatt-hours of electricity generated, Kilowatt-hours of electricity
+        saved, Kilograms of waste saved
       </Typography>
       <div style={{ height: rows1.length <= 6 ? rows1.length * 52 + 58 : 300, width: '100%' }}>
         <DataGrid
           pageSize={100}
           columns={[
             { field: 'year', headerName: 'Year', editable: false, width: 120 },
+            {
+              field: 'achieved',
+              headerName: 'How much was generated/saved/avoided achieved',
+              type: 'number',
+              editable: true,
+              width: 450,
+            },
             {
               field: 'achievedUnit',
               headerName: 'Unit of achievements',
@@ -106,13 +134,6 @@ export default ({ calculator, updateCalculator }) => {
                   }}
                 />
               ),
-            },
-            {
-              field: 'achieved',
-              headerName: 'How much was generated/saved/avoided achieved',
-              type: 'number',
-              editable: true,
-              width: 450,
             },
           ]}
           rows={rows1}

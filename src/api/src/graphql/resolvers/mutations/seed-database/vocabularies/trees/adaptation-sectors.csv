@@ -1,9 +1,10 @@
 parent,term,tree
 ,Adaptation sector,adaptationSectors
-Adaptation sector,Biodiverity,adaptationSectors
-Adaptation sector,Coastal Area,adaptationSectors
-Adaptation sector,Disaster Risk Management,adaptationSectors
-Adaptation sector,Food Security/Agriculture,adaptationSectors
-Adaptation sector,Infrastructure,adaptationSectors
-Adaptation sector,Public Health,adaptationSectors
+Adaptation sector,Biodiversity and Ecosystems,adaptationSectors
+Adaptation sector,Coastal Zone,adaptationSectors
+Adaptation sector,Disaster Risk Reduction and  Management,adaptationSectors
+Adaptation sector,Agriculture and Commercial Forestry,adaptationSectors
+Adaptation sector,Urban and Rural Settlements,adaptationSectors
+Adaptation sector,Health ,adaptationSectors
 Adaptation sector,Water Resources,adaptationSectors
+Adaptation sector,Other (Please indicate),adaptationSectors

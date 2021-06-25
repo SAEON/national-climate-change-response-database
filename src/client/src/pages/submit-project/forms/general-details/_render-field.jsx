@@ -23,10 +23,14 @@ export default ({ field }) => {
     resetAdaptationDetailsForm,
   } = useContext(formContext)
   const { name: fieldName, description, type } = field
-  const [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
+  let [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType } = type
   const isRequired = !inputType
   const value = form[fieldName]
+
+  if (helperText === '') {
+    helperText = ` `
+  }
 
   /**
    * WKT_4326
@@ -149,14 +153,8 @@ export default ({ field }) => {
         error={isRequired && !value}
         onChange={val => {
           updateForm({ [fieldName]: val })
-
-          if (val?.term.toLowerCase() === 'adaptation' || !val?.term) {
-            resetMitigationDetailsForm()
-          }
-
-          if (val?.term.toLowerCase() === 'mitigation' || !val?.term) {
-            resetAdaptationDetailsForm()
-          }
+          resetMitigationDetailsForm()
+          resetAdaptationDetailsForm()
         }}
         placeholder={placeholder}
         helperText={helperText}

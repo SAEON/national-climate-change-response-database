@@ -5,7 +5,7 @@ import {
   ControlledVocabularySelect,
 } from '../../gql-form-binder'
 
-const multilineFields = ['description']
+const multilineFields = ['description', 'otherHazard']
 
 const researchFormFields = [
   'researchDescription',
@@ -19,10 +19,14 @@ export default ({ field }) => {
   const { updateAdaptationDetailsForm: updateForm, adaptationDetailsForm: form } =
     useContext(formContext)
   const { name: fieldName, description, type } = field
-  const [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
+  let [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType } = type
   const isRequired = !inputType
   const value = form[fieldName]
+
+  if (helperText === '') {
+    helperText = ` `
+  }
 
   /**
    * Controlled vocabulary
@@ -104,85 +108,24 @@ export default ({ field }) => {
   /**
    * Controlled vocabulary
    */
-  if (fieldName === 'hazardFamily') {
+  if (fieldName === 'hazard') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
         tree={tree}
-        root="Hazard family"
+        root="Hazard"
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val =>
-          updateForm({
-            [fieldName]: val,
-            hazardSubFamily: undefined,
-            hazard: undefined,
-            subHazard: undefined,
-          })
-        }
+        onChange={val => updateForm({ [fieldName]: val, otherHazard: undefined })}
         placeholder={placeholder}
         helperText={helperText}
       />
     )
-  } else if (fieldName === 'hazardSubFamily') {
-    if (form['hazardFamily']) {
-      return (
-        <ControlledVocabularySelect
-          key={fieldName}
-          tree={tree}
-          root={form['hazardFamily']}
-          name={fieldName}
-          value={value}
-          error={isRequired && !value}
-          onChange={val =>
-            updateForm({
-              [fieldName]: val,
-              hazard: undefined,
-              subHazard: undefined,
-            })
-          }
-          placeholder={placeholder}
-          helperText={helperText}
-        />
-      )
-    } else {
-      return null
-    }
-  } else if (fieldName === 'hazard') {
-    if (form['hazardSubFamily']) {
-      return (
-        <ControlledVocabularySelect
-          key={fieldName}
-          tree={tree}
-          root={form['hazardSubFamily']}
-          name={fieldName}
-          value={value}
-          error={isRequired && !value}
-          onChange={val => updateForm({ [fieldName]: val, subHazard: undefined })}
-          placeholder={placeholder}
-          helperText={helperText}
-        />
-      )
-    } else {
-      return null
-    }
-  } else if (fieldName === 'subHazard') {
-    if (form['hazard']) {
-      return (
-        <ControlledVocabularySelect
-          key={fieldName}
-          tree={tree}
-          root={form['hazard']}
-          name={fieldName}
-          value={value}
-          error={isRequired && !value}
-          onChange={val => updateForm({ [fieldName]: val })}
-          placeholder={placeholder}
-          helperText={helperText}
-        />
-      )
-    } else {
+  }
+
+  if (fieldName === 'otherHazard') {
+    if (!form.hazard || form.hazard.term !== 'Other (Please specify)') {
       return null
     }
   }

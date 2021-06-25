@@ -1,9 +1,9 @@
 input MitigationInput {
-  # Select host sector :: Select the IPCC host sector that best describes your project. :: mitigationSectors
+  # Select host sector :: Select the sector in which the project is taking place :: mitigationSectors
   hostSector: ControlledVocabularyInput!
-  # Select main sub-sector :: Select the IPCC main sub-sector that best describes you project. :: mitigationSectors
+  # Select main sub-sector :: Select the main sub-sector in which the project is taking place :: mitigationSectors
   hostSubSectorPrimary: ControlledVocabularyInput
-  # Select secondary sub-sector :: Select the IPCC sub-sector that best describes your project. :: mitigationSectors
+  # Select secondary sub-sector :: Select the secondary sub-sector in which the project is taking place :: mitigationSectors
   hostSubSectorSecondary: ControlledVocabularyInput
 
   # Select the type of project :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationTypes

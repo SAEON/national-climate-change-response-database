@@ -32,7 +32,7 @@ export default async (
     })}
     `
 
-  logSql(sql, 'Fetch projects', true)
+  logSql(sql, 'Fetch projects')
   const result = await query(sql)
   return result.recordset
 }

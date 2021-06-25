@@ -2,7 +2,6 @@ import query from '../../../../mssql/query.js'
 import seedUserModel from './user-model/index.js'
 import seedAdmins from './admins/index.js'
 import seedSysAdmins from './sysadmins/index.js'
-import loadGeometries from './geometries/index.js'
 import loadErmData from './erm/index.js'
 import loadVocabularies from './vocabularies/index.js'
 
@@ -19,7 +18,7 @@ import loadVocabularies from './vocabularies/index.js'
 })
 
 export default async (
-  self,
+  _,
   { userModel = false, erm = false, geometries = false, vocabularies = false },
   ctx
 ) => {
@@ -35,7 +34,10 @@ export default async (
 
   result.vocabularies = vocabularies ? await loadVocabularies(ctx) : false
   result.erm = erm ? await loadErmData(ctx) : false
-  result.geometries = geometries ? await loadGeometries(ctx) : false
+
+  if (geometries) {
+    throw new Error('Geometries are not supported at this time')
+  }
 
   return result
 }

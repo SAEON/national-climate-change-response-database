@@ -62,14 +62,7 @@ const NewPointForm = ({ closeFn, addPoint }) => {
   )
 }
 
-/**
- * TODO
- *
- * Would be nice to have the fence validation here as well
- *
- */
-//  eslint-disable-next-line
-export default ({ points, setPoints, addPoint, fenceGeometry, fenceId }) => {
+export default ({ points, setPoints, addPoint }) => {
   const classes = useStyles()
   const theme = useTheme()
 

@@ -91,7 +91,7 @@ const fixProgressCalculatorGrids = ({ calculator }) => {
             field === 'achievedUnit'
               ? getCellValue({
                   calculator: 'progress',
-                  startYear,
+                  endYear,
                   currentYear,
                   field,
                   grid: grid1,
@@ -99,7 +99,7 @@ const fixProgressCalculatorGrids = ({ calculator }) => {
               : parseInt(
                   getCellValue({
                     calculator: 'progress',
-                    startYear,
+                    endYear,
                     currentYear,
                     field,
                     grid: grid1,

@@ -14,6 +14,7 @@ const fields = [
   'fundingType',
   'actualBudget',
   'estimatedBudget',
+  'cityOrTown',
   'province',
   'districtMunicipality',
   'localMunicipality',
@@ -24,8 +25,6 @@ const fields = [
   'projectManagerEmail',
   'projectManagerTelephone',
   'projectManagerMobile',
-  'projectManagerPhysicalAddress',
-  'projectManagerPostalAddress',
   'validationStatus',
   'validationComments',
 ]

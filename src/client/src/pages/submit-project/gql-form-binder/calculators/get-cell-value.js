@@ -33,8 +33,8 @@ const type1 = ({ startYear, type, currentYear, grid, field }) => {
  *   }
  * }
  */
-const type2 = ({ startYear, currentYear, grid, field }) => {
-  for (let _currentYear = currentYear; _currentYear >= startYear; _currentYear--) {
+const type2 = ({ endYear, currentYear, grid, field }) => {
+  for (let _currentYear = currentYear; _currentYear <= endYear; _currentYear++) {
     const val = grid?.[_currentYear]?.[field]
     if (val) {
       return val

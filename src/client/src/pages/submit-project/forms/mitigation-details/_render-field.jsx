@@ -8,7 +8,16 @@ import EnergyCalculator from '../../gql-form-binder/calculators/energy'
 import EmissionsCalculator from '../../gql-form-binder/calculators/emissions'
 import ProgressCalculator from '../../gql-form-binder/calculators/progress'
 
-const multilineFields = ['description', 'volMethodology', 'otherCarbonCreditStandardDescription']
+const multilineFields = [
+  'description',
+  'volMethodology',
+  'otherCarbonCreditStandardDescription',
+  'primaryIntendedOutcome',
+  'coBenefitEnvironmentalDescription',
+  'coBenefitSocialDescription',
+  'coBenefitEconomicDescription',
+  'carbonCreditVoluntaryMethodology',
+]
 
 const researchFormFields = [
   'researchDescription',
@@ -18,14 +27,26 @@ const researchFormFields = [
   'researchPaper',
 ]
 
+const carbonCreditsFields = [
+  'carbonCreditStandard',
+  'carbonCreditCdmExecutiveStatus',
+  'carbonCreditCdmMethodology',
+  'carbonCreditVoluntaryOrganization',
+  'carbonCreditVoluntaryMethodology',
+]
+
 export default ({ field }) => {
   const { mitigationDetailsForm: form, updateMitigationDetailsForm: updateForm } =
     useContext(formContext)
   const { name: fieldName, description, type } = field
-  const [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
+  let [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType } = type
   const isRequired = !inputType
   const value = form[fieldName]
+
+  if (helperText === '') {
+    helperText = ` `
+  }
 
   if (fieldName === 'progressData') {
     return (
@@ -268,6 +289,12 @@ export default ({ field }) => {
         helperText={helperText}
       />
     )
+  }
+
+  if (carbonCreditsFields.includes(fieldName)) {
+    if (!(form.carbonCredit || '').toBoolean()) {
+      return null
+    }
   }
 
   /**

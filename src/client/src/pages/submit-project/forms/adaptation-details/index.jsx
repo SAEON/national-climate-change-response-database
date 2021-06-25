@@ -7,19 +7,21 @@ const Compose = memo(({ fields }) => {
     <ComposeForm
       RenderField={RenderField}
       fields={fields}
+      hideSections={['Associated research']}
       sections={{
         'Adaptation details': [
           'adaptationSector',
           'correspondingNationalPolicy',
           'correspondingSubNationalPolicy',
           'correspondingAction',
+          'hazard',
+          'otherHazard',
         ],
         'Climate impact': [
           'observedClimateChangeImpacts',
           'addressedClimateChangeImpact',
           'responseImpact',
         ],
-        'Hazard details': ['hazardFamily', 'hazardSubFamily', 'hazard', 'subHazard'],
         'Associated research': [
           'hasResearch',
           'researchDescription',

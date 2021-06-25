@@ -7,10 +7,14 @@ import EnumField from './_enum'
 
 export default ({ field, value, disabled = false, updateValue, multiline }) => {
   const { name: fieldName, description, type } = field
-  const [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
+  let [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType, ofType } = type
   const gqlType = inputType || ofType.name
   const isRequired = !inputType
+
+  if (helperText === '') {
+    helperText = ` `
+  }
 
   if (gqlType === 'String') {
     return (

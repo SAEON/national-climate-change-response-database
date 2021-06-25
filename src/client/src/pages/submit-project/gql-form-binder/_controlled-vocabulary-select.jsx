@@ -86,7 +86,17 @@ export default ({
       disabled={disabled}
       label={placeholder}
       placeholder={placeholder}
-      helperText={helperText}
+      form
+      helperText={
+        <>
+          {helperText.split('\\n').map((text, i) => (
+            <span key={i}>
+              {text}
+              <br />
+            </span>
+          ))}
+        </>
+      }
       fullWidth
       onChange={e => {
         e.stopPropagation()

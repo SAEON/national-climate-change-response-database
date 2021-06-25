@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton'
 
 export default ({ id }) => {
   return (
-    <Tooltip placement="bottom" title="Submit a new project using the online form">
+    <Tooltip placement="bottom" title="Edit this project">
       <span>
         <Hidden xsDown>
           <Button
@@ -23,7 +23,7 @@ export default ({ id }) => {
           </Button>
         </Hidden>
         <Hidden smUp>
-          <IconButton component={Link} to="/projects/submission" size="small" color="primary">
+          <IconButton component={Link} to={`/projects/${id}/edit`} size="small" color="primary">
             <EditIcon size={18} />
           </IconButton>
         </Hidden>

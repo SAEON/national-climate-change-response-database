@@ -1,8 +1,8 @@
 export const Projects = [
+  'estimatedBudget',
   'interventionType',
   'implementationStatus',
   'fundingType',
-  'estimatedBudget',
   'province',
   'districtMunicipality',
   'localMunicipality',
@@ -38,13 +38,8 @@ export const Adaptations = [
   'subHazard',
 ]
 
-export const vocabularyFields = {
+export default {
   Projects,
-  p: Projects,
   Mitigations,
-  m: Mitigations,
   Adaptations,
-  a: Adaptations,
 }
-
-export default vocabularyFields

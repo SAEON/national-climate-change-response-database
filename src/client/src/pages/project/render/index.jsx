@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid'
 import Card from './_card'
 
-export default ({ project, mitigations, adaptations, projectSections }) => {
+export default ({ project, mitigation, adaptation, projectSections }) => {
   return (
     <Grid container spacing={2}>
       {Object.entries(projectSections).map(([title, fieldNames]) => {

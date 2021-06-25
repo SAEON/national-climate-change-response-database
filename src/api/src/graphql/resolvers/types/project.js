@@ -2,8 +2,8 @@ import finder from '../../../lib/find-vocabulary-helper.js'
 import { Projects as vocabularyFields } from '../vocabulary-fields.js'
 
 export default {
-  mitigation: async ({ mitigation = {} }) => mitigation,
-  adaptation: async ({ adaptation = {} }) => adaptation,
+  mitigation: async ({ mitigation = {} }) => JSON.parse(mitigation),
+  adaptation: async ({ adaptation = {} }) => JSON.parse(adaptation),
   ...Object.fromEntries(
     vocabularyFields.map(field => {
       return [

@@ -81,8 +81,7 @@ type Mitigation {
   hostSubSectorPrimary: String
   hostSubSectorSecondary: String
 
-  mitigationType: String!
-
+  mitigationType: String
   mitigationSubType: String
 
   mitigationProgramme: String
@@ -103,6 +102,9 @@ type Mitigation {
   carbonCreditCdmMethodology: String
   carbonCreditVoluntaryOrganization: String
   carbonCreditVoluntaryMethodology: String
+
+  progressData: JSON
+  expenditureData: JSON
 
   hasEnergyData: Boolean
   energyData: JSON

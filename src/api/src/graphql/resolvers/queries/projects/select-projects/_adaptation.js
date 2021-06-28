@@ -3,9 +3,9 @@ import vocabularyFields from '../../../vocabulary-fields.js'
 const fields = [
   'id',
   'adaptationSector',
-  'correspondingNationalPolicy',
-  'correspondingSubNationalPolicy',
-  'correspondingAction',
+  'nationalPolicy',
+  'regionalPolicy',
+  'target',
   'hazard',
   'otherHazard',
   'observedClimateChangeImpacts',

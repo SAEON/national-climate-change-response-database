@@ -40,9 +40,9 @@ const LoadProject = ({ id }) => {
           adaptation {
             id
             adaptationSector
-            correspondingNationalPolicy
-            correspondingSubNationalPolicy
-            correspondingAction
+            nationalPolicy
+            regionalPolicy
+            target
             hazard
             otherHazard
             observedClimateChangeImpacts
@@ -57,8 +57,8 @@ const LoadProject = ({ id }) => {
             mitigationType
             mitigationSubType
             mitigationProgramme
-            correspondingNationalPolicy
-            correspondingSubNationalPolicy
+            nationalPolicy
+            regionalPolicy
             primaryIntendedOutcome
             coBenefitEnvironmental
             coBenefitEnvironmentalDescription

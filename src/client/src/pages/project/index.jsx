@@ -52,8 +52,8 @@ export default ({ id }) => {
             mitigationType
             mitigationSubType
             mitigationProgramme
-            correspondingNationalPolicy
-            correspondingSubNationalPolicy
+            nationalPolicy
+            regionalPolicy
             primaryIntendedOutcome
             coBenefitEnvironmental
             coBenefitEnvironmentalDescription
@@ -102,8 +102,8 @@ export default ({ id }) => {
             'Mitigation type': ['mitigationType', 'mitigationSubType'],
             'Policy information': [
               'mitigationProgramme',
-              'correspondingNationalPolicy',
-              'correspondingSubNationalPolicy',
+              'nationalPolicy',
+              'regionalPolicy',
               'primaryIntendedOutcome',
             ],
             'Co-benefit information': [
@@ -135,8 +135,8 @@ export default ({ id }) => {
           adaptationSections={{
             'Adaptation details': [
               'adaptationSector',
-              'correspondingNationalPolicy',
-              'correspondingSubNationalPolicy',
+              'nationalPolicy',
+              'regionalPolicy',
               'correspondingAction',
             ],
             'Climate impact': [

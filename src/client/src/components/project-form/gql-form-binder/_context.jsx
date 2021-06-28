@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client'
 import Loading from '../../loading'
 import Fade from '@material-ui/core/Fade'
 import getFormStatus from './_get-form-status'
+import convertGqlToFormInput from './_convert-gql-to-form-input'
 
 export const context = createContext()
 
@@ -29,10 +30,23 @@ const CORE_FIELDS = gql`
   }
 `
 
-export default ({ children, project = undefined }) => {
-  const [generalDetailsForm, setGeneralDetailsForm] = useState({})
-  const [mitigationDetailsForm, setMitigationDetailsForm] = useState({})
-  const [adaptationDetailsForm, setAdaptationDetailsForm] = useState({})
+export default ({
+  children,
+  project: {
+    mitigation: mitigationDetails = {},
+    adaptation: adaptationDetails = {},
+    ...generalDetails
+  } = {},
+}) => {
+  const [generalDetailsForm, setGeneralDetailsForm] = useState(
+    convertGqlToFormInput(generalDetails)
+  )
+  const [mitigationDetailsForm, setMitigationDetailsForm] = useState(
+    convertGqlToFormInput(mitigationDetails)
+  )
+  const [adaptationDetailsForm, setAdaptationDetailsForm] = useState(
+    convertGqlToFormInput(adaptationDetails)
+  )
 
   /* TYPE QUERY */
 

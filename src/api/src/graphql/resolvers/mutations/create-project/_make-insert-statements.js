@@ -97,7 +97,6 @@ export const makeMitigationsInsertStmt = ({ simpleInput, vocabInput, projectId =
 }
 
 export const makeAdaptationsInsertStmt = ({ simpleInput, vocabInput, projectId = false }) => {
-  console.log('s', simpleInput, vocabInput)
   if (!simpleInput.length && !vocabInput.length) {
     return ''
   }

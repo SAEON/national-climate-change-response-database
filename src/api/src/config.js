@@ -64,13 +64,17 @@ export const SUBMITTED_TEMPLATES_DIRECTORY = normalize(
   join(FILES_DIRECTORY, `.${sep}submitted-templates`)
 )
 
+export const UPLOADS_DIRECTORY = normalize(join(FILES_DIRECTORY, `.${sep}uploads`))
+
 /**
- * Ensure data directory exists
+ * Ensure required directories exists
  */
 try {
   ensureDirectory(FILES_DIRECTORY)
   ensureDirectory(SUBMISSION_TEMPLATES_DIRECTORY)
   ensureDirectory(SUBMITTED_TEMPLATES_DIRECTORY)
+  ensureDirectory(UPLOADS_DIRECTORY)
+
   mkdirSync(join(FILES_DIRECTORY, '.test-write-permissions'))
   rmdirSync(join(FILES_DIRECTORY, '.test-write-permissions'))
 } catch (error) {

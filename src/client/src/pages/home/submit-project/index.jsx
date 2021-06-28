@@ -59,20 +59,26 @@ export default () => {
       {/* DESCRIPTION */}
       <Grid item sm={6} style={{ flexGrow: 1 }}>
         <Typography
-          style={{ marginBottom: theme.spacing(3), color: fade(theme.palette.common.white, 0.9) }}
+          style={{
+            textAlign: 'center',
+            marginBottom: theme.spacing(3),
+            color: fade(theme.palette.common.white, 0.9),
+          }}
           variant="h4"
         >
           Submit a project to the National Climate Change Response Database
         </Typography>
-        <Typography style={{ color: fade(theme.palette.common.white, 0.9) }} variant="body1">
-          The National Climate Change Response Database (NCCRD) is a Department of Forestry,
-          Fisheries and the Environment (DFFE) project designed to capture and store the details of
-          climate change intervention projects including adaptation, mitigation and research actions
-          from across South African industrial, research and government bodies. The submission of
-          information to the database is entirely voluntary and the accuracy of the information can
-          not be guaranteed. Project managers are responsible for adding and maintaining information
-          about their projects. Projects are reviewed and have to be accepted by DFFE prior to
-          becoming available in search results or infographics.
+        <Typography
+          style={{ textAlign: 'justify', color: fade(theme.palette.common.white, 0.9) }}
+          variant="body1"
+        >
+          The NCCRD is designed to capture and store the details of climate change interventions
+          including adaptation, mitigation and crosscutting efforts from across South African
+          industrial, research, non-governmental organisations, government bodies and entities. The
+          submission of information to the database is entirely voluntary and the accuracy of the
+          information cannot be guaranteed. Project managers are responsible for adding and
+          maintaining information about their projects. Projects are reviewed and have to be
+          accepted by DFFE prior to becoming available in the system.
         </Typography>
       </Grid>
     </Grid>

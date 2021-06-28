@@ -21,19 +21,26 @@ export default () => {
       {/* DESCRIPTION */}
       <Grid item sm={6} style={{ flexGrow: 1 }}>
         <Typography
-          style={{ marginBottom: theme.spacing(3), color: fade(theme.palette.common.black, 0.9) }}
+          style={{
+            textAlign: 'center',
+            marginBottom: theme.spacing(3),
+            color: fade(theme.palette.common.black, 0.9),
+          }}
           variant="h4"
         >
           Explore climate mitigation and adaptation projects
         </Typography>
-        <Typography style={{ color: fade(theme.palette.common.black, 0.9) }} variant="body1">
-          Through the NCCRD each project in the database is broken down into several key areas
-          including a general project overview, a description of the funding provided for the
-          project, and the details of specific adaptation and mitigation intervention/s in the
-          project. For each intervention, additional details are supplied depending on if the
-          intervention is considered an applied or research action. Research interventions are
-          studies to test some aspect of project implementation whereas applied projects can be
-          implemented or rolled out directly at a variety of scales.
+        <Typography
+          style={{ textAlign: 'justify', color: fade(theme.palette.common.black, 0.9) }}
+          variant="body1"
+        >
+          The platform is implemented and coordinated by the Department of Forestry, Fisheries and
+          the Environment (DFFE) as part of the national efforts to implement the National
+          Development Plan (Vision 2030) to facilitate South Africa’s overall efforts and transition
+          towards a lower carbon and climate resilient society and economy. The climate change
+          response efforts in the NCCRD are broken down into several key areas including a general
+          project overview, a description of the funding provided and the details of specific
+          adaptation and mitigation efforts.
         </Typography>
       </Grid>
 

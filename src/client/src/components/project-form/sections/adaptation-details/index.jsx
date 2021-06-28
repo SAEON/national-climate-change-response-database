@@ -11,9 +11,9 @@ const Compose = memo(({ fields }) => {
       sections={{
         'Adaptation details': [
           'adaptationSector',
-          'correspondingNationalPolicy',
-          'correspondingSubNationalPolicy',
-          'correspondingAction',
+          'nationalPolicy',
+          'regionalPolicy',
+          'target',
           'hazard',
           'otherHazard',
         ],

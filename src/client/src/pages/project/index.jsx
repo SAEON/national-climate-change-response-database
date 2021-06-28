@@ -35,9 +35,9 @@ export default ({ id }) => {
           adaptation {
             id
             adaptationSector
-            correspondingNationalPolicy
-            correspondingSubNationalPolicy
-            correspondingAction
+            nationalPolicy
+            regionalPolicy
+            target
             hazard
             otherHazard
             observedClimateChangeImpacts

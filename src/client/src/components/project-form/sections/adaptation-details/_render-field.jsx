@@ -31,29 +31,27 @@ export default ({ field }) => {
   /**
    * Controlled vocabulary
    */
-  if (fieldName === 'correspondingNationalPolicy') {
+  if (fieldName === 'nationalPolicy') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
         tree={tree}
-        root="Adaptation policies"
+        root="National policy"
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val =>
-          updateForm({ [fieldName]: val, correspondingSubNationalPolicy: undefined })
-        }
+        onChange={val => updateForm({ [fieldName]: val, target: undefined })}
         placeholder={placeholder}
         helperText={helperText}
       />
     )
-  } else if (fieldName === 'correspondingSubNationalPolicy') {
-    if (form.correspondingNationalPolicy) {
+  } else if (fieldName === 'target') {
+    if (form.nationalPolicy) {
       return (
         <ControlledVocabularySelect
           key={fieldName}
           tree={tree}
-          root={form.correspondingNationalPolicy}
+          root={form.nationalPolicy}
           name={fieldName}
           value={value}
           error={isRequired && !value}
@@ -67,15 +65,12 @@ export default ({ field }) => {
     }
   }
 
-  /**
-   * Controlled vocabulary
-   */
-  if (fieldName === 'correspondingAction') {
+  if (fieldName === 'regionalPolicy') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
         tree={tree}
-        root="Action"
+        root={'Regional policy'}
         name={fieldName}
         value={value}
         error={isRequired && !value}

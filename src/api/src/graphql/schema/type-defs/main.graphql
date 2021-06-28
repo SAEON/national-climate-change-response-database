@@ -34,7 +34,7 @@ input ControlledVocabularyInput {
 }
 
 type ControlledVocabulary {
-  id: Int!
+  id: ID!
   term: String!
   children: [ControlledVocabulary!]
   tree: String!

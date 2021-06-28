@@ -18,6 +18,7 @@ export default ({
   value = DEFAULT_VALUE,
   isRequired = false,
   disabled = false,
+  filterChildren = null,
 }) => {
   const theme = useTheme()
 
@@ -68,7 +69,9 @@ export default ({
 
   let options
   try {
-    options = data.controlledVocabulary.children
+    options = filterChildren
+      ? data.controlledVocabulary.children.filter(child => filterChildren(child))
+      : data.controlledVocabulary.children
   } catch {
     throw new Error(
       `Unable to retrieve the vocabulary lists for the tree "${tree}" with root "${root}". Please make sure that the database is seeded correctly`

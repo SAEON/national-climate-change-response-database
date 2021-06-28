@@ -1,12 +1,12 @@
 input AdaptationInput {
   # Adaptation sector :: Select the adaptation sector :: adaptationSectors
   adaptationSector: ControlledVocabularyInput!
-  # Corresponding national policy :: Indicate the national policy or strategy that the measure is responding to :: adaptationPolicies
-  correspondingNationalPolicy: ControlledVocabularyInput
-  # Corresponding sub-national policy :: Indicate the sub-national policy or strategy that the measure is responding to :: adaptationPolicies
-  correspondingSubNationalPolicy: ControlledVocabularyInput
-  # Indicate the corresponding intervention, goal, or target :: Please select an appropriate value based on your other form inputs above :: adaptationActions
-  correspondingAction: ControlledVocabularyInput
+  # National policy :: Indicate the national policy or strategy that the measure is responding to :: adaptationPolicies
+  nationalPolicy: ControlledVocabularyInput
+  # Provincial or Municipal policy :: Indicate the provincial or municipal policy or strategy that the measure is responding to :: adaptationPolicies
+  regionalPolicy: ControlledVocabularyInput
+  # Indicate the corresponding intervention, goal, or target :: Please select an appropriate value based on your other form inputs above :: adaptationPolicies
+  target: ControlledVocabularyInput
 
   # Hazard :: Select hazard :: hazards
   hazard: ControlledVocabularyInput
@@ -37,9 +37,9 @@ input AdaptationInput {
 type Adaptation {
   id: Int!
   adaptationSector: String
-  correspondingNationalPolicy: String
-  correspondingSubNationalPolicy: String
-  correspondingAction: String
+  nationalPolicy: String
+  regionalPolicy: String
+  target: String
 
   hazard: String
   otherHazard: String

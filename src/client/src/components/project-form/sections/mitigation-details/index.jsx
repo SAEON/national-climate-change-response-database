@@ -13,8 +13,8 @@ const Compose = memo(({ fields }) => {
         'Project type': ['mitigationType', 'mitigationSubType'],
         'Policy information': [
           'mitigationProgramme',
-          'correspondingNationalPolicy',
-          'correspondingSubNationalPolicy',
+          'nationalPolicy',
+          'regionalPolicy',
           'primaryIntendedOutcome',
         ],
         'Progress calculator': ['progressData'],

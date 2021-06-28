@@ -1,76 +1,28 @@
 parent,term,tree
-,Type of Mitigation,mitigationTypes
-Type of Mitigation,Afforestation,mitigationTypes
-Type of Mitigation,Agriculture,mitigationTypes
-Type of Mitigation,Biomass Energy,mitigationTypes
-Type of Mitigation,Biogas,mitigationTypes
-Type of Mitigation,Cement,mitigationTypes
-Type of Mitigation,Coal Bed Mine Methane,mitigationTypes
-Type of Mitigation,EE Households,mitigationTypes
-Type of Mitigation,EE Industry,mitigationTypes
-Type of Mitigation,EE Own Generation,mitigationTypes
-Type of Mitigation,EE Service,mitigationTypes
-Type of Mitigation,EE Supply Side,mitigationTypes
-Type of Mitigation,Energy Distribution,mitigationTypes
-Type of Mitigation,Fossil Fuel Switch,mitigationTypes
-Type of Mitigation,Fugitive Gases,mitigationTypes
-Type of Mitigation,Geothermal,mitigationTypes
-Type of Mitigation,HFCs,mitigationTypes
-Type of Mitigation,Hydro,mitigationTypes
-Type of Mitigation,Landfill Gas,mitigationTypes
-Type of Mitigation,N2O,mitigationTypes
-Type of Mitigation,PFCs,mitigationTypes
-Type of Mitigation,Reforestation,mitigationTypes
-Type of Mitigation,Solar,mitigationTypes
-Type of Mitigation,Tidal,mitigationTypes
-Type of Mitigation,Transport,mitigationTypes
-Type of Mitigation,Wind,mitigationTypes
-Biogas,Biogas Flaring,mitigationTypes
-Biogas,Biogas Power,mitigationTypes
-Biomass Energy,Agricultural residues: Mustard crop,mitigationTypes
-Biomass Energy,Agricultural Residues: Other Kinds,mitigationTypes
-Biomass Energy,Agricultural Residues: Poultry Litter,mitigationTypes
-Biomass Energy,Agricultural Residues: Rice Husk,mitigationTypes
-Biomass Energy,Bagasse Power,mitigationTypes
-Biomass Energy,Biodiesel,mitigationTypes
-Biomass Energy,Black Liquor,mitigationTypes
-Biomass Energy,Ethanol,mitigationTypes
-Biomass Energy,Forest Biomass,mitigationTypes
-Biomass Energy,Forest Residues: Other,mitigationTypes
-Biomass Energy,Forest Residues: Sawmill Waste,mitigationTypes
-Biomass Energy,Gasification of Biomass,mitigationTypes
-Biomass Energy,Industrial Waste,mitigationTypes
-Biomass Energy,Irrigation,mitigationTypes
-Biomass Energy,Palm Oil Solid Waste,mitigationTypes
-Coal Bed Mine Methane,Coal Mine Methane,mitigationTypes
-EE Industry,Building Materials,mitigationTypes
-EE Industry,Cement,mitigationTypes
-EE Industry,Chemicals,mitigationTypes
-EE Industry,Coke Oven,mitigationTypes
-EE Industry,Construction,mitigationTypes
-EE Industry,Electronics,mitigationTypes
-EE Industry,Food,mitigationTypes
-EE Industry,Glass,mitigationTypes
-EE Industry,Iron & Steel,mitigationTypes
-EE Industry,Machinery,mitigationTypes
-EE Industry,Metal products,mitigationTypes
-EE Industry,Mining,mitigationTypes
-EE Industry,Non-Ferrous Metals,mitigationTypes
-EE Industry,Paper,mitigationTypes
-EE Industry,Petrochemicals,mitigationTypes
-EE Industry,Textiles,mitigationTypes
-EE Industry,Wood,mitigationTypes
-Hydro,Existing Dam,mitigationTypes
-Hydro,New Dam,mitigationTypes
-Hydro,Run of River,mitigationTypes
-Landfill Gas,Combustion for MSW,mitigationTypes
-Landfill Gas,Composting,mitigationTypes
-Landfill Gas,Gasification of MSW,mitigationTypes
-Landfill Gas,Landfill Flaring,mitigationTypes
-Landfill Gas,Landfill Power,mitigationTypes
-N2O,Adipic Acid,mitigationTypes
-N2O,Caprolactam,mitigationTypes
-N2O,Nitric Acid,mitigationTypes
-Solar,Solar Coking,mitigationTypes
-Solar,Solar PV,mitigationTypes
-Solar,Solar Water Heating,mitigationTypes
+,Mitigation type,mitigationType
+
+Mitigation type,Renewable energy (Energy generation from renewables sources or heat),mitigationType
+Mitigation type,Energy Efficiency (Demand energy side management),mitigationType
+Mitigation type,Energy (Fuel and technology switch),mitigationType
+Mitigation type,Energy (Methane gas recovery),mitigationType
+Mitigation type,Waste (Waste Heat Recovery),mitigationType
+Mitigation type,Carbon Capture and Sequestration,mitigationType
+
+Renewable energy (Energy generation from renewables sources or heat),Wind,mitigationType
+Renewable energy (Energy generation from renewables sources or heat),Solar,mitigationType
+Renewable energy (Energy generation from renewables sources or heat),Geothermal,mitigationType
+Renewable energy (Energy generation from renewables sources or heat),Hydro,mitigationType
+Renewable energy (Energy generation from renewables sources or heat),Biomass (landfill gas and waste-to-energy),mitigationType
+
+Energy Efficiency (Demand energy side management),Upgrading Building,mitigationType
+Energy Efficiency (Demand energy side management),Electricity Equipment upgraded,mitigationType
+Energy Efficiency (Demand energy side management),Electric equipment and industrial process optimized,mitigationType
+
+Energy (Fuel and technology switch),"Replacing one non-renewable fuel with another non-renewable but more efficient and/or less carbon intensive fuel e.g using natural gas instead of coal or using cleaner coal)",mitigationType
+
+"Energy (Methane gas recovery)","Methane recovery from mines and oil/gas fields captured and flared or used to generate energy in the form of heat or electricity",mitigationType
+
+Waste (Waste Heat Recovery),"Waste heat is recovery and used",mitigationType
+
+Carbon Capture and Sequestration,"Carbon capture and storage",mitigationType
+Carbon Capture and Sequestration,"Carbon Capture and Sequestration of carbon from industries",mitigationType

@@ -16,8 +16,8 @@ export const Mitigations = [
   'mitigationType',
   'mitigationSubType',
   'mitigationProgramme',
-  'correspondingNationalPolicy',
-  'correspondingSubNationalPolicy',
+  'nationalPolicy',
+  'regionalPolicy',
   'coBenefitEnvironmental',
   'coBenefitSocial',
   'coBenefitEconomic',
@@ -29,9 +29,9 @@ export const Mitigations = [
 
 export const Adaptations = [
   'adaptationSector',
-  'correspondingNationalPolicy',
-  'correspondingSubNationalPolicy',
-  'correspondingAction',
+  'nationalPolicy',
+  'regionalPolicy',
+  'target',
   'hazard',
 ]
 

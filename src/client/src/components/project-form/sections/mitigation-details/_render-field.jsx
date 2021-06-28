@@ -179,40 +179,39 @@ export default ({ field }) => {
   /**
    * Controlled vocabulary
    */
-  if (fieldName === 'correspondingNationalPolicy') {
+  if (fieldName === 'nationalPolicy') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
         tree={tree}
-        root="Mitigation policies"
+        root="National policy"
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val =>
-          updateForm({ [fieldName]: val, correspondingSubNationalPolicy: undefined })
-        }
+        onChange={val => updateForm({ [fieldName]: val })}
         placeholder={placeholder}
         helperText={helperText}
       />
     )
-  } else if (fieldName === 'correspondingSubNationalPolicy') {
-    if (form.correspondingNationalPolicy) {
-      return (
-        <ControlledVocabularySelect
-          key={fieldName}
-          tree={tree}
-          root={form.correspondingNationalPolicy}
-          name={fieldName}
-          value={value}
-          error={isRequired && !value}
-          onChange={val => updateForm({ [fieldName]: val })}
-          placeholder={placeholder}
-          helperText={helperText}
-        />
-      )
-    } else {
-      return null
-    }
+  }
+
+  /**
+   * Controlled vocabulary
+   */
+  if (fieldName === 'regionalPolicy') {
+    return (
+      <ControlledVocabularySelect
+        key={fieldName}
+        tree={tree}
+        root={'Regional policy'}
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateForm({ [fieldName]: val })}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
+    )
   }
 
   /**
@@ -400,7 +399,7 @@ export default ({ field }) => {
       <ControlledVocabularySelect
         key={fieldName}
         tree={tree}
-        root="Type of Mitigation"
+        root="Mitigation type"
         name={fieldName}
         value={value}
         error={isRequired && !value}

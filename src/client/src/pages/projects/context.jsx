@@ -85,9 +85,9 @@ export default ({ children }) => {
           adaptation {
             id
             adaptationSector
-            correspondingNationalPolicy
-            correspondingSubNationalPolicy
-            correspondingAction
+            nationalPolicy
+            regionalPolicy
+            target
             hazard
             otherHazard
             observedClimateChangeImpacts
@@ -102,8 +102,8 @@ export default ({ children }) => {
             mitigationType
             mitigationSubType
             mitigationProgramme
-            correspondingNationalPolicy
-            correspondingSubNationalPolicy
+            nationalPolicy
+            regionalPolicy
             primaryIntendedOutcome
             coBenefitEnvironmental
             coBenefitEnvironmentalDescription

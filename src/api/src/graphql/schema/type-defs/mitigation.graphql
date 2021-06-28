@@ -6,18 +6,17 @@ input MitigationInput {
   # Select secondary sub-sector :: Select the secondary sub-sector in which the project is taking place :: mitigationSectors
   hostSubSectorSecondary: ControlledVocabularyInput
 
-  # Select the type of project :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationTypes
+  # Select the type of project :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationType
   mitigationType: ControlledVocabularyInput
-
-  # Select the project sub-type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationTypes
+  # Select the project sub-type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationType
   mitigationSubType: ControlledVocabularyInput
 
   # Select the mitigation program the project is linked to :: A programme is a high level support measure that support mitigation actions/project types above e.g 1A1 REIPPP :: mitigationProgramme
   mitigationProgramme: ControlledVocabularyInput
-  # Corresponding national policy :: Indicate the national policy or strategy that the measure is responding to :: mitigationPolicies
-  correspondingNationalPolicy: ControlledVocabularyInput
-  # Corresponding sub-national policy :: Indicate the sub-national policy or strategy that the measure is responding to :: mitigationPolicies
-  correspondingSubNationalPolicy: ControlledVocabularyInput
+  # National policy :: Indicate the national policy or strategy that the measure is responding to :: mitigationPolicies
+  nationalPolicy: ControlledVocabularyInput
+  # Provincial or Municipal policy :: Indicate the provincial or municipal policy or strategy that the measure is responding to :: mitigationPolicies
+  regionalPolicy: ControlledVocabularyInput
   # Primary intended outcome :: Primary intended outcome (Indicate the expected or achieved goals)
   primaryIntendedOutcome: String
 
@@ -85,8 +84,8 @@ type Mitigation {
   mitigationSubType: String
 
   mitigationProgramme: String
-  correspondingNationalPolicy: String
-  correspondingSubNationalPolicy: String
+  nationalPolicy: String
+  regionalPolicy: String
   primaryIntendedOutcome: String
 
   coBenefitEnvironmental: String

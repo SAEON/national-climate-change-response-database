@@ -2,16 +2,17 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { fade } from '@material-ui/core/styles/colorManipulator'
-// import OlReact from '../../../components/ol-react'
 
 export default () => {
   const theme = useTheme()
 
   return (
     <Grid container spacing={4}>
-      <Grid item xs={12}>
+      <Grid item sm={6} style={{ display: 'flex' }}>
         <Typography
           style={{
+            alignItems: 'center',
+            display: 'flex',
             textAlign: 'center',
             marginBottom: theme.spacing(3),
             color: fade(theme.palette.common.white, 0.9),
@@ -21,10 +22,10 @@ export default () => {
           Welcome to the National Climate Change Response Database
         </Typography>
       </Grid>
-      <Grid item xs={12} style={{ flexGrow: 1 }}>
+      <Grid item sm={6} style={{ flexGrow: 1 }}>
         <Typography
           style={{
-            textAlign: 'center',
+            textAlign: 'justify',
             color: fade(theme.palette.common.white, 0.9),
             marginBottom: theme.spacing(2),
           }}

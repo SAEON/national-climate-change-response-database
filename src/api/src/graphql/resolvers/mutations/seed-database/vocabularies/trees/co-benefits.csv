@@ -27,10 +27,10 @@ Social,"Total no. of jobs created per annum",coBenefits
 Social,"No. of new SMMEs created per annum",coBenefits
 Social,"Number of people to trained with new skills per annum",coBenefits
 
-Econmic,"Contribution to basic service access (Yes - contributes to access to basic services",coBenefits
-Econmic,"Contribution to basic service access (No - does not contribute to access to basic services)",coBenefits
-Econmic,"Contribution to promotion of gender equality (Number or percentage of jobs for women per year)",coBenefits
-Econmic,"Youth empowerment (Number or percentage of jobs for people under 35 per year)",coBenefits
-Econmic,"Local ownership (% local ownership of assets)",coBenefits
-Econmic,"Rural social upliftment (Yes - project is in rural area)",coBenefits
-Econmic,"Rural social upliftment No - project is in an urban area)",coBenefits
+Economic,"Contribution to basic service access (Yes - contributes to access to basic services",coBenefits
+Economic,"Contribution to basic service access (No - does not contribute to access to basic services)",coBenefits
+Economic,"Contribution to promotion of gender equality (Number or percentage of jobs for women per year)",coBenefits
+Economic,"Youth empowerment (Number or percentage of jobs for people under 35 per year)",coBenefits
+Economic,"Local ownership (% local ownership of assets)",coBenefits
+Economic,"Rural social upliftment (Yes - project is in rural area)",coBenefits
+Economic,"Rural social upliftment No - project is in an urban area)",coBenefits

@@ -20,7 +20,7 @@ export default ({ children }) => {
             marginBottom: theme.spacing(2),
           }}
         >
-          {children[key]}
+          {children[key]?.term || children[key]}
         </Typography>
       </div>
     )

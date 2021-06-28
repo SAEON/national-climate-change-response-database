@@ -5,6 +5,7 @@ export default form =>
   Object.fromEntries(
     Object.entries(form).map(([field, value]) => {
       if (field === 'yx') {
+        console.log('v', value)
         return [
           field,
           stringify({

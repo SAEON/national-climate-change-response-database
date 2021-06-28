@@ -5,14 +5,9 @@ export default {
   mitigation: async ({ mitigation = {} }) => JSON.parse(mitigation),
   adaptation: async ({ adaptation = {} }) => JSON.parse(adaptation),
   ...Object.fromEntries(
-    vocabularyFields.map(field => {
-      return [
-        field,
-        async (self, _, ctx) => {
-          const id = self[`${field}Id`]
-          return await finder(ctx, id)
-        },
-      ]
-    })
+    vocabularyFields.map(field => [
+      field,
+      async (self, _, ctx) => await finder(ctx, self[`${field}Id`]),
+    ])
   ),
 }

@@ -36,12 +36,12 @@ input AdaptationInput {
 
 type Adaptation {
   id: Int!
-  adaptationSector: String
-  nationalPolicy: String
-  regionalPolicy: String
-  target: String
+  adaptationSector: ControlledVocabulary
+  nationalPolicy: ControlledVocabulary
+  regionalPolicy: ControlledVocabulary
+  target: ControlledVocabulary
 
-  hazard: String
+  hazard: ControlledVocabulary
   otherHazard: String
 
   observedClimateChangeImpacts: String

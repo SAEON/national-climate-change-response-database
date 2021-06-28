@@ -58,17 +58,17 @@ type Project {
   id: Int!
   title: String
   description: String
-  interventionType: String
+  interventionType: ControlledVocabulary
   link: String
-  implementationStatus: String
+  implementationStatus: ControlledVocabulary
   implementingOrganization: String
   fundingOrganisation: String
-  fundingType: String
+  fundingType: ControlledVocabulary
   actualBudget: Money
-  estimatedBudget: String
-  province: String
-  districtMunicipality: String
-  localMunicipality: String
+  estimatedBudget: ControlledVocabulary
+  province: ControlledVocabulary
+  districtMunicipality: ControlledVocabulary
+  localMunicipality: ControlledVocabulary
   cityOrTown: String
   yx: WKT_4326
   projectManagerName: String
@@ -77,7 +77,7 @@ type Project {
   projectManagerEmail: String
   projectManagerTelephone: String
   projectManagerMobile: String
-  validationStatus: String
+  validationStatus: ControlledVocabulary
   validationComments: String
 
   mitigation: Mitigation

@@ -29,10 +29,10 @@ Agriculture Forestry and Other Land Use,Agriculture,mitigationSectors
 Agriculture Forestry and Other Land Use,Conservation,mitigationSectors
 Agriculture Forestry and Other Land Use,Fisheries,mitigationSectors
 Agriculture Forestry and Other Land Use,Forestry,mitigationSectors
-Agriculture Forestry and Other Land Use,Other,mitigationSectors
+Agriculture Forestry and Other Land Use,Other Agriculture Forestry and Other Land Use,mitigationSectors
 Waste,Solid Waste Disposal,mitigationSectors
 Waste,Wastewater Treatment and Discharge,mitigationSectors
-Waste,Other,mitigationSectors
+Waste,Other Waste,mitigationSectors
 Energy Industries,Main Activity Electricity and Heat Production,mitigationSectors
 Energy Industries,Petroleum Refinery,mitigationSectors
 Energy Industries,Manufacture of Solid Fuels & Other Energy Industries,mitigationSectors
@@ -65,7 +65,7 @@ Solid Fuels,Spontaneous Combustion and Burning Coal Dumps,mitigationSectors
 Oil and Natural Gas,Oil,mitigationSectors
 Oil and Natural Gas,Venting,mitigationSectors
 Oil and Natural Gas,Flaring,mitigationSectors
-Oil and Natural Gas,All other,mitigationSectors
+Oil and Natural Gas,All Other Oil and Natural Gas,mitigationSectors
 Oil and Natural Gas,Natural Gas,mitigationSectors
 Transport of CO2,Pipelines,mitigationSectors
 Transport of CO3,Ships,mitigationSectors
@@ -76,7 +76,7 @@ Mineral Industry,Cement production,mitigationSectors
 Mineral Industry,Lime Production,mitigationSectors
 Mineral Industry,Glass Production,mitigationSectors
 Mineral Industry,Other Process Uses of Carbonates,mitigationSectors
-Mineral Industry,Other ,mitigationSectors
+Mineral Industry,Other Mineral Industry,mitigationSectors
 Chemical Industry,Ammonia production,mitigationSectors
 Chemical Industry,Nitric Acid Production,mitigationSectors
 Chemical Industry,Adipic Acid Production,mitigationSectors
@@ -86,23 +86,23 @@ Chemical Industry,Titanium Dioxide Production,mitigationSectors
 Chemical Industry,Soda Ash Production,mitigationSectors
 Chemical Industry,Petrochemical & Carbon Black Production,mitigationSectors
 Chemical Industry,Fluorochemical Production,mitigationSectors
-Chemical Industry,Other ,mitigationSectors
+Chemical Industry,Other Chemical Industry,mitigationSectors
 Metal Industry,Iron & Steel Production,mitigationSectors
 Metal Industry,Ferroalloys production,mitigationSectors
 Metal Industry,Aluminium Production,mitigationSectors
 Metal Industry,Magnesium Production,mitigationSectors
 Metal Industry,Lead Production,mitigationSectors
 Metal Industry,Zinc Production,mitigationSectors
-Metal Industry,Other ,mitigationSectors
+Metal Industry,Other Metal Industry,mitigationSectors
 Non Energy Products from Fuels and Solvent Use,Lubricant Use,mitigationSectors
 Non Energy Products from Fuels and Solvent Use,Paraffin Wax Use,mitigationSectors
 Non Energy Products from Fuels and Solvent Use,Solvent Use,mitigationSectors
-Non Energy Products from Fuels and Solvent Use,Other,mitigationSectors
+Non Energy Products from Fuels and Solvent Use,Other Non Energy Products from Fuels and Solvent Use,mitigationSectors
 Electronics Industry,Integrated Circuit or Semiconductor,mitigationSectors
 Electronics Industry,TFT Flat Panel Display,mitigationSectors
 Electronics Industry,Photovoltaics,mitigationSectors
 Electronics Industry,Heat Transfer Fluid,mitigationSectors
-Electronics Industry,Other,mitigationSectors
+Electronics Industry,Other Electronics Industry,mitigationSectors
 Product Uses as Substitutes for Ozone Depleting Substances,Refrigeration & Air Conditioning,mitigationSectors
 Product Uses as Substitutes for Ozone Depleting Substances,Foam Blowing Agents,mitigationSectors
 Product Uses as Substitutes for Ozone Depleting Substances,Fire Protection,mitigationSectors
@@ -112,7 +112,7 @@ Product Uses as Substitutes for Ozone Depleting Substances,Other Applications,mi
 Other Product Manufacture and Use,Electrical Equipment,mitigationSectors
 Other Product Manufacture and Use,SF6 and PFCs from Other Product Use,mitigationSectors
 Other Product Manufacture and Use,N20 from Product Uses,mitigationSectors
-Other Product Manufacture and Use,Other,mitigationSectors
+Other Product Manufacture and Use,All Other Product Manufacture and Use,mitigationSectors
 Other Industrial Processess,Pulp & Paper Industry,mitigationSectors
 Other Industrial Processess,Food & Beverages Industry,mitigationSectors
-Other Industrial Processess,Other,mitigationSectors
+Other Industrial Processess,All Other Industrial Processess,mitigationSectors

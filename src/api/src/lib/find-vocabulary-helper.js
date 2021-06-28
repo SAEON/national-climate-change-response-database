@@ -5,11 +5,6 @@
  */
 export default async (ctx, id) => {
   const { findVocabulary } = ctx.mssql.dataFinders
-
-  if (!id) {
-    return null
-  }
-
-  const vocabulary = await findVocabulary(id)
-  return vocabulary[0].term
+  if (!id) return null
+  return (await findVocabulary(id))[0]
 }

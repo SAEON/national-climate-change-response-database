@@ -2,6 +2,7 @@ import { useState, createContext, useCallback } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
 import Fade from '@material-ui/core/Fade'
+import { projectFields } from '../../lib/gql-fragments'
 
 export const context = createContext()
 
@@ -45,6 +46,7 @@ export default ({ children }) => {
 
   const { error, loading, data } = useQuery(
     gql`
+      ${projectFields}
       query projects(
         $vocabularyFilters: [VocabularyFilterInput!]
         $mitigationFilters: MitigationFiltersInput
@@ -59,67 +61,7 @@ export default ({ children }) => {
           mitigationFilters: $mitigationFilters
           adaptationFilters: $adaptationFilters
         ) {
-          id
-          title
-          description
-          interventionType
-          link
-          implementationStatus
-          implementingOrganization
-          fundingOrganisation
-          fundingType
-          actualBudget
-          estimatedBudget
-          province
-          districtMunicipality
-          localMunicipality
-          yx
-          projectManagerName
-          projectManagerOrganization
-          projectManagerPosition
-          projectManagerEmail
-          projectManagerTelephone
-          projectManagerMobile
-          validationStatus
-          validationComments
-          adaptation {
-            id
-            adaptationSector
-            nationalPolicy
-            regionalPolicy
-            target
-            hazard
-            otherHazard
-            observedClimateChangeImpacts
-            addressedClimateChangeImpact
-            responseImpact
-          }
-          mitigation {
-            id
-            hostSector
-            hostSubSectorPrimary
-            hostSubSectorSecondary
-            mitigationType
-            mitigationSubType
-            mitigationProgramme
-            nationalPolicy
-            regionalPolicy
-            primaryIntendedOutcome
-            coBenefitEnvironmental
-            coBenefitEnvironmentalDescription
-            coBenefitSocial
-            coBenefitSocialDescription
-            coBenefitEconomic
-            coBenefitEconomicDescription
-            carbonCredit
-            carbonCreditStandard
-            carbonCreditCdmExecutiveStatus
-            carbonCreditCdmMethodology
-            carbonCreditVoluntaryOrganization
-            carbonCreditVoluntaryMethodology
-            progressData
-            expenditureData
-          }
+          ...projectFields
         }
       }
     `,

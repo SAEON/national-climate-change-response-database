@@ -152,9 +152,8 @@ create table VocabularyXrefVocabulary (
   id int not null identity primary key,
   parentId int not null foreign key references Vocabulary (id),
   childId int not null foreign key references Vocabulary (id),
-	-- TODO order
   treeId int not null foreign key references Trees (id),
-  unique (parentId, childId, treeId),
+  unique (childId, treeId),
   index ix_VocabularyXrefVocabulary_parentId nonclustered (parentId),
   index ix_VocabularyXrefVocabulary_childId nonclustered (childId),
   index ix_VocabularyXrefVocabulary_vocabularyTreeId nonclustered (treeId)

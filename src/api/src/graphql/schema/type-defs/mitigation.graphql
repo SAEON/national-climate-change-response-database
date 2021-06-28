@@ -76,41 +76,33 @@ input MitigationInput {
 type Mitigation {
   id: Int!
 
-  hostSector: String
-  hostSubSectorPrimary: String
-  hostSubSectorSecondary: String
-
-  mitigationType: String
-  mitigationSubType: String
-
-  mitigationProgramme: String
-  nationalPolicy: String
-  regionalPolicy: String
+  hostSector: ControlledVocabulary
+  hostSubSectorPrimary: ControlledVocabulary
+  hostSubSectorSecondary: ControlledVocabulary
+  mitigationType: ControlledVocabulary
+  mitigationSubType: ControlledVocabulary
+  mitigationProgramme: ControlledVocabulary
+  nationalPolicy: ControlledVocabulary
+  regionalPolicy: ControlledVocabulary
   primaryIntendedOutcome: String
-
-  coBenefitEnvironmental: String
+  coBenefitEnvironmental: ControlledVocabulary
   coBenefitEnvironmentalDescription: String
-  coBenefitSocial: String
+  coBenefitSocial: ControlledVocabulary
   coBenefitSocialDescription: String
-  coBenefitEconomic: String
+  coBenefitEconomic: ControlledVocabulary
   coBenefitEconomicDescription: String
-
   carbonCredit: Boolean
-  carbonCreditStandard: String
-  carbonCreditCdmExecutiveStatus: String
-  carbonCreditCdmMethodology: String
-  carbonCreditVoluntaryOrganization: String
+  carbonCreditStandard: ControlledVocabulary
+  carbonCreditCdmExecutiveStatus: ControlledVocabulary
+  carbonCreditCdmMethodology: ControlledVocabulary
+  carbonCreditVoluntaryOrganization: ControlledVocabulary
   carbonCreditVoluntaryMethodology: String
-
   progressData: JSON
   expenditureData: JSON
-
   hasEnergyData: Boolean
   energyData: JSON
-
   hasEmissionsData: Boolean
   emissionsData: JSON
-
   hasResearch: Boolean
   researchDescription: String
   researchType: String

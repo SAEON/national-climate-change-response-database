@@ -20,17 +20,17 @@
   "author": "zach@saeon.ac.za",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^7.28.0",
+    "eslint": "^7.29.0",
     "nodemon": "^2.0.7",
-    "npm-check-updates": "^11.6.0",
-    "prettier": "^2.3.1"
+    "npm-check-updates": "^11.7.1",
+    "prettier": "^2.3.2"
   },
   "dependencies": {
     "@babel/cli": "^7.14.5",
     "@babel/core": "^7.14.6",
-    "@babel/eslint-parser": "^7.14.5",
+    "@babel/eslint-parser": "^7.14.7",
     "@babel/eslint-plugin": "^7.14.5",
-    "@babel/preset-env": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
     "@koa/router": "^10.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "apollo-server-koa": "2.25",
@@ -39,7 +39,7 @@
     "dataloader": "^2.0.0",
     "date-fns": "^2.22.1",
     "dotenv": "^10.0.0",
-    "graphql": "^15.5.0",
+    "graphql": "^15.5.1",
     "graphql-tools": "^7.0.5",
     "graphql-type-json": "^0.3.2",
     "koa": "^2.13.1",
@@ -56,7 +56,7 @@
     "passport-google-oauth": "^2.0.0",
     "passport-oauth": "^1.0.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.52.1",
+    "rollup": "^2.52.3",
     "sift": "^13.5.4",
     "sql-formatter": "^4.0.2",
     "wkt": "^0.1.1"

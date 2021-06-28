@@ -21,7 +21,7 @@ export default withRouter(() => {
         path={'/'}
         exact
         render={() => (
-          <Transition nowrap tKey="home">
+          <Transition tKey="home">
             <HomePage />
           </Transition>
         )}
@@ -33,7 +33,7 @@ export default withRouter(() => {
         path={'/users/:id/projects'}
         exact
         render={props => (
-          <Transition nowrap tKey="user-projects">
+          <Transition tKey="user-projects">
             <UserProjectsPage id={props.match.params.id} {...props} />
           </Transition>
         )}
@@ -44,7 +44,7 @@ export default withRouter(() => {
         key={'users'}
         path={'/users'}
         render={() => (
-          <Transition nowrap tKey="users">
+          <Transition tKey="users">
             <UsersPage />
           </Transition>
         )}
@@ -56,7 +56,7 @@ export default withRouter(() => {
         path={'/access'}
         exact
         render={() => (
-          <Transition nowrap tKey="access">
+          <Transition tKey="access">
             <AccessPage />
           </Transition>
         )}
@@ -68,7 +68,7 @@ export default withRouter(() => {
         path={'/projects'}
         exact
         render={() => (
-          <Transition nowrap tKey="projects">
+          <Transition tKey="projects">
             <ProjectsPage />
           </Transition>
         )}
@@ -80,7 +80,7 @@ export default withRouter(() => {
         path={'/projects/submission'}
         exact
         render={() => (
-          <Transition nowrap tKey="wizard">
+          <Transition tKey="wizard">
             <SubmitProjectPage />
           </Transition>
         )}
@@ -104,7 +104,7 @@ export default withRouter(() => {
         path={'/projects/:id+'}
         exact
         render={props => (
-          <Transition nowrap tKey="project">
+          <Transition tKey="project">
             <ProjectPage id={props.match.params.id} {...props} />
           </Transition>
         )}
@@ -116,7 +116,7 @@ export default withRouter(() => {
         path={'/deployments'}
         exact
         render={() => (
-          <Transition nowrap tKey="deployments">
+          <Transition tKey="deployments">
             <DeploymentsPage />
           </Transition>
         )}

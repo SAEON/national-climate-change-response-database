@@ -3,7 +3,7 @@ import ControlledVocabularySelectMultiple from '../../_controlled-vocabulary-sel
 import { DatePicker } from '@material-ui/pickers'
 import Grid from '@material-ui/core/Grid'
 import InputTables from './input-tables'
-import QuickForm from '../../../../../components/quick-form'
+import QuickForm from '../../../../quick-form'
 import debounce from '../../../../../lib/debounce'
 
 export default memo(

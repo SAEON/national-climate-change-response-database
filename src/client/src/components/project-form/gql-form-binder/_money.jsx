@@ -1,38 +1,35 @@
-import { memo, useMemo } from 'react'
+import { useMemo, memo } from 'react'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
-import QuickForm from '../../../components/quick-form'
-import { MenuItem } from '@material-ui/core'
+import QuickForm from '../../quick-form'
 import debounce from '../../../lib/debounce'
 
 export default memo(
   ({ name, placeholder, disabled = false, helperText, error, value, setValue }) => {
-    const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
+    const effect = useMemo(() => debounce(({ value }) => setValue(value), 100), [setValue])
 
     return (
       <QuickForm effect={effect} value={value}>
         {(update, { value }) => {
           return (
             <TextField
+              autoComplete="off"
               id={`${name}`}
-              select
+              label={name}
+              disabled={disabled}
               placeholder={placeholder}
               helperText={helperText}
-              fullWidth
-              disabled={disabled}
               variant="outlined"
-              margin="normal"
-              label={name}
+              fullWidth
+              type="number"
               error={error}
               value={value}
               onChange={e => update({ value: e.target.value })}
-            >
-              <MenuItem key={'false'} value={'false'}>
-                No
-              </MenuItem>
-              <MenuItem key={'true'} value={'true'}>
-                Yes
-              </MenuItem>
-            </TextField>
+              margin="normal"
+              InputProps={{
+                startAdornment: <InputAdornment position="start">R</InputAdornment>,
+              }}
+            />
           )
         }}
       </QuickForm>

@@ -1,6 +1,6 @@
 import CardContent from '@material-ui/core/CardContent'
 import useTheme from '@material-ui/core/styles/useTheme'
-import Collapse from '../../../components/collapse'
+import Collapse from '../../collapse'
 import Typography from '@material-ui/core/Typography'
 import Icon from 'mdi-react/EditIcon'
 

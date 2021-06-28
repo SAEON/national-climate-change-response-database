@@ -1,35 +1,38 @@
 import { memo, useMemo } from 'react'
-import { DatePicker } from '@material-ui/pickers'
-import QuickForm from '../../../components/quick-form'
+import TextField from '@material-ui/core/TextField'
+import QuickForm from '../../quick-form'
+import { MenuItem } from '@material-ui/core'
 import debounce from '../../../lib/debounce'
 
 export default memo(
-  ({ helperText, name, placeholder, error, disabled = false, value, setValue }) => {
+  ({ name, placeholder, disabled = false, helperText, error, value, setValue }) => {
     const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
 
     return (
       <QuickForm effect={effect} value={value}>
         {(update, { value }) => {
           return (
-            <DatePicker
-              fullWidth
-              margin="normal"
-              inputVariant="outlined"
-              clearable
-              disabled={disabled}
-              autoOk
-              minDate="1990"
-              maxDate="2089"
-              format="yyyy"
-              views={['year']}
-              placeholder={placeholder}
-              label={name}
+            <TextField
               id={`${name}`}
+              select
+              placeholder={placeholder}
               helperText={helperText}
+              fullWidth
+              disabled={disabled}
+              variant="outlined"
+              margin="normal"
+              label={name}
               error={error}
               value={value}
-              onChange={value => update({ value })}
-            />
+              onChange={e => update({ value: e.target.value })}
+            >
+              <MenuItem key={'false'} value={'false'}>
+                No
+              </MenuItem>
+              <MenuItem key={'true'} value={'true'}>
+                Yes
+              </MenuItem>
+            </TextField>
           )
         }}
       </QuickForm>

@@ -1,6 +1,6 @@
 import { createContext, useState, useCallback, useMemo } from 'react'
 import { gql, useQuery } from '@apollo/client'
-import Loading from '../../../components/loading'
+import Loading from '../../loading'
 import Fade from '@material-ui/core/Fade'
 import getFormStatus from './_get-form-status'
 
@@ -29,7 +29,7 @@ const CORE_FIELDS = gql`
   }
 `
 
-export default ({ children }) => {
+export default ({ children, project = undefined }) => {
   const [generalDetailsForm, setGeneralDetailsForm] = useState({})
   const [mitigationDetailsForm, setMitigationDetailsForm] = useState({})
   const [adaptationDetailsForm, setAdaptationDetailsForm] = useState({})

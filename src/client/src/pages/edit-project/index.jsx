@@ -1,11 +1,15 @@
+import { useContext, lazy, Suspense } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import Loading from '../../components/loading'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { context as authenticationContext } from '../../contexts/authentication'
+import { context as authorizationContext } from '../../contexts/authorization'
+import Header from './header'
+import Wrapper from '../../components/page-wrapper'
+import AccessDenied from '../../components/access-denied'
 
-export default ({ id }) => {
-  const theme = useTheme()
+const ProjectForm = lazy(() => import('../../components/project-form'))
+
+const LoadProject = ({ id }) => {
   const { error, loading, data } = useQuery(
     gql`
       query projects($ids: [Int!]) {
@@ -92,11 +96,28 @@ export default ({ id }) => {
   }
 
   return (
-    <Card style={{ backgroundColor: theme.backgroundColor }} variant="outlined">
-      <CardContent>
-        <h1>Edit page</h1>
-        <pre>{JSON.stringify(project, null, 2)}</pre>
-      </CardContent>
-    </Card>
+    <>
+      <Header />
+      <Wrapper>
+        <Suspense fallback={<Loading />}>
+          <ProjectForm project={project} />
+        </Suspense>
+      </Wrapper>
+    </>
   )
+}
+
+export default ({ id }) => {
+  const isAuthenticated = useContext(authenticationContext).authenticate()
+  const { hasPermission } = useContext(authorizationContext)
+
+  if (!isAuthenticated) {
+    return <Loading />
+  }
+
+  if (!hasPermission('update-project')) {
+    return <AccessDenied requiredPermission="update-project" />
+  }
+
+  return <LoadProject id={id} />
 }

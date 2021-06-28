@@ -1,4 +1,5 @@
 role,permission
+sysadmin,kill-server
 sysadmin,view-submission-templates
 sysadmin,validate-submission
 sysadmin,upload-template

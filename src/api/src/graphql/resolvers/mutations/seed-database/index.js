@@ -1,21 +1,8 @@
-import query from '../../../../mssql/query.js'
 import seedUserModel from './user-model/index.js'
 import seedAdmins from './admins/index.js'
 import seedSysAdmins from './sysadmins/index.js'
 import loadErmData from './erm/index.js'
 import loadVocabularies from './vocabularies/index.js'
-
-/**
- * Initial seeds
- */
-;(async () => {
-  await seedUserModel(query).then(() => console.info('User model seeded!'))
-  await seedAdmins(query).then(() => console.info('Admin users seeded!'))
-  await seedSysAdmins(query).then(() => console.info('System admin users seeded!'))
-})().catch(error => {
-  console.error(error.message)
-  process.exit(1)
-})
 
 export default async (
   _,

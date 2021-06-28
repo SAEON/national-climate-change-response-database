@@ -16,4 +16,5 @@ export default {
   // sysadmin
   seedDatabase: authorize(PERMISSIONS.seedDatabase)(seedDatabase),
   migrateDatabase: authorize(PERMISSIONS.migrateDatabase)(migrateDatabase),
+  killServer: authorize(PERMISSIONS.killServer)(() => process.exit(1)),
 }

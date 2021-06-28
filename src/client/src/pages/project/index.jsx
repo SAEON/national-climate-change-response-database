@@ -30,8 +30,6 @@ export default ({ id }) => {
           projectManagerEmail
           projectManagerTelephone
           projectManagerMobile
-          projectManagerPhysicalAddress
-          projectManagerPostalAddress
           validationStatus
           validationComments
           adaptation {
@@ -40,19 +38,11 @@ export default ({ id }) => {
             correspondingNationalPolicy
             correspondingSubNationalPolicy
             correspondingAction
-            hazardFamily
-            hazardSubFamily
             hazard
-            subHazard
+            otherHazard
             observedClimateChangeImpacts
             addressedClimateChangeImpact
             responseImpact
-            hasResearch
-            researchDescription
-            researchType
-            researchTargetAudience
-            researchAuthor
-            researchPaper
           }
           mitigation {
             id
@@ -71,24 +61,14 @@ export default ({ id }) => {
             coBenefitSocialDescription
             coBenefitEconomic
             coBenefitEconomicDescription
-            expenditureData
             carbonCredit
             carbonCreditStandard
             carbonCreditCdmExecutiveStatus
             carbonCreditCdmMethodology
             carbonCreditVoluntaryOrganization
             carbonCreditVoluntaryMethodology
-            hasEnergyData
-            energyData
-            hasEmissionsData
-            emissionsData
             progressData
-            hasResearch
-            researchDescription
-            researchType
-            researchTargetAudience
-            researchAuthor
-            researchPaper
+            expenditureData
           }
         }
       }

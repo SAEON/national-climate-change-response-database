@@ -90,8 +90,9 @@ type Query {
 # type Subscription {}
 
 type Mutation {
+  killServer: Void
   migrateDatabase(dropSchema: Boolean): JSON!
-  seedDatabase(userModel: Boolean, erm: Boolean, geometries: Boolean, vocabularies: Boolean): JSON!
+  seedDatabase(userModel: Boolean, erm: Boolean, vocabularies: Boolean): JSON!
   # Create a project
   createProject(
     generalDetailsForm: ProjectInput!

@@ -13,81 +13,63 @@ export default ({ id }) => {
           id
           title
           description
-          projectManager
-          link
-          startYear
-          endYear
-          validationComments
-          fundingOrganisation
-          fundingPartner
-          budgetLower
-          budgetUpper
-          hostOrganisation
-          hostPartner
-          alternativeContact
-          alternativeContactEmail
-          leadAgent
           interventionType
-          projectStatus
-          validationStatus
-          fundingStatus
+          link
+          implementationStatus
+          implementingOrganization
+          fundingOrganisation
+          fundingType
+          actualBudget
           estimatedBudget
-          hostSector
-          hostSubSector
           province
           districtMunicipality
           localMunicipality
-          mitigations {
+          yx
+          projectManagerName
+          projectManagerOrganization
+          projectManagerPosition
+          projectManagerEmail
+          projectManagerTelephone
+          projectManagerMobile
+          validationStatus
+          validationComments
+          adaptation {
             id
-            title
-            description
-            carbonCredit
-            volMethodology
-            goldStandard
-            vcs
-            yx
-            otherCarbonCreditStandard
-            otherCarbonCreditStandardDescription
-            cdmProjectNumber
-            cdmStatus
-            isResearch
-            researchDescription
-            energyOrEmissionsData
-            energyData
-            emissionsData
-            researchType
-            researchTargetAudience
-            researchAuthor
-            researchPaper
-            mitigationType
-            mitigationSubType
-            interventionStatus
-            cdmMethodology
-            cdmExecutiveStatus
+            adaptationSector
+            correspondingNationalPolicy
+            correspondingSubNationalPolicy
+            correspondingAction
+            hazard
+            otherHazard
+            observedClimateChangeImpacts
+            addressedClimateChangeImpact
+            responseImpact
+          }
+          mitigation {
+            id
             hostSector
             hostSubSectorPrimary
             hostSubSectorSecondary
-          }
-          adaptations {
-            id
-            title
-            description
-            startYear
-            endYear
-            yx
-            isResearch
-            interventionStatus
-            researchDescription
-            researchType
-            researchTargetAudience
-            researchAuthor
-            researchPaper
-            adaptationSector
-            adaptationPurpose
-            hazardFamily
-            hazardSubFamily
-            hazard
-            subHazard
+            mitigationType
+            mitigationSubType
+            mitigationProgramme
+            correspondingNationalPolicy
+            correspondingSubNationalPolicy
+            primaryIntendedOutcome
+            coBenefitEnvironmental
+            coBenefitEnvironmentalDescription
+            coBenefitSocial
+            coBenefitSocialDescription
+            coBenefitEconomic
+            coBenefitEconomicDescription
+            carbonCredit
+            carbonCreditStandard
+            carbonCreditCdmExecutiveStatus
+            carbonCreditCdmMethodology
+            carbonCreditVoluntaryOrganization
+            carbonCreditVoluntaryMethodology
+            progressData
+            expenditureData
           }
         }
       }
@@ -103,11 +85,17 @@ export default ({ id }) => {
     throw error
   }
 
+  const project = data.projects?.[0]
+
+  if (!project) {
+    throw new Error(`Error retrieving project - are you sure that project with ID ${id} exists?`)
+  }
+
   return (
     <Card style={{ backgroundColor: theme.backgroundColor }} variant="outlined">
       <CardContent>
         <h1>Edit page</h1>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
+        <pre>{JSON.stringify(project, null, 2)}</pre>
       </CardContent>
     </Card>
   )

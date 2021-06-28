@@ -29,6 +29,7 @@ import passportCookieConfig from './passport/cookie-config.js'
 import { NCCRD_PORT, NCCRD_API_KEY } from './config.js'
 import getCurrentDirectory from './lib/get-current-directory.js'
 import path from 'path'
+import './mssql/setup-db.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 

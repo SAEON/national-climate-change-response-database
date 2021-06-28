@@ -80,10 +80,46 @@ export default ({ children }) => {
           projectManagerEmail
           projectManagerTelephone
           projectManagerMobile
-          projectManagerPhysicalAddress
-          projectManagerPostalAddress
           validationStatus
           validationComments
+          adaptation {
+            id
+            adaptationSector
+            correspondingNationalPolicy
+            correspondingSubNationalPolicy
+            correspondingAction
+            hazard
+            otherHazard
+            observedClimateChangeImpacts
+            addressedClimateChangeImpact
+            responseImpact
+          }
+          mitigation {
+            id
+            hostSector
+            hostSubSectorPrimary
+            hostSubSectorSecondary
+            mitigationType
+            mitigationSubType
+            mitigationProgramme
+            correspondingNationalPolicy
+            correspondingSubNationalPolicy
+            primaryIntendedOutcome
+            coBenefitEnvironmental
+            coBenefitEnvironmentalDescription
+            coBenefitSocial
+            coBenefitSocialDescription
+            coBenefitEconomic
+            coBenefitEconomicDescription
+            carbonCredit
+            carbonCreditStandard
+            carbonCreditCdmExecutiveStatus
+            carbonCreditCdmMethodology
+            carbonCreditVoluntaryOrganization
+            carbonCreditVoluntaryMethodology
+            progressData
+            expenditureData
+          }
         }
       }
     `,

@@ -1,5 +1,4 @@
 import { join } from 'path'
-import query from '../../../../mssql/query.js'
 import loadFile from '../../../../lib/load-file.js'
 import getCurrentDirectory from '../../../../lib/get-current-directory.js'
 import seedUserModel from '../seed-database/user-model/index.js'
@@ -8,26 +7,17 @@ import seedSysAdmins from '../seed-database/sysadmins/index.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 
-/**
- * Initial schema
- */
-;(async () => {
-  await loadFile(join(__dirname, './sql/schema.sql'))
-    .then(sql => query(sql))
-    .then(() => console.info('Schema created (or already exists)'))
-})()
-
 export default async (_, { dropSchema = false }, ctx) => {
   const { query } = ctx.mssql
   const result = {}
 
   if (dropSchema) {
-    await loadFile(join(__dirname, './sql/drop-schema.sql'))
+    await loadFile(join(__dirname, '../../../../mssql/sql/drop-schema.sql'))
       .then(sql => query(sql))
       .then(() => console.info('Schema dropped!'))
   }
 
-  await loadFile(join(__dirname, './sql/schema.sql'))
+  await loadFile(join(__dirname, '../../../../mssql/sql/schema.sql'))
     .then(sql => query(sql))
     .then(() => console.info('Schema created (or already exists)'))
 

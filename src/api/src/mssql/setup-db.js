@@ -25,7 +25,8 @@ import { installSchema } from '../graphql/resolvers/mutations/migrate-database/_
   for (const filename of excelTemplates) {
     const filePath = normalize(join(SUBMISSION_TEMPLATES_DIRECTORY, `.${sep}${filename}`))
     const createdAt = statSync(filePath)?.ctime?.toISOString() || new Date().toISOString()
-    await query(`
+    try {
+      await query(`
       merge ExcelSubmissionTemplates t
       using (
         select
@@ -37,6 +38,9 @@ import { installSchema } from '../graphql/resolvers/mutations/migrate-database/_
         s.filePath,
         s.createdAt
       );`)
+    } catch (error) {
+      console.error('Error registering existing templates', error.message)
+    }
   }
 })().catch(error => {
   console.error(error.message)

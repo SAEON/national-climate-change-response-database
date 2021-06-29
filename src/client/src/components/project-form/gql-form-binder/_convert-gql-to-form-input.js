@@ -21,7 +21,7 @@ export default ({ ...form }) =>
         }
 
         if (field === 'progressData') {
-          return null // TODO
+          return [field, value]
         }
 
         if (value?.__typename === 'ControlledVocabulary') {

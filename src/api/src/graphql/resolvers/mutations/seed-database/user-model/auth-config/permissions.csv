@@ -1,6 +1,6 @@
 name,description
 seed-database,Seed the database
-kill-server,Stop the server by throwing an error
+kill-server,Stop the server with a non-zero access code
 upload-template,Upload Excel project template
 migrate-database,Run database migrations
 change-project-owner,"Change project's owner"

@@ -16,7 +16,7 @@ export default progressData => {
           year,
           {
             achieved,
-            achievedUnit: { id: vocabularyId = 0, tree = 'none' },
+            achievedUnit: { id: vocabularyId, tree = 'none' }, // TODO - need to change to vxv identifier rather than vxt
           },
         ]) => `
           select

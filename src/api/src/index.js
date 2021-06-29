@@ -16,6 +16,7 @@ import cors from './middleware/cors.js'
 import clientSession from './middleware/client-session.js'
 import whitelistRoutes from './middleware/whitelist-routes.js'
 import blacklistRoutes from './middleware/blacklist-routes.js'
+import logReqDetails from './middleware/log-req-details.js'
 import fourOfour from './middleware/404.js'
 import clientInfoRoute from './http/client-info.js'
 import authenticateRoute from './http/authenticate.js'
@@ -64,6 +65,7 @@ app
   .use(koaBody())
   .use(koaSession(passportCookieConfig, app))
   .use(cors)
+  .use(logReqDetails)
   .use(clientSession)
   .use(koaPassport.initialize())
   .use(koaPassport.session())

@@ -72,12 +72,18 @@ export default ({ templates }) => {
                 },
               },
             ]}
-            rows={templates.map(({ id, createdBy: { emailAddress }, createdAt, filePath }) => ({
-              id,
-              createdBy: emailAddress,
-              createdAt,
-              filePath: filePath.split('/').pop(),
-            }))}
+            rows={[...templates]
+              .sort(({ createdAt: a }, { createdAt: b }) => {
+                a = new Date(a)
+                b = new Date(b)
+                return a > b ? -1 : a < b ? 1 : 0
+              })
+              .map(({ id, createdBy, createdAt, filePath }) => ({
+                id,
+                createdBy: createdBy?.emailAddress || 'UNKNOWN',
+                createdAt,
+                filePath: filePath.split('/').pop(),
+              }))}
           />
         </div>
       </CardContent>

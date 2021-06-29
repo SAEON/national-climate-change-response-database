@@ -59,7 +59,7 @@ input AdaptationFiltersInput {
 
 type SubmissionTemplate {
   id: Int!
-  createdBy: User!
+  createdBy: User
   createdAt: DateTime!
   filePath: String!
 }

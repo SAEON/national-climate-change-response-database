@@ -433,7 +433,7 @@ if not exists (
 begin
 create table ExcelSubmissionTemplates (
   id int not null identity primary key,
-	createdBy int not null foreign key references Users (id),
+	createdBy int foreign key references Users (id),
 	filePath nvarchar(500) not null unique,
 	createdAt datetime2 not null
 );

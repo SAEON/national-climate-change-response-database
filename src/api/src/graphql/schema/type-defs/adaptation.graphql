@@ -1,10 +1,16 @@
 input AdaptationInput {
   # Adaptation sector :: Select the adaptation sector :: adaptationSectors
   adaptationSector: ControlledVocabularyInput!
+  # Sector description :: Please describe the sector
+  otherAdaptationSector: String
   # National policy :: Indicate the national policy or strategy that the measure is responding to :: adaptationPolicies
   nationalPolicy: ControlledVocabularyInput
+  # National policy description :: Please describe the policy
+  otherNationalPolicy: String
   # Provincial or Municipal policy :: Indicate the provincial or municipal policy or strategy that the measure is responding to :: adaptationPolicies
   regionalPolicy: ControlledVocabularyInput
+  # Regional policy description :: Please describe the policy
+  otherRegionalPolicy: String
   # Indicate the corresponding intervention, goal, or target :: Please select an appropriate value based on your other form inputs above :: adaptationPolicies
   target: ControlledVocabularyInput
 
@@ -15,7 +21,7 @@ input AdaptationInput {
 
   # Observed climate change impacts :: What climate change impacts have been observed?
   observedClimateChangeImpacts: String
-  # Addressed climate change impact :: Which observed climate change impact is the response addressing?
+  # Addressed climate change impact :: Which observed climate change impact(s) is the response addressing
   addressedClimateChangeImpact: String
   # Impact of response :: What has been the impact of the response in reducing climate change impacts?
   responseImpact: String
@@ -37,8 +43,11 @@ input AdaptationInput {
 type Adaptation {
   id: Int!
   adaptationSector: ControlledVocabulary
+  otherAdaptationSector: String
   nationalPolicy: ControlledVocabulary
+  otherNationalPolicy: String
   regionalPolicy: ControlledVocabulary
+  otherRegionalPolicy: String
   target: ControlledVocabulary
 
   hazard: ControlledVocabulary

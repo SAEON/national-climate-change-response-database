@@ -16,6 +16,15 @@ export default memo(
               autoComplete="off"
               id={`${name}`}
               label={name}
+              style={{
+                overflowX: 'clip',
+              }}
+              inputProps={{
+                style: {
+                  appearance: 'textfield',
+                  marginRight: -30,
+                },
+              }}
               disabled={disabled}
               placeholder={placeholder}
               helperText={helperText}

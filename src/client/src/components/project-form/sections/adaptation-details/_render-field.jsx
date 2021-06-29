@@ -5,7 +5,16 @@ import {
   ControlledVocabularySelect,
 } from '../../gql-form-binder'
 
-const multilineFields = ['description', 'otherHazard']
+const multilineFields = [
+  'description',
+  'otherHazard',
+  'addressedClimateChangeImpact',
+  'observedClimateChangeImpacts',
+  'responseImpact',
+  'otherNationalPolicy',
+  'otherRegionalPolicy',
+  'otherAdaptationSector',
+]
 
 const researchFormFields = [
   'researchDescription',
@@ -45,6 +54,10 @@ export default ({ field }) => {
         helperText={helperText}
       />
     )
+  } else if (fieldName === 'otherNationalPolicy') {
+    if (!form?.nationalPolicy?.term?.match(/^Other\s/)) {
+      return null
+    }
   } else if (fieldName === 'target') {
     if (form.nationalPolicy) {
       return (
@@ -74,11 +87,15 @@ export default ({ field }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateForm({ [fieldName]: val })}
+        onChange={val => updateForm({ [fieldName]: val, otherRegionalPolicy: undefined })}
         placeholder={placeholder}
         helperText={helperText}
       />
     )
+  } else if (fieldName === 'otherRegionalPolicy') {
+    if (!form?.regionalPolicy?.term?.match(/^Other\s/)) {
+      return null
+    }
   }
 
   /**
@@ -93,11 +110,15 @@ export default ({ field }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateForm({ [fieldName]: val })}
+        onChange={val => updateForm({ [fieldName]: val, otherAdaptationSector: undefined })}
         placeholder={placeholder}
         helperText={helperText}
       />
     )
+  } else if (fieldName === 'otherAdaptationSector') {
+    if (!form?.adaptationSector?.term?.match(/Other\s/)) {
+      return null
+    }
   }
 
   /**
@@ -117,9 +138,7 @@ export default ({ field }) => {
         helperText={helperText}
       />
     )
-  }
-
-  if (fieldName === 'otherHazard') {
+  } else if (fieldName === 'otherHazard') {
     if (!form.hazard || form.hazard.term !== 'Other (Please specify)') {
       return null
     }

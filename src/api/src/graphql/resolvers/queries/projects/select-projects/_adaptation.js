@@ -3,8 +3,11 @@ import vocabularyFields from '../../../vocabulary-fields.js'
 const fields = [
   'id',
   'adaptationSector',
+  'otherAdaptationSector',
   'nationalPolicy',
+  'otherNationalPolicy',
   'regionalPolicy',
+  'otherRegionalPolicy',
   'target',
   'hazard',
   'otherHazard',

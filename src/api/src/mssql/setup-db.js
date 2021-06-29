@@ -24,7 +24,7 @@ import { installSchema } from '../graphql/resolvers/mutations/migrate-database/_
   console.info('Loading existing Excel submission templates', excelTemplates)
   for (const filename of excelTemplates) {
     const filePath = normalize(join(SUBMISSION_TEMPLATES_DIRECTORY, `.${sep}${filename}`))
-    const createdAt = statSync(filePath).ctime.toISOString()
+    const createdAt = statSync(filePath)?.ctime?.toISOString() || new Date().toISOString()
     await query(`
       merge ExcelSubmissionTemplates t
       using (

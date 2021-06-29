@@ -3,6 +3,7 @@ import json from '@rollup/plugin-json'
 export default {
   input: 'src/index.js',
   external: [
+    'object-hash',
     'http',
     'koa',
     'koa-static',

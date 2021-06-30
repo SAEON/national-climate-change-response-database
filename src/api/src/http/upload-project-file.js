@@ -35,7 +35,7 @@ export default async ctx => {
     //   );`)
 
     ctx.response.status = 201
-    ctx.body = 'File upload successful'
+    ctx.body = 'todo-unique-identifier'
   } catch (error) {
     ctx.response.status = 409
     ctx.body = error.message

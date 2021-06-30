@@ -32,7 +32,7 @@ const uploadAddress = `${NCCRD_API_HTTP_ADDRESS}/upload-project-file`
  * project
  */
 
-export default ({ helperText, placeholder }) => {
+export default ({ helperText, placeholder, updateValue, value }) => {
   const [open, setOpen] = useState(false)
   const [files, setFiles] = useState([])
   const [uploading, setUploading] = useState(false)
@@ -40,138 +40,149 @@ export default ({ helperText, placeholder }) => {
   const theme = useTheme()
 
   return (
-    <div onClick={e => e.stopPropagation()}>
-      <Tooltip placement="top" title={helperText}>
-        <span>
-          <Button
-            startIcon={<UploadIcon size={18} />}
-            onClick={() => setOpen(!open)}
-            disableElevation
-            size="medium"
-            variant="contained"
-            color="primary"
-          >
-            {placeholder}
-          </Button>
-        </span>
-      </Tooltip>
-
-      <Dialog
-        id="file(s)-upload"
-        disableBackdropClick
-        disableEscapeKeyDown
-        open={open}
-        onClose={() => setOpen(false)}
+    <div>
+      <div>
+        <pre>{JSON.stringify(value || { fileUploads: 'none yet' }, null, 2)}</pre>
+      </div>
+      <div
+        style={{ display: 'flex', justifyContent: 'flex-end' }}
+        onClick={e => e.stopPropagation()}
       >
-        <DialogTitle>Upload file(s)</DialogTitle>
+        <Tooltip placement="top" title={helperText}>
+          <span>
+            <Button
+              startIcon={<UploadIcon size={18} />}
+              onClick={() => setOpen(!open)}
+              disableElevation
+              size="medium"
+              variant="contained"
+              color="primary"
+            >
+              {placeholder}
+            </Button>
+          </span>
+        </Tooltip>
 
-        <DialogContent>
-          <Typography variant="body2" style={{ marginBottom: theme.spacing(2) }}>
-            Select the latest version of the Excel template that users can use to upload project
-            details
-          </Typography>
+        <Dialog
+          id="file(s)-upload"
+          disableBackdropClick
+          disableEscapeKeyDown
+          open={open}
+          onClose={() => setOpen(false)}
+        >
+          <DialogTitle>Upload file(s)</DialogTitle>
 
-          {/* File selection */}
-          <input
-            accept="*"
-            style={{ display: 'none' }}
-            id="upload-selection-input"
-            type="file"
-            multiple
-            onChange={e => setFiles(e.target.files)}
-          />
-          {
-            <label htmlFor="upload-selection-input">
-              <Button
-                disabled={uploading}
-                variant="contained"
-                disableElevation
-                size="medium"
-                component="span"
-              >
-                Select files
-              </Button>
-            </label>
-          }
-
-          {/* Upload selection details */}
-          {[...files].map(file => {
-            console.log(file)
-            return (
-              <Typography
-                key={file.name}
-                variant="body2"
-                style={{ marginTop: theme.spacing(2), display: 'flex' }}
-              >
-                <FileIcon size={18} style={{ marginRight: theme.spacing(1) }} /> {file.name}
-              </Typography>
-            )
-          })}
-
-          {/* Error text */}
-          {error && (
-            <Typography color="error" variant="body2" style={{ marginTop: theme.spacing(2) }}>
-              {error.message}
+          <DialogContent>
+            <Typography variant="body2" style={{ marginBottom: theme.spacing(2) }}>
+              Select the latest version of the Excel template that users can use to upload project
+              details
             </Typography>
-          )}
-        </DialogContent>
 
-        {/* ACTIONS */}
-        <DialogActions style={{ justifyContent: 'flex-end' }}>
-          <Button
-            color="primary"
-            size="small"
-            variant="outlined"
-            disableElevation
-            startIcon={<CancelIcon size={16} />}
-            onClick={() => {
-              setOpen(false)
-            }}
-            style={{ minWidth: 105 }}
-          >
-            Cancel
-          </Button>
-          <Button
-            disabled={uploading || !files.length}
-            onClick={async () => {
-              setUploading(true)
-              try {
-                for (const file of files) {
-                  const body = new FormData()
-                  body.append('upload-project-file', file, file.name)
-                  const response = await fetch(uploadAddress, {
-                    method: 'POST',
-                    body,
-                    mode: 'cors',
-                    credentials: 'include',
-                  })
-                  const { status } = response
-                  if (status === 201) {
-                    setOpen(false)
-                  } else {
+            {/* File selection */}
+            <input
+              accept="*"
+              style={{ display: 'none' }}
+              id="upload-selection-input"
+              type="file"
+              multiple
+              onChange={e => setFiles(e.target.files)}
+            />
+            {
+              <label htmlFor="upload-selection-input">
+                <Button
+                  disabled={uploading}
+                  variant="contained"
+                  disableElevation
+                  size="medium"
+                  component="span"
+                >
+                  Select files
+                </Button>
+              </label>
+            }
+
+            {/* Upload selection details */}
+            {[...files].map(file => {
+              console.log(file)
+              return (
+                <Typography
+                  key={file.name}
+                  variant="body2"
+                  style={{ marginTop: theme.spacing(2), display: 'flex' }}
+                >
+                  <FileIcon size={18} style={{ marginRight: theme.spacing(1) }} /> {file.name}
+                </Typography>
+              )
+            })}
+
+            {/* Error text */}
+            {error && (
+              <Typography color="error" variant="body2" style={{ marginTop: theme.spacing(2) }}>
+                {error.message}
+              </Typography>
+            )}
+          </DialogContent>
+
+          {/* ACTIONS */}
+          <DialogActions style={{ justifyContent: 'flex-end' }}>
+            <Button
+              color="primary"
+              size="small"
+              variant="outlined"
+              disableElevation
+              startIcon={<CancelIcon size={16} />}
+              onClick={() => {
+                setOpen(false)
+              }}
+              style={{ minWidth: 105 }}
+            >
+              Cancel
+            </Button>
+            <Button
+              disabled={uploading || !files.length}
+              onClick={async () => {
+                setUploading(true)
+                const uploadedFiles = []
+                try {
+                  for (const file of files) {
+                    const body = new FormData()
+                    body.append('upload-project-file', file, file.name)
+                    const response = await fetch(uploadAddress, {
+                      method: 'POST',
+                      body,
+                      mode: 'cors',
+                      credentials: 'include',
+                    })
+                    const { status } = response
                     const responseText = await response.text()
-                    setError(
-                      new Error(`Error uploading file (HTTP code ${status}). ${responseText}`)
-                    )
+                    if (status === 201) {
+                      setOpen(false)
+                      uploadedFiles.push({ id: responseText, name: file.name })
+                    } else {
+                      setError(
+                        new Error(`Error uploading file (HTTP code ${status}). ${responseText}`)
+                      )
+                    }
                   }
+                  updateValue(uploadedFiles)
+                } catch (error) {
+                  setError(new Error(`Unexpected error occurred. ${error.message}`))
+                } finally {
+                  setUploading(false)
                 }
-              } catch (error) {
-                setError(new Error(`Unexpected error occurred. ${error.message}`))
-              } finally {
-                setUploading(false)
-              }
-            }}
-            color="primary"
-            size="small"
-            variant="outlined"
-            disableElevation
-            startIcon={uploading ? <CircularProgress size={14} /> : <AcceptIcon size={16} />}
-            style={{ minWidth: 105 }}
-          >
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
+              }}
+              color="primary"
+              size="small"
+              variant="outlined"
+              disableElevation
+              startIcon={uploading ? <CircularProgress size={14} /> : <AcceptIcon size={16} />}
+              style={{ minWidth: 105 }}
+            >
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </div>
   )
 }

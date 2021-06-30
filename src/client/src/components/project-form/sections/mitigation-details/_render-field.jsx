@@ -53,9 +53,13 @@ export default ({ field }) => {
 
   if (fieldName === 'fileUploads') {
     return (
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <FileUpload key={fieldName} placeholder={placeholder} helperText={helperText} />
-      </div>
+      <FileUpload
+        updateValue={val => updateForm({ [fieldName]: val })}
+        key={fieldName}
+        value={value}
+        placeholder={placeholder}
+        helperText={helperText}
+      />
     )
   }
 

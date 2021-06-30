@@ -1,14 +1,12 @@
 import { useContext, lazy, Suspense } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
-import Header from './header'
-import Wrapper from '../../components/page-wrapper'
 import Loading from '../../components/loading'
 import AccessDenied from '../../components/access-denied'
 
-const ProjectForm = lazy(() => import('../../components/project-form'))
+const LoadSubmission = lazy(() => import('./load-submission'))
 
-export default () => {
+export default ({ id }) => {
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
 
@@ -21,13 +19,8 @@ export default () => {
   }
 
   return (
-    <>
-      <Header />
-      <Wrapper>
-        <Suspense fallback={<Loading />}>
-          <ProjectForm />
-        </Suspense>
-      </Wrapper>
-    </>
+    <Suspense fallback={<Loading />}>
+      <LoadSubmission id={id} />
+    </Suspense>
   )
 }

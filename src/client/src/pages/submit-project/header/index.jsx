@@ -1,5 +1,5 @@
 import ToolbarHeader from '../../../components/toolbar-header'
-import ResetForm from './reset-form'
+import DeleteSubmission from './delete-submission'
 import DownloadExcelTemplate from './download-template'
 import UploadProject from './submit-template'
 import useTheme from '@material-ui/core/styles/useTheme'
@@ -7,7 +7,7 @@ import Divider from '@material-ui/core/Divider'
 import Hidden from '@material-ui/core/Hidden'
 import ShareForm from './share-form'
 
-export default () => {
+export default ({ id }) => {
   const theme = useTheme()
 
   return (
@@ -39,7 +39,7 @@ export default () => {
         style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
       />
 
-      <ResetForm />
+      <DeleteSubmission id={id} />
     </ToolbarHeader>
   )
 }

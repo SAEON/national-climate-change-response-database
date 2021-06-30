@@ -14,11 +14,8 @@ export default ({ id }) => {
       update: (cache, { data: { deleteProject: deletedId } }) => {
         cache.modify({
           fields: {
-            projects: (existingProjects = [], { readField }) => {
-              return existingProjects.filter(p => {
-                return readField('id', p) !== deletedId
-              })
-            },
+            projects: (existingProjects = [], { readField }) =>
+              existingProjects.filter(p => readField('id', p) !== deletedId),
           },
         })
       },

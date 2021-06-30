@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom'
 import MuiLink from '@material-ui/core/Link'
 import navItems from './nav-items'
 import EditIcon from 'mdi-react/EditIcon'
+import SubmissionIcon from 'mdi-react/DatabaseAddIcon'
 
 const useStyles = makeStyles(theme => ({
   link: {
@@ -34,6 +35,9 @@ export default function IconBreadcrumbs() {
     <Breadcrumbs aria-label="breadcrumb">
       {tree.length > 1 &&
         tree.slice(0, -1).map(({ label, Icon, to }) => {
+          if (label === 'Submission') {
+            Icon = SubmissionIcon
+          }
           return (
             <MuiLink
               component={Link}

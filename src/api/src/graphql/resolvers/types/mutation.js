@@ -6,14 +6,16 @@ import migrateDatabase from '../mutations/migrate-database/index.js'
 import seedDatabase from '../mutations/seed-database/index.js'
 import PERMISSIONS from '../../../user-model/permissions.js'
 import authorize from '../../../user-model/authorize.js'
+import createSubmission from '../mutations/create-submission/index.js'
+import deleteSubmission from '../mutations/delete-submission/index.js'
 
 export default {
+  createSubmission: authorize(PERMISSIONS.createProject)(createSubmission),
+  deleteSubmission: authorize(PERMISSIONS.deleteProject)(deleteSubmission), // TODO ?
   createProject: authorize(PERMISSIONS.updateProject)(createProject),
   updateProject: authorize(PERMISSIONS.updateProject)(updateProject),
   deleteProject: authorize(PERMISSIONS.deleteProject)(deleteProject),
   assignUserRoles: authorize(PERMISSIONS.assignRole)(assignUserRoles),
-
-  // sysadmin
   seedDatabase: authorize(PERMISSIONS.seedDatabase)(seedDatabase),
   migrateDatabase: authorize(PERMISSIONS.migrateDatabase)(migrateDatabase),
   killServer: authorize(PERMISSIONS.killServer)(() => process.exit(1)),

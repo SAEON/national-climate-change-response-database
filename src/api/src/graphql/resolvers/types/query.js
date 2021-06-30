@@ -7,10 +7,12 @@ import PERMISSIONS from '../../../user-model/permissions.js'
 import authorize from '../../../user-model/authorize.js'
 import user from '../queries/user.js'
 import submissionTemplates from '../queries/submission-templates.js'
+import activeSubmission from '../queries/active-submission/index.js'
 
 export default {
   users: authorize(PERMISSIONS.viewUsers)(users),
   roles: authorize(PERMISSIONS.viewRoles)(roles),
+  activeSubmission: authorize(PERMISSIONS.createProject)(activeSubmission),
   permissions: authorize(PERMISSIONS.viewPermissions)(permissions),
   submissionTemplates: authorize(PERMISSIONS.viewSubmissionTemplates)(submissionTemplates),
   projects,

@@ -443,3 +443,20 @@ create table ExcelSubmissionTemplates (
 	createdAt datetime2 not null
 );
 end
+
+-- WebSubmissions
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[WebSubmissions]')
+		and type = 'U'
+)
+begin
+create table WebSubmissions (
+  id uniqueidentifier not null primary key default (newsequentialid()),
+	createdBy int foreign key references Users (id),
+	createdAt datetime2 not null,
+	index ix_websubmissions nonclustered (id)
+);
+end

@@ -1,14 +1,39 @@
+import { gql, useMutation } from '@apollo/client'
 import IconButton from '@material-ui/core/IconButton'
-import RefreshIcon from 'mdi-react/RefreshIcon'
+import DeleteIcon from 'mdi-react/DeleteIcon'
 import Button from '@material-ui/core/Button'
+import { useHistory } from 'react-router-dom'
 import Hidden from '@material-ui/core/Hidden'
 import MessageDialogue from '../../../../components/message-dialogue'
 
-export default () => {
+export default ({ id }) => {
+  const history = useHistory()
+  const [deleteSubmission] = useMutation(
+    gql`
+      mutation deleteSubmission($id: ID!) {
+        deleteSubmission(id: $id)
+      }
+    `,
+    {
+      onCompleted: ({ deleteSubmission: id }) => {
+        if (id) {
+          history.push('/')
+        }
+      },
+      update: cache => {
+        cache.modify({
+          fields: {
+            activeSubmission: () => undefined,
+          },
+        })
+      },
+    }
+  )
+
   return (
     <MessageDialogue
-      title="Confirm reset"
-      text="Are you sure you want to reset the form? All your entered data will be lost"
+      title="Confirm"
+      text="Are you sure you want to delete this submission? All data will be lost"
       tooltipProps={{
         placement: 'bottom',
         title: 'Reset form',
@@ -23,14 +48,14 @@ export default () => {
                 size="small"
                 variant="text"
                 color="primary"
-                startIcon={<RefreshIcon size={18} />}
+                startIcon={<DeleteIcon size={18} />}
               >
-                Reset form
+                Delete submission
               </Button>
             </Hidden>
             <Hidden smUp>
               <IconButton onClick={openFn} size="small" color="primary">
-                <RefreshIcon size={18} />
+                <DeleteIcon size={18} />
               </IconButton>
             </Hidden>
           </>
@@ -40,10 +65,10 @@ export default () => {
         closeFn => (
           <Button
             key="delete-project"
-            startIcon={<RefreshIcon size={18} />}
+            startIcon={<DeleteIcon size={18} />}
             onClick={e => {
               closeFn(e)
-              window.location.reload()
+              deleteSubmission({ variables: { id } })
             }}
             color="primary"
             size="small"

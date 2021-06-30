@@ -67,6 +67,7 @@ type SubmissionTemplate {
 type Query {
   # Get a list of all the the Excel submission templates that have been uploaded
   submissionTemplates: [SubmissionTemplate!]!
+  activeSubmission(id: ID!): JSON!
   # Search projects
   projects(
     ids: [Int!]
@@ -93,6 +94,8 @@ type Mutation {
   killServer: Void
   migrateDatabase(dropSchema: Boolean): JSON!
   seedDatabase(userModel: Boolean, erm: Boolean, vocabularies: Boolean): JSON!
+  createSubmission: ID!
+  deleteSubmission(id: ID!): ID!
   # Create a project
   createProject(
     generalDetailsForm: ProjectInput!

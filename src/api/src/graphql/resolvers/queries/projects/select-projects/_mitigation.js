@@ -1,49 +1,12 @@
-import vocabularyFields from '../../../vocabulary-fields.js'
+import { mitigationFields, mitigationVocabularyFields } from '../../../../schema/index.js'
 
-const fields = [
-  'id',
-  'hostSector',
-  'hostSubSectorPrimary',
-  'hostSubSectorSecondary',
-  'mitigationType',
-  'mitigationSubType',
-  'mitigationProgramme',
-  'nationalPolicy',
-  'otherNationalPolicy',
-  'regionalPolicy',
-  'otherRegionalPolicy',
-  'primaryIntendedOutcome',
-  'coBenefitEnvironmental',
-  'coBenefitEnvironmentalDescription',
-  'coBenefitSocial',
-  'coBenefitSocialDescription',
-  'coBenefitEconomic',
-  'coBenefitEconomicDescription',
-  'expenditureData',
-  'carbonCredit',
-  'carbonCreditStandard',
-  'carbonCreditCdmExecutiveStatus',
-  'carbonCreditCdmMethodology',
-  'carbonCreditVoluntaryOrganization',
-  'carbonCreditVoluntaryMethodology',
-  'hasEnergyData',
-  'energyData',
-  'hasEmissionsData',
-  'emissionsData',
-  'progressData',
-  'hasResearch',
-  'researchDescription',
-  'researchType',
-  'researchTargetAudience',
-  'researchAuthor',
-  'researchPaper',
-]
+const BLACKLIST_FIELDS_FROM_QUERY = []
 
-export const getAdaptationProjection = () => {
+const getMitigationProjection = fields => {
   return `
     ${fields
       .map(field => {
-        if (vocabularyFields.Mitigations.includes(field)) {
+        if (mitigationVocabularyFields.includes(field)) {
           return `[Mitigations].[${field}] [${field}Id]`
         }
 
@@ -129,13 +92,17 @@ export const getAdaptationProjection = () => {
 }
 
 export default ({ vocabularyFilters }) => {
+  const fields = mitigationFields
+    .map(({ name }) => name)
+    .filter(name => !BLACKLIST_FIELDS_FROM_QUERY.includes(name))
+
   return `
     select
-    ${getAdaptationProjection()}
+    ${getMitigationProjection(fields)}
     from [Mitigations]
       ${fields
         .map(field => {
-          if (!vocabularyFields.Mitigations.includes(field)) {
+          if (!mitigationVocabularyFields.includes(field)) {
             return ''
           }
 

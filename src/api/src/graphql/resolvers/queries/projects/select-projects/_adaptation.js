@@ -1,32 +1,12 @@
-import vocabularyFields from '../../../vocabulary-fields.js'
+import { adaptationFields, adaptationVocabularyFields } from '../../../../schema/index.js'
 
-const fields = [
-  'id',
-  'adaptationSector',
-  'otherAdaptationSector',
-  'nationalPolicy',
-  'otherNationalPolicy',
-  'regionalPolicy',
-  'otherRegionalPolicy',
-  'target',
-  'hazard',
-  'otherHazard',
-  'observedClimateChangeImpacts',
-  'addressedClimateChangeImpact',
-  'responseImpact',
-  'hasResearch',
-  'researchDescription',
-  'researchType',
-  'researchTargetAudience',
-  'researchAuthor',
-  'researchPaper',
-]
+const BLACKLIST_FIELDS_FROM_QUERY = []
 
-export const getAdaptationProjection = () => {
+const getAdaptationProjection = fields => {
   return `
     ${fields
       .map(field => {
-        if (vocabularyFields.Adaptations.includes(field)) {
+        if (adaptationVocabularyFields.includes(field)) {
           return `[Adaptations].[${field}] [${field}Id]`
         }
 
@@ -40,13 +20,17 @@ export const getAdaptationProjection = () => {
 }
 
 export default ({ vocabularyFilters }) => {
+  const fields = adaptationFields
+    .map(({ name }) => name)
+    .filter(name => !BLACKLIST_FIELDS_FROM_QUERY.includes(name))
+
   return `
     select
-    ${getAdaptationProjection()}
+    ${getAdaptationProjection(fields)}
     from [Adaptations]
       ${fields
         .map(field => {
-          if (!vocabularyFields.Adaptations.includes(field)) {
+          if (!adaptationVocabularyFields.includes(field)) {
             return ''
           }
 

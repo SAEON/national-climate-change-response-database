@@ -1,9 +1,9 @@
 import finder from '../../../lib/find-vocabulary-helper.js'
-import { Adaptations as vocabularyFields } from '../vocabulary-fields.js'
+import { adaptationVocabularyFields } from '../../schema/vocabulary-fields.js'
 
 export default {
   ...Object.fromEntries(
-    vocabularyFields.map(field => {
+    adaptationVocabularyFields.map(field => {
       return [
         field,
         async (self, _, ctx) => {

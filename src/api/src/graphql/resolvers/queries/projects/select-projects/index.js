@@ -1,42 +1,17 @@
-import vocabularyFields from '../../../vocabulary-fields.js'
+import { projectFields, projectVocabularyFields } from '../../../../schema/index.js'
 import selectAdaptation from './_adaptation.js'
 import selectMitigation from './_mitigation.js'
 
-const fields = [
-  'id',
-  'title',
-  'description',
-  'interventionType',
-  'link',
-  'implementationStatus',
-  'implementingOrganization',
-  'fundingOrganisation',
-  'fundingType',
-  'actualBudget',
-  'estimatedBudget',
-  'cityOrTown',
-  'province',
-  'districtMunicipality',
-  'localMunicipality',
-  'yx',
-  'projectManagerName',
-  'projectManagerOrganization',
-  'projectManagerPosition',
-  'projectManagerEmail',
-  'projectManagerTelephone',
-  'projectManagerMobile',
-  'validationStatus',
-  'validationComments',
-]
+const BLACKLIST_FIELDS_FROM_QUERY = ['mitigation', 'adaptation']
 
-export const getProjectProjection = ({
-  adaptationVocabularyFilters,
-  mitigationVocabularyFilters,
-}) => {
+const getProjectProjection = (
+  fields,
+  { adaptationVocabularyFilters, mitigationVocabularyFilters }
+) => {
   return `
     ${fields
       .map(field => {
-        if (vocabularyFields.Projects.includes(field)) {
+        if (projectVocabularyFields.includes(field)) {
           return `[Projects].[${field}] [${field}Id]`
         }
 
@@ -63,13 +38,20 @@ export default ({
   offset,
   limit,
 }) => {
+  const fields = projectFields
+    .map(({ name }) => name)
+    .filter(name => !BLACKLIST_FIELDS_FROM_QUERY.includes(name))
+
   return `
     select
-    ${getProjectProjection({ adaptationVocabularyFilters, mitigationVocabularyFilters })}
+    ${getProjectProjection(fields, {
+      adaptationVocabularyFilters,
+      mitigationVocabularyFilters,
+    })}
     from [Projects]
       ${fields
         .map(field => {
-          if (!vocabularyFields.Projects.includes(field)) {
+          if (!projectVocabularyFields.includes(field)) {
             return ''
           }
 

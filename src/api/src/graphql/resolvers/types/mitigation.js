@@ -1,9 +1,9 @@
 import finder from '../../../lib/find-vocabulary-helper.js'
-import { Mitigations as vocabularyFields } from '../vocabulary-fields.js'
+import { mitigationVocabularyFields } from '../../schema/vocabulary-fields.js'
 
 export default {
   ...Object.fromEntries(
-    vocabularyFields.map(field => {
+    mitigationVocabularyFields.map(field => {
       return [
         field,
         async (self, _, ctx) => {

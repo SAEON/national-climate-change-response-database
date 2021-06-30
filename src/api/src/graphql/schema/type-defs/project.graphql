@@ -38,11 +38,11 @@ input ProjectInput {
 
   # Estimated budget range :: If you don't know the actual budget, please provide a range estimate :: budgetRanges
   estimatedBudget: ControlledVocabularyInput
-  # Indicate the type of measure :: Mitigation measures are defined as ' actions aimed at reducing the extent or likelihood of global climate change through the reduction or diplacement of greenhouse gas emissions (GHGs) (e.g. through emission reduction, energy efficiency or renewable energy projects'.\n\nAdaptation measures are defined as 'actions preventing or minimising the negative effects and taking advantage of positive effects of global warming in addition to actions which would have occurred naturally or as a matter of course.\n\nCross-cutting Measures that contain elements of both adaptation and mitigation :: interventionTypes
+  # Indicate the type of measure :: <b>Mitigation</b> measures are defined as 'actions aimed at reducing the extent or likelihood of global climate change through the reduction or displacement of greenhouse gas emissions (GHGs) (e.g. through emission reduction, energy efficiency or renewable energy projects'.<br /><br /><b>Adaptation</b> measures are defined as 'actions preventing or minimising the negative effects and taking advantage of positive effects of global warming in addition to actions which would have occurred naturally or as a matter of course.<br /><br /><b>Cross-cutting</b> Measures that contain elements of both adaptation and mitigation :: interventionTypes
   interventionType: ControlledVocabularyInput!
-  # Implementation status :: Operational - Ongoing project \nPlanned project - Project has not begun but is being constructed or has been registered/approved/funded\nComplete - The project has been finalized\nDiscontinued - planned project terminated :: actionStatus
+  # Implementation status :: <b>Operational</b> - Ongoing project <br /><b>Planned project</b> - Project has not begun but is being constructed or has been registered/approved/funded<br /><b>Complete</b> - The project has been finalized<br /><b>Discontinued</b> - planned project terminated :: actionStatus
   implementationStatus: ControlledVocabularyInput
-  # Type of funding :: @Delani TODO :: fundingTypes
+  # Type of funding :: Any financial resources that is spent on supporting either mitigation and adaption efforts in South Africa. Climate finance refers to <b>domestic</b> (drawn from local public or private organisations), <b>International</b> (bilateral or multilateral grants or loans). <b>Bilateral</b> funding describes money which is given directly from one government to another, whereas <b>multilateral</b> funding comes from numerous different governments and organisations and is usually arranged by an international organisation such as the World Bank or the UN :: fundingTypes
   fundingType: ControlledVocabularyInput
   # Province :: Select province :: regions
   province: ControlledVocabularyInput

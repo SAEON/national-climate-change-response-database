@@ -16,7 +16,7 @@ export default memo(
               id={`${name}`}
               select
               placeholder={placeholder}
-              helperText={helperText}
+              helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
               fullWidth
               disabled={disabled}
               variant="outlined"

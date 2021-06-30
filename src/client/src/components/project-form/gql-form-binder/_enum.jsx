@@ -19,7 +19,7 @@ export default memo(
               select
               disabled={disabled}
               placeholder={placeholder}
-              helperText={helperText}
+              helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
               fullWidth
               variant="outlined"
               margin="normal"

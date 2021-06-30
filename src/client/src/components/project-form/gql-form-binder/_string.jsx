@@ -30,7 +30,7 @@ export default memo(
               id={`${name}`}
               label={name}
               placeholder={placeholder}
-              helperText={helperText}
+              helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
               multiline={multiline}
               rows={rows}
               fullWidth

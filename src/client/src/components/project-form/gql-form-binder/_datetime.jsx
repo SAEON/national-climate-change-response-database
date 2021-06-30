@@ -25,7 +25,7 @@ export default memo(
               placeholder={placeholder}
               label={name}
               id={`${name}`}
-              helperText={helperText}
+              helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
               error={error}
               value={value}
               onChange={value => update({ value })}

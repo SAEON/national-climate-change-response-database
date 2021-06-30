@@ -89,16 +89,7 @@ export default ({
       disabled={disabled}
       label={placeholder}
       placeholder={placeholder}
-      helperText={
-        <>
-          {helperText.split('\\n').map((text, i) => (
-            <span key={i}>
-              {text}
-              <br />
-            </span>
-          ))}
-        </>
-      }
+      helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
       fullWidth
       onChange={e => {
         e.stopPropagation()

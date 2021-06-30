@@ -63,16 +63,7 @@ export default ({ root, tree, disabled = false, value, setValue, helperText, lab
       disabled={disabled}
       options={options.map(({ term }) => term)}
       value={value}
-      helperText={
-        <>
-          {helperText.split('\\n').map((text, i) => (
-            <span key={i}>
-              {text}
-              <br />
-            </span>
-          ))}
-        </>
-      }
+      helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
       label={label}
       setValue={setValue}
     />

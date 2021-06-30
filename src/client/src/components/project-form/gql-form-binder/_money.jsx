@@ -27,7 +27,7 @@ export default memo(
               }}
               disabled={disabled}
               placeholder={placeholder}
-              helperText={helperText}
+              helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
               variant="outlined"
               fullWidth
               type="number"

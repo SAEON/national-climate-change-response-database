@@ -9,7 +9,7 @@ const fields = [
   'mitigationSubType',
   'mitigationProgramme',
   'nationalPolicy',
-  'regionalPolicy',
+  'otherNationalPolicy',
   'regionalPolicy',
   'otherRegionalPolicy',
   'primaryIntendedOutcome',

@@ -14,7 +14,9 @@ const Compose = memo(({ fields }) => {
         'Policy information': [
           'mitigationProgramme',
           'nationalPolicy',
+          'otherNationalPolicy',
           'regionalPolicy',
+          'otherRegionalPolicy',
           'primaryIntendedOutcome',
         ],
         'Progress calculator': ['progressData'],

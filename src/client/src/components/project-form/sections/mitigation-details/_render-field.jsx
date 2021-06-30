@@ -17,6 +17,8 @@ const multilineFields = [
   'coBenefitSocialDescription',
   'coBenefitEconomicDescription',
   'carbonCreditVoluntaryMethodology',
+  'otherNationalPolicy',
+  'otherRegionalPolicy',
 ]
 
 const researchFormFields = [
@@ -188,11 +190,15 @@ export default ({ field }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateForm({ [fieldName]: val })}
+        onChange={val => updateForm({ [fieldName]: val, otherNationalPolicy: undefined })}
         placeholder={placeholder}
         helperText={helperText}
       />
     )
+  } else if (fieldName === 'otherNationalPolicy') {
+    if (!form?.nationalPolicy?.term?.match(/^Other\s/)) {
+      return null
+    }
   }
 
   /**
@@ -207,11 +213,15 @@ export default ({ field }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateForm({ [fieldName]: val })}
+        onChange={val => updateForm({ [fieldName]: val, otherRegionalPolicy: undefined })}
         placeholder={placeholder}
         helperText={helperText}
       />
     )
+  } else if (fieldName === 'otherRegionalPolicy') {
+    if (!form?.regionalPolicy?.term?.match(/^Other\s/)) {
+      return null
+    }
   }
 
   /**

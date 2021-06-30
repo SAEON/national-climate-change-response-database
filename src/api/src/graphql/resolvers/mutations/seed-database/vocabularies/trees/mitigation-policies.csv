@@ -21,6 +21,7 @@ National policy,"National Environmental Management: Biodiversity Act, 1998",miti
 National policy,"National Climate Change Response Policy, 2011",mitigationPolicies
 National policy,"Draft Climate Change Adaptation and Mitigation Plan for South African Agriculture, Forestry, and Fisheries, 2018 ",mitigationPolicies
 National policy,"National Waste Management Strategy, 2011",mitigationPolicies
+National policy,"Other national policy",mitigationPolicies
 
 ,Regional policy,mitigationPolicies
 Regional policy,"Integrated Development Plan (IDP)",mitigationPolicies
@@ -43,3 +44,4 @@ Regional policy,"Green Economic Development  Plan",mitigationPolicies
 Regional policy,"Tourism Master Plan",mitigationPolicies
 Regional policy,"Agriculture Master Plan",mitigationPolicies
 Regional policy,"Human Settlement Master Plan",mitigationPolicies
+Regional policy,"Other regional policy",mitigationPolicies

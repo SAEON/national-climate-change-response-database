@@ -15,8 +15,12 @@ input MitigationInput {
   mitigationProgramme: ControlledVocabularyInput
   # National policy :: Indicate the national policy or strategy that the measure is responding to :: mitigationPolicies
   nationalPolicy: ControlledVocabularyInput
+  # National policy description :: Please describe the policy
+  otherNationalPolicy: String
   # Provincial or Municipal policy :: Indicate the provincial or municipal policy or strategy that the measure is responding to :: mitigationPolicies
   regionalPolicy: ControlledVocabularyInput
+  # Regional policy description :: Please describe the policy
+  otherRegionalPolicy: String
   # Primary intended outcome :: Primary intended outcome (Indicate the expected or achieved goals)
   primaryIntendedOutcome: String
 
@@ -83,7 +87,9 @@ type Mitigation {
   mitigationSubType: ControlledVocabulary
   mitigationProgramme: ControlledVocabulary
   nationalPolicy: ControlledVocabulary
+  otherNationalPolicy: String
   regionalPolicy: ControlledVocabulary
+  otherRegionalPolicy: String
   primaryIntendedOutcome: String
   coBenefitEnvironmental: ControlledVocabulary
   coBenefitEnvironmentalDescription: String

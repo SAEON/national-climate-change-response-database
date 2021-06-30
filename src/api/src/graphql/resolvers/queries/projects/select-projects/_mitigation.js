@@ -10,6 +10,8 @@ const fields = [
   'mitigationProgramme',
   'nationalPolicy',
   'regionalPolicy',
+  'regionalPolicy',
+  'otherRegionalPolicy',
   'primaryIntendedOutcome',
   'coBenefitEnvironmental',
   'coBenefitEnvironmentalDescription',

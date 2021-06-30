@@ -19,6 +19,9 @@ input AdaptationInput {
   # Hazard description :: Please describe the hazard
   otherHazard: String
 
+  # Attach progress or status report :: Upload file(s) related to the progress or status of this project
+  fileUploads: JSON
+
   # Observed climate change impacts :: What climate change impacts have been observed?
   observedClimateChangeImpacts: String
   # Addressed climate change impact :: Which observed climate change impact(s) is the response addressing
@@ -42,6 +45,7 @@ input AdaptationInput {
 
 type Adaptation {
   id: Int!
+  fileUploads: JSON
   adaptationSector: ControlledVocabulary
   otherAdaptationSector: String
   nationalPolicy: ControlledVocabulary

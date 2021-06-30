@@ -13,6 +13,7 @@ export { default as ControlledVocabularySelect } from './_controlled-vocabulary-
 export { default as ControlledVocabularySelectMultiple } from './_controlled-vocabulary-select-multiple'
 export { default as FormSection } from './_form-section'
 export { default as ComposeForm } from './_compose-form'
+export { default as FileUpload } from './upload'
 
 const LocationsPicker_ = lazy(() => import('./locations-picker'))
 

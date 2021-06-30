@@ -67,6 +67,7 @@ export const projectFields = gql`
     validationComments
     adaptation {
       id
+      fileUploads
       adaptationSector {
         id
         term
@@ -79,12 +80,14 @@ export const projectFields = gql`
         tree
         root
       }
+      otherNationalPolicy
       regionalPolicy {
         id
         term
         tree
         root
       }
+      otherRegionalPolicy
       target {
         id
         term
@@ -104,6 +107,7 @@ export const projectFields = gql`
     }
     mitigation {
       id
+      fileUploads
       hostSector {
         id
         term
@@ -146,12 +150,14 @@ export const projectFields = gql`
         tree
         root
       }
+      otherNationalPolicy
       regionalPolicy {
         id
         term
         tree
         root
       }
+      otherRegionalPolicy
       primaryIntendedOutcome
       coBenefitEnvironmental {
         id

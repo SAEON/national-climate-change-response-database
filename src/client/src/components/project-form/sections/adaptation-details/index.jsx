@@ -25,6 +25,7 @@ const Compose = memo(({ fields }) => {
           'addressedClimateChangeImpact',
           'responseImpact',
         ],
+        'Progress reports': ['fileUploads'],
         'Associated research': [
           'hasResearch',
           'researchDescription',

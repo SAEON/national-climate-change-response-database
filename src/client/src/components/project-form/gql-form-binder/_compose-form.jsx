@@ -44,12 +44,16 @@ export default ({ fields, RenderField, sections, formNumber = 0, hideSections = 
 
     if (!(set3.size === set1.size && set3.size === set2.size)) {
       throw new Error(
-        `Oops! The graphQL input type does not match the client form logic. You need to explicitly assign each input field into a group. Sorry this is a manual process! (But it is as easy as updating an array of field values in the form builder)
+        `Oops! The graphQL input type does not match the client form logic. You need to explicitly assign each input field into a section. Either a field in the GraphQL type has NOT been added to a section, or there is a field defined in a section that does NOT exist on the GraphQL type. Sorry this is a manual process! (But it is as easy as updating an array of field values in the form builder)
 
-Fields:
-${JSON.stringify(_fields, null, 2)}
+Fields defined on the GraphQL type:
+${JSON.stringify(
+  fields.map(({ name }) => name),
+  null,
+  2
+)}
 
-Sections:
+Fields defined in the form sections:
 ${JSON.stringify(sections, null, 2)}`
       )
     }

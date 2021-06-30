@@ -53,7 +53,7 @@ export default ({ id, tooltipProps, title, Icon, apiAddress }) => {
 
           {/* File selection */}
           <input
-            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            accept="application/vnd.ms-excel.sheet.macroEnabled.12"
             style={{ display: 'none' }}
             id="upload-selection-input"
             type="file"

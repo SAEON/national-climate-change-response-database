@@ -24,6 +24,9 @@ input MitigationInput {
   # Primary intended outcome :: Primary intended outcome (Indicate the expected or achieved goals)
   primaryIntendedOutcome: String
 
+  # Attach progress or status report(s) :: Upload file(s) related to the progress or status of this project
+  fileUploads: JSON
+
   # Environmental co-benefit :: Select co-benefit :: coBenefits
   coBenefitEnvironmental: ControlledVocabularyInput
   # Environmental co-benefit description :: Please indicate the quantified environmental benefits from the project :: coBenefits
@@ -81,6 +84,7 @@ type Mitigation {
   id: Int!
 
   hostSector: ControlledVocabulary
+  fileUploads: JSON
   hostSubSectorPrimary: ControlledVocabulary
   hostSubSectorSecondary: ControlledVocabulary
   mitigationType: ControlledVocabulary

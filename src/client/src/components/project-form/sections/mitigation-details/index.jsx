@@ -19,6 +19,7 @@ const Compose = memo(({ fields }) => {
           'otherRegionalPolicy',
           'primaryIntendedOutcome',
         ],
+        'Progress reports': ['fileUploads'],
         'Progress calculator': ['progressData'],
         'Co-benefit information': [
           'coBenefitEnvironmental',

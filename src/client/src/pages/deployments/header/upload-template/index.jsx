@@ -2,7 +2,7 @@ import Icon from 'mdi-react/MicrosoftExcelIcon'
 import Hidden from '@material-ui/core/Hidden'
 import { NCCRD_API_HTTP_ADDRESS } from '../../../../config'
 import Divider from '@material-ui/core/Divider'
-import FileUploadDialogue from '../../../../components/file-upload-dialogue'
+import FileUploadDialogue from './upload-dialogue'
 import useTheme from '@material-ui/core/styles/useTheme'
 
 export default () => {

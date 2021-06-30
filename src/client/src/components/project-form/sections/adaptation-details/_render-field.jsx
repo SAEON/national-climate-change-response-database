@@ -3,6 +3,7 @@ import {
   GqlBoundFormInput,
   context as formContext,
   ControlledVocabularySelect,
+  FileUpload,
 } from '../../gql-form-binder'
 
 const multilineFields = [
@@ -35,6 +36,14 @@ export default ({ field }) => {
 
   if (helperText === '') {
     helperText = ` `
+  }
+
+  if (fieldName === 'fileUploads') {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <FileUpload key={fieldName} placeholder={placeholder} helperText={helperText} />
+      </div>
+    )
   }
 
   /**

@@ -3,6 +3,7 @@ import {
   GqlBoundFormInput,
   context as formContext,
   ControlledVocabularySelect,
+  FileUpload,
 } from '../../gql-form-binder'
 import EnergyCalculator from '../../gql-form-binder/calculators/energy'
 import EmissionsCalculator from '../../gql-form-binder/calculators/emissions'
@@ -48,6 +49,14 @@ export default ({ field }) => {
 
   if (helperText === '') {
     helperText = ` `
+  }
+
+  if (fieldName === 'fileUploads') {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <FileUpload key={fieldName} placeholder={placeholder} helperText={helperText} />
+      </div>
+    )
   }
 
   if (fieldName === 'progressData') {

@@ -14,7 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 
 export default memo(
-  ({ value, updateValue, submissionId, disabled }) => {
+  ({ value, removeFiles: updateForm, submissionId, disabled }) => {
     const [open, setOpen] = useState(false)
     const theme = useTheme()
 
@@ -26,17 +26,8 @@ export default memo(
       `,
       {
         onCompleted: () => {
-          updateValue([])
-        },
-        update: cache => {
-          cache.modify({
-            fields: {
-              activeSubmission: (type = {}) => {
-                // TODO - set the fileUploads property = [] in the cache
-                console.log('type', type)
-              },
-            },
-          })
+          updateForm([])
+          setOpen(false)
         },
       }
     )
@@ -95,7 +86,7 @@ export default memo(
               onClick={async () => {
                 removeFiles({
                   variables: {
-                    ids: value.map(({ id }) => id),
+                    ids: value.map(({ id }) => parseInt(id, 10)),
                     submissionId,
                   },
                 })
@@ -119,11 +110,12 @@ export default memo(
    * to context otherwise the component is re-
    * rendered too often.
    *
-   * Don't re-render unless unmounted or the error
-   * state changes
+   * However, if the form value changes then
+   * buttons need to be disabled/enabled
    */
   ({ value: a }, { value: b }) => {
-    console.log(a, b)
-    return false
+    a = a.map(({ id }) => id)
+    b = b.map(({ id }) => id)
+    return a.sort().toString() == b.sort().toString()
   }
 )

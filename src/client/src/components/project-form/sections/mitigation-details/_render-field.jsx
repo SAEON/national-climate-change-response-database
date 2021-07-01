@@ -52,10 +52,10 @@ export default ({ field }) => {
   }
 
   if (fieldName === 'fileUploads') {
-    console.log('new value', value)
     return (
       <FileUpload
         updateValue={val => updateForm({ [fieldName]: [...value, ...val] })}
+        removeFiles={() => updateForm({ [fieldName]: [] })}
         key={fieldName}
         placeholder={placeholder}
         helperText={helperText}

@@ -7,7 +7,6 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import FileIcon from 'mdi-react/FileIcon'
 
 export default ({ value, ...props }) => {
-  console.log('the value', value)
   const theme = useTheme()
   const { submissionId } = useContext(formContext)
 

@@ -3,6 +3,7 @@ import logSql from '../../../../lib/log-sql.js'
 
 export default async (self, { ids, submissionId }, ctx) => {
   const { query } = ctx.mssql
+
   /**
    * Get paths to files that should be deleted
    */

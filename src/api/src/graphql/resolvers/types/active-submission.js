@@ -1,3 +1,9 @@
 export default {
-  fileUploads: async ({ fileUploads = {} }) => JSON.parse(fileUploads),
+  fileUploads: async ({ fileUploads = {} }) => {
+    if (typeof fileUploads === 'object') {
+      return fileUploads
+    }
+
+    return JSON.parse(fileUploads)
+  },
 }

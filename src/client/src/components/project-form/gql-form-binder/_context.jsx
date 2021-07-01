@@ -1,9 +1,10 @@
-import { createContext, useState, useCallback, useMemo } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { createContext, useEffect, useState, useCallback, useMemo } from 'react'
+import { gql, useQuery, useApolloClient } from '@apollo/client'
 import Loading from '../../loading'
 import Fade from '@material-ui/core/Fade'
 import getFormStatus from './_get-form-status'
 import convertGqlToFormInput from './_convert-gql-to-form-input'
+import debounce from '../../../lib/debounce'
 
 export const context = createContext()
 
@@ -39,6 +40,7 @@ export default ({
     ...generalDetails
   } = {},
 }) => {
+  const apollo = useApolloClient()
   const [generalDetailsForm, setGeneralDetailsForm] = useState(
     convertGqlToFormInput(generalDetails)
   )
@@ -102,7 +104,8 @@ export default ({
 
   /**
    * Don't remove file references
-   * since they are saved to the server
+   * since the files are saved to the server
+   * and need to be explicitly deleted
    */
   const resetMitigationDetailsForm = useCallback(
     () => setMitigationDetailsForm(form => ({ fileUploads: form.fileUploads })),
@@ -122,7 +125,8 @@ export default ({
 
   /**
    * Don't remove file references
-   * since they are saved to the server
+   * since the files are saved to the server
+   * and need to be explicitly deleted
    */
   const resetAdaptationDetailsForm = useCallback(
     () => setAdaptationDetailsForm(form => ({ fileUploads: form.fileUploads })),
@@ -133,6 +137,44 @@ export default ({
     () => getFormStatus(adaptationFields, adaptationDetailsForm),
     [adaptationFields, adaptationDetailsForm]
   )
+
+  // eslint-disable-next-line
+  const syncProgress = useCallback(
+    debounce(({ generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm }) => {
+      apollo.mutate({
+        mutation: gql`
+          mutation saveActiveSubmission(
+            $submissionId: ID!
+            $projectForm: JSON
+            $mitigationForm: JSON
+            $adaptationForm: JSON
+          ) {
+            saveActiveSubmission(
+              submissionId: $submissionId
+              projectForm: $projectForm
+              mitigationForm: $mitigationForm
+              adaptationForm: $adaptationForm
+            ) {
+              id
+              fileUploads
+            }
+          }
+        `,
+        variables: {
+          submissionId,
+          projectForm: generalDetailsForm,
+          mitigationForm: mitigationDetailsForm,
+          adaptationForm: adaptationDetailsForm,
+        },
+        update: () => {}, // TODO ?
+      })
+    }, 2000),
+    []
+  )
+
+  useEffect(() => {
+    syncProgress({ generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm })
+  }, [generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm, syncProgress])
 
   if (loading) {
     return (

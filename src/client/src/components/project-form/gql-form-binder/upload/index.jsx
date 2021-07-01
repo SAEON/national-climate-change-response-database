@@ -29,7 +29,7 @@ export default ({ value, ...props }) => {
         onClick={e => e.stopPropagation()}
       >
         <Clear disabled={!value.length} value={value} submissionId={submissionId} {...props} />
-        <Upload submissionId={submissionId} {...props} />
+        <Upload submissionId={submissionId} value={value} {...props} />
       </div>
     </>
   )

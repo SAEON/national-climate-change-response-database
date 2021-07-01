@@ -97,6 +97,12 @@ type Query {
 # type Subscription {}
 
 type Mutation {
+  saveActiveSubmission(
+    submissionId: ID!
+    projectForm: JSON
+    mitigationForm: JSON
+    adaptationForm: JSON
+  ): ActiveSubmission
   killServer: Void
   migrateDatabase(dropSchema: Boolean): JSON!
   seedDatabase(userModel: Boolean, erm: Boolean, vocabularies: Boolean): JSON!

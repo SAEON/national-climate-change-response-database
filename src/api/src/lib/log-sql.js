@@ -3,9 +3,13 @@ import { format } from 'sql-formatter'
 
 export default (sql, name, force = false) => {
   if (LOG_SQL_QUERIES || force) {
-    console.info(
-      `\n===== SQL Query # ${name || 'anonymous'}`,
-      `\n\n${format(sql, { language: 'tsql' })}\n`
-    )
+    try {
+      console.info(
+        `\n===== SQL Query # ${name || 'anonymous'}`,
+        `\n\n${format(sql, { language: 'tsql' })}\n`
+      )
+    } catch (error) {
+      console.error('Unable to print SQL (I think this is a bug with the sql-formatter library)')
+    }
   }
 }

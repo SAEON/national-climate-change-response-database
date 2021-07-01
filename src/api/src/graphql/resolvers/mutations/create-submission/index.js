@@ -4,7 +4,7 @@ export default async (self, args, ctx) => {
   const { query } = ctx.mssql
 
   const sql = `
-    insert into WebSubmissions (
+    insert into ActiveSubmissions (
       createdBy,
       createdAt
     )

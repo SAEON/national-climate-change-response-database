@@ -9,10 +9,11 @@ import authorize from '../../../user-model/authorize.js'
 import createSubmission from '../mutations/create-submission/index.js'
 import deleteSubmission from '../mutations/delete-submission/index.js'
 import removeProjectFiles from '../mutations/remove-project-files/index.js'
+import saveActiveSubmission from '../mutations/save-active-submission/index.js'
 
 export default {
   createSubmission: authorize(PERMISSIONS.createProject)(createSubmission),
-  deleteSubmission: authorize(PERMISSIONS.deleteProject)(deleteSubmission), // TODO ?
+  deleteSubmission: authorize(PERMISSIONS.deleteProject)(deleteSubmission), // TODO - new permission?
   createProject: authorize(PERMISSIONS.updateProject)(createProject),
   updateProject: authorize(PERMISSIONS.updateProject)(updateProject),
   deleteProject: authorize(PERMISSIONS.deleteProject)(deleteProject),
@@ -20,5 +21,6 @@ export default {
   seedDatabase: authorize(PERMISSIONS.seedDatabase)(seedDatabase),
   migrateDatabase: authorize(PERMISSIONS.migrateDatabase)(migrateDatabase),
   killServer: authorize(PERMISSIONS.killServer)(() => process.exit(1)),
-  removeProjectFiles: authorize(PERMISSIONS.uploadProjectFile)(removeProjectFiles), // TODO ?
+  removeProjectFiles: authorize(PERMISSIONS.uploadProjectFile)(removeProjectFiles), // TODO - new permission?
+  saveActiveSubmission: authorize(PERMISSIONS.createProject)(saveActiveSubmission), // TODO - new permission?
 }

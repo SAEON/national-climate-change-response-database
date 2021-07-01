@@ -53,6 +53,10 @@ export default async ctx => {
     ctx.body = result.recordset[0].id
   } catch (error) {
     ctx.response.status = 409
-    ctx.body = error.message
+    if (error.message.includes('UNIQUE KEY')) {
+      ctx.body = `File already exists ${name}`
+    } else {
+      ctx.body = error.message
+    }
   }
 }

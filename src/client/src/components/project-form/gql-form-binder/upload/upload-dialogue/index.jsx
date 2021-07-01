@@ -46,7 +46,11 @@ export default memo(
           <span>
             <Button
               startIcon={<UploadIcon size={18} />}
-              onClick={() => setOpen(!open)}
+              onClick={() => {
+                setError(null)
+                setFiles([])
+                setOpen(!open)
+              }}
               disableElevation
               size="medium"
               variant="outlined"
@@ -78,7 +82,10 @@ export default memo(
               id="upload-selection-input"
               type="file"
               multiple
-              onChange={e => setFiles(e.target.files)}
+              onChange={e => {
+                setError(null)
+                setFiles(e.target.files)
+              }}
             />
             {
               <label htmlFor="upload-selection-input">
@@ -182,8 +189,12 @@ export default memo(
    * to context otherwise the component is re-
    * rendered too often.
    *
-   * Don't re-render unless unmounted or the error
-   * state changes
+   * However, if the form value changes then
+   * buttons need to be disabled/enabled
    */
-  () => true
+  ({ value: a }, { value: b }) => {
+    a = a.map(({ id }) => id)
+    b = b.map(({ id }) => id)
+    return a.sort().toString() == b.sort().toString()
+  }
 )

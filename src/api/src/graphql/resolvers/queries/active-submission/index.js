@@ -15,7 +15,7 @@ export default async (self, { id }, ctx) => {
         for json path
       ) fileUploads
     from
-    WebSubmissions s
+    ActiveSubmissions s
     where id = '${sanitizeSqlValue(id)}'`
 
   logSql(sql, 'Load in-progress submission', true)

@@ -4,21 +4,11 @@ export default async (self, { id }, ctx) => {
   const { query } = ctx.mssql
 
   const sql = `
-    select
-      s.*,
-      (
-        select
-          id,
-          name
-        from WebSubmissionFiles f
-        where webSubmissionId = s.id
-        for json path
-      ) fileUploads
-    from
-    ActiveSubmissions s
+    select *
+    from ActiveSubmissions s
     where id = '${sanitizeSqlValue(id)}'`
 
-  logSql(sql, 'Load in-progress submission', true)
+  logSql(sql, 'Active submission', true)
   const result = await query(sql)
   return result.recordset[0]
 }

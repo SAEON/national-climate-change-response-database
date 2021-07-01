@@ -12,7 +12,9 @@ export default ({ id }) => {
       query activeSubmission($id: ID!) {
         activeSubmission(id: $id) {
           id
-          fileUploads
+          projectForm
+          mitigationForm
+          adaptationForm
         }
       }
     `,
@@ -29,20 +31,22 @@ export default ({ id }) => {
     )
   }
 
+  if (loading) {
+    return <Loading />
+  }
+
+  const project = JSON.parse(data.activeSubmission.projectForm)
+  const mitigation = JSON.parse(data.activeSubmission.mitigationForm)
+  const adaptation = JSON.parse(data.activeSubmission.adaptationForm)
+
   return (
     <>
       <Header id={id} />
-      {loading && <Loading />}
-      {data && (
-        <Wrapper>
-          <Suspense fallback={<Loading />}>
-            <ProjectForm
-              submissionId={id}
-              project={{ mitigation: { fileUploads: data.activeSubmission.fileUploads || [] } }}
-            />
-          </Suspense>
-        </Wrapper>
-      )}
+      <Wrapper>
+        <Suspense fallback={<Loading />}>
+          <ProjectForm submissionId={id} project={{ mitigation, adaptation, ...project }} />
+        </Suspense>
+      </Wrapper>
     </>
   )
 }

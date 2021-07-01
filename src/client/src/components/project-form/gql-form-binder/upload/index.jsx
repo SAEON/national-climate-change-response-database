@@ -28,7 +28,7 @@ export default ({ value, ...props }) => {
         style={{ display: 'flex', justifyContent: 'flex-end' }}
         onClick={e => e.stopPropagation()}
       >
-        <Clear disabled={!value.length} value={value} submissionId={submissionId} {...props} />
+        <Clear disabled={!value?.length} value={value} submissionId={submissionId} {...props} />
         <Upload submissionId={submissionId} value={value} {...props} />
       </div>
     </>

@@ -155,7 +155,7 @@ export default memo(
                     const { status } = response
                     const responseText = await response.text()
                     if (status === 201) {
-                      setOpen(false)
+                      // setOpen(false)
                       uploadedFiles.push({ id: responseText, name: file.name })
                     } else {
                       setError(
@@ -193,8 +193,8 @@ export default memo(
    * buttons need to be disabled/enabled
    */
   ({ value: a }, { value: b }) => {
-    a = a.map(({ id }) => id)
-    b = b.map(({ id }) => id)
-    return a.sort().toString() == b.sort().toString()
+    a = a?.map(({ id }) => id)
+    b = b?.map(({ id }) => id)
+    return a?.sort().toString() == b?.sort().toString()
   }
 )

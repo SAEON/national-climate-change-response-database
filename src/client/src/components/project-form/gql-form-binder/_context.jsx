@@ -156,7 +156,6 @@ export default ({
               adaptationForm: $adaptationForm
             ) {
               id
-              fileUploads
             }
           }
         `,

@@ -114,8 +114,8 @@ export default memo(
    * buttons need to be disabled/enabled
    */
   ({ value: a }, { value: b }) => {
-    a = a.map(({ id }) => id)
-    b = b.map(({ id }) => id)
-    return a.sort().toString() == b.sort().toString()
+    a = a?.map(({ id }) => id)
+    b = b?.map(({ id }) => id)
+    return a?.sort().toString() == b?.sort().toString()
   }
 )

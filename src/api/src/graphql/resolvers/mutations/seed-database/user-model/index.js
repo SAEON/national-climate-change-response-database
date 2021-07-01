@@ -9,6 +9,7 @@ const __dirname = getCurrentDirectory(import.meta)
 
 const upsertRoles = async query => {
   console.info('Seeding roles')
+  const result = []
   const rolesPath = normalize(join(__dirname, `.${sep}auth-config${sep}roles.csv`))
   const parser = createReadStream(rolesPath).pipe(parse({ columns: true }))
   for await (let { name, description = '' } of parser) {
@@ -32,11 +33,14 @@ const upsertRoles = async query => {
 
     logSql(sql, 'Upsert roles')
     await query(sql)
+    result.push({ addedRole: name })
   }
+  return result
 }
 
 const upsertPermissions = async query => {
   console.info('Seeding permissions')
+  const result = []
   const permissionsPath = normalize(join(__dirname, `.${sep}auth-config${sep}permissions.csv`))
   const parser = createReadStream(permissionsPath).pipe(parse({ columns: true }))
 
@@ -61,11 +65,14 @@ const upsertPermissions = async query => {
 
     logSql(sql, 'Upsert permissions')
     await query(sql)
+    result.push({ addedPermission: name })
   }
+  return result
 }
 
 const upsertPermissionsXrefRoles = async query => {
   console.info('Seeding role permissions')
+  const result = []
   const xrefPath = normalize(join(__dirname, `.${sep}auth-config${sep}roles-x-permissions.csv`))
   const parser = createReadStream(xrefPath).pipe(parse({ columns: true }))
 
@@ -90,11 +97,15 @@ const upsertPermissionsXrefRoles = async query => {
 
     logSql(sql, 'upsert role-permission')
     await query(sql)
+    result.push({ addedRoleXrefPermission: [role, permission] })
   }
+  return result
 }
 
 export default async query => {
-  await upsertRoles(query)
-  await upsertPermissions(query)
-  await upsertPermissionsXrefRoles(query)
+  return {
+    roles: await upsertRoles(query),
+    permissions: await upsertPermissions(query),
+    permissionsXrefRoles: await upsertPermissionsXrefRoles(query),
+  }
 }

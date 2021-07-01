@@ -460,3 +460,21 @@ create table WebSubmissions (
 	index ix_websubmissions nonclustered (id)
 );
 end
+
+-- WebSubmissionFiles
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[WebSubmissionFiles]')
+		and type = 'U'
+)
+begin
+create table WebSubmissionFiles (
+  id int not null identity primary key,
+	filePath nvarchar(500) not null unique,
+	webSubmissionId uniqueidentifier not null foreign key references WebSubmissions (id),
+	createdBy int foreign key references Users (id),
+	createdAt datetime2 not null
+);
+end

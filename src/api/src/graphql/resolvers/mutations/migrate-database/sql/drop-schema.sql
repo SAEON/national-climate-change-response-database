@@ -3,6 +3,8 @@
  */
  
 drop table if exists ExcelSubmissionTemplates;
+drop table if exists WebSubmissionFiles;
+drop table if exists WebSubmissions;
 drop table if exists EmissionsDataXrefVocabTreeX;
 drop table if exists ProgressData;
 drop table if exists ExpenditureData;

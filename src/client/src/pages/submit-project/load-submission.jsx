@@ -33,7 +33,7 @@ export default ({ id }) => {
       {data && (
         <Wrapper>
           <Suspense fallback={<Loading />}>
-            <ProjectForm />
+            <ProjectForm submissionId={id} />
           </Suspense>
         </Wrapper>
       )}

@@ -1,6 +1,6 @@
-import { existsSync, mkdirSync } from 'fs'
+import { mkdir, access } from 'fs'
 
-export default directoryPath => {
+export default async directoryPath => {
   directoryPath = directoryPath.replace(/\\/g, '/')
 
   // -- preparation to allow absolute paths as well
@@ -15,14 +15,28 @@ export default directoryPath => {
 
   // -- create folders all the way down
   const folders = directoryPath.split('/')
-  folders.reduce(
-    (acc, folder) => {
-      const folderPath = acc + folder + '/'
-      if (!existsSync(folderPath)) {
-        mkdirSync(folderPath)
-      }
-      return folderPath
-    },
-    root // first 'acc', important
-  )
+  let folderPath = `${root}`
+  for (const folder of folders) {
+    folderPath = `${folderPath}${folder}/`
+
+    const folderExists = await new Promise(resolve =>
+      access(folderPath, error => {
+        if (error) {
+          resolve(false)
+        }
+        resolve(true)
+      })
+    )
+
+    if (!folderExists) {
+      await new Promise((resolve, reject) =>
+        mkdir(folderPath, error => {
+          if (error) {
+            reject(`Error creating ${folderPath}`)
+          }
+          resolve(folderPath)
+        })
+      )
+    }
+  }
 }

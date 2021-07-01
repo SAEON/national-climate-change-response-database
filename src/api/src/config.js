@@ -71,15 +71,14 @@ export const UPLOADS_DIRECTORY = normalize(join(FILES_DIRECTORY, `.${sep}uploads
 /**
  * Ensure required directories exists
  */
-try {
-  ensureDirectory(FILES_DIRECTORY)
-  ensureDirectory(SUBMISSION_TEMPLATES_DIRECTORY)
-  ensureDirectory(SUBMITTED_TEMPLATES_DIRECTORY)
-  ensureDirectory(UPLOADS_DIRECTORY)
-
+;(async () => {
+  await ensureDirectory(FILES_DIRECTORY)
+  await ensureDirectory(SUBMISSION_TEMPLATES_DIRECTORY)
+  await ensureDirectory(SUBMITTED_TEMPLATES_DIRECTORY)
+  await ensureDirectory(UPLOADS_DIRECTORY)
   mkdirSync(join(FILES_DIRECTORY, '.test-write-permissions'))
   rmdirSync(join(FILES_DIRECTORY, '.test-write-permissions'))
-} catch (error) {
+})().catch(error => {
   console.error(
     'Please create directory',
     FILES_DIRECTORY,
@@ -87,4 +86,4 @@ try {
     error
   )
   process.exit(1)
-}
+})

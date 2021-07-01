@@ -17,3 +17,4 @@ view-/access,"View the /access route on the UI"
 view-/deployments,"View the /deployments route on the UI"
 validate-submission,Validate project submissions
 view-submission-templates,View Excel template submissions
+upload-project-file,Upload files associated with projects

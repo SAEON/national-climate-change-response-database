@@ -110,9 +110,14 @@ const Form = () => {
   )
 }
 
-export default ({ project = undefined }) => {
+export default ({ project = undefined, submissionId = undefined }) => {
+  if (!submissionId) {
+    throw new Error(
+      'Project form needs to be instantiated with an editId to associate uploaded files'
+    )
+  }
   return (
-    <GraphQLFormProvider project={project}>
+    <GraphQLFormProvider project={project} submissionId={submissionId}>
       <Form />
     </GraphQLFormProvider>
   )

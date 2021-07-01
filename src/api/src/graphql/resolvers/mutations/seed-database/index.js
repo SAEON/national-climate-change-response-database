@@ -13,10 +13,9 @@ export default async (
   const { query } = ctx.mssql
 
   if (userModel) {
-    await seedUserModel(query).then(() => console.info('User model seeded!'))
-    await seedAdmins(query).then(() => console.info('Admin users seeded!'))
-    await seedSysAdmins(query).then(() => console.info('System admin users seeded!'))
-    result.users = 'Seeded roles, users, and userXRoles'
+    result.userModel = await seedUserModel(query)
+    result.admins = await seedAdmins(query)
+    result.sysAdmins = await seedSysAdmins(query)
   }
 
   result.vocabularies = vocabularies ? await loadVocabularies(ctx) : false

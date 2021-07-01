@@ -1,16 +1,25 @@
-import { createReadStream, createWriteStream, stat } from 'fs'
+import { createReadStream, createWriteStream } from 'fs'
 import { join, normalize, sep } from 'path'
 import { UPLOADS_DIRECTORY } from '../config.js'
-import { format } from 'date-fns'
+import ensureDirectory from '../lib/ensure-directory.js'
+import logSql from '../lib/log-sql.js'
 
 export default async ctx => {
   const { PERMISSIONS, user, mssql } = ctx
   const { query } = mssql
   const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS.createProject })
+  await ensurePermission({ ctx, permission: PERMISSIONS.uploadProjectFile })
+  const { submissionId } = ctx.query
+
+  if (!submissionId) {
+    ctx.status = 400
+    return
+  }
 
   const { path, name } = ctx.request.files['upload-project-file']
-  const filePath = normalize(join(UPLOADS_DIRECTORY, `.${sep}${name}`))
+  const submissionDirectory = normalize(join(UPLOADS_DIRECTORY, `.${sep}${submissionId}`))
+  await ensureDirectory(submissionDirectory)
+  const filePath = normalize(join(submissionDirectory, `.${sep}${name}`))
 
   try {
     const readStream = createReadStream(path)
@@ -23,19 +32,24 @@ export default async ctx => {
     })
 
     /**
-     * Register this file in the DB, along with
-     * the in-progress-project and user
+     * Register this upload to an in-progress
+     * submission, along with the user id
      */
-    // await query(`
-    //   insert into ExcelSubmissionTemplates (filePath, createdBy, createdAt)
-    //   values (
-    //     '${sanitizeSqlValue(filePath)}',
-    //     ${user.info(ctx).id},
-    //     '${new Date().toISOString()}'
-    //   );`)
+    const sql = `
+    insert into WebSubmissionFiles (filePath, webSubmissionId, createdBy, createdAt)
+    output inserted.id
+    values (
+      '${sanitizeSqlValue(filePath)}',
+      '${sanitizeSqlValue(submissionId)}',
+      ${user.info(ctx).id},
+      '${new Date().toISOString()}'
+    );`
+
+    logSql(sql, 'Register project upload', true)
+    const result = await query(sql)
 
     ctx.response.status = 201
-    ctx.body = 'todo-unique-identifier'
+    ctx.body = result.recordset[0].id
   } catch (error) {
     ctx.response.status = 409
     ctx.body = error.message

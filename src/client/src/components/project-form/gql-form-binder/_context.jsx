@@ -32,6 +32,7 @@ const CORE_FIELDS = gql`
 
 export default ({
   children,
+  submissionId,
   project: {
     mitigation: mitigationDetails = {},
     adaptation: adaptationDetails = {},
@@ -136,6 +137,7 @@ export default ({
   return (
     <context.Provider
       value={{
+        submissionId,
         projectFields,
         generalDetailsForm,
         generalDetailsFormValidation,

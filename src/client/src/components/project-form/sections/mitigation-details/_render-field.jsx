@@ -56,7 +56,6 @@ export default ({ field }) => {
       <FileUpload
         updateValue={val => updateForm({ [fieldName]: val })}
         key={fieldName}
-        value={value}
         placeholder={placeholder}
         helperText={helperText}
       />

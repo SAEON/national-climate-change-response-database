@@ -13,6 +13,7 @@ export default {
   validateSubmission: 'validate-submission',
   viewSubmissionTemplates: 'view-submission-templates',
   killServer: 'kill-server',
+  uploadProjectFile: 'upload-project-file',
 
   // UI routes
   'view/Access': 'view-/access',

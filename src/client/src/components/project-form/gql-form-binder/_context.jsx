@@ -100,7 +100,14 @@ export default ({
     setMitigationDetailsForm(form => Object.assign({ ...form }, obj))
   }, [])
 
-  const resetMitigationDetailsForm = useCallback(() => setMitigationDetailsForm({}), [])
+  /**
+   * Don't remove file references
+   * since they are saved to the server
+   */
+  const resetMitigationDetailsForm = useCallback(
+    () => setMitigationDetailsForm(form => ({ fileUploads: form.fileUploads })),
+    []
+  )
 
   const mitigationFormsValidation = useMemo(
     () => getFormStatus(mitigationFields, mitigationDetailsForm),
@@ -113,7 +120,14 @@ export default ({
     setAdaptationDetailsForm(form => Object.assign({ ...form }, obj))
   }, [])
 
-  const resetAdaptationDetailsForm = useCallback(() => setAdaptationDetailsForm({}), [])
+  /**
+   * Don't remove file references
+   * since they are saved to the server
+   */
+  const resetAdaptationDetailsForm = useCallback(
+    () => setAdaptationDetailsForm(form => ({ fileUploads: form.fileUploads })),
+    []
+  )
 
   const adaptationFormsValidation = useMemo(
     () => getFormStatus(adaptationFields, adaptationDetailsForm),

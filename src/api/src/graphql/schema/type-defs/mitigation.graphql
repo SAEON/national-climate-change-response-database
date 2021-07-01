@@ -24,7 +24,7 @@ input MitigationInput {
   # Primary intended outcome :: Primary intended outcome (Indicate the expected or achieved goals)
   primaryIntendedOutcome: String
 
-  # Attach progress or status report(s) :: Upload file(s) related to the progress or status of this project
+  # Upload file(s) :: Progress and/or status report(s) for this project component
   fileUploads: JSON
 
   # Environmental co-benefit :: Select co-benefit :: coBenefits

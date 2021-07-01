@@ -10,7 +10,10 @@ export default ({ id }) => {
   const { error, loading, data } = useQuery(
     gql`
       query activeSubmission($id: ID!) {
-        activeSubmission(id: $id)
+        activeSubmission(id: $id) {
+          id
+          fileUploads
+        }
       }
     `,
     {
@@ -33,7 +36,10 @@ export default ({ id }) => {
       {data && (
         <Wrapper>
           <Suspense fallback={<Loading />}>
-            <ProjectForm submissionId={id} />
+            <ProjectForm
+              submissionId={id}
+              project={{ mitigation: { fileUploads: data.activeSubmission.fileUploads || [] } }}
+            />
           </Suspense>
         </Wrapper>
       )}

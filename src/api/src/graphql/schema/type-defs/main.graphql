@@ -64,10 +64,16 @@ type SubmissionTemplate {
   filePath: String!
 }
 
+type ActiveSubmission {
+  id: ID!
+  fileUploads: JSON
+}
+
 type Query {
   # Get a list of all the the Excel submission templates that have been uploaded
   submissionTemplates: [SubmissionTemplate!]!
-  activeSubmission(id: ID!): JSON!
+  # Get an in-progress form by the ID of the incomplete submission
+  activeSubmission(id: ID!): ActiveSubmission!
   # Search projects
   projects(
     ids: [Int!]
@@ -96,6 +102,7 @@ type Mutation {
   seedDatabase(userModel: Boolean, erm: Boolean, vocabularies: Boolean): JSON!
   createSubmission: ID!
   deleteSubmission(id: ID!): ID!
+  removeProjectFiles(submissionId: ID!, ids: [Int!]!): JSON!
   # Create a project
   createProject(
     generalDetailsForm: ProjectInput!

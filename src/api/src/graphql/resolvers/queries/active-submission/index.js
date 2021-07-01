@@ -5,11 +5,20 @@ export default async (self, { id }, ctx) => {
 
   const sql = `
     select
-    *
-    from WebSubmissions
-    where id = '${id}'`
+      s.*,
+      (
+        select
+          id,
+          name
+        from WebSubmissionFiles f
+        where webSubmissionId = s.id
+        for json path
+      ) fileUploads
+    from
+    WebSubmissions s
+    where id = '${sanitizeSqlValue(id)}'`
 
-  logSql(sql, 'Load in-progress submission')
+  logSql(sql, 'Load in-progress submission', true)
   const result = await query(sql)
   return result.recordset[0]
 }

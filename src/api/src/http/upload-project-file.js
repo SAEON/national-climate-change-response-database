@@ -36,9 +36,10 @@ export default async ctx => {
      * submission, along with the user id
      */
     const sql = `
-    insert into WebSubmissionFiles (filePath, webSubmissionId, createdBy, createdAt)
+    insert into WebSubmissionFiles (name, filePath, webSubmissionId, createdBy, createdAt)
     output inserted.id
     values (
+      '${sanitizeSqlValue(name)}',
       '${sanitizeSqlValue(filePath)}',
       '${sanitizeSqlValue(submissionId)}',
       ${user.info(ctx).id},

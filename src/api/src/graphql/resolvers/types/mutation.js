@@ -8,6 +8,7 @@ import PERMISSIONS from '../../../user-model/permissions.js'
 import authorize from '../../../user-model/authorize.js'
 import createSubmission from '../mutations/create-submission/index.js'
 import deleteSubmission from '../mutations/delete-submission/index.js'
+import removeProjectFiles from '../mutations/remove-project-files/index.js'
 
 export default {
   createSubmission: authorize(PERMISSIONS.createProject)(createSubmission),
@@ -19,4 +20,5 @@ export default {
   seedDatabase: authorize(PERMISSIONS.seedDatabase)(seedDatabase),
   migrateDatabase: authorize(PERMISSIONS.migrateDatabase)(migrateDatabase),
   killServer: authorize(PERMISSIONS.killServer)(() => process.exit(1)),
+  removeProjectFiles: authorize(PERMISSIONS.uploadProjectFile)(removeProjectFiles), // TODO ?
 }

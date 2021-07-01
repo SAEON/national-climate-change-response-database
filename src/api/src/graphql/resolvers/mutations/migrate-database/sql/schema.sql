@@ -472,6 +472,7 @@ if not exists (
 begin
 create table WebSubmissionFiles (
   id int not null identity primary key,
+	name nvarchar(255) not null,
 	filePath nvarchar(500) not null unique,
 	webSubmissionId uniqueidentifier not null foreign key references WebSubmissions (id),
 	createdBy int foreign key references Users (id),

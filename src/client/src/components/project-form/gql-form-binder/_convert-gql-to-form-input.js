@@ -36,7 +36,9 @@ export default ({ ...form }) =>
           return [field, value]
         }
 
-        console.log(field, value)
+        if (field === 'fileUploads') {
+          return [field, value]
+        }
 
         return null
       })

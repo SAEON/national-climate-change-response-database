@@ -45,6 +45,7 @@ export default ({ field }) => {
         key={fieldName}
         placeholder={placeholder}
         helperText={helperText}
+        value={value}
       />
     )
   }

@@ -54,8 +54,7 @@ export default ({ field }) => {
   if (fieldName === 'fileUploads') {
     return (
       <FileUpload
-        updateValue={val => updateForm({ [fieldName]: [...value, ...val] })}
-        removeFiles={() => updateForm({ [fieldName]: [] })}
+        updateValue={value => updateForm({ [fieldName]: value })}
         key={fieldName}
         placeholder={placeholder}
         helperText={helperText}

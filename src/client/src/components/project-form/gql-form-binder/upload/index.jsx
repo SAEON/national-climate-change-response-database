@@ -1,36 +1,50 @@
-import { useContext } from 'react'
+import { useContext, memo, useMemo } from 'react'
 import { context as formContext } from './../_context'
-import Upload from './upload-dialogue'
-import Clear from './clear-files-dialogue'
-import Typography from '@material-ui/core/Typography'
-import useTheme from '@material-ui/core/styles/useTheme'
-import FileIcon from 'mdi-react/FileIcon'
+import QuickForm from '../../../quick-form'
+import debounce from '../../../../lib/debounce'
+import Render from './_render'
 
-export default ({ value, ...props }) => {
-  const theme = useTheme()
+const Compose = memo(
+  ({ submissionId, updateValue, placeholder, helperText, value = [] }) => {
+    const effect = useMemo(() => debounce(({ value }) => updateValue(value)), [updateValue])
+
+    return (
+      <QuickForm effect={effect} value={value}>
+        {(update, { value }) => (
+          <Render
+            submissionId={submissionId}
+            placeholder={placeholder}
+            helperText={helperText}
+            value={value}
+            updateValue={value => update({ value })}
+          />
+        )}
+      </QuickForm>
+    )
+  },
+  /**
+   * State is managed internally, and synced
+   * to context.
+   *
+   * Never re-render this component once mounted
+   */
+  () => true
+)
+
+/**
+ * Files are uploaded, and responses from the server
+ * are added to the main form state
+ */
+export default ({ updateValue, placeholder, helperText, value }) => {
   const { submissionId } = useContext(formContext)
 
   return (
-    <>
-      <div style={{ marginBottom: theme.spacing(2) }}>
-        {value?.map(({ name }) => (
-          <Typography
-            key={name}
-            variant="body2"
-            style={{ marginTop: theme.spacing(2), display: 'flex' }}
-          >
-            <FileIcon size={18} style={{ marginRight: theme.spacing(1) }} /> {name}
-          </Typography>
-        ))}
-        {!value?.length && <Typography variant="body2">(No uploads)</Typography>}
-      </div>
-      <div
-        style={{ display: 'flex', justifyContent: 'flex-end' }}
-        onClick={e => e.stopPropagation()}
-      >
-        <Clear disabled={!value?.length} value={value} submissionId={submissionId} {...props} />
-        <Upload submissionId={submissionId} value={value} {...props} />
-      </div>
-    </>
+    <Compose
+      updateValue={updateValue}
+      placeholder={placeholder}
+      helperText={helperText}
+      value={value}
+      submissionId={submissionId}
+    />
   )
 }

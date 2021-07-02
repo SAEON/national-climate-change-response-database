@@ -16,24 +16,8 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 const uploadAddress = `${NCCRD_API_HTTP_ADDRESS}/upload-project-file`
 
-/**
- * UPloads are always for forms in progress, or for
- * completed forms when editing projects
- *
- * When a file is uploaded, the server will respond
- * with a unique key for that file, this key (along)
- * with file info is added to the main form state
- *
- * When the form is finally submitted the 'fileUploads'
- * JSON input will include the unique key of the uploaded
- * file
- *
- * The server will then register the file to the created
- * project
- */
-
 export default memo(
-  ({ helperText, placeholder, updateValue, submissionId }) => {
+  ({ value, updateValue, helperText, placeholder, submissionId }) => {
     const [open, setOpen] = useState(false)
     const [files, setFiles] = useState([])
     const [uploading, setUploading] = useState(false)
@@ -155,7 +139,7 @@ export default memo(
                     const { status } = response
                     const responseText = await response.text()
                     if (status === 201) {
-                      // setOpen(false)
+                      setOpen(false)
                       uploadedFiles.push({ id: responseText, name: file.name })
                     } else {
                       setError(
@@ -163,7 +147,7 @@ export default memo(
                       )
                     }
                   }
-                  updateValue(uploadedFiles)
+                  updateValue([...value, ...uploadedFiles])
                 } catch (error) {
                   setError(new Error(`Unexpected error occurred. ${error.message}`))
                 } finally {

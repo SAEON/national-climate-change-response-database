@@ -14,7 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 
 export default memo(
-  ({ value, removeFiles: updateForm, submissionId, disabled }) => {
+  ({ value, updateValue, submissionId, disabled }) => {
     const [open, setOpen] = useState(false)
     const theme = useTheme()
 
@@ -25,9 +25,13 @@ export default memo(
         }
       `,
       {
-        onCompleted: () => {
-          updateForm([])
-          setOpen(false)
+        onCompleted: ({ removeProjectFiles: { ids } }) => {
+          if (ids) {
+            updateValue([])
+            setOpen(false)
+          } else {
+            throw new Error('An unexpected error occurred when trying to remove downloaded files')
+          }
         },
       }
     )

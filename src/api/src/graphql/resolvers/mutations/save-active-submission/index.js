@@ -6,7 +6,7 @@ export default async (self, { submissionId, projectForm, mitigationForm, adaptat
   const userId = user.info(ctx).id
 
   const sql = `
-    merge ActiveSubmissions t
+    merge Submissions t
     using (
       select
         '${JSON.stringify(projectForm)}' projectForm,

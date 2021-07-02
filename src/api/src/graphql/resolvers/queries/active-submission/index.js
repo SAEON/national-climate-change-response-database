@@ -5,7 +5,7 @@ export default async (self, { id }, ctx) => {
 
   const sql = `
     select *
-    from ActiveSubmissions s
+    from Submissions s
     where id = '${sanitizeSqlValue(id)}'`
 
   logSql(sql, 'Active submission', true)

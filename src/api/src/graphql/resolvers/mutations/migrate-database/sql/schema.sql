@@ -444,23 +444,23 @@ create table ExcelSubmissionTemplates (
 );
 end
 
--- ActiveSubmissions
+-- Submissions
 if not exists (
 	select *
 	from sys.objects
 	where
-		object_id = OBJECT_ID(N'[dbo].[ActiveSubmissions]')
+		object_id = OBJECT_ID(N'[dbo].[Submissions]')
 		and type = 'U'
 )
 begin
-create table ActiveSubmissions (
+create table Submissions (
   id uniqueidentifier not null primary key default (newsequentialid()),
 	projectForm nvarchar(max),
 	mitigationForm nvarchar(max),
 	adaptationForm nvarchar(max),
 	createdBy int foreign key references Users (id),
 	createdAt datetime2 not null,
-	index ix_activesubmissions nonclustered (id),
+	index ix_submissions nonclustered (id),
 	constraint json_projectForm check(isjson(projectForm)=1),
 	constraint json_mitigationForm check(isjson(mitigationForm)=1),
 	constraint json_AdaptationForm check(isjson(adaptationForm)=1)
@@ -480,7 +480,7 @@ create table WebSubmissionFiles (
   id int not null identity primary key,
 	name nvarchar(255) not null,
 	filePath nvarchar(500) not null unique,
-	webSubmissionId uniqueidentifier not null foreign key references ActiveSubmissions (id),
+	webSubmissionId uniqueidentifier not null foreign key references Submissions (id),
 	createdBy int foreign key references Users (id),
 	createdAt datetime2 not null
 );

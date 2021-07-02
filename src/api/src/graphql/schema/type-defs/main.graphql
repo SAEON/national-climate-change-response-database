@@ -64,7 +64,7 @@ type SubmissionTemplate {
   filePath: String!
 }
 
-type ActiveSubmission {
+type Submission {
   id: ID!
   projectForm: JSON
   mitigationForm: JSON
@@ -75,7 +75,7 @@ type Query {
   # Get a list of all the the Excel submission templates that have been uploaded
   submissionTemplates: [SubmissionTemplate!]!
   # Get an in-progress form by the ID of the incomplete submission
-  activeSubmission(id: ID!): ActiveSubmission!
+  submission(id: ID!): Submission!
   # Search projects
   projects(
     ids: [Int!]
@@ -99,12 +99,12 @@ type Query {
 # type Subscription {}
 
 type Mutation {
-  saveActiveSubmission(
+  saveSubmission(
     submissionId: ID!
     projectForm: JSON
     mitigationForm: JSON
     adaptationForm: JSON
-  ): ActiveSubmission
+  ): Submission
   killServer: Void
   migrateDatabase(dropSchema: Boolean): JSON!
   seedDatabase(userModel: Boolean, erm: Boolean, vocabularies: Boolean): JSON!

@@ -23,7 +23,7 @@ export default ({ id }) => {
       update: cache => {
         cache.modify({
           fields: {
-            activeSubmission: () => undefined,
+            submission: () => undefined,
           },
         })
       },

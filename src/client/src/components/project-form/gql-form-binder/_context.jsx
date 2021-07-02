@@ -155,13 +155,13 @@ export default ({
     debounce(({ generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm }) => {
       apollo.mutate({
         mutation: gql`
-          mutation saveActiveSubmission(
+          mutation saveSubmission(
             $submissionId: ID!
             $projectForm: JSON
             $mitigationForm: JSON
             $adaptationForm: JSON
           ) {
-            saveActiveSubmission(
+            saveSubmission(
               submissionId: $submissionId
               projectForm: $projectForm
               mitigationForm: $mitigationForm

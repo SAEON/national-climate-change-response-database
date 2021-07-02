@@ -25,7 +25,7 @@ const researchFormFields = [
   'researchPaper',
 ]
 
-export default ({ field }) => {
+export default ({ field, formName }) => {
   const { updateAdaptationDetailsForm: updateForm, adaptationDetailsForm: form } =
     useContext(formContext)
   const { name: fieldName, description, type } = field
@@ -41,6 +41,7 @@ export default ({ field }) => {
   if (fieldName === 'fileUploads') {
     return (
       <FileUpload
+        formName={formName}
         updateValue={value => updateForm({ [fieldName]: value })}
         key={fieldName}
         placeholder={placeholder}

@@ -5,6 +5,7 @@ import RenderField from './_render-field'
 const Compose = memo(({ fields }) => {
   return (
     <ComposeForm
+      formName="adaptation"
       RenderField={RenderField}
       fields={fields}
       hideSections={['Associated research']}

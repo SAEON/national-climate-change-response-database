@@ -4,6 +4,7 @@ import RenderField from './_render-field'
 
 const Compose = memo(({ fields }) => (
   <ComposeForm
+    formName="project"
     RenderField={RenderField}
     fields={fields}
     sections={{

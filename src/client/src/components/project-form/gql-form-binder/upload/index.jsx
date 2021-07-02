@@ -5,13 +5,14 @@ import debounce from '../../../../lib/debounce'
 import Render from './_render'
 
 const Compose = memo(
-  ({ submissionId, updateValue, placeholder, helperText, value = [] }) => {
+  ({ submissionId, updateValue, placeholder, helperText, value = [], formName }) => {
     const effect = useMemo(() => debounce(({ value }) => updateValue(value)), [updateValue])
 
     return (
       <QuickForm effect={effect} value={value}>
         {(update, { value }) => (
           <Render
+            formName={formName}
             submissionId={submissionId}
             placeholder={placeholder}
             helperText={helperText}
@@ -35,11 +36,12 @@ const Compose = memo(
  * Files are uploaded, and responses from the server
  * are added to the main form state
  */
-export default ({ updateValue, placeholder, helperText, value }) => {
+export default ({ formName, updateValue, placeholder, helperText, value }) => {
   const { submissionId } = useContext(formContext)
 
   return (
     <Compose
+      formName={formName}
       updateValue={updateValue}
       placeholder={placeholder}
       helperText={helperText}

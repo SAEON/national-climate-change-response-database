@@ -108,7 +108,13 @@ export default ({
    * and need to be explicitly deleted
    */
   const resetMitigationDetailsForm = useCallback(
-    () => setMitigationDetailsForm(form => ({ fileUploads: form.fileUploads })),
+    () =>
+      setMitigationDetailsForm(form => {
+        if (form.fileUploads) {
+          return { fileUploads: form.fileUploads }
+        }
+        return {}
+      }),
     []
   )
 
@@ -129,7 +135,13 @@ export default ({
    * and need to be explicitly deleted
    */
   const resetAdaptationDetailsForm = useCallback(
-    () => setAdaptationDetailsForm(form => ({ fileUploads: form.fileUploads })),
+    () =>
+      setAdaptationDetailsForm(form => {
+        if (form.fileUploads) {
+          return { fileUploads: form.fileUploads }
+        }
+        return {}
+      }),
     []
   )
 

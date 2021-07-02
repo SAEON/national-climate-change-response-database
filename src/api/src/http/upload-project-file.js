@@ -9,15 +9,17 @@ export default async ctx => {
   const { query } = mssql
   const { ensurePermission } = user
   await ensurePermission({ ctx, permission: PERMISSIONS.uploadProjectFile })
-  const { submissionId } = ctx.query
+  const { submissionId, formName } = ctx.query
 
-  if (!submissionId) {
+  if (!submissionId || !formName) {
     ctx.status = 400
     return
   }
 
   const { path, name } = ctx.request.files['upload-project-file']
-  const submissionDirectory = normalize(join(UPLOADS_DIRECTORY, `.${sep}${submissionId}`))
+  const submissionDirectory = normalize(
+    join(UPLOADS_DIRECTORY, `.${sep}${submissionId}`, `.${sep}${formName}`)
+  )
   await ensureDirectory(submissionDirectory)
   const filePath = normalize(join(submissionDirectory, `.${sep}${name}`))
 

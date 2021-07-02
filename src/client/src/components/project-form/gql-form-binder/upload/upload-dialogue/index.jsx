@@ -17,7 +17,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 const uploadAddress = `${NCCRD_API_HTTP_ADDRESS}/upload-project-file`
 
 export default memo(
-  ({ value, updateValue, helperText, placeholder, submissionId }) => {
+  ({ value, updateValue, helperText, placeholder, submissionId, formName }) => {
     const [open, setOpen] = useState(false)
     const [files, setFiles] = useState([])
     const [uploading, setUploading] = useState(false)
@@ -130,12 +130,15 @@ export default memo(
                   for (const file of files) {
                     const body = new FormData()
                     body.append('upload-project-file', file, file.name)
-                    const response = await fetch(`${uploadAddress}?submissionId=${submissionId}`, {
-                      method: 'POST',
-                      body,
-                      mode: 'cors',
-                      credentials: 'include',
-                    })
+                    const response = await fetch(
+                      `${uploadAddress}?submissionId=${submissionId}&formName=${formName}`,
+                      {
+                        method: 'POST',
+                        body,
+                        mode: 'cors',
+                        credentials: 'include',
+                      }
+                    )
                     const { status } = response
                     const responseText = await response.text()
                     if (status === 201) {

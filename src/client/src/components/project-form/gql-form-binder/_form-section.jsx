@@ -4,7 +4,7 @@ import Collapse from '../../collapse'
 import Typography from '@material-ui/core/Typography'
 import Icon from 'mdi-react/EditIcon'
 
-export default ({ title, fields, RenderField }) => {
+export default ({ title, fields, RenderField, formName }) => {
   const theme = useTheme()
 
   return (
@@ -22,7 +22,7 @@ export default ({ title, fields, RenderField }) => {
       <CardContent>
         {fields.map(field => {
           const { name } = field
-          return <RenderField key={name} field={field} />
+          return <RenderField key={name} field={field} formName={formName} />
         })}
       </CardContent>
     </Collapse>

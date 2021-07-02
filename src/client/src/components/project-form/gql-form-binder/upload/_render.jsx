@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 import FileIcon from 'mdi-react/FileIcon'
 
-export default ({ value, submissionId, updateValue, placeholder, helperText }) => {
+export default ({ value, submissionId, updateValue, placeholder, helperText, formName }) => {
   const theme = useTheme()
 
   return (
@@ -37,6 +37,7 @@ export default ({ value, submissionId, updateValue, placeholder, helperText }) =
           helperText={helperText}
         />
         <Upload
+          formName={formName}
           submissionId={submissionId}
           value={value}
           updateValue={updateValue}

@@ -38,7 +38,7 @@ const carbonCreditsFields = [
   'carbonCreditVoluntaryMethodology',
 ]
 
-export default ({ field }) => {
+export default ({ field, formName }) => {
   const { mitigationDetailsForm: form, updateMitigationDetailsForm: updateForm } =
     useContext(formContext)
   const { name: fieldName, description, type } = field
@@ -54,6 +54,7 @@ export default ({ field }) => {
   if (fieldName === 'fileUploads') {
     return (
       <FileUpload
+        formName={formName}
         updateValue={value => updateForm({ [fieldName]: value })}
         key={fieldName}
         placeholder={placeholder}

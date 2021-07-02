@@ -1,9 +1,15 @@
 import logSql from '../../../../lib/log-sql.js'
 
-export default async (self, { submissionId, project, mitigation, adaptation }, ctx) => {
+export default async (
+  self,
+  { submissionId, project, mitigation = {}, adaptation = {}, isSubmitted = false },
+  ctx
+) => {
   const { query } = ctx.mssql
   const { user } = ctx
   const userId = user.info(ctx).id
+
+  console.log('mitigation', mitigation)
 
   const sql = `
     merge Submissions t
@@ -12,6 +18,7 @@ export default async (self, { submissionId, project, mitigation, adaptation }, c
         '${JSON.stringify(project)}' project,
         '${JSON.stringify(mitigation)}' mitigation,
         '${JSON.stringify(adaptation)}' adaptation,
+        '${isSubmitted}' isSubmitted,
         ${userId} createdBy,
         '${new Date().toISOString()}' createdAt
     ) s on t.id = '${sanitizeSqlValue(submissionId)}'
@@ -19,6 +26,7 @@ export default async (self, { submissionId, project, mitigation, adaptation }, c
       project,
       mitigation,
       adaptation,
+      isSubmitted,
       createdBy,
       createdAt
     )
@@ -26,17 +34,20 @@ export default async (self, { submissionId, project, mitigation, adaptation }, c
       s.project,
       s.mitigation,
       s.adaptation,
+      s.isSubmitted,
       s.createdBy,
       s.createdAt
     )
     when matched then update set
       t.project = s.project,
       t.mitigation = s.mitigation,
-      t.adaptation = s.adaptation;`
+      t.adaptation = s.adaptation,
+      t.isSubmitted = s.isSubmitted;`
 
   logSql(sql, 'Save active submission', true)
   await query(sql)
 
+  // TODO - should be output
   return {
     id: 1,
     fileUploads: [],

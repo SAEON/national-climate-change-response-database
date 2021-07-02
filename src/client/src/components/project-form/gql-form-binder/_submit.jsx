@@ -5,50 +5,56 @@ import Button from '@material-ui/core/Button'
 import CardHeader from '@material-ui/core/CardHeader'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
 import { context as formContext } from './_context'
 import convertFormToInput from './_convert-form-to-gql-input.js'
+import Typography from '@material-ui/core/Typography'
 
 export default () => {
   const history = useHistory()
-  const { generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm } =
+  const { generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm, submissionId } =
     useContext(formContext)
 
   const [createProject, { error, loading }] = useMutation(
     gql`
-      mutation createProject(
-        $generalDetailsForm: ProjectInput!
-        $mitigationDetailsForm: MitigationInput
-        $adaptationDetailsForm: AdaptationInput
+      mutation saveSubmission(
+        $submissionId: ID!
+        $project: JSON
+        $mitigation: JSON
+        $adaptation: JSON
+        $isSubmitted: Boolean
       ) {
-        createProject(
-          generalDetailsForm: $generalDetailsForm
-          mitigationDetailsForm: $mitigationDetailsForm
-          adaptationDetailsForm: $adaptationDetailsForm
+        saveSubmission(
+          submissionId: $submissionId
+          project: $project
+          mitigation: $mitigation
+          adaptation: $adaptation
+          isSubmitted: $isSubmitted
         ) {
           id
         }
       }
     `,
     {
-      update: (cache, { data: { createProject } }) => {
-        cache.modify({
-          fields: {
-            projects: (existingProjects = []) => [
-              ...existingProjects,
-              cache.writeFragment({
-                data: createProject,
-                fragment: gql`
-                  fragment newProject on Project {
-                    id
-                  }
-                `,
-              }),
-            ],
-          },
-        })
+      update: (cache, { data: { saveSubmission } }) => {
+        // cache.modify({
+        //   fields: {
+        //     projects: (existingProjects = []) => [
+        //       ...existingProjects,
+        //       cache.writeFragment({
+        //         data: saveSubmission,
+        //         fragment: gql`
+        //           fragment newSu on Submission {
+        //             id
+        //           }
+        //         `,
+        //       }),
+        //     ],
+        //   },
+        // })
       },
-      onCompleted: ({ createProject }) => {
-        const { id } = createProject
+      onCompleted: ({ saveSubmission }) => {
+        const { id } = saveSubmission
         // history.push(`/projects/${id}`)
       },
     }
@@ -63,17 +69,26 @@ export default () => {
       <Card variant="outlined">
         <CardHeader title={'Finalize and submit'} />
         <CardContent>
+          <Typography variant="body2">
+            Please check the form before finalizing the submission - once you have finalized the
+            submission you will not be able to edit project information except via requesting
+            assistance
+          </Typography>
+        </CardContent>
+        <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button
             onClick={() => {
               createProject({
                 variables: {
-                  generalDetailsForm: convertFormToInput(generalDetailsForm),
-                  mitigationDetailsForm: Object.keys(mitigationDetailsForm).length
+                  submissionId,
+                  project: convertFormToInput(generalDetailsForm),
+                  mitigation: Object.keys(mitigationDetailsForm).length
                     ? convertFormToInput(mitigationDetailsForm)
                     : undefined,
-                  adaptationDetailsForm: Object.keys(adaptationDetailsForm).length
+                  adaptation: Object.keys(adaptationDetailsForm).length
                     ? convertFormToInput(adaptationDetailsForm)
                     : undefined,
+                  isSubmitted: true,
                 },
               })
             }}
@@ -84,7 +99,7 @@ export default () => {
             {loading && 'Loading'}
             {!loading && 'submit'}
           </Button>
-        </CardContent>
+        </CardActions>
       </Card>
     </div>
   )

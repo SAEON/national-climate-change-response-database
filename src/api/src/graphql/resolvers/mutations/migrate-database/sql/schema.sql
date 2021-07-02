@@ -458,6 +458,7 @@ create table Submissions (
 	project nvarchar(max),
 	mitigation nvarchar(max),
 	adaptation nvarchar(max),
+	isSubmitted bit default 0,
 	createdBy int foreign key references Users (id),
 	createdAt datetime2 not null,
 	index ix_submissions nonclustered (id),

@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 import FileIcon from 'mdi-react/FileIcon'
 
-export default ({ value, submissionId, updateValue, removeFiles, placeholder, helperText }) => {
+export default ({ value, submissionId, updateValue, placeholder, helperText }) => {
   const theme = useTheme()
 
   return (

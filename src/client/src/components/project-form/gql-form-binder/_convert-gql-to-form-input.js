@@ -1,4 +1,4 @@
-import { parse } from 'wkt'
+// import { parse } from 'wkt'
 
 export default ({ ...form }) =>
   Object.fromEntries(
@@ -9,7 +9,9 @@ export default ({ ...form }) =>
         }
 
         if (field === 'yx') {
-          return [field, parse(value).geometries.map(({ coordinates: [x, y] }) => [x, y])]
+          console.log('yx', field, value)
+          return [field, value]
+          // return [field, parse(value).geometries.map(({ coordinates: [x, y] }) => [x, y])]
         }
 
         if (field === 'energyData') {

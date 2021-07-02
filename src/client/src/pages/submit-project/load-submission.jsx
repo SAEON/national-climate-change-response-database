@@ -12,9 +12,9 @@ export default ({ id }) => {
       query submission($id: ID!) {
         submission(id: $id) {
           id
-          projectForm
-          mitigationForm
-          adaptationForm
+          project
+          mitigation
+          adaptation
         }
       }
     `,
@@ -35,16 +35,17 @@ export default ({ id }) => {
     return <Loading />
   }
 
-  const project = JSON.parse(data.submission.projectForm)
-  const mitigation = JSON.parse(data.submission.mitigationForm)
-  const adaptation = JSON.parse(data.submission.adaptationForm)
-
   return (
     <>
       <Header id={id} />
       <Wrapper>
         <Suspense fallback={<Loading />}>
-          <ProjectForm submissionId={id} project={{ mitigation, adaptation, ...project }} />
+          <ProjectForm
+            submissionId={id}
+            project={JSON.parse(data.submission.project)}
+            mitigation={JSON.parse(data.submission.mitigation)}
+            adaptation={JSON.parse(data.submission.adaptation)}
+          />
         </Suspense>
       </Wrapper>
     </>

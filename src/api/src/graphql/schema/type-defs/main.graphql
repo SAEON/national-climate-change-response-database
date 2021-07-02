@@ -66,9 +66,9 @@ type SubmissionTemplate {
 
 type Submission {
   id: ID!
-  projectForm: JSON
-  mitigationForm: JSON
-  adaptationForm: JSON
+  project: JSON
+  mitigation: JSON
+  adaptation: JSON
 }
 
 type Query {
@@ -99,12 +99,8 @@ type Query {
 # type Subscription {}
 
 type Mutation {
-  saveSubmission(
-    submissionId: ID!
-    projectForm: JSON
-    mitigationForm: JSON
-    adaptationForm: JSON
-  ): Submission
+  # Create and update a submission
+  saveSubmission(submissionId: ID!, project: JSON, mitigation: JSON, adaptation: JSON): Submission
   killServer: Void
   migrateDatabase(dropSchema: Boolean): JSON!
   seedDatabase(userModel: Boolean, erm: Boolean, vocabularies: Boolean): JSON!
@@ -116,12 +112,6 @@ type Mutation {
     generalDetailsForm: ProjectInput!
     mitigationDetailsForm: MitigationInput
     adaptationDetailsForm: AdaptationInput
-  ): Project!
-  # Update a project
-  updateProject(
-    projectForm: ProjectInput
-    mitigationForm: MitigationInput
-    adaptationForm: AdaptationInput
   ): Project!
   # Delete a project
   deleteProject(id: Int!): Int

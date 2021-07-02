@@ -1,6 +1,6 @@
 import logSql from '../../../../lib/log-sql.js'
 
-export default async (self, { submissionId, projectForm, mitigationForm, adaptationForm }, ctx) => {
+export default async (self, { submissionId, project, mitigation, adaptation }, ctx) => {
   const { query } = ctx.mssql
   const { user } = ctx
   const userId = user.info(ctx).id
@@ -9,30 +9,30 @@ export default async (self, { submissionId, projectForm, mitigationForm, adaptat
     merge Submissions t
     using (
       select
-        '${JSON.stringify(projectForm)}' projectForm,
-        '${JSON.stringify(mitigationForm)}' mitigationForm,
-        '${JSON.stringify(adaptationForm)}' adaptationForm,
+        '${JSON.stringify(project)}' project,
+        '${JSON.stringify(mitigation)}' mitigation,
+        '${JSON.stringify(adaptation)}' adaptation,
         ${userId} createdBy,
         '${new Date().toISOString()}' createdAt
     ) s on t.id = '${sanitizeSqlValue(submissionId)}'
     when not matched then insert (
-      projectForm,
-      mitigationForm,
-      adaptationForm,
+      project,
+      mitigation,
+      adaptation,
       createdBy,
       createdAt
     )
     values (
-      s.projectForm,
-      s.mitigationForm,
-      s.adaptationForm,
+      s.project,
+      s.mitigation,
+      s.adaptation,
       s.createdBy,
       s.createdAt
     )
     when matched then update set
-      t.projectForm = s.projectForm,
-      t.mitigationForm = s.mitigationForm,
-      t.adaptationForm = s.adaptationForm;`
+      t.project = s.project,
+      t.mitigation = s.mitigation,
+      t.adaptation = s.adaptation;`
 
   logSql(sql, 'Save active submission', true)
   await query(sql)

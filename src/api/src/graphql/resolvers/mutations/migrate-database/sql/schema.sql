@@ -455,15 +455,15 @@ if not exists (
 begin
 create table Submissions (
   id uniqueidentifier not null primary key default (newsequentialid()),
-	projectForm nvarchar(max),
-	mitigationForm nvarchar(max),
-	adaptationForm nvarchar(max),
+	project nvarchar(max),
+	mitigation nvarchar(max),
+	adaptation nvarchar(max),
 	createdBy int foreign key references Users (id),
 	createdAt datetime2 not null,
 	index ix_submissions nonclustered (id),
-	constraint json_projectForm check(isjson(projectForm)=1),
-	constraint json_mitigationForm check(isjson(mitigationForm)=1),
-	constraint json_AdaptationForm check(isjson(adaptationForm)=1)
+	constraint json_project check(isjson(project)=1),
+	constraint json_mitigation check(isjson(mitigation)=1),
+	constraint json_Adaptation check(isjson(adaptation)=1)
 );
 end
 

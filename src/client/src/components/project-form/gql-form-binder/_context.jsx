@@ -34,11 +34,9 @@ const CORE_FIELDS = gql`
 export default ({
   children,
   submissionId,
-  project: {
-    mitigation: mitigationDetails = {},
-    adaptation: adaptationDetails = {},
-    ...generalDetails
-  } = {},
+  project: generalDetails = {},
+  mitigation: mitigationDetails = {},
+  adaptation: adaptationDetails = {},
 }) => {
   const apollo = useApolloClient()
   const [generalDetailsForm, setGeneralDetailsForm] = useState(
@@ -157,15 +155,15 @@ export default ({
         mutation: gql`
           mutation saveSubmission(
             $submissionId: ID!
-            $projectForm: JSON
-            $mitigationForm: JSON
-            $adaptationForm: JSON
+            $project: JSON
+            $mitigation: JSON
+            $adaptation: JSON
           ) {
             saveSubmission(
               submissionId: $submissionId
-              projectForm: $projectForm
-              mitigationForm: $mitigationForm
-              adaptationForm: $adaptationForm
+              project: $project
+              mitigation: $mitigation
+              adaptation: $adaptation
             ) {
               id
             }
@@ -173,13 +171,13 @@ export default ({
         `,
         variables: {
           submissionId,
-          projectForm: generalDetailsForm,
-          mitigationForm: mitigationDetailsForm,
-          adaptationForm: adaptationDetailsForm,
+          project: generalDetailsForm,
+          mitigation: mitigationDetailsForm,
+          adaptation: adaptationDetailsForm,
         },
-        update: () => {}, // TODO ?
+        update: () => {}, // TODO - this is a place to handle collaborative editing
       })
-    }, 2000),
+    }, 1000),
     []
   )
 

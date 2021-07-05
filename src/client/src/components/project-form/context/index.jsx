@@ -4,13 +4,11 @@ import Loading from '../../loading'
 import Fade from '@material-ui/core/Fade'
 import getFormStatus from './_get-form-status'
 import convertGqlToFormInput_ from './_convert-gql-to-form-input'
-import convertFormToGqlInput_ from './_convert-gql-to-form-input'
+import convertFormToGqlInput_ from './_convert-form-to-gql-input'
 import debounce from '../../../lib/debounce'
 
 export const convertGqlToFormInput = convertGqlToFormInput_
-
 export const convertFormToGqlInput = convertFormToGqlInput_
-
 export const context = createContext()
 
 const CORE_FIELDS = gql`
@@ -155,8 +153,10 @@ export default ({
 
   // eslint-disable-next-line
   const syncProgress = useCallback(
-    debounce(({ generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm }) => {
+    debounce(({ project, mitigation, adaptation }) => {
+      console.log('syncing', project)
       apollo.mutate({
+        fetchPolicy: 'no-cache',
         mutation: gql`
           mutation saveSubmission(
             $submissionId: ID!
@@ -176,9 +176,10 @@ export default ({
         `,
         variables: {
           submissionId,
-          project: generalDetailsForm,
-          mitigation: mitigationDetailsForm,
-          adaptation: adaptationDetailsForm,
+          project: convertFormToGqlInput(project),
+          mitigation: convertFormToGqlInput(mitigation),
+          adaptation: convertFormToGqlInput(adaptation),
+          isSubmitted: false, // TODO - this needs to be dynamic for editing?
         },
         update: () => {}, // TODO - this is a place to handle collaborative editing
       })
@@ -187,7 +188,11 @@ export default ({
   )
 
   useEffect(() => {
-    syncProgress({ generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm })
+    syncProgress({
+      project: generalDetailsForm,
+      mitigation: mitigationDetailsForm,
+      adaptation: adaptationDetailsForm,
+    })
   }, [generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm, syncProgress])
 
   if (loading) {

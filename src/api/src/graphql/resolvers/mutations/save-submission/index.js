@@ -9,8 +9,6 @@ export default async (
   const { user } = ctx
   const userId = user.info(ctx).id
 
-  console.log('mitigation', mitigation)
-
   const sql = `
     merge Submissions t
     using (

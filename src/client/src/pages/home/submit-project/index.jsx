@@ -24,7 +24,7 @@ export default () => {
           <div className={classes.root}>
             <ButtonBase
               component={Link}
-              to="/projects/submission"
+              to="/submissions/new"
               focusRipple
               key={image.title}
               className={classes.image}

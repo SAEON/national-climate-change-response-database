@@ -20,7 +20,7 @@ export default ({ filters, entityContext }) => {
   const availableFilters = Object.entries(filters)
   const activeFilters = context.filterContext[`${entityContext}Filters`]
   const [collapsed, setCollapsed] = useState(
-    !Object.entries(activeFilters).filter(([, value]) => value).length
+    !Object.entries(activeFilters || {}).filter(([, value]) => value).length
   )
 
   return (

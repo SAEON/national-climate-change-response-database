@@ -1,6 +1,6 @@
 import logSql from '../../../../lib/log-sql.js'
 
-export default async (self, { id }, ctx) => {
+export default async (_, { id }, ctx) => {
   const { query } = ctx.mssql
 
   const sql = `

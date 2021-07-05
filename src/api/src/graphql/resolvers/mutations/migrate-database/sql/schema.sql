@@ -461,6 +461,7 @@ create table Submissions (
 	isSubmitted bit default 0,
 	createdBy int foreign key references Users (id),
 	createdAt datetime2 not null,
+	deletedAt datetime2 null,
 	index ix_submissions nonclustered (id),
 	constraint json_project check(isjson(project)=1),
 	constraint json_mitigation check(isjson(mitigation)=1),

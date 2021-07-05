@@ -4,13 +4,13 @@ import Transition from './_transition'
 
 const HomePage = lazy(() => import('../../pages/home'))
 const AccessPage = lazy(() => import('../../pages/access'))
-const ProjectsPage = lazy(() => import('../../pages/projects'))
-const ProjectPage = lazy(() => import('../../pages/project'))
-const EditProjectPage = lazy(() => import('../../pages/edit-project'))
+const SubmissionsPage = lazy(() => import('../../pages/submissions'))
+const SubmissionPage = lazy(() => import('../../pages/submission'))
+const EditSubmissionPage = lazy(() => import('../../pages/edit-submission'))
 const CreateSubmission = lazy(() => import('../../pages/create-submission'))
-const SubmitProjectPage = lazy(() => import('../../pages/submit-project'))
+const NewSubmissionPage = lazy(() => import('../../pages/new-submission'))
 const DeploymentsPage = lazy(() => import('../../pages/deployments'))
-const UserProjectsPage = lazy(() => import('../../pages/user-projects'))
+const UserSubmissionsPage = lazy(() => import('../../pages/user-submissions'))
 const UsersPage = lazy(() => import('../../pages/users'))
 
 export default withRouter(() => {
@@ -28,14 +28,14 @@ export default withRouter(() => {
         )}
       />
 
-      {/* USER PROJECTs */}
+      {/* USER SUBMISSIONs */}
       <Route
-        key={'user-projects'}
-        path={'/users/:id/projects'}
+        key={'user-submissions'}
+        path={'/users/:id/submissions'}
         exact
         render={props => (
-          <Transition tKey="user-projects">
-            <UserProjectsPage id={props.match.params.id} {...props} />
+          <Transition tKey="user-submissions">
+            <UserSubmissionsPage id={props.match.params.id} {...props} />
           </Transition>
         )}
       />
@@ -63,22 +63,22 @@ export default withRouter(() => {
         )}
       />
 
-      {/* PROJECTS */}
+      {/* SUBMISSIONS */}
       <Route
-        key={'projects'}
-        path={'/projects'}
+        key={'submissions'}
+        path={'/submissions'}
         exact
         render={() => (
-          <Transition tKey="projects">
-            <ProjectsPage />
+          <Transition tKey="submissions">
+            <SubmissionsPage />
           </Transition>
         )}
       />
 
       {/* CREATE SUBMISSION */}
       <Route
-        key={'submit-project'}
-        path={'/projects/submission'}
+        key={'submit-submission'}
+        path={'/submissions/new'}
         exact
         render={() => (
           <Transition tKey="create-submission">
@@ -87,38 +87,38 @@ export default withRouter(() => {
         )}
       />
 
-      {/* PROJECT SUBMISSION */}
+      {/* NEW SUBMISSION */}
       <Route
-        key={'submit-project'}
-        path={'/projects/submission/:id'}
+        key={'submit-submission'}
+        path={'/submissions/new/:id'}
         exact
         render={props => (
-          <Transition tKey="submit-project">
-            <SubmitProjectPage id={props.match.params.id} />
+          <Transition tKey="submit-submission">
+            <NewSubmissionPage id={props.match.params.id} />
           </Transition>
         )}
       />
 
-      {/* EDIT PROJECT */}
+      {/* EDIT SUBMISSION */}
       <Route
-        key={'edit-project'}
-        path={'/projects/:id/edit'}
+        key={'edit-submission'}
+        path={'/submissions/:id/edit'}
         exact
         render={props => (
-          <Transition tKey="edit-project">
-            <EditProjectPage id={props.match.params.id} {...props} />
+          <Transition tKey="edit-submission">
+            <EditSubmissionPage id={props.match.params.id} {...props} />
           </Transition>
         )}
       />
 
-      {/* PROJECT */}
+      {/* SUBMISSION */}
       <Route
-        key={'project'}
-        path={'/projects/:id+'}
+        key={'submission'}
+        path={'/submissions/:id'}
         exact
         render={props => (
-          <Transition tKey="project">
-            <ProjectPage id={props.match.params.id} {...props} />
+          <Transition tKey="submission">
+            <SubmissionPage id={props.match.params.id} {...props} />
           </Transition>
         )}
       />

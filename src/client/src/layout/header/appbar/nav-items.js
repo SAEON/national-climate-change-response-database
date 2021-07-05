@@ -1,6 +1,6 @@
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import HomeIcon from 'mdi-react/HomeIcon'
-import ProjectsIcon from 'mdi-react/DatabaseIcon'
+import SubmissionsIcon from 'mdi-react/DatabaseIcon'
 import DeploymentsIcon from 'mdi-react/ServerIcon'
 
 export default [
@@ -10,9 +10,9 @@ export default [
     to: '/',
   },
   {
-    label: 'Projects',
-    Icon: ProjectsIcon,
-    to: '/projects',
+    label: 'Submissions',
+    Icon: SubmissionsIcon,
+    to: '/submissions',
   },
   {
     label: 'Deployments',

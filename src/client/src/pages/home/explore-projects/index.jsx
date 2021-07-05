@@ -50,7 +50,7 @@ export default () => {
           <div className={classes.root}>
             <ButtonBase
               component={Link}
-              to="/projects"
+              to="/submissions"
               focusRipple
               key={image.title}
               className={classes.image}

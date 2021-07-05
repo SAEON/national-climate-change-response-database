@@ -8,7 +8,7 @@ import Download from './_download'
 import Title from './_title'
 import Description from './_description'
 
-export default project => {
+export default ({ id, project }) => {
   const theme = useTheme()
 
   return (
@@ -16,9 +16,9 @@ export default project => {
       <Title {...project} />
       <Description {...project} />
       <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Delete {...project} />
-        <View {...project} />
-        <Edit {...project} />
+        <Delete id={id} />
+        <View id={id} />
+        <Edit id={id} />
         <Download />
       </CardActions>
     </Card>

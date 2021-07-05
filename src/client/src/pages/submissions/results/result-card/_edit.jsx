@@ -6,7 +6,7 @@ export default ({ id }) => {
   return (
     <Button
       component={Link}
-      to={`/projects/${id}/edit`}
+      to={`/submissions/${id}/edit`}
       startIcon={<EditIcon size={18} />}
       color="primary"
       size="small"

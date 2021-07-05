@@ -77,6 +77,15 @@ type Query {
   submissionTemplates: [SubmissionTemplate!]!
   # Get an in-progress form by the ID of the incomplete submission
   submission(id: ID!): Submission!
+  # Search submissions
+  submissions(
+    ids: [Int!]
+    vocabularyFilters: [VocabularyFilterInput!]
+    mitigationFilters: MitigationFiltersInput
+    adaptationFilters: AdaptationFiltersInput
+    limit: Int
+    offset: Int
+  ): [Submission!]!
   # Search projects
   projects(
     ids: [Int!]

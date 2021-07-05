@@ -6,7 +6,7 @@ export default ({ id }) => {
   return (
     <Button
       component={Link}
-      to={`/projects/${id}`}
+      to={`/submissions/${id}`}
       startIcon={<ViewIcon size={18} />}
       color="primary"
       size="small"

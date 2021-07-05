@@ -32,7 +32,7 @@ export default () => {
   }
 
   if (id) {
-    return <Redirect to={`/projects/submission/${id}`} />
+    return <Redirect to={`/submissions/new/${id}`} />
   }
 
   return <Loading />

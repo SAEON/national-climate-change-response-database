@@ -2,7 +2,6 @@ import { useState, createContext, useCallback } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
 import Fade from '@material-ui/core/Fade'
-import { projectFields } from '../../lib/gql-fragments'
 
 export const context = createContext()
 
@@ -19,7 +18,7 @@ const normalizeVocabularyFilters = f =>
 export default ({ children }) => {
   const [currentPage, setCurrentPage] = useState(0)
   const [filterContext, setFilterContext] = useState({
-    ProjectFilters: {},
+    SubmissionFilters: {},
     MitigationFilters: {},
     AdaptationFilters: {},
   })
@@ -40,28 +39,31 @@ export default ({ children }) => {
     )
   }, [])
 
-  const setProjectFilter = useCallback(obj => setFilter(obj, 'Project'), [setFilter])
+  const setSubmissionFilter = useCallback(obj => setFilter(obj, 'Submission'), [setFilter])
   const setMitigationFilter = useCallback(obj => setFilter(obj, 'Mitigation'), [setFilter])
   const setAdaptationFilter = useCallback(obj => setFilter(obj, 'Adaptation'), [setFilter])
 
   const { error, loading, data } = useQuery(
     gql`
-      ${projectFields}
-      query projects(
+      query submissions(
         $vocabularyFilters: [VocabularyFilterInput!]
         $mitigationFilters: MitigationFiltersInput
         $adaptationFilters: AdaptationFiltersInput
         $limit: Int
         $offset: Int
       ) {
-        projects(
+        submissions(
           limit: $limit
           offset: $offset
           vocabularyFilters: $vocabularyFilters
           mitigationFilters: $mitigationFilters
           adaptationFilters: $adaptationFilters
         ) {
-          ...projectFields
+          id
+          isSubmitted
+          project
+          mitigation
+          adaptation
         }
       }
     `,
@@ -69,7 +71,7 @@ export default ({ children }) => {
       variables: {
         limit: PAGE_SIZE,
         offset: currentPage * PAGE_SIZE,
-        vocabularyFilters: normalizeVocabularyFilters(filterContext.ProjectFilters),
+        vocabularyFilters: normalizeVocabularyFilters(filterContext.SubmissionFilters),
         mitigationFilters: {
           vocabularyFilters: normalizeVocabularyFilters(filterContext.MitigationFilters),
         },
@@ -92,7 +94,7 @@ export default ({ children }) => {
     throw error
   }
 
-  const { projects } = data
+  const { submissions } = data
 
   return (
     <context.Provider
@@ -102,9 +104,9 @@ export default ({ children }) => {
         pageSize: PAGE_SIZE,
         previousPage: currentPage === 0 ? undefined : () => setCurrentPage(p => p - 1),
         nextPage: () => setCurrentPage(p => p + 1),
-        projects,
+        submissions,
         filters: [],
-        setProjectFilter,
+        setSubmissionFilter,
         setMitigationFilter,
         setAdaptationFilter,
       }}

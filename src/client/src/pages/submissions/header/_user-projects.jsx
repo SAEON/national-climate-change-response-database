@@ -24,7 +24,7 @@ export default () => {
           <Hidden xsDown>
             <Button
               component={Link}
-              to={`/users/${id}/projects`}
+              to={`/users/${id}/submissions`}
               disableElevation
               size="small"
               variant="text"
@@ -35,7 +35,7 @@ export default () => {
             </Button>
           </Hidden>
           <Hidden smUp>
-            <IconButton component={Link} to="/projects/submission" size="small" color="primary">
+            <IconButton component={Link} to="/submissions/new" size="small" color="primary">
               <Icon size={18} />
             </IconButton>
           </Hidden>

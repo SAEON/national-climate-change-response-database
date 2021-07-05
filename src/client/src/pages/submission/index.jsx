@@ -3,19 +3,22 @@ import Loading from '../../components/loading'
 import Header from './header'
 import Render from './render'
 import Wrapper from '../../components/page-wrapper'
-import { projectFields } from '../../lib/gql-fragments'
 
 export default ({ id }) => {
   const { error, loading, data } = useQuery(
     gql`
-      ${projectFields}
-      query projects($ids: [Int!]) {
-        projects(ids: $ids) {
-          ...projectFields
+      query submission($id: ID!) {
+        submission(id: $id) {
+          id
+          project
+          mitigation
+          adaptation
+          isSubmitted
+          createdAt
         }
       }
     `,
-    { variables: { ids: [parseInt(id, 10)] } }
+    { variables: { id } }
   )
 
   if (loading) {
@@ -26,7 +29,7 @@ export default ({ id }) => {
     throw error
   }
 
-  const { mitigation, adaptation, ...project } = data.projects[0] || undefined
+  const { mitigation, adaptation, project } = data.submission || undefined
 
   if (!project) {
     throw new Error(
@@ -36,9 +39,12 @@ export default ({ id }) => {
 
   return (
     <>
-      <Header {...project} />
+      <Header id={id} {...project} />
       <Wrapper>
         <Render
+          project={project}
+          mitigation={mitigation}
+          adaptation={adaptation}
           mitigationSections={{
             'Host sector': ['hostSector', 'hostSubSectorPrimary', 'hostSubSectorSecondary'],
             'Mitigation type': ['mitigationType', 'mitigationSubType'],
@@ -131,9 +137,6 @@ export default ({ id }) => {
             ],
             'Validation status': ['validationStatus', 'validationComments'],
           }}
-          project={project}
-          mitigation={mitigation}
-          adaptation={adaptation}
         />
       </Wrapper>
     </>

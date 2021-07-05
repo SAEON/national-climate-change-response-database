@@ -9,8 +9,8 @@ const ProjectForm = lazy(() => import('../../components/project-form'))
 export default ({ id }) => {
   const { error, loading, data } = useQuery(
     gql`
-      query submission($id: ID!) {
-        submission(id: $id) {
+      query submission($id: ID!, $isSubmitted: Boolean) {
+        submission(id: $id, isSubmitted: $isSubmitted) {
           id
           project
           mitigation
@@ -20,6 +20,7 @@ export default ({ id }) => {
     `,
     {
       variables: {
+        isSubmitted: false,
         id,
       },
     }
@@ -35,6 +36,8 @@ export default ({ id }) => {
     return <Loading />
   }
 
+  const { project, mitigation, adaptation } = data.submission
+
   return (
     <>
       <Header id={id} />
@@ -42,9 +45,9 @@ export default ({ id }) => {
         <Suspense fallback={<Loading />}>
           <ProjectForm
             submissionId={id}
-            project={JSON.parse(data.submission.project)}
-            mitigation={JSON.parse(data.submission.mitigation)}
-            adaptation={JSON.parse(data.submission.adaptation)}
+            project={project}
+            mitigation={mitigation}
+            adaptation={adaptation}
           />
         </Suspense>
       </Wrapper>

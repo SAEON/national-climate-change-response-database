@@ -3,10 +3,10 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import MobileSideMenu from './_mobile-side-menu'
 import Hidden from '@material-ui/core/Hidden'
 import { context as filterContext } from '../context'
-import SubmitProject from './_submit-project'
+import NewSubmission from './_new-submission'
 import DownloadData from './_download-data'
 import Pagination from './pagination'
-import UserProjects from './_user-projects'
+import UserSubmissions from './_user-submissions'
 import Divider from '@material-ui/core/Divider'
 import ToolbarHeader from '../../../components/toolbar-header'
 
@@ -27,7 +27,7 @@ export default ({ MobileFilters }) => {
       </Hidden>
 
       {/* SUBMIT PROJECT */}
-      <SubmitProject />
+      <NewSubmission />
 
       {/* DOWNLOAD PROJECT DATA */}
       <div style={{ marginLeft: theme.spacing(2) }} />
@@ -49,7 +49,7 @@ export default ({ MobileFilters }) => {
       </Hidden>
 
       {/* USER PROJECTS */}
-      <UserProjects />
+      <UserSubmissions />
 
       {/* Pagination */}
       <div style={{ marginLeft: 'auto' }} />

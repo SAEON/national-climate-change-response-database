@@ -23,14 +23,11 @@ export default () => {
 
   return (
     <Grid container spacing={2}>
-      {submissions.map(({ id, project }) => {
-        project = JSON.parse(project)
-        return (
-          <Grid key={id} item xs={12}>
-            <ResultCard id={id} {...project} />
-          </Grid>
-        )
-      })}
+      {submissions.map(({ id, project }) => (
+        <Grid key={id} item xs={12}>
+          <ResultCard id={id} {...project} />
+        </Grid>
+      ))}
     </Grid>
   )
 }

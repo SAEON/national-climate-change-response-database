@@ -54,7 +54,7 @@ export default () => {
       },
       onCompleted: ({ saveSubmission }) => {
         const { id } = saveSubmission
-        // history.push(`/projects/${id}`)
+        history.push(`/submissions/${id}`)
       },
     }
   )

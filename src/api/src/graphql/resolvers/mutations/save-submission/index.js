@@ -43,11 +43,11 @@ export default async (
       t.isSubmitted = s.isSubmitted;`
 
   logSql(sql, 'Save active submission', true)
-  await query(sql)
+  const result = await query(sql)
 
-  // TODO - should be output
+  // TODO - should return the whole document
+
   return {
-    id: 1,
-    fileUploads: [],
+    id: submissionId,
   }
 }

@@ -70,13 +70,14 @@ type Submission {
   project: JSON
   mitigation: JSON
   adaptation: JSON
+  createdAt: DateTime
 }
 
 type Query {
   # Get a list of all the the Excel submission templates that have been uploaded
   submissionTemplates: [SubmissionTemplate!]!
   # Get an in-progress form by the ID of the incomplete submission
-  submission(id: ID!): Submission!
+  submission(id: ID!, isSubmitted: Boolean): Submission!
   # Search submissions
   submissions(
     ids: [Int!]

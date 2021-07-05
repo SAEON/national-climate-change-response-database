@@ -6,21 +6,24 @@ import { context as authorizationContext } from '../../contexts/authorization'
 import Header from './header'
 import Wrapper from '../../components/page-wrapper'
 import AccessDenied from '../../components/access-denied'
-import { projectFields } from '../../lib/gql-fragments'
 
 const ProjectForm = lazy(() => import('../../components/project-form'))
 
 const LoadProject = ({ id }) => {
   const { error, loading, data } = useQuery(
     gql`
-      ${projectFields}
-      query projects($ids: [Int!]) {
-        projects(ids: $ids) {
-          ...projectFields
+      query submission($id: ID!) {
+        submission(id: $id) {
+          id
+          project
+          mitigation
+          adaptation
+          isSubmitted
+          createdAt
         }
       }
     `,
-    { variables: { ids: [parseInt(id, 10)] } }
+    { variables: { id } }
   )
 
   if (loading) {
@@ -31,18 +34,25 @@ const LoadProject = ({ id }) => {
     throw error
   }
 
-  const project = data.projects?.[0]
+  const submission = data.submission
 
-  if (!project) {
+  if (!submission) {
     throw new Error(`Error retrieving project - are you sure that project with ID ${id} exists?`)
   }
+
+  const { project, mitigation, adaptation } = submission
 
   return (
     <>
       <Header />
       <Wrapper>
         <Suspense fallback={<Loading />}>
-          <ProjectForm project={project} />
+          <ProjectForm
+            submissionId={id}
+            project={project}
+            mitigation={mitigation}
+            adaptation={adaptation}
+          />
         </Suspense>
       </Wrapper>
     </>

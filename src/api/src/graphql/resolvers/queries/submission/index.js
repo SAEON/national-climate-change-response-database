@@ -1,14 +1,16 @@
 import logSql from '../../../../lib/log-sql.js'
 
-export default async (_, { id }, ctx) => {
+export default async (_, { id, isSubmitted = undefined }, ctx) => {
   const { query } = ctx.mssql
 
   const sql = `
     select *
     from Submissions s
-    where id = '${sanitizeSqlValue(id)}'`
+    where 
+    id = '${sanitizeSqlValue(id)}'
+    ${isSubmitted === undefined ? '' : `and isSubmitted = '${isSubmitted}'`};`
 
-  logSql(sql, 'Active submission', true)
+  logSql(sql, 'Submission', true)
   const result = await query(sql)
   return result.recordset[0]
 }

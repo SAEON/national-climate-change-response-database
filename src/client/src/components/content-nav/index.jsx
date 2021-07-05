@@ -23,45 +23,57 @@ export default ({ navItems, subNavChildren = null, children }) => {
     <Grid container spacing={2}>
       <Grid item xs={12} md={3}>
         <List style={{ padding: 0, display: 'flex', flexDirection: mdAndUp ? 'column' : 'row' }}>
-          {navItems.map(({ primaryText, secondaryText, Icon, disabled = false }, i) => (
-            <Card
-              variant="outlined"
-              style={{
-                flexBasis: mdAndUp ? 'auto' : 0,
-                flexGrow: 1,
-                border: 'none',
-              }}
-              className={clsx(classes.card, {
-                [classes.disabled]: disabled,
-              })}
-              key={i}
-            >
-              <ButtonBase
-                disabled={disabled}
-                className={clsx({
-                  [classes.active]: i === activeIndex,
-                })}
-                onClick={() => setActiveIndex(i)}
-                style={{ width: '100%' }}
-              >
-                <ListItem>
-                  {(xsAndDown || mdAndUp) && (
-                    <ListItemIcon style={{ justifyContent: 'center' }}>
-                      <Icon />
-                    </ListItemIcon>
-                  )}
+          {navItems.map(
+            ({ Component, primaryText, secondaryText, Icon, disabled = false, style = {} }, i) => {
+              if (Component) {
+                return <Component key={i} />
+              }
+              return (
+                <Card
+                  variant="outlined"
+                  style={{
+                    flexBasis: mdAndUp ? 'auto' : 0,
+                    flexGrow: 1,
+                    border: 'none',
+                    ...style,
+                  }}
+                  className={clsx(classes.card, {
+                    [classes.disabled]: disabled,
+                  })}
+                  key={i}
+                >
+                  <ButtonBase
+                    disabled={disabled}
+                    className={clsx({
+                      [classes.active]: i === activeIndex,
+                    })}
+                    onClick={() => setActiveIndex(i)}
+                    style={{ width: '100%' }}
+                  >
+                    <ListItem>
+                      {(xsAndDown || mdAndUp) && (
+                        <ListItemIcon style={{ justifyContent: 'center' }}>
+                          <Icon />
+                        </ListItemIcon>
+                      )}
 
-                  {smAndUp && (
-                    <ListItemText
-                      style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-                      primary={primaryText}
-                      secondary={mdAndUp && secondaryText}
-                    />
-                  )}
-                </ListItem>
-              </ButtonBase>
-            </Card>
-          ))}
+                      {smAndUp && (
+                        <ListItemText
+                          style={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                          }}
+                          primary={primaryText}
+                          secondary={mdAndUp && secondaryText}
+                        />
+                      )}
+                    </ListItem>
+                  </ButtonBase>
+                </Card>
+              )
+            }
+          )}
         </List>
         {subNavChildren && subNavChildren({ setActiveIndex })}
       </Grid>

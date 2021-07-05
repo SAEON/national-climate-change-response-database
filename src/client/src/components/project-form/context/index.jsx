@@ -43,6 +43,8 @@ export default ({
   adaptation: adaptationDetails = {},
 }) => {
   const apollo = useApolloClient()
+  const [syncing, setSyncing] = useState(false)
+
   const [generalDetailsForm, setGeneralDetailsForm] = useState(
     convertGqlToFormInput(generalDetails || {})
   )
@@ -154,9 +156,9 @@ export default ({
 
   // eslint-disable-next-line
   const syncProgress = useCallback(
-    debounce(({ project, mitigation, adaptation }) => {
-      console.log('hi', convertFormToGqlInput(project))
-      apollo.mutate({
+    debounce(async ({ project, mitigation, adaptation }) => {
+      setSyncing(true)
+      const result = await apollo.mutate({
         fetchPolicy: 'no-cache',
         mutation: gql`
           mutation saveSubmission(
@@ -182,8 +184,8 @@ export default ({
           adaptation: convertFormToGqlInput(adaptation),
           isSubmitted: false, // TODO - this needs to be dynamic for editing?
         },
-        update: () => {}, // TODO - this is a place to handle collaborative editing
       })
+      setSyncing(false)
     }, 1000),
     []
   )
@@ -213,6 +215,7 @@ export default ({
   return (
     <context.Provider
       value={{
+        syncing,
         mode,
         submissionId,
         projectFields,

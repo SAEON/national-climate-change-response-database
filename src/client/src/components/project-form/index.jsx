@@ -1,21 +1,25 @@
-import { useContext, lazy, Suspense } from 'react'
+import { useContext, lazy, Suspense, useMemo } from 'react'
 import ContentNav from '../content-nav'
 import GraphQLFormProvider, { context as formContext } from './context'
 import Submit from './submit'
 import Loading from '../loading'
 import AvatarIcon from './_avatar-icon'
+import useTheme from '@material-ui/core/styles/useTheme'
+import SyncStatus from './_sync-status'
 
 const GeneralDetailsForm = lazy(() => import('./sections/general-details'))
 const MitigationDetailsForm = lazy(() => import('./sections/mitigation-details'))
 const AdaptationDetailsForm = lazy(() => import('./sections/adaptation-details'))
 
 const FormController = () => {
+  const theme = useTheme()
   const {
     mode,
     generalDetailsForm,
     generalDetailsFormValidation,
     mitigationFormsValidation,
     adaptationFormsValidation,
+    syncing,
   } = useContext(formContext)
 
   const { isComplete: generalDetailsFormComplete, isStarted: generalDetailsFormStarted } =
@@ -40,52 +44,78 @@ const FormController = () => {
   if (mitigationsRequired && !mitigationDetailsFormComplete) canSubmit = false
   if (adaptationsRequired && !adaptationDetailsFormComplete) canSubmit = false
 
-  const navItems = [
-    {
-      primaryText: 'General',
-      secondaryText: 'Basic project details',
-      Icon: () => (
-        <AvatarIcon
-          i={1}
-          started={generalDetailsFormStarted}
-          complete={generalDetailsFormComplete}
-        />
-      ),
-    },
-    {
-      disabled: !mitigationsRequired,
-      primaryText: 'Mitigation details',
-      secondaryText: 'Project mitigation details',
-      Icon: () => (
-        <AvatarIcon
-          i={2}
-          started={mitigationDetailsFormStarted}
-          complete={mitigationDetailsFormComplete}
-        />
-      ),
-    },
-    {
-      disabled: !adaptationsRequired,
-      primaryText: 'Adaptation details',
-      secondaryText: 'Project adaptation details',
-      Icon: () => (
-        <AvatarIcon
-          i={3}
-          started={adaptationDetailsFormStarted}
-          complete={adaptationDetailsFormComplete}
-        />
-      ),
-    },
-    {
+  const navItems = useMemo(
+    () => [
+      {
+        primaryText: 'General',
+        secondaryText: 'Basic project details',
+        Icon: () => (
+          <AvatarIcon
+            i={1}
+            started={generalDetailsFormStarted}
+            complete={generalDetailsFormComplete}
+          />
+        ),
+      },
+      {
+        disabled: !mitigationsRequired,
+        primaryText: 'Mitigation details',
+        secondaryText: 'Project mitigation details',
+        Icon: () => (
+          <AvatarIcon
+            i={2}
+            started={mitigationDetailsFormStarted}
+            complete={mitigationDetailsFormComplete}
+          />
+        ),
+      },
+      {
+        disabled: !adaptationsRequired,
+        primaryText: 'Adaptation details',
+        secondaryText: 'Project adaptation details',
+        Icon: () => (
+          <AvatarIcon
+            i={3}
+            started={adaptationDetailsFormStarted}
+            complete={adaptationDetailsFormComplete}
+          />
+        ),
+      },
+    ],
+    [
+      mitigationsRequired,
+      adaptationsRequired,
+      generalDetailsFormStarted,
+      generalDetailsFormComplete,
+      mitigationDetailsFormStarted,
+      mitigationDetailsFormComplete,
+      adaptationDetailsFormStarted,
+      adaptationDetailsFormComplete,
+    ]
+  )
+
+  const submitNavItem = useMemo(
+    () => ({
+      style: { marginTop: theme.spacing(2) },
       disabled: !canSubmit,
       primaryText: 'Submit',
       secondaryText: 'Review and submit project',
       Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={4} />,
-    },
-  ]
+    }),
+    [canSubmit, theme]
+  )
+
+  const syncingNavItem = useMemo(
+    () => ({
+      Component: () => <SyncStatus style={{ marginTop: theme.spacing(2) }} syncing={syncing} />,
+    }),
+    [syncing, theme]
+  )
 
   return (
-    <ContentNav navItems={mode === 'edit' ? navItems.slice(0, -1) : navItems}>
+    <ContentNav
+      navItems={mode === 'edit' ? [...navItems, syncingNavItem] : [...navItems, submitNavItem]}
+    >
       {({ activeIndex }) => {
         return (
           <>
@@ -104,7 +134,7 @@ const FormController = () => {
                 <AdaptationDetailsForm key="adaptation-form" />
               </Suspense>
             )}
-            {activeIndex === 3 && <Submit key="submit" />}
+            {activeIndex === 3 && (mode !== 'edit' ? <Submit key="submit" /> : null)}
           </>
         )
       }}

@@ -19,7 +19,7 @@ export default ({ id }) => {
             color="primary"
             startIcon={<EditIcon size={18} />}
           >
-            Edit project
+            Edit
           </Button>
         </Hidden>
         <Hidden smUp>

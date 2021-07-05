@@ -4,13 +4,13 @@ import Edit from './_edit'
 import Hidden from '@material-ui/core/Hidden'
 import ToolbarHeader from '../../../components/toolbar-header'
 
-export default ({ ...project }) => {
+export default ({ id }) => {
   const theme = useTheme()
 
   return (
     <ToolbarHeader>
-      {/* EDIT PROJECT */}
-      <Edit {...project} />
+      {/* EDIT */}
+      <Edit id={id} />
 
       {/* DOWNLOAD PROJECT DATA */}
       <Hidden xsDown>

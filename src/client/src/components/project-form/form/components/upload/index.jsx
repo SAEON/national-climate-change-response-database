@@ -1,7 +1,7 @@
 import { useContext, memo, useMemo } from 'react'
-import { context as formContext } from '../../context'
-import QuickForm from '../../../quick-form'
-import debounce from '../../../../lib/debounce'
+import { context as formContext } from '../../../context'
+import QuickForm from '../../../../quick-form'
+import debounce from '../../../../../lib/debounce'
 import Render from './_render'
 
 const Compose = memo(

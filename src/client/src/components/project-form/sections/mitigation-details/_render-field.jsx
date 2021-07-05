@@ -1,9 +1,12 @@
-import { useContext } from 'react'
-import { GqlBoundFormInput, ControlledVocabularySelect, FileUpload } from '../../gql-form-binder'
+import { useContext, lazy, Suspense } from 'react'
+import Loading from '../../../loading'
+import { GqlBoundFormInput, ControlledVocabularySelect } from '../../form'
 import { context as formContext } from '../../context'
-import EnergyCalculator from '../../gql-form-binder/calculators/energy'
-import EmissionsCalculator from '../../gql-form-binder/calculators/emissions'
-import ProgressCalculator from '../../gql-form-binder/calculators/progress'
+
+const EnergyCalculator = lazy(() => import('../../form/components/calculators/energy'))
+const EmissionsCalculator = lazy(() => import('../../form/components/calculators/emissions'))
+const ProgressCalculator = lazy(() => import('../../form/components/calculators/progress'))
+const FileUpload = lazy(() => import('../../form/components/upload'))
 
 const multilineFields = [
   'description',
@@ -49,24 +52,26 @@ export default ({ field, formName }) => {
 
   if (fieldName === 'fileUploads') {
     return (
-      <FileUpload
-        formName={formName}
-        updateValue={value => updateForm({ [fieldName]: value })}
-        key={fieldName}
-        placeholder={placeholder}
-        helperText={helperText}
-        value={value}
-      />
+      <Suspense key={fieldName} fallback={<Loading />}>
+        <FileUpload
+          formName={formName}
+          updateValue={value => updateForm({ [fieldName]: value })}
+          placeholder={placeholder}
+          helperText={helperText}
+          value={value}
+        />
+      </Suspense>
     )
   }
 
   if (fieldName === 'progressData') {
     return (
-      <ProgressCalculator
-        key={fieldName}
-        calculator={form[fieldName] || {}}
-        updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
-      />
+      <Suspense key={fieldName} fallback={<Loading />}>
+        <ProgressCalculator
+          calculator={form[fieldName] || {}}
+          updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
+        />
+      </Suspense>
     )
   }
 
@@ -86,11 +91,12 @@ export default ({ field, formName }) => {
   } else if (fieldName === 'energyData') {
     if (form.hasEnergyData?.toBoolean()) {
       return (
-        <EnergyCalculator
-          key={fieldName}
-          calculator={form[fieldName] || {}}
-          updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
-        />
+        <Suspense key={fieldName} fallback={<Loading />}>
+          <EnergyCalculator
+            calculator={form[fieldName] || {}}
+            updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
+          />
+        </Suspense>
       )
     } else {
       return null
@@ -114,11 +120,12 @@ export default ({ field, formName }) => {
   } else if (fieldName === 'emissionsData') {
     if (form.hasEmissionsData?.toBoolean()) {
       return (
-        <EmissionsCalculator
-          key={fieldName}
-          calculator={form[fieldName] || {}}
-          updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
-        />
+        <Suspense key={fieldName} fallback={<Loading />}>
+          <EmissionsCalculator
+            calculator={form[fieldName] || {}}
+            updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
+          />
+        </Suspense>
       )
     } else {
       return null

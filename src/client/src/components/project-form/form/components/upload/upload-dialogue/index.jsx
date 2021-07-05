@@ -11,7 +11,7 @@ import UploadIcon from 'mdi-react/UploadIcon'
 import FileIcon from 'mdi-react/FileIcon'
 import CancelIcon from 'mdi-react/CancelIcon'
 import AcceptIcon from 'mdi-react/CheckCircleIcon'
-import { NCCRD_API_HTTP_ADDRESS } from '../../../../../config'
+import { NCCRD_API_HTTP_ADDRESS } from '../../../../../../config'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 const uploadAddress = `${NCCRD_API_HTTP_ADDRESS}/upload-project-file`

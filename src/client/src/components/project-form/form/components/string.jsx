@@ -1,11 +1,20 @@
-import { memo, useMemo } from 'react'
+import { useMemo, memo } from 'react'
 import TextField from '@material-ui/core/TextField'
-import QuickForm from '../../quick-form'
-import { MenuItem } from '@material-ui/core'
-import debounce from '../../../lib/debounce'
+import QuickForm from '../../../quick-form'
+import debounce from '../../../../lib/debounce'
 
 export default memo(
-  ({ name, placeholder, disabled = false, helperText, error, value, setValue }) => {
+  ({
+    name,
+    placeholder,
+    disabled = false,
+    helperText,
+    multiline,
+    rows,
+    error,
+    setValue,
+    value,
+  }) => {
     const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
 
     return (
@@ -13,26 +22,21 @@ export default memo(
         {(update, { value }) => {
           return (
             <TextField
+              autoComplete="off"
+              onChange={e => update({ value: e.target.value })}
+              value={value}
+              disabled={disabled}
+              error={error}
               id={`${name}`}
-              select
+              label={name}
               placeholder={placeholder}
               helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
+              multiline={multiline}
+              rows={rows}
               fullWidth
-              disabled={disabled}
               variant="outlined"
               margin="normal"
-              label={name}
-              error={error}
-              value={value}
-              onChange={e => update({ value: e.target.value })}
-            >
-              <MenuItem key={'false'} value={'false'}>
-                No
-              </MenuItem>
-              <MenuItem key={'true'} value={'true'}>
-                Yes
-              </MenuItem>
-            </TextField>
+            />
           )
         }}
       </QuickForm>

@@ -2,7 +2,7 @@ import Typography from '@material-ui/core/Typography'
 import { DataGrid } from '@material-ui/data-grid'
 import useTheme from '@material-ui/core/styles/useTheme'
 import getCellValue from '../get-cell-value.js'
-import ControlledVocabularySelect from '../../_controlled-vocabulary-select'
+import ControlledVocabularySelect from '../../controlled-vocabulary-select'
 import clsx from 'clsx'
 import useStyles from './style'
 

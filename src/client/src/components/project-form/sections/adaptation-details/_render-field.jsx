@@ -1,6 +1,8 @@
-import { useContext } from 'react'
-import { GqlBoundFormInput, ControlledVocabularySelect, FileUpload } from '../../gql-form-binder'
+import { useContext, lazy, Suspense } from 'react'
+import { GqlBoundFormInput, ControlledVocabularySelect } from '../../form'
 import { context as formContext } from '../../context'
+
+const FileUpload = lazy(() => import('../../form/components/upload'))
 
 const multilineFields = [
   'description',
@@ -36,14 +38,15 @@ export default ({ field, formName }) => {
 
   if (fieldName === 'fileUploads') {
     return (
-      <FileUpload
-        formName={formName}
-        updateValue={value => updateForm({ [fieldName]: value })}
-        key={fieldName}
-        placeholder={placeholder}
-        helperText={helperText}
-        value={value}
-      />
+      <Suspense key={fieldName} fallback={<Loading />}>
+        <FileUpload
+          formName={formName}
+          updateValue={value => updateForm({ [fieldName]: value })}
+          placeholder={placeholder}
+          helperText={helperText}
+          value={value}
+        />
+      </Suspense>
     )
   }
 

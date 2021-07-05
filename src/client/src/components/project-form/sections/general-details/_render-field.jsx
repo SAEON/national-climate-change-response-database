@@ -1,11 +1,10 @@
-import { useContext } from 'react'
-import {
-  GqlBoundFormInput,
-  ControlledVocabularySelect,
-  LocationsPicker,
-} from '../../gql-form-binder'
+import { useContext, lazy, Suspense } from 'react'
+import { GqlBoundFormInput, ControlledVocabularySelect } from '../../form'
 import { context as formContext } from '../../context'
 import { context as authContext } from '../../../../contexts/authorization'
+import Loading from '../../../loading'
+
+const LocationsPicker = lazy(() => import('../../form/components/locations-picker'))
 
 const multilineFields = [
   'description',
@@ -37,14 +36,15 @@ export default ({ field }) => {
    */
   if (fieldName === 'yx') {
     return (
-      <LocationsPicker
-        onChange={(y, x) => {
-          updateForm({ [fieldName]: [...(form[fieldName] || []), [y, x]] })
-        }}
-        setPoints={points => updateForm({ [fieldName]: points })}
-        points={form[fieldName] || []}
-        key={fieldName}
-      />
+      <Suspense key={fieldName} fallback={<Loading />}>
+        <LocationsPicker
+          onChange={(y, x) => {
+            updateForm({ [fieldName]: [...(form[fieldName] || []), [y, x]] })
+          }}
+          setPoints={points => updateForm({ [fieldName]: points })}
+          points={form[fieldName] || []}
+        />
+      </Suspense>
     )
   }
 

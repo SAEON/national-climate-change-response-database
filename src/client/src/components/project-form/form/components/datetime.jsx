@@ -1,41 +1,34 @@
-import { useMemo, memo } from 'react'
-import TextField from '@material-ui/core/TextField'
-import QuickForm from '../../quick-form'
-import debounce from '../../../lib/debounce'
+import { memo, useMemo } from 'react'
+import { DatePicker } from '@material-ui/pickers'
+import QuickForm from '../../../quick-form'
+import debounce from '../../../../lib/debounce'
 
 export default memo(
-  ({
-    name,
-    placeholder,
-    disabled = false,
-    helperText,
-    multiline,
-    rows,
-    error,
-    setValue,
-    value,
-  }) => {
+  ({ helperText, name, placeholder, error, disabled = false, value, setValue }) => {
     const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
 
     return (
       <QuickForm effect={effect} value={value}>
         {(update, { value }) => {
           return (
-            <TextField
-              autoComplete="off"
-              onChange={e => update({ value: e.target.value })}
-              value={value}
-              disabled={disabled}
-              error={error}
-              id={`${name}`}
-              label={name}
-              placeholder={placeholder}
-              helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
-              multiline={multiline}
-              rows={rows}
+            <DatePicker
               fullWidth
-              variant="outlined"
               margin="normal"
+              inputVariant="outlined"
+              clearable
+              disabled={disabled}
+              autoOk
+              minDate="1990"
+              maxDate="2089"
+              format="yyyy"
+              views={['year']}
+              placeholder={placeholder}
+              label={name}
+              id={`${name}`}
+              helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
+              error={error}
+              value={value}
+              onChange={value => update({ value })}
             />
           )
         }}

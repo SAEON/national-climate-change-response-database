@@ -1,5 +1,5 @@
 import { useContext, memo } from 'react'
-import { ComposeForm } from '../../gql-form-binder'
+import { ComposeForm } from '../../form'
 import { context as formContext } from '../../context'
 import RenderField from './_render-field'
 

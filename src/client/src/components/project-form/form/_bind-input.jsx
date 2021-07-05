@@ -1,9 +1,9 @@
-import BooleanField from './_boolean'
-import DateTimeField from './_datetime'
-import IntField from './_int'
-import MoneyField from './_money'
-import StringField from './_string'
-import EnumField from './_enum'
+import BooleanField from './components/boolean'
+import DateTimeField from './components/datetime'
+import IntField from './components/int'
+import MoneyField from './components/money'
+import StringField from './components/string'
+import EnumField from './components/enum'
 
 export default ({ field, value, disabled = false, updateValue, multiline }) => {
   const { name: fieldName, description, type } = field

@@ -1,8 +1,8 @@
 import { gql, useQuery } from '@apollo/client'
 import useTheme from '@material-ui/core/styles/useTheme'
-import Loading from '../../loading'
 import Typography from '@material-ui/core/Typography'
-import Multiselect from '../../multiselect'
+import Loading from '../../../loading'
+import Multiselect from '../../../multiselect'
 
 export default ({ root, tree, disabled = false, value, setValue, helperText, label, id }) => {
   const theme = useTheme()

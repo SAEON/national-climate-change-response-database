@@ -3,7 +3,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Typography from '@material-ui/core/Typography'
 import { gql, useQuery } from '@apollo/client'
 import useTheme from '@material-ui/core/styles/useTheme'
-import Loading from '../../loading'
+import Loading from '../../../loading'
 
 const DEFAULT_VALUE = { term: '(NONE)' }
 

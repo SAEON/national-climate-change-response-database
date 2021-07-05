@@ -1,10 +1,10 @@
 import { memo, useMemo } from 'react'
-import ControlledVocabularySelectMultiple from '../../_controlled-vocabulary-select-multiple'
+import ControlledVocabularySelectMultiple from '../../controlled-vocabulary-select-multiple'
 import { DatePicker } from '@material-ui/pickers'
 import Grid from '@material-ui/core/Grid'
 import InputTables from './input-tables'
-import QuickForm from '../../../../quick-form'
-import debounce from '../../../../../lib/debounce'
+import QuickForm from '../../../../../quick-form'
+import debounce from '../../../../../../lib/debounce'
 
 export default memo(
   ({ calculator = {}, updateCalculator = {} }) => {

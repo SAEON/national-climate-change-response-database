@@ -11,7 +11,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import useTheme from '@material-ui/core/styles/useTheme'
-import MessageDialogue from '../../../message-dialogue'
+import MessageDialogue from '../../../../message-dialogue'
 import TextField from '@material-ui/core/TextField'
 
 const NewPointForm = ({ closeFn, addPoint }) => {

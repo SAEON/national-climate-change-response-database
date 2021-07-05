@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
-import { context as mapContext } from '../../../../components/ol-react'
+import { context as mapContext } from '../../../../ol-react'
 import { useSnackbar } from 'notistack'
 import VectorSource from 'ol/source/Vector'
 import VectorLayer from 'ol/layer/Vector'

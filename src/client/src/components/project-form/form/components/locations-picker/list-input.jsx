@@ -14,7 +14,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import MessageDialogue from '../../../../message-dialogue'
 import TextField from '@material-ui/core/TextField'
 
-const NewPointForm = ({ closeFn, addPoint }) => {
+const NewPointForm = ({ closeFn, points, setPoints }) => {
   const [lat, setLat] = useState('')
   const [lng, setLng] = useState('')
 
@@ -46,7 +46,7 @@ const NewPointForm = ({ closeFn, addPoint }) => {
         <Button
           key="add-gps-point"
           onClick={e => {
-            addPoint(lat, lng)
+            setPoints([...points, [parseFloat(lat), parseFloat(lng)]])
             closeFn(e)
           }}
           startIcon={<PlusIcon size={18} />}
@@ -62,7 +62,7 @@ const NewPointForm = ({ closeFn, addPoint }) => {
   )
 }
 
-export default ({ points, setPoints, addPoint }) => {
+export default ({ points, setPoints }) => {
   const classes = useStyles()
   const theme = useTheme()
 
@@ -99,7 +99,9 @@ export default ({ points, setPoints, addPoint }) => {
                   </Button>
                 )}
               >
-                {closeFn => <NewPointForm addPoint={addPoint} closeFn={closeFn} />}
+                {closeFn => (
+                  <NewPointForm setPoints={setPoints} points={points} closeFn={closeFn} />
+                )}
               </MessageDialogue>
             </Toolbar>
           </AppBar>

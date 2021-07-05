@@ -38,9 +38,6 @@ export default ({ field }) => {
     return (
       <Suspense key={fieldName} fallback={<Loading />}>
         <LocationsPicker
-          onChange={(y, x) => {
-            updateForm({ [fieldName]: [...(form[fieldName] || []), [y, x]] })
-          }}
           setPoints={points => updateForm({ [fieldName]: points })}
           points={form[fieldName] || []}
         />

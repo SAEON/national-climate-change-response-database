@@ -11,7 +11,7 @@ import WKT from 'ol/format/WKT'
 
 const _wkt = new WKT()
 
-export default ({ onChange, points = [], setPoints, fenceGeometry = undefined }) => {
+export default ({ points = [], setPoints, fenceGeometry = undefined }) => {
   const { enqueueSnackbar } = useSnackbar()
   const { map } = useContext(mapContext)
   const source = useMemo(() => new VectorSource({ wrapX: false }), [])
@@ -39,10 +39,10 @@ export default ({ onChange, points = [], setPoints, fenceGeometry = undefined })
             }
             resolve()
           })
-          onChange(y, x)
+          setPoints([...points, [y, x]])
         },
       }),
-    [source, fence, enqueueSnackbar, onChange]
+    [source, fence, enqueueSnackbar, setPoints, points]
   )
 
   const mouseenter = useCallback(() => {
@@ -157,7 +157,3 @@ export default ({ onChange, points = [], setPoints, fenceGeometry = undefined })
 
   return null
 }
-
-// const onClick = useCallback(e => {
-//   console.log(e.coordinate)
-// }, [])

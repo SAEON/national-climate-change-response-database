@@ -3,8 +3,13 @@ import { gql, useQuery, useApolloClient } from '@apollo/client'
 import Loading from '../../loading'
 import Fade from '@material-ui/core/Fade'
 import getFormStatus from './_get-form-status'
-import convertGqlToFormInput from './_convert-gql-to-form-input'
+import convertGqlToFormInput_ from './_convert-gql-to-form-input'
+import convertFormToGqlInput_ from './_convert-gql-to-form-input'
 import debounce from '../../../lib/debounce'
+
+export const convertGqlToFormInput = convertGqlToFormInput_
+
+export const convertFormToGqlInput = convertFormToGqlInput_
 
 export const context = createContext()
 

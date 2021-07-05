@@ -1,5 +1,4 @@
 import { lazy, Suspense } from 'react'
-import { default as GraphQLFormProvider, context as _context } from './_context'
 
 export { default as BooleanField } from './_boolean'
 export { default as DateTimeField } from './_datetime'
@@ -8,14 +7,13 @@ export { default as MoneyField } from './_money'
 export { default as StringField } from './_string'
 export { default as EnumField } from './_enum'
 export { default as GqlBoundFormInput } from './_bind-input'
-export { default as Submit } from './_submit'
 export { default as ControlledVocabularySelect } from './_controlled-vocabulary-select'
 export { default as ControlledVocabularySelectMultiple } from './_controlled-vocabulary-select-multiple'
 export { default as FormSection } from './_form-section'
 export { default as ComposeForm } from './_compose-form'
-export { default as FileUpload } from './upload'
 
 const LocationsPicker_ = lazy(() => import('./locations-picker'))
+const FileUpload_ = lazy(() => import('./upload'))
 
 export const LocationsPicker = props => (
   <Suspense fallback={null}>
@@ -23,6 +21,8 @@ export const LocationsPicker = props => (
   </Suspense>
 )
 
-export const context = _context
-
-export default GraphQLFormProvider
+export const FileUpload = props => (
+  <Suspense fallback={null}>
+    <FileUpload_ {...props} />
+  </Suspense>
+)

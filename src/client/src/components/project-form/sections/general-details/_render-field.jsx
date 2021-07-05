@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import {
   GqlBoundFormInput,
-  context as formContext,
   ControlledVocabularySelect,
   LocationsPicker,
 } from '../../gql-form-binder'
+import { context as formContext } from '../../context'
 import { context as authContext } from '../../../../contexts/authorization'
 
 const multilineFields = [

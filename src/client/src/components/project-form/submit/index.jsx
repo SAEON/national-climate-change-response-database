@@ -6,8 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
-import { context as formContext } from './_context'
-import convertFormToInput from './_convert-form-to-gql-input.js'
+import { context as formContext, convertFormToGqlInput } from '../context'
 import Typography from '@material-ui/core/Typography'
 
 export default () => {
@@ -81,12 +80,12 @@ export default () => {
               createProject({
                 variables: {
                   submissionId,
-                  project: convertFormToInput(generalDetailsForm),
+                  project: convertFormToGqlInput(generalDetailsForm),
                   mitigation: Object.keys(mitigationDetailsForm).length
-                    ? convertFormToInput(mitigationDetailsForm)
+                    ? convertFormToGqlInput(mitigationDetailsForm)
                     : undefined,
                   adaptation: Object.keys(adaptationDetailsForm).length
-                    ? convertFormToInput(adaptationDetailsForm)
+                    ? convertFormToGqlInput(adaptationDetailsForm)
                     : undefined,
                   isSubmitted: true,
                 },

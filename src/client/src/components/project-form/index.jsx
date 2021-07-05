@@ -1,6 +1,7 @@
 import { useContext, lazy, Suspense } from 'react'
 import ContentNav from '../content-nav'
-import GraphQLFormProvider, { Submit, context as formContext } from './gql-form-binder'
+import GraphQLFormProvider, { context as formContext } from './context'
+import Submit from './submit'
 import Loading from '../loading'
 import AvatarIcon from './_avatar-icon'
 

@@ -1,10 +1,6 @@
 import { useContext } from 'react'
-import {
-  GqlBoundFormInput,
-  context as formContext,
-  ControlledVocabularySelect,
-  FileUpload,
-} from '../../gql-form-binder'
+import { GqlBoundFormInput, ControlledVocabularySelect, FileUpload } from '../../gql-form-binder'
+import { context as formContext } from '../../context'
 
 const multilineFields = [
   'description',

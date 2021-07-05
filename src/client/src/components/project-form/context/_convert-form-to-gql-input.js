@@ -1,7 +1,6 @@
 import { stringify } from 'wkt'
-import fixGridValues from '../form/components/calculators/fix-grid-values'
 
-export default (form, fixValues = false) => {
+export default form => {
   return Object.fromEntries(
     Object.entries(form).map(([field, value]) => {
       if (field === 'yx') {
@@ -27,15 +26,7 @@ export default (form, fixValues = false) => {
           return [field, undefined]
         }
 
-        return [
-          field,
-          fixValues
-            ? fixGridValues({
-                fields: ['annualKwh', 'annualKwhPurchaseReduction', 'notes'],
-                calculator: value,
-              })
-            : value,
-        ]
+        return [field, value]
       }
 
       /* EMISSIONS CALCULATOR */
@@ -45,29 +36,17 @@ export default (form, fixValues = false) => {
           return [field, undefined]
         }
 
-        return [
-          field,
-          fixValues
-            ? fixGridValues({
-                fields: [...value.chemicals.map(c => c), 'notes'],
-                calculator: value,
-              })
-            : value,
-        ]
+        return [field, value]
       }
 
       /* PROGRESS CALCULATOR */
 
       if (field === 'progressData') {
-        return [
-          field,
-          fixValues ? fixGridValues({ calculatorType: 'progress', calculator: value }) : value,
-        ]
+        return [field, value]
       }
 
       if (value?.__typename === 'ControlledVocabulary') {
-        const { root, term, tree } = value
-        return [field, { root, term, tree }]
+        return [field, value]
       }
 
       if (value === 'false') {

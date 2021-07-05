@@ -154,6 +154,7 @@ export default ({
   // eslint-disable-next-line
   const syncProgress = useCallback(
     debounce(({ project, mitigation, adaptation }) => {
+      console.log('hi', convertFormToGqlInput(project))
       apollo.mutate({
         fetchPolicy: 'no-cache',
         mutation: gql`

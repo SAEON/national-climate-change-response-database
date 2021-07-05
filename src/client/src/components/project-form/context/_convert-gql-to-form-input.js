@@ -44,7 +44,7 @@ export default ({ ...form }) => {
           return [field, value]
         }
 
-        return null
+        return [field, value]
       })
       .filter(_ => _)
   )

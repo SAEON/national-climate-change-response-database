@@ -80,9 +80,9 @@ export default () => {
               createProject({
                 variables: {
                   submissionId,
-                  project: convertFormToGqlInput(generalDetailsForm, true),
-                  mitigation: convertFormToGqlInput(mitigationDetailsForm, true),
-                  adaptation: convertFormToGqlInput(adaptationDetailsForm, true),
+                  project: convertFormToGqlInput(generalDetailsForm),
+                  mitigation: convertFormToGqlInput(mitigationDetailsForm),
+                  adaptation: convertFormToGqlInput(adaptationDetailsForm),
                   isSubmitted: true,
                 },
               })

@@ -25,7 +25,7 @@ export default ({ field }) => {
   let [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType } = type
   const isRequired = !inputType
-  const value = form[fieldName]
+  const value = form?.[fieldName]
 
   if (helperText === '') {
     helperText = ` `

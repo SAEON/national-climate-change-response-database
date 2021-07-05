@@ -1,8 +1,9 @@
 import { stringify } from 'wkt'
 import fixGridValues from './calculators/fix-grid-values'
 
-export default form =>
-  Object.fromEntries(
+export default form => {
+  console.log('trying', form)
+  return Object.fromEntries(
     Object.entries(form).map(([field, value]) => {
       if (field === 'yx') {
         return [
@@ -74,3 +75,4 @@ export default form =>
       return [field, value]
     })
   )
+}

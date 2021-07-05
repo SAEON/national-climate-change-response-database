@@ -1,7 +1,11 @@
 // import { parse } from 'wkt'
 
-export default ({ ...form }) =>
-  Object.fromEntries(
+export default ({ ...form }) => {
+  if (!form || !Object.keys(form).length) {
+    return undefined
+  }
+
+  return Object.fromEntries(
     Object.entries(form)
       .map(([field, value]) => {
         if (value === null) {
@@ -46,3 +50,4 @@ export default ({ ...form }) =>
       })
       .filter(_ => _)
   )
+}

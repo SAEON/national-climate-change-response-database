@@ -27,11 +27,11 @@ const Form = () => {
     adaptationFormsValidation
 
   const mitigationsRequired = ['mitigation'].includes(
-    generalDetailsForm['interventionType']?.term.toLowerCase()
+    generalDetailsForm?.['interventionType']?.term.toLowerCase()
   )
 
   const adaptationsRequired = ['adaptation'].includes(
-    generalDetailsForm['interventionType']?.term.toLowerCase()
+    generalDetailsForm?.['interventionType']?.term.toLowerCase()
   )
 
   let canSubmit = true

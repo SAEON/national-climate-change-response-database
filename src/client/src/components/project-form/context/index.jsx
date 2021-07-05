@@ -45,13 +45,13 @@ export default ({
 }) => {
   const apollo = useApolloClient()
   const [generalDetailsForm, setGeneralDetailsForm] = useState(
-    convertGqlToFormInput(generalDetails)
+    convertGqlToFormInput(generalDetails || {})
   )
   const [mitigationDetailsForm, setMitigationDetailsForm] = useState(
-    convertGqlToFormInput(mitigationDetails)
+    convertGqlToFormInput(mitigationDetails || {})
   )
   const [adaptationDetailsForm, setAdaptationDetailsForm] = useState(
-    convertGqlToFormInput(adaptationDetails)
+    convertGqlToFormInput(adaptationDetails || {})
   )
 
   /* TYPE QUERY */
@@ -113,7 +113,7 @@ export default ({
   const resetMitigationDetailsForm = useCallback(
     () =>
       setMitigationDetailsForm(form => {
-        if (form.fileUploads) {
+        if (form?.fileUploads) {
           return { fileUploads: form.fileUploads }
         }
         return {}
@@ -140,7 +140,7 @@ export default ({
   const resetAdaptationDetailsForm = useCallback(
     () =>
       setAdaptationDetailsForm(form => {
-        if (form.fileUploads) {
+        if (form?.fileUploads) {
           return { fileUploads: form.fileUploads }
         }
         return {}

@@ -1,14 +1,14 @@
 export default (fields, form) => {
   const requiredFields = (
-    fields?.map(({ name: fieldName, type }) => {
+    fields?.map(({ name: fieldName, type = {} }) => {
       const { ofType } = type
       if (ofType) {
-        return [fieldName, Boolean(form[fieldName])]
+        return [fieldName, Boolean(form?.[fieldName])]
       }
     }) || []
   ).filter(_ => _)
 
-  const filledInFields = Object.entries(form).filter(([, value]) => value !== '')
+  const filledInFields = Object.entries(form || {}).filter(([, value]) => value !== '')
 
   return {
     requiredFields: Object.fromEntries(requiredFields),

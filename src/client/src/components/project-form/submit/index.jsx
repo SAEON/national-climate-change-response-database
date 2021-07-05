@@ -76,21 +76,17 @@ export default () => {
         </CardContent>
         <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button
-            onClick={() => {
+            onClick={() =>
               createProject({
                 variables: {
                   submissionId,
                   project: convertFormToGqlInput(generalDetailsForm),
-                  mitigation: Object.keys(mitigationDetailsForm).length
-                    ? convertFormToGqlInput(mitigationDetailsForm)
-                    : undefined,
-                  adaptation: Object.keys(adaptationDetailsForm).length
-                    ? convertFormToGqlInput(adaptationDetailsForm)
-                    : undefined,
+                  mitigation: convertFormToGqlInput(mitigationDetailsForm),
+                  adaptation: convertFormToGqlInput(adaptationDetailsForm),
                   isSubmitted: true,
                 },
               })
-            }}
+            }
             variant="contained"
             color="primary"
             disableElevation

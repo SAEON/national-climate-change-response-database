@@ -4,18 +4,18 @@ import { gql, useMutation } from '@apollo/client'
 import MessageDialogue from '../../../../components/message-dialogue'
 
 export default ({ id }) => {
-  const [deleteProject] = useMutation(
+  const [deleteSubmission] = useMutation(
     gql`
-      mutation deleteProject($id: Int!) {
-        deleteProject(id: $id)
+      mutation deleteSubmission($id: ID!) {
+        deleteSubmission(id: $id)
       }
     `,
     {
-      update: (cache, { data: { deleteProject: deletedId } }) => {
+      update: (cache, { data: { deleteSubmission: deletedId } }) => {
         cache.modify({
           fields: {
-            projects: (existingProjects = [], { readField }) =>
-              existingProjects.filter(p => readField('id', p) !== deletedId),
+            submissions: (existingSubmissions = [], { readField }) =>
+              existingSubmissions.filter(p => readField('id', p) !== deletedId),
           },
         })
       },
@@ -25,10 +25,10 @@ export default ({ id }) => {
   return (
     <MessageDialogue
       title="Confirm delete"
-      text="Are you sure you want to delete this project? This action cannot be undone"
+      text="Are you sure you want to delete this project submission? This action cannot be undone"
       tooltipProps={{
         placement: 'top',
-        title: 'Delete this project',
+        title: 'Delete this submission',
       }}
       Button={openFn => (
         <Button
@@ -44,10 +44,10 @@ export default ({ id }) => {
       Actions={[
         closeFn => (
           <Button
-            key="delete-project"
+            key="delete-submission"
             onClick={e => {
               closeFn(e)
-              deleteProject({ variables: { id } })
+              deleteSubmission({ variables: { id } })
             }}
             startIcon={<DeleteIcon size={18} />}
             color="primary"

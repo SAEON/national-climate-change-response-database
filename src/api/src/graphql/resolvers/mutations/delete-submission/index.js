@@ -1,7 +1,12 @@
 import logSql from '../../../../lib/log-sql.js'
-export default async (self, { id }, ctx) => {
+
+export default async (_, { id }, ctx) => {
   const { query } = ctx.mssql
-  const sql = `delete from Submissions where id = '${id}'`
+  const sql = `
+    update Submissions
+    set deletedAt = '${sanitizeSqlValue(new Date().toISOString())}'
+    where id = '${sanitizeSqlValue(id)}'`
+
   logSql(sql, 'Delete submission')
   await query(sql)
   return id

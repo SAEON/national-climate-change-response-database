@@ -9,8 +9,9 @@ const GeneralDetailsForm = lazy(() => import('./sections/general-details'))
 const MitigationDetailsForm = lazy(() => import('./sections/mitigation-details'))
 const AdaptationDetailsForm = lazy(() => import('./sections/adaptation-details'))
 
-const Form = () => {
+const FormController = () => {
   const {
+    mode,
     generalDetailsForm,
     generalDetailsFormValidation,
     mitigationFormsValidation,
@@ -39,52 +40,52 @@ const Form = () => {
   if (mitigationsRequired && !mitigationDetailsFormComplete) canSubmit = false
   if (adaptationsRequired && !adaptationDetailsFormComplete) canSubmit = false
 
+  const navItems = [
+    {
+      primaryText: 'General',
+      secondaryText: 'Basic project details',
+      Icon: () => (
+        <AvatarIcon
+          i={1}
+          started={generalDetailsFormStarted}
+          complete={generalDetailsFormComplete}
+        />
+      ),
+    },
+    {
+      disabled: !mitigationsRequired,
+      primaryText: 'Mitigation details',
+      secondaryText: 'Project mitigation details',
+      Icon: () => (
+        <AvatarIcon
+          i={2}
+          started={mitigationDetailsFormStarted}
+          complete={mitigationDetailsFormComplete}
+        />
+      ),
+    },
+    {
+      disabled: !adaptationsRequired,
+      primaryText: 'Adaptation details',
+      secondaryText: 'Project adaptation details',
+      Icon: () => (
+        <AvatarIcon
+          i={3}
+          started={adaptationDetailsFormStarted}
+          complete={adaptationDetailsFormComplete}
+        />
+      ),
+    },
+    {
+      disabled: !canSubmit,
+      primaryText: 'Submit',
+      secondaryText: 'Review and submit project',
+      Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={4} />,
+    },
+  ]
+
   return (
-    <ContentNav
-      navItems={[
-        {
-          primaryText: 'General',
-          secondaryText: 'Basic project details',
-          Icon: () => (
-            <AvatarIcon
-              i={1}
-              started={generalDetailsFormStarted}
-              complete={generalDetailsFormComplete}
-            />
-          ),
-        },
-        {
-          disabled: !mitigationsRequired,
-          primaryText: 'Mitigation details',
-          secondaryText: 'Project mitigation details',
-          Icon: () => (
-            <AvatarIcon
-              i={2}
-              started={mitigationDetailsFormStarted}
-              complete={mitigationDetailsFormComplete}
-            />
-          ),
-        },
-        {
-          disabled: !adaptationsRequired,
-          primaryText: 'Adaptation details',
-          secondaryText: 'Project adaptation details',
-          Icon: () => (
-            <AvatarIcon
-              i={3}
-              started={adaptationDetailsFormStarted}
-              complete={adaptationDetailsFormComplete}
-            />
-          ),
-        },
-        {
-          disabled: !canSubmit,
-          primaryText: 'Submit',
-          secondaryText: 'Review and submit project',
-          Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={4} />,
-        },
-      ]}
-    >
+    <ContentNav navItems={mode === 'edit' ? navItems.slice(0, -1) : navItems}>
       {({ activeIndex }) => {
         return (
           <>
@@ -116,11 +117,10 @@ export default ({
   mitigation = undefined,
   adaptation = undefined,
   submissionId = undefined,
+  mode = 'new-submission',
 }) => {
   if (!submissionId) {
-    throw new Error(
-      'Project form needs to be instantiated with an editId to associate uploaded files'
-    )
+    throw new Error('Project form needs to be instantiated with a submissionId')
   }
   return (
     <GraphQLFormProvider
@@ -128,8 +128,9 @@ export default ({
       mitigation={mitigation}
       adaptation={adaptation}
       submissionId={submissionId}
+      mode={mode}
     >
-      <Form />
+      <FormController />
     </GraphQLFormProvider>
   )
 }

@@ -48,6 +48,7 @@ const LoadProject = ({ id }) => {
       <Wrapper>
         <Suspense fallback={<Loading />}>
           <ProjectForm
+            mode="edit"
             submissionId={id}
             project={project}
             mitigation={mitigation}

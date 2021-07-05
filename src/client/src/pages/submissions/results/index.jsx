@@ -23,11 +23,15 @@ export default () => {
 
   return (
     <Grid container spacing={2}>
-      {submissions.map(({ id, project }) => (
-        <Grid key={id} item xs={12}>
-          <ResultCard id={id} {...project} />
-        </Grid>
-      ))}
+      {submissions.map(submission => {
+        const { id, project } = submission
+
+        return (
+          <Grid key={id} item xs={12}>
+            <ResultCard id={id} project={project} />
+          </Grid>
+        )
+      })}
     </Grid>
   )
 }

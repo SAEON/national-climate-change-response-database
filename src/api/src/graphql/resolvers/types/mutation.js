@@ -1,5 +1,3 @@
-import createProject from '../mutations/create-project/index.js'
-import deleteProject from '../mutations/delete-project/index.js'
 import assignUserRoles from '../mutations/assign-user-roles/index.js'
 import migrateDatabase from '../mutations/migrate-database/index.js'
 import seedDatabase from '../mutations/seed-database/index.js'
@@ -13,8 +11,6 @@ import saveSubmission from '../mutations/save-submission/index.js'
 export default {
   createSubmission: authorize(PERMISSIONS.createProject)(createSubmission),
   deleteSubmission: authorize(PERMISSIONS.deleteProject)(deleteSubmission), // TODO - new permission?
-  createProject: authorize(PERMISSIONS.createProject)(createProject),
-  deleteProject: authorize(PERMISSIONS.deleteProject)(deleteProject),
   assignUserRoles: authorize(PERMISSIONS.assignRole)(assignUserRoles),
   seedDatabase: authorize(PERMISSIONS.seedDatabase)(seedDatabase),
   migrateDatabase: authorize(PERMISSIONS.migrateDatabase)(migrateDatabase),

@@ -87,7 +87,7 @@ type Query {
     limit: Int
     offset: Int
   ): [Submission!]!
-  # Search projects
+  # Search projects TODO delete
   projects(
     ids: [Int!]
     vocabularyFilters: [VocabularyFilterInput!]
@@ -124,14 +124,6 @@ type Mutation {
   createSubmission: ID!
   deleteSubmission(id: ID!): ID!
   removeProjectFiles(submissionId: ID!, ids: [Int!]!): JSON!
-  # Create a project
-  createProject(
-    generalDetailsForm: ProjectInput!
-    mitigationDetailsForm: MitigationInput
-    adaptationDetailsForm: AdaptationInput
-  ): Project!
-  # Delete a project
-  deleteProject(id: Int!): Int
   # Assign roles to users
   assignUserRoles(userId: Int!, roleIds: [Int!]!): User!
 }

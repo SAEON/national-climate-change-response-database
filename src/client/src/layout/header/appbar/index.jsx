@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { context as authenticationContext } from '../../../contexts/authentication'
 import { context as clientInfoContext } from '../../../contexts/client-info'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import MuiLink from '@material-ui/core/Link'
 import Toolbar from '@material-ui/core/Toolbar'
 import { NCCRD_API_HTTP_ADDRESS } from '../../../config'
@@ -44,8 +44,9 @@ export default () => {
       {/* LOG IN */}
       {window.location.pathname !== '/login' && !user && (
         <MuiLink
+          component={Link}
           style={{ marginLeft: 'auto' }}
-          href={`${NCCRD_API_HTTP_ADDRESS}/login?redirect=${window.location.href}`}
+          to={`/login?redirect=${window.location.href}`}
         >
           <Typography style={{ paddingRight: theme.spacing(1) }} variant="overline">
             Log in

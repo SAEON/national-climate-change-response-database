@@ -12,6 +12,7 @@ const NewSubmissionPage = lazy(() => import('../../pages/submission-new'))
 const DeploymentsPage = lazy(() => import('../../pages/deployments'))
 const UserSubmissionsPage = lazy(() => import('../../pages/user-submissions'))
 const UsersPage = lazy(() => import('../../pages/users'))
+const LoginPage = lazy(() => import('../../pages/login'))
 
 export default withRouter(() => {
   return (
@@ -24,6 +25,18 @@ export default withRouter(() => {
         render={() => (
           <Transition tKey="home">
             <HomePage />
+          </Transition>
+        )}
+      />
+
+      {/* LOGIN */}
+      <Route
+        key={'login'}
+        path={'/login'}
+        exact
+        render={() => (
+          <Transition tKey="login">
+            <LoginPage />
           </Transition>
         )}
       />

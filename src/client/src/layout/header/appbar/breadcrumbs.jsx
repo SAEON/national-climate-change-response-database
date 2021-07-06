@@ -6,6 +6,7 @@ import MuiLink from '@material-ui/core/Link'
 import navItems from './nav-items'
 import EditIcon from 'mdi-react/EditIcon'
 import SubmissionIcon from 'mdi-react/DatabaseAddIcon'
+import LoginIcon from 'mdi-react/LoginIcon'
 
 const useStyles = makeStyles(theme => ({
   link: {
@@ -61,6 +62,10 @@ export default function IconBreadcrumbs() {
       {tree.slice(-1).map(({ label, Icon } = {}) => {
         if (label === 'Edit') {
           Icon = EditIcon
+        }
+
+        if (label === 'Login') {
+          Icon = LoginIcon
         }
         return (
           <Typography key={label} color="textPrimary" className={classes.link}>

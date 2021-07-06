@@ -1,6 +1,7 @@
 import { useContext, lazy, Suspense } from 'react'
 import { GqlBoundFormInput, ControlledVocabularySelect } from '../../form'
 import { context as formContext } from '../../context'
+import Loading from '../../../loading'
 
 const FileUpload = lazy(() => import('../../form/components/upload'))
 

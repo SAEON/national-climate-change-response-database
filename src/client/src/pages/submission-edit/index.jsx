@@ -20,6 +20,8 @@ const LoadProject = ({ id }) => {
           adaptation
           isSubmitted
           createdAt
+          validationStatus
+          validationComments
         }
       }
     `,
@@ -40,7 +42,14 @@ const LoadProject = ({ id }) => {
     throw new Error(`Error retrieving project - are you sure that project with ID ${id} exists?`)
   }
 
-  const { project, mitigation, adaptation, isSubmitted } = submission
+  const {
+    project,
+    mitigation,
+    adaptation,
+    isSubmitted,
+    validationStatus: __validationStatus,
+    validationComments: __validationComments,
+  } = submission
 
   return (
     <>
@@ -50,7 +59,7 @@ const LoadProject = ({ id }) => {
           <ProjectForm
             mode="edit"
             submissionId={id}
-            project={project}
+            project={{ __validationStatus, __validationComments, ...project }}
             mitigation={mitigation}
             adaptation={adaptation}
             isSubmitted={isSubmitted}

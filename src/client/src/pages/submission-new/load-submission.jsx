@@ -15,6 +15,8 @@ export default ({ id }) => {
           project
           mitigation
           adaptation
+          validationComments
+          validationStatus
         }
       }
     `,
@@ -36,7 +38,13 @@ export default ({ id }) => {
     return <Loading />
   }
 
-  const { project, mitigation, adaptation } = data.submission
+  const {
+    project,
+    mitigation,
+    adaptation,
+    validationComments: __validationComments,
+    validationStatus: __validationStatus,
+  } = data.submission
 
   return (
     <>
@@ -45,7 +53,7 @@ export default ({ id }) => {
         <Suspense fallback={<Loading />}>
           <ProjectForm
             submissionId={id}
-            project={project}
+            project={{ __validationComments, __validationStatus, ...project }}
             mitigation={mitigation}
             adaptation={adaptation}
           />

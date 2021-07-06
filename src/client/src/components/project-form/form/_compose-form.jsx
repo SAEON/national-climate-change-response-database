@@ -18,7 +18,7 @@ import sift from 'sift'
  * limiting if you want to have a form section with fields that are NOT
  * in the input type.
  *
- * To achieve this, any field names that start with "__" or passed back to
+ * To achieve this, any field names that start with "__" are passed back to
  * the render component
  */
 export default ({ formName, fields, RenderField, sections, formNumber = 0, hideSections = [] }) => {

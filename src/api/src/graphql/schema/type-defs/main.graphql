@@ -67,6 +67,8 @@ type SubmissionTemplate {
 type Submission {
   id: ID!
   isSubmitted: Boolean
+  validationStatus: JSON
+  validationComments: String
   project: JSON
   mitigation: JSON
   adaptation: JSON
@@ -117,6 +119,8 @@ type Mutation {
     mitigation: JSON
     adaptation: JSON
     isSubmitted: Boolean
+    validationStatus: JSON
+    validationComments: String
   ): Submission
   killServer: Void
   migrateDatabase(dropSchema: Boolean): JSON!

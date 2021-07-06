@@ -159,6 +159,10 @@ export default ({
   const syncProgress = useCallback(
     debounce(async ({ project, mitigation, adaptation }) => {
       setSyncing(true)
+
+      const { __validationStatus: validationStatus, __validationComments: validationComments } =
+        project
+
       await apollo.mutate({
         fetchPolicy: 'no-cache',
         mutation: gql`
@@ -167,12 +171,16 @@ export default ({
             $project: JSON
             $mitigation: JSON
             $adaptation: JSON
+            $validationStatus: JSON
+            $validationComments: String
           ) {
             saveSubmission(
               submissionId: $submissionId
               project: $project
               mitigation: $mitigation
               adaptation: $adaptation
+              validationStatus: $validationStatus
+              validationComments: $validationComments
             ) {
               id
             }
@@ -183,6 +191,8 @@ export default ({
           project: convertFormToGqlInput(project),
           mitigation: convertFormToGqlInput(mitigation),
           adaptation: convertFormToGqlInput(adaptation),
+          validationStatus,
+          validationComments,
           isSubmitted,
         },
       })

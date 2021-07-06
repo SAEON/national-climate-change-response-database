@@ -226,6 +226,8 @@ if not exists (
 begin
 create table Submissions (
   id uniqueidentifier not null primary key default (newsequentialid()),
+	validationStatus nvarchar(4000),
+	validationComments nvarchar(max),
 	project nvarchar(max),
 	mitigation nvarchar(max),
 	adaptation nvarchar(max),
@@ -234,6 +236,7 @@ create table Submissions (
 	createdAt datetime2 not null,
 	deletedAt datetime2 null,
 	index ix_submissions nonclustered (id),
+	constraint json_validationStatus check(isjson(validationStatus)=1),
 	constraint json_project check(isjson(project)=1),
 	constraint json_mitigation check(isjson(mitigation)=1),
 	constraint json_Adaptation check(isjson(adaptation)=1)

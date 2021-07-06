@@ -1,5 +1,5 @@
 import { useContext, lazy, Suspense } from 'react'
-import { GqlBoundFormInput, ControlledVocabularySelect } from '../../form'
+import { GqlBoundFormInput, ControlledVocabularySelect, StringField } from '../../form'
 import { context as formContext } from '../../context'
 import { context as authContext } from '../../../../contexts/authorization'
 import Loading from '../../../loading'
@@ -8,7 +8,7 @@ const LocationsPicker = lazy(() => import('../../form/components/locations-picke
 
 const multilineFields = [
   'description',
-  'validationComments',
+  '__validationComments',
   'projectManagerPhysicalAddress',
   'projectManagerPostalAddress',
 ]
@@ -25,7 +25,7 @@ export default ({ field }) => {
   let [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
   const { name: inputType } = type
   const isRequired = !inputType
-  const value = form?.[fieldName]
+  const value = form?.[fieldName] || undefined
 
   if (helperText === '') {
     helperText = ` `
@@ -103,19 +103,19 @@ export default ({ field }) => {
   /**
    * Controlled vocabulary
    */
-  if (fieldName === 'validationStatus') {
+  if (fieldName === '__validationStatus') {
     return (
       <ControlledVocabularySelect
         key={fieldName}
-        tree={tree}
+        tree={'projectValidationStatus'}
         root="Validation Status"
-        name={fieldName}
+        name={'Validation status'}
         disabled={!hasPermission('validate-submission')}
         value={value}
         error={isRequired && !value}
         onChange={val => updateForm({ [fieldName]: val })}
-        placeholder={placeholder}
-        helperText={helperText}
+        placeholder={'Validation status '}
+        helperText={'Has this project been validated?'}
       />
     )
   }
@@ -123,15 +123,19 @@ export default ({ field }) => {
   /**
    * Validation comments (limited user access)
    */
-  if (fieldName === 'validationComments') {
+  if (fieldName === '__validationComments') {
     return (
-      <GqlBoundFormInput
-        key={fieldName}
-        field={field}
-        value={value || ''}
+      <StringField
         disabled={!hasPermission('validate-submission')}
-        updateValue={val => updateForm({ [fieldName]: val })}
+        error={isRequired && !value}
         multiline={multilineFields.includes(fieldName)}
+        rows={4}
+        placeholder={'Validation comments'}
+        helperText={'Please leave comments RE. the validation status'}
+        name={'Validation comments'}
+        key={fieldName}
+        value={value}
+        setValue={val => updateForm({ [fieldName]: val })}
       />
     )
   }

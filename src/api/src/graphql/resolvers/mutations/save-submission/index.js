@@ -1,8 +1,16 @@
 import logSql from '../../../../lib/log-sql.js'
 
 export default async (
-  self,
-  { submissionId, project, mitigation = {}, adaptation = {}, isSubmitted = false },
+  _,
+  {
+    submissionId,
+    project,
+    mitigation = {},
+    adaptation = {},
+    isSubmitted = false,
+    validationStatus = undefined,
+    validationComments = '',
+  },
   ctx
 ) => {
   const { query } = ctx.mssql
@@ -17,6 +25,8 @@ export default async (
         '${JSON.stringify(mitigation)}' mitigation,
         '${JSON.stringify(adaptation)}' adaptation,
         '${isSubmitted}' isSubmitted,
+        ${validationStatus ? `'${JSON.stringify(validationStatus)}' validationStatus,` : ''}
+        '${sanitizeSqlValue(validationComments)}' validationComments,
         ${userId} createdBy,
         '${new Date().toISOString()}' createdAt
     ) s on t.id = '${sanitizeSqlValue(submissionId)}'
@@ -25,6 +35,8 @@ export default async (
       mitigation,
       adaptation,
       isSubmitted,
+      ${validationStatus ? 'validationStatus,' : ''}
+      validationComments,
       createdBy,
       createdAt
     )
@@ -33,6 +45,8 @@ export default async (
       s.mitigation,
       s.adaptation,
       s.isSubmitted,
+      ${validationStatus ? 's.validationStatus,' : ''}
+      validationComments,
       s.createdBy,
       s.createdAt
     )
@@ -40,13 +54,19 @@ export default async (
       t.project = s.project,
       t.mitigation = s.mitigation,
       t.adaptation = s.adaptation,
-      t.isSubmitted = s.isSubmitted;`
+      t.isSubmitted = s.isSubmitted,
+      ${validationStatus ? 't.validationStatus = s.validationStatus,' : ''}
+      t.validationComments = s.validationComments
+      
+    output
+      $action,
+      inserted.*,
+      deleted.*;`
 
   logSql(sql, 'Save active submission', true)
+
+  // TODO - should probably process the output and return that
   const result = await query(sql)
-
-  // TODO - should return the whole document
-
   return {
     id: submissionId,
   }

@@ -31,8 +31,6 @@ input ProjectInput {
   projectManagerTelephone: String
   # Mobile number ::
   projectManagerMobile: String
-  # Validation Comments :: Any validation feedback?
-  validationComments: String
   # City / Town
   cityOrTown: String
 
@@ -50,8 +48,6 @@ input ProjectInput {
   districtMunicipality: ControlledVocabularyInput
   # Local municipality :: Select local municipality :: regions
   localMunicipality: ControlledVocabularyInput
-  # Validation status :: Has this project been validated? :: projectValidationStatus
-  validationStatus: ControlledVocabularyInput
 }
 
 type Project {

@@ -1,26 +1,18 @@
-/**
- * ORDER IS IMPORTANT!
- */
- 
-drop table if exists ExcelSubmissionTemplates;
-drop table if exists WebSubmissionFiles;
-drop table if exists Submissions;
-drop table if exists EmissionsDataXrefVocabTreeX;
-drop table if exists ProgressData;
-drop table if exists ExpenditureData;
-drop table if exists EmissionsData;
-drop table if exists EnergyData;
-drop table if exists Mitigations;
-drop table if exists Adaptations;
-drop table if exists Projects;
-drop table if exists GeometryXrefVocabularyTreeX;
-drop table if exists Geometries;
-drop table if exists VocabularyXrefVocabulary;
-drop table if exists VocabularyXrefTree;
-drop table if exists Trees;
-drop table if exists Vocabulary;
-drop table if exists PermissionRoleXref;
-drop table if exists UserRoleXref;
-drop table if exists [Permissions];
-drop table if exists Roles;
-drop table if exists Users;
+DECLARE @sql NVARCHAR(2000)
+
+WHILE(EXISTS(SELECT 1 from INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_TYPE='FOREIGN KEY'))
+BEGIN
+    SELECT TOP 1 @sql=('ALTER TABLE ' + TABLE_SCHEMA + '.[' + TABLE_NAME + '] DROP CONSTRAINT [' + CONSTRAINT_NAME + ']')
+    FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+    WHERE CONSTRAINT_TYPE = 'FOREIGN KEY'
+    EXEC(@sql)
+    PRINT @sql
+END
+
+WHILE(EXISTS(SELECT * from INFORMATION_SCHEMA.TABLES))
+BEGIN
+    SELECT TOP 1 @sql=('DROP TABLE ' + TABLE_SCHEMA + '.[' + TABLE_NAME + ']')
+    FROM INFORMATION_SCHEMA.TABLES
+    EXEC(@sql)
+    PRINT @sql
+END

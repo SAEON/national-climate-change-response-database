@@ -20,21 +20,21 @@ const sections = [
     secondaryText: 'Manage application users',
     Icon: UsersIcon,
     requiredPermission: 'view-users',
-    Component: Users,
+    Section: Users,
   },
   {
     primaryText: 'Roles',
     secondaryText: 'Manage application roles',
     Icon: RolesIcon,
     requiredPermission: 'view-roles',
-    Component: Roles,
+    Section: Roles,
   },
   {
     primaryText: 'Permissions',
     secondaryText: 'Manage application permissions',
     Icon: PermissionsIcon,
     requiredPermission: 'view-permissions',
-    Component: Permissions,
+    Section: Permissions,
   },
 ]
 
@@ -56,7 +56,7 @@ export default () => {
 
   return (
     <UserRolesProvider>
-      <ToolbarHeader></ToolbarHeader>
+      <ToolbarHeader />
       <Wrapper>
         <ContentNav
           navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
@@ -64,9 +64,9 @@ export default () => {
           {({ activeIndex }) => {
             return sections
               .filter(({ requiredPermission }) => hasPermission(requiredPermission))
-              .map(({ Component, primaryText, requiredPermission }, i) =>
+              .map(({ Section, primaryText, requiredPermission }, i) =>
                 activeIndex === i ? (
-                  <Component permission={requiredPermission} key={primaryText} />
+                  <Section permission={requiredPermission} key={primaryText} />
                 ) : null
               )
           }}

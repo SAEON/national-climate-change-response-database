@@ -9,14 +9,14 @@ import removeProjectFiles from '../mutations/remove-project-files/index.js'
 import saveSubmission from '../mutations/save-submission/index.js'
 import query from '../../../mssql/query.js'
 
-const getSubmissionOwner = async id => {
-  const result = await query(
-    `select *
+const getSubmissionOwner = async id =>
+  (
+    await query(
+      `select *
      from Submissions
      where id = '${sanitizeSqlValue(id)}';`
-  )
-  return result.recordset[0].createdBy
-}
+    )
+  ).recordset[0].createdBy
 
 export default {
   createSubmission: authorize(PERMISSIONS.createProject)(createSubmission),
@@ -29,5 +29,9 @@ export default {
   migrateDatabase: authorize(PERMISSIONS.migrateDatabase)(migrateDatabase),
   killServer: authorize(PERMISSIONS.killServer)(() => process.exit(1)),
   removeProjectFiles: authorize(PERMISSIONS.uploadProjectFile)(removeProjectFiles),
-  saveSubmission: authorize(PERMISSIONS.createProject)(saveSubmission),
+  saveSubmission: async (...args) =>
+    authorize(
+      PERMISSIONS.updateProject,
+      await getSubmissionOwner(args[1].submissionId)
+    )(saveSubmission)(...args),
 }

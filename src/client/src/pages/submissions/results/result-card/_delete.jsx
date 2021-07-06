@@ -1,9 +1,13 @@
+import { useContext } from 'react'
+import { context as authContext } from '../../../../contexts/authorization'
 import Button from '@material-ui/core/Button'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 import { gql, useMutation } from '@apollo/client'
 import MessageDialogue from '../../../../components/message-dialogue'
 
-export default ({ id }) => {
+export default ({ id, createdBy }) => {
+  const { hasPermission, user } = useContext(authContext)
+
   const [deleteSubmission] = useMutation(
     gql`
       mutation deleteSubmission($id: ID!) {
@@ -21,6 +25,18 @@ export default ({ id }) => {
       },
     }
   )
+
+  /**
+   * Users can delete their own submissions
+   *
+   * Users with the permission 'delete-project'
+   * can delete submissions
+   */
+  if (!hasPermission('delete-project')) {
+    if (createdBy?.id !== user?.id) {
+      return null
+    }
+  }
 
   return (
     <MessageDialogue

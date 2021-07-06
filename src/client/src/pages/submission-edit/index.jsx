@@ -10,6 +10,8 @@ import AccessDenied from '../../components/access-denied'
 const ProjectForm = lazy(() => import('../../components/project-form'))
 
 const LoadProject = ({ id }) => {
+  const { hasPermission, user } = useContext(authorizationContext)
+
   const { error, loading, data } = useQuery(
     gql`
       query submission($id: ID!) {
@@ -20,6 +22,9 @@ const LoadProject = ({ id }) => {
           adaptation
           isSubmitted
           createdAt
+          createdBy {
+            id
+          }
           validationStatus
           validationComments
         }
@@ -49,7 +54,14 @@ const LoadProject = ({ id }) => {
     isSubmitted,
     validationStatus: __validationStatus,
     validationComments: __validationComments,
+    createdBy,
   } = submission
+
+  if (!hasPermission('update-project')) {
+    if (createdBy?.id !== user?.id) {
+      return <AccessDenied requiredPermission="update-project" />
+    }
+  }
 
   return (
     <>
@@ -72,14 +84,9 @@ const LoadProject = ({ id }) => {
 
 export default ({ id }) => {
   const isAuthenticated = useContext(authenticationContext).authenticate()
-  const { hasPermission } = useContext(authorizationContext)
 
   if (!isAuthenticated) {
     return <Loading />
-  }
-
-  if (!hasPermission('update-project')) {
-    return <AccessDenied requiredPermission="update-project" />
   }
 
   return <LoadProject id={id} />

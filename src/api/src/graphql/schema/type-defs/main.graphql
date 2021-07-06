@@ -11,7 +11,7 @@ type User {
   familyName: String
   roles: [Role!]!
   permissions: [Permission!]!
-  projects: [Project!]!
+  submissions: [Submission!]!
 }
 
 type Role {
@@ -73,6 +73,7 @@ type Submission {
   mitigation: JSON
   adaptation: JSON
   createdAt: DateTime
+  createdBy: User
 }
 
 type Query {

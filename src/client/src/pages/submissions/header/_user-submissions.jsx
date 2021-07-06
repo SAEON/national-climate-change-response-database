@@ -11,7 +11,9 @@ import useTheme from '@material-ui/core/styles/useTheme'
 
 export default () => {
   const theme = useTheme()
-  const { isAuthenticated, user: { id = undefined } = {} } = useContext(authContext)
+  const _authContext = useContext(authContext)
+  const { isAuthenticated, user = {} } = _authContext
+  const { id = undefined } = user || {}
 
   if (!isAuthenticated) {
     return null

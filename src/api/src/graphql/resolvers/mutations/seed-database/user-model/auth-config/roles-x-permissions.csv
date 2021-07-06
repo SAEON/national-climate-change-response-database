@@ -40,5 +40,3 @@ dffe,delete-project
 dffe,update-project
 public,upload-project-file
 public,create-project
-public,delete-project
-public,update-project

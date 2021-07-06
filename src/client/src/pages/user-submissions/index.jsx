@@ -11,7 +11,7 @@ export default ({ id }) => {
       query user($id: Int!) {
         user(id: $id) {
           id
-          projects {
+          submissions {
             id
           }
         }

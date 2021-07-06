@@ -8,10 +8,10 @@ export default () =>
     async keys => {
       const sql = `
         select *
-        from Projects p
-        where p.userId in (${keys.join(',')})`
+        from Submissions s
+        where s.createdBy in (${keys.join(',')})`
 
-      logSql(sql, "Find user's projects", true)
+      logSql(sql, "Find user's submissions", true)
       const result = await query(sql)
       return keys.map(userId => result.recordset.filter(sift({ userId })))
     },

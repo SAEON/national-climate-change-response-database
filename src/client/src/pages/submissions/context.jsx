@@ -64,6 +64,11 @@ export default ({ children }) => {
           project
           mitigation
           adaptation
+          validationComments
+          validationStatus
+          createdBy {
+            id
+          }
         }
       }
     `,

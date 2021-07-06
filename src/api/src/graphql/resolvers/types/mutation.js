@@ -7,14 +7,27 @@ import createSubmission from '../mutations/create-submission/index.js'
 import deleteSubmission from '../mutations/delete-submission/index.js'
 import removeProjectFiles from '../mutations/remove-project-files/index.js'
 import saveSubmission from '../mutations/save-submission/index.js'
+import query from '../../../mssql/query.js'
+
+const getSubmissionOwner = async id => {
+  const result = await query(
+    `select *
+     from Submissions
+     where id = '${sanitizeSqlValue(id)}';`
+  )
+  return result.recordset[0].createdBy
+}
 
 export default {
   createSubmission: authorize(PERMISSIONS.createProject)(createSubmission),
-  deleteSubmission: authorize(PERMISSIONS.deleteProject)(deleteSubmission), // TODO - new permission?
+  deleteSubmission: async (...args) =>
+    authorize(PERMISSIONS.deleteProject, await getSubmissionOwner(args[1].id))(deleteSubmission)(
+      ...args
+    ),
   assignUserRoles: authorize(PERMISSIONS.assignRole)(assignUserRoles),
   seedDatabase: authorize(PERMISSIONS.seedDatabase)(seedDatabase),
   migrateDatabase: authorize(PERMISSIONS.migrateDatabase)(migrateDatabase),
   killServer: authorize(PERMISSIONS.killServer)(() => process.exit(1)),
-  removeProjectFiles: authorize(PERMISSIONS.uploadProjectFile)(removeProjectFiles), // TODO - new permission?
-  saveSubmission: authorize(PERMISSIONS.createProject)(saveSubmission), // TODO - new permission?
+  removeProjectFiles: authorize(PERMISSIONS.uploadProjectFile)(removeProjectFiles),
+  saveSubmission: authorize(PERMISSIONS.createProject)(saveSubmission),
 }

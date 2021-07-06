@@ -167,6 +167,7 @@ export default ({
       adaptation={adaptation}
       submissionId={submissionId}
       mode={mode}
+      isSubmitted={isSubmitted}
     >
       <FormController />
     </GraphQLFormProvider>

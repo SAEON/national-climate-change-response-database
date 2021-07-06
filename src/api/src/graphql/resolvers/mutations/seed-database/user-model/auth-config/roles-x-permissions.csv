@@ -36,7 +36,6 @@ admin,view-/access
 admin,view-/deployments
 dffe,upload-project-file
 dffe,create-project
-dffe,delete-project
 dffe,update-project
 public,upload-project-file
 public,create-project

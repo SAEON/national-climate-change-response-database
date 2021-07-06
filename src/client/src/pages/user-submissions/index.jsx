@@ -13,6 +13,7 @@ export default ({ id }) => {
           id
           submissions {
             id
+            isSubmitted
           }
         }
       }

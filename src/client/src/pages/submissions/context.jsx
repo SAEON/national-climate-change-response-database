@@ -51,6 +51,7 @@ export default ({ children }) => {
         $adaptationFilters: AdaptationFiltersInput
         $limit: Int
         $offset: Int
+        $isSubmitted: Boolean
       ) {
         submissions(
           limit: $limit
@@ -58,6 +59,7 @@ export default ({ children }) => {
           vocabularyFilters: $vocabularyFilters
           mitigationFilters: $mitigationFilters
           adaptationFilters: $adaptationFilters
+          isSubmitted: $isSubmitted
         ) {
           id
           isSubmitted
@@ -74,6 +76,7 @@ export default ({ children }) => {
     `,
     {
       variables: {
+        isSubmitted: true,
         limit: PAGE_SIZE,
         offset: currentPage * PAGE_SIZE,
         vocabularyFilters: normalizeVocabularyFilters(filterContext.SubmissionFilters),

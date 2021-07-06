@@ -89,6 +89,7 @@ type Query {
     adaptationFilters: AdaptationFiltersInput
     limit: Int
     offset: Int
+    isSubmitted: Boolean
   ): [Submission!]!
   # Search projects TODO delete
   projects(

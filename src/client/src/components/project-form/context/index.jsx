@@ -173,6 +173,7 @@ export default ({
             $adaptation: JSON
             $validationStatus: JSON
             $validationComments: String
+            $isSubmitted: Boolean
           ) {
             saveSubmission(
               submissionId: $submissionId
@@ -181,6 +182,7 @@ export default ({
               adaptation: $adaptation
               validationStatus: $validationStatus
               validationComments: $validationComments
+              isSubmitted: $isSubmitted
             ) {
               id
             }

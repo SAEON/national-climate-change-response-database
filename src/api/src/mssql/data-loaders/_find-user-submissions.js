@@ -13,7 +13,7 @@ export default () =>
 
       logSql(sql, "Find user's submissions", true)
       const result = await query(sql)
-      return keys.map(userId => result.recordset.filter(sift({ userId })))
+      return keys.map(createdBy => result.recordset.filter(sift({ createdBy })))
     },
     {
       batch: true,

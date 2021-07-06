@@ -5,6 +5,7 @@ const MAX_PAGE_SIZE = 20
 export default async (
   _,
   {
+    isSubmitted = true,
     ids = [],
     vocabularyFilters = [],
     mitigationFilters: { vocabularyFilters: mitigationVocabularyFilters = [] } = {},
@@ -24,12 +25,14 @@ export default async (
     select
     *
     from Submissions
-    where deletedAt is null
+    where
+      deletedAt is null
+      and isSubmitted = ${isSubmitted ? 1 : 0}
     order by id asc
     offset ${offset} rows
     fetch next ${limit} rows only`
 
-  logSql(sql, 'Fetch projects')
+  logSql(sql, 'Fetch projects', true)
   const result = await query(sql)
   return result.recordset
 }

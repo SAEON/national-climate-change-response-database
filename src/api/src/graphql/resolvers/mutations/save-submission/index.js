@@ -17,6 +17,8 @@ export default async (
   const { user } = ctx
   const userId = user.info(ctx).id
 
+  console.log('hii', isSubmitted)
+
   const sql = `
     merge Submissions t
     using (
@@ -24,7 +26,7 @@ export default async (
         '${JSON.stringify(project)}' project,
         '${JSON.stringify(mitigation)}' mitigation,
         '${JSON.stringify(adaptation)}' adaptation,
-        '${isSubmitted}' isSubmitted,
+        ${isSubmitted ? 1 : 0} isSubmitted,
         ${validationStatus ? `'${JSON.stringify(validationStatus)}' validationStatus,` : ''}
         '${sanitizeSqlValue(validationComments)}' validationComments,
         ${userId} createdBy,

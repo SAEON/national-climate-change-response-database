@@ -40,7 +40,7 @@ const LoadProject = ({ id }) => {
     throw new Error(`Error retrieving project - are you sure that project with ID ${id} exists?`)
   }
 
-  const { project, mitigation, adaptation } = submission
+  const { project, mitigation, adaptation, isSubmitted } = submission
 
   return (
     <>
@@ -53,6 +53,7 @@ const LoadProject = ({ id }) => {
             project={project}
             mitigation={mitigation}
             adaptation={adaptation}
+            isSubmitted={isSubmitted}
           />
         </Suspense>
       </Wrapper>

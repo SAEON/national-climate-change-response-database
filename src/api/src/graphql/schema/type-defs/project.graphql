@@ -1,6 +1,6 @@
 input ProjectInput {
   # Title ::
-  title: String
+  title: String!
   # Description :: Please describe the project including aims, objective, methodology used, life expectancy and outcome. The outcome should be the actual or desired outcome of the project, such as findings of research, levels of emissions or energy savings, level of resilience achieved, human capital potential, other environmental, social and economic benefits.
   description: String
   # Start year :: Project life span

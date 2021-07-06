@@ -41,6 +41,7 @@ export default ({
   project: generalDetails = {},
   mitigation: mitigationDetails = {},
   adaptation: adaptationDetails = {},
+  isSubmitted,
 }) => {
   const apollo = useApolloClient()
   const [syncing, setSyncing] = useState(false)
@@ -158,7 +159,7 @@ export default ({
   const syncProgress = useCallback(
     debounce(async ({ project, mitigation, adaptation }) => {
       setSyncing(true)
-      const result = await apollo.mutate({
+      await apollo.mutate({
         fetchPolicy: 'no-cache',
         mutation: gql`
           mutation saveSubmission(
@@ -182,7 +183,7 @@ export default ({
           project: convertFormToGqlInput(project),
           mitigation: convertFormToGqlInput(mitigation),
           adaptation: convertFormToGqlInput(adaptation),
-          isSubmitted: false, // TODO - this needs to be dynamic for editing?
+          isSubmitted,
         },
       })
       setSyncing(false)
@@ -196,6 +197,9 @@ export default ({
       mitigation: mitigationDetailsForm,
       adaptation: adaptationDetailsForm,
     })
+    return () => {
+      // TODO - Sync needs to be aborted if component is dismounted. I'm not sure how to do that with client.mutate()
+    }
   }, [generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm, syncProgress])
 
   if (loading) {

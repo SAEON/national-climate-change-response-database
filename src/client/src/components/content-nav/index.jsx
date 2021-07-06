@@ -10,6 +10,7 @@ import useStyles from './style'
 import clsx from 'clsx'
 import useTheme from '@material-ui/core/styles/useTheme'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Tooltip from '@material-ui/core/Tooltip'
 
 export default ({ navItems, subNavChildren = null, children }) => {
   const classes = useStyles()
@@ -24,53 +25,69 @@ export default ({ navItems, subNavChildren = null, children }) => {
       <Grid item xs={12} md={3}>
         <List style={{ padding: 0, display: 'flex', flexDirection: mdAndUp ? 'column' : 'row' }}>
           {navItems.map(
-            ({ Component, primaryText, secondaryText, Icon, disabled = false, style = {} }, i) => {
+            (
+              {
+                Component,
+                primaryText,
+                secondaryText,
+                Icon,
+                disabled = false,
+                style = {},
+                tooltipTitle,
+              },
+              i
+            ) => {
               if (Component) {
                 return <Component key={i} />
               }
               return (
-                <Card
-                  variant="outlined"
-                  style={{
-                    flexBasis: mdAndUp ? 'auto' : 0,
-                    flexGrow: 1,
-                    border: 'none',
-                    ...style,
-                  }}
-                  className={clsx(classes.card, {
-                    [classes.disabled]: disabled,
-                  })}
+                <Tooltip
                   key={i}
+                  title={tooltipTitle || disabled ? 'This option is disabled' : secondaryText}
+                  placement="top-end"
                 >
-                  <ButtonBase
-                    disabled={disabled}
-                    className={clsx({
-                      [classes.active]: i === activeIndex,
+                  <Card
+                    variant="outlined"
+                    style={{
+                      flexBasis: mdAndUp ? 'auto' : 0,
+                      flexGrow: 1,
+                      border: 'none',
+                      ...style,
+                    }}
+                    className={clsx(classes.card, {
+                      [classes.disabled]: disabled,
                     })}
-                    onClick={() => setActiveIndex(i)}
-                    style={{ width: '100%' }}
                   >
-                    <ListItem>
-                      {(xsAndDown || mdAndUp) && (
-                        <ListItemIcon style={{ justifyContent: 'center' }}>
-                          <Icon />
-                        </ListItemIcon>
-                      )}
+                    <ButtonBase
+                      disabled={disabled}
+                      className={clsx({
+                        [classes.active]: i === activeIndex,
+                      })}
+                      onClick={() => setActiveIndex(i)}
+                      style={{ width: '100%' }}
+                    >
+                      <ListItem>
+                        {(xsAndDown || mdAndUp) && (
+                          <ListItemIcon style={{ justifyContent: 'center' }}>
+                            <Icon />
+                          </ListItemIcon>
+                        )}
 
-                      {smAndUp && (
-                        <ListItemText
-                          style={{
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                          }}
-                          primary={primaryText}
-                          secondary={mdAndUp && secondaryText}
-                        />
-                      )}
-                    </ListItem>
-                  </ButtonBase>
-                </Card>
+                        {smAndUp && (
+                          <ListItemText
+                            style={{
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
+                            }}
+                            primary={primaryText}
+                            secondary={mdAndUp && secondaryText}
+                          />
+                        )}
+                      </ListItem>
+                    </ButtonBase>
+                  </Card>
+                </Tooltip>
               )
             }
           )}

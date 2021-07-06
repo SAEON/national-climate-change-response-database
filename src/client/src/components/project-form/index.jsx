@@ -20,6 +20,7 @@ const FormController = () => {
     mitigationFormsValidation,
     adaptationFormsValidation,
     syncing,
+    submissionId,
   } = useContext(formContext)
 
   const { isComplete: generalDetailsFormComplete, isStarted: generalDetailsFormStarted } =
@@ -107,9 +108,15 @@ const FormController = () => {
 
   const syncingNavItem = useMemo(
     () => ({
-      Component: () => <SyncStatus style={{ marginTop: theme.spacing(2) }} syncing={syncing} />,
+      Component: () => (
+        <SyncStatus
+          submissionId={submissionId}
+          style={{ marginTop: theme.spacing(2) }}
+          syncing={syncing}
+        />
+      ),
     }),
-    [syncing, theme]
+    [syncing, theme, submissionId]
   )
 
   return (
@@ -148,6 +155,7 @@ export default ({
   adaptation = undefined,
   submissionId = undefined,
   mode = 'new-submission',
+  isSubmitted = false,
 }) => {
   if (!submissionId) {
     throw new Error('Project form needs to be instantiated with a submissionId')

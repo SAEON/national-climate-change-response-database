@@ -17,8 +17,6 @@ export default async (
   const { user } = ctx
   const userId = user.info(ctx).id
 
-  console.log('hii', isSubmitted)
-
   const sql = `
     merge Submissions t
     using (
@@ -68,6 +66,7 @@ export default async (
   logSql(sql, 'Save active submission', true)
 
   // TODO - should probably process the output and return that
+  // eslint-disable-next-line
   const result = await query(sql)
   return {
     id: submissionId,

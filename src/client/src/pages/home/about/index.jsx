@@ -8,7 +8,7 @@ export default () => {
 
   return (
     <Grid container spacing={4}>
-      <Grid item sm={6} style={{ display: 'flex' }}>
+      <Grid item lg={6} style={{ display: 'flex' }}>
         <Typography
           style={{
             alignItems: 'center',
@@ -22,7 +22,7 @@ export default () => {
           Welcome to the National Climate Change Response Database
         </Typography>
       </Grid>
-      <Grid item sm={6} style={{ flexGrow: 1 }}>
+      <Grid item lg={6} style={{ flexGrow: 1 }}>
         <Typography
           style={{
             textAlign: 'justify',

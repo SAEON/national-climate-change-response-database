@@ -19,7 +19,7 @@ export default () => {
   return (
     <Grid container spacing={4}>
       {/* DESCRIPTION */}
-      <Grid item sm={6} style={{ flexGrow: 1 }}>
+      <Grid item lg={6} style={{ flexGrow: 1 }}>
         <Typography
           style={{
             textAlign: 'center',
@@ -45,7 +45,7 @@ export default () => {
       </Grid>
 
       {/* BUTTON */}
-      <Grid item sm={6} style={{ flexGrow: 1 }}>
+      <Grid item lg={6} style={{ flexGrow: 1 }}>
         <div style={{ height: '100%', position: 'relative', boxShadow: theme.shadows[9] }}>
           <div className={classes.root}>
             <ButtonBase

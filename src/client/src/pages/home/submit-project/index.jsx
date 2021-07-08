@@ -18,8 +18,34 @@ export default () => {
 
   return (
     <Grid container spacing={4}>
+      {/* DESCRIPTION */}
+      <Grid item lg={6} style={{ flexGrow: 1 }}>
+        <Typography
+          style={{
+            textAlign: 'center',
+            marginBottom: theme.spacing(3),
+            color: fade(theme.palette.common.white, 0.9),
+          }}
+          variant="h4"
+        >
+          Submit a project to the National Climate Change Response Database
+        </Typography>
+        <Typography
+          style={{ textAlign: 'justify', color: fade(theme.palette.common.white, 0.9) }}
+          variant="body1"
+        >
+          The NCCRD is designed to capture and store the details of climate change interventions
+          including adaptation, mitigation and crosscutting efforts from across South African
+          industrial, research, non-governmental organisations, government bodies and entities. The
+          submission of information to the database is entirely voluntary and the accuracy of the
+          information cannot be guaranteed. Project managers are responsible for adding and
+          maintaining information about their projects. Projects are reviewed and have to be
+          accepted by DFFE prior to becoming available in the system.
+        </Typography>
+      </Grid>
+
       {/* BUTTON */}
-      <Grid item sm={6} style={{ flexGrow: 1 }}>
+      <Grid item lg={6} style={{ flexGrow: 1 }}>
         <div style={{ height: '100%', position: 'relative', boxShadow: theme.shadows[9] }}>
           <div className={classes.root}>
             <ButtonBase
@@ -54,32 +80,6 @@ export default () => {
             </ButtonBase>
           </div>
         </div>
-      </Grid>
-
-      {/* DESCRIPTION */}
-      <Grid item sm={6} style={{ flexGrow: 1 }}>
-        <Typography
-          style={{
-            textAlign: 'center',
-            marginBottom: theme.spacing(3),
-            color: fade(theme.palette.common.white, 0.9),
-          }}
-          variant="h4"
-        >
-          Submit a project to the National Climate Change Response Database
-        </Typography>
-        <Typography
-          style={{ textAlign: 'justify', color: fade(theme.palette.common.white, 0.9) }}
-          variant="body1"
-        >
-          The NCCRD is designed to capture and store the details of climate change interventions
-          including adaptation, mitigation and crosscutting efforts from across South African
-          industrial, research, non-governmental organisations, government bodies and entities. The
-          submission of information to the database is entirely voluntary and the accuracy of the
-          information cannot be guaranteed. Project managers are responsible for adding and
-          maintaining information about their projects. Projects are reviewed and have to be
-          accepted by DFFE prior to becoming available in the system.
-        </Typography>
       </Grid>
     </Grid>
   )

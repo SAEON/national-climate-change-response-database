@@ -101,7 +101,7 @@ type Query {
     offset: Int
   ): [Project]!
   # Search vocabulary tress
-  controlledVocabulary(root: String!, tree: String!): ControlledVocabulary
+  controlledVocabulary(root: String, roots: [String!], tree: String!): [ControlledVocabulary]!
   # Search users
   users(ids: [Int!]): [User!]
   user(id: Int!): User

@@ -124,7 +124,7 @@ export default memo(
                 id="emissions-calculator-types"
                 helperText="Select all applicable emissions types"
                 label={'Emissions types'}
-                root="Emission"
+                roots={['Emission']}
                 tree="emissionTypes"
                 value={emissionTypes}
                 setValue={value =>

@@ -28,7 +28,7 @@ export default ({
     data,
   } = useQuery(
     gql`
-      query controlledVocabulary($root: String!, $tree: String!) {
+      query controlledVocabulary($root: String, $tree: String!) {
         controlledVocabulary(root: $root, tree: $tree) {
           id
           term
@@ -43,7 +43,7 @@ export default ({
     `,
     {
       variables: {
-        root: root.term || root,
+        root: root?.term || root,
         tree,
       },
     }
@@ -67,14 +67,20 @@ export default ({
     throw gqlError
   }
 
+  /**
+   * Since this component takes a single value as root,
+   * only a single term is returned (with multiple children)
+   */
+  const controlledVocabulary = data.controlledVocabulary[0]
+
   let options
   try {
     options = filterChildren
-      ? data.controlledVocabulary.children.filter(child => filterChildren(child))
-      : data.controlledVocabulary.children
-  } catch {
+      ? controlledVocabulary.children.filter(child => filterChildren(child))
+      : controlledVocabulary.children
+  } catch (error) {
     throw new Error(
-      `Unable to retrieve the vocabulary lists for the tree "${tree}" with root "${root}". Please make sure that the database is seeded correctly`
+      `Unable to retrieve the vocabulary lists for the tree "${tree}" with root "${root}". Please make sure that the database is seeded correctly\n\n${error.message}`
     )
   }
 

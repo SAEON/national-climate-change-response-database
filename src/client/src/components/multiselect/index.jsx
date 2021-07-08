@@ -10,6 +10,16 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 import ListItemText from '@material-ui/core/ListItemText'
 import useTheme from '@material-ui/core/styles/useTheme'
 import Loading from '../../components/loading'
+import clsx from 'clsx'
+import makeStyles from '@material-ui/core/styles/makeStyles'
+
+const useStyles = makeStyles(theme => ({
+  select: {
+    '& .MuiSelect-icon': {
+      marginRight: theme.spacing(1),
+    },
+  },
+}))
 
 export default ({
   id,
@@ -22,15 +32,17 @@ export default ({
   disabled = false,
   loading = false,
 }) => {
+  const classes = useStyles()
   const theme = useTheme()
 
   return (
     <div style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(1) }}>
-      <FormControl fullWidth>
+      <FormControl margin="normal" fullWidth>
         <InputLabel id={`${id}-label`} style={{ top: value.length ? -8 : -5, left: 12 }}>
           {label}
         </InputLabel>
         <Select
+          className={clsx(classes.select)}
           disabled={disabled}
           fullWidth
           labelId={`${id}-label`}
@@ -54,7 +66,14 @@ export default ({
           }}
           input={<OutlinedInput id={`${id}-input-label`} label={label} />}
           renderValue={selected => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+            <Box
+              style={{
+                display: 'inline-flex',
+                gap: theme.spacing(1),
+                flexWrap: 'wrap',
+                alignItems: 'flex-start',
+              }}
+            >
               {selected.map(value => {
                 const { style, color = undefined, ...props } = chipProps
                 const _color = typeof color === 'function' ? color(value) : color || 'primary'
@@ -64,7 +83,9 @@ export default ({
                     color={_color}
                     key={value}
                     label={value}
-                    style={{ marginRight: theme.spacing(1), ...style }}
+                    style={{
+                      ...style,
+                    }}
                     {...props}
                   />
                 )

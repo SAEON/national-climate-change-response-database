@@ -1,5 +1,10 @@
 import { useContext, lazy, Suspense } from 'react'
-import { GqlBoundFormInput, ControlledVocabularySelect, StringField } from '../../form'
+import {
+  GqlBoundFormInput,
+  ControlledVocabularySelect,
+  ControlledVocabularySelectMultiple,
+  StringField,
+} from '../../form'
 import { context as formContext } from '../../context'
 import { context as authContext } from '../../../../contexts/authorization'
 import Loading from '../../../loading'
@@ -50,10 +55,11 @@ export default ({ field }) => {
    */
   if (fieldName === 'province') {
     return (
-      <ControlledVocabularySelect
+      <ControlledVocabularySelectMultiple
+        id="select-province"
         key={fieldName}
         tree={tree}
-        root="South Africa"
+        roots={['South Africa']}
         name={fieldName}
         value={value}
         error={isRequired && !value}
@@ -64,37 +70,39 @@ export default ({ field }) => {
             localMunicipality: undefined,
           })
         }
-        placeholder={placeholder}
+        label={placeholder}
         helperText={helperText}
       />
     )
   } else if (fieldName === 'districtMunicipality') {
-    if (!form.province) return null
+    if (!form.province?.length) return null
     return (
-      <ControlledVocabularySelect
+      <ControlledVocabularySelectMultiple
+        id="select-district-municipality"
         key={fieldName}
         tree={tree}
-        root={form.province}
+        roots={form.province}
         name={fieldName}
         value={value}
         error={isRequired && !value}
         onChange={val => updateForm({ [fieldName]: val, localMunicipality: undefined })}
-        placeholder={placeholder}
+        label={placeholder}
         helperText={helperText}
       />
     )
   } else if (fieldName === 'localMunicipality') {
-    if (!form.districtMunicipality) return null
+    if (!form.districtMunicipality?.length) return null
     return (
-      <ControlledVocabularySelect
+      <ControlledVocabularySelectMultiple
+        id="select-local-municipality"
         key={fieldName}
         tree={tree}
-        root={form.districtMunicipality}
+        roots={form.districtMunicipality}
         name={fieldName}
         value={value}
         error={isRequired && !value}
         onChange={val => updateForm({ [fieldName]: val })}
-        placeholder={placeholder}
+        label={placeholder}
         helperText={helperText}
       />
     )

@@ -31,7 +31,7 @@ input ProjectInput {
   projectManagerTelephone: String
   # Mobile number ::
   projectManagerMobile: String
-  # City / Town
+  # City / Town(s) :: City 1, City 2, etc.
   cityOrTown: String
 
   # Estimated budget range :: If you don't know the actual budget, please provide a range estimate :: budgetRanges
@@ -42,11 +42,11 @@ input ProjectInput {
   implementationStatus: ControlledVocabularyInput
   # Type of funding :: Any financial resources that is spent on supporting either mitigation and adaption efforts in South Africa. Climate finance refers to <b>domestic</b> (drawn from local public or private organisations), <b>International</b> (bilateral or multilateral grants or loans). <b>Bilateral</b> funding describes money which is given directly from one government to another, whereas <b>multilateral</b> funding comes from numerous different governments and organisations and is usually arranged by an international organisation such as the World Bank or the UN :: fundingTypes
   fundingType: ControlledVocabularyInput
-  # Province :: Select province :: regions
+  # Province :: Select province(s) :: regions
   province: ControlledVocabularyInput
-  # District municipality :: Select district municipality :: regions
+  # District municipality :: Select district municipality(s) :: regions
   districtMunicipality: ControlledVocabularyInput
-  # Local municipality :: Select local municipality :: regions
+  # Local municipality :: Select local municipality(s) :: regions
   localMunicipality: ControlledVocabularyInput
 }
 

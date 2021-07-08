@@ -118,7 +118,7 @@ export default memo(
                 id="energy-calculator"
                 helperText="Select all applicable renewable energy types"
                 label={'Renewable energy types'}
-                root="Energy source"
+                roots={['Energy source']}
                 tree="renewableTypes"
                 value={renewableTypes}
                 setValue={value =>

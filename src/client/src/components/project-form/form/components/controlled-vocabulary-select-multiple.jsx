@@ -4,13 +4,13 @@ import Typography from '@material-ui/core/Typography'
 import Loading from '../../../loading'
 import Multiselect from '../../../multiselect'
 
-export default ({ root, tree, disabled = false, value, setValue, helperText, label, id }) => {
+export default ({ roots, tree, disabled = false, value, onChange, helperText, label, id }) => {
   const theme = useTheme()
 
   const { error, loading, data } = useQuery(
     gql`
-      query controlledVocabulary($root: String!, $tree: String!) {
-        controlledVocabulary(root: $root, tree: $tree) {
+      query controlledVocabularies($roots: [String!], $tree: String!) {
+        controlledVocabulary(roots: $roots, tree: $tree) {
           id
           term
           children {
@@ -24,7 +24,7 @@ export default ({ root, tree, disabled = false, value, setValue, helperText, lab
     `,
     {
       variables: {
-        root,
+        roots: roots.map(root => root?.term || root),
         tree,
       },
     }
@@ -50,7 +50,7 @@ export default ({ root, tree, disabled = false, value, setValue, helperText, lab
 
   let options
   try {
-    options = data.controlledVocabulary.children
+    options = data.controlledVocabulary.map(({ children }) => children).flat()
   } catch {
     throw new Error(
       'Unable to retrieve the vocabulary lists - please make sure that the database is seeded correctly'
@@ -62,10 +62,10 @@ export default ({ root, tree, disabled = false, value, setValue, helperText, lab
       id={id}
       disabled={disabled}
       options={options.map(({ term }) => term)}
-      value={value}
+      value={value || []}
       helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
       label={label}
-      setValue={setValue}
+      setValue={onChange}
     />
   )
 }

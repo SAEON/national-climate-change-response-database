@@ -1,5 +1,7 @@
 import { NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES } from '../../../../../config.js'
-const DEFAULT_SYSADMINS = NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES.split(',').filter(_ => _)
+const DEFAULT_SYSADMINS = NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES.split(',')
+  .filter(_ => _)
+  .map(_ => _.toLowerCase())
 
 export default async query => {
   console.info('Seeding default sysadmins')

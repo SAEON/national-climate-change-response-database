@@ -1,5 +1,7 @@
 import { NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES } from '../../../../../config.js'
-const DEFAULT_ADMINS = NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',').filter(_ => _)
+const DEFAULT_ADMINS = NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',')
+  .filter(_ => _)
+  .map(_ => _.toLowerCase())
 
 export default async query => {
   console.info('Seeding default admins')

@@ -29,7 +29,7 @@ export default () => {
         },
         async (token, tokenSecret, _, cb) => {
           const {
-            email: saeonEmail,
+            email,
             sub: saeonId,
             family_name = '',
             given_name = '',
@@ -38,6 +38,8 @@ export default () => {
               Authorization: `bearer ${token}`,
             },
           }).then(res => res.json())
+
+          const saeonEmail = email.toLowerCase()
 
           try {
             const sql = `

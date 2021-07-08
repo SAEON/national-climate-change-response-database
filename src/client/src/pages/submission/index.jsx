@@ -71,14 +71,6 @@ export default ({ id }) => {
               'carbonCreditVoluntaryOrganization',
               'carbonCreditVoluntaryMethodology',
             ],
-            'Associated research': [
-              'hasResearch',
-              'researchDescription',
-              'researchType',
-              'researchTargetAudience',
-              'researchAuthor',
-              'researchPaper',
-            ],
           }}
           adaptationSections={{
             'Adaptation details': [
@@ -93,14 +85,6 @@ export default ({ id }) => {
               'responseImpact',
             ],
             'Hazard details': ['hazardFamily', 'hazardSubFamily', 'hazard', 'subHazard'],
-            'Associated research': [
-              'hasResearch',
-              'researchDescription',
-              'researchType',
-              'researchTargetAudience',
-              'researchAuthor',
-              'researchPaper',
-            ],
           }}
           projectSections={{
             'Project details': [

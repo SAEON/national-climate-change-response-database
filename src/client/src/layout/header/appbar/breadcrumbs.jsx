@@ -35,8 +35,10 @@ export default function IconBreadcrumbs() {
   return (
     <Breadcrumbs aria-label="breadcrumb">
       {tree.length > 1 &&
-        tree.slice(0, -1).map(({ label, Icon, to }) => {
-          if (label === 'Submission') {
+        tree.slice(0, -1).map(({ label, Icon, BreadcrumbsIcon, breadcrumbsLabel, to }) => {
+          Icon = BreadcrumbsIcon || Icon
+          label = breadcrumbsLabel || label
+          if (label === 'New') {
             Icon = SubmissionIcon
           }
           return (
@@ -59,7 +61,10 @@ export default function IconBreadcrumbs() {
           )
         })}
 
-      {tree.slice(-1).map(({ label, Icon } = {}) => {
+      {tree.slice(-1).map(({ label, breadcrumbsLabel, Icon, BreadcrumbsIcon } = {}) => {
+        Icon = BreadcrumbsIcon || Icon
+        label = breadcrumbsLabel || label
+
         if (label === 'Edit') {
           Icon = EditIcon
         }

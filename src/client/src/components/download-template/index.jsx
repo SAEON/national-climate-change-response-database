@@ -1,13 +1,16 @@
+import { useContext } from 'react'
+import { context as authenticationContext } from '../../contexts/authentication'
 import Icon from 'mdi-react/FileDownloadIcon'
 import Button from '@material-ui/core/Button'
-import MessageDialogue from '../../../../components/message-dialogue'
+import MessageDialogue from '../message-dialogue'
 import Link from '@material-ui/core/Link'
 import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { NCCRD_API_HTTP_ADDRESS } from '../../../../config'
+import { NCCRD_API_HTTP_ADDRESS } from '../../config'
 
 export default () => {
   const theme = useTheme()
+  const isAuthenticated = useContext(authenticationContext)
 
   return (
     <MessageDialogue
@@ -31,14 +34,17 @@ export default () => {
       Button={openFn => {
         return (
           <Button
-            onClick={openFn}
+            onClick={e => {
+              isAuthenticated.authenticate()
+              openFn(e)
+            }}
             disableElevation
             size="small"
             variant="text"
             color="primary"
             startIcon={<Icon size={18} />}
           >
-            Download Excel template
+            Download submission template
           </Button>
         )
       }}

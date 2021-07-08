@@ -1,9 +1,12 @@
+import { useContext } from 'react'
+import { context as authenticationContext } from '../../contexts/authentication'
 import Icon from 'mdi-react/MicrosoftExcelIcon'
 import Button from '@material-ui/core/Button'
-
-import MessageDialogue from '../../../../components/message-dialogue'
+import MessageDialogue from '../message-dialogue'
 
 export default () => {
+  const isAuthenticated = useContext(authenticationContext)
+
   return (
     <MessageDialogue
       title="Submit project via Excel file upload"
@@ -15,14 +18,17 @@ export default () => {
       Button={openFn => {
         return (
           <Button
-            onClick={openFn}
+            onClick={e => {
+              isAuthenticated.authenticate()
+              openFn(e)
+            }}
             disableElevation
             size="small"
             variant="text"
             color="primary"
             startIcon={<Icon size={18} />}
           >
-            Upload project(s) template
+            Submit project(s) template
           </Button>
         )
       }}

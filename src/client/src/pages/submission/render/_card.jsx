@@ -11,7 +11,7 @@ export default ({ title, json }) => {
     <Card style={{ backgroundColor: theme.backgroundColor, height: '100%' }} variant="outlined">
       <CardHeader title={title} />
       <CardContent>
-        <FormattedObject>{json}</FormattedObject>
+        <FormattedObject json={json} />
       </CardContent>
     </Card>
   )

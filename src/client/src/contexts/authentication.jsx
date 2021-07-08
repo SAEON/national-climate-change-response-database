@@ -11,7 +11,7 @@ export default ({ children }) => {
     if (user) {
       return true
     } else {
-      window.location.href = `${NCCRD_API_HTTP_ADDRESS}/login?redirect=${window.location.href}`
+      window.location.href = `/login?redirect=${window.location.href}`
     }
   }
 

@@ -1,13 +1,11 @@
-import ToolbarHeader from '../../../components/toolbar-header'
-import DeleteSubmission from './delete-submission'
 import DownloadExcelTemplate from '../../../components/download-template'
 import UploadProject from '../../../components/submit-template'
-import useTheme from '@material-ui/core/styles/useTheme'
+import ToolbarHeader from '../../../components/toolbar-header'
 import Divider from '@material-ui/core/Divider'
+import useTheme from '@material-ui/core/styles/useTheme'
 import Hidden from '@material-ui/core/Hidden'
-import ShareForm from './share-form'
 
-export default ({ id }) => {
+export default () => {
   const theme = useTheme()
 
   return (
@@ -22,24 +20,7 @@ export default ({ id }) => {
           style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
         />
       </Hidden>
-
       <div style={{ marginRight: 'auto' }} />
-
-      <Divider
-        flexItem
-        orientation="vertical"
-        style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
-      />
-
-      <ShareForm />
-
-      <Divider
-        flexItem
-        orientation="vertical"
-        style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
-      />
-
-      <DeleteSubmission id={id} />
     </ToolbarHeader>
   )
 }

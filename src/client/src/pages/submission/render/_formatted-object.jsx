@@ -1,10 +1,22 @@
 import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-export default ({ children }) => {
+const renderValue = value => {
+  if (value.term) {
+    return value.term
+  }
+
+  if (typeof value === 'object') {
+    return JSON.stringify(value)
+  }
+
+  return value
+}
+
+export default ({ json }) => {
   const theme = useTheme()
 
-  return Object.keys(children).map(key => {
+  return Object.keys(json).map(key => {
     return (
       <div key={key}>
         {/* TITLE */}
@@ -20,7 +32,7 @@ export default ({ children }) => {
             marginBottom: theme.spacing(2),
           }}
         >
-          {children[key]?.term || children[key]}
+          <>{renderValue(json[key])}</>
         </Typography>
       </div>
     )

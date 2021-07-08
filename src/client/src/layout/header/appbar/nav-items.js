@@ -1,7 +1,9 @@
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import HomeIcon from 'mdi-react/HomeIcon'
-import SubmissionsIcon from 'mdi-react/DatabaseIcon'
+import SearchSubmissionsIcon from 'mdi-react/DatabaseSearchIcon'
 import DeploymentsIcon from 'mdi-react/ServerIcon'
+import SubmitIcon from 'mdi-react/DatabaseAddIcon'
+import SubmissionsIcon from 'mdi-react/DatabaseIcon'
 
 export default [
   {
@@ -10,15 +12,23 @@ export default [
     to: '/',
   },
   {
-    label: 'Submissions',
-    Icon: SubmissionsIcon,
+    breadcrumbsLabel: 'Submissions',
+    BreadcrumbsIcon: SubmissionsIcon,
+    label: 'Search Submissions',
+    Icon: SearchSubmissionsIcon,
     to: '/submissions',
+  },
+  {
+    label: 'Submit project',
+    Icon: SubmitIcon,
+    to: '/submissions/new',
   },
   {
     label: 'Deployments',
     Icon: DeploymentsIcon,
     to: '/deployments',
+    requiredPermission: 'view-/deployments',
   },
-  { label: 'Access', Icon: UsersIcon, to: '/access', authorization: ['admin'] },
-  { label: 'Users', Icon: UsersIcon, to: '/users', authorization: ['admin'], excludeFromNav: true },
+  { label: 'Access', Icon: UsersIcon, to: '/access', requiredPermission: 'view-/access' },
+  { label: 'Users', Icon: UsersIcon, to: '/users', excludeFromNav: true },
 ]

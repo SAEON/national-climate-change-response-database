@@ -6,6 +6,7 @@ import Loading from '../loading'
 import AvatarIcon from './_avatar-icon'
 import useTheme from '@material-ui/core/styles/useTheme'
 import SyncStatus from './_sync-status'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const GeneralDetailsForm = lazy(() => import('./sections/general-details'))
 const MitigationDetailsForm = lazy(() => import('./sections/mitigation-details'))
@@ -13,6 +14,7 @@ const AdaptationDetailsForm = lazy(() => import('./sections/adaptation-details')
 
 const FormController = () => {
   const theme = useTheme()
+  const lgAndUp = useMediaQuery(theme.breakpoints.up('lg'))
   const {
     mode,
     generalDetailsForm,
@@ -97,13 +99,13 @@ const FormController = () => {
 
   const submitNavItem = useMemo(
     () => ({
-      style: { marginTop: theme.spacing(2) },
+      style: { marginTop: theme.spacing(lgAndUp ? 2 : 0) },
       disabled: !canSubmit,
       primaryText: 'Submit',
       secondaryText: 'Review and submit project',
       Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={4} />,
     }),
-    [canSubmit, theme]
+    [canSubmit, lgAndUp, theme]
   )
 
   const syncingNavItem = useMemo(

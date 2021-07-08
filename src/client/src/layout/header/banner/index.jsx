@@ -11,6 +11,7 @@ export default () => {
   const theme = useTheme()
   const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
   const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
+  const lgAndUp = useMediaQuery(theme.breakpoints.up('lg'))
 
   return (
     <Toolbar>
@@ -36,7 +37,7 @@ export default () => {
             style={{ display: 'flex', flexBasis: 0, flexGrow: 1, textAlign: 'center' }}
             variant="h1"
           >
-            National Climate Change Response Database
+            {lgAndUp ? 'National Climate Change Response Database' : 'NCCRD'}
           </Typography>
         </MuiLink>
       )}

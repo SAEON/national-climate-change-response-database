@@ -40,7 +40,14 @@ export default function IconBreadcrumbs() {
           label = breadcrumbsLabel || label
           if (label === 'New') {
             Icon = SubmissionIcon
+            return (
+              <Typography key={label} color="inherit" className={classes.link}>
+                {Icon && <Icon size={18} className={classes.icon} />}
+                {label}
+              </Typography>
+            )
           }
+
           return (
             <MuiLink
               component={Link}

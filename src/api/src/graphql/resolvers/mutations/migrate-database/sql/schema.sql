@@ -225,6 +225,7 @@ if not exists (
 )
 begin
 create table Submissions (
+	_id int not null unique identity,
   id uniqueidentifier not null primary key default (newsequentialid()),
 	validationStatus nvarchar(4000),
 	validationComments nvarchar(max),
@@ -235,13 +236,24 @@ create table Submissions (
 	createdBy int foreign key references Users (id),
 	createdAt datetime2 not null,
 	deletedAt datetime2 null,
+	_projectTitle as JSON_VALUE(project, '$.title'),
+	_projectDescription as JSON_VALUE(project, '$.description'),
 	index ix_submissions nonclustered (id),
+	index ix_submissions_id nonclustered (id),
 	constraint json_validationStatus check(isjson(validationStatus)=1),
 	constraint json_project check(isjson(project)=1),
 	constraint json_mitigation check(isjson(mitigation)=1),
 	constraint json_Adaptation check(isjson(adaptation)=1)
 );
 end
+
+-- https://schwabencode.com/blog/2019/10/27/MSSQL-Server-2017-Docker-Full-Text-Search
+
+-- create fulltext catalogue submissionDetails;
+-- create fulltext index on Submissions(
+-- 	_projectTitle language 1033,
+-- 	_projectDescription language 1033
+-- ) key index ix_submissions_id on Submissions;
 
 -- WebSubmissionFiles
 if not exists (

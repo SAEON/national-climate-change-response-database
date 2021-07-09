@@ -1,17 +1,36 @@
 import { useContext } from 'react'
 import { context as filterContext } from '../context'
-import reduceFilters from './reduce-filters'
 import FilterSection from './filter-section'
 
 export default () => {
-  const { filters: _filters } = useContext(filterContext)
-  const filters = reduceFilters(_filters)
+  const {
+    projectFilters,
+    mitigationFilters,
+    adaptationFilters,
+    setProjectFilters,
+    setAdaptationFilters,
+    setMitigationFilters,
+  } = useContext(filterContext)
 
   return (
     <>
-      <FilterSection filters={filters.project} entityContext="Project" />
-      <FilterSection filters={filters.mitigation} entityContext="Mitigation" />
-      <FilterSection filters={filters.adaptation} entityContext="Adaptation" />
+      <FilterSection
+        title="Project filters"
+        filters={projectFilters}
+        setFilter={setProjectFilters}
+      />
+
+      <FilterSection
+        title="Mitigation filters"
+        filters={mitigationFilters}
+        setFilter={setMitigationFilters}
+      />
+
+      <FilterSection
+        title="Adaptation filters"
+        filters={adaptationFilters}
+        setFilter={setAdaptationFilters}
+      />
     </>
   )
 }

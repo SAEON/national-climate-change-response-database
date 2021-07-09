@@ -84,9 +84,9 @@ type Query {
   # Search submissions
   submissions(
     ids: [Int!]
-    vocabularyFilters: [VocabularyFilterInput!]
-    mitigationFilters: MitigationFiltersInput
-    adaptationFilters: AdaptationFiltersInput
+    projectFilters: JSON
+    mitigationFilters: JSON
+    adaptationFilters: JSON
     limit: Int
     offset: Int
     isSubmitted: Boolean

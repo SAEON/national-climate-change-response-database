@@ -65,7 +65,7 @@ export default ({ roots, tree, disabled = false, value, onChange, helperText, la
       value={value || []}
       helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
       label={label}
-      setValue={onChange}
+      setValue={onChange} // TODO - should store vocabulary object. not jus value
     />
   )
 }

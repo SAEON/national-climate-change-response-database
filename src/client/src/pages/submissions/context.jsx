@@ -2,64 +2,78 @@ import { useState, createContext, useCallback } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
 import Fade from '@material-ui/core/Fade'
+import {
+  projectFilters as projectFiltersConfig,
+  adaptationFilters as adaptationFiltersConfig,
+  mitigationFilters as mitigationFiltersConfig,
+} from './filters/config'
 
 export const context = createContext()
 
-const PAGE_SIZE = 20
-
-const normalizeVocabularyFilters = f =>
-  Object.entries(f)
-    .filter(([, term]) => term)
-    .map(([field, term]) => ({
-      field,
-      term,
-    }))
+const PAGE_SIZE = 10
 
 export default ({ children }) => {
   const [currentPage, setCurrentPage] = useState(0)
-  const [filterContext, setFilterContext] = useState({
-    SubmissionFilters: {},
-    MitigationFilters: {},
-    AdaptationFilters: {},
-  })
+  const [projectFilters, _setProjectFilters] = useState(projectFiltersConfig)
+  const [adaptationFilters, _setAdaptationFilters] = useState(adaptationFiltersConfig)
+  const [mitigationFilters, _setMitigationFilters] = useState(mitigationFiltersConfig)
 
-  const setFilter = useCallback((obj, entity) => {
-    setFilterContext(filterContext =>
-      Object.assign(
-        { ...filterContext },
-        {
-          [`${entity}Filters`]: Object.assign(
-            {
-              ...filterContext[`${entity}Filters`],
-            },
-            obj
-          ),
-        }
-      )
-    )
-  }, [])
+  const setProjectFilters = useCallback(
+    ({ field, value }) =>
+      _setProjectFilters(projectFilters =>
+        Object.assign(
+          { ...projectFilters },
+          {
+            [field]: Object.assign({ ...projectFilters[field] }, { value }),
+          }
+        )
+      ),
+    []
+  )
 
-  const setSubmissionFilter = useCallback(obj => setFilter(obj, 'Submission'), [setFilter])
-  const setMitigationFilter = useCallback(obj => setFilter(obj, 'Mitigation'), [setFilter])
-  const setAdaptationFilter = useCallback(obj => setFilter(obj, 'Adaptation'), [setFilter])
+  const setAdaptationFilters = useCallback(
+    ({ field, value }) =>
+      _setAdaptationFilters(adaptationFilters =>
+        Object.assign(
+          { ...adaptationFilters },
+          {
+            [field]: Object.assign({ ...adaptationFilters[field] }, { value }),
+          }
+        )
+      ),
+    []
+  )
+
+  const setMitigationFilters = useCallback(
+    ({ field, value }) =>
+      _setMitigationFilters(mitigationFilters =>
+        Object.assign(
+          { ...mitigationFilters },
+          {
+            [field]: Object.assign({ ...mitigationFilters[field] }, { value }),
+          }
+        )
+      ),
+    []
+  )
 
   const { error, loading, data } = useQuery(
     gql`
       query submissions(
-        $vocabularyFilters: [VocabularyFilterInput!]
-        $mitigationFilters: MitigationFiltersInput
-        $adaptationFilters: AdaptationFiltersInput
         $limit: Int
         $offset: Int
         $isSubmitted: Boolean
+        $projectFilters: JSON
+        $mitigationFilters: JSON
+        $adaptationFilters: JSON
       ) {
         submissions(
           limit: $limit
           offset: $offset
-          vocabularyFilters: $vocabularyFilters
+          isSubmitted: $isSubmitted
+          projectFilters: $projectFilters
           mitigationFilters: $mitigationFilters
           adaptationFilters: $adaptationFilters
-          isSubmitted: $isSubmitted
         ) {
           id
           isSubmitted
@@ -75,17 +89,14 @@ export default ({ children }) => {
       }
     `,
     {
+      fetchPolicy: 'network-only',
       variables: {
         isSubmitted: true,
         limit: PAGE_SIZE,
         offset: currentPage * PAGE_SIZE,
-        vocabularyFilters: normalizeVocabularyFilters(filterContext.SubmissionFilters),
-        mitigationFilters: {
-          vocabularyFilters: normalizeVocabularyFilters(filterContext.MitigationFilters),
-        },
-        adaptationFilters: {
-          vocabularyFilters: normalizeVocabularyFilters(filterContext.AdaptationFilters),
-        },
+        projectFilters,
+        mitigationFilters,
+        adaptationFilters,
       },
     }
   )
@@ -107,16 +118,17 @@ export default ({ children }) => {
   return (
     <context.Provider
       value={{
-        filterContext,
+        projectFilters,
+        setProjectFilters,
+        adaptationFilters,
+        setAdaptationFilters,
+        mitigationFilters,
+        setMitigationFilters,
         currentPage,
         pageSize: PAGE_SIZE,
         previousPage: currentPage === 0 ? undefined : () => setCurrentPage(p => p - 1),
         nextPage: () => setCurrentPage(p => p + 1),
         submissions,
-        filters: [],
-        setSubmissionFilter,
-        setMitigationFilter,
-        setAdaptationFilter,
       }}
     >
       <Fade in={Boolean(data)} key="data-in">

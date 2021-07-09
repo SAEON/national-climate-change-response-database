@@ -224,7 +224,15 @@ export default ({
       adaptation: adaptationDetailsForm,
     })
     return () => {
-      // TODO - Sync needs to be aborted if component is dismounted. I'm not sure how to do that with client.mutate()
+      /**
+       * TODO - Sync needs to be aborted if component is dismounted
+       * I'm not sure how to do that with client.mutate(). The apollo
+       * hooks do it automatically, so possibly look in the apollo client
+       * source code (or refactor to use hooks - but that created an infinite
+       * loop when I tried it)
+       *
+       * But it's not too big of a problem in any case
+       */
     }
   }, [generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm, syncProgress])
 

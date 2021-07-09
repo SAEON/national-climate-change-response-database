@@ -2,7 +2,7 @@ import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 
 const renderValue = value => {
-  if (value.term) {
+  if (value?.term) {
     return value.term
   }
 

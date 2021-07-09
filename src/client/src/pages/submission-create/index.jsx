@@ -11,12 +11,24 @@ export default () => {
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
 
-  const [createSubmission, { data: { createSubmission: id } = {} }] = useMutation(
+  const [createSubmission, { data: { createSubmission: { id } = {} } = {} }] = useMutation(
     gql`
       mutation createSubmission {
-        createSubmission
+        createSubmission {
+          id
+          isSubmitted
+        }
       }
-    `
+    `,
+    {
+      update: (cache, { data: { createSubmission: newSubmission } }) => {
+        cache.modify({
+          fields: {
+            submissions: (existingSubmissions = []) => [...existingSubmissions, newSubmission],
+          },
+        })
+      },
+    }
   )
 
   useEffect(() => {

@@ -163,7 +163,9 @@ export default ({
       const { __validationStatus: validationStatus, __validationComments: validationComments } =
         project
 
-      await apollo.mutate({
+      const {
+        data: { saveSubmission: submission },
+      } = await apollo.mutate({
         fetchPolicy: 'no-cache',
         mutation: gql`
           mutation saveSubmission(
@@ -185,6 +187,12 @@ export default ({
               isSubmitted: $isSubmitted
             ) {
               id
+              isSubmitted
+              project
+              mitigation
+              adaptation
+              validationStatus
+              validationComments
             }
           }
         `,
@@ -198,6 +206,12 @@ export default ({
           isSubmitted,
         },
       })
+
+      apollo.cache.modify({
+        id: apollo.cache.identify(submission),
+        fields: (value, details) => submission?.[details.fieldName] || value,
+      })
+
       setSyncing(false)
     }, 1000),
     []

@@ -11,5 +11,7 @@ export default (sql, name, force = false) => {
     } catch (error) {
       console.error('Unable to print SQL (I think this is a bug with the sql-formatter library)')
     }
+  } else {
+    console.info(`===== SQL Query # ${name || 'anonymous'}`)
   }
 }

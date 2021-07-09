@@ -60,15 +60,10 @@ export default async (
       
     output
       $action,
-      inserted.*,
-      deleted.*;`
+      inserted.*;`
 
-  logSql(sql, 'Save active submission', true)
-
-  // TODO - should probably process the output and return that
-  // eslint-disable-next-line
-  const result = await query(sql)
-  return {
-    id: submissionId,
-  }
+  logSql(sql, 'Save active submission')
+  const response = await query(sql)
+  const output = response.recordset[0]
+  return output
 }

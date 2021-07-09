@@ -9,7 +9,7 @@ export default async (self, args, ctx) => {
       createdAt
     )
 
-    output inserted.id
+    output inserted.*
     
     values (
       ${ctx.user.info(ctx).id},
@@ -18,5 +18,5 @@ export default async (self, args, ctx) => {
 
   logSql(sql, 'Create submission')
   const result = await query(sql)
-  return result.recordset[0].id
+  return result.recordset[0]
 }

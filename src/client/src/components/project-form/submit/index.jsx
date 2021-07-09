@@ -38,26 +38,28 @@ export default () => {
           validationComments: $validationComments
         ) {
           id
+          isSubmitted
         }
       }
     `,
     {
-      update: (cache, { data: { saveSubmission } }) => {
-        // cache.modify({
-        //   fields: {
-        //     projects: (existingProjects = []) => [
-        //       ...existingProjects,
-        //       cache.writeFragment({
-        //         data: saveSubmission,
-        //         fragment: gql`
-        //           fragment newSu on Submission {
-        //             id
-        //           }
-        //         `,
-        //       }),
-        //     ],
-        //   },
-        // })
+      update: (cache, { data: { saveSubmission: submission } }) => {
+        cache.modify({
+          fields: {
+            submissions: (existingSubmissions = []) => [
+              ...existingSubmissions,
+              cache.writeFragment({
+                data: submission,
+                fragment: gql`
+                  fragment newData on Submission {
+                    id
+                    isSubmitted
+                  }
+                `,
+              }),
+            ],
+          },
+        })
       },
       onCompleted: ({ saveSubmission }) => {
         const { id } = saveSubmission

@@ -2,6 +2,7 @@ export default {
   project: async ({ project = {} }) => JSON.parse(project),
   mitigation: async ({ mitigation = {} }) => JSON.parse(mitigation),
   adaptation: async ({ adaptation = {} }) => JSON.parse(adaptation),
+  validationStatus: async ({ validationStatus = {} }) => JSON.parse(validationStatus),
 
   /**
    * I think I only ever care about the userId

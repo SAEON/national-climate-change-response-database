@@ -127,7 +127,7 @@ type Mutation {
   killServer: Void
   migrateDatabase(dropSchema: Boolean): JSON!
   seedDatabase(userModel: Boolean, erm: Boolean, vocabularies: Boolean): JSON!
-  createSubmission: ID!
+  createSubmission: Submission!
   deleteSubmission(id: ID!): ID!
   removeProjectFiles(submissionId: ID!, ids: [Int!]!): JSON!
   # Assign roles to users

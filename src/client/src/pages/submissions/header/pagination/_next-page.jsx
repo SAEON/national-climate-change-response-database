@@ -5,12 +5,12 @@ import { useContext } from 'react'
 import { context as resultContext } from '../../context'
 
 export default () => {
-  const { nextPage } = useContext(resultContext)
+  const { nextPage, hasNextPage } = useContext(resultContext)
 
   return (
-    <Tooltip title="Go to next page">
+    <Tooltip title={hasNextPage ? 'Go to next page' : '(No more pages)'}>
       <span>
-        <IconButton onClick={nextPage} size="small">
+        <IconButton disabled={!hasNextPage} onClick={nextPage} size="small">
           <Icon size={18} />
         </IconButton>
       </span>

@@ -10,7 +10,7 @@ import {
 
 export const context = createContext()
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 20
 
 export default ({ children }) => {
   const [currentPage, setCurrentPage] = useState(0)
@@ -75,15 +75,22 @@ export default ({ children }) => {
           mitigationFilters: $mitigationFilters
           adaptationFilters: $adaptationFilters
         ) {
-          id
-          isSubmitted
-          project
-          mitigation
-          adaptation
-          validationComments
-          validationStatus
-          createdBy {
+          pageInfo {
+            hasPreviousPage
+            hasNextPage
+            totalRecords
+          }
+          records {
             id
+            isSubmitted
+            project
+            mitigation
+            adaptation
+            validationComments
+            validationStatus
+            createdBy {
+              id
+            }
           }
         }
       }
@@ -114,6 +121,8 @@ export default ({ children }) => {
   }
 
   const { submissions } = data
+  const { pageInfo, records } = submissions
+  const { hasPreviousPage, hasNextPage, totalRecords } = pageInfo
 
   return (
     <context.Provider
@@ -126,9 +135,12 @@ export default ({ children }) => {
         setMitigationFilters,
         currentPage,
         pageSize: PAGE_SIZE,
-        previousPage: currentPage === 0 ? undefined : () => setCurrentPage(p => p - 1),
+        previousPage: () => setCurrentPage(p => p - 1),
         nextPage: () => setCurrentPage(p => p + 1),
-        submissions,
+        records,
+        hasPreviousPage,
+        hasNextPage,
+        totalRecords,
       }}
     >
       <Fade in={Boolean(data)} key="data-in">

@@ -8,10 +8,10 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import ResultCard from './result-card'
 
 export default () => {
-  const { submissions } = useContext(filterContext)
+  const { records } = useContext(filterContext)
   const theme = useTheme()
 
-  if (!submissions.length) {
+  if (!records.length) {
     return (
       <Card variant="outlined" style={{ width: '100%', backgroundColor: theme.backgroundColor }}>
         <CardContent>
@@ -23,8 +23,8 @@ export default () => {
 
   return (
     <Grid container spacing={2}>
-      {submissions.map(submission => {
-        const { id, createdBy, project } = submission
+      {records.map(record => {
+        const { id, createdBy, project } = record
 
         return (
           <Grid key={id} item xs={12}>

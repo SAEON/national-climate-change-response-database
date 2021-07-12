@@ -76,6 +76,17 @@ type Submission {
   createdBy: User
 }
 
+type PageInfo {
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  totalRecords: Int!
+}
+
+type SubmissionSearch {
+  pageInfo: PageInfo!
+  records: [Submission!]!
+}
+
 type Query {
   # Get a list of all the the Excel submission templates that have been uploaded
   submissionTemplates: [SubmissionTemplate!]!
@@ -90,7 +101,7 @@ type Query {
     limit: Int
     offset: Int
     isSubmitted: Boolean
-  ): [Submission!]!
+  ): SubmissionSearch!
   # Search projects TODO delete
   projects(
     ids: [Int!]

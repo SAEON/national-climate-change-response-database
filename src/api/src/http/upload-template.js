@@ -2,16 +2,24 @@ import { createReadStream, createWriteStream, stat } from 'fs'
 import { join, normalize, sep } from 'path'
 import { SUBMISSION_TEMPLATES_DIRECTORY } from '../config.js'
 
+const MAX_UPLOAD_SIZE_MB = 5
+
 export default async ctx => {
   const { PERMISSIONS, user, mssql } = ctx
   const { query } = mssql
   const { ensurePermission } = user
   await ensurePermission({ ctx, permission: PERMISSIONS.uploadTemplate })
 
-  const { path, name } = ctx.request.files['project-upload-excel-template']
+  const { path, name, size: sizeInBytes } = ctx.request.files['project-upload-excel-template']
+  const sizeInMB = (sizeInBytes / (1024 * 1024)).toFixed(2)
+
   const filePath = normalize(join(SUBMISSION_TEMPLATES_DIRECTORY, `.${sep}${name}`))
 
   try {
+    if (sizeInMB > MAX_UPLOAD_SIZE_MB) {
+      throw new Error(`Max upload size (${MAX_UPLOAD_SIZE_MB}MB) exceeded`)
+    }
+
     /**
      * The file must not exist. Therefore the stat() fn call
      * MUST fail for this to be a valid upload
@@ -56,7 +64,12 @@ export default async ctx => {
     ctx.response.status = 201
     ctx.body = 'File upload successful'
   } catch (error) {
-    ctx.response.status = 409
-    ctx.body = error.message
+    if (error.message.includes('Max upload size')) {
+      ctx.response.status = 413
+      ctx.body = error.message
+    } else {
+      ctx.response.status = 409
+      ctx.body = error.message
+    }
   }
 }

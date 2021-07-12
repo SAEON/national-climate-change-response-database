@@ -82,26 +82,27 @@ type PageInfo {
   totalRecords: Int!
 }
 
-type SubmissionSearch {
-  pageInfo: PageInfo!
-  records: [Submission!]!
-}
-
 type Query {
   # Get a list of all the the Excel submission templates that have been uploaded
   submissionTemplates: [SubmissionTemplate!]!
   # Get an in-progress form by the ID of the incomplete submission
   submission(id: ID!, isSubmitted: Boolean): Submission!
+  # Page info (pagination) for a particular search
+  pageInfo(
+    projectFilters: JSON
+    mitigationFilters: JSON
+    adaptationFilters: JSON
+    isSubmitted: Boolean
+  ): PageInfo!
   # Search submissions
   submissions(
-    ids: [Int!]
     projectFilters: JSON
     mitigationFilters: JSON
     adaptationFilters: JSON
     limit: Int
     offset: Int
     isSubmitted: Boolean
-  ): SubmissionSearch!
+  ): [Submission!]!
   # Search vocabulary tress
   controlledVocabulary(root: String, roots: [String!], tree: String!): [ControlledVocabulary]!
   # Search users

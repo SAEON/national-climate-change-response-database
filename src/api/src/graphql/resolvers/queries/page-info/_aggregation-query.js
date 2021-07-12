@@ -1,4 +1,4 @@
-import baseQuery from './_base-query.js'
+import baseQuery from '../submissions/_base-query.js'
 
 export default args => {
   return `

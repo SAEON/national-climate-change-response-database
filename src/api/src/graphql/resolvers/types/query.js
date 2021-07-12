@@ -8,6 +8,7 @@ import authorize from '../../../user-model/authorize.js'
 import user from '../queries/user.js'
 import submissionTemplates from '../queries/submission-templates.js'
 import submission from '../queries/submission/index.js'
+import pageInfo from '../queries/page-info/index.js'
 
 export default {
   users: authorize(PERMISSIONS.viewUsers)(users),
@@ -16,6 +17,7 @@ export default {
   permissions: authorize(PERMISSIONS.viewPermissions)(permissions),
   submissionTemplates: authorize(PERMISSIONS.viewSubmissionTemplates)(submissionTemplates),
   submissions,
+  pageInfo,
   user,
   controlledVocabulary,
 }

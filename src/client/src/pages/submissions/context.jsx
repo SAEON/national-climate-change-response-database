@@ -59,7 +59,7 @@ export default ({ children }) => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query submissions(
+      query (
         $limit: Int
         $offset: Int
         $isSubmitted: Boolean
@@ -67,6 +67,17 @@ export default ({ children }) => {
         $mitigationFilters: JSON
         $adaptationFilters: JSON
       ) {
+        pageInfo(
+          isSubmitted: $isSubmitted
+          projectFilters: $projectFilters
+          mitigationFilters: $mitigationFilters
+          adaptationFilters: $adaptationFilters
+        ) {
+          hasPreviousPage
+          hasNextPage
+          totalRecords
+        }
+
         submissions(
           limit: $limit
           offset: $offset
@@ -75,22 +86,15 @@ export default ({ children }) => {
           mitigationFilters: $mitigationFilters
           adaptationFilters: $adaptationFilters
         ) {
-          pageInfo {
-            hasPreviousPage
-            hasNextPage
-            totalRecords
-          }
-          records {
+          id
+          isSubmitted
+          project
+          mitigation
+          adaptation
+          validationComments
+          validationStatus
+          createdBy {
             id
-            isSubmitted
-            project
-            mitigation
-            adaptation
-            validationComments
-            validationStatus
-            createdBy {
-              id
-            }
           }
         }
       }
@@ -120,8 +124,7 @@ export default ({ children }) => {
     throw error
   }
 
-  const { submissions } = data
-  const { pageInfo, records } = submissions
+  const { submissions, pageInfo } = data
   const { hasPreviousPage, hasNextPage, totalRecords } = pageInfo
 
   return (
@@ -137,7 +140,7 @@ export default ({ children }) => {
         pageSize: PAGE_SIZE,
         previousPage: () => setCurrentPage(p => p - 1),
         nextPage: () => setCurrentPage(p => p + 1),
-        records,
+        records: submissions,
         hasPreviousPage,
         hasNextPage,
         totalRecords,

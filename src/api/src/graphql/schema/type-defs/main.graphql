@@ -102,15 +102,6 @@ type Query {
     offset: Int
     isSubmitted: Boolean
   ): SubmissionSearch!
-  # Search projects TODO delete
-  projects(
-    ids: [Int!]
-    vocabularyFilters: [VocabularyFilterInput!]
-    mitigationFilters: MitigationFiltersInput
-    adaptationFilters: AdaptationFiltersInput
-    limit: Int
-    offset: Int
-  ): [Project]!
   # Search vocabulary tress
   controlledVocabulary(root: String, roots: [String!], tree: String!): [ControlledVocabulary]!
   # Search users

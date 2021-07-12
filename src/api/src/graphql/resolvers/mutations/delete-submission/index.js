@@ -4,7 +4,7 @@ export default async (_, { id }, ctx) => {
   const { query } = ctx.mssql
   const sql = `
     update Submissions
-    set deletedAt = '${sanitizeSqlValue(new Date().toISOString())}'
+    set deletedAt = '${new Date().toISOString()}'
     where id = '${sanitizeSqlValue(id)}'`
 
   logSql(sql, 'Delete submission')

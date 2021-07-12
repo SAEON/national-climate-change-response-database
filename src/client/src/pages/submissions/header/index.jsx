@@ -28,17 +28,7 @@ export default ({ MobileFilters }) => {
 
       {/* SUBMIT PROJECT */}
       <NewSubmission />
-
-      {/* DOWNLOAD PROJECT DATA */}
       <div style={{ marginLeft: theme.spacing(2) }} />
-      <Hidden xsDown>
-        <DownloadData />
-        <Divider
-          flexItem
-          orientation="vertical"
-          style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
-        />
-      </Hidden>
 
       <Hidden smUp>
         <Divider
@@ -51,8 +41,20 @@ export default ({ MobileFilters }) => {
       {/* USER PROJECTS */}
       <UserSubmissions />
 
-      {/* Pagination */}
+      {/* DOWNLOAD PROJECT DATA */}
+
       <div style={{ marginLeft: 'auto' }} />
+      <Hidden smDown>
+        <Divider
+          flexItem
+          orientation="vertical"
+          style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+        />
+        <DownloadData />
+      </Hidden>
+
+      {/* Pagination */}
+
       <Divider
         flexItem
         orientation="vertical"

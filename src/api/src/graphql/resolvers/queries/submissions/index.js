@@ -13,6 +13,7 @@ export default async (
       ...projectVocabularyFilters
     } = {},
     mitigationFilters: { ...mitigationVocabularyFilters } = {},
+    adaptationFilters: { ...adaptationVocabularyFilters } = {},
     limit = MAX_PAGE_SIZE,
     offset = 0,
   },
@@ -72,6 +73,15 @@ export default async (
             : ''
         )
         .join('\n')}
+
+      ${Object.entries(adaptationVocabularyFilters)
+        .map(([fieldName, { value: filter = undefined }]) =>
+          filter
+            ? `
+            and json_value(adaptation, '$.${fieldName}.term') = '${sanitizeSqlValue(filter)}'`
+            : ''
+        )
+        .join('\n')}        
       
     order by id asc
     offset ${offset} rows

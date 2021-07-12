@@ -8,7 +8,12 @@ import ExpandLessIcon from 'mdi-react/ExpandLessIcon'
 
 export default ({ title, collapsed, setCollapsed }) => {
   return (
-    <AppBar style={{ zIndex: 200 }} position="relative" color="inherit" variant="outlined">
+    <AppBar
+      style={{ zIndex: 200 }}
+      position="relative"
+      color="inherit"
+      variant={collapsed ? 'outlined' : 'elevation'}
+    >
       <Toolbar variant="regular">
         <Typography
           onClick={() => setCollapsed(!collapsed)}

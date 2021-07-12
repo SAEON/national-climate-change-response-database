@@ -64,6 +64,71 @@ export const mitigationFilters = {
     root: 'Mitigation sector',
     tree: 'mitigationSectors',
   },
+  mitigationType: {
+    label: 'Mitigation type',
+    helperText: 'Filter by mitigation type',
+    type: 'controlledVocabulary',
+    value: undefined,
+    root: 'Mitigation type',
+    tree: 'mitigationType',
+  },
+  mitigationProgramme: {
+    label: 'Mitigation program',
+    helperText: 'Filter by mitigation program',
+    type: 'controlledVocabulary',
+    value: undefined,
+    root: 'Programme',
+    tree: 'mitigationProgramme',
+  },
+  nationalPolicy: {
+    label: 'National policy',
+    helperText: 'Filter by national policy',
+    type: 'controlledVocabulary',
+    value: undefined,
+    root: 'National policy',
+    tree: 'mitigationPolicies',
+  },
+  regionalPolicy: {
+    label: 'Regional policy',
+    helperText: 'Filter by regional policy',
+    type: 'controlledVocabulary',
+    value: undefined,
+    root: 'Regional policy',
+    tree: 'mitigationPolicies',
+  },
 }
 
-export const adaptationFilters = {}
+export const adaptationFilters = {
+  adaptationSector: {
+    label: 'Sector',
+    helperText: 'Filter by sector',
+    type: 'controlledVocabulary',
+    value: undefined,
+    root: 'Adaptation sector',
+    tree: 'adaptationSectors',
+  },
+  nationalPolicy: {
+    label: 'National policy',
+    helperText: 'Filter by national policy',
+    type: 'controlledVocabulary',
+    value: undefined,
+    root: 'National policy',
+    tree: 'adaptationPolicies',
+  },
+  regionalPolicy: {
+    label: 'Regional policy',
+    helperText: 'Filter by regional policy',
+    type: 'controlledVocabulary',
+    value: undefined,
+    root: 'Regional policy',
+    tree: 'adaptationPolicies',
+  },
+  hazard: {
+    label: 'Hazard',
+    helperText: 'Filter by hazard',
+    type: 'controlledVocabulary',
+    value: undefined,
+    root: 'Hazard',
+    tree: 'hazards',
+  },
+}

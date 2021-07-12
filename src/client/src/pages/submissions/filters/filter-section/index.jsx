@@ -8,6 +8,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import TextFilter from './_text-filter'
 import VocabularyFilter from './_vocabulary-filter'
 import { DEFAULT_VALUE as NA_VOCAB_SELECT } from './_vocabulary-filter'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
 export default ({ filters, setFilter, title }) => {
   const _filters = Object.entries(filters)
@@ -31,7 +32,7 @@ export default ({ filters, setFilter, title }) => {
         unmountOnExit
         in={!collapsed}
       >
-        <Paper style={{ backgroundColor: theme.backgroundColor }}>
+        <Paper style={{ backgroundColor: fade(theme.backgroundColor, 0.9) }}>
           <Box px={3} py={2}>
             {_filters.length ? (
               _filters.map(([field, info]) => {

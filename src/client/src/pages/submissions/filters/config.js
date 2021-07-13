@@ -12,6 +12,7 @@ export const projectFilters = {
     value: undefined,
     root: 'Validation Status',
     tree: 'projectValidationStatus',
+    requiredPermission: 'validate-submission',
   },
   estimatedBudget: {
     label: 'Estimated budget',

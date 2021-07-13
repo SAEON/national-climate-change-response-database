@@ -1,5 +1,6 @@
 export default ({
   isSubmitted = true,
+  validationStatus = undefined,
   projectFilters: {
     title: { value: titleFilter = undefined } = {},
     province: { value: provinceFilter = undefined } = {},
@@ -14,6 +15,11 @@ export default ({
     where
       deletedAt is null
       and isSubmitted = ${isSubmitted ? 1 : 0}
+      ${
+        validationStatus
+          ? `and json_value(validationStatus, '$.term') = '${sanitizeSqlValue(validationStatus)}'`
+          : ''
+      }
       ${titleFilter ? `and _projectTitle like '%${sanitizeSqlValue(titleFilter)}%'` : ''}
       ${
         provinceFilter

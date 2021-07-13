@@ -1,4 +1,5 @@
-import { useState, createContext, useCallback } from 'react'
+import { useState, createContext, useCallback, useContext } from 'react'
+import { context as authContext } from '../../contexts/authorization'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
 import Fade from '@material-ui/core/Fade'
@@ -13,10 +14,32 @@ export const context = createContext()
 const PAGE_SIZE = 20
 
 export default ({ children }) => {
+  const { hasPermission } = useContext(authContext)
   const [currentPage, setCurrentPage] = useState(0)
-  const [projectFilters, _setProjectFilters] = useState(projectFiltersConfig)
-  const [adaptationFilters, _setAdaptationFilters] = useState(adaptationFiltersConfig)
-  const [mitigationFilters, _setMitigationFilters] = useState(mitigationFiltersConfig)
+
+  const [projectFilters, _setProjectFilters] = useState(
+    Object.fromEntries(
+      Object.entries(projectFiltersConfig).filter(([, { requiredPermission = undefined }]) =>
+        requiredPermission ? hasPermission(requiredPermission) : true
+      )
+    )
+  )
+
+  const [adaptationFilters, _setAdaptationFilters] = useState(
+    Object.fromEntries(
+      Object.entries(adaptationFiltersConfig).filter(([, { requiredPermission = undefined }]) =>
+        requiredPermission ? hasPermission(requiredPermission) : true
+      )
+    )
+  )
+
+  const [mitigationFilters, _setMitigationFilters] = useState(
+    Object.fromEntries(
+      Object.entries(mitigationFiltersConfig).filter(([, { requiredPermission = undefined }]) =>
+        requiredPermission ? hasPermission(requiredPermission) : true
+      )
+    )
+  )
 
   const setProjectFilters = useCallback(
     ({ field, value }) =>
@@ -63,12 +86,14 @@ export default ({ children }) => {
         $limit: Int
         $offset: Int
         $isSubmitted: Boolean
+        $validationStatus: String
         $projectFilters: JSON
         $mitigationFilters: JSON
         $adaptationFilters: JSON
       ) {
         pageInfo(
           isSubmitted: $isSubmitted
+          validationStatus: $validationStatus
           projectFilters: $projectFilters
           mitigationFilters: $mitigationFilters
           adaptationFilters: $adaptationFilters
@@ -81,6 +106,7 @@ export default ({ children }) => {
         submissions(
           limit: $limit
           offset: $offset
+          validationStatus: $validationStatus
           isSubmitted: $isSubmitted
           projectFilters: $projectFilters
           mitigationFilters: $mitigationFilters
@@ -105,6 +131,7 @@ export default ({ children }) => {
         isSubmitted: true,
         limit: PAGE_SIZE,
         offset: currentPage * PAGE_SIZE,
+        validationStatus: hasPermission('validate-submission') ? undefined : 'Accepted',
         projectFilters,
         mitigationFilters,
         adaptationFilters,

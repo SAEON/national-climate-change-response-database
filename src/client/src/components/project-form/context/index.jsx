@@ -43,6 +43,7 @@ export default ({
   adaptation: adaptationDetails = {},
   isSubmitted,
 }) => {
+  const [syncError, setSynError] = useState(null)
   const apollo = useApolloClient()
   const [syncing, setSyncing] = useState(false)
 
@@ -55,6 +56,10 @@ export default ({
   const [adaptationDetailsForm, setAdaptationDetailsForm] = useState(
     convertGqlToFormInput(adaptationDetails || {})
   )
+
+  if (syncError) {
+    throw syncError
+  }
 
   /* TYPE QUERY */
 
@@ -164,48 +169,61 @@ export default ({
         project
 
       const {
+        errors,
         data: { saveSubmission: submission },
-      } = await apollo.mutate({
-        fetchPolicy: 'no-cache',
-        mutation: gql`
-          mutation saveSubmission(
-            $submissionId: ID!
-            $project: JSON
-            $mitigation: JSON
-            $adaptation: JSON
-            $validationStatus: JSON
-            $validationComments: String
-            $isSubmitted: Boolean
-          ) {
-            saveSubmission(
-              submissionId: $submissionId
-              project: $project
-              mitigation: $mitigation
-              adaptation: $adaptation
-              validationStatus: $validationStatus
-              validationComments: $validationComments
-              isSubmitted: $isSubmitted
+      } = await apollo
+        .mutate({
+          fetchPolicy: 'no-cache',
+          mutation: gql`
+            mutation saveSubmission(
+              $submissionId: ID!
+              $project: JSON
+              $mitigation: JSON
+              $adaptation: JSON
+              $validationStatus: JSON
+              $validationComments: String
+              $isSubmitted: Boolean
             ) {
-              id
-              isSubmitted
-              project
-              mitigation
-              adaptation
-              validationStatus
-              validationComments
+              saveSubmission(
+                submissionId: $submissionId
+                project: $project
+                mitigation: $mitigation
+                adaptation: $adaptation
+                validationStatus: $validationStatus
+                validationComments: $validationComments
+                isSubmitted: $isSubmitted
+              ) {
+                id
+                isSubmitted
+                project
+                mitigation
+                adaptation
+                validationStatus
+                validationComments
+              }
             }
-          }
-        `,
-        variables: {
-          submissionId,
-          project: convertFormToGqlInput(project),
-          mitigation: convertFormToGqlInput(mitigation),
-          adaptation: convertFormToGqlInput(adaptation),
-          validationStatus,
-          validationComments,
-          isSubmitted,
-        },
-      })
+          `,
+          variables: {
+            submissionId,
+            project: convertFormToGqlInput(project),
+            mitigation: convertFormToGqlInput(mitigation),
+            adaptation: convertFormToGqlInput(adaptation),
+            validationStatus,
+            validationComments,
+            isSubmitted,
+          },
+        })
+        .catch(error =>
+          setSynError(
+            new Error(
+              `Error saving form (please make sure you have an internet connection. Refresh this page to continue editing the form): ${error.message}`
+            )
+          )
+        )
+
+      if (errors) {
+        setSynError(new Error(`Unexpected syncing error: ${JSON.stringify(errors, null, 2)}`))
+      }
 
       apollo.cache.modify({
         id: apollo.cache.identify(submission),

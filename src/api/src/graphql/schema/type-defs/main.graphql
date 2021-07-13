@@ -89,6 +89,7 @@ type Query {
   submission(id: ID!, isSubmitted: Boolean): Submission!
   # Page info (pagination) for a particular search
   pageInfo(
+    validationStatus: String
     projectFilters: JSON
     mitigationFilters: JSON
     adaptationFilters: JSON
@@ -96,6 +97,7 @@ type Query {
   ): PageInfo!
   # Search submissions
   submissions(
+    validationStatus: String
     projectFilters: JSON
     mitigationFilters: JSON
     adaptationFilters: JSON

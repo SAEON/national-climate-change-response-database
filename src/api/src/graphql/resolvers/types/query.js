@@ -13,7 +13,7 @@ import pageInfo from '../queries/page-info/index.js'
 export default {
   users: authorize(PERMISSIONS.viewUsers)(users),
   roles: authorize(PERMISSIONS.viewRoles)(roles),
-  submission: authorize(PERMISSIONS.createProject)(submission),
+  submission: authorize(PERMISSIONS.createSubmission)(submission),
   permissions: authorize(PERMISSIONS.viewPermissions)(permissions),
   submissionTemplates: authorize(PERMISSIONS.viewSubmissionTemplates)(submissionTemplates),
   submissions,

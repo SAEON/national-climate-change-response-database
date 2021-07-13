@@ -17,7 +17,7 @@ export default () => {
   const { __validationStatus: validationStatus, __validationComments: validationComments } =
     generalDetailsForm
 
-  const [createProject, { error, loading }] = useMutation(
+  const [createSubmission, { error, loading }] = useMutation(
     gql`
       mutation saveSubmission(
         $submissionId: ID!
@@ -86,7 +86,7 @@ export default () => {
         <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button
             onClick={() =>
-              createProject({
+              createSubmission({
                 variables: {
                   submissionId,
                   project: convertFormToGqlInput(generalDetailsForm),

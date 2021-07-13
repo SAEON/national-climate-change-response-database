@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
-import Icon from 'mdi-react/FileDownloadIcon'
+import Icon from 'mdi-react/MicrosoftExcelIcon'
 import Button from '@material-ui/core/Button'
 import MessageDialogue from '../message-dialogue'
 import Link from '@material-ui/core/Link'

@@ -5,7 +5,7 @@ export default async ctx => {
   const { PERMISSIONS, user, mssql } = ctx
   const { query } = mssql
   const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS.createProject })
+  await ensurePermission({ ctx, permission: PERMISSIONS.createSubmission })
   const { id = undefined } = ctx.query
 
   try {

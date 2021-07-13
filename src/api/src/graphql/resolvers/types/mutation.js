@@ -19,21 +19,21 @@ const getSubmissionOwner = async id =>
   ).recordset[0].createdBy
 
 export default {
-  createSubmission: authorize(PERMISSIONS.createProject)(createSubmission),
+  createSubmission: authorize(PERMISSIONS.createSubmission)(createSubmission),
   deleteSubmission: async (...args) =>
-    authorize(PERMISSIONS.deleteProject, await getSubmissionOwner(args[1].id))(deleteSubmission)(
+    authorize(PERMISSIONS.deleteSubmission, await getSubmissionOwner(args[1].id))(deleteSubmission)(
       ...args
     ),
   assignUserRoles: authorize(PERMISSIONS.assignRole)(assignUserRoles),
   seedDatabase: authorize(PERMISSIONS.seedDatabase)(seedDatabase),
   migrateDatabase: authorize(PERMISSIONS.migrateDatabase)(migrateDatabase),
   killServer: authorize(PERMISSIONS.killServer)(() => process.exit(1)),
-  removeSubmissionAttachments: authorize(PERMISSIONS.uploadProjectFile)(
+  removeSubmissionAttachments: authorize(PERMISSIONS.attachFileToSubmission)(
     removeSubmissionAttachments
   ),
   saveSubmission: async (...args) =>
     authorize(
-      PERMISSIONS.updateProject,
+      PERMISSIONS.updateSubmission,
       await getSubmissionOwner(args[1].submissionId)
     )(saveSubmission)(...args),
 }

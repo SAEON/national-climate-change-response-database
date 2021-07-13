@@ -10,7 +10,7 @@ export default async ctx => {
   const { PERMISSIONS, user, mssql } = ctx
   const { query } = mssql
   const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS.uploadProjectFile })
+  await ensurePermission({ ctx, permission: PERMISSIONS.attachFileToSubmission })
   const { submissionId, formName } = ctx.query
 
   if (!submissionId || !formName) {

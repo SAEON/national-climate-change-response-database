@@ -21,11 +21,11 @@ export default memo(
     const [removeFiles, { error, loading }] = useMutation(
       gql`
         mutation ($submissionId: ID!, $ids: [Int!]!) {
-          removeProjectFiles(submissionId: $submissionId, ids: $ids)
+          removeSubmissionAttachments(submissionId: $submissionId, ids: $ids)
         }
       `,
       {
-        onCompleted: ({ removeProjectFiles: { ids } }) => {
+        onCompleted: ({ removeSubmissionAttachments: { ids } }) => {
           if (ids) {
             updateValue([])
             setOpen(false)

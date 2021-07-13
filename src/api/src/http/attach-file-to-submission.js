@@ -18,7 +18,7 @@ export default async ctx => {
     return
   }
 
-  const { path, name, size: sizeInBytes } = ctx.request.files['upload-project-file']
+  const { path, name, size: sizeInBytes } = ctx.request.files['attach-file-to-submission']
   const sizeInMB = (sizeInBytes / (1024 * 1024)).toFixed(2)
 
   try {
@@ -56,7 +56,7 @@ export default async ctx => {
       '${new Date().toISOString()}'
     );`
 
-    logSql(sql, 'Register project upload', true)
+    logSql(sql, 'Attach submission file')
     const result = await query(sql)
 
     ctx.response.status = 201

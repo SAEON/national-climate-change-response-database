@@ -5,7 +5,7 @@ import Hidden from '@material-ui/core/Hidden'
 
 export default () => {
   return (
-    <Tooltip placement="bottom" title="Download project data">
+    <Tooltip placement="bottom" title="Download submission data">
       <span>
         <Hidden smDown>
           <Button

@@ -23,7 +23,7 @@ import authenticateRoute from './http/authenticate.js'
 import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
 import uploadTemplateRoute from './http/upload-template.js'
-import uploadProjectFile from './http/upload-project-file.js'
+import attachFileToSubmission from './http/attach-file-to-submission.js'
 import downloadTemplateRoute from './http/download-template.js'
 import apolloServer from './graphql/index.js'
 import configureSaeonAuth from './passport/saeon-auth/index.js'
@@ -79,7 +79,7 @@ app
       .get('/http/authenticate', authenticateRoute)
       .get('/http/logout', logoutRoute)
       .post('/http/upload-template', uploadTemplateRoute)
-      .post('/http/upload-project-file', uploadProjectFile)
+      .post('/http/attach-file-to-submission', attachFileToSubmission)
       .get('/http/download-template', downloadTemplateRoute)
       .routes()
   )

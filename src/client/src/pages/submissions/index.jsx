@@ -15,7 +15,7 @@ export default () => {
 
   if (!hasPermission('validate-submission')) {
     enqueueSnackbar(
-      `Please note: only VALIDATED submissions are shown on this page. If your project is missing please contact the site administrator`,
+      `Please note: only VALIDATED submissions are shown on this page. If your submission is missing please contact the site administrator`,
       { variant: 'default' }
     )
   }

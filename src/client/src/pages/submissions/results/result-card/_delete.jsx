@@ -29,10 +29,10 @@ export default ({ id, createdBy }) => {
   /**
    * Users can delete their own submissions
    *
-   * Users with the permission 'delete-project'
+   * Users with the permission 'delete-submission'
    * can delete submissions
    */
-  if (!hasPermission('delete-project')) {
+  if (!hasPermission('delete-submission')) {
     if (createdBy?.id !== user?.id) {
       return null
     }

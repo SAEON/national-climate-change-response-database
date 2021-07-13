@@ -28,7 +28,7 @@ export default [
     label: 'Your submissions',
     Icon: UserSubmissionIcon,
     to: '/users/:id/submissions',
-    requiredPermission: 'create-project',
+    requiredPermission: 'create-submission',
   },
   {
     label: 'Deployments',

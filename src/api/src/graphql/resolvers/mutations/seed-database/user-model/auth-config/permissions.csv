@@ -1,12 +1,12 @@
 name,description
 seed-database,Seed the database
 kill-server,Stop the server with a non-zero access code
-upload-template,Upload Excel project template
+upload-template,Upload Excel submission template
 migrate-database,Run database migrations
-change-project-owner,"Change project's owner"
-create-project,Create a new project
-delete-project,Delete a project
-update-project,Update a project
+change-submission-owner,"Change submission's owner"
+create-submission,Create a new submission
+delete-submission,Delete a submission
+update-submission,Update a submission
 update-users,Update user objects
 assign-role,Assign role to user
 assign-permission,Assign permission to role
@@ -15,6 +15,6 @@ view-permissions,View permissions
 view-roles,View roles
 view-/access,"View the /access route on the UI"
 view-/deployments,"View the /deployments route on the UI"
-validate-submission,Validate project submissions
+validate-submission,Validate submissions
 view-submission-templates,View Excel template submissions
-upload-project-file,Upload files associated with projects
+attach-file-to-submission,Upload file attachment for a submission

@@ -14,7 +14,7 @@ import AcceptIcon from 'mdi-react/CheckCircleIcon'
 import { NCCRD_API_HTTP_ADDRESS } from '../../../../../../config'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-const uploadAddress = `${NCCRD_API_HTTP_ADDRESS}/upload-project-file`
+const uploadAddress = `${NCCRD_API_HTTP_ADDRESS}/attach-file-to-submission`
 
 export default memo(
   ({ value, updateValue, helperText, placeholder, submissionId, formName }) => {
@@ -132,7 +132,7 @@ export default memo(
                 try {
                   for (const file of files) {
                     const body = new FormData()
-                    body.append('upload-project-file', file, file.name)
+                    body.append('attach-file-to-submission', file, file.name)
                     const response = await fetch(
                       `${uploadAddress}?submissionId=${submissionId}&formName=${formName}`,
                       {

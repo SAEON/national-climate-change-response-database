@@ -64,7 +64,7 @@ export default ({ id }) => {
       Actions={[
         closeFn => (
           <Button
-            key="delete-project"
+            key="delete-submission"
             startIcon={<DeleteIcon size={18} />}
             onClick={e => {
               closeFn(e)

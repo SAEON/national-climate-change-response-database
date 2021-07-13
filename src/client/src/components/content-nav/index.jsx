@@ -48,7 +48,7 @@ export default ({ navItems, subNavChildren = null, children }) => {
                   placement="top-end"
                 >
                   <Card
-                    variant="outlined"
+                    variant={i === activeIndex ? 'elevation' : 'outlined'}
                     style={{
                       flexBasis: mdAndUp ? 'auto' : 0,
                       flexGrow: 1,
@@ -61,7 +61,7 @@ export default ({ navItems, subNavChildren = null, children }) => {
                   >
                     <ButtonBase
                       disabled={disabled}
-                      className={clsx({
+                      className={clsx(classes.buttonBase, {
                         [classes.active]: i === activeIndex,
                       })}
                       onClick={() => setActiveIndex(i)}

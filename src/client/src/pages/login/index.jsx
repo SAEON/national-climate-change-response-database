@@ -21,7 +21,7 @@ export default () => {
     <>
       <Header />
       <Wrapper>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Grid item xs={12} sm={8} md={4} style={{ display: 'flex', justifyContent: 'center' }}>
             <Card variant="outlined" style={{ width: '100%' }}>
               <CardHeader title="Log in" />

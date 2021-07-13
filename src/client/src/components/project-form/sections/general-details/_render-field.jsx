@@ -113,7 +113,7 @@ export default ({ field }) => {
    */
   if (fieldName === '__validationStatus') {
     if (!form.__validationStatus) {
-      updateForm({ __validationStatus: { term: 'Pending' } })
+      setImmediate(() => updateForm({ __validationStatus: { term: 'Pending' } }))
       return null
     }
     return (

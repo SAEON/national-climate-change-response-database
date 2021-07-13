@@ -62,10 +62,13 @@ export default ({ roots, tree, disabled = false, value, onChange, helperText, la
       id={id}
       disabled={disabled}
       options={options.map(({ term }) => term)}
-      value={value || []}
+      value={value?.map(({ term }) => term) || []}
       helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
       label={label}
-      setValue={onChange} // TODO - should store vocabulary object. not jus value
+      setValue={values => {
+        const newValues = options.filter(({ term }) => values.includes(term))
+        onChange(newValues)
+      }}
     />
   )
 }

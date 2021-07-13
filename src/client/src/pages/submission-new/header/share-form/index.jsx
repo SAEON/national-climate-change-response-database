@@ -18,8 +18,7 @@ export default () => {
       text={
         <>
           <Typography gutterBottom>
-            This form will be available on the link below until it is submitted. After the form is
-            submitted you can search for this submission on the project page and edit from there
+            This form will be available on the link below until it is submitted
           </Typography>
           <pre style={{ ...theme.pre }}>{window.location.href}</pre>
         </>
@@ -54,7 +53,7 @@ export default () => {
       Actions={[
         closeFn => (
           <Button
-            key="delete-project"
+            key="delete-submission"
             startIcon={copied ? <CheckIcon size={18} /> : <Icon size={18} />}
             onClick={e => {
               navigator.clipboard.writeText(window.location.href)

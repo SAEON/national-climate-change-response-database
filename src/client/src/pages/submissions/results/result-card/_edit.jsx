@@ -10,10 +10,10 @@ export default ({ id, createdBy }) => {
   /**
    * Users can edit their own submissions
    *
-   * Users with the permission 'edit-project'
+   * Users with the permission
    * can edit submissions
    */
-  if (!hasPermission('update-project')) {
+  if (!hasPermission('update-submission')) {
     if (createdBy?.id !== user?.id) {
       return null
     }

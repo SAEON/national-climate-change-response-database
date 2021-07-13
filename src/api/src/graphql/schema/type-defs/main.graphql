@@ -132,7 +132,7 @@ type Mutation {
   seedDatabase(userModel: Boolean, erm: Boolean, vocabularies: Boolean): JSON!
   createSubmission: Submission!
   deleteSubmission(id: ID!): ID!
-  removeProjectFiles(submissionId: ID!, ids: [Int!]!): JSON!
+  removeSubmissionAttachments(submissionId: ID!, ids: [Int!]!): JSON!
   # Assign roles to users
   assignUserRoles(userId: Int!, roleIds: [Int!]!): User!
 }

@@ -90,7 +90,7 @@ export default ({ id, tooltipProps, title, Icon, apiAddress }) => {
             key="upload-template"
             onClick={async () => {
               const body = new FormData()
-              body.append('project-upload-excel-template', file, file.name)
+              body.append('excel-submission-template', file, file.name)
               const response = await fetch(apiAddress, {
                 method: 'POST',
                 body,

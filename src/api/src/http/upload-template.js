@@ -10,7 +10,7 @@ export default async ctx => {
   const { ensurePermission } = user
   await ensurePermission({ ctx, permission: PERMISSIONS.uploadTemplate })
 
-  const { path, name, size: sizeInBytes } = ctx.request.files['project-upload-excel-template']
+  const { path, name, size: sizeInBytes } = ctx.request.files['excel-submission-template']
   const sizeInMB = (sizeInBytes / (1024 * 1024)).toFixed(2)
 
   const filePath = normalize(join(SUBMISSION_TEMPLATES_DIRECTORY, `.${sep}${name}`))

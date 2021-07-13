@@ -14,8 +14,8 @@ export default ({ id }) => {
     return <Loading />
   }
 
-  if (!hasPermission('create-project')) {
-    return <AccessDenied requiredPermission="create-project" />
+  if (!hasPermission('create-submission')) {
+    return <AccessDenied requiredPermission="create-submission" />
   }
 
   return (

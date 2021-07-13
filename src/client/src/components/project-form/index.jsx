@@ -7,6 +7,7 @@ import AvatarIcon from './_avatar-icon'
 import useTheme from '@material-ui/core/styles/useTheme'
 import SyncStatus from './_sync-status'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import BottomNav from './bottom-nav'
 
 const GeneralDetailsForm = lazy(() => import('./sections/general-details'))
 const MitigationDetailsForm = lazy(() => import('./sections/mitigation-details'))
@@ -125,7 +126,7 @@ const FormController = () => {
     <ContentNav
       navItems={mode === 'edit' ? [...navItems, syncingNavItem] : [...navItems, submitNavItem]}
     >
-      {({ activeIndex }) => {
+      {({ activeIndex, setActiveIndex }) => {
         return (
           <>
             {activeIndex === 0 && (
@@ -144,6 +145,7 @@ const FormController = () => {
               </Suspense>
             )}
             {activeIndex === 3 && (mode !== 'edit' ? <Submit key="submit" /> : null)}
+            <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
           </>
         )
       }}
@@ -160,7 +162,7 @@ export default ({
   isSubmitted = false,
 }) => {
   if (!submissionId) {
-    throw new Error('Project form needs to be instantiated with a submissionId')
+    throw new Error('Form needs to be instantiated with a submissionId')
   }
   return (
     <GraphQLFormProvider

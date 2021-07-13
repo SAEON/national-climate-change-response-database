@@ -57,9 +57,9 @@ const LoadProject = ({ id }) => {
     createdBy,
   } = submission
 
-  if (!hasPermission('update-project')) {
+  if (!hasPermission('update-submission')) {
     if (createdBy?.id !== user?.id) {
-      return <AccessDenied requiredPermission="update-project" />
+      return <AccessDenied requiredPermission="update-submission" />
     }
   }
 

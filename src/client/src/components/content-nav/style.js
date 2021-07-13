@@ -7,17 +7,21 @@ export default makeStyles(theme => {
       borderRadius: 0,
     },
     buttonBase: {
-      minHeight: theme.spacing(8),
       transition: `all`,
-      transitionDuration: `${theme.transitions.duration.standard}ms`,
+      transitionDuration: `${theme.transitions.duration.short}ms`,
       transitionTimingFunction: theme.transitions.easing.sharp,
+      [theme.breakpoints.up('lg')]: {
+        minHeight: theme.spacing(10),
+      },
     },
     active: {
       transition: `all`,
-      transitionDuration: `${theme.transitions.duration.standard}ms`,
+      transitionDuration: `${theme.transitions.duration.short}ms`,
       transitionTimingFunction: theme.transitions.easing.sharp,
       backgroundColor: alpha(theme.palette.primary.main, 0.3),
-      minHeight: theme.spacing(16),
+      [theme.breakpoints.up('lg')]: {
+        minHeight: theme.spacing(16),
+      },
     },
     disabled: {
       backgroundColor: theme.palette.grey[200],

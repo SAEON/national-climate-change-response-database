@@ -22,7 +22,6 @@ const Buttons = memo(
     generalDetailsFormValidation,
     interventionType,
   }) => {
-    console.log('rendering')
     const theme = useTheme()
     let hasPrevious
     let previousFn

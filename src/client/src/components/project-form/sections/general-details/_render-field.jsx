@@ -112,6 +112,10 @@ export default ({ field }) => {
    * Controlled vocabulary
    */
   if (fieldName === '__validationStatus') {
+    if (!form.__validationStatus) {
+      updateForm({ __validationStatus: { term: 'Pending' } })
+      return null
+    }
     return (
       <ControlledVocabularySelect
         key={fieldName}

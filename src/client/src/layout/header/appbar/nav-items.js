@@ -4,6 +4,7 @@ import SearchSubmissionsIcon from 'mdi-react/DatabaseSearchIcon'
 import DeploymentsIcon from 'mdi-react/ServerIcon'
 import SubmitIcon from 'mdi-react/DatabaseAddIcon'
 import SubmissionsIcon from 'mdi-react/DatabaseIcon'
+import UserSubmissionIcon from 'mdi-react/AccountIcon'
 
 export default [
   {
@@ -22,6 +23,12 @@ export default [
     label: 'Submit project',
     Icon: SubmitIcon,
     to: '/submissions/new',
+  },
+  {
+    label: 'Your submissions',
+    Icon: UserSubmissionIcon,
+    to: '/users/:id/submissions',
+    requiredPermission: 'create-project',
   },
   {
     label: 'Deployments',

@@ -7,7 +7,7 @@ import navItems from './nav-items'
 import NavItem from './nav-item'
 
 export default () => {
-  const { hasPermission } = useContext(authContext)
+  const { hasPermission, user } = useContext(authContext)
   const [anchorEl, setAnchorEl] = useState(null)
 
   return (
@@ -45,7 +45,7 @@ export default () => {
               key={label}
               Icon={Icon}
               label={label}
-              to={to}
+              to={to.replace(':id', user?.id || 'na')}
             />
           )
         })}

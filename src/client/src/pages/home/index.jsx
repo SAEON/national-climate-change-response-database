@@ -1,7 +1,7 @@
 import Submit from './submit-project'
 import Wrapper from './_wrapper'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 import About from './about'
 import Explore from './explore-projects'
 import Header from './header'
@@ -9,9 +9,9 @@ import Header from './header'
 export default () => {
   const theme = useTheme()
 
-  const bg1 = fade(theme.palette.common.black, 0.25)
-  const bg2 = fade(theme.palette.common.white, 0.7)
-  const bg3 = fade(theme.palette.common.black, 0.4)
+  const bg1 = alpha(theme.palette.common.black, 0.25)
+  const bg2 = alpha(theme.palette.common.white, 0.7)
+  const bg3 = alpha(theme.palette.common.black, 0.4)
 
   return (
     <>

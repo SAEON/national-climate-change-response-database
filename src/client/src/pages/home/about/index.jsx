@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 
 export default () => {
   const theme = useTheme()
@@ -15,7 +15,7 @@ export default () => {
             display: 'flex',
             textAlign: 'center',
             marginBottom: theme.spacing(3),
-            color: fade(theme.palette.common.white, 0.9),
+            color: alpha(theme.palette.common.white, 0.9),
           }}
           variant="h4"
         >
@@ -26,7 +26,7 @@ export default () => {
         <Typography
           style={{
             textAlign: 'justify',
-            color: fade(theme.palette.common.white, 0.9),
+            color: alpha(theme.palette.common.white, 0.9),
             marginBottom: theme.spacing(2),
           }}
           variant="body1"

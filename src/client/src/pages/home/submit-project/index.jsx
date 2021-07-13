@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 import { Link } from 'react-router-dom'
 import useStyles from './style'
 import ButtonBase from '@material-ui/core/ButtonBase'
@@ -24,14 +24,14 @@ export default () => {
           style={{
             textAlign: 'center',
             marginBottom: theme.spacing(3),
-            color: fade(theme.palette.common.white, 0.9),
+            color: alpha(theme.palette.common.white, 0.9),
           }}
           variant="h4"
         >
           Submit a project to the National Climate Change Response Database
         </Typography>
         <Typography
-          style={{ textAlign: 'justify', color: fade(theme.palette.common.white, 0.9) }}
+          style={{ textAlign: 'justify', color: alpha(theme.palette.common.white, 0.9) }}
           variant="body1"
         >
           The NCCRD is designed to capture and store the details of climate change interventions

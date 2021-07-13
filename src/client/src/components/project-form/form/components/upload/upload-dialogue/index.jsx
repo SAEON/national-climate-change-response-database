@@ -47,10 +47,13 @@ export default memo(
 
         <Dialog
           id="file(s)-upload"
-          disableBackdropClick
-          disableEscapeKeyDown
           open={open}
-          onClose={() => setOpen(false)}
+          onClose={(e, reason) => {
+            if (reason) {
+              return
+            }
+            setOpen(false)
+          }}
         >
           <DialogTitle>Upload file(s)</DialogTitle>
 

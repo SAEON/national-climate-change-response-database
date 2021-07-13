@@ -24,10 +24,10 @@ export const HideOnScroll = ({ children, contentRef }) => {
   }
 
   const availableHeight = window.innerHeight - contentRef.offsetHeight
-  const collapsedHeight = availableHeight < 0 ? 0 : availableHeight
+  const collapsedSize = availableHeight < 0 ? 0 : availableHeight
 
   return (
-    <Collapse collapsedHeight={collapsedHeight} in={!trigger}>
+    <Collapse collapsedSize={collapsedSize} in={!trigger}>
       <div>{children}</div>
     </Collapse>
   )

@@ -1,15 +1,15 @@
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import createTheme from '@material-ui/core/styles/createTheme'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 import overrides from './_mui-overrides'
 import muiDefaults from './_mui'
 import custom from './_custom'
 
-const defaultTheme = createMuiTheme()
+const defaultTheme = createTheme()
 
-export default createMuiTheme({
+export default createTheme({
   ...muiDefaults,
   overrides: overrides(defaultTheme),
   ...custom(defaultTheme),
-  backgroundColor: fade(defaultTheme.palette.common.white, 1),
-  border: `1px solid ${fade(defaultTheme.palette.common.black, 0.12)}`,
+  backgroundColor: alpha(defaultTheme.palette.common.white, 1),
+  border: `1px solid ${alpha(defaultTheme.palette.common.black, 0.12)}`,
 })

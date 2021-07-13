@@ -1,5 +1,5 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 
 export default makeStyles(theme => {
   return {
@@ -7,7 +7,7 @@ export default makeStyles(theme => {
       borderRadius: 0,
     },
     active: {
-      backgroundColor: fade(theme.palette.primary.main, 0.2),
+      backgroundColor: alpha(theme.palette.primary.main, 0.2),
     },
     disabled: {
       backgroundColor: theme.palette.grey[200],

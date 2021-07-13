@@ -86,11 +86,12 @@ export default ({
 
       <Dialog
         id={id}
-        disableBackdropClick={permanent}
-        disableEscapeKeyDown={permanent}
         {...dialogueProps}
         open={open}
-        onClose={() => {
+        onClose={(e, reason) => {
+          if (permanent && reason) {
+            return
+          }
           handleClose()
           setOpen(false)
         }}

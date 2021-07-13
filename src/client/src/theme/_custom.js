@@ -1,4 +1,4 @@
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 
 export default defaultTheme => ({
   link: {
@@ -20,6 +20,6 @@ export default defaultTheme => ({
     wordBreak: 'break-all',
     padding: defaultTheme.spacing(1),
   },
-  backgroundColor: fade(defaultTheme.palette.common.white, 0.9),
+  backgroundColor: alpha(defaultTheme.palette.common.white, 0.9),
   boxShadow: '0px 0px 55px 0px rgba(0,0,0,0.29)',
 })

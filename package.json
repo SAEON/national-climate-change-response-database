@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "*************** SERVICE ALIASES *************": "",
-    "start:api": "npm --prefix src/api start",
-    "start:client": "npm --prefix src/client start",
+    "api": "npm --prefix src/api start",
+    "client": "npm --prefix src/client start",
     "*************** DEPLOYMENTS & BUILDS *************": "",
     "build:bundled": "rimraf src/api/src/client-dist/ && NCCRD_HOSTNAME=origin NCCRD_DEPLOYMENT_ENV=production npm --prefix src/client run build && mv src/client/dist/ src/api/src/client-dist/",
     "start:bundled": "npm run build:bundled && npm --prefix src/api run start:prod",

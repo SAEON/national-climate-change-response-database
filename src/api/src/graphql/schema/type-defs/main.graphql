@@ -114,8 +114,6 @@ type Query {
   permissions: [Permission!]!
 }
 
-# type Subscription {}
-
 type Mutation {
   # Create and update a submission
   saveSubmission(

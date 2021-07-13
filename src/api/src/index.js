@@ -91,8 +91,7 @@ app
 const httpServer = createServer(app.callback())
 
 // Configure Apollo server
-apolloServer.applyMiddleware({ app: app })
-apolloServer.installSubscriptionHandlers(httpServer)
+apolloServer.start().then(() => apolloServer.applyMiddleware({ app: app, cors: false }))
 
 // Start public HTTP server
 httpServer.listen(NCCRD_PORT, () => {

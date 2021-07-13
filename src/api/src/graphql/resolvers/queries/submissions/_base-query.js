@@ -2,7 +2,7 @@ export default ({
   isSubmitted = true,
   projectFilters: {
     title: { value: titleFilter = undefined } = {},
-    province: { value: provinceFilter = undefined },
+    province: { value: provinceFilter = undefined } = {},
     validationStatus: { value: validationStatusFilter = undefined } = {},
     ...projectVocabularyFilters
   } = {},
@@ -37,7 +37,7 @@ export default ({
           : ''
       }
       ${Object.entries(projectVocabularyFilters)
-        .map(([fieldName, { value: filter = undefined }]) =>
+        .map(([fieldName, { value: filter = undefined } = {}]) =>
           filter
             ? `
             and json_value(project, '$.${fieldName}.term') = '${sanitizeSqlValue(filter)}'`
@@ -48,7 +48,7 @@ export default ({
       -- Mitigation
 
       ${Object.entries(mitigationVocabularyFilters)
-        .map(([fieldName, { value: filter = undefined }]) =>
+        .map(([fieldName, { value: filter = undefined } = {}]) =>
           filter
             ? `
             and json_value(mitigation, '$.${fieldName}.term') = '${sanitizeSqlValue(filter)}'`
@@ -57,7 +57,7 @@ export default ({
         .join('\n')}
 
       ${Object.entries(adaptationVocabularyFilters)
-        .map(([fieldName, { value: filter = undefined }]) =>
+        .map(([fieldName, { value: filter = undefined } = {}]) =>
           filter
             ? `
             and json_value(adaptation, '$.${fieldName}.term') = '${sanitizeSqlValue(filter)}'`

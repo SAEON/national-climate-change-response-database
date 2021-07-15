@@ -4,6 +4,5 @@ import Dialogue from './_dialogue'
 
 export default () => {
   const isAuthenticated = useContext(authenticationContext)
-
   return <Dialogue isAuthenticated={isAuthenticated} />
 }

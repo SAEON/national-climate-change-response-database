@@ -13,7 +13,11 @@ export default ({ ...form }) => {
         }
 
         if (field === 'yx') {
-          return [field, parse(value).geometries.map(({ coordinates: [x, y] }) => [x, y])]
+          try {
+            return [field, parse(value).geometries.map(({ coordinates: [x, y] }) => [x, y])]
+          } catch {
+            return [field, undefined]
+          }
         }
 
         if (field === 'energyData') {

@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
+import MuiLink from '@material-ui/core/Link'
+import { Link } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
@@ -23,6 +25,16 @@ export default ({ isAuthenticated }) => {
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState(null)
   const theme = useTheme()
+
+  useEffect(
+    () => () => {
+      if (open === false) {
+        setFiles([])
+        setResult([])
+      }
+    },
+    [open]
+  )
 
   return (
     <>
@@ -60,11 +72,20 @@ export default ({ isAuthenticated }) => {
 
         {result.length ? (
           <DialogContent>
-            <Typography variant="body2">
-              Thank you! Your submission is being validated by a system administrator. Edit / attach
-              files to these submissions on the links below:
+            <Typography gutterBottom variant="body2">
+              Thank you! Your submission is being validated by a system administrator. Click on the
+              links to edit submissions / attach files:
             </Typography>
-            <Typography>{JSON.stringify(result, null, 2)}</Typography>
+            {result.map(({ name, submissions }) => (
+              <div key={name}>
+                <Typography>{name}</Typography>
+                {submissions.map(({ id, title }) => (
+                  <MuiLink key={id} component={Link} to={`/submissions/${id}/edit`}>
+                    <Typography>{title}</Typography>
+                  </MuiLink>
+                ))}
+              </div>
+            ))}
           </DialogContent>
         ) : null}
 
@@ -155,7 +176,15 @@ export default ({ isAuthenticated }) => {
                   const { status } = response
                   const responseText = await response.text()
                   if (status === 201) {
-                    uploadedFiles.push({ id: responseText, name: file.name })
+                    uploadedFiles.push({
+                      name: file.name,
+                      submissions: JSON.parse(responseText).inserted.map(
+                        ({ id, _projectTitle: title }) => ({
+                          id,
+                          title,
+                        })
+                      ),
+                    })
                   } else {
                     setError(
                       new Error(`Error uploading file (HTTP code ${status}). ${responseText}`)

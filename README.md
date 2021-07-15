@@ -68,11 +68,11 @@ npm run install-dependencies
   -d \
   mcr.microsoft.com/mssql/server:2017-latest-ubuntu
 
-# Start the Node.js API server
-npm run start:api
+# Start the Node.js API server in development mode
+npm run api
 
-# Start the React.js client
-npm run start:client
+# Start the React.js client in development mode
+npm run client
 ```
 
 # Deployment

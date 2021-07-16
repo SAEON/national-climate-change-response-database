@@ -1,9 +1,8 @@
 export default (fields, form) => {
   const requiredFields = (
-    fields?.map(({ name: fieldName, type = {} }) => {
-      const { ofType } = type
-      if (ofType) {
-        return [fieldName, Boolean(form?.[fieldName])]
+    fields?.map(({ name: fieldName, type: { kind } = {} }) => {
+      if (kind === 'NON_NULL') {
+        return [fieldName, Boolean(form?.[fieldName]?.length || form?.[fieldName]?.term)]
       }
     }) || []
   ).filter(_ => _)
@@ -13,9 +12,9 @@ export default (fields, form) => {
   return {
     requiredFields: Object.fromEntries(requiredFields),
     isStarted: Boolean(filledInFields.length),
-    isComplete: requiredFields.reduce((acc, current) => {
-      if (!acc) return false
-      return current[1]
-    }, true),
+    isComplete: requiredFields.reduce(
+      (isComplete, [, value]) => (isComplete ? value : false),
+      true
+    ),
   }
 }

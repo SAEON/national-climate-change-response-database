@@ -18,6 +18,7 @@ const CORE_FIELDS = gql`
       description
       type {
         name
+        kind
         enumValues {
           name
           description

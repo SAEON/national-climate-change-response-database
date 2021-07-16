@@ -8,9 +8,9 @@ import EnumField from './components/enum'
 export default ({ field, value, disabled = false, updateValue, multiline }) => {
   const { name: fieldName, description, type } = field
   let [placeholder, helperText] = description?.split('::').map(s => s.trim()) || []
-  const { name: inputType, ofType } = type
+  const { name: inputType, ofType, kind } = type
   const gqlType = inputType || ofType.name
-  const isRequired = !inputType
+  const isRequired = kind === 'NON_NULL'
 
   if (helperText === '') {
     helperText = ` `

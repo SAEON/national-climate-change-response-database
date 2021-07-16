@@ -27,6 +27,7 @@ export default ({
   value,
   setValue,
   label,
+  error = false,
   helperText = '',
   chipProps = {},
   disabled = false,
@@ -38,13 +39,18 @@ export default ({
   return (
     <div style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(1) }}>
       <FormControl margin="normal" fullWidth>
-        <InputLabel id={`${id}-label`} style={{ top: value.length ? -8 : -5, left: 12 }}>
+        <InputLabel
+          error={error}
+          id={`${id}-label`}
+          style={{ top: value.length ? -8 : -5, left: 12 }}
+        >
           {label}
         </InputLabel>
         <Select
           className={clsx(classes.select)}
           disabled={disabled}
           fullWidth
+          error={error}
           labelId={`${id}-label`}
           id={`${id}-multi-select`}
           multiple

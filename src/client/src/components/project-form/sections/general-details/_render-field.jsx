@@ -28,8 +28,8 @@ export default ({ field }) => {
   } = useContext(formContext)
   const { name: fieldName, description, type } = field
   let [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
-  const { name: inputType } = type
-  const isRequired = !inputType
+  const { kind } = type
+  const isRequired = kind === 'NON_NULL'
   const value = form?.[fieldName] || undefined
 
   if (helperText === '') {
@@ -62,7 +62,7 @@ export default ({ field }) => {
         roots={['South Africa']}
         name={fieldName}
         value={value}
-        error={isRequired && !value}
+        error={isRequired && !value?.length}
         onChange={val =>
           updateForm({
             [fieldName]: val,
@@ -84,7 +84,7 @@ export default ({ field }) => {
         roots={form.province}
         name={fieldName}
         value={value}
-        error={isRequired && !value}
+        error={isRequired && !value?.length}
         onChange={val => updateForm({ [fieldName]: val, localMunicipality: undefined })}
         label={placeholder}
         helperText={helperText}
@@ -100,7 +100,7 @@ export default ({ field }) => {
         roots={form.districtMunicipality}
         name={fieldName}
         value={value}
-        error={isRequired && !value}
+        error={isRequired && !value?.length}
         onChange={val => updateForm({ [fieldName]: val })}
         label={placeholder}
         helperText={helperText}

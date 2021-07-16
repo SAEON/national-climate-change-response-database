@@ -4,10 +4,24 @@ import Typography from '@material-ui/core/Typography'
 import Loading from '../../../loading'
 import Multiselect from '../../../multiselect'
 
-export default ({ roots, tree, disabled = false, value, onChange, helperText, label, id }) => {
+export default ({
+  roots,
+  tree,
+  disabled = false,
+  value,
+  onChange,
+  helperText,
+  label,
+  id,
+  error,
+}) => {
   const theme = useTheme()
 
-  const { error, loading, data } = useQuery(
+  const {
+    error: gqlError,
+    loading,
+    data,
+  } = useQuery(
     gql`
       query controlledVocabularies($roots: [String!], $tree: String!) {
         controlledVocabulary(roots: $roots, tree: $tree) {
@@ -44,8 +58,8 @@ export default ({ roots, tree, disabled = false, value, onChange, helperText, la
     )
   }
 
-  if (error) {
-    throw error
+  if (gqlError) {
+    throw gqlError
   }
 
   let options
@@ -61,6 +75,7 @@ export default ({ roots, tree, disabled = false, value, onChange, helperText, la
     <Multiselect
       id={id}
       disabled={disabled}
+      error={error}
       options={options.map(({ term }) => term)}
       value={value?.map(({ term }) => term) || []}
       helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}

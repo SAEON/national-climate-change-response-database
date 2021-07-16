@@ -18,3 +18,5 @@ view-/deployments,"View the /deployments route on the UI"
 validate-submission,Validate submissions
 view-submission-templates,View Excel template submissions
 attach-file-to-submission,Upload file attachment for a submission
+download-all-submissions,Download all submission data
+download-submission,Download a single submission

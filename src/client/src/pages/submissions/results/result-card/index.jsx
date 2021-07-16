@@ -4,7 +4,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import Delete from './_delete'
 import View from './_view'
 import Edit from './_edit'
-import Download from './_download'
+import Download from '../../../../components/download-record'
 import Title from './_title'
 import Description from './_description'
 
@@ -19,7 +19,7 @@ export default ({ id, project, createdBy }) => {
         <Delete createdBy={createdBy} id={id} />
         <View id={id} />
         <Edit createdBy={createdBy} id={id} />
-        <Download />
+        <Download id={id} title={project.title} />
       </CardActions>
     </Card>
   )

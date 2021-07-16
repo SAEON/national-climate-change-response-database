@@ -1,4 +1,6 @@
 role,permission
+sysadmin,download-all-submissions
+sysadmin,download-submission
 sysadmin,attach-file-to-submission
 sysadmin,kill-server
 sysadmin,view-submission-templates
@@ -18,6 +20,8 @@ sysadmin,view-permissions
 sysadmin,view-roles
 sysadmin,view-/access
 sysadmin,view-/deployments
+admin,download-all-submissions
+admin,download-submission
 admin,attach-file-to-submission
 admin,view-submission-templates
 admin,validate-submission
@@ -34,8 +38,12 @@ admin,view-permissions
 admin,view-roles
 admin,view-/access
 admin,view-/deployments
+dffe,validate-submission
+dffe,download-all-submissions
+dffe,download-submission
 dffe,attach-file-to-submission
 dffe,create-submission
 dffe,update-submission
 public,attach-file-to-submission
 public,create-submission
+public,download-submission

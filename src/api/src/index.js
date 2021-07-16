@@ -26,6 +26,7 @@ import uploadTemplateRoute from './http/upload-template.js'
 import attachFileToSubmission from './http/attach-file-to-submission.js'
 import submitCompletedTemplates from './http/submit-completed-templates/index.js'
 import downloadTemplateRoute from './http/download-template.js'
+import downloadSubmission from './http/download-submission/index.js'
 import apolloServer from './graphql/index.js'
 import configureSaeonAuth from './passport/saeon-auth/index.js'
 import passportCookieConfig from './passport/cookie-config.js'
@@ -83,6 +84,7 @@ app
       .post('/http/attach-file-to-submission', attachFileToSubmission)
       .post('/http/submit-completed-templates', submitCompletedTemplates)
       .get('/http/download-template', downloadTemplateRoute)
+      .get('/http/download-submission', downloadSubmission)
       .routes()
   )
   .use(fourOfour)

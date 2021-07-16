@@ -42,14 +42,8 @@ export default ({ MobileFilters }) => {
       <UserSubmissions />
 
       {/* DOWNLOAD PROJECT DATA */}
-
       <div style={{ marginLeft: 'auto' }} />
       <Hidden smDown>
-        <Divider
-          flexItem
-          orientation="vertical"
-          style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
-        />
         <DownloadData />
       </Hidden>
 

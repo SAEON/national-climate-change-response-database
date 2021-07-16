@@ -4,7 +4,7 @@ import Edit from './_edit'
 import Hidden from '@material-ui/core/Hidden'
 import ToolbarHeader from '../../../components/toolbar-header'
 
-export default ({ id }) => {
+export default ({ id, title }) => {
   const theme = useTheme()
 
   return (
@@ -15,7 +15,7 @@ export default ({ id }) => {
       {/* DOWNLOAD PROJECT DATA */}
       <Hidden xsDown>
         <div style={{ marginLeft: theme.spacing(2) }} />
-        <Download />
+        <Download id={id} title={title} />
       </Hidden>
     </ToolbarHeader>
   )

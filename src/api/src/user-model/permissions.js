@@ -14,6 +14,7 @@ export default {
   viewSubmissionTemplates: 'view-submission-templates',
   killServer: 'kill-server',
   attachFileToSubmission: 'attach-file-to-submission',
+  downloadSubmission: 'download-submission',
 
   // UI routes
   'view/Access': 'view-/access',

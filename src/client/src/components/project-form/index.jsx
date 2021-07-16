@@ -8,7 +8,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import SyncStatus from './_sync-status'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import BottomNav from './bottom-nav'
-import SaveIcon from 'mdi-react/ContentSaveIcon'
+import SyncIcon from 'mdi-react/SyncIcon'
 
 const GeneralDetailsForm = lazy(() => import('./sections/general-details'))
 const MitigationDetailsForm = lazy(() => import('./sections/mitigation-details'))
@@ -105,11 +105,11 @@ const FormController = () => {
       disabled: !canSubmit,
       primaryText: 'Submit',
       SecondaryIcon: () => (
-        <SaveIcon
+        <SyncIcon
           style={{
             color: syncing ? theme.palette.warning.main : theme.palette.success.main,
           }}
-          size={24}
+          size={18}
         />
       ),
       syncing,

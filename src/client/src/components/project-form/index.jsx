@@ -8,6 +8,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import SyncStatus from './_sync-status'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import BottomNav from './bottom-nav'
+import SaveIcon from 'mdi-react/ContentSaveIcon'
 
 const GeneralDetailsForm = lazy(() => import('./sections/general-details'))
 const MitigationDetailsForm = lazy(() => import('./sections/mitigation-details'))
@@ -103,14 +104,24 @@ const FormController = () => {
       style: { marginTop: theme.spacing(lgAndUp ? 2 : 0) },
       disabled: !canSubmit,
       primaryText: 'Submit',
-      secondaryText: 'Review and submit project',
+      SecondaryIcon: () => (
+        <SaveIcon
+          style={{
+            color: syncing ? theme.palette.warning.main : theme.palette.success.main,
+          }}
+          size={24}
+        />
+      ),
+      syncing,
+      secondaryText: 'Review submission',
       Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={4} />,
     }),
-    [canSubmit, lgAndUp, theme]
+    [canSubmit, lgAndUp, theme, syncing]
   )
 
   const syncingNavItem = useMemo(
     () => ({
+      syncing,
       Component: () => (
         <SyncStatus
           submissionId={submissionId}

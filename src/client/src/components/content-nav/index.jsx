@@ -10,9 +10,8 @@ const RenderNavContent = memo(
     return <div>{children({ setActiveIndex, activeIndex })}</div>
   },
   (a, b) => {
-    let _memo = true
-    if (a.activeIndex !== b.activeIndex) _memo = false
-    return _memo
+    if (a.activeIndex !== b.activeIndex) return false
+    return true
   }
 )
 

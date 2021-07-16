@@ -16,6 +16,7 @@ export default memo(
     primaryText,
     secondaryText,
     Icon,
+    SecondaryIcon = undefined,
     disabled = false,
     style = {},
     tooltipTitle,
@@ -80,6 +81,12 @@ export default memo(
                   secondary={mdAndUp && secondaryText}
                 />
               )}
+
+              {(xsAndDown || mdAndUp) && SecondaryIcon && (
+                <ListItemIcon style={{ justifyContent: 'center' }}>
+                  <SecondaryIcon />
+                </ListItemIcon>
+              )}
             </ListItem>
           </ButtonBase>
         </Card>
@@ -87,10 +94,11 @@ export default memo(
     )
   },
   (a, b) => {
-    const _memo = true
     if (a.activeIndex !== b.activeIndex) return false
     if (a.disabled !== b.disabled) return false
     if (a.Icon !== b.Icon) return false
-    return _memo
+    if (a.SecondaryIcon !== b.SecondaryIcon) return false
+    if (a.syncing !== b.syncing) return false
+    return true
   }
 )

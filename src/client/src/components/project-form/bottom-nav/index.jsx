@@ -101,13 +101,12 @@ const Buttons = memo(
     )
   },
   (a, b) => {
-    let _memo = true
-    if (a.currentIndex !== b.currentIndex) _memo = false
-    if (a.interventionType !== b.interventionType) _memo = false
-    if (a.generalDetailsFormValidation !== b.generalDetailsFormValidation) _memo = false
-    if (a.mitigationFormsValidation !== b.mitigationFormsValidation) _memo = false
-    if (a.adaptationFormsValidation !== b.adaptationFormsValidation) _memo = false
-    return _memo
+    if (a.currentIndex !== b.currentIndex) return false
+    if (a.interventionType !== b.interventionType) return false
+    if (a.generalDetailsFormValidation !== b.generalDetailsFormValidation) return false
+    if (a.mitigationFormsValidation !== b.mitigationFormsValidation) return false
+    if (a.adaptationFormsValidation !== b.adaptationFormsValidation) return false
+    return true
   }
 )
 

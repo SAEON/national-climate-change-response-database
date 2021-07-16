@@ -24,7 +24,7 @@ export default (sheet, startRow, maxRight, invertedIndex) => {
      * TODO - delete this to release the multiple parsing
      * functionality
      */
-    if (currentRow > startRow) {
+    if (currentRow > startRow + 1) {
       throw new Error('Excel parsing limited to single projects')
     }
 

@@ -31,16 +31,19 @@ export default () => {
           Submit a project to the National Climate Change Response Database
         </Typography>
         <Typography
-          style={{ textAlign: 'justify', color: alpha(theme.palette.common.white, 0.9) }}
-          variant="body1"
+          style={{ textAlign: 'left', color: alpha(theme.palette.common.white, 0.9) }}
+          variant="body2"
         >
-          The NCCRD is designed to capture and store the details of climate change interventions
-          including adaptation, mitigation and crosscutting efforts from across South African
-          industrial, research, non-governmental organisations, government bodies and entities. The
-          submission of information to the database is entirely voluntary and the accuracy of the
-          information cannot be guaranteed. Project managers are responsible for adding and
-          maintaining information about their projects. Projects are reviewed and have to be
-          accepted by DFFE prior to becoming available in the system.
+          Although the submission of information to the database is voluntary, data providers are
+          encouraged to upload and update the information into the database to benefit a wide range
+          of use cases in the country. While the administrator of the database (DFFE) takes all
+          necessary steps to ensure quality of captured data, users of the information should note
+          that accuracy of the information captured herein cannot be guaranteed. The database
+          presents a platform where Project managers can upload information on their projects’
+          details as well as to provide periodic updates. The database is beneficial in supporting
+          various use cases in support of the National Climate Change Policy (2011) imperatives. The
+          submitted data supports the undertaking of climate change monitoring and evaluation to
+          track South Africa’s transition to a lower carbon economy and climate resilient society.
         </Typography>
       </Grid>
 

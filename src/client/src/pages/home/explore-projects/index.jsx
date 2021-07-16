@@ -31,16 +31,17 @@ export default () => {
           Explore climate mitigation and adaptation projects
         </Typography>
         <Typography
-          style={{ textAlign: 'justify', color: alpha(theme.palette.common.black, 0.9) }}
-          variant="body1"
+          style={{ textAlign: 'left', color: alpha(theme.palette.common.black, 0.9) }}
+          variant="body2"
         >
-          The platform is implemented and coordinated by the Department of Forestry, Fisheries and
-          the Environment (DFFE) as part of the national efforts to implement the National
-          Development Plan (Vision 2030) to facilitate South Africa’s overall efforts and transition
-          towards a lower carbon and climate resilient society and economy. The climate change
-          response efforts in the NCCRD are broken down into several key areas including a general
-          project overview, a description of the funding provided and the details of specific
-          adaptation and mitigation efforts.
+          The NCCRD is part of the National Climate Change Information System. It is designed to
+          capture and store the details of climate change interventions including adaptation,
+          mitigation and crosscutting efforts from across wide range of stakeholders in South Africa
+          such as industrial entities, research, non-governmental organisations as well as
+          government institutions and entities. Information on climate change related projects
+          contained in the NCCRD include details mitigation and adaptation projects that features
+          specifications on general project overview, description of funding sources and details
+          about project supporters as well as related activity data related to the projects
         </Typography>
       </Grid>
 

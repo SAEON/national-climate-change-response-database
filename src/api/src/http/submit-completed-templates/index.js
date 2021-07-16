@@ -5,7 +5,8 @@ import ensureDirectory from '../../lib/ensure-directory.js'
 import logSql from '../../lib/log-sql.js'
 import xlsx from 'xlsx-populate'
 import { nanoid } from 'nanoid'
-import { createRowIterator, createFormIterator } from './_iterate-rows.js'
+import createUserInputIterator from './excel-iterators/user-input-iterator/index.js'
+import createCompileSheetIterator from './excel-iterators/compile-sheet-iterator/index.js'
 import saveSubmission from './_save-submission.js'
 
 const MAX_UPLOAD_SIZE_MB = 20
@@ -60,7 +61,7 @@ export default async ctx => {
     /**
      * Get submission values from the workbook
      */
-    let row = createRowIterator(compileSheet, _COMPILE_TOP_LEFT, _COMPILE_BOTTOM_RIGHT)()
+    let row = createCompileSheetIterator(compileSheet, _COMPILE_TOP_LEFT, _COMPILE_BOTTOM_RIGHT)()
     while (!row.done) {
       let [form, field, , sheet, headerRowNumber, col] = row.data
 
@@ -90,7 +91,7 @@ export default async ctx => {
      * Save the submissions in the workbook
      * to the database
      */
-    let forms = createFormIterator(valueSheet, valueRowStart, maxColNumber, columnMap)()
+    let forms = createUserInputIterator(valueSheet, valueRowStart, maxColNumber, columnMap)()
     while (!forms.done) {
       const { submission } = forms
       result.inserted.push(await saveSubmission(user.info(ctx).id, submission))

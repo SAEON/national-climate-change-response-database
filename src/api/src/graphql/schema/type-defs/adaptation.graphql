@@ -42,29 +42,3 @@ input AdaptationInput {
   # Paper :: What is the title of the paper?
   researchPaper: String
 }
-
-type Adaptation {
-  id: Int!
-  fileUploads: JSON
-  adaptationSector: ControlledVocabulary
-  otherAdaptationSector: String
-  nationalPolicy: ControlledVocabulary
-  otherNationalPolicy: String
-  regionalPolicy: ControlledVocabulary
-  otherRegionalPolicy: String
-  target: ControlledVocabulary
-
-  hazard: ControlledVocabulary
-  otherHazard: String
-
-  observedClimateChangeImpacts: String
-  addressedClimateChangeImpact: String
-  responseImpact: String
-
-  hasResearch: Boolean
-  researchDescription: String
-  researchType: String
-  researchTargetAudience: String
-  researchAuthor: String
-  researchPaper: String
-}

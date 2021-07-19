@@ -1,4 +1,6 @@
 {
+  "name": "nccrd-api",
+  "version": "1.0.0",
   "description": "Node.js API",
   "type": "module",
   "scripts": {

@@ -3,6 +3,9 @@ import json from '@rollup/plugin-json'
 export default {
   input: 'src/index.js',
   external: [
+    'xlsx-populate',
+    'stream',
+    'apollo-server-core',
     'object-hash',
     'http',
     'koa',

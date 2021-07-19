@@ -1,5 +1,4 @@
 import { join, normalize, sep } from 'path'
-import { mkdirSync, rmdirSync } from 'fs'
 import { config } from 'dotenv'
 import getCurrentDirectory from './lib/get-current-directory.js'
 import ensureDirectory from './lib/ensure-directory.js'

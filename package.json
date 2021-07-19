@@ -1,7 +1,7 @@
 {
   "name": "nccrd",
-  "version": "0.0.1",
-  "description": "National climate change information systems",
+  "version": "1.0.0",
+  "description": "National climate change response database",
   "type": "module",
   "scripts": {
     "*************** SERVICE ALIASES *************": "",

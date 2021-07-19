@@ -1,7 +1,5 @@
 {
-  "name": "nccrd-api",
-  "version": "0.0.1",
-  "description": "NCCRD API",
+  "description": "Node.js API",
   "type": "module",
   "scripts": {
     "start": "nodemon --ignore 'src/client-dist/**/*' --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && TZ=utc node --trace-warnings --experimental-json-modules src'",

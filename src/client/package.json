@@ -1,6 +1,4 @@
 {
-  "name": "nccrd",
-  "version": "0.0.1",
   "description": "React.js client",
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack",

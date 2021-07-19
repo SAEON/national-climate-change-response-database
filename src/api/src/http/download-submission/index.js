@@ -13,6 +13,7 @@ import {
   mitigationVocabularyFields,
   adaptationVocabularyFields,
 } from '../../graphql/schema/index.js'
+import parseProgressData from './_parse-progress-data.js'
 
 const vocabFields = {
   project: projectVocabularyFields,
@@ -52,7 +53,7 @@ export default async ctx => {
     }
 
     const project = JSON.parse(submission.project)
-    const mitigation = JSON.parse(submission.mitigation)
+    let mitigation = JSON.parse(submission.mitigation)
     const adaptation = JSON.parse(submission.adaptation)
 
     /**
@@ -109,9 +110,19 @@ export default async ctx => {
 
       let value
       if (vocabFields.project.includes(field)) {
-        value = _value.term
+        if (
+          field === 'province' ||
+          field === 'districtMunicipality' ||
+          field === 'localMunicipality'
+        ) {
+          value = _value.map(({ term }) => term).join(', ')
+        } else {
+          value = _value.term
+        }
+      } else if (field === 'startYear' || field === 'endYear') {
+        value = new Date(_value).getFullYear().toString()
       } else if (field === 'yx') {
-        value = 'TODO'
+        value = _value // TODO
       } else {
         value = _value
       }
@@ -125,28 +136,29 @@ export default async ctx => {
      * Populate the template (mitigation details)
      */
     const { mitigation: mitigationExcelCols } = columnMap
-    Object.entries(mitigation).forEach(([field, _value]) => {
-      const col = mitigationExcelCols[field]
-      // TODO - progress and energy data
-      if (!col) {
-        return
-      }
-      const valueColLetter = colToLetter(col - 1)
-      const valueAddress = `${valueColLetter}${valueRowStart}`
+    Object.entries({ ...mitigation, ...parseProgressData(mitigation?.progressData) }).forEach(
+      ([field, _value]) => {
+        const col = mitigationExcelCols[field]
+        if (!col) {
+          return
+        }
+        const valueColLetter = colToLetter(col - 1)
+        const valueAddress = `${valueColLetter}${valueRowStart}`
 
-      let value
-      if (vocabFields.mitigation.includes(field)) {
-        value = _value.term
-      } else if (field === 'yx') {
-        value = 'TODO'
-      } else {
-        value = _value
-      }
+        let value
+        if (vocabFields.mitigation.includes(field)) {
+          value = _value.term
+        } else if (field === 'yx') {
+          value = 'TODO'
+        } else {
+          value = _value
+        }
 
-      if (value) {
-        valueSheet.cell(valueAddress).value(value)
+        if (value) {
+          valueSheet.cell(valueAddress).value(value)
+        }
       }
-    })
+    )
 
     /**
      * Populate the template (adaptation details)

@@ -17,6 +17,7 @@ const Compose = memo(({ fields }) => {
           'nationalPolicy',
           'otherNationalPolicy',
           'target',
+          'otherTarget',
           'regionalPolicy',
           'otherRegionalPolicy',
           'hazard',

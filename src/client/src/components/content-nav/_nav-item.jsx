@@ -31,7 +31,7 @@ export default memo(
     const classes = useStyles()
 
     if (Component) {
-      return <Component />
+      return <Component style={style} />
     }
 
     return (
@@ -99,6 +99,7 @@ export default memo(
     if (a.Icon !== b.Icon) return false
     if (a.SecondaryIcon !== b.SecondaryIcon) return false
     if (a.syncing !== b.syncing) return false
+    if (a.style !== b.style) return false
     return true
   }
 )

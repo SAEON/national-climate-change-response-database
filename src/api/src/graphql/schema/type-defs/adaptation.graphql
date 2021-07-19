@@ -13,6 +13,8 @@ input AdaptationInput {
   otherRegionalPolicy: String
   # Indicate the corresponding intervention, goal, or target :: Please select an appropriate value based on your other form inputs above :: adaptationPolicies
   target: ControlledVocabularyInput
+  # Other corresponding intervention, goal, or target :: Please describe based on your other form inputs above
+  otherTarget: String
 
   # Hazard :: Select hazard :: hazards
   hazard: ControlledVocabularyInput

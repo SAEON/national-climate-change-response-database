@@ -99,9 +99,11 @@ const FormController = () => {
     ]
   )
 
+  const style = useMemo(() => (lgAndUp ? { marginTop: theme.spacing(2) } : {}), [lgAndUp, theme])
+
   const submitNavItem = useMemo(
     () => ({
-      style: { marginTop: theme.spacing(lgAndUp ? 2 : 0) },
+      style,
       disabled: !canSubmit,
       primaryText: 'Submit',
       SecondaryIcon: () => (
@@ -116,21 +118,16 @@ const FormController = () => {
       secondaryText: 'Review submission',
       Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={4} />,
     }),
-    [canSubmit, lgAndUp, theme, syncing]
+    [style, canSubmit, syncing, theme.palette.warning.main, theme.palette.success.main]
   )
 
   const syncingNavItem = useMemo(
     () => ({
+      style,
       syncing,
-      Component: () => (
-        <SyncStatus
-          submissionId={submissionId}
-          style={{ marginTop: theme.spacing(2) }}
-          syncing={syncing}
-        />
-      ),
+      Component: props => <SyncStatus submissionId={submissionId} {...props} syncing={syncing} />,
     }),
-    [syncing, theme, submissionId]
+    [syncing, submissionId, style]
   )
 
   return (
@@ -156,7 +153,9 @@ const FormController = () => {
               </Suspense>
             )}
             {activeIndex === 3 && (mode !== 'edit' ? <Submit key="submit" /> : null)}
-            <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
+            {mode !== 'edit' ? (
+              <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
+            ) : null}
           </>
         )
       }}

@@ -14,6 +14,7 @@ const multilineFields = [
   'otherNationalPolicy',
   'otherRegionalPolicy',
   'otherAdaptationSector',
+  'otherTarget',
 ]
 
 const researchFormFields = [
@@ -63,7 +64,9 @@ export default ({ field, formName }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value}
-        onChange={val => updateForm({ [fieldName]: val, target: undefined })}
+        onChange={val =>
+          updateForm({ [fieldName]: val, target: undefined, otherTarget: undefined })
+        }
         placeholder={placeholder}
         helperText={helperText}
       />
@@ -82,12 +85,16 @@ export default ({ field, formName }) => {
           name={fieldName}
           value={value}
           error={isRequired && !value}
-          onChange={val => updateForm({ [fieldName]: val })}
+          onChange={val => updateForm({ [fieldName]: val, otherTarget: undefined })}
           placeholder={placeholder}
           helperText={helperText}
         />
       )
     } else {
+      return null
+    }
+  } else if (fieldName === 'otherTarget') {
+    if (!form.target || !form.target.match(/^Other/)) {
       return null
     }
   }

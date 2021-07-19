@@ -4,6 +4,15 @@ export default form => {
   return Object.fromEntries(
     Object.entries(form)
       .map(([field, value]) => {
+        /**
+         * Fields that start with
+         * "__" should NOT be synced
+         * to the database
+         */
+        if (field.match(/^__/)) {
+          return null
+        }
+
         if (field === 'yx') {
           return [
             field,
@@ -56,10 +65,6 @@ export default form => {
 
         if (value === 'true') {
           return [field, true]
-        }
-
-        if (field.match(/^__/)) {
-          return null
         }
 
         return [field, value]

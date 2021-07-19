@@ -124,11 +124,12 @@ const fixProgressCalculatorGrids = ({ calculator }) => {
             parseFloat(
               getCellValue({
                 calculator: 'progress',
-                startYear,
+                endYear,
                 currentYear,
                 field,
                 grid: grid2,
-              })
+              }),
+              10
             ),
           ])
         ),

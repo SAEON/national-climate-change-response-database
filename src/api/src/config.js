@@ -68,6 +68,8 @@ export const SUBMITTED_TEMPLATES_DIRECTORY = normalize(
 
 export const UPLOADS_DIRECTORY = normalize(join(FILES_DIRECTORY, `.${sep}uploads`))
 
+export const TEMP_DIRECTORY = normalize(join(FILES_DIRECTORY, `.${sep}temp`))
+
 /**
  * Ensure required directories exists
  */
@@ -76,8 +78,7 @@ export const UPLOADS_DIRECTORY = normalize(join(FILES_DIRECTORY, `.${sep}uploads
   await ensureDirectory(SUBMISSION_TEMPLATES_DIRECTORY)
   await ensureDirectory(SUBMITTED_TEMPLATES_DIRECTORY)
   await ensureDirectory(UPLOADS_DIRECTORY)
-  mkdirSync(join(FILES_DIRECTORY, '.test-write-permissions'))
-  rmdirSync(join(FILES_DIRECTORY, '.test-write-permissions'))
+  await ensureDirectory(TEMP_DIRECTORY)
 })().catch(error => {
   console.error(
     'Please create directory',

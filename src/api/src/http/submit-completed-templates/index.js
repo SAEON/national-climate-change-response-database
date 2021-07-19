@@ -2,22 +2,20 @@ import { createReadStream, createWriteStream } from 'fs'
 import { join, normalize, sep } from 'path'
 import { UPLOADS_DIRECTORY } from '../../config.js'
 import ensureDirectory from '../../lib/ensure-directory.js'
-import logSql from '../../lib/log-sql.js'
 import xlsx from 'xlsx-populate'
 import { nanoid } from 'nanoid'
-import createUserInputIterator from './excel-iterators/user-input-iterator/index.js'
-import createCompileSheetIterator from './excel-iterators/compile-sheet-iterator/index.js'
+import createUserInputIterator from '../../lib/xlsx/user-input-iterator/index.js'
+import createCompileSheetIterator from '../../lib/xlsx/compile-sheet-iterator/index.js'
 import saveSubmission from './_save-submission.js'
 
 const MAX_UPLOAD_SIZE_MB = 20
 
-const _COMPILE_SHEET = '_Compile'
-const _COMPILE_TOP_LEFT = 'A3'
-const _COMPILE_BOTTOM_RIGHT = `I111`
+export const _COMPILE_SHEET = '_Compile'
+export const _COMPILE_TOP_LEFT = 'A3'
+export const _COMPILE_BOTTOM_RIGHT = `I111`
 
 export default async ctx => {
-  const { PERMISSIONS, user, mssql } = ctx
-  const { query } = mssql
+  const { PERMISSIONS, user } = ctx
   const { ensurePermission } = user
   await ensurePermission({ ctx, permission: PERMISSIONS.createSubmission })
 
@@ -59,7 +57,8 @@ export default async ctx => {
     let maxColNumber = 0
 
     /**
-     * Get submission values from the workbook
+     * Get a mapping of field names to column numbers in the Excel sheet
+     * TODO - this code is defined twice
      */
     let row = createCompileSheetIterator(compileSheet, _COMPILE_TOP_LEFT, _COMPILE_BOTTOM_RIGHT)()
     while (!row.done) {

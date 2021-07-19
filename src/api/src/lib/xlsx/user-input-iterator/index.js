@@ -1,10 +1,10 @@
-import colToLetter from './_col-to-letter.js'
+import colToLetter from '../col-to-letter.js'
 import processMitigation from './process-mitigation/index.js'
 import {
   projectVocabularyFields,
   mitigationVocabularyFields,
   adaptationVocabularyFields,
-} from '../../../../graphql/schema/index.js'
+} from '../../../graphql/schema/index.js'
 
 const vocabFields = {
   project: projectVocabularyFields,

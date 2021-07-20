@@ -9,7 +9,7 @@ const Compose = memo(({ fields }) => {
       formName="mitigation"
       RenderField={RenderField}
       fields={fields}
-      hideSections={['Emissions data', 'Energy data', 'Associated research']}
+      hideSections={['Emissions data', 'Energy data']}
       sections={{
         'Host sector': ['hostSector', 'hostSubSectorPrimary', 'hostSubSectorSecondary'],
         'Project type': ['mitigationType', 'mitigationSubType'],
@@ -38,17 +38,10 @@ const Compose = memo(({ fields }) => {
           'carbonCreditCdmMethodology',
           'carbonCreditVoluntaryOrganization',
           'carbonCreditVoluntaryMethodology',
+          'carbonCreditCdmProjectNumber',
         ],
         'Energy data': ['hasEnergyData', 'energyData'],
         'Emissions data': ['hasEmissionsData', 'emissionsData'],
-        'Associated research': [
-          'hasResearch',
-          'researchDescription',
-          'researchType',
-          'researchTargetAudience',
-          'researchAuthor',
-          'researchPaper',
-        ],
       }}
     />
   )

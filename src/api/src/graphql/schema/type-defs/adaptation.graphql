@@ -30,17 +30,4 @@ input AdaptationInput {
   addressedClimateChangeImpact: String
   # Impact of response :: What has been the impact of the response in reducing climate change impacts?
   responseImpact: String
-
-  # Associated research :: Is this project component research or applied?
-  hasResearch: Boolean
-  # Description :: Short description of this research component
-  researchDescription: String
-  # Research type :: What kind of research is it?
-  researchType: String
-  # Target audience :: Who is the target audience?
-  researchTargetAudience: String
-  # Author :: Who is the primary author?
-  researchAuthor: String
-  # Paper :: What is the title of the paper?
-  researchPaper: String
 }

@@ -21,20 +21,13 @@ const multilineFields = [
   'otherRegionalPolicy',
 ]
 
-const researchFormFields = [
-  'researchDescription',
-  'researchType',
-  'researchTargetAudience',
-  'researchAuthor',
-  'researchPaper',
-]
-
 const carbonCreditsFields = [
   'carbonCreditStandard',
   'carbonCreditCdmExecutiveStatus',
   'carbonCreditCdmMethodology',
   'carbonCreditVoluntaryOrganization',
   'carbonCreditVoluntaryMethodology',
+  'carbonCreditCdmProjectNumber',
 ]
 
 export default ({ field, formName }) => {
@@ -456,29 +449,6 @@ export default ({ field, formName }) => {
     } else {
       return null
     }
-  }
-
-  if (researchFormFields.includes(fieldName)) {
-    if (!(form.hasResearch || '').toBoolean()) {
-      return null
-    }
-  }
-
-  if (fieldName === 'hasResearch') {
-    return (
-      <GqlBoundFormInput
-        key={fieldName}
-        field={field}
-        value={value || ''}
-        updateValue={val =>
-          updateForm({
-            [fieldName]: val,
-            ...Object.fromEntries(researchFormFields.map(field => [field, undefined])),
-          })
-        }
-        multiline={multilineFields.includes(fieldName)}
-      />
-    )
   }
 
   return (

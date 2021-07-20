@@ -52,6 +52,8 @@ input MitigationInput {
   carbonCreditVoluntaryOrganization: ControlledVocabularyInput
   # Voluntary methodology :: Describe the method used in the project.
   carbonCreditVoluntaryMethodology: String
+  # CDM Project number :: Please add the CDM project number if you know it
+  carbonCreditCdmProjectNumber: String
 
   # Achieved progress :: Achieved progress by project
   progressData: JSON
@@ -65,17 +67,4 @@ input MitigationInput {
   hasEmissionsData: Boolean
   # Emissions data :: Input mitigation emissions data
   emissionsData: JSON
-
-  # Associated research :: Is this project component research or applied?
-  hasResearch: Boolean
-  # Description :: Short description of this research component
-  researchDescription: String
-  # Research type :: What kind of research is it?
-  researchType: String
-  # Target audience :: Who is the target audience?
-  researchTargetAudience: String
-  # Author :: Who is the primary author?
-  researchAuthor: String
-  # Paper :: What is the title of the paper?
-  researchPaper: String
 }

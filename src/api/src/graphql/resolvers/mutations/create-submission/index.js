@@ -5,6 +5,7 @@ export default async (self, args, ctx) => {
 
   const sql = `
     insert into Submissions (
+      userId,
       createdBy,
       createdAt
     )
@@ -12,6 +13,7 @@ export default async (self, args, ctx) => {
     output inserted.*
     
     values (
+      ${ctx.user.info(ctx).id},
       ${ctx.user.info(ctx).id},
       '${new Date().toISOString()}'
     );`

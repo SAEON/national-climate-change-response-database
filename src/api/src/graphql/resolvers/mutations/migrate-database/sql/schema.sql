@@ -229,10 +229,13 @@ create table Submissions (
   id uniqueidentifier not null primary key default (newsequentialid()),
 	validationStatus nvarchar(4000),
 	validationComments nvarchar(max),
+	submissionType nvarchar(255),
 	project nvarchar(max),
 	mitigation nvarchar(max),
 	adaptation nvarchar(max),
+	research nvarchar(max),
 	isSubmitted bit default 0,
+	userId int foreign key references Users (id),
 	createdBy int foreign key references Users (id),
 	createdAt datetime2 not null,
 	deletedAt datetime2 null,
@@ -240,10 +243,11 @@ create table Submissions (
 	_projectDescription as JSON_VALUE(project, '$.description'),
 	index ix_submissions nonclustered (id),
 	index ix_submissions_id nonclustered (id),
-	constraint json_validationStatus check(isjson(validationStatus)=1),
-	constraint json_project check(isjson(project)=1),
-	constraint json_mitigation check(isjson(mitigation)=1),
-	constraint json_Adaptation check(isjson(adaptation)=1)
+	constraint json_research check( isjson(research) = 1),
+	constraint json_validationStatus check( isjson(validationStatus) = 1),
+	constraint json_project check( isjson(project) = 1),
+	constraint json_mitigation check( isjson(mitigation) = 1),
+	constraint json_Adaptation check( isjson(adaptation) = 1)
 );
 end
 

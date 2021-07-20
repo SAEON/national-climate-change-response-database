@@ -17,14 +17,6 @@ const multilineFields = [
   'otherTarget',
 ]
 
-const researchFormFields = [
-  'researchDescription',
-  'researchType',
-  'researchTargetAudience',
-  'researchAuthor',
-  'researchPaper',
-]
-
 export default ({ field, formName }) => {
   const { updateAdaptationDetailsForm: updateForm, adaptationDetailsForm: form } =
     useContext(formContext)
@@ -163,29 +155,6 @@ export default ({ field, formName }) => {
     if (!form.hazard || form.hazard.term !== 'Other (Please specify)') {
       return null
     }
-  }
-
-  if (researchFormFields.includes(fieldName)) {
-    if (!(form['hasResearch'] || '').toBoolean()) {
-      return null
-    }
-  }
-
-  if (fieldName === 'hasResearch') {
-    return (
-      <GqlBoundFormInput
-        key={fieldName}
-        field={field}
-        value={value || ''}
-        updateValue={val =>
-          updateForm({
-            [fieldName]: val,
-            ...Object.fromEntries(researchFormFields.map(field => [field, undefined])),
-          })
-        }
-        multiline={multilineFields.includes(fieldName)}
-      />
-    )
   }
 
   return (

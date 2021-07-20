@@ -9,7 +9,6 @@ const Compose = memo(({ fields }) => {
       formName="adaptation"
       RenderField={RenderField}
       fields={fields}
-      hideSections={['Associated research']}
       sections={{
         'Adaptation details': [
           'adaptationSector',
@@ -29,14 +28,6 @@ const Compose = memo(({ fields }) => {
           'responseImpact',
         ],
         'Progress reports': ['fileUploads'],
-        'Associated research': [
-          'hasResearch',
-          'researchDescription',
-          'researchType',
-          'researchTargetAudience',
-          'researchAuthor',
-          'researchPaper',
-        ],
       }}
     />
   )

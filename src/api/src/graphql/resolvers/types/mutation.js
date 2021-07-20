@@ -16,7 +16,7 @@ const getSubmissionOwner = async id =>
      from Submissions
      where id = '${sanitizeSqlValue(id)}';`
     )
-  ).recordset[0].createdBy
+  ).recordset[0].userId
 
 export default {
   createSubmission: authorize(PERMISSIONS.createSubmission)(createSubmission),

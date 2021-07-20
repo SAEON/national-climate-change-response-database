@@ -1,5 +1,5 @@
 {
-  "name": "nccrd-client",
+  "name": "nccrd",
   "version": "1.0.0",
   "description": "React.js client",
   "scripts": {

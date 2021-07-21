@@ -1,34 +1,37 @@
-use NCCRD_ERM;
-go
-
 ;with projectDetails as (
   select distinct
     p.ProjectDetailsId,
-    (select ProvinceName province
+    (select ProvinceName _
      from tb_erm_Province
      join tb_erm_Project_Location_Data ld on ld.ProjectDetailsId = p.ProjectDetailsId
      where ProvinceID = ld.Province for json path
     ) province,
-    (select MetroName districtMunicipality
+    (select MetroName _
      from tb_erm_Metro_DistrictMunicipality
      join tb_erm_Project_Location_Data ld on ld.ProjectDetailsId = p.ProjectDetailsId
      where MetroID = ld.Metro for json path
     ) districtMunicipality,
-    (select LocalMunicipalityName localMunicipality
+    (select LocalMunicipalityName _
      from tb_erm_Local_Municipalities
      join tb_erm_Project_Location_Data ld on ld.ProjectDetailsId = p.ProjectDetailsId
      where LocalMunicipalityID = ld.LocalMunicipality for json path
     ) localMunicipality,
-    (select TownName cityOrTown
+    (select TownName _
      from tb_erm_Town
      join tb_erm_Project_Location_Data ld on ld.ProjectDetailsId = p.ProjectDetailsId
      where TownID = ld.Town for json path
     ) cityOrTown,
+    (select
+      ltrim(str(LatCalculated, 25, 10)) lat,
+      ltrim(str(LonCalculated, 25, 10)) lng
+     from tb_erm_Project_Location_Data ld
+     where ld.ProjectDetailsId = p.ProjectDetailsId for json path
+    ) yx,
     p.ProjectTitle title,
     p.Description description,
     case TypeOfIntervention
       when 1 then 'Mitigation'
-      when 2 then 'Adaptatation'
+      when 2 then 'Adaptation'
     end interventionType,
     p.Link link,
     (select AppUserName from tb_erm_appusers where AppUserID = p.ProjectManager) projectManagerEmail,
@@ -43,9 +46,8 @@ go
   left join tb_erm_Project_Location_Data ld on ld.ProjectDetailsId = p.ProjectDetailsId
 )
 
-
 ,mitigationDetails as (
-  select
+  select distinct
     ProjectDetailsId,
     (select
       e.Year,
@@ -86,8 +88,8 @@ go
     (select MainSubSectorType from tb_erm_Mitigation_MainSubSector where MainSubSectorId = m.HostMainSubSector) hostSubSectorPrimary,
     (select SubSectorType from tb_erm_Mitigation_SubSector where SubSectorId = m.HostSubSector) hostSubSectorSecondary,
     case CarbonCredit
-      when 1 then 'Yes'
-      when 2 then 'No'
+      when 1 then 'true'
+      when 2 then 'false'
     end carbonCredit,
     case CarbonCreditMarket
       when 1 then 'CDM'
@@ -106,27 +108,38 @@ go
 
 ,adaptationDetails as (
   select
-    ProjectDetailsId,
-    (select ItemDisplay from tb_erm_picklist l join tb_erm_picklist_value v on v.ListId = l.ListId where l.ListName = 'Adaptation Host Sector' and ItemNum = a.HostSector) adaptationSector,
-    (select ItemDisplay from tb_erm_picklist l join tb_erm_picklist_value v on v.ListId = l.ListId where l.ListName = 'Purpose of adaptation' and ItemNum = a.PurposeOfAdaptation) responseImpact
+  ProjectDetailsId,
+  STRING_AGG(adaptationSector, ', ') adaptationSector,
+  STRING_AGG(responseImpact, ', ') responseImpact
 
-  from tb_erm_Project_Adaptation_Data a
+  from (
+    select distinct
+      ProjectDetailsId,
+      (select ItemDisplay from tb_erm_picklist l join tb_erm_picklist_value v on v.ListId = l.ListId where l.ListName = 'Adaptation Host Sector' and ItemNum = a.HostSector) adaptationSector,
+      (select ItemDisplay from tb_erm_picklist l join tb_erm_picklist_value v on v.ListId = l.ListId where l.ListName = 'Purpose of adaptation' and ItemNum = a.PurposeOfAdaptation) responseImpact
+    from tb_erm_Project_Adaptation_Data a
+  ) t
+
+  group by
+  ProjectDetailsId
 )
 
 
 ,researchDetails as (
-  select
+  select distinct
     r.ProjectDetailsId,
     (select ItemDisplay from tb_erm_picklist l join tb_erm_picklist_value v on v.ListId = l.ListId where l.ListName = 'Type of research' and ItemNum = r.TypeOfResearch) researchType,
     (select ItemDisplay from tb_erm_picklist l join tb_erm_picklist_value v on v.ListId = l.ListId where l.ListName = 'Target audience' and ItemNum = r.TargetAudience) targetAudience,
     Paper paper
     
   from tb_erm_Project_Research_Data r
+  where paper <> ''
 )
 
 
 ,submissions as (
   select
+    p.ProjectDetailsIdentifier _id,
     case UpdtUser
       when '' then null
       when 'Admin' then null
@@ -138,16 +151,14 @@ go
     end submissionType,
     p.VALIDATIONCOMMENTS validationComments,
     (select ItemDisplay from tb_erm_picklist l join tb_erm_picklist_value v on v.ListId = l.ListId where l.ListName = 'DEAT Validation Status' and ItemNum = p.ValidationStatus) validationStatus,
-    (select * from projectDetails _p where _p.ProjectDetailsId = p.ProjectDetailsId for json path) project,
-    (select * from mitigationDetails _m where _m.ProjectDetailsId = p.ProjectDetailsId for json path) mitigation,
-    (select * from adaptationDetails _a where _a.ProjectDetailsId = p.ProjectDetailsId for json path) adaptation,
-    (select * from researchDetails _r where _r.ProjectDetailsId = p.ProjectDetailsId for json path) research
+    (select * from projectDetails _p where _p.ProjectDetailsId = p.ProjectDetailsId for json path, without_array_wrapper) project,
+    (select * from mitigationDetails _m where _m.ProjectDetailsId = p.ProjectDetailsId for json path, without_array_wrapper) mitigation,
+    (select * from adaptationDetails _a where _a.ProjectDetailsId = p.ProjectDetailsId for json path, without_array_wrapper) adaptation,
+    (select * from researchDetails _r where _r.ProjectDetailsId = p.ProjectDetailsId for json path, without_array_wrapper) research,
+    p.UpdtTime createdAt
 
   from tb_erm_project_details p
+  where p.ProjectDetailsId not in (10171, 10179, 10178) -- these are test entries
 )
 
-select
-*
-from submissions
-
-(1) GPS coordinates
+select * from submissions;

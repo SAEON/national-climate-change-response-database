@@ -21,11 +21,15 @@ export default async (
     merge Submissions t
     using (
       select
-        '${JSON.stringify(project)}' project,
-        '${JSON.stringify(mitigation)}' mitigation,
-        '${JSON.stringify(adaptation)}' adaptation,
+        '${sanitizeSqlValue(JSON.stringify(project))}' project,
+        '${sanitizeSqlValue(JSON.stringify(mitigation))}' mitigation,
+        '${sanitizeSqlValue(JSON.stringify(adaptation))}' adaptation,
         ${isSubmitted ? 1 : 0} isSubmitted,
-        ${validationStatus ? `'${JSON.stringify(validationStatus)}' validationStatus,` : ''}
+        ${
+          validationStatus
+            ? `'${sanitizeSqlValue(JSON.stringify(validationStatus))}' validationStatus,`
+            : ''
+        }
         '${sanitizeSqlValue(validationComments)}' validationComments,
         ${userId} createdBy,
         '${new Date().toISOString()}' createdAt
@@ -62,7 +66,7 @@ export default async (
       $action,
       inserted.*;`
 
-  logSql(sql, 'Save active submission')
+  logSql(sql, 'Save active submission', true)
   const response = await query(sql)
   const output = response.recordset[0]
   return output

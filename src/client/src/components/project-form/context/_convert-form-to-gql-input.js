@@ -18,7 +18,7 @@ export default form => {
             field,
             stringify({
               type: 'GeometryCollection',
-              geometries: (value || []).map(coordinates => ({ type: 'Point', coordinates })),
+              geometries: (value || []).map(([x, y]) => ({ type: 'Point', coordinates: [y, x] })),
             }),
           ]
         }

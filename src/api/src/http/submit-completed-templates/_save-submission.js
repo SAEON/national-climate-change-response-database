@@ -6,11 +6,11 @@ export default async (userId, { project, mitigation = {}, adaptation = {} }) => 
     merge Submissions t
     using (
       select
-        '${JSON.stringify(project)}' project,
-        '${JSON.stringify(mitigation)}' mitigation,
-        '${JSON.stringify(adaptation)}' adaptation,
+        '${sanitizeSqlValue(JSON.stringify(project))}' project,
+        '${sanitizeSqlValue(JSON.stringify(mitigation))}' mitigation,
+        '${sanitizeSqlValue(JSON.stringify(adaptation))}' adaptation,
         1 isSubmitted,
-        '${JSON.stringify({ term: 'Pending' })}' validationStatus,
+        '${sanitizeSqlValue(JSON.stringify({ term: 'Pending' }))}' validationStatus,
         ${userId} createdBy,
         '${new Date().toISOString()}' createdAt
     ) s on t.id = null

@@ -66,9 +66,23 @@ export default ({
   try {
     options = data.controlledVocabulary.map(({ children }) => children).flat()
   } catch {
-    throw new Error(
-      'Unable to retrieve the vocabulary lists - please make sure that the database is seeded correctly'
-    )
+    /**
+     * The old data from the ERM database sometimes
+     * doesn't have the same terms. So usually if this
+     * error occurs it's because an old submission is
+     * being edited and the vocabulary misaligns
+     */
+    if (roots?.length && roots?.[0]?.term) {
+      options = []
+    } else {
+      throw new Error(
+        `Unable to retrieve the vocabulary lists for the tree "${tree}" with root "${JSON.stringify(
+          roots,
+          null,
+          2
+        )}". Please make sure that the database is seeded correctly\n\n${error.message}`
+      )
+    }
   }
 
   return (

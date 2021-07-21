@@ -14,7 +14,7 @@ export default ({ ...form }) => {
 
         if (field === 'yx') {
           try {
-            return [field, parse(value).geometries.map(({ coordinates: [x, y] }) => [x, y])]
+            return [field, parse(value).geometries.map(({ coordinates: [y, x] }) => [x, y])]
           } catch {
             return [field, undefined]
           }

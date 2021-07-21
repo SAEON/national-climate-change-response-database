@@ -1,5 +1,5 @@
-import projects from './_projects.js'
+import submissions from './_submissions.js'
 
 export default async ctx => ({
-  projects: await projects(ctx),
+  submissions: await submissions(ctx),
 })

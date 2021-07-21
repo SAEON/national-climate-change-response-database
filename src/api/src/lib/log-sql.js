@@ -9,7 +9,8 @@ export default (sql, name, force = false) => {
         `\n\n${format(sql, { language: 'tsql' })}\n`
       )
     } catch (error) {
-      console.error('Unable to print SQL (I think this is a bug with the sql-formatter library)')
+      console.error('Unable to format SQL (I think this is a bug with the sql-formatter library)')
+      console.info(sql)
     }
   } else {
     console.info(`===== SQL Query # ${name || 'anonymous'}`)

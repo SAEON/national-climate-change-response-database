@@ -1,11 +1,11 @@
 import { useContext } from 'react'
 import DownloadIcon from 'mdi-react/DownloadIcon'
 import Button from '@material-ui/core/Button'
-import Tooltip from '@material-ui/core/Tooltip'
 import Hidden from '@material-ui/core/Hidden'
-import { context as authContext } from '.././../../contexts/authorization'
+import { context as authContext } from '../../../contexts/authorization'
 import useTheme from '@material-ui/core/styles/useTheme'
 import Divider from '@material-ui/core/Divider'
+import MessageDialog from '../../../components/message-dialogue'
 
 export default () => {
   const theme = useTheme()
@@ -21,22 +21,29 @@ export default () => {
         orientation="vertical"
         style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
       />
-      <Tooltip placement="bottom" title="Download submission data">
-        <span>
-          <Hidden smDown>
+
+      <Hidden smDown>
+        <MessageDialog
+          title="Download submissions"
+          text="This button is only shown to admins, and is not implemented yet"
+          tooltipProps={{
+            title: 'Download all submissions from current filter context',
+            placement: 'bottom',
+          }}
+          Button={fn => (
             <Button
               disableElevation
               size="small"
               variant="text"
               color="primary"
-              onClick={() => alert('TODO')}
+              onClick={fn}
               startIcon={<DownloadIcon size={18} />}
             >
               Download all (filtered) data
             </Button>
-          </Hidden>
-        </span>
-      </Tooltip>
+          )}
+        />
+      </Hidden>
     </>
   )
 }

@@ -92,6 +92,8 @@ export default ({ children }) => {
         $adaptationFilters: JSON
       ) {
         pageInfo(
+          limit: $limit
+          offset: $offset
           isSubmitted: $isSubmitted
           validationStatus: $validationStatus
           projectFilters: $projectFilters

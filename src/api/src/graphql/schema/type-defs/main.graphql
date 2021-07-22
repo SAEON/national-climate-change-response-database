@@ -94,6 +94,8 @@ type Query {
     mitigationFilters: JSON
     adaptationFilters: JSON
     isSubmitted: Boolean
+    limit: Int
+    offset: Int
   ): PageInfo!
   # Search submissions
   submissions(

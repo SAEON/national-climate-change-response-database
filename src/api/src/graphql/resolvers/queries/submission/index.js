@@ -2,7 +2,6 @@ import logSql from '../../../../lib/log-sql.js'
 
 export default async (_, { id, isSubmitted = undefined }, ctx) => {
   const { query } = ctx.mssql
-  console.log('hi', id)
 
   const sql = `
     select *

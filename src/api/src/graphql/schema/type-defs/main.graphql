@@ -66,6 +66,7 @@ type SubmissionTemplate {
 
 type Submission {
   id: ID!
+  _id: Int
   isSubmitted: Boolean
   validationStatus: JSON
   validationComments: String

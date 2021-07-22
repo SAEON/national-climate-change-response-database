@@ -9,9 +9,5 @@ export default {
    * If more fields are required this will need
    * to be made into a batching function
    */
-  createdBy: async ({ createdBy, args, ctx }) => {
-    return {
-      id: createdBy,
-    }
-  },
+  createdBy: async ({ createdBy: id }) => ({ id }),
 }

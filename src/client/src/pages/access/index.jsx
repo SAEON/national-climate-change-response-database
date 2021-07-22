@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, Suspense, lazy } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Loading from '../../components/loading'
@@ -6,13 +6,16 @@ import ContentNav from '../../components/content-nav'
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
 import RolesIcon from 'mdi-react/AccountLockIcon'
 import PermissionsIcon from 'mdi-react/AxisLockIcon'
-import Users from './users'
-import Roles from './roles'
-import Permissions from './permissions'
 import Wrapper from '../../components/page-wrapper'
 import ToolbarHeader from '../../components/toolbar-header'
 import AccessDenied from '../../components/access-denied'
 import UserRolesProvider from './context'
+import useTheme from '@material-ui/core/styles/useTheme'
+import Fade from '@material-ui/core/Fade'
+
+const Users = lazy(() => import('./users'))
+const Roles = lazy(() => import('./roles'))
+const Permissions = lazy(() => import('./permissions'))
 
 const sections = [
   {
@@ -39,6 +42,7 @@ const sections = [
 ]
 
 export default () => {
+  const theme = useTheme()
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
 
@@ -61,15 +65,36 @@ export default () => {
         <ContentNav
           navItems={sections.filter(({ requiredPermission }) => hasPermission(requiredPermission))}
         >
-          {({ activeIndex }) => {
-            return sections
+          {({ activeIndex }) =>
+            sections
               .filter(({ requiredPermission }) => hasPermission(requiredPermission))
-              .map(({ Section, primaryText, requiredPermission }, i) =>
-                activeIndex === i ? (
-                  <Section permission={requiredPermission} key={primaryText} />
-                ) : null
-              )
-          }}
+              .map(({ Section, primaryText, requiredPermission }, i) => (
+                <Suspense
+                  key={primaryText}
+                  fallback={
+                    <Fade
+                      timeout={theme.transitions.duration.regular}
+                      in={activeIndex === i}
+                      key={'loading'}
+                    >
+                      <span>
+                        <Loading />
+                      </span>
+                    </Fade>
+                  }
+                >
+                  <Fade
+                    timeout={theme.transitions.duration.regular}
+                    in={activeIndex === i}
+                    key={'loaded'}
+                  >
+                    <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+                      <Section permission={requiredPermission} />
+                    </span>
+                  </Fade>
+                </Suspense>
+              ))
+          }
         </ContentNav>
       </Wrapper>
     </UserRolesProvider>

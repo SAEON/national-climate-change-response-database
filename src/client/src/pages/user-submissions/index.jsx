@@ -1,11 +1,35 @@
+import { lazy, Suspense } from 'react'
 import Wrapper from '../../components/page-wrapper'
 import { gql, useQuery } from '@apollo/client'
 import Header from './header'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
 import Loading from '../../components/loading'
+import ContentNav from '../../components/content-nav'
+import CompletedIcon from 'mdi-react/CheckCircleIcon'
+import IncompleteIcon from 'mdi-react/ProgressWrenchIcon'
+import Fade from '@material-ui/core/Fade'
+import useTheme from '@material-ui/core/styles/useTheme'
+
+const CompletedSubmissions = lazy(() => import('./completed-submissions'))
+const InprogressSubmissions = lazy(() => import('./inprogress-submissions'))
+
+const sections = [
+  {
+    primaryText: 'Completed submissions',
+    secondaryText: 'Show your completed submissions',
+    Icon: CompletedIcon,
+    Section: CompletedSubmissions,
+  },
+  {
+    primaryText: 'Incomplete submissions',
+    secondaryText: 'Show your incomplete submissions (continue from previous)',
+    Icon: IncompleteIcon,
+    Section: InprogressSubmissions,
+  },
+]
 
 export default ({ id }) => {
+  const theme = useTheme()
+
   const { error, loading, data } = useQuery(
     gql`
       query user($id: Int!) {
@@ -13,6 +37,10 @@ export default ({ id }) => {
           id
           submissions {
             id
+            _id
+            project
+            validationStatus
+            validationComments
             isSubmitted
           }
         }
@@ -37,9 +65,36 @@ export default ({ id }) => {
     <>
       <Header />
       <Wrapper>
-        <Card>
-          <CardContent>{JSON.stringify(data.user)}</CardContent>
-        </Card>
+        <ContentNav navItems={sections}>
+          {({ activeIndex }) =>
+            sections.map(({ Section, primaryText }, i) => (
+              <Suspense
+                key={primaryText}
+                fallback={
+                  <Fade
+                    timeout={theme.transitions.duration.regular}
+                    in={activeIndex === i}
+                    key={'loading'}
+                  >
+                    <span>
+                      <Loading />
+                    </span>
+                  </Fade>
+                }
+              >
+                <Fade
+                  timeout={theme.transitions.duration.regular}
+                  in={activeIndex === i}
+                  key={'loaded'}
+                >
+                  <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+                    <Section submissions={data.user.submissions} />
+                  </span>
+                </Fade>
+              </Suspense>
+            ))
+          }
+        </ContentNav>
       </Wrapper>
     </>
   )

@@ -36,7 +36,7 @@ export default ({ id }) => {
       text="Are you sure you want to delete this submission? All data will be lost"
       tooltipProps={{
         placement: 'bottom',
-        title: 'Reset form',
+        title: 'Delete submission',
       }}
       Button={openFn => {
         return (

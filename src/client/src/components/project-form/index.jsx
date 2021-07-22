@@ -9,6 +9,7 @@ import SyncStatus from './_sync-status'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import BottomNav from './bottom-nav'
 import SyncIcon from 'mdi-react/SyncIcon'
+import Fade from '@material-ui/core/Fade'
 
 const GeneralDetailsForm = lazy(() => import('./sections/general-details'))
 const MitigationDetailsForm = lazy(() => import('./sections/mitigation-details'))
@@ -52,6 +53,7 @@ const FormController = () => {
   const navItems = useMemo(
     () => [
       {
+        Section: GeneralDetailsForm,
         primaryText: 'General',
         secondaryText: 'Basic project details',
         Icon: () => (
@@ -63,6 +65,7 @@ const FormController = () => {
         ),
       },
       {
+        Section: MitigationDetailsForm,
         disabled: !mitigationsRequired,
         primaryText: 'Mitigation details',
         secondaryText: 'Project mitigation details',
@@ -75,6 +78,7 @@ const FormController = () => {
         ),
       },
       {
+        Section: AdaptationDetailsForm,
         disabled: !adaptationsRequired,
         primaryText: 'Adaptation details',
         secondaryText: 'Project adaptation details',
@@ -134,31 +138,64 @@ const FormController = () => {
     <ContentNav
       navItems={mode === 'edit' ? [...navItems, syncingNavItem] : [...navItems, submitNavItem]}
     >
-      {({ activeIndex, setActiveIndex }) => {
-        return (
-          <>
-            {activeIndex === 0 && (
-              <Suspense fallback={<Loading />}>
-                <GeneralDetailsForm key="project-form" />
-              </Suspense>
-            )}
-            {activeIndex === 1 && (
-              <Suspense fallback={<Loading />}>
-                <MitigationDetailsForm key="mitigation-form" />
-              </Suspense>
-            )}
-            {activeIndex === 2 && (
-              <Suspense fallback={<Loading />}>
-                <AdaptationDetailsForm key="adaptation-form" />
-              </Suspense>
-            )}
-            {activeIndex === 3 && (mode !== 'edit' ? <Submit key="submit" /> : null)}
-            {mode !== 'edit' ? (
-              <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
-            ) : null}
-          </>
-        )
-      }}
+      {({ activeIndex, setActiveIndex }) => (
+        <>
+          {[navItems[0], navItems[1], navItems[2]].map(({ Section, primaryText }, i) => (
+            <Suspense
+              key={primaryText}
+              fallback={
+                <Fade
+                  timeout={theme.transitions.duration.standard}
+                  in={activeIndex === i}
+                  key={'loading'}
+                >
+                  <span>
+                    <Loading />
+                  </span>
+                </Fade>
+              }
+            >
+              <Fade
+                timeout={theme.transitions.duration.standard}
+                in={activeIndex === i}
+                key={'loaded'}
+              >
+                <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+                  <Section />
+                </span>
+              </Fade>
+            </Suspense>
+          ))}
+
+          <Suspense
+            fallback={
+              <Fade
+                timeout={theme.transitions.duration.standard}
+                in={activeIndex === 3}
+                key={'loading'}
+              >
+                <span>
+                  <Loading />
+                </span>
+              </Fade>
+            }
+          >
+            <Fade
+              timeout={theme.transitions.duration.standard}
+              in={activeIndex === 3}
+              key={'loaded'}
+            >
+              <span style={{ display: activeIndex === 3 ? 'inherit' : 'none' }}>
+                <Submit key="submit" />
+              </span>
+            </Fade>
+          </Suspense>
+
+          {mode !== 'edit' ? (
+            <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
+          ) : null}
+        </>
+      )}
     </ContentNav>
   )
 }

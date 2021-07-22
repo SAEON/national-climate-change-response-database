@@ -9,9 +9,11 @@ export default () =>
       const sql = `
         select *
         from Submissions s
-        where s.createdBy in (${keys.join(',')})`
+        where
+        deletedAt is null
+        and s.createdBy in (${keys.join(',')})`
 
-      logSql(sql, "Find user's submissions", true)
+      logSql(sql, "Find user's submissions")
       const result = await query(sql)
       return keys.map(createdBy => result.recordset.filter(sift({ createdBy })))
     },

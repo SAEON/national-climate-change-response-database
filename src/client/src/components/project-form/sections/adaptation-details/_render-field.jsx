@@ -86,7 +86,7 @@ export default ({ field, formName }) => {
       return null
     }
   } else if (fieldName === 'otherTarget') {
-    if (!form.target || !form.target.match(/^Other/)) {
+    if (!form?.target || !form.target.term?.match(/^Other/)) {
       return null
     }
   }

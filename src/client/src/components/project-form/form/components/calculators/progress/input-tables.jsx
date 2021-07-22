@@ -168,6 +168,19 @@ export default ({ calculator, updateCalculator }) => {
       >
         Project expenditure
       </Typography>
+      <Typography
+        variant="caption"
+        style={{
+          display: 'block',
+          textAlign: 'center',
+          fontStyle: 'italic',
+          marginBottom: theme.spacing(2),
+        }}
+      >
+        The term &quot;project expenditure&quot; refers to the annual cost of the previous calendar
+        year. This is not the project&apos;s total budget; however, it is a breakdown of the annual
+        financial expenditures.
+      </Typography>
       <div style={{ height: rows2.length <= 6 ? rows2.length * 52 + 58 : 300, width: '100%' }}>
         <DataGrid
           pageSize={100}

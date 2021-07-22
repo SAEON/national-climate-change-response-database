@@ -24,7 +24,7 @@ export default () =>
         join Trees t on t.id = vt.treeId
         where vt.id in (${keys.join(',')})`
 
-      logSql(sql, 'Find vocabulary', true)
+      logSql(sql, 'Find vocabulary')
 
       const result = await query(sql)
 

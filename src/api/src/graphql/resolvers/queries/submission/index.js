@@ -10,7 +10,7 @@ export default async (_, { id, isSubmitted = undefined }, ctx) => {
     id = '${sanitizeSqlValue(id)}'
     ${isSubmitted === undefined ? '' : `and isSubmitted = ${isSubmitted ? 1 : 0}`};`
 
-  logSql(sql, 'Submission', true)
+  logSql(sql, 'Submission')
   const result = await query(sql)
   return result.recordset[0]
 }

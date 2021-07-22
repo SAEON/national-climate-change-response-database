@@ -45,7 +45,7 @@ export default async ctx => {
      * Get the submission data
      */
     const getSubmissionData = `select * from Submissions where id = '${sanitizeSqlValue(id)}';`
-    logSql(getSubmissionData, 'Submission', true)
+    logSql(getSubmissionData, 'Submission')
     const submission = (await query(getSubmissionData)).recordset[0]
 
     if (!submission) {

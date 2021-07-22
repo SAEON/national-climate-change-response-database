@@ -66,7 +66,7 @@ export default async (
       $action,
       inserted.*;`
 
-  logSql(sql, 'Save active submission', true)
+  logSql(sql, 'Save active submission')
   const response = await query(sql)
   const output = response.recordset[0]
   return output

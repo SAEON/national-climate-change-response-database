@@ -129,14 +129,11 @@ export default withRouter(() => {
         key={'submission'}
         path={'/submissions/:id'}
         exact
-        render={props => {
-          console.log('props', props)
-          return (
-            <Transition tKey="submission">
-              <SubmissionPage id={props.match.params.id} {...props} />
-            </Transition>
-          )
-        }}
+        render={props => (
+          <Transition tKey="submission">
+            <SubmissionPage id={props.match.params.id} {...props} />
+          </Transition>
+        )}
       />
 
       {/* DEPLOYMENTS */}

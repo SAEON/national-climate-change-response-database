@@ -23,8 +23,8 @@ export default () => {
         href="http://www.environment.gov.za/"
       >
         <img
-          style={{ height: IMAGE_HEIGHT }}
-          src="/dffe-logo-transparent.png"
+          style={{ maxHeight: IMAGE_HEIGHT, width: 'auto' }}
+          src="/dffe-logo.jpg"
           alt="SA Government"
         />
       </a>

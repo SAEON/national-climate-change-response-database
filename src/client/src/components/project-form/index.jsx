@@ -1,4 +1,4 @@
-import { useContext, lazy, Suspense, useMemo } from 'react'
+import { useContext, lazy, Suspense, useMemo, memo, useEffect } from 'react'
 import ContentNav from '../content-nav'
 import GraphQLFormProvider, { context as formContext } from './context'
 import Submit from './submit'
@@ -200,7 +200,7 @@ const FormController = () => {
   )
 }
 
-export default ({
+const Provider = ({
   project = undefined,
   mitigation = undefined,
   adaptation = undefined,
@@ -224,3 +224,28 @@ export default ({
     </GraphQLFormProvider>
   )
 }
+
+let isShown = false
+const pop = () => {
+  if (!isShown) {
+    alert(
+      'Did you mean to leave this form? Please use the tabs to navigate between form sections. You can resume this form by going "forward" in your browser'
+    )
+    isShown = true
+  } else {
+    window.removeEventListener('popstate', pop)
+  }
+}
+
+export default memo(
+  props => {
+    useEffect(() => {
+      if (!isShown) {
+        window.addEventListener('popstate', pop)
+      }
+    })
+
+    return <Provider {...props} />
+  },
+  ({ isSubmitted: a }, { isSubmitted: b }) => a === b
+)

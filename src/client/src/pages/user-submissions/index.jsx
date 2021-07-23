@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useContext } from 'react'
+import { context as authenticationContext } from '../../contexts/authentication'
 import Wrapper from '../../components/page-wrapper'
 import { gql, useQuery } from '@apollo/client'
 import Header from './header'
@@ -27,8 +28,14 @@ const sections = [
   },
 ]
 
-export default ({ id }) => {
+export default () => {
   const theme = useTheme()
+  const { user: { id = 0 } = {}, authenticate } = useContext(authenticationContext)
+  const isAuthenticated = authenticate()
+
+  if (!isAuthenticated) {
+    return <Loading />
+  }
 
   const { error, loading, data } = useQuery(
     gql`

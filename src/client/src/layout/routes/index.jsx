@@ -11,6 +11,7 @@ const CreateSubmission = lazy(() => import('../../pages/submission-create'))
 const NewSubmissionPage = lazy(() => import('../../pages/submission-new'))
 const DeploymentsPage = lazy(() => import('../../pages/deployments'))
 const UserSubmissionsPage = lazy(() => import('../../pages/user-submissions'))
+const UserPage = lazy(() => import('../../pages/user'))
 const UsersPage = lazy(() => import('../../pages/users'))
 const LoginPage = lazy(() => import('../../pages/login'))
 
@@ -44,16 +45,27 @@ export default withRouter(() => {
       {/* USER SUBMISSIONs */}
       <Route
         key={'user-submissions'}
-        path={'/users/:id/submissions'}
+        path={'/user/submissions'}
         exact
-        render={props => (
+        render={() => (
           <Transition tKey="user-submissions">
-            <UserSubmissionsPage id={props.match.params.id} {...props} />
+            <UserSubmissionsPage />
           </Transition>
         )}
       />
 
-      {/* USERs */}
+      {/* USER */}
+      <Route
+        key={'user'}
+        path={'/user'}
+        render={() => (
+          <Transition tKey="user">
+            <UserPage />
+          </Transition>
+        )}
+      />
+
+      {/* USERS */}
       <Route
         key={'users'}
         path={'/users'}

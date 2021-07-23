@@ -1,4 +1,5 @@
 import UsersIcon from 'mdi-react/AccountMultipleIcon'
+import UserIcon from 'mdi-react/AccountIcon'
 import HomeIcon from 'mdi-react/HomeIcon'
 import SearchSubmissionsIcon from 'mdi-react/DatabaseSearchIcon'
 import DeploymentsIcon from 'mdi-react/ServerIcon'
@@ -25,9 +26,16 @@ export default [
     to: '/submissions/new',
   },
   {
+    label: 'Your profile',
+    Icon: UserIcon,
+    to: '/user',
+    requiredPermission: 'create-submission',
+    excludeFromNav: true,
+  },
+  {
     label: 'Your submissions',
     Icon: UserSubmissionIcon,
-    to: '/users/:id/submissions',
+    to: '/user/submissions',
     requiredPermission: 'create-submission',
   },
   {

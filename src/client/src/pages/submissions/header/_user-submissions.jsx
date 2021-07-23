@@ -12,8 +12,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 export default () => {
   const theme = useTheme()
   const _authContext = useContext(authContext)
-  const { isAuthenticated, user = {} } = _authContext
-  const { id = undefined } = user || {}
+  const { isAuthenticated } = _authContext
 
   if (!isAuthenticated) {
     return null
@@ -26,7 +25,7 @@ export default () => {
           <Hidden xsDown>
             <Button
               component={Link}
-              to={`/users/${id}/submissions`}
+              to={`/user/submissions`}
               disableElevation
               size="small"
               variant="text"

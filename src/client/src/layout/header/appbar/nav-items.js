@@ -6,6 +6,7 @@ import DeploymentsIcon from 'mdi-react/ServerIcon'
 import SubmitIcon from 'mdi-react/DatabaseAddIcon'
 import SubmissionsIcon from 'mdi-react/DatabaseIcon'
 import UserSubmissionIcon from 'mdi-react/AccountIcon'
+import LoginIcon from 'mdi-react/LoginIcon'
 
 export default [
   {
@@ -44,6 +45,7 @@ export default [
     to: '/deployments',
     requiredPermission: 'view-/deployments',
   },
+  { label: 'Login', Icon: LoginIcon, to: '/login', excludeFromNav: true },
   { label: 'Access', Icon: UsersIcon, to: '/access', requiredPermission: 'view-/access' },
   { label: 'Users', Icon: UsersIcon, to: '/users', excludeFromNav: true },
 ]

@@ -55,6 +55,7 @@ export default ({ field, formName }) => {
     return (
       <ControlledVocabularySelectMultiple
         key={fieldName}
+        id={`${fieldName}-adaptation`}
         tree={tree}
         roots={['National policy']}
         name={fieldName}
@@ -76,6 +77,7 @@ export default ({ field, formName }) => {
       return (
         <ControlledVocabularySelectMultiple
           key={fieldName}
+          id={fieldName}
           tree={tree}
           roots={form.nationalPolicy.map(({ term }) => term)}
           name={fieldName}
@@ -99,6 +101,7 @@ export default ({ field, formName }) => {
     return (
       <ControlledVocabularySelectMultiple
         key={fieldName}
+        id={`${fieldName}-adaptation`}
         tree={tree}
         roots={['Regional policy']}
         name={fieldName}

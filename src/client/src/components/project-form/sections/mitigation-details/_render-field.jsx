@@ -199,6 +199,7 @@ export default ({ field, formName }) => {
     return (
       <ControlledVocabularySelectMultiple
         key={fieldName}
+        id={fieldName}
         tree={tree}
         roots={['National policy']}
         name={fieldName}
@@ -222,6 +223,7 @@ export default ({ field, formName }) => {
     return (
       <ControlledVocabularySelectMultiple
         key={fieldName}
+        id={fieldName}
         tree={tree}
         roots={['Regional policy']}
         name={fieldName}

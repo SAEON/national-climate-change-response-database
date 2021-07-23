@@ -227,8 +227,8 @@ begin
 create table Submissions (
 	_id int not null unique identity,
   id uniqueidentifier not null primary key default (newsequentialid()),
-	validationStatus nvarchar(4000),
-	validationComments nvarchar(max),
+	submissionStatus nvarchar(4000),
+	submissionComments nvarchar(max),
 	submissionType nvarchar(255),
 	project nvarchar(max),
 	mitigation nvarchar(max),
@@ -244,7 +244,7 @@ create table Submissions (
 	index ix_submissions nonclustered (id),
 	index ix_submissions_id nonclustered (id),
 	constraint json_research check( isjson(research) = 1),
-	constraint json_validationStatus check( isjson(validationStatus) = 1),
+	constraint json_submissionStatus check( isjson(submissionStatus) = 1),
 	constraint json_project check( isjson(project) = 1),
 	constraint json_mitigation check( isjson(mitigation) = 1),
 	constraint json_Adaptation check( isjson(adaptation) = 1)

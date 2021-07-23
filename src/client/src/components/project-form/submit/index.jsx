@@ -14,7 +14,7 @@ export default () => {
   const { generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm, submissionId } =
     useContext(formContext)
 
-  const { __validationStatus: validationStatus, __validationComments: validationComments } =
+  const { __submissionStatus: submissionStatus, __submissionComments: submissionComments } =
     generalDetailsForm
 
   const [createSubmission, { error, loading }] = useMutation(
@@ -25,8 +25,8 @@ export default () => {
         $mitigation: JSON
         $adaptation: JSON
         $isSubmitted: Boolean
-        $validationStatus: JSON
-        $validationComments: String
+        $submissionStatus: JSON
+        $submissionComments: String
       ) {
         saveSubmission(
           submissionId: $submissionId
@@ -34,8 +34,8 @@ export default () => {
           mitigation: $mitigation
           adaptation: $adaptation
           isSubmitted: $isSubmitted
-          validationStatus: $validationStatus
-          validationComments: $validationComments
+          submissionStatus: $submissionStatus
+          submissionComments: $submissionComments
         ) {
           id
           isSubmitted
@@ -93,8 +93,8 @@ export default () => {
                   mitigation: convertFormToGqlInput(mitigationDetailsForm),
                   adaptation: convertFormToGqlInput(adaptationDetailsForm),
                   isSubmitted: true,
-                  validationStatus,
-                  validationComments,
+                  submissionStatus,
+                  submissionComments,
                 },
               })
             }

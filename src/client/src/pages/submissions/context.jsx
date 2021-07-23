@@ -86,7 +86,7 @@ export default ({ children }) => {
         $limit: Int
         $offset: Int
         $isSubmitted: Boolean
-        $validationStatus: String
+        $submissionStatus: String
         $projectFilters: JSON
         $mitigationFilters: JSON
         $adaptationFilters: JSON
@@ -95,7 +95,7 @@ export default ({ children }) => {
           limit: $limit
           offset: $offset
           isSubmitted: $isSubmitted
-          validationStatus: $validationStatus
+          submissionStatus: $submissionStatus
           projectFilters: $projectFilters
           mitigationFilters: $mitigationFilters
           adaptationFilters: $adaptationFilters
@@ -108,7 +108,7 @@ export default ({ children }) => {
         submissions(
           limit: $limit
           offset: $offset
-          validationStatus: $validationStatus
+          submissionStatus: $submissionStatus
           isSubmitted: $isSubmitted
           projectFilters: $projectFilters
           mitigationFilters: $mitigationFilters
@@ -119,8 +119,8 @@ export default ({ children }) => {
           project
           mitigation
           adaptation
-          validationComments
-          validationStatus
+          submissionComments
+          submissionStatus
           createdBy {
             id
           }
@@ -133,7 +133,7 @@ export default ({ children }) => {
         isSubmitted: true,
         limit: PAGE_SIZE,
         offset: currentPage * PAGE_SIZE,
-        validationStatus: hasPermission('validate-submission') ? undefined : 'Accepted',
+        submissionStatus: hasPermission('validate-submission') ? undefined : 'Accepted',
         projectFilters,
         mitigationFilters,
         adaptationFilters,

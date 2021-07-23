@@ -149,8 +149,8 @@
       when 1 then 'project'
       when 2 then 'research'
     end submissionType,
-    p.VALIDATIONCOMMENTS validationComments,
-    (select ItemDisplay from tb_erm_picklist l join tb_erm_picklist_value v on v.ListId = l.ListId where l.ListName = 'DEAT Validation Status' and ItemNum = p.ValidationStatus) validationStatus,
+    p.VALIDATIONCOMMENTS submissionComments,
+    (select ItemDisplay from tb_erm_picklist l join tb_erm_picklist_value v on v.ListId = l.ListId where l.ListName = 'DEAT Validation Status' and ItemNum = p.ValidationStatus) submissionStatus,
     (select * from projectDetails _p where _p.ProjectDetailsId = p.ProjectDetailsId for json path, without_array_wrapper) project,
     (select * from mitigationDetails _m where _m.ProjectDetailsId = p.ProjectDetailsId for json path, without_array_wrapper) mitigation,
     (select * from adaptationDetails _a where _a.ProjectDetailsId = p.ProjectDetailsId for json path, without_array_wrapper) adaptation,

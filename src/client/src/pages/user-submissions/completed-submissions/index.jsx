@@ -72,8 +72,8 @@ export default ({ submissions }) => {
                 _id,
                 project: { title, interventionType: { term: intervention = '' } = {} },
                 isSubmitted,
-                validationStatus: { term: status },
-                validationComments: comments,
+                submissionStatus: { term: status },
+                submissionComments: comments,
               }) => ({
                 id: _id,
                 formNumber: id,

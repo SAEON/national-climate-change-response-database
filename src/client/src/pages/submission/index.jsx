@@ -10,8 +10,8 @@ export default ({ id }) => {
       query submission($id: ID!) {
         submission(id: $id) {
           id
-          validationStatus
-          validationComments
+          submissionStatus
+          submissionComments
           project
           mitigation
           adaptation
@@ -31,7 +31,7 @@ export default ({ id }) => {
     throw error
   }
 
-  const { mitigation, adaptation, project, validationStatus, validationComments } =
+  const { mitigation, adaptation, project, submissionStatus, submissionComments } =
     data.submission || undefined
 
   if (!project) {
@@ -45,12 +45,12 @@ export default ({ id }) => {
       <Header id={id} {...project} />
       <Wrapper>
         <Render
-          submission={{ validationStatus, validationComments }}
+          submission={{ submissionStatus, submissionComments }}
           project={project}
           mitigation={mitigation}
           adaptation={adaptation}
           submissionSections={{
-            'Validation status': ['validationStatus', 'validationComments'],
+            'Validation status': ['submissionStatus', 'submissionComments'],
           }}
           mitigationSections={{
             'Host sector': ['hostSector', 'hostSubSectorPrimary', 'hostSubSectorSecondary'],

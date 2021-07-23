@@ -13,7 +13,7 @@ const LocationsPicker = lazy(() => import('../../form/components/locations-picke
 
 const multilineFields = [
   'description',
-  '__validationComments',
+  '__submissionComments',
   'projectManagerPhysicalAddress',
   'projectManagerPostalAddress',
 ]
@@ -111,9 +111,9 @@ export default ({ field }) => {
   /**
    * Controlled vocabulary
    */
-  if (fieldName === '__validationStatus') {
-    if (!form.__validationStatus) {
-      setImmediate(() => updateForm({ __validationStatus: { term: 'Pending' } }))
+  if (fieldName === '__submissionStatus') {
+    if (!form.__submissionStatus) {
+      setImmediate(() => updateForm({ __submissionStatus: { term: 'Pending' } }))
       return null
     }
     return (
@@ -121,13 +121,13 @@ export default ({ field }) => {
         key={fieldName}
         tree={'projectValidationStatus'}
         root="Validation Status"
-        name={'Validation status'}
+        name={'Submission status'}
         disabled={!hasPermission('validate-submission')}
         value={value}
         error={isRequired && !value}
         onChange={val => updateForm({ [fieldName]: val })}
-        placeholder={'Validation status '}
-        helperText={'Has this project been validated?'}
+        placeholder={'Submission status '}
+        helperText={'Has this submission been validated?'}
       />
     )
   }
@@ -135,16 +135,16 @@ export default ({ field }) => {
   /**
    * Validation comments (limited user access)
    */
-  if (fieldName === '__validationComments') {
+  if (fieldName === '__submissionComments') {
     return (
       <StringField
         disabled={!hasPermission('validate-submission')}
         error={isRequired && !value}
         multiline={multilineFields.includes(fieldName)}
         rows={4}
-        placeholder={'Validation comments'}
-        helperText={'Please leave comments RE. the validation status'}
-        name={'Validation comments'}
+        placeholder={'Submission comments'}
+        helperText={'Please leave comments RE. the submission status'}
+        name={'Submission comments'}
         key={fieldName}
         value={value}
         setValue={val => updateForm({ [fieldName]: val })}

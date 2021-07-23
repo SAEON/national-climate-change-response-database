@@ -46,8 +46,8 @@ export default () => {
             id
             _id
             project
-            validationStatus
-            validationComments
+            submissionStatus
+            submissionComments
             isSubmitted
           }
         }

@@ -10,7 +10,7 @@ export default async (userId, { project, mitigation = {}, adaptation = {} }) => 
         '${sanitizeSqlValue(JSON.stringify(mitigation))}' mitigation,
         '${sanitizeSqlValue(JSON.stringify(adaptation))}' adaptation,
         1 isSubmitted,
-        '${sanitizeSqlValue(JSON.stringify({ term: 'Pending' }))}' validationStatus,
+        '${sanitizeSqlValue(JSON.stringify({ term: 'Pending' }))}' submissionStatus,
         ${userId} createdBy,
         '${new Date().toISOString()}' createdAt
     ) s on t.id = null
@@ -19,7 +19,7 @@ export default async (userId, { project, mitigation = {}, adaptation = {} }) => 
       mitigation,
       adaptation,
       isSubmitted,
-      validationStatus,
+      submissionStatus,
       createdBy,
       createdAt
     )
@@ -28,7 +28,7 @@ export default async (userId, { project, mitigation = {}, adaptation = {} }) => 
       s.mitigation,
       s.adaptation,
       s.isSubmitted,
-      s.validationStatus,
+      s.submissionStatus,
       s.createdBy,
       s.createdAt
     )

@@ -1,10 +1,10 @@
 export default ({
   isSubmitted = true,
-  validationStatus = undefined,
+  submissionStatus = undefined,
   projectFilters: {
     title: { value: titleFilter = undefined } = {},
     province: { value: provinceFilter = undefined } = {},
-    validationStatus: { value: validationStatusFilter = undefined } = {},
+    submissionStatus: { value: submissionStatusFilter = undefined } = {},
     ...projectVocabularyFilters
   } = {},
   mitigationFilters: { ...mitigationVocabularyFilters } = {},
@@ -16,8 +16,8 @@ export default ({
       deletedAt is null
       and isSubmitted = ${isSubmitted ? 1 : 0}
       ${
-        validationStatus
-          ? `and json_value(validationStatus, '$.term') = '${sanitizeSqlValue(validationStatus)}'`
+        submissionStatus
+          ? `and json_value(submissionStatus, '$.term') = '${sanitizeSqlValue(submissionStatus)}'`
           : ''
       }
       ${titleFilter ? `and _projectTitle like '%${sanitizeSqlValue(titleFilter)}%'` : ''}
@@ -36,9 +36,9 @@ export default ({
           : ''
       }
       ${
-        validationStatusFilter
-          ? `and json_value(validationStatus, '$.term') = '${sanitizeSqlValue(
-              validationStatusFilter
+        submissionStatusFilter
+          ? `and json_value(submissionStatus, '$.term') = '${sanitizeSqlValue(
+              submissionStatusFilter
             )}'`
           : ''
       }

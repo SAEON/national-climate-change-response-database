@@ -25,8 +25,8 @@ const LoadProject = ({ id }) => {
           createdBy {
             id
           }
-          validationStatus
-          validationComments
+          submissionStatus
+          submissionComments
         }
       }
     `,
@@ -52,8 +52,8 @@ const LoadProject = ({ id }) => {
     mitigation,
     adaptation,
     isSubmitted,
-    validationStatus: __validationStatus,
-    validationComments: __validationComments,
+    submissionStatus: __submissionStatus,
+    submissionComments: __submissionComments,
     createdBy,
   } = submission
 
@@ -71,7 +71,7 @@ const LoadProject = ({ id }) => {
           <ProjectForm
             mode={isSubmitted ? 'edit' : undefined}
             submissionId={id}
-            project={{ __validationStatus, __validationComments, ...project }}
+            project={{ __submissionStatus, __submissionComments, ...project }}
             mitigation={mitigation}
             adaptation={adaptation}
             isSubmitted={isSubmitted}

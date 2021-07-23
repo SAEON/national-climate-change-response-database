@@ -68,8 +68,8 @@ type Submission {
   id: ID!
   _id: Int
   isSubmitted: Boolean
-  validationStatus: JSON
-  validationComments: String
+  submissionStatus: JSON
+  submissionComments: String
   project: JSON
   mitigation: JSON
   adaptation: JSON
@@ -90,7 +90,7 @@ type Query {
   submission(id: ID!, isSubmitted: Boolean): Submission!
   # Page info (pagination) for a particular search
   pageInfo(
-    validationStatus: String
+    submissionStatus: String
     projectFilters: JSON
     mitigationFilters: JSON
     adaptationFilters: JSON
@@ -100,7 +100,7 @@ type Query {
   ): PageInfo!
   # Search submissions
   submissions(
-    validationStatus: String
+    submissionStatus: String
     projectFilters: JSON
     mitigationFilters: JSON
     adaptationFilters: JSON
@@ -127,8 +127,8 @@ type Mutation {
     mitigation: JSON
     adaptation: JSON
     isSubmitted: Boolean
-    validationStatus: JSON
-    validationComments: String
+    submissionStatus: JSON
+    submissionComments: String
   ): Submission
   killServer: Void
   migrateDatabase(dropSchema: Boolean): JSON!

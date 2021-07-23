@@ -33,8 +33,8 @@ export default async ctx => {
 
       for (const {
         _id,
-        validationStatus,
-        validationComments,
+        submissionStatus,
+        submissionComments,
         submissionType,
         project,
         mitigation,
@@ -75,8 +75,8 @@ export default async ctx => {
           using (
             select
               ${_id} _id,
-              '${sanitizeSqlValue(makeValidationStatus(validationStatus))}' validationStatus,
-              '${sanitizeSqlValue(validationComments)}' validationComments,
+              '${sanitizeSqlValue(makeValidationStatus(submissionStatus))}' submissionStatus,
+              '${sanitizeSqlValue(submissionComments)}' submissionComments,
               '${sanitizeSqlValue(submissionType)}' submissionType,
               '${sanitizeSqlValue(makeProjectJson(project))}' project,
               '${sanitizeSqlValue(makeMitigationJson(mitigation))}' mitigation,
@@ -93,8 +93,8 @@ export default async ctx => {
           ) s on s._id = t._id
           when not matched then insert (
             _id,
-            validationStatus,
-            validationComments,
+            submissionStatus,
+            submissionComments,
             submissionType,
             project,
             mitigation,
@@ -107,8 +107,8 @@ export default async ctx => {
           )
           values (
             s._id,
-            s.validationStatus,
-            s.validationComments,
+            s.submissionStatus,
+            s.submissionComments,
             s.submissionType,
             s.project,
             s.mitigation,
@@ -120,8 +120,8 @@ export default async ctx => {
             s.createdAt
           )
           when matched then update set
-            t.validationStatus = s.validationStatus,
-            t.validationComments = s.validationComments,
+            t.submissionStatus = s.submissionStatus,
+            t.submissionComments = s.submissionComments,
             t.submissionType = s.submissionType,
             t.project = s.project,
             t.mitigation = s.mitigation,

@@ -8,8 +8,8 @@ export default async (
     mitigation = {},
     adaptation = {},
     isSubmitted = false,
-    validationStatus = undefined,
-    validationComments = '',
+    submissionStatus = undefined,
+    submissionComments = '',
   },
   ctx
 ) => {
@@ -26,11 +26,11 @@ export default async (
         '${sanitizeSqlValue(JSON.stringify(adaptation))}' adaptation,
         ${isSubmitted ? 1 : 0} isSubmitted,
         ${
-          validationStatus
-            ? `'${sanitizeSqlValue(JSON.stringify(validationStatus))}' validationStatus,`
+          submissionStatus
+            ? `'${sanitizeSqlValue(JSON.stringify(submissionStatus))}' submissionStatus,`
             : ''
         }
-        '${sanitizeSqlValue(validationComments)}' validationComments,
+        '${sanitizeSqlValue(submissionComments)}' submissionComments,
         ${userId} createdBy,
         '${new Date().toISOString()}' createdAt
     ) s on t.id = '${sanitizeSqlValue(submissionId)}'
@@ -39,8 +39,8 @@ export default async (
       mitigation,
       adaptation,
       isSubmitted,
-      ${validationStatus ? 'validationStatus,' : ''}
-      validationComments,
+      ${submissionStatus ? 'submissionStatus,' : ''}
+      submissionComments,
       createdBy,
       createdAt
     )
@@ -49,8 +49,8 @@ export default async (
       s.mitigation,
       s.adaptation,
       s.isSubmitted,
-      ${validationStatus ? 's.validationStatus,' : ''}
-      validationComments,
+      ${submissionStatus ? 's.submissionStatus,' : ''}
+      submissionComments,
       s.createdBy,
       s.createdAt
     )
@@ -59,8 +59,8 @@ export default async (
       t.mitigation = s.mitigation,
       t.adaptation = s.adaptation,
       t.isSubmitted = s.isSubmitted,
-      ${validationStatus ? 't.validationStatus = s.validationStatus,' : ''}
-      t.validationComments = s.validationComments
+      ${submissionStatus ? 't.submissionStatus = s.submissionStatus,' : ''}
+      t.submissionComments = s.submissionComments
       
     output
       $action,

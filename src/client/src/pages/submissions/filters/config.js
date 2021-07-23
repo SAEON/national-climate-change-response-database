@@ -5,8 +5,8 @@ export const projectFilters = {
     type: 'fulltext',
     value: '',
   },
-  validationStatus: {
-    label: 'Validation status',
+  submissionStatus: {
+    label: 'Submission status',
     helperText: '(admins only)',
     type: 'controlledVocabulary',
     value: undefined,

@@ -166,7 +166,7 @@ export default ({
     debounce(async ({ project, mitigation, adaptation }) => {
       setSyncing(true)
 
-      const { __validationStatus: validationStatus, __validationComments: validationComments } =
+      const { __submissionStatus: submissionStatus, __submissionComments: submissionComments } =
         project
 
       const {
@@ -181,8 +181,8 @@ export default ({
               $project: JSON
               $mitigation: JSON
               $adaptation: JSON
-              $validationStatus: JSON
-              $validationComments: String
+              $submissionStatus: JSON
+              $submissionComments: String
               $isSubmitted: Boolean
             ) {
               saveSubmission(
@@ -190,8 +190,8 @@ export default ({
                 project: $project
                 mitigation: $mitigation
                 adaptation: $adaptation
-                validationStatus: $validationStatus
-                validationComments: $validationComments
+                submissionStatus: $submissionStatus
+                submissionComments: $submissionComments
                 isSubmitted: $isSubmitted
               ) {
                 id
@@ -199,8 +199,8 @@ export default ({
                 project
                 mitigation
                 adaptation
-                validationStatus
-                validationComments
+                submissionStatus
+                submissionComments
               }
             }
           `,
@@ -209,8 +209,8 @@ export default ({
             project: convertFormToGqlInput(project),
             mitigation: convertFormToGqlInput(mitigation),
             adaptation: convertFormToGqlInput(adaptation),
-            validationStatus,
-            validationComments,
+            submissionStatus,
+            submissionComments,
             isSubmitted,
           },
         })

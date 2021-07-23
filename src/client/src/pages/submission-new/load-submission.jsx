@@ -15,8 +15,8 @@ export default ({ id }) => {
           project
           mitigation
           adaptation
-          validationComments
-          validationStatus
+          submissionComments
+          submissionStatus
         }
       }
     `,
@@ -42,8 +42,8 @@ export default ({ id }) => {
     project,
     mitigation,
     adaptation,
-    validationComments: __validationComments,
-    validationStatus: __validationStatus,
+    submissionComments: __submissionComments,
+    submissionStatus: __submissionStatus,
   } = data.submission
 
   return (
@@ -53,7 +53,7 @@ export default ({ id }) => {
         <Suspense fallback={<Loading />}>
           <ProjectForm
             submissionId={id}
-            project={{ __validationComments, __validationStatus, ...project }}
+            project={{ __submissionComments, __submissionStatus, ...project }}
             mitigation={mitigation}
             adaptation={adaptation}
           />

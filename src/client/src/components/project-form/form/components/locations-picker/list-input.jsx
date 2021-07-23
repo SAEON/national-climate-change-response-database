@@ -26,7 +26,7 @@ const NewPointForm = ({ closeFn, points, setPoints }) => {
           onChange={e => setLat(e.target.value)}
           label="Latitude"
           type="number"
-          helperText="Latitude in degrees"
+          helperText="Latitude in degrees (East / West)"
           fullWidth
           variant="outlined"
           margin="normal"
@@ -36,7 +36,7 @@ const NewPointForm = ({ closeFn, points, setPoints }) => {
           onChange={e => setLng(e.target.value)}
           label="Longitude"
           type="number"
-          helperText="Longitude in degrees"
+          helperText="Longitude in degrees (North / South)"
           fullWidth
           variant="outlined"
           margin="normal"

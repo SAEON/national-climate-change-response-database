@@ -37,7 +37,7 @@ export default ({
   const theme = useTheme()
 
   return (
-    <div style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(1) }}>
+    <div style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(1), maxWidth: '100%' }}>
       <FormControl margin="normal" fullWidth>
         <InputLabel
           error={error}
@@ -78,6 +78,7 @@ export default ({
                 gap: theme.spacing(1),
                 flexWrap: 'wrap',
                 alignItems: 'flex-start',
+                maxWidth: '100%',
               }}
             >
               {selected.map(value => {
@@ -90,6 +91,7 @@ export default ({
                     key={value}
                     label={value}
                     style={{
+                      maxWidth: '100%',
                       ...style,
                     }}
                     {...props}
@@ -102,7 +104,7 @@ export default ({
           {options.map(option => (
             <MenuItem key={option} value={option}>
               <Checkbox checked={value.indexOf(option) > -1} />
-              <ListItemText primary={option} />
+              <ListItemText primary={option} style={{ overflowX: 'auto' }} />
             </MenuItem>
           ))}
           {loading ? <Loading /> : null}

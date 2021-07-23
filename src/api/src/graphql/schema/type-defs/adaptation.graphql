@@ -4,16 +4,16 @@ input AdaptationInput {
   # Sector description :: Please describe the sector
   otherAdaptationSector: String
   # National policy :: Indicate the national policy or strategy that the measure is responding to :: adaptationPolicies
-  nationalPolicy: ControlledVocabularyInput
+  nationalPolicy: [ControlledVocabularyInput]
   # National policy description :: Please describe the policy
   otherNationalPolicy: String
   # Provincial or Municipal policy :: Indicate the provincial or municipal policy or strategy that the measure is responding to :: adaptationPolicies
-  regionalPolicy: ControlledVocabularyInput
+  regionalPolicy: [ControlledVocabularyInput]
   # Regional policy description :: Please describe the policy
   otherRegionalPolicy: String
   # Indicate the corresponding intervention, goal, or target :: Please select an appropriate value based on your other form inputs above :: adaptationPolicies
-  target: ControlledVocabularyInput
-  # Other corresponding intervention, goal, or target :: Please describe based on your other form inputs above
+  target: [ControlledVocabularyInput]
+  # Other corresponding intervention(s), goal(s), or target(s) :: Please describe based on your other form inputs above
   otherTarget: String
 
   # Hazard :: Select hazard :: hazards

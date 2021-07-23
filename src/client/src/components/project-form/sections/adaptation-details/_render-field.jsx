@@ -1,5 +1,9 @@
 import { useContext, lazy, Suspense } from 'react'
-import { GqlBoundFormInput, ControlledVocabularySelect } from '../../form'
+import {
+  GqlBoundFormInput,
+  ControlledVocabularySelect,
+  ControlledVocabularySelectMultiple,
+} from '../../form'
 import { context as formContext } from '../../context'
 import Loading from '../../../loading'
 
@@ -22,9 +26,9 @@ export default ({ field, formName }) => {
     useContext(formContext)
   const { name: fieldName, description, type } = field
   let [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
-  const { name: inputType } = type
-  const isRequired = !inputType
-  const value = form[fieldName]
+  const { kind } = type
+  const isRequired = kind === 'NON_NULL'
+  const value = form?.[fieldName] || undefined
 
   if (helperText === '') {
     helperText = ` `
@@ -49,36 +53,36 @@ export default ({ field, formName }) => {
    */
   if (fieldName === 'nationalPolicy') {
     return (
-      <ControlledVocabularySelect
+      <ControlledVocabularySelectMultiple
         key={fieldName}
         tree={tree}
-        root="National policy"
+        roots={['National policy']}
         name={fieldName}
         value={value}
         error={isRequired && !value}
         onChange={val =>
           updateForm({ [fieldName]: val, target: undefined, otherTarget: undefined })
         }
-        placeholder={placeholder}
+        label={placeholder}
         helperText={helperText}
       />
     )
   } else if (fieldName === 'otherNationalPolicy') {
-    if (!form?.nationalPolicy?.term?.match(/^Other\s/)) {
+    if (!form?.nationalPolicy?.find(({ term }) => term?.match(/^Other\s/))) {
       return null
     }
   } else if (fieldName === 'target') {
     if (form.nationalPolicy) {
       return (
-        <ControlledVocabularySelect
+        <ControlledVocabularySelectMultiple
           key={fieldName}
           tree={tree}
-          root={form.nationalPolicy}
+          roots={form.nationalPolicy.map(({ term }) => term)}
           name={fieldName}
           value={value}
           error={isRequired && !value}
           onChange={val => updateForm({ [fieldName]: val, otherTarget: undefined })}
-          placeholder={placeholder}
+          label={placeholder}
           helperText={helperText}
         />
       )
@@ -86,27 +90,27 @@ export default ({ field, formName }) => {
       return null
     }
   } else if (fieldName === 'otherTarget') {
-    if (!form?.target || !form.target.term?.match(/^Other/)) {
+    if (!form?.target || !form.target?.find(({ term }) => term?.match(/^Other/))) {
       return null
     }
   }
 
   if (fieldName === 'regionalPolicy') {
     return (
-      <ControlledVocabularySelect
+      <ControlledVocabularySelectMultiple
         key={fieldName}
         tree={tree}
-        root={'Regional policy'}
+        roots={['Regional policy']}
         name={fieldName}
         value={value}
         error={isRequired && !value}
         onChange={val => updateForm({ [fieldName]: val, otherRegionalPolicy: undefined })}
-        placeholder={placeholder}
+        label={placeholder}
         helperText={helperText}
       />
     )
   } else if (fieldName === 'otherRegionalPolicy') {
-    if (!form?.regionalPolicy?.term?.match(/^Other\s/)) {
+    if (!form?.regionalPolicy?.find(({ term }) => term?.match(/^Other\s/))) {
       return null
     }
   }

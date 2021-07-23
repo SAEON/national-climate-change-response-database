@@ -14,12 +14,12 @@ input MitigationInput {
   # Select the mitigation program the project is linked to :: A programme is a high level support measure that support mitigation actions/project types above e.g 1A1 REIPPP :: mitigationProgramme
   mitigationProgramme: ControlledVocabularyInput
   # National policy :: Indicate the national policy or strategy that the measure is responding to :: mitigationPolicies
-  nationalPolicy: ControlledVocabularyInput
-  # National policy description :: Please describe the policy
+  nationalPolicy: [ControlledVocabularyInput]
+  # (Other) national policy(ies) description :: Please describe the policy(ies)
   otherNationalPolicy: String
   # Provincial or Municipal policy :: Indicate the provincial or municipal policy or strategy that the measure is responding to :: mitigationPolicies
-  regionalPolicy: ControlledVocabularyInput
-  # Regional policy description :: Please describe the policy
+  regionalPolicy: [ControlledVocabularyInput]
+  # (Other) regional policy(ies) description :: Please describe the policy(ies)
   otherRegionalPolicy: String
   # Primary intended outcome :: Primary intended outcome (Indicate the expected or achieved goals)
   primaryIntendedOutcome: String

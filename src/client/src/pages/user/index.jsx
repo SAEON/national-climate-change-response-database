@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import useTheme from '@material-ui/core/styles/useTheme'
 import Loading from '../../components/loading'
-import Header from '../../components/toolbar-header'
+import Header from './header'
 import Wrapper from '../../components/page-wrapper'
 
 export default () => {

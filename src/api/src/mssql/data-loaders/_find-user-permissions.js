@@ -18,7 +18,7 @@ export default () =>
         join Permissions p on p.id = px.permissionId
         where x.userId in (${keys.join(',')})`
 
-      logSql(sql, 'Find user permissions')
+      logSql(sql, 'User permissions (batched)')
       const result = await query(sql)
       return keys.map(id => result.recordset.filter(sift({ userId: id })))
     },

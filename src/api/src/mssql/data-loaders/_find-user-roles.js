@@ -16,7 +16,7 @@ export default () =>
         join UserRoleXref x on x.roleId = r.id
         where x.userId in (${keys.join(',')})`
 
-      logSql(sql, 'Find user roles')
+      logSql(sql, 'User roles (batched)')
       const result = await query(sql)
       return keys.map(id => result.recordset.filter(sift({ userId: id })))
     },

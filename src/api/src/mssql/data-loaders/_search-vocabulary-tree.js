@@ -39,7 +39,7 @@ export default () =>
         
         for json auto`
 
-      logSql(sql, 'Search vocabulary tree')
+      logSql(sql, 'Controlled vocabulary (batched)')
 
       const results = await query(sql)
 

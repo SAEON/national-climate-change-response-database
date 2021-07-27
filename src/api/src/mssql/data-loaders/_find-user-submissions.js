@@ -13,7 +13,7 @@ export default () =>
         deletedAt is null
         and s.createdBy in (${keys.join(',')})`
 
-      logSql(sql, "Find user's submissions")
+      logSql(sql, 'User submissions (batched)')
       const result = await query(sql)
       return keys.map(createdBy => result.recordset.filter(sift({ createdBy })))
     },

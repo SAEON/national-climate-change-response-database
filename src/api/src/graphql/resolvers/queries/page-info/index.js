@@ -12,7 +12,7 @@ export default async (_, args, ctx) => {
 
   const sql = makeAggregationQuery(args)
 
-  logSql(sql, 'Page info')
+  logSql(sql, 'Submissions (page info)')
   const result = await query(sql)
   const { submissionCount: totalRecords } = result.recordset[0]
 

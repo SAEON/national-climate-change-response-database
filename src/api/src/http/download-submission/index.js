@@ -12,6 +12,9 @@ import {
   projectVocabularyFields,
   mitigationVocabularyFields,
   adaptationVocabularyFields,
+  projectInputFields,
+  mitigationInputFields,
+  adaptationInputFields,
 } from '../../graphql/schema/index.js'
 import parseProgressData from './_parse-progress-data.js'
 
@@ -110,11 +113,7 @@ export default async ctx => {
 
       let value
       if (vocabFields.project.includes(field)) {
-        if (
-          field === 'province' ||
-          field === 'districtMunicipality' ||
-          field === 'localMunicipality'
-        ) {
+        if (projectInputFields[field] === 'LIST') {
           value = _value.map(({ term }) => term).join(', ')
         } else {
           value = _value.term
@@ -147,7 +146,11 @@ export default async ctx => {
 
         let value
         if (vocabFields.mitigation.includes(field)) {
-          value = _value.term
+          if (mitigationInputFields[field] === 'LIST') {
+            value = _value.map(({ term }) => term).join(', ')
+          } else {
+            value = _value.term
+          }
         } else if (field === 'yx') {
           value = 'TODO'
         } else {
@@ -174,7 +177,11 @@ export default async ctx => {
 
       let value
       if (vocabFields.adaptation.includes(field)) {
-        value = _value.term
+        if (adaptationInputFields[field] === 'LIST') {
+          value = _value.map(({ term }) => term).join(', ')
+        } else {
+          value = _value.term
+        }
       } else if (field === 'yx') {
         value = 'TODO'
       } else {

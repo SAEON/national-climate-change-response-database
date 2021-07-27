@@ -1,4 +1,7 @@
 import { makeExecutableSchema } from 'graphql-tools'
+import { graphqlSync } from 'graphql'
+import { print } from 'graphql/language/printer.js'
+import { gql } from 'apollo-server-koa'
 import { join } from 'path'
 import { readFileSync, readdirSync } from 'fs'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
@@ -24,8 +27,52 @@ const schema = makeExecutableSchema({
   inheritResolversFromInterfaces: true,
 })
 
+console.info('Building input type fields list from GraphQL schema')
+const typeFields = graphqlSync(
+  schema,
+  print(
+    gql`
+      query {
+        p: __type(name: "ProjectInput") {
+          inputFields {
+            name
+            type {
+              kind
+            }
+          }
+        }
+        m: __type(name: "MitigationInput") {
+          inputFields {
+            name
+            type {
+              kind
+            }
+          }
+        }
+        a: __type(name: "AdaptationInput") {
+          inputFields {
+            name
+            type {
+              kind
+            }
+          }
+        }
+      }
+    `
+  )
+).data
+
 export const projectVocabularyFields = _projectVocabularyFields
 export const mitigationVocabularyFields = _mitigationVocabularyFields
 export const adaptationVocabularyFields = _adaptationVocabularyFields
+export const projectInputFields = Object.fromEntries(
+  typeFields.p.inputFields.map(({ name, type: { kind } }) => [name, kind])
+)
+export const mitigationInputFields = Object.fromEntries(
+  typeFields.m.inputFields.map(({ name, type: { kind } }) => [name, kind])
+)
+export const adaptationInputFields = Object.fromEntries(
+  typeFields.a.inputFields.map(({ name, type: { kind } }) => [name, kind])
+)
 
 export default schema

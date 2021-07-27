@@ -1,4 +1,7 @@
-import { adaptationVocabularyFields } from '../../../../../graphql/schema/index.js'
+import {
+  adaptationVocabularyFields,
+  adaptationInputFields,
+} from '../../../../../graphql/schema/index.js'
 
 export default adaptation => {
   if (!adaptation) return JSON.stringify({})
@@ -11,7 +14,11 @@ export default adaptation => {
       Object.fromEntries(
         Object.entries(_adaptation).map(([field, value]) => {
           if (adaptationVocabularyFields.includes(field)) {
-            return [field, { term: value }]
+            if (adaptationInputFields[field] === 'LIST') {
+              return [field, value.map(({ _: term }) => ({ term }))]
+            } else {
+              return [field, { term: value }]
+            }
           }
 
           return [field, value]

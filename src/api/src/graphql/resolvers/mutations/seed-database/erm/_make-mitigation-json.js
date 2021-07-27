@@ -1,4 +1,7 @@
-import { mitigationVocabularyFields } from '../../../../../graphql/schema/index.js'
+import {
+  mitigationVocabularyFields,
+  mitigationInputFields,
+} from '../../../../../graphql/schema/index.js'
 
 export default mitigation => {
   if (!mitigation) return JSON.stringify({})
@@ -11,7 +14,11 @@ export default mitigation => {
       Object.fromEntries(
         Object.entries(_mitigation).map(([field, value]) => {
           if (mitigationVocabularyFields.includes(field)) {
-            return [field, { term: value }]
+            if (mitigationInputFields[field] === 'LIST') {
+              return [field, value.map(({ _: term }) => ({ term }))]
+            } else {
+              return [field, { term: value }]
+            }
           }
 
           if (field === 'yx') {

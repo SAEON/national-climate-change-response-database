@@ -1,4 +1,4 @@
-import { projectVocabularyFields } from '../../../../../graphql/schema/index.js'
+import { projectVocabularyFields, projectInputFields } from '../../../../../graphql/schema/index.js'
 import { stringify } from 'wkt'
 
 export default project => {
@@ -12,14 +12,11 @@ export default project => {
       Object.fromEntries(
         Object.entries(_project).map(([field, value]) => {
           if (projectVocabularyFields.includes(field)) {
-            if (
-              field === 'province' ||
-              field === 'districtMunicipality' ||
-              field === 'localMunicipality'
-            ) {
+            if (projectInputFields[field] === 'LIST') {
               return [field, value.map(({ _: term }) => ({ term }))]
+            } else {
+              return [field, { term: value }]
             }
-            return [field, { term: value }]
           }
 
           if (field === 'yx') {

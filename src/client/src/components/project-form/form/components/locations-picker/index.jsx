@@ -1,9 +1,77 @@
-import { memo, useMemo } from 'react'
+import { memo, useMemo, useState } from 'react'
 import useTheme from '@material-ui/core/styles/useTheme'
 import ListInput from './list-input'
 import Typography from '@material-ui/core/Typography'
 import QuickForm from '../../../../quick-form'
 import debounce from '../../../../../lib/debounce'
+import Toolbar from './toolbar'
+import Map from '../../../../ol-react'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Box from '@material-ui/core/Box'
+import Picker from './picker'
+import Fade from '@material-ui/core/Fade'
+
+const TabPanel = props => {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      <Fade in={value === index} key={index}>
+        <Box p={0}>{children}</Box>
+      </Fade>
+    </div>
+  )
+}
+
+function a11yProps(index) {
+  return {
+    id: `location-picker-tab-${index}`,
+    'aria-controls': `location-picker-tab-${index}`,
+  }
+}
+
+const Input = ({ update, points }) => {
+  const [activeTabIndex, setActiveTabIndex] = useState(0)
+  const theme = useTheme()
+
+  return (
+    <>
+      <AppBar style={{ zIndex: 1 }} variant="outlined" color="default" position="relative">
+        <Tabs
+          indicatorColor="primary"
+          textColor="primary"
+          value={activeTabIndex}
+          onChange={(e, i) => setActiveTabIndex(i)}
+          aria-label="Location picker"
+        >
+          <Tab label="Map input" {...a11yProps(0)} />
+          <Tab label="List input" {...a11yProps(1)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={activeTabIndex} index={0}>
+        <div style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}>
+          <Map>
+            <Picker setPoints={points => update({ points })} points={points} />
+            <Toolbar points={points} setPoints={points => update({ points })} />
+          </Map>
+        </div>
+      </TabPanel>
+      <TabPanel value={activeTabIndex} index={1}>
+        <div style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}>
+          <ListInput setPoints={points => update({ points })} points={points} />
+        </div>
+      </TabPanel>
+    </>
+  )
+}
 
 const LocationBounds = memo(
   ({ points, setPoints }) => {
@@ -21,11 +89,7 @@ const LocationBounds = memo(
               >
                 Add GPS location points
               </Typography>
-              <div
-                style={{ width: '100%', height: 400, border: theme.border, position: 'relative' }}
-              >
-                <ListInput setPoints={points => update({ points })} points={points} />
-              </div>
+              <Input update={update} points={points} />
             </div>
           )
         }}

@@ -1,29 +1,16 @@
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 import { context as mapContext } from '../../../../ol-react'
-import { useSnackbar } from 'notistack'
 import VectorSource from 'ol/source/Vector'
 import VectorLayer from 'ol/layer/Vector'
 import Draw from 'ol/interaction/Draw'
 import LayerGroup from 'ol/layer/Group'
 import Feature from 'ol/Feature'
 import Point from 'ol/geom/Point'
-import WKT from 'ol/format/WKT'
 
-const _wkt = new WKT()
-
-export default ({ points = [], setPoints, fenceGeometry = undefined }) => {
-  const { enqueueSnackbar } = useSnackbar()
+export default ({ points = [], setPoints }) => {
   const { map } = useContext(mapContext)
   const source = useMemo(() => new VectorSource({ wrapX: false }), [])
   const awaitGeometryFunction = useRef(null)
-
-  const fence = useMemo(() => {
-    if (!fenceGeometry) return null
-    return _wkt.readGeometry(fenceGeometry, {
-      dataProjection: 'EPSG:4326',
-      featureProjection: 'EPSG:4326',
-    })
-  }, [fenceGeometry])
 
   const draw = useMemo(
     () =>
@@ -32,17 +19,12 @@ export default ({ points = [], setPoints, fenceGeometry = undefined }) => {
         source,
         geometryFunction: ([y, x]) => {
           awaitGeometryFunction.current = new Promise(resolve => {
-            if (fence && !fence.intersectsCoordinate([y, x])) {
-              enqueueSnackbar('Point input must be within bounds of the selected project region', {
-                variant: 'warning',
-              })
-            }
             resolve()
           })
           setPoints([...points, [y, x]])
         },
       }),
-    [source, fence, enqueueSnackbar, setPoints, points]
+    [source, setPoints, points]
   )
 
   const mouseenter = useCallback(() => {
@@ -83,24 +65,20 @@ export default ({ points = [], setPoints, fenceGeometry = undefined }) => {
    */
   useEffect(() => {
     source.clear()
-    const _points = points.filter(point => {
-      if (!fence) return true
-      return fence.intersectsCoordinate(point)
-    })
 
-    if (points.length !== _points.length) {
-      setPoints(_points)
+    if (points.length !== points.length) {
+      setPoints(points)
     }
 
     source.addFeatures(
-      _points.map(
+      points.map(
         point =>
           new Feature({
             geometry: new Point(point),
           })
       )
     )
-  }, [points, setPoints, source, map, fence])
+  }, [points, setPoints, source, map])
 
   /**
    * Layer

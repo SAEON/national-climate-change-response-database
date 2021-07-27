@@ -3,3 +3,4 @@ parent,term,tree
 Funding type,Domestic,fundingTypes
 Funding type,International grant,fundingTypes
 Funding type,International loan,fundingTypes
+Funding type,Other,fundingTypes

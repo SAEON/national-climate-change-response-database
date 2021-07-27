@@ -146,20 +146,21 @@ export default ({ field, formName }) => {
    */
   if (fieldName === 'hazard') {
     return (
-      <ControlledVocabularySelect
+      <ControlledVocabularySelectMultiple
         key={fieldName}
         tree={tree}
-        root="Hazard"
+        id="hazard"
+        roots={['Hazard']}
         name={fieldName}
         value={value}
         error={isRequired && !value}
         onChange={val => updateForm({ [fieldName]: val, otherHazard: undefined })}
-        placeholder={placeholder}
+        label={placeholder}
         helperText={helperText}
       />
     )
   } else if (fieldName === 'otherHazard') {
-    if (!form.hazard || form.hazard.term !== 'Other (Please specify)') {
+    if (!form.hazard?.find(({ term }) => term?.match(/^Other/))) {
       return null
     }
   }

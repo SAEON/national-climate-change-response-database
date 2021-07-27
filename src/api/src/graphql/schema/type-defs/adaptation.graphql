@@ -17,7 +17,7 @@ input AdaptationInput {
   otherTarget: String
 
   # Hazard :: Select hazard :: hazards
-  hazard: ControlledVocabularyInput
+  hazard: [ControlledVocabularyInput]
   # Hazard description :: Please describe the hazard
   otherHazard: String
 

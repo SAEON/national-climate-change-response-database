@@ -16,6 +16,8 @@ const multilineFields = [
   '__submissionComments',
   'projectManagerPhysicalAddress',
   'projectManagerPostalAddress',
+  'otherImplementingPartners',
+  'fundingTypeOther',
 ]
 
 export default ({ field }) => {
@@ -75,7 +77,12 @@ export default ({ field }) => {
       />
     )
   } else if (fieldName === 'districtMunicipality') {
-    if (!form.province?.length) return null
+    if (!form.province?.length) {
+      return null
+    }
+    if (form.province.length === 1 && form.province[0].term === 'National') {
+      return null
+    }
     return (
       <ControlledVocabularySelectMultiple
         id="select-district-municipality"
@@ -91,7 +98,9 @@ export default ({ field }) => {
       />
     )
   } else if (fieldName === 'localMunicipality') {
-    if (!form.districtMunicipality?.length) return null
+    if (!form.districtMunicipality?.length) {
+      return null
+    }
     return (
       <ControlledVocabularySelectMultiple
         id="select-local-municipality"
@@ -230,6 +239,10 @@ export default ({ field }) => {
         helperText={helperText}
       />
     )
+  } else if (fieldName === 'fundingTypeOther') {
+    if (!form.fundingType?.term.match(/Other/)) {
+      return null
+    }
   }
 
   return (

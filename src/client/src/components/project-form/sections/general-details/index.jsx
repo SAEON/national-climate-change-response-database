@@ -42,7 +42,7 @@ const Compose = memo(({ fields }) => (
         'projectManagerTelephone',
         'projectManagerMobile',
       ],
-      'Validation status': ['__submissionStatus', '__submissionComments'],
+      'Submission status': ['__submissionStatus', '__submissionComments'],
     }}
   />
 ))

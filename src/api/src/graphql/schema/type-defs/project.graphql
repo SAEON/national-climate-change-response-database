@@ -44,7 +44,7 @@ input ProjectInput {
   interventionType: ControlledVocabularyInput
   # Implementation status :: <b>Operational</b> - Ongoing project <br /><b>Planned project</b> - Project has not begun but is being constructed or has been registered/approved/funded<br /><b>Complete</b> - The project has been finalized<br /><b>Discontinued</b> - planned project terminated :: actionStatus
   implementationStatus: ControlledVocabularyInput
-  # Type of funding :: Any financial resources that is spent on supporting either mitigation and adaption efforts in South Africa. Climate finance refers to <b>domestic</b> (drawn from local public or private organisations), <b>International</b> (bilateral or multilateral grants or loans). <b>Bilateral</b> funding describes money which is given directly from one government to another, whereas <b>multilateral</b> funding comes from numerous different governments and organisations and is usually arranged by an international organisation such as the World Bank or the UN :: fundingTypes
+  # Type of funding :: Any financial resources that are spent on supporting either mitigation and adaptation efforts in South Africa. Climate finance refers to <b>domestic</b> (drawn from local public or private organisations), <b>International</b> (bilateral or multilateral grants or loans). <b>Bilateral</b> funding describes money which is given directly from one government to another, whereas <b>multilateral</b> funding comes from numerous different governments and organisations and is usually arranged by an international organisation such as the World Bank or the UN :: fundingTypes
   fundingType: ControlledVocabularyInput
   # Province :: Select province(s) :: regions
   province: [ControlledVocabularyInput]

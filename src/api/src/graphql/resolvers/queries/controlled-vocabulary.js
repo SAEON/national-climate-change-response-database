@@ -3,7 +3,7 @@ import logSql from '../../../lib/log-sql.js'
 export default async (_, { root, roots, tree }, ctx) => {
   const { query } = ctx.mssql
 
-  if (!root && !roots?.length) {
+  if (!root && !roots) {
     throw new Error('Either a vocabulary "root" or "roots" argument must be provided')
   }
 

@@ -59,7 +59,9 @@ export default ({
   }
 
   if (gqlError) {
-    throw gqlError
+    throw new Error(
+      `GQL Error in Vocabulary select (multiple roots) form component. ${gqlError.message}`
+    )
   }
 
   let options
@@ -83,6 +85,10 @@ export default ({
         )}". Please make sure that the database is seeded correctly\n\n${error.message}`
       )
     }
+  }
+
+  if (!options.length) {
+    return null
   }
 
   return (

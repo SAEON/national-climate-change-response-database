@@ -64,7 +64,7 @@ export default ({
   }
 
   if (gqlError) {
-    throw gqlError
+    throw new Error(`GQL Error in Vocabulary select form component. ${gqlError.message}`)
   }
 
   /**

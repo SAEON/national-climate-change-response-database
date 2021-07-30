@@ -23,6 +23,10 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
   - [Windows](#windows)
   - [With a configuration file](#with-a-configuration-file)
 - [System migrations](#system-migrations)
+- [Source code documentation](#source-code-documentation)
+  - [Platform](#platform)
+  - [API](#api)
+  - [Client](#client)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -265,3 +269,17 @@ Moving a deployment from one system to another is fairly straightforward - just 
 
 1. Don't forget to move the uploads directory to the environment! Look at the configuration value `FILES_DIRECTORY` on your current deployment to see where files are uploaded to
 2. **file uploads are referenced in SQL Server via absolute paths. As such, you will need to update the file paths referenced in Sql Server**
+
+# Source code documentation
+
+## Platform
+
+[src/platform/README.md](src/platform/)
+
+## API
+
+[src/api/README.md](src/api/)
+
+## Client
+
+[src/client/README.md](src/client/)

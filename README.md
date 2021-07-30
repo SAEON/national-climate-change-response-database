@@ -274,7 +274,7 @@ Moving a deployment from one system to another is fairly straightforward - just 
 
 ## Platform
 
-[src/platform/README.md](src/platform/)
+[platform/README.md](src/platform/)
 
 ## API
 

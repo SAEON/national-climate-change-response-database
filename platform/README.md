@@ -1,3 +1,5 @@
+# Platform configuration
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -5,6 +7,6 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Configure a CentOS deployment platform
+### Configure a CentOS deployment platform
 
-[Documentation](/centos/)
+[CentOS 7.6](centos/)

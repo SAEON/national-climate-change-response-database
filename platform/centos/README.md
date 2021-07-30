@@ -1,6 +1,5 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents** 
 
 - [Configure CentOS 7.6](#configure-centos-76)
   - [Configure login to work without a password (optional)](#configure-login-to-work-without-a-password-optional)
@@ -21,9 +20,11 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Configure CentOS 7.6
+
 Configuring CentOS involves running some commands and editing some text files using the `vi` (or some other text editor that comes with, or is installed, on CentOS).
 
 ## Configure login to work without a password (optional)
+
 ```sh
 # Create an RSA key on YOUR computer
 # Use defaults for all options
@@ -62,6 +63,7 @@ service sshd restart
 ```
 
 ## Give your user passwordless sudo access (optional)
+
 ```sh
 visudo
 
@@ -70,6 +72,7 @@ visudo
 ```
 
 ## Install Docker
+
 ```sh
 ssh <user>@<hostname>
 sudo su
@@ -83,6 +86,7 @@ systemctl start docker
 ```
 
 ## Install Docker Compose
+
 ```sh
 ssh <user>@<hostname>
 sudo su
@@ -91,6 +95,7 @@ chmod +x /usr/local/bin/docker-compose
 ```
 
 ### Clean up docker files regularly
+
 ```sh
 ssh <user>@<hostname>
 sudo su
@@ -104,6 +109,7 @@ Make sure the following line is in the crontab
 ```
 
 ### Add your user to the 'docker' group
+
 ```sh
 ssh <user>@<hostname>
 sudo su
@@ -111,6 +117,7 @@ usermod -a -G docker <name>
 ```
 
 ## Install Nginx
+
 ```sh
 ssh <user>@<hostname>
 sudo su
@@ -121,6 +128,7 @@ systemctl start nginx
 ```
 
 ### Configure Nginx
+
 ```sh
 ssh <user>@<hostname>
 sudo su
@@ -139,6 +147,7 @@ Obtain SSL certs - the following two files are expected to exist:
 ```
 
 ### Copy Nginx configuration files
+
 Manually copy two files from this repository onto the server
 
 ```txt
@@ -146,29 +155,32 @@ platform/centos/nginx/nginx.conf => /etc/nginx/nginx.conf (overwrite the existin
 platform/centos/nginx/nccrd.conf => /etc/nginx/conf.d/nccrd.conf (change <hostname> to the correct hostname)
 ```
 
-*NOTE - **Did you replace <hostname> in nccrd.conf??***
+\*NOTE - **Did you replace <hostname> in nccrd.conf??\***
 
 ## Install and configure firewalld
+
 ```sh
 ssh <user>@<hostname>
 sudo su
 yum -y install firewalld
 systemctl unmask firewalld
 systemctl enable firewalld
-systemctl start firewalld    
-firewall-cmd --permanent --zone=public --add-service=http 
+systemctl start firewalld
+firewall-cmd --permanent --zone=public --add-service=http
 firewall-cmd --permanent --zone=public --add-service=https
-firewall-cmd --permanent --add-port=1433/tcp # SQL Server 
+firewall-cmd --permanent --add-port=1433/tcp # SQL Server
 firewall-cmd --reload
 ```
 
 ## Setup continuous deployment via GitHub Actions
+
 This actually involves two things:
 
 1. Installing & configuring a self-hosted GitHub actions runner on your server
 2. Creating a workflow file in the source code repository to use the runner
 
 ### Install GitHub actions runner
+
 ```sh
 # Create a passwordless 'runner' user
 ssh <user>@<hostname>
@@ -185,10 +197,13 @@ runner ALL=NOPASSWD: /home/runner/bin/installdependencies.sh
 
 # NOTE - after installing the runner, once CD is working, revoke this access!
 ```
+
 ### Configure GitHub to use this runner
+
 Create a workflow file in the .github/workflows directory in this repository. Use the `stable.yml` file as a reference
 
 ## Disable SELinux (or configure it correctly)
+
 ```sh
 ssh <user>@<hostname>
 sudo su

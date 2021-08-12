@@ -111,7 +111,7 @@ The easiest way to deploy the application from source code is to serve the React
 2. No caching policy is set by the Node.js server when static files are requested (also configure this in your webserver)
 3. The HTTP `origin` header should be set explicitly by the proxy server and should be the domain by which the application is served from
 
-Refer to this [this Nginx configuration file](platform/centos/nginx/nginx.conf) and [this Nginx server block](platform/centos/nginx/nccrd.conf) for an example of how to configure a webserver to set caching headers and compress static files.
+Refer to this [this Nginx configuration file](platform/centos/nginx/nginx.conf) and [this Nginx server block](platform/centos/nginx/nccrd.conf) for an example of how to configure a webserver to set caching headers and compress static files. [IIS configuration instructions](platform/windows/README.md) are also included.
 
 To start this app in a production environment:
 

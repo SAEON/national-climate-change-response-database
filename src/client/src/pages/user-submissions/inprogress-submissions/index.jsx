@@ -60,7 +60,7 @@ export default ({ submissions }) => {
               ({
                 id,
                 _id,
-                project: { title, interventionType: { term: intervention = '' } = {} },
+                project: { title = '', interventionType: { term: intervention = '' } = {} } = {},
                 isSubmitted,
               }) => ({
                 id: _id,

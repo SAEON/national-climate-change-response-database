@@ -75,10 +75,11 @@ To remove the need for constant manual management of the Node.js service, it's n
   - The defaults in the "Log on" tab should work fine, but it may be advisable to create a dedicated user with limited permissions (beyond scope here)
   - In the "Dependencies" tab should be fine as is (there is a dependency on SQL Server but the NCCRD will just crash and restart until SQL Server is ready)
   - The default "Process" tab values are fine
-  - Create a file `console.log` in the root of directory with the NCCRD executable. In the I/O tab set the stdout and stderr path to this file
+  - Create a file `console.log` in the root of directory with the NCCRD executable. In the I/O tab set the stdout and stderr path to this file, or in the "File rotation" tab set nssm to replace existing log tabs (i.e. prevent large log files)
   - Click "Install service" (there are other useful configuration options that are worth looking into, particularly log rotation)
   - In the "Environment" tab, you can specify the application environment variables (See the section below on Environment variables)
-  - Run the command: `.\nssm.exe set nccrd appnoconsole 1`
+- Run: `.\nssm.exe set nccrd appnoconsole 1`
+- Run: `.\nssm.exe start nccrd`
 
 ### Environment variables
 Windows Server 2016 seems to allow for creating a `.env` file in the root of the directory with the NCCRD executable. However Windows Server 2019 seems to ignore this file. In this case the environment variables need to be specified to the NSSM tool. This is done via the install Wizard. There should be **NO QUOTES** wrapping the values. i.e. the input to the Environment tab should look like this:
@@ -111,6 +112,8 @@ I think it's useful to name the NCCRD executable files according to version. As 
 - Remove the NSSM service: `.\nssm.exe remove nccrd`
 - Copy a newer NCCRD executable into the directory
 - Reinstall the NSSM service: `.\nssm.exe install nccrd` (use the new executable, and don't forget about setting the stdio and environment variables)
+- Run: `.\nssm.exe set nccrd appnoconsole 1`
+- Run: `.\nssm.exe start nccrd`
 
 # Proxy server alternatives
 It should also be possible to host the Node.js process directly using IIS and [iisnode](https://github.com/azure/iisnode)

@@ -243,7 +243,7 @@ $env:SAEON_AUTH_CLIENT_SECRET="<secret>";
 
 ## With a configuration file
 
-Make sure there is a `.env` file in the same directory as the executable. Add configuration values to the file in the format below and then start the executable (double click on Windows)
+Make sure there is a `.env` file in the same directory as the executable. Add configuration values to the file in the format below and then start the executable (double click on Windows). **This doesn't seem to work on Windows Server 2019**
 
 ```txt
 LOG_SQL_QUERIES=true

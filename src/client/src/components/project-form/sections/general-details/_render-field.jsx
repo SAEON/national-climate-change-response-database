@@ -28,6 +28,7 @@ export default ({ field }) => {
     resetMitigationDetailsForm,
     resetAdaptationDetailsForm,
   } = useContext(formContext)
+  console.log('field', field)
   const { name: fieldName, description, type } = field
   let [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
   const { kind } = type

@@ -1,33 +1,61 @@
 input AdaptationInput {
-  # Adaptation sector :: Select the adaptation sector :: adaptationSectors
+  """
+  Adaptation sector :: Select the adaptation sector :: adaptationSectors
+  """
   adaptationSector: ControlledVocabularyInput!
-  # Sector description :: Please describe the sector
+  """
+  Sector description :: Please describe the sector
+  """
   otherAdaptationSector: String
-  # National policy :: Indicate the national policy or strategy that the measure is responding to :: adaptationPolicies
+  """
+  National policy :: Indicate the national policy or strategy that the measure is responding to :: adaptationPolicies
+  """
   nationalPolicy: [ControlledVocabularyInput]
-  # National policy description :: Please describe the policy
+  """
+  National policy description :: Please describe the policy
+  """
   otherNationalPolicy: String
-  # Provincial or Municipal policy :: Indicate the provincial or municipal policy or strategy that the measure is responding to :: adaptationPolicies
+  """
+  Provincial or Municipal policy :: Indicate the provincial or municipal policy or strategy that the measure is responding to :: adaptationPolicies
+  """
   regionalPolicy: [ControlledVocabularyInput]
-  # Regional policy description :: Please describe the policy
+  """
+  Regional policy description :: Please describe the policy
+  """
   otherRegionalPolicy: String
-  # Indicate the corresponding intervention, goal, or target :: Please select an appropriate value based on your other form inputs above :: adaptationPolicies
+  """
+  Indicate the corresponding intervention, goal, or target :: Please select an appropriate value based on your other form inputs above :: adaptationPolicies
+  """
   target: [ControlledVocabularyInput]
-  # Other corresponding intervention(s), goal(s), or target(s) :: Please describe based on your other form inputs above
+  """
+  Other corresponding intervention(s), goal(s), or target(s) :: Please describe based on your other form inputs above
+  """
   otherTarget: String
 
-  # Hazard :: Select hazard :: hazards
+  """
+  Hazard :: Select hazard :: hazards
+  """
   hazard: [ControlledVocabularyInput]
-  # Hazard description :: Please describe the hazard
+  """
+  Hazard description :: Please describe the hazard
+  """
   otherHazard: String
 
-  # Upload file(s) :: Progress and/or status report(s) for this project component
+  """
+  Upload file(s) :: Progress and/or status report(s) for this project component
+  """
   fileUploads: JSON
 
-  # Observed and projected climate change impacts :: What climate change impacts have been observed or projected?
+  """
+  Observed and projected climate change impacts :: What climate change impacts have been observed or projected?
+  """
   observedClimateChangeImpacts: String
-  # Addressed climate change impact :: Which observed climate change impact(s) is the response addressing
+  """
+  Addressed climate change impact :: Which observed climate change impact(s) is the response addressing
+  """
   addressedClimateChangeImpact: String
-  # Impact of response :: What has been the impact of the response in reducing climate change impacts?
+  """
+  Impact of response :: What has been the impact of the response in reducing climate change impacts?
+  """
   responseImpact: String
 }

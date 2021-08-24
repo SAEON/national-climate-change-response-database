@@ -84,11 +84,17 @@ type PageInfo {
 }
 
 type Query {
-  # Get a list of all the the Excel submission templates that have been uploaded
+  """
+  Get a list of all the the Excel submission templates that have been uploaded
+  """
   submissionTemplates: [SubmissionTemplate!]!
-  # Get an in-progress form by the ID of the incomplete submission
+  """
+  Get an in-progress form by the ID of the incomplete submission
+  """
   submission(id: ID!, isSubmitted: Boolean): Submission!
-  # Page info (pagination) for a particular search
+  """
+  Page info (pagination) for a particular search
+  """
   pageInfo(
     submissionStatus: String
     projectFilters: JSON
@@ -98,7 +104,9 @@ type Query {
     limit: Int
     offset: Int
   ): PageInfo!
-  # Search submissions
+  """
+  Search submissions
+  """
   submissions(
     submissionStatus: String
     projectFilters: JSON
@@ -108,19 +116,29 @@ type Query {
     offset: Int
     isSubmitted: Boolean
   ): [Submission!]!
-  # Search vocabulary tress
+  """
+  Search vocabulary tress
+  """
   controlledVocabulary(root: String, roots: [String!], tree: String!): [ControlledVocabulary]!
-  # Search users
+  """
+  Search users
+  """
   users(ids: [Int!]): [User!]
   user(id: Int!): User
-  # Search roles
+  """
+  Search roles
+  """
   roles: [Role!]!
-  # Search permissions
+  """
+  Search permissions
+  """
   permissions: [Permission!]!
 }
 
 type Mutation {
-  # Create and update a submission
+  """
+  Create and update a submission
+  """
   saveSubmission(
     submissionId: ID!
     project: JSON
@@ -136,6 +154,8 @@ type Mutation {
   createSubmission: Submission!
   deleteSubmission(id: ID!): ID!
   removeSubmissionAttachments(submissionId: ID!, ids: [Int!]!): JSON!
-  # Assign roles to users
+  """
+  Assign roles to users
+  """
   assignUserRoles(userId: Int!, roleIds: [Int!]!): User!
 }

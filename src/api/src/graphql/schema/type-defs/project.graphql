@@ -1,55 +1,105 @@
 input ProjectInput {
-  # Title ::
+  """
+  Title ::
+  """
   title: String!
-  # Description :: Please describe the project including aims, objective, methodology used, life expectancy and outcome. The outcome should be the actual or desired outcome of the project, such as findings of research, levels of emissions or energy savings, level of resilience achieved, human capital potential, other environmental, social and economic benefits.
+  """
+  Description :: Please describe the project including aims, objective, methodology used, life expectancy and outcome. The outcome should be the actual or desired outcome of the project, such as findings of research, levels of emissions or energy savings, level of resilience achieved, human capital potential, other environmental, social and economic benefits.
+  """
   description: String
-  # Start year :: Project life span
+  """
+  Start year :: Project life span
+  """
   startYear: DateTime
-  # End year :: Project life span
+  """
+  End year :: Project life span
+  """
   endYear: DateTime
-  # Link to project website :: Is there a URI that is associated with this project?
+  """
+  Link to project website :: Is there a URI that is associated with this project?
+  """
   link: String
-  # Implementing organization :: Who is implementing the project?
+  """
+  Implementing organization :: Who is implementing the project?
+  """
   implementingOrganization: String
-  # Other implementing partners :: Are there any other partners involved in project implementation?
+  """
+  Other implementing partners :: Are there any other partners involved in project implementation?
+  """
   otherImplementingPartners: String
-  # Funding organization :: Who is the main funding organization?
+  """
+  Funding organization :: Who is the main funding organization?
+  """
   fundingOrganisation: String
-  # Actual budget :: Do you know the actual project budget?
+  """
+  Actual budget :: Do you know the actual project budget?
+  """
   actualBudget: Money
 
-  # GPS point location(s) :: Include relevant point locations
+  """
+  GPS point location(s) :: Include relevant point locations
+  """
   yx: WKT_4326
 
-  # Name ::
+  """
+  Name ::
+  """
   projectManagerName: String
-  # Company/organization ::
+  """
+  Company/organization ::
+  """
   projectManagerOrganization: String
-  # Position :: What position does the project manager hold at the company?
+  """
+  Position :: What position does the project manager hold at the company?
+  """
   projectManagerPosition: String
-  # Email address ::
+  """
+  Email address ::
+  """
   projectManagerEmail: String
-  # Telephone number ::
+  """
+  Telephone number ::
+  """
   projectManagerTelephone: String
-  # Mobile number ::
+  """
+  Mobile number ::
+  """
   projectManagerMobile: String
-  # City / Town(s) :: City 1, City 2, etc.
+  """
+  City / Town(s) :: City 1, City 2, etc.
+  """
   cityOrTown: String
-  # Type of funding (other) :: Please indicate the type of funding this project will receive
+  """
+  Type of funding (other) :: Please indicate the type of funding this project will receive
+  """
   fundingTypeOther: String
 
-  # Estimated budget range :: If you don't know the actual budget, please provide a range estimate :: budgetRanges
+  """
+  Estimated budget range :: If you don't know the actual budget, please provide a range estimate :: budgetRanges
+  """
   estimatedBudget: ControlledVocabularyInput
-  # Indicate the type of measure :: <b>Mitigation</b> measures are defined as 'actions aimed at reducing the extent or likelihood of global climate change through the reduction or displacement of greenhouse gas emissions (GHGs) (e.g. through emission reduction, energy efficiency or renewable energy projects'.<br /><br /><b>Adaptation</b> measures are defined as 'actions preventing or minimising the negative effects and taking advantage of positive effects of global warming in addition to actions which would have occurred naturally or as a matter of course.<br /><br /><b>Cross-cutting</b> measures that contain elements of both adaptation and mitigation :: interventionTypes
+  """
+  Indicate the type of measure :: <b>Mitigation</b> measures are defined as 'actions aimed at reducing the extent or likelihood of global climate change through the reduction or displacement of greenhouse gas emissions (GHGs) (e.g. through emission reduction, energy efficiency or renewable energy projects'.<br /><br /><b>Adaptation</b> measures are defined as 'actions preventing or minimising the negative effects and taking advantage of positive effects of global warming in addition to actions which would have occurred naturally or as a matter of course.<br /><br /><b>Cross-cutting</b> measures that contain elements of both adaptation and mitigation :: interventionTypes
+  """
   interventionType: ControlledVocabularyInput
-  # Implementation status :: <b>Operational</b> - Ongoing project <br /><b>Planned project</b> - Project has not begun but is being constructed or has been registered/approved/funded<br /><b>Complete</b> - The project has been finalized<br /><b>Discontinued</b> - planned project terminated :: actionStatus
+  """
+  Implementation status :: <b>Operational</b> - Ongoing project <br /><b>Planned project</b> - Project has not begun but is being constructed or has been registered/approved/funded<br /><b>Complete</b> - The project has been finalized<br /><b>Discontinued</b> - planned project terminated :: actionStatus
+  """
   implementationStatus: ControlledVocabularyInput
-  # Type of funding :: Any financial resources that are spent on supporting either mitigation and adaptation efforts in South Africa. Climate finance refers to <b>domestic</b> (drawn from local public or private organisations), <b>International</b> (bilateral or multilateral grants or loans). <b>Bilateral</b> funding describes money which is given directly from one government to another, whereas <b>multilateral</b> funding comes from numerous different governments and organisations and is usually arranged by an international organisation such as the World Bank or the UN :: fundingTypes
+  """
+  Type of funding :: Any financial resources that are spent on supporting either mitigation and adaptation efforts in South Africa. Climate finance refers to <b>domestic</b> (drawn from local public or private organisations), <b>International</b> (bilateral or multilateral grants or loans). <b>Bilateral</b> funding describes money which is given directly from one government to another, whereas <b>multilateral</b> funding comes from numerous different governments and organisations and is usually arranged by an international organisation such as the World Bank or the UN :: fundingTypes
+  """
   fundingType: ControlledVocabularyInput
-  # Province :: Select province(s) :: regions
+  """
+  Province :: Select province(s) :: regions
+  """
   province: [ControlledVocabularyInput]
-  # District municipality :: Select district municipality(s) :: regions
+  """
+  District municipality :: Select district municipality(s) :: regions
+  """
   districtMunicipality: [ControlledVocabularyInput]
-  # Local municipality :: Select local municipality(s) :: regions
+  """
+  Local municipality :: Select local municipality(s) :: regions
+  """
   localMunicipality: [ControlledVocabularyInput]
 }

@@ -1,70 +1,130 @@
 input MitigationInput {
-  # Select host sector :: Select the sector in which the project is taking place :: mitigationSectors
+  """
+  Select host sector :: Select the sector in which the project is taking place :: mitigationSectors
+  """
   hostSector: ControlledVocabularyInput!
-  # Select main sub-sector :: Select the main sub-sector in which the project is taking place :: mitigationSectors
+  """
+  Select main sub-sector :: Select the main sub-sector in which the project is taking place :: mitigationSectors
+  """
   hostSubSectorPrimary: ControlledVocabularyInput
-  # Select secondary sub-sector :: Select the secondary sub-sector in which the project is taking place :: mitigationSectors
+  """
+  Select secondary sub-sector :: Select the secondary sub-sector in which the project is taking place :: mitigationSectors
+  """
   hostSubSectorSecondary: ControlledVocabularyInput
 
-  # Select the type of project :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationType
+  """
+  Select the type of project :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationType
+  """
   mitigationType: ControlledVocabularyInput
-  # Select the project sub-type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationType
+  """
+  Select the project sub-type :: Mitigation type and subtype as defined by the UNFCCC CDM pipeline (e.g. industrial energy efficiency - iron & steel, hydro - new dam etc.) :: mitigationType
+  """
   mitigationSubType: ControlledVocabularyInput
 
-  # Select the mitigation program the project is linked to :: A programme is a high level support measure that support mitigation actions/project types above e.g 1A1 REIPPP :: mitigationProgramme
+  """
+  Select the mitigation program the project is linked to :: A programme is a high level support measure that support mitigation actions/project types above e.g 1A1 REIPPP :: mitigationProgramme
+  """
   mitigationProgramme: ControlledVocabularyInput
-  # National policy :: Indicate the national policy or strategy that the measure is responding to :: mitigationPolicies
+  """
+  National policy :: Indicate the national policy or strategy that the measure is responding to :: mitigationPolicies
+  """
   nationalPolicy: [ControlledVocabularyInput]
-  # (Other) national policy(ies) description :: Please describe the policy(ies)
+  """
+  (Other) national policy(ies) description :: Please describe the policy(ies)
+  """
   otherNationalPolicy: String
-  # Provincial or Municipal policy :: Indicate the provincial or municipal policy or strategy that the measure is responding to :: mitigationPolicies
+  """
+  Provincial or Municipal policy :: Indicate the provincial or municipal policy or strategy that the measure is responding to :: mitigationPolicies
+  """
   regionalPolicy: [ControlledVocabularyInput]
-  # (Other) regional policy(ies) description :: Please describe the policy(ies)
+  """
+  (Other) regional policy(ies) description :: Please describe the policy(ies)
+  """
   otherRegionalPolicy: String
-  # Primary intended outcome :: Primary intended outcome (Indicate the expected or achieved goals)
+  """
+  Primary intended outcome :: Primary intended outcome (Indicate the expected or achieved goals)
+  """
   primaryIntendedOutcome: String
 
-  # Upload file(s) :: Progress and/or status report(s) for this project component
+  """
+  Upload file(s) :: Progress and/or status report(s) for this project component
+  """
   fileUploads: JSON
 
-  # Environmental co-benefit :: Select co-benefit :: coBenefits
+  """
+  Environmental co-benefit :: Select co-benefit :: coBenefits
+  """
   coBenefitEnvironmental: ControlledVocabularyInput
-  # Environmental co-benefit description :: Please indicate the quantified environmental benefits from the project :: coBenefits
+  """
+  Environmental co-benefit description :: Please indicate the quantified environmental benefits from the project :: coBenefits
+  """
   coBenefitEnvironmentalDescription: String
-  # Social co-benefit :: Select co-benefit :: coBenefits
+  """
+  Social co-benefit :: Select co-benefit :: coBenefits
+  """
   coBenefitSocial: ControlledVocabularyInput
-  # Social co-benefit description :: Please indicate the quantified social benefits from the project
+  """
+  Social co-benefit description :: Please indicate the quantified social benefits from the project
+  """
   coBenefitSocialDescription: String
-  # Economic co-benefit :: Select co-benefit :: coBenefits
+  """
+  Economic co-benefit :: Select co-benefit :: coBenefits
+  """
   coBenefitEconomic: ControlledVocabularyInput
-  # Economic co-benefit description :: Please indicate the quantified social benefits from the project
+  """
+  Economic co-benefit description :: Please indicate the quantified social benefits from the project
+  """
   coBenefitEconomicDescription: String
 
-  # Carbon credit :: Does this project produce carbon credits?
+  """
+  Carbon credit :: Does this project produce carbon credits?
+  """
   carbonCredit: Boolean
-  # CDM or Voluntary :: Which carbon-credit standard does this project use? :: carbonCreditStandards
+  """
+  CDM or Voluntary :: Which carbon-credit standard does this project use? :: carbonCreditStandards
+  """
   carbonCreditStandard: ControlledVocabularyInput
-  # CDM Executive Board Status :: What is the CDM status of this project? :: executiveStatus
+  """
+  CDM Executive Board Status :: What is the CDM status of this project? :: executiveStatus
+  """
   carbonCreditCdmExecutiveStatus: ControlledVocabularyInput
-  # CDM methodology :: Please select the CDM method used in your project. :: cdmMethodology
+  """
+  CDM methodology :: Please select the CDM method used in your project. :: cdmMethodology
+  """
   carbonCreditCdmMethodology: ControlledVocabularyInput
-  # Organization Issuing Credits :: Which organization issues the voluntary carbon credits? :: carbonCreditVoluntaryOrganizations
+  """
+  Organization Issuing Credits :: Which organization issues the voluntary carbon credits? :: carbonCreditVoluntaryOrganizations
+  """
   carbonCreditVoluntaryOrganization: ControlledVocabularyInput
-  # Voluntary methodology :: Describe the method used in the project.
+  """
+  Voluntary methodology :: Describe the method used in the project.
+  """
   carbonCreditVoluntaryMethodology: String
-  # CDM Project number :: Please add the CDM project number if you know it
+  """
+  CDM Project number :: Please add the CDM project number if you know it
+  """
   carbonCreditCdmProjectNumber: String
 
-  # Achieved progress :: Achieved progress by project
+  """
+  Achieved progress :: Achieved progress by project
+  """
   progressData: JSON
 
-  # Energy data :: Does the project have energy data?
+  """
+  Energy data :: Does the project have energy data?
+  """
   hasEnergyData: Boolean
-  # Energy data :: Input mitigation energy data
+  """
+  Energy data :: Input mitigation energy data
+  """
   energyData: JSON
 
-  # Emissions data :: Does the project have emissions data?
+  """
+  Emissions data :: Does the project have emissions data?
+  """
   hasEmissionsData: Boolean
-  # Emissions data :: Input mitigation emissions data
+  """
+  Emissions data :: Input mitigation emissions data
+  """
   emissionsData: JSON
 }

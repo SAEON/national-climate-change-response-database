@@ -18,12 +18,14 @@ export const NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES =
 export const ODP_ADDRESS = process.env.ODP_ADDRESS || 'https://odp.saeon.ac.za'
 export const CATALOGUE_API_ODP_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
 export const SAEON_AUTH_ADDRESS = `${ODP_ADDRESS}/auth`
+export const SAEON_AUTH_ADDRESS_WELLKNOWN = `${SAEON_AUTH_ADDRESS}/.well-known/openid-configuration`
+export const SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS = `${SAEON_AUTH_ADDRESS}/oauth2/sessions/logout`
 
 export const NCCRD_HOSTNAME = process.env.NCCRD_HOSTNAME || 'http://localhost:3000'
 
 export const SAEON_AUTH_CLIENT_SECRET = process.env.SAEON_AUTH_CLIENT_SECRET || ''
 export const SAEON_AUTH_CLIENT_ID = process.env.SAEON_AUTH_CLIENT_ID || 'SAEON.NCCIS'
-export const SAEON_AUTH_CLIENT_SCOPES = process.env.SAEON_AUTH_CLIENT_SCOPES || 'SAEON.NCCIS'
+export const SAEON_AUTH_CLIENT_SCOPES = process.env.SAEON_AUTH_CLIENT_SCOPES || 'SAEON.NCCIS openid'
 export const SAEON_AUTH_OAUTH_REDIRECT_ADDRESS = `${NCCRD_HOSTNAME}/http/authenticate/redirect/saeon`
 
 export const NCCRD_DEPLOYMENT_ENV = process.env.NCCRD_DEPLOYMENT_ENV || 'development'

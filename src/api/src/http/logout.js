@@ -1,7 +1,26 @@
-import { NCCRD_HOSTNAME } from '../config.js'
+import { NCCRD_HOSTNAME, SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS } from '../config.js'
+import logSql from '../lib/log-sql.js'
 
 export default async ctx => {
-  const { redirect = NCCRD_HOSTNAME } = ctx.request.query
+  /**
+   * User is already logged out
+   */
+  if (ctx.session.isNew) {
+    return ctx.redirect(NCCRD_HOSTNAME)
+  }
+
+  /**
+   * Otherwise log user out of Oauth2 server
+   */
+  const { user, mssql } = ctx
+  const userId = user.info(ctx).id
+  const { query } = mssql
+  const sql = `select id_token from Users where id = ${userId}`
+  logSql('User', sql)
+  const response = await query(sql)
+  const { id_token } = response.recordset[0]
   ctx.session = null
-  ctx.redirect(redirect)
+  return ctx.redirect(
+    `${SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS}?id_token_hint=${id_token}&post_logout_redirect_uri=${NCCRD_HOSTNAME}/http/logout`
+  )
 }

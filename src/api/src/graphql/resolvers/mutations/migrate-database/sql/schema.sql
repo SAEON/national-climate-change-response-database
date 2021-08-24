@@ -10,13 +10,11 @@ begin
 create table Users (
   id int not null identity primary key,
 	name nvarchar(255) null,
-	familyName nvarchar(255) null,
   emailAddress nvarchar(255) not null unique,
-  googleId nvarchar(255) null,
-	saeonId nvarchar(255) null
+	saeonId nvarchar(255) null,
+	id_token nvarchar(4000)
 );
 
-create unique index users_unique_googleId on Users(googleId) where googleId is not null;
 create unique index users_unique_saeonId on Users(saeonId) where saeonId is not null;
 end
 

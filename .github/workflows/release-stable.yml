@@ -2,8 +2,6 @@ name: release@stable
 
 on:
   push:
-    branches:
-      - stable
     tags:
       - '*'
 

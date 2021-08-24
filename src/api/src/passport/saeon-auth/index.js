@@ -134,7 +134,7 @@ export default () => {
      */
     login: async (ctx, next) =>
       passport.authenticate('oidc', {
-        scope: SAEON_AUTH_CLIENT_SCOPES.split(','),
+        scope: SAEON_AUTH_CLIENT_SCOPES,
         state: base64url(
           JSON.stringify({
             redirect: ctx.request.query.redirect

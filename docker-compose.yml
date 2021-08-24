@@ -9,8 +9,8 @@ volumes:
     driver: local
 
 services:
-  sql-server:
-    container_name: sql-server
+  sql-server-express:
+    container_name: sql-server-express
     restart: always
     image: $MSSQL_IMAGE
     volumes: 

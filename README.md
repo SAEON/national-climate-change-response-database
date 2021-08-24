@@ -63,12 +63,12 @@ npm run install-dependencies
 ```sh
 # Start a SQL Server instance (manually create the database)
   docker run \
-  --name sql-server \
+  --name sql-server-express \
   --restart always \
   -v /home/$USER:/host-mnt \
   -e 'ACCEPT_EULA=Y' \
   -e 'SA_PASSWORD=password!123#' \
-  -e 'MSSQL_PID=Developer' \
+  -e 'MSSQL_PID=Express' \
   -p 1433:1433 \
   -d \
   mcr.microsoft.com/mssql/server:2017-latest-ubuntu
@@ -150,7 +150,7 @@ docker run \
   -e 'NCCRD_DEPLOYMENT_ENV=development' \
   -e 'FILES_DIRECTORY=' \
   -e 'NCCRD_SSL_ENV=development' \
-  -e 'MSSQL_HOSTNAME=sql-server' \
+  -e 'MSSQL_HOSTNAME=sql-server-express' \
   -e 'MSSQL_USERNAME=sa' \
   -e 'MSSQL_PASSWORD=password!123#' \
   -e 'MSSQL_DATABASE=nccrd' \

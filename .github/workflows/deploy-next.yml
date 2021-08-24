@@ -1,9 +1,9 @@
-name: deployment@stable
+name: deployment@next
 
 on:
   push:
     branches:
-      - stable
+      - next
 
 jobs:
 
@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: stable  
+          ref: next  
 
   deploy:
     needs: [source-code]

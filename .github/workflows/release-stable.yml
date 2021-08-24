@@ -8,7 +8,7 @@ on:
 jobs:
 
   source-code:
-    runs-on: nccrd.saeon.ac.za
+    runs-on: github-runner.saeon.int
     steps:
       - uses: actions/checkout@v2
         with:
@@ -16,7 +16,7 @@ jobs:
 
   pkg-releases:
     needs: [source-code]
-    runs-on: nccrd.saeon.ac.za
+    runs-on: github-runner.saeon.int
     
     steps:
       - name: Build binaries via Docker

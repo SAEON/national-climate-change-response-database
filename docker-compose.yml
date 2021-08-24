@@ -53,6 +53,6 @@ services:
     ports:
       - 3000:3000
     depends_on: 
-      - sql-server
+      - sql-server-express
     networks: 
       - $NCCRD_DOCKER_NETWORK

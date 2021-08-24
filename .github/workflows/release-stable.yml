@@ -6,7 +6,6 @@ on:
       - '*'
 
 jobs:
-
   source-code:
     runs-on: github-runner.saeon.int
     steps:
@@ -14,19 +13,21 @@ jobs:
         with:
           ref: stable
 
-  pkg-releases:
+  pkg:
     needs: [source-code]
     runs-on: github-runner.saeon.int
-    
     steps:
       - name: Build binaries via Docker
         run: |
           docker image build -t nccrd-binaries -f pkg.Dockerfile .
-
       - name: Get binaries from Docker context
         run: |
           docker cp $(docker create --rm nccrd-binaries):/app/binaries/ ./
-      
+
+  releases:
+    needs: [pkg]
+    runs-on: github-runner.saeon.int
+    steps:
       - name: Publish binaries
         uses: softprops/action-gh-release@v1
         with:

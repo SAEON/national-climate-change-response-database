@@ -1,0 +1,25 @@
+name: deployment@stable
+
+on:
+  push:
+    branches:
+      - stable
+
+jobs:
+
+  source-code:
+    runs-on: github-runner.saeon.int
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: stable  
+
+  deploy:
+    needs: [source-code]
+    runs-on: github-runner.saeon.int
+    steps:
+      - name: Deploy services
+        run: >-
+          SAEON_AUTH_CLIENT_SECRET="${{ secrets.SAEON_AUTH_CLIENT_SECRET}}"
+          NCCRD_HOSTNAME="https://nccrd.environment.gov.za"
+          /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

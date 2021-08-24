@@ -1,5 +1,5 @@
 # Build client
-FROM node:14.17.0 as client
+FROM node:16.7 as client
 
 ARG NCCRD_DEPLOYMENT_ENV
 ARG NCCRD_CLIENT_DEFAULT_NOTICES
@@ -22,7 +22,7 @@ RUN npm run build
 
 
 # Start API
-FROM node:14.17-alpine
+FROM node:16.7-alpine
 
 ARG NCCRD_API_RESET_SCHEMA
 ENV NCCRD_API_RESET_SCHEMA=$NCCRD_API_RESET_SCHEMA

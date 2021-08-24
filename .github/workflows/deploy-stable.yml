@@ -12,14 +12,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: stable  
+          ref: stable
 
-  deploy:
-    needs: [source-code]
+  build-image:
     runs-on: github-runner.saeon.int
     steps:
-      - name: Deploy services
-        run: >-
-          SAEON_AUTH_CLIENT_SECRET="${{ secrets.SAEON_AUTH_CLIENT_SECRET}}"
-          NCCRD_HOSTNAME="https://nccrd.environment.gov.za"
-          /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build
+      - name: Build Docker image
+        run: >
+          docker image build -t nccrd
+          --build-arg SAEON_AUTH_CLIENT_SECRET="${{ secrets.SAEON_AUTH_CLIENT_SECRET}}"
+          --build-arg NCCRD_HOSTNAME="https://nccrd.environment.gov.za"
+
+  deploy:
+    runs-on: github-runner.saeon.int
+    steps:
+      - name: Deploy image
+        run: |
+          echo hi there

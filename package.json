@@ -54,7 +54,7 @@
     "prettier": "^2.3.2"
   },
   "dependencies": {
-    "rimraf": "^3.0.2",
-    "pkg": "^5.3.1"
+    "pkg": "^5.3.1",
+    "rimraf": "^3.0.2"
   }
 }

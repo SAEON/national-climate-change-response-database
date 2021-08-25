@@ -106,7 +106,7 @@ module.exports = () => {
       static: {
         staticOptions: {
           contentBase: path.join(__dirname, output),
-        }
+        },
       },
       historyApiFallback: {
         disableDotRule: true,

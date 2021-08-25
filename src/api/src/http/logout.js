@@ -16,7 +16,7 @@ export default async ctx => {
   const userId = user.info(ctx).id
   const { query } = mssql
   const sql = `select id_token from Users where id = ${userId}`
-  logSql('User', sql)
+  logSql(sql, 'User')
   const response = await query(sql)
   const { id_token } = response.recordset[0]
   ctx.session = null

@@ -5,8 +5,11 @@ on:
     branches:
       - stable
 
-jobs:
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
+jobs:
   source-code:
     runs-on: github-runner.saeon.int
     steps:

@@ -35,28 +35,30 @@ export default () => {
    * This tutorial was helpful in getting openid-client
    * and passport to work together
    */
-  Issuer.discover(SAEON_AUTH_ADDRESS_WELLKNOWN).then(hydra => {
-    const client = new hydra.Client({
-      client_id: SAEON_AUTH_CLIENT_ID,
-      client_secret: SAEON_AUTH_CLIENT_SECRET,
-      redirect_uris: [SAEON_AUTH_OAUTH_REDIRECT_ADDRESS],
-      post_logout_redirect_uris: [SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS],
-      token_endpoint_auth_method: 'client_secret_post',
-      response_types: ['code'],
-    })
+  try {
+    Issuer.discover(SAEON_AUTH_ADDRESS_WELLKNOWN)
+      .then(hydra => {
+        const client = new hydra.Client({
+          client_id: SAEON_AUTH_CLIENT_ID,
+          client_secret: SAEON_AUTH_CLIENT_SECRET,
+          redirect_uris: [SAEON_AUTH_OAUTH_REDIRECT_ADDRESS],
+          post_logout_redirect_uris: [SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS],
+          token_endpoint_auth_method: 'client_secret_post',
+          response_types: ['code'],
+        })
 
-    console.info('Auth client created', client)
+        console.info('Auth client created', client)
 
-    passport.use(
-      'oidc',
-      new Strategy({ client }, async (tokenSet, userInfo, cb) => {
-        const { id_token } = tokenSet
-        const { email, sub: saeonId, name } = userInfo
+        passport.use(
+          'oidc',
+          new Strategy({ client }, async (tokenSet, userInfo, cb) => {
+            const { id_token } = tokenSet
+            const { email, sub: saeonId, name } = userInfo
 
-        const userEmail = email.toLowerCase()
+            const userEmail = email.toLowerCase()
 
-        try {
-          const sql = `
+            try {
+              const sql = `
             begin transaction T
             begin try
   
@@ -110,47 +112,53 @@ export default () => {
                 rollback transaction T
             end catch`
 
-          logSql(sql, 'Authenticate user')
-          const result = await query(sql)
-          const user = result.recordset[0]
-          cb(null, user)
-        } catch (error) {
-          console.error('Error authenticating', error.message)
-          cb(error, null)
-        }
-      })
-    )
-  })
-
-  passport.serializeUser((user, cb) => cb(null, user))
-  passport.deserializeUser((user, cb) => cb(null, user))
-
-  return {
-    authenticate: async (ctx, next) => {
-      console.info('Authentication callback')
-      return passport.authenticate('oidc')(ctx, next)
-    },
-
-    /**
-     * If /login is called without a 'redirect'
-     * query param, then the result is 'undefined' as
-     * a string, which needs to be parsed to be read
-     * as undefined as a JavaScript value
-     */
-    login: async (ctx, next) => {
-      console.info('User login')
-      return passport.authenticate('oidc', {
-        scope: SAEON_AUTH_CLIENT_SCOPES,
-        state: base64url(
-          JSON.stringify({
-            redirect: ctx.request.query.redirect
-              ? ctx.request.query.redirect == 'undefined'
-                ? `${NCCRD_HOSTNAME}`
-                : ctx.request.query.redirect
-              : NCCRD_HOSTNAME,
+              logSql(sql, 'Authenticate user')
+              const result = await query(sql)
+              const user = result.recordset[0]
+              cb(null, user)
+            } catch (error) {
+              console.error('Error authenticating', error.message)
+              cb(error, null)
+            }
           })
-        ),
-      })(ctx, next)
-    },
+        )
+      })
+      .catch(error => {
+        console.error('Unable to configure oauth2 oidc strategy', error)
+      })
+
+    passport.serializeUser((user, cb) => cb(null, user))
+    passport.deserializeUser((user, cb) => cb(null, user))
+
+    return {
+      authenticate: async (ctx, next) => {
+        console.info('Authentication callback')
+        return passport.authenticate('oidc')(ctx, next)
+      },
+
+      /**
+       * If /login is called without a 'redirect'
+       * query param, then the result is 'undefined' as
+       * a string, which needs to be parsed to be read
+       * as undefined as a JavaScript value
+       */
+      login: async (ctx, next) => {
+        console.info('User login')
+        return passport.authenticate('oidc', {
+          scope: SAEON_AUTH_CLIENT_SCOPES,
+          state: base64url(
+            JSON.stringify({
+              redirect: ctx.request.query.redirect
+                ? ctx.request.query.redirect == 'undefined'
+                  ? `${NCCRD_HOSTNAME}`
+                  : ctx.request.query.redirect
+                : NCCRD_HOSTNAME,
+            })
+          ),
+        })(ctx, next)
+      },
+    }
+  } catch (error) {
+    console.error('Error setting up passport authentication', error)
   }
 }

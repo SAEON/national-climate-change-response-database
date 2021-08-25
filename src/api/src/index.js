@@ -46,7 +46,11 @@ const reactClient = new Koa()
 reactClient.use(serve(SPA_PATH))
 
 const staticSpaMiddleware = async (ctx, next) => {
-  return await serve(SPA_PATH)(Object.assign(ctx, { path: 'index.html' }), next)
+  try {
+    return await serve(SPA_PATH)(Object.assign(ctx, { path: 'index.html' }), next)
+  } catch (error) {
+    console.error('Error setting up static SPA middleware', error)
+  }
 }
 
 // Configure api
@@ -95,7 +99,10 @@ app
 const httpServer = createServer(app.callback())
 
 // Configure Apollo server
-apolloServer.start().then(() => apolloServer.applyMiddleware({ app: app, cors: false }))
+apolloServer
+  .start()
+  .then(() => apolloServer.applyMiddleware({ app: app, cors: false }))
+  .catch(error => console.error('Unable to start Apollo server', error))
 
 // Start public HTTP server
 httpServer.listen(NCCRD_PORT, () => {

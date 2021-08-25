@@ -1,4 +1,4 @@
-import { makeExecutableSchema } from 'graphql-tools'
+import { makeExecutableSchema } from '@graphql-tools/schema'
 import { graphqlSync } from 'graphql'
 import { print } from 'graphql/language/printer.js'
 import { gql } from 'apollo-server-koa'

@@ -47,8 +47,6 @@ export default () => {
           response_types: ['code'],
         })
 
-        console.info('Auth client created', client)
-
         passport.use(
           'oidc',
           new Strategy({ client }, async (tokenSet, userInfo, cb) => {
@@ -131,20 +129,15 @@ export default () => {
     passport.deserializeUser((user, cb) => cb(null, user))
 
     return {
-      authenticate: async (ctx, next) => {
-        console.info('Authentication callback')
-        return passport.authenticate('oidc')(ctx, next)
-      },
-
+      authenticate: async (ctx, next) => passport.authenticate('oidc')(ctx, next),
       /**
        * If /login is called without a 'redirect'
        * query param, then the result is 'undefined' as
        * a string, which needs to be parsed to be read
        * as undefined as a JavaScript value
        */
-      login: async (ctx, next) => {
-        console.info('User login')
-        return passport.authenticate('oidc', {
+      login: async (ctx, next) =>
+        passport.authenticate('oidc', {
           scope: SAEON_AUTH_CLIENT_SCOPES,
           state: base64url(
             JSON.stringify({
@@ -155,8 +148,7 @@ export default () => {
                 : NCCRD_HOSTNAME,
             })
           ),
-        })(ctx, next)
-      },
+        })(ctx, next),
     }
   } catch (error) {
     console.error('Error setting up passport authentication', error)

@@ -40,7 +40,7 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
 Setup the repository for development on a local machine. The Node.js and React services are run using a local installation of Node.js, and dependent services (SQL Server) are run via Docker containers
 
 ## System requirements
- 
+
 1. Docker Desktop
 2. Node.js **node:^16**
 
@@ -97,13 +97,16 @@ Several mechanisms are available to deploy this project from source code:
 4. Package the API and client into a single executable that can be started on any server
 
 ## Configuration
+
 #### NCCRD_SSL_ENV
+
 - `production`
 - `development`
 
 "production" is for deployment behind an SSL-offloading proxy server. In this case, incoming requests MUST have the X-Forwarded-Proto header explicitly set to "https", otherwise all server requests will fail
 
 #### NCCRD_DEPLOYMENT_ENV
+
 - `production`
 - `development`
 
@@ -116,6 +119,7 @@ In development mode:
 - A number of helpful, but expensive, developer checks are performed that will greatly slow down the application (both API and client)
 
 #### Other vars
+
 ... Please let me know if more detail is required for other variables
 
 ## Proxy headers
@@ -224,6 +228,7 @@ Executables for Mac, Linux and Windows will be placed in the `binaries/` folder.
 Binary executables are built automatically for Windows, Max, and Linux every time a tag is added to the repository. Download the latest version of the built application from [the releases page](https://github.com/SAEON/national-climate-change-systems/releases), and start the executable from a terminal. The examples below show how to start the application with the correct SQL Server configuration (and other configurable properties). Alternatively, placing a `.env` file in the same folder as the executable will result in configuring the application on startup.
 
 ## With a configuration file
+
 It should be possible to specify configuration in a `.env` file in the same directory as the executable. Add configuration values to the file in the format below and then start the executable. (NOTE there is currently a bug on Windows Server 2019 where the configuration file is NOT read, in this case specify configuration as part of a Powershell script).
 
 ```txt
@@ -286,7 +291,8 @@ $env:SAEON_AUTH_CLIENT_SECRET="<secret>";
 ```
 
 ### Installing the executable as a Windows service
-Please see the [Windows platform installation instructions](platform/windows/) for installing the NCCRD as a service (i.e. it will start on server startup, and also restart on error). 
+
+Please see the [Windows platform installation instructions](platform/windows/) for installing the NCCRD as a service (i.e. it will start on server startup, and also restart on error).
 
 # System migrations
 

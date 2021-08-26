@@ -12,6 +12,10 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
   - [Install source code and dependencies](#install-source-code-and-dependencies)
   - [Local development](#local-development)
 - [Deployment](#deployment)
+  - [Configuration](#configuration)
+      - [NCCRD_SSL_ENV](#nccrd_ssl_env)
+      - [NCCRD_DEPLOYMENT_ENV](#nccrd_deployment_env)
+      - [Other vars](#other-vars)
   - [Proxy headers](#proxy-headers)
   - [Deploy bundled API + client](#deploy-bundled-api--client)
   - [Deploy as Docker image](#deploy-as-docker-image)
@@ -64,7 +68,7 @@ npm run install-dependencies
 ```sh
 # Start a SQL Server instance (manually create the database)
   docker run \
-  --name sql-server-express \
+  --name sql-server \
   --restart always \
   -v /home/$USER:/host-mnt \
   -e 'ACCEPT_EULA=Y' \
@@ -92,6 +96,28 @@ Several mechanisms are available to deploy this project from source code:
 3. Use Docker-compose to setup a deployment that includes the API, client, and Sql Server
 4. Package the API and client into a single executable that can be started on any server
 
+## Configuration
+#### NCCRD_SSL_ENV
+- `production`
+- `development`
+
+"production" is for deployment behind an SSL-offloading proxy server. In this case, incoming requests MUST have the X-Forwarded-Proto header explicitly set to "https", otherwise all server requests will fail
+
+#### NCCRD_DEPLOYMENT_ENV
+- `production`
+- `development`
+
+In development mode:
+
+- Configuration secrets are logged in plain text to make debugging easier for the API
+- The client configuration is logged (in production mode the client configuration is not logged at all)
+- JavaScript code is NOT minified to make debugging easier
+- Webpack bundling is run in development mode (the web client will theoretically be less responsive in this case)
+- A number of helpful, but expensive, developer checks are performed that will greatly slow down the application (both API and client)
+
+#### Other vars
+... Please let me know if more detail is required for other variables
+
 ## Proxy headers
 
 When deployed behind a proxy, the following headers need to be set by the public-facing webserver explicitly:
@@ -114,7 +140,7 @@ The easiest way to deploy the application from source code is to serve the React
 
 Refer to this [this Nginx configuration file](platform/centos/nginx/nginx.conf) and [this Nginx server block](platform/centos/nginx/nccrd.conf) for an example of how to configure a webserver to set caching headers and compress static files. [IIS configuration instructions](platform/windows/README.md) are also included.
 
-To start this app in a production environment:
+To start this application from source code:
 
 ```sh
 # Install Node.js 14.17 on the server (https://nodejs.org/en/)
@@ -151,7 +177,7 @@ docker run \
   -e 'NCCRD_DEPLOYMENT_ENV=development' \
   -e 'FILES_DIRECTORY=' \
   -e 'NCCRD_SSL_ENV=development' \
-  -e 'MSSQL_HOSTNAME=sql-server-express' \
+  -e 'MSSQL_HOSTNAME=sql-server' \
   -e 'MSSQL_USERNAME=sa' \
   -e 'MSSQL_PASSWORD=password!123#' \
   -e 'MSSQL_DATABASE=nccrd' \
@@ -161,8 +187,6 @@ docker run \
   -e 'NCCRD_CLIENT_DEFAULT_NOTICES=Welcome to the National Climate Change Response Database!,info' \
   -p 3000:3000 \
   -d nccrd
-
-# NCCRD_SSL_ENV=production is for deployment behind an SSL-offloading proxy server
 ```
 
 ## Deploy from published Docker image
@@ -231,7 +255,7 @@ MSSQL_USERNAME='sa' \
 FILES_DIRECTORY= \
 NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES='' \
 NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES='' \
-NCCRD_DEPLOYMENT_ENV='production' \
+NCCRD_DEPLOYMENT_ENV='development' \
 NCCRD_SSL_ENV='development' \
 NCCRD_HOSTNAME='http://localhost:3000' \
 NCCRD_PORT=3000 \

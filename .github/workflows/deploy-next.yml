@@ -23,4 +23,5 @@ jobs:
           SAEON_AUTH_CLIENT_SECRET="${{ secrets.SAEON_AUTH_CLIENT_SECRET}}"
           NCCRD_HOSTNAME="https://nccrd.saeon.ac.za"
           MSSQL_PID="Express"
+          NCCRD_API_ALLOWED_ORIGINS=https://192.168.100.110,https://154.114.33.110,https://nccrd.environment.gov.za
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

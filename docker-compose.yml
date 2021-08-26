@@ -29,6 +29,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
+        NCCRD_API_ALLOWED_ORIGINS: $NCCRD_API_ALLOWED_ORIGINS
         LOG_REQUEST_DETAILS: $LOG_REQUEST_DETAILS
         FILES_DIRECTORY: $FILES_DIRECTORY
         LOG_SQL_QUERIES: $LOG_SQL_QUERIES

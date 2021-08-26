@@ -38,10 +38,7 @@ export default () => {
           transition to a low carbon economy and climate-resilient society. The country is projected
           to face a higher frequency of climate-related disasters that are increasing in intensity,
           and these events are likely to be associated with impacts that are on par with, if not
-          worse than those already experienced. The country is projected to face a higher frequency
-          of climate related disasters that are increasing in intensity, and these events are likely
-          to be associated with impacts that are on par with, if not worse than those already
-          experienced. The National Climate Change Response Database (NCCRD) is intended as a
+          worse than those already experienced. The National Climate Change Response Database (NCCRD) is intended as a
           resource to collect and track interventions on climate change (adaptation and mitigation)
           on past, current and future climate change response efforts (policies, plans, strategies,
           projects and research) across South Africa.

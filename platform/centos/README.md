@@ -191,11 +191,13 @@ usermod -a -G docker runner
 # Allow runner sudo access to a single script
 visudo
 
-# Make sure these lines exists towards the bottom of the file
+# Make sure this lines exists towards the bottom of the file
 runner ALL=NOPASSWD: /home/runner/svc.sh
+
+# Sometimes it seems that .NET core dependencies need to be installed explicitly by the runner. So you may have to add this
 runner ALL=NOPASSWD: /home/runner/bin/installdependencies.sh
 
-# NOTE - after installing the runner, once CD is working, revoke this access!
+# NOTE - after installing the runner, once CD is working, revoke any sudo access!!
 ```
 
 ### Configure GitHub to use this runner

@@ -4,17 +4,13 @@ networks:
   nccs_default:
     name: $NCCRD_DOCKER_NETWORK
 
-volumes:
-  sql-server:
-    driver: local
-
 services:
-  sql-server-express:
-    container_name: sql-server-express
+  sql-server:
+    container_name: sql-server
     restart: always
     image: $MSSQL_IMAGE
     volumes: 
-      - sql-server:/var/opt/mssql
+      - /opt/sql:/var/opt/mssql
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: $MSSQL_SA_PASSWORD
@@ -52,6 +48,6 @@ services:
     ports:
       - 3000:3000
     depends_on: 
-      - sql-server-express
+      - sql-server
     networks: 
       - $NCCRD_DOCKER_NETWORK

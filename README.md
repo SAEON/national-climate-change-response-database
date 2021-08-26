@@ -40,7 +40,7 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
 Setup the repository for development on a local machine. The Node.js and React services are run using a local installation of Node.js, and dependent services (SQL Server) are run via Docker containers
 
 ## System requirements
-
+ 
 1. Docker Desktop
 2. Node.js **node:^16**
 

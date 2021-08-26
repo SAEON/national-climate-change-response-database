@@ -5,30 +5,25 @@ on:
     branches:
       - stable
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-
 jobs:
+
   source-code:
-    runs-on: github-runner.saeon.int
+    runs-on: nccrd.environment.gov.za
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: stable
-
-  build-image:
-    runs-on: github-runner.saeon.int
-    steps:
-      - name: Build Docker image
-        run: >
-          docker image build -t nccrd -f Dockerfile .
-          --build-arg SAEON_AUTH_CLIENT_SECRET="${{ secrets.SAEON_AUTH_CLIENT_SECRET}}"
-          --build-arg NCCRD_HOSTNAME="https://nccrd.environment.gov.za"
+          ref: stable  
 
   deploy:
-    runs-on: github-runner.saeon.int
+    needs: [source-code]
+    runs-on: nccrd.environment.gov.za
     steps:
-      - name: Deploy image
-        run: |
-          echo hi there
+      - name: Deploy services
+        run: >-
+          SAEON_AUTH_CLIENT_SECRET="${{ secrets.SAEON_AUTH_CLIENT_SECRET}}"
+          NCCRD_HOSTNAME="https://nccrd.environment.gov.za"
+          MSSQL_SA_PASSWORD="${{ secrets.MSSQL_PASSWORD}}"
+          MSSQL_USERNAME="${{ secrets.MSSQL_USERNAME}}"
+          MSSQL_PASSWORD="${{ secrets.MSSQL_PASSWORD}}"        
+          MSSQL_PID="Express"
+          /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

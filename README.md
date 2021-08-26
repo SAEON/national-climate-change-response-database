@@ -42,12 +42,12 @@ Setup the repository for development on a local machine. The Node.js and React s
 ## System requirements
 
 1. Docker Desktop
-2. Node.js **node:^14.17** (Versions lower than **node:14.13** will not work)
+2. Node.js **node:^16**
 
 ```sh
-# Make sure that Node.js ^node:14.17 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+# Make sure that Node.js ^node:16 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 # Assuming an Ubuntu Linux environment
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings
 sudo apt-get install -y nodejs
 ```
@@ -143,7 +143,7 @@ Refer to this [this Nginx configuration file](platform/centos/nginx/nginx.conf) 
 To start this application from source code:
 
 ```sh
-# Install Node.js 14.17 on the server (https://nodejs.org/en/)
+# Install Node.js 16.x on the server (https://nodejs.org/en/)
 
 # Clone the repository if not already done
 git clone ... nccrd
@@ -204,7 +204,7 @@ docker-compose --env-file docker-compose.env up -d --force-recreate --build
 ## Build an executable from the source code
 
 ```sh
-# Install Node.js 14.17x on the server (https://nodejs.org/en/)
+# Install Node.js 16.x on the server (https://nodejs.org/en/)
 
 # Clone the repository if not already done
 git clone ... nccrd

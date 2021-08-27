@@ -2,10 +2,10 @@ import { readdirSync, statSync } from 'fs'
 import { join, normalize, sep } from 'path'
 import { SUBMISSION_TEMPLATES_DIRECTORY } from '../config.js'
 import query from './query.js'
-import seedUserModel from '../graphql/resolvers/mutations/seed-database/user-model/index.js'
-import seedAdmins from '../graphql/resolvers/mutations/seed-database/admins/index.js'
-import seedSysAdmins from '../graphql/resolvers/mutations/seed-database/sysadmins/index.js'
-import { installSchema } from '../graphql/resolvers/mutations/migrate-database/_queries.js'
+import seedUserModel from './install-user-model/index.js'
+import seedAdmins from './install-admins/index.js'
+import seedSysAdmins from './install-sysadmins/index.js'
+import installSchema from './install-schema.js'
 
 /**
  * Initial schema

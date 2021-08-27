@@ -66,17 +66,18 @@ npm run install-dependencies
 ## Local development
 
 ```sh
-# Start a SQL Server instance (manually create the database)
-  docker run \
+# Start a Developer SQL Server instance (manually create the database)
+docker run \
   --name sql-server \
   --restart always \
-  -v /home/$USER:/host-mnt \
+  -v /home/$USER/sql-server-data:/var/opt/mssql \
   -e 'ACCEPT_EULA=Y' \
   -e 'SA_PASSWORD=password!123#' \
-  -e 'MSSQL_PID=Express' \
+  -e 'MSSQL_PID=Developer' \
+  -e 'MSSQL_AGENT_ENABLED=true' \
   -p 1433:1433 \
   -d \
-  mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+  mcr.microsoft.com/mssql/server:2019-latest
 
 # Start the Node.js API server in development mode
 npm run api

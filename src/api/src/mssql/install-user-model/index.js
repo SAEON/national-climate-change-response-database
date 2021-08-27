@@ -1,6 +1,6 @@
 import { join, normalize, sep } from 'path'
-import logSql from '../../../../../lib/log-sql.js'
-import getCurrentDirectory from '../../../../../lib/get-current-directory.js'
+import logSql from '../../lib/log-sql.js'
+import getCurrentDirectory from '../../lib/get-current-directory.js'
 import { createReadStream } from 'fs'
 import csv from 'csv'
 const { parse } = csv
@@ -8,7 +8,6 @@ const { parse } = csv
 const __dirname = getCurrentDirectory(import.meta)
 
 const upsertRoles = async query => {
-  console.info('Seeding roles')
   const result = []
   const rolesPath = normalize(join(__dirname, `.${sep}auth-config${sep}roles.csv`))
   const parser = createReadStream(rolesPath).pipe(parse({ columns: true }))
@@ -39,7 +38,6 @@ const upsertRoles = async query => {
 }
 
 const upsertPermissions = async query => {
-  console.info('Seeding permissions')
   const result = []
   const permissionsPath = normalize(join(__dirname, `.${sep}auth-config${sep}permissions.csv`))
   const parser = createReadStream(permissionsPath).pipe(parse({ columns: true }))
@@ -71,7 +69,6 @@ const upsertPermissions = async query => {
 }
 
 const upsertPermissionsXrefRoles = async query => {
-  console.info('Seeding role permissions')
   const result = []
   const xrefPath = normalize(join(__dirname, `.${sep}auth-config${sep}roles-x-permissions.csv`))
   const parser = createReadStream(xrefPath).pipe(parse({ columns: true }))

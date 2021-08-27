@@ -148,9 +148,7 @@ type Mutation {
     submissionStatus: JSON
     submissionComments: String
   ): Submission
-  killServer: Void
-  migrateDatabase(dropSchema: Boolean): JSON!
-  seedDatabase(userModel: Boolean, erm: Boolean, vocabularies: Boolean): JSON!
+  seedDatabase(erm: Boolean, vocabularies: Boolean): JSON!
   createSubmission: Submission!
   deleteSubmission(id: ID!): ID!
   removeSubmissionAttachments(submissionId: ID!, ids: [Int!]!): JSON!

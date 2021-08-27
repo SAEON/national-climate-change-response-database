@@ -43,7 +43,7 @@ Setup the repository for development on a local machine. The Node.js and React s
 
 1. Docker Desktop
 2. Node.js **node:^16**
-
+ 
 ```sh
 # Make sure that Node.js ^node:16 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 # Assuming an Ubuntu Linux environment

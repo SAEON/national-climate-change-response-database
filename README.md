@@ -77,7 +77,7 @@ docker run \
   -e 'MSSQL_AGENT_ENABLED=true' \
   -p 1433:1433 \
   -d \
-  mcr.microsoft.com/mssql/server:2019-latest
+  mcr.microsoft.com/mssql/server:2017-latest
 
 # Start the Node.js API server in development mode
 npm run api

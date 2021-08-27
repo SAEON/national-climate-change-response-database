@@ -25,6 +25,6 @@ jobs:
           MSSQL_SA_PASSWORD="${{ secrets.MSSQL_PASSWORD}}"
           MSSQL_USERNAME="${{ secrets.MSSQL_USERNAME}}"
           MSSQL_PASSWORD="${{ secrets.MSSQL_PASSWORD}}"        
-          MSSQL_PID="Standard"
+          MSSQL_PID="Express"
           NCCRD_API_ALLOWED_ORIGINS=https://192.168.100.110,https://154.114.33.110,https://nccrd.environment.gov.za
           /usr/local/bin/docker-compose --env-file docker-compose.env up -d --force-recreate --build

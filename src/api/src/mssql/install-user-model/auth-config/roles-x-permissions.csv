@@ -38,6 +38,7 @@ admin,view-permissions
 admin,view-roles
 admin,view-/access
 admin,view-/deployments
+dffe,update-submission
 dffe,validate-submission
 dffe,download-all-submissions
 dffe,download-submission

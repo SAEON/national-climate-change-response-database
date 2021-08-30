@@ -7,7 +7,7 @@
     "start": "nodemon --ignore 'src/client-dist/**/*' --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && TZ=utc node --trace-warnings --experimental-json-modules src'",
     "start:prod": "TZ=utc node --no-warnings --experimental-json-modules src",
     "lint": "eslint -c .eslintrc.cjs \"./**/*.{js,mjs,cjs}\"",
-    "rollup": "rimraf bin && rollup --config rollup.config.js && cp -r src/graphql/resolvers/mutations/seed-database/vocabularies/trees bin/trees && cp -r src/graphql/schema/type-defs bin/type-defs && cp -r src/mssql/user-model/auth-config bin/auth-config && cp -r src/mssql/sql bin/sql && cp src/graphql/resolvers/mutations/seed-database/erm/erm.sql bin/erm.sql && cp -r src/client-dist bin/client-dist",
+    "rollup": "rimraf bin && rollup --config rollup.config.js && cp -r src/graphql/resolvers/mutations/seed-database/vocabularies/trees bin/trees && cp -r src/graphql/schema/type-defs bin/type-defs && cp -r src/mssql/install-user-model/auth-config bin/auth-config && cp -r src/mssql/sql bin/sql && cp src/graphql/resolvers/mutations/seed-database/erm/erm.sql bin/erm.sql && cp -r src/client-dist bin/client-dist",
     "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
     "ncu": "ncu",
     "ncu -u": "ncu -u"

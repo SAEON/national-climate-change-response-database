@@ -2,8 +2,8 @@ name: deployment@stable
 
 on:
   push:
-    branches:
-      - stable
+    tags:
+      - '*'
 
 jobs:
 

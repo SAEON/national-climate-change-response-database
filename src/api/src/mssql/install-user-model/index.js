@@ -130,11 +130,7 @@ const upsertPermissionsXrefRoles = async query => {
    */
   const sql2 = `
     delete from Permissions
-    where id in (
-      select p.id
-      from Permissions p
-      where p.id not in (select permissionId from PermissionRoleXref)
-    );`
+    where id not in (select permissionId from PermissionRoleXref);`
 
   logSql(sql2, 'Remove unused permissions')
   await query(sql2)

@@ -1,8 +1,6 @@
 name,description
 seed-database,Seed the database
-kill-server,Stop the server with a non-zero access code
 upload-template,Upload Excel submission template
-migrate-database,Run database migrations
 change-submission-owner,"Change submission's owner"
 create-submission,Create a new submission
 delete-submission,Delete a submission

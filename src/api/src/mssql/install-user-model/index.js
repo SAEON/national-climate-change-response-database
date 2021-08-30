@@ -7,7 +7,7 @@ const { parse } = csv
 
 const __dirname = getCurrentDirectory(import.meta)
 
-const upsertRoles = async query => {
+const upsertRoles = async (query, { removeUnmatchedBySource = false } = {}) => {
   const result = []
   const rolesPath = normalize(join(__dirname, `.${sep}auth-config${sep}roles.csv`))
   const parser = createReadStream(rolesPath).pipe(parse({ columns: true }))
@@ -22,22 +22,28 @@ const upsertRoles = async query => {
           '${sanitizeSqlValue(name)}' name,
           '${sanitizeSqlValue(description)}' description
       ) s on s.name = t.name
-      when not matched then insert (name, description)
+      when not matched by target then insert (name, description)
       values (
         s.name,
         s.description
       )
-    when matched then update set
-      t.description = s.description;`
+      ${
+        removeUnmatchedBySource
+          ? `when not matched by source and (t.name = '${sanitizeSqlValue(name)}')
+             then delete`
+          : ''
+      }
+      when matched then update set
+        t.description = s.description;`
 
-    logSql(sql, 'Upsert roles')
+    logSql(sql, `Upsert roles (removeUnmatchedBySource: ${removeUnmatchedBySource})`)
     await query(sql)
     result.push({ addedRole: name })
   }
   return result
 }
 
-const upsertPermissions = async query => {
+const upsertPermissions = async (query, { removeUnmatchedBySource = false } = {}) => {
   const result = []
   const permissionsPath = normalize(join(__dirname, `.${sep}auth-config${sep}permissions.csv`))
   const parser = createReadStream(permissionsPath).pipe(parse({ columns: true }))
@@ -58,8 +64,14 @@ const upsertPermissions = async query => {
         s.name,
         s.description
       )
-    when matched then update set
-      t.description = s.description;`
+      ${
+        removeUnmatchedBySource
+          ? `when not matched by source and (t.name = '${sanitizeSqlValue(name)}')
+             then delete`
+          : ''
+      }      
+      when matched then update set
+        t.description = s.description;`
 
     logSql(sql, 'Upsert permissions')
     await query(sql)
@@ -68,6 +80,15 @@ const upsertPermissions = async query => {
   return result
 }
 
+/**
+ * This function will also clean up roles
+ * and permissions that have been removed
+ * from the CSV file.
+ *
+ * This needs to happen here since roles
+ * and permissions have to be deleted after
+ * the xref tables inserts are deleted
+ */
 const upsertPermissionsXrefRoles = async query => {
   const result = []
   const xrefPath = normalize(join(__dirname, `.${sep}auth-config${sep}roles-x-permissions.csv`))
@@ -86,16 +107,38 @@ const upsertPermissionsXrefRoles = async query => {
               permission
             )}') permissionId
         ) s on s.roleId = t.roleId and s.permissionId = t.permissionId
-        when not matched then insert (roleId, permissionId)
+        when not matched by target then insert (roleId, permissionId)
         values (
           s.roleId,
           s.permissionId
-        );`
+        )
+        when not matched by source
+          and (t.roleId = ( select id from Roles where name = '${sanitizeSqlValue(role)}' ))
+          and (t.permissionId = ( select id from Permissions where name = '${sanitizeSqlValue(
+            permission
+          )}' ))
+        then delete;`
 
     logSql(sql, 'upsert role-permission')
     await query(sql)
     result.push({ addedRoleXrefPermission: [role, permission] })
   }
+
+  /**
+   * Clean up permissions by deleting all permissions that
+   * are not assigned to at least one role
+   */
+  const sql2 = `
+    delete from Permissions
+    where id in (
+      select p.id
+      from Permissions p
+      where p.id not in (select permissionId from PermissionRoleXref)
+    );`
+
+  logSql(sql2, 'Remove unused permissions')
+  await query(sql2)
+
   return result
 }
 

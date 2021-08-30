@@ -7,12 +7,10 @@ export default {
   viewRoles: 'view-roles',
   viewUsers: 'view-users',
   assignRole: 'assign-role',
-  migrateDatabase: 'migrate-database',
   seedDatabase: 'seed-database',
   uploadTemplate: 'upload-template',
   validateSubmission: 'validate-submission',
   viewSubmissionTemplates: 'view-submission-templates',
-  killServer: 'kill-server',
   attachFileToSubmission: 'attach-file-to-submission',
   downloadSubmission: 'download-submission',
 

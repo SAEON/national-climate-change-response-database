@@ -8,8 +8,8 @@ export default (sql, name, force = false) => {
     try {
       console.info(
         timestamp,
-        `\n===== SQL # ${name || 'anonymous'}`,
-        `\n\n${format(sql, { language: 'tsql' })}\n`
+        `\n\n===== SQL # ${name || 'anonymous'}`,
+        `\n${format(sql, { language: 'tsql' })}\n`
       )
     } catch (error) {
       console.error('Unable to format SQL (I think this is a bug with the sql-formatter library)')

@@ -42,15 +42,6 @@ export default ({ users }) => {
             <DataGrid
               pageSize={25}
               rowHeight={theme.spacing(5)}
-              rows={users.map(({ id, emailAddress, name, familyName, roles }) => {
-                return {
-                  id,
-                  emailAddress,
-                  name,
-                  familyName,
-                  roles,
-                }
-              })}
               columns={[
                 {
                   field: 'id',
@@ -60,9 +51,8 @@ export default ({ users }) => {
                   headerName: 'ID',
                   width: 50,
                 },
-                { field: 'emailAddress', headerName: 'Email Address', flex: 0.5 },
+                { field: 'emailAddress', headerName: 'Email Address', flex: 0.7 },
                 { field: 'name', headerName: 'Name', flex: 0.5 },
-                { field: 'familyName', headerName: 'Family name', flex: 0.5 },
                 {
                   field: 'roles',
                   headerName: 'Roles',
@@ -101,6 +91,14 @@ export default ({ users }) => {
                   },
                 },
               ]}
+              rows={users.map(({ id, emailAddress, name, roles }) => {
+                return {
+                  id,
+                  emailAddress,
+                  name,
+                  roles,
+                }
+              })}
               checkboxSelection
             />
           </div>

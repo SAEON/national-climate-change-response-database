@@ -2,12 +2,10 @@ role,permission
 sysadmin,download-all-submissions
 sysadmin,download-submission
 sysadmin,attach-file-to-submission
-sysadmin,kill-server
 sysadmin,view-submission-templates
 sysadmin,validate-submission
 sysadmin,upload-template
 sysadmin,seed-database
-sysadmin,migrate-database
 sysadmin,change-submission-owner
 sysadmin,create-submission
 sysadmin,delete-submission

@@ -25,7 +25,8 @@
     "softprops",
     "srvany",
     "stdio",
-    "terrestris"
+    "terrestris",
+    "tsql"
   ],
   "eslint.workingDirectories": ["src/api", "src/client"]
 }

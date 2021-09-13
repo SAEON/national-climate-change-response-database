@@ -1,7 +1,6 @@
 name,description
 seed-database,Seed the database
 upload-template,Upload Excel submission template
-change-submission-owner,"Change submission's owner"
 create-submission,Create a new submission
 delete-submission,Delete a submission
 update-submission,Update a submission

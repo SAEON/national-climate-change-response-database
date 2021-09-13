@@ -6,7 +6,6 @@ sysadmin,view-submission-templates
 sysadmin,validate-submission
 sysadmin,upload-template
 sysadmin,seed-database
-sysadmin,change-submission-owner
 sysadmin,create-submission
 sysadmin,delete-submission
 sysadmin,update-submission
@@ -24,7 +23,6 @@ admin,attach-file-to-submission
 admin,view-submission-templates
 admin,validate-submission
 admin,upload-template
-admin,change-submission-owner
 admin,create-submission
 admin,delete-submission
 admin,update-submission

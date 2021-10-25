@@ -57,4 +57,4 @@ jobs:
 
       - name: test previous
         run: |
-          echo ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build.outputs.tags }}
+          echo ${{ needs.build.outputs.tags }}

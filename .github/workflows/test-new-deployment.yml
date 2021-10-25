@@ -1,21 +1,25 @@
 name: build@14
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: saeon/nccrd
+  BRANCH_REF: test-new-deployment
+
 on:
   push:
     branches:
-      - test-new-deployment
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: saeon/nccrd  
+      - ${{ env.BRANCH_REF }}
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+    outputs:
+      image: ${{steps.image.outputs.digest}}  
     steps:
-      - uses: SAEON/checkout@v2
+      - name: Check out source code (shared) 
+        uses: SAEON/checkout@v2
         with:
-          ref: test-new-deployment
+          ref: ${{ env.BRANCH_REF }}
 
       - name: Log in to the Container registry
         if: github.event_name != 'pull_request'
@@ -34,9 +38,23 @@ jobs:
             type=sha
 
       - name: Build and push
+        id: image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    needs: [build]
+    runs-on: github-runner.saeon.int
+    steps:
+      - name: Check out source code (int)
+        uses: SAEON/checkout@v2
+        with:
+          ref: ${{ env.BRANCH_REF }}
+
+      - name: test previous
+        run: |
+          echo ${{ needs.build.outputs.image }}

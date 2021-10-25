@@ -14,7 +14,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      image: ${{steps.image.outputs.digest}}  
+      image: ${{ steps.image.outputs.digest }}
+      metadata: ${{ steps.image.outputs.metadata }}
     steps:
       - name: Check out source code (shared) 
         uses: SAEON/checkout@v2
@@ -58,3 +59,4 @@ jobs:
       - name: test previous
         run: |
           echo ${{ needs.build.outputs.image }}
+          echo ${{ needs.build.outputs.metadata }}

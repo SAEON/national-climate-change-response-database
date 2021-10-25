@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: nccrd  
+  IMAGE_NAME: saeon/nccrd  
 
 jobs:
   deploy:

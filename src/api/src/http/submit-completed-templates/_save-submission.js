@@ -11,7 +11,7 @@ export default async (userId, { project, mitigation = {}, adaptation = {} }) => 
         '${sanitizeSqlValue(JSON.stringify(adaptation))}' adaptation,
         1 isSubmitted,
         '${sanitizeSqlValue(JSON.stringify({ term: 'Pending' }))}' submissionStatus,
-        ${userId} createdBy,
+        '${sanitizeSqlValue(userId)}'' createdBy,
         '${new Date().toISOString()}' createdAt
     ) s on t.id = null
     when not matched then insert (

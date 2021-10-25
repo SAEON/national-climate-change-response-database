@@ -20,13 +20,8 @@ export default ({ id }) => {
           history.push('/')
         }
       },
-      update: cache => {
-        cache.modify({
-          fields: {
-            submission: () => undefined,
-          },
-        })
-      },
+      update: (cache, { data: { deleteSubmission: id } }) =>
+        cache.evict({ id: `Submission:${id}` }),
     }
   )
 

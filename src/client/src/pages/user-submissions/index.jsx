@@ -54,6 +54,7 @@ export default () => {
       }
     `,
     {
+      fetchPolicy: 'network-only',
       variables: {
         id: parseInt(id, 10),
       },

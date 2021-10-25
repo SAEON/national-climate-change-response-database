@@ -52,7 +52,7 @@ export default async ctx => {
       '${sanitizeSqlValue(name)}',
       '${sanitizeSqlValue(filePath)}',
       '${sanitizeSqlValue(submissionId)}',
-      ${user.info(ctx).id},
+      '${sanitizeSqlValue(user.info(ctx).id)}',
       '${new Date().toISOString()}'
     );`
 

@@ -15,14 +15,8 @@ export default ({ id, createdBy }) => {
       }
     `,
     {
-      update: (cache, { data: { deleteSubmission: deletedId } }) => {
-        cache.modify({
-          fields: {
-            submissions: (existingSubmissions = [], { readField }) =>
-              existingSubmissions.filter(p => readField('id', p) !== deletedId),
-          },
-        })
-      },
+      update: (cache, { data: { deleteSubmission: deletedId } }) =>
+        cache.evict({ id: `Submission:${deletedId}` }),
     }
   )
 

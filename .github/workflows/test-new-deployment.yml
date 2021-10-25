@@ -1,14 +1,14 @@
 name: build@14
 
+on:
+  push:
+    branches:
+      - test-new-deployment
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: saeon/nccrd
   BRANCH_REF: test-new-deployment
-
-on:
-  push:
-    branches:
-      - ${{ env.BRANCH_REF }}
 
 jobs:
   build:

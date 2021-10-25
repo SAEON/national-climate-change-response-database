@@ -14,7 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      tags: ${{ steps.meta.output.tags }}
+      tags: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Check out source code (shared) 
         uses: SAEON/checkout@v2

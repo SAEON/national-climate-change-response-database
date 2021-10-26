@@ -23,24 +23,22 @@ services:
     volumes:
       - nccrd_stable:/nccrd-assets
     environment:
-        NCCRD_API_ALLOWED_ORIGINS: $NCCRD_API_ALLOWED_ORIGINS
-        LOG_REQUEST_DETAILS: $LOG_REQUEST_DETAILS
-        FILES_DIRECTORY: $FILES_DIRECTORY
-        LOG_SQL_QUERIES: $LOG_SQL_QUERIES
-        NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES: $NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES
-        NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES: $NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES
-        SAEON_AUTH_CLIENT_ID: $SAEON_AUTH_CLIENT_ID
-        SAEON_AUTH_CLIENT_SCOPES: $SAEON_AUTH_CLIENT_SCOPES
-        SAEON_AUTH_CLIENT_SECRET: $SAEON_AUTH_CLIENT_SECRET
-        NCCRD_HOSTNAME: $NCCRD_HOSTNAME
-        NCCRD_DEPLOYMENT_ENV: $NCCRD_DEPLOYMENT_ENV
-        NCCRD_SSL_ENV: $NCCRD_SSL_ENV
-        MSSQL_USERNAME: $MSSQL_USERNAME
+        FILES_DIRECTORY: /nccrd-assets
+        LOG_REQUEST_DETAILS: 'false'
+        LOG_SQL_QUERIES: 'false'
+        MSSQL_DATABASE: nccrd_stable
+        MSSQL_HOSTNAME: mssql.saeon.int
         MSSQL_PASSWORD: $MSSQL_PASSWORD
-        MSSQL_HOSTNAME: $MSSQL_HOSTNAME
-        MSSQL_DATABASE: $MSSQL_DATABASE
-        MSSQL_PORT: $MSSQL_PORT
+        MSSQL_PORT: 3433
+        MSSQL_USERNAME: $MSSQL_USERNAME
+        NCCRD_API_ALLOWED_ORIGINS: https://nccrd.environment.gov.za
+        NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES: 'TMakholela@environment.gov.za,tmakholela@yahoo.com,rditlopo@environment.gov.za'
+        NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
+        NCCRD_DEPLOYMENT_ENV: production
+        NCCRD_HOSTNAME: https://nccrd.environment.gov.za
+        NCCRD_SSL_ENV: production
+        SAEON_AUTH_CLIENT_SECRET: $SAEON_AUTH_CLIENT_SECRET
     ports:
-      - 9000:3000
+      - 10000:3000
     networks:
       - nccrd_stable

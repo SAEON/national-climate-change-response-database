@@ -80,6 +80,7 @@ jobs:
             echo "NCCRD_IMAGE=${{ needs.build.outputs.tags }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
             echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
             echo "MSSQL_SA_PASSWORD=${{ secrets.MSSQL_SA_PASSWORD }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
+            echo "MSSQL_PORT=2433" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
             echo "MSSQL_USERNAME=${{ secrets.MSSQL_USERNAME }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
             echo "MSSQL_PASSWORD=${{ secrets.MSSQL_PASSWORD }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
             echo "NCCRD_API_ALLOWED_ORIGINS=https://nccrd.saeon.ac.za" >> /home/runner/nccrd-next/deploy/next/docker-compose.env

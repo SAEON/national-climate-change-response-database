@@ -173,36 +173,40 @@ firewall-cmd --reload
 ```
 
 ## Setup continuous deployment via GitHub Actions
-
-This actually involves two things:
-
-1. Installing & configuring a self-hosted GitHub actions runner on your server
-2. Creating a workflow file in the source code repository to use the runner
-
-### Install GitHub actions runner
+On the deployment server, create a limited permissions user called `runner`
 
 ```sh
-# Create a passwordless 'runner' user
-ssh <user>@<hostname>
 sudo su
 adduser runner
-usermod -a -G docker runner
-
-# Allow runner sudo access to a single script
-visudo
-
-# Make sure this lines exists towards the bottom of the file
-runner ALL=NOPASSWD: /home/runner/svc.sh
-
-# Sometimes it seems that .NET core dependencies need to be installed explicitly by the runner. So you may have to add this
-runner ALL=NOPASSWD: /home/runner/bin/installdependencies.sh
-
-# NOTE - after installing the runner, once CD is working, revoke any sudo access!!
+passwd runner # Enter a strong password, and add this password as a repository secret
 ```
 
-### Configure GitHub to use this runner
+The `runner` user needs to be able to run `docker`, but should not be in the `docker` group
 
-Create a workflow file in the .github/workflows directory in this repository. Use the `stable.yml` file as a reference
+```sh
+visudo
+
+# Add this line to the bottom of the visudo file
+runner ALL=NOPASSWD: /opt/deploy-docker-stack.sh
+```
+
+Create the deploy script `/opt/deploy-docker-stack.sh` with the following content
+
+```sh
+#!/bin/sh
+echo "Deploying stack: $2"
+echo "Compose file: $1"
+
+export $(cat docker-compose.env) > /dev/null 2>&1;
+docker stack deploy -c $1 $2
+```
+
+Make sure the script has the correct permissions
+
+```sh
+chown root /opt/deploy-docker-stack.sh 
+chmod 755 /opt/deploy-docker-stack.sh
+```
 
 ## Disable SELinux (or configure it correctly)
 

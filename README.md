@@ -64,10 +64,13 @@ npm run install-dependencies
 ```
 
 ## Local development
-
 ```sh
+# Create a Docker network
+docker network create --driver bridge nccrd
+
 # Start a Developer SQL Server instance (manually create the database)
 docker run \
+  --net=nccrd \
   --name sql-server \
   --restart always \
   -v /home/$USER/sql-server-data:/var/opt/mssql \

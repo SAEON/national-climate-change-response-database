@@ -1,36 +1,28 @@
 version: '3.8'
 
+volumes:
+  nccrd_next:
+    driver: local
+
 networks:
-  nccs_default:
-    name: $NCCRD_DOCKER_NETWORK
+  nccrd_next:
+    name: nccrd_next
+    driver: overlay
+    attachable: true    
 
 services:
-  sql-server:
-    container_name: sql-server
-    restart: always
-    image: $MSSQL_IMAGE
-    volumes: 
-      - /opt/sql:/var/opt/mssql
-    environment:
-      ACCEPT_EULA: Y
-      SA_PASSWORD: $MSSQL_SA_PASSWORD
-      MSSQL_PID: $MSSQL_PID
-      MSSQL_BACKUP_DIR: /var/opt/mssql/bak
-      MSSQL_AGENT_ENABLED: 'true'
-    ports:
-      - 1433:1433
-    networks:
-      - $NCCRD_DOCKER_NETWORK
-
   nccrd:
-    container_name: nccrd
+    image: $NCCRD_IMAGE
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: 'any'
+        delay: 5s
+        max_attempts: 3
+        window: 120s   
     volumes:
-      - /opt/nccrd-assets:/nccrd-assets
-    restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
+      - nccrd_next:/nccrd-assets
+    environment:
         NCCRD_API_ALLOWED_ORIGINS: $NCCRD_API_ALLOWED_ORIGINS
         LOG_REQUEST_DETAILS: $LOG_REQUEST_DETAILS
         FILES_DIRECTORY: $FILES_DIRECTORY
@@ -49,8 +41,6 @@ services:
         MSSQL_DATABASE: $MSSQL_DATABASE
         MSSQL_PORT: $MSSQL_PORT
     ports:
-      - 3000:3000
-    depends_on: 
-      - sql-server
-    networks: 
-      - $NCCRD_DOCKER_NETWORK
+      -9000:3000
+    networks:
+      - nccrd_next

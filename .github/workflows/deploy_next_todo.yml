@@ -1,4 +1,4 @@
-name: build@14
+name: deploy@next
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: saeon/nccrd
+  IMAGE_NAME: saeon/nccrd_next
   BRANCH_REF: test-new-deployment
 
 jobs:
@@ -42,6 +42,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
+          build-args:
+            - NCCRD_HOSTNAME: https://nccrd.saeon.ac.za
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -62,9 +64,18 @@ jobs:
           username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
           password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
           port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
-          source: "docker-compose.yml"
+          source: "deploy/next/docker-compose.yml"
           target: "nccrd-next"
 
-      - name: test previous
-        run: |
-          echo ${{ needs.build.outputs.tags }} # This works - now just run the docker-compose file against a host
+      - name: (SSH) Deploy Docker stack
+        uses: SAEON/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
+          username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
+          password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
+          port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
+          script: |
+            echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" > /home/runner/nccrd-next/deploy/next/docker-compose.env
+            echo "NCCRD_HOSTNAME=https://nccrd.saeon.ac.za" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
+            echo "NCCRD_IMAGE=${{ needs.build.outputs.tags }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
+            sudo /opt/deploy-docker-stack.sh /home/runner/nccrd-next/deploy/next/docker-compose.yml /home/runner/nccrd-next/deploy/next/docker-compose.env nccrd_next

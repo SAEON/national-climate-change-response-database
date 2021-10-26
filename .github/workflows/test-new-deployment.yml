@@ -55,6 +55,16 @@ jobs:
         with:
           ref: ${{ env.BRANCH_REF }}
 
+      - name: (SCP) Copy Docker files to app server
+        uses: SAEON/scp-action@master
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
+          username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
+          password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
+          port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
+          source: "docker-compose.yml"
+          target: "nccrd-next"
+
       - name: test previous
         run: |
-          echo ${{ needs.build.outputs.tags }}
+          echo ${{ needs.build.outputs.tags }} # This works - now just run the docker-compose file against a host

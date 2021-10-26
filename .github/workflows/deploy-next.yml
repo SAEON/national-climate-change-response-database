@@ -75,15 +75,8 @@ jobs:
           password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
           port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
           script: |
-            echo "LOG_REQUEST_DETAILS=false" > /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "MSSQL_HOSTNAME=mssql.saeon.int" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "MSSQL_PASSWORD=${{ secrets.MSSQL_PASSWORD }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
+            echo "MSSQL_PASSWORD=${{ secrets.MSSQL_PASSWORD }}" > /home/runner/nccrd-next/deploy/next/docker-compose.env
             echo "MSSQL_USERNAME=${{ secrets.MSSQL_USERNAME }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "NCCRD_API_ALLOWED_ORIGINS=https://nccrd.saeon.ac.za" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES=zd.smith@saeon.nrf.ac.za" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "NCCRD_DEPLOYMENT_ENV=production" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "NCCRD_HOSTNAME=https://nccrd.saeon.ac.za" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
             echo "NCCRD_IMAGE=${{ needs.build.outputs.tags }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "NCCRD_SSL_ENV=production" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
             echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
             sudo /opt/deploy-docker-stack.sh /home/runner/nccrd-next/deploy/next/docker-compose.yml /home/runner/nccrd-next/deploy/next/docker-compose.env nccrd_next

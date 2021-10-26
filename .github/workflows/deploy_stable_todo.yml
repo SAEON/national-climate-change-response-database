@@ -3,12 +3,12 @@ name: deploy@stable
 on:
   push:
     branches:
-      - stable_todo
+      - stable
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: saeon/nccrd_stable
-  BRANCH_REF: stable_todo
+  BRANCH_REF: stable
 
 jobs:
   build:
@@ -42,6 +42,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
+          build-args: |
+            NCCRD_HOSTNAME=https://nccrd.environment.gov.za
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -74,6 +76,11 @@ jobs:
           port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
           script: |
             echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" > /home/runner/nccrd-stable/deploy/stable/docker-compose.env
-            echo "NCCRD_HOSTNAME=https://nccrd.saeon.ac.za" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
+            echo "NCCRD_HOSTNAME=https://nccrd.environment.gov.za" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
             echo "NCCRD_IMAGE=${{ needs.build.outputs.tags }}" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
+            echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
+            echo "MSSQL_PORT=2433" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
+            echo "MSSQL_USERNAME=${{ secrets.MSSQL_USERNAME }}" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
+            echo "MSSQL_PASSWORD=${{ secrets.MSSQL_PASSWORD }}" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
+            echo "NCCRD_API_ALLOWED_ORIGINS=https://nccrd.environment.gov.za" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
             sudo /opt/deploy-docker-stack.sh /home/runner/nccrd-stable/deploy/stable/docker-compose.yml /home/runner/nccrd-stable/deploy/stable/docker-compose.env nccrd_stable

@@ -1,7 +1,7 @@
 ARG NCCRD_HOSTNAME=http://localhost:3001
 
 # Build client
-FROM node:16.7 as client
+FROM node:16.12 as client
 
 ARG NCCRD_DEPLOYMENT_ENV=production
 ARG NCCRD_CLIENT_DEFAULT_NOTICES=
@@ -23,7 +23,7 @@ RUN npm run build
 
 
 # Start API
-FROM node:16.7-alpine
+FROM node:16.12-alpine
 
 ARG SAEON_AUTH_CLIENT_ID=SAEON.NCCIS
 ENV SAEON_AUTH_CLIENT_ID=$SAEON_AUTH_CLIENT_ID

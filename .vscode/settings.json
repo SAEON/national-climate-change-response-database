@@ -7,6 +7,7 @@
     "centos",
     "containerd",
     "CSVs",
+    "dffe",
     "dhparams",
     "EPSG",
     "firewalld",
@@ -35,6 +36,7 @@
     "stdio",
     "terrestris",
     "tsql",
+    "unprepare",
     "usermod"
   ],
   "eslint.workingDirectories": ["src/api", "src/client"]

@@ -1,11 +1,11 @@
 import { NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES } from '../../config.js'
-import logSql from '../../lib/log-sql.js'
+import query from '../query.js'
 
 const DEFAULT_ADMINS = NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',')
   .filter(_ => _)
   .map(_ => _.toLowerCase())
 
-export default async query => {
+export default async () => {
   if (DEFAULT_ADMINS.length) {
     try {
       const sql = `
@@ -15,7 +15,9 @@ export default async query => {
         -- Users
         merge Users t
         using (
-          ${DEFAULT_ADMINS.map(user => `select '${user}' emailAddress`).join(' union ')}
+          ${DEFAULT_ADMINS.map(user => `select '${sanitizeSqlValue(user)}' emailAddress`).join(
+            ' union '
+          )}
         ) s on s.emailAddress = t.emailAddress
         when not matched then insert (emailAddress)
         values (s.emailAddress);
@@ -28,7 +30,7 @@ export default async query => {
           r.id roleId
           from Users u
           join Roles r on r.name = 'admin'
-          where u.emailAddress in (${DEFAULT_ADMINS.map(e => `'${e}'`).join(',')})
+          where u.emailAddress in (${DEFAULT_ADMINS.map(e => `'${sanitizeSqlValue(e)}'`).join(',')})
         ) s on s.userId = t.userId and s.roleId = t.roleId
         when not matched then insert (userId, roleId)
         values (s.userId, s.roleId);
@@ -39,7 +41,6 @@ export default async query => {
         rollback transaction ProvisionUsers
       end catch`
 
-      logSql(sql, 'Install admin users')
       await query(sql)
     } catch (error) {
       console.error('Unable to provision users', error.message)

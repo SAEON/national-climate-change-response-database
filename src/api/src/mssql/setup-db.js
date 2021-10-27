@@ -2,23 +2,27 @@ import { readdirSync, statSync } from 'fs'
 import { join, normalize, sep } from 'path'
 import { SUBMISSION_TEMPLATES_DIRECTORY } from '../config.js'
 import query from './query.js'
-import seedUserModel from './install-user-model/index.js'
+import installUserModel from './install-user-model/index.js'
 import seedAdmins from './install-admins/index.js'
 import seedSysAdmins from './install-sysadmins/index.js'
 import installSchema from './install-schema.js'
+
+const info = msg => console.info('========== MSSQL ==========', msg)
 
 /**
  * Initial schema
  */
 ;(async () => {
-  await installSchema(query).then(() => console.info('Schema created (or already exists)'))
-  await seedUserModel(query).then(() => console.info('User model seeded!'))
-  await seedAdmins(query).then(() => console.info('Admin users seeded!'))
-  await seedSysAdmins(query).then(() => console.info('System admin users seeded!'))
+  await installSchema().then(() => info('Schema created (or already exists)'))
+  await installUserModel().then(() => info('User model seeded!'))
+  await seedAdmins().then(() => info('Admin users seeded!'))
+  await seedSysAdmins().then(() => info('System admin users seeded!'))
 
   /**
    * Register existing template uploads
    * with SQL Server
+   *
+   * Not user input - query doesn't need to be sanitized
    */
   const excelTemplates = readdirSync(SUBMISSION_TEMPLATES_DIRECTORY)
   console.info('Loading existing Excel submission templates', excelTemplates)

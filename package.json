@@ -29,8 +29,7 @@
       "src/api/bin/type-defs/**/*",
       "src/api/bin/sql/**/*",
       "src/api/bin/erm.sql",
-      "src/api/bin/client-dist/**/*",
-      "src/api/bin/auth-config/**/*"
+      "src/api/bin/client-dist/**/*"
     ],
     "targets": [
       "node16-linux-x64",

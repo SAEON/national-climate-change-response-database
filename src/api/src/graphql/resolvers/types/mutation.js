@@ -18,19 +18,20 @@ const getSubmissionOwner = async id =>
   ).recordset[0].userId
 
 export default {
-  createSubmission: authorize(PERMISSIONS.createSubmission)(createSubmission),
+  createSubmission: authorize(PERMISSIONS['create-submission'])(createSubmission),
   deleteSubmission: async (...args) =>
-    authorize(PERMISSIONS.deleteSubmission, await getSubmissionOwner(args[1].id))(deleteSubmission)(
-      ...args
-    ),
-  assignUserRoles: authorize(PERMISSIONS.assignRole)(assignUserRoles),
-  seedDatabase: authorize(PERMISSIONS.seedDatabase)(seedDatabase),
-  removeSubmissionAttachments: authorize(PERMISSIONS.attachFileToSubmission)(
+    authorize(
+      PERMISSIONS['delete-submission'],
+      await getSubmissionOwner(args[1].id)
+    )(deleteSubmission)(...args),
+  assignUserRoles: authorize(PERMISSIONS['assign-role'])(assignUserRoles),
+  seedDatabase: authorize(PERMISSIONS['seed-database'])(seedDatabase),
+  removeSubmissionAttachments: authorize(PERMISSIONS['attach-file-to-submission'])(
     removeSubmissionAttachments
   ),
   saveSubmission: async (...args) =>
     authorize(
-      PERMISSIONS.updateSubmission,
+      PERMISSIONS['update-submission'],
       await getSubmissionOwner(args[1].submissionId)
     )(saveSubmission)(...args),
 }

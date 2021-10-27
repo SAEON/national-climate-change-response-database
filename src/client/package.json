@@ -11,7 +11,7 @@
     "ncu -u": "ncu -u -x @date-io/date-fns"
   },
   "keywords": [],
-  "author": "zach@saeon.ac.za",
+  "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -11,10 +11,10 @@ import submission from '../queries/submission/index.js'
 import pageInfo from '../queries/page-info/index.js'
 
 export default {
-  users: authorize(PERMISSIONS.viewUsers)(users),
-  roles: authorize(PERMISSIONS.viewRoles)(roles),
-  permissions: authorize(PERMISSIONS.viewPermissions)(permissions),
-  submissionTemplates: authorize(PERMISSIONS.viewSubmissionTemplates)(submissionTemplates),
+  users: authorize(PERMISSIONS['view-users'])(users),
+  roles: authorize(PERMISSIONS['view-roles'])(roles),
+  permissions: authorize(PERMISSIONS['view-permissions'])(permissions),
+  submissionTemplates: authorize(PERMISSIONS['view-submission-templates'])(submissionTemplates),
   submission,
   submissions,
   pageInfo,

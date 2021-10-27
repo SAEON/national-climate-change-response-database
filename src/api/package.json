@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/SAEON/national-climate-change-systems.git"
   },
-  "author": "zach@saeon.ac.za",
+  "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^8.1.0",

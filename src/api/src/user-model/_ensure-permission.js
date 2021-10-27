@@ -1,6 +1,7 @@
 import logSql from '../lib/log-sql.js'
 
 export default async (ctx, ...permissions) => {
+  console.log('permissions', permissions)
   const { query } = ctx.mssql
 
   if (!ctx.userInfo) {
@@ -19,7 +20,7 @@ export default async (ctx, ...permissions) => {
     join UserRoleXref xu on xu.roleId = xp.roleId
     join Users u on u.id = xu.userId
     where userId = ${userId}
-    and p.name in (${permissions.map(name => `'${sanitizeSqlValue(name)}'`).join(',')});`
+    and p.name in (${permissions.map(({ name }) => `'${sanitizeSqlValue(name)}'`).join(',')});`
 
   logSql(sql, 'Check user permissions')
   const result = await query(sql)

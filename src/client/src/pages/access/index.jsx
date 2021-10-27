@@ -50,7 +50,7 @@ export default () => {
     return <Loading />
   }
 
-  if (!hasPermission('view-/access')) {
+  if (!hasPermission('/access')) {
     return (
       <Wrapper>
         <AccessDenied requiredPermission="Admin" />

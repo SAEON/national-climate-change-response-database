@@ -22,10 +22,10 @@ export default () => {
     return <Loading />
   }
 
-  if (!hasPermission('view-/deployments')) {
+  if (!hasPermission('/deployments')) {
     return (
       <Wrapper>
-        <AccessDenied requiredPermission="view-/deployments" />
+        <AccessDenied requiredPermission="/deployments" />
       </Wrapper>
     )
   }

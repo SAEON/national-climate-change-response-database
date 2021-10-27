@@ -43,9 +43,9 @@ export default [
     label: 'Deployments',
     Icon: DeploymentsIcon,
     to: '/deployments',
-    requiredPermission: 'view-/deployments',
+    requiredPermission: '/deployments',
   },
   { label: 'Login', Icon: LoginIcon, to: '/login', excludeFromNav: true },
-  { label: 'Access', Icon: UsersIcon, to: '/access', requiredPermission: 'view-/access' },
+  { label: 'Access', Icon: UsersIcon, to: '/access', requiredPermission: '/access' },
   { label: 'Users', Icon: UsersIcon, to: '/users', excludeFromNav: true },
 ]

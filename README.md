@@ -1,7 +1,7 @@
 # national-climate-change-systems
 
 Suite of services - for tracking, analysing, and monitoring climate adaptation and mitigation projects
- 
+
 # README Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -13,9 +13,9 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
   - [Local development](#local-development)
 - [Deployment](#deployment)
   - [Configuration](#configuration)
-      - [NCCRD_SSL_ENV](#nccrd_ssl_env)
-      - [NCCRD_DEPLOYMENT_ENV](#nccrd_deployment_env)
-      - [Other vars](#other-vars)
+    - [NCCRD_SSL_ENV](#nccrd_ssl_env)
+    - [NCCRD_DEPLOYMENT_ENV](#nccrd_deployment_env)
+    - [Other vars](#other-vars)
   - [Proxy headers](#proxy-headers)
   - [Deploy bundled API + client](#deploy-bundled-api--client)
   - [Deploy as Docker image](#deploy-as-docker-image)
@@ -43,7 +43,7 @@ Setup the repository for development on a local machine. The Node.js and React s
 
 1. Docker
 2. Node.js **node:^16**
- 
+
 ```sh
 # Make sure that Node.js ^node:16 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 # Assuming an Ubuntu Linux environment
@@ -63,8 +63,8 @@ cd nccs
 npm run install-dependencies
 ```
 
-
 ## Local development
+
 ```sh
 # Create a Docker network
 docker network create --driver bridge nccrd

@@ -13,8 +13,6 @@
     - [Copy Nginx configuration files](#copy-nginx-configuration-files)
   - [Install and configure firewalld](#install-and-configure-firewalld)
   - [Setup continuous deployment via GitHub Actions](#setup-continuous-deployment-via-github-actions)
-    - [Install GitHub actions runner](#install-github-actions-runner)
-    - [Configure GitHub to use this runner](#configure-github-to-use-this-runner)
   - [Disable SELinux (or configure it correctly)](#disable-selinux-or-configure-it-correctly)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -173,6 +171,7 @@ firewall-cmd --reload
 ```
 
 ## Setup continuous deployment via GitHub Actions
+
 On the deployment server, create a limited permissions user called `runner`
 
 ```sh
@@ -206,7 +205,7 @@ docker stack deploy -c $1 $3
 Make sure the script has the correct permissions
 
 ```sh
-chown root /opt/deploy-docker-stack.sh 
+chown root /opt/deploy-docker-stack.sh
 chmod 755 /opt/deploy-docker-stack.sh
 ```
 

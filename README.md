@@ -67,7 +67,7 @@ npm run install-dependencies
 
 ```sh
 # Create a Docker network
-docker network create --driver bridge nccrd
+docker network create --driver bridge nccrd 
 
 # Start a Developer SQL Server instance (manually create the database)
 docker run \

@@ -29,7 +29,7 @@ services:
         MSSQL_DATABASE: nccrd_next
         MSSQL_HOSTNAME: mssql.saeon.int
         MSSQL_PASSWORD: $MSSQL_PASSWORD
-        MSSQL_PORT: 2433
+        MSSQL_PORT: 3433
         MSSQL_USERNAME: $MSSQL_USERNAME
         NCCRD_API_ALLOWED_ORIGINS: https://nccrd.saeon.ac.za
         NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES: ''

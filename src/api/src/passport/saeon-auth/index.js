@@ -1,5 +1,6 @@
 import passport from 'koa-passport'
-import query from '../../mssql/query.js'
+import { pool } from '../../mssql/pool.js'
+import mssql from 'mssql'
 import logSql from '../../lib/log-sql.js'
 import { Issuer, Strategy } from 'openid-client'
 import base64url from 'base64url'
@@ -53,20 +54,22 @@ export default () => {
             const { id_token } = tokenSet
             const { email, sub: saeonId, name } = userInfo
 
-            const userEmail = email.toLowerCase()
+            const transaction = new mssql.Transaction(await pool.connect())
+            await transaction.begin()
 
-            try {
-              const sql = `
-            begin transaction T
-            begin try
-  
-              -- Create / get user
-              with currentUser as (
+            // Create/retrieve user
+            const userQuery = new mssql.PreparedStatement(transaction)
+            userQuery.input('emailAddress', mssql.NVarChar)
+            userQuery.input('saeonId', mssql.NVarChar)
+            userQuery.input('name', mssql.NVarChar)
+            userQuery.input('id_token', mssql.NVarChar)
+            await userQuery.prepare(`
+              ;with currentUser as (
                 select
-                '${sanitizeSqlValue(userEmail)}' emailAddress,
-                '${sanitizeSqlValue(saeonId)}' saeonId,
-                '${sanitizeSqlValue(name)}' name,
-                '${sanitizeSqlValue(id_token)}' id_token
+                @emailAddress emailAddress,
+                @saeonId saeonId,
+                @name name,
+                @id_token id_token
               )
               merge Users as target
               using currentUser as source on target.emailAddress = source.emailAddress
@@ -81,43 +84,26 @@ export default () => {
                   source.saeonId,
                   source.name,
                   source.id_token
-                );
-  
-              -- Insert role
-              insert into UserRoleXref (userId, roleId)
-              select distinct
-                u.id userId,
-                ( select id from Roles r where r.name = 'public') roleId
-                from Users u
-              where
-                u.emailAddress = '${sanitizeSqlValue(userEmail)}'
-                and not exists (
-                  select 1
-                  from UserRoleXref
-                  where userId = u.id
-                );
-  
-              -- Get user back
-              select
-              *
-              from Users u
-              where saeonId = '${sanitizeSqlValue(saeonId)}'
-              for json auto, without_array_wrapper;
-  
-              commit transaction T
-            end try
-            begin catch
-                rollback transaction T
-            end catch`
+                );`)
 
-              logSql(sql, 'Authenticate user')
-              const result = await query(sql)
-              const user = result.recordset[0]
-              cb(null, user)
-            } catch (error) {
-              console.error('Error authenticating', error.message)
-              cb(error, null)
-            }
+            const userQueryResult = await userQuery.execute({
+              emailAddress: email.toLowerCase(),
+              name,
+              saeonId,
+              id_token,
+            })
+
+            await userQuery.unprepare()
+
+            console.log('result', userQueryResult)
+
+            // Commit transaction
+            await transaction.commit()
+
+            // const result = await query(sql)
+            // const user = result.recordset[0]
+            // cb(null, user)
+            cb(new Error('no user'), null)
           })
         )
       })

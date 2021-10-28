@@ -1,11 +1,11 @@
 import roles from '../../user-model/roles.js'
+import { pool } from '../pool.js'
 import mssql from 'mssql'
 
 export default async () => {
   for (const { name, description, permissions } of Object.values(roles)) {
     // Start transaction
-    const pool = await mssql.connect()
-    const transaction = new mssql.Transaction(pool)
+    const transaction = new mssql.Transaction(await pool.connect())
     await transaction.begin()
 
     // Insert roles query

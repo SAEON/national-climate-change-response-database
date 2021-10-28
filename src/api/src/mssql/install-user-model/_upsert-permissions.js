@@ -1,10 +1,10 @@
 import permissions from '../../user-model/permissions.js'
+import { pool } from '../pool.js'
 import mssql from 'mssql'
 
 export default async () => {
   for (const { name, description } of Object.values(permissions)) {
-    const pool = await mssql.connect()
-    const transaction = new mssql.Transaction(pool)
+    const transaction = new mssql.Transaction(await pool.connect())
     await transaction.begin()
 
     // Insert permissions

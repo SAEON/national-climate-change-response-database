@@ -1,22 +1,28 @@
-import logSql from '../../../lib/log-sql.js'
 import PERMISSIONS from '../../../user-model/permissions.js'
+import mssql from 'mssql'
 
 export default async (self, { id }, ctx) => {
-  const { user, mssql } = ctx
-  const { query } = mssql
+  const { user } = ctx
 
-  if (!id === user.info(ctx).id) {
+  if (!id === ctx.user.info(ctx).id) {
     console.log('User request', id, user.info(ctx).id)
     await user.ensurePermission({ ctx, permission: PERMISSIONS['view-users'] })
   }
 
-  const sql = `
-  select
-  u.*
-  from Users u
-  where u.id = ${id}`
+  const p = new mssql.PreparedStatement(await ctx.mssql.pool.connect())
+  let result
 
-  logSql(sql, 'User')
-  const result = await query(sql)
-  return result.recordset[0]
+  try {
+    p.input('id', mssql.Int)
+    await p.prepare(` select u.* from Users u where u.id = @id;`)
+    result = await p.execute({ id })
+  } catch (error) {
+    console.error('query.user error', error)
+  } finally {
+    await p.unprepare()
+  }
+
+  if (result) {
+    return result.recordset[0]
+  }
 }

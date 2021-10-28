@@ -53,7 +53,7 @@ export default () => {
   if (!hasPermission('/access')) {
     return (
       <Wrapper>
-        <AccessDenied requiredPermission="Admin" />
+        <AccessDenied requiredPermission="/access" />
       </Wrapper>
     )
   }

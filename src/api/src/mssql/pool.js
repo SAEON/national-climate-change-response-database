@@ -10,15 +10,8 @@ import {
 
 const { ConnectionPool } = mssql
 
-export default ({
-  user = MSSQL_USERNAME,
-  password = MSSQL_PASSWORD,
-  server = MSSQL_HOSTNAME,
-  database = MSSQL_DATABASE,
-  port = MSSQL_PORT,
-  batchSize = 100,
-} = {}) => {
-  const pool = new ConnectionPool({
+const makePool = ({ user, password, server, database, port }) => {
+  return new ConnectionPool({
     user,
     password,
     server,
@@ -43,6 +36,51 @@ export default ({
       trustServerCertificate: true,
     },
   })
+}
+
+export const pool = makePool({
+  user: MSSQL_USERNAME,
+  password: MSSQL_PASSWORD,
+  server: MSSQL_HOSTNAME,
+  database: MSSQL_DATABASE,
+  port: MSSQL_PORT,
+})
+
+const getPool = ({
+  user = MSSQL_USERNAME,
+  password = MSSQL_PASSWORD,
+  server = MSSQL_HOSTNAME,
+  database = MSSQL_DATABASE,
+  port = MSSQL_PORT,
+} = {}) => {
+  if (
+    user !== MSSQL_USERNAME ||
+    server !== MSSQL_HOSTNAME ||
+    database ||
+    MSSQL_DATABASE ||
+    port !== MSSQL_PORT
+  ) {
+    return makePool({
+      user,
+      password,
+      server,
+      database,
+      port,
+    })
+  } else {
+    return pool
+  }
+}
+
+export default ({
+  user = MSSQL_USERNAME,
+  password = MSSQL_PASSWORD,
+  server = MSSQL_HOSTNAME,
+  database = MSSQL_DATABASE,
+  port = MSSQL_PORT,
+  batchSize = 100,
+} = {}) => {
+  const pool = getPool({ user, password, server, database, port })
 
   return async sql => {
     let done = false

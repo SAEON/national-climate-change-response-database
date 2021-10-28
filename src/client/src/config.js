@@ -1,4 +1,4 @@
-export const NCCRD_DEPLOYMENT_ENV = process.env.NCCRD_DEPLOYMENT_ENV || 'development'
+export const NCCRD_DEPLOYMENT_ENV = 'development' // process.env.NCCRD_DEPLOYMENT_ENV || 'development'
 export const NCCRD_CLIENT_DEFAULT_NOTICES = process.env.NCCRD_CLIENT_DEFAULT_NOTICES || '' // "msg,info;msg2,warn;msg3,error;etd"
 
 export const NCCRD_HOSTNAME = process.env.NCCRD_HOSTNAME

@@ -134,7 +134,7 @@ mkdir /opt # Might already exist
 mkdir /opt/ssl
 
 # Generate dhparams
-openssl dhparam -out /opt/ssl/dhparam.pem 512
+openssl dhparam -out /opt/ssl/dhparam.pem 2048
 ```
 
 Obtain SSL certs - the following two files are expected to exist:

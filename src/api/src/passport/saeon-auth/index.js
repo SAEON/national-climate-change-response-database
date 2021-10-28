@@ -1,9 +1,9 @@
 import passport from 'koa-passport'
 import { pool } from '../../mssql/pool.js'
 import mssql from 'mssql'
-import logSql from '../../lib/log-sql.js'
 import { Issuer, Strategy } from 'openid-client'
 import base64url from 'base64url'
+import { user as userRole } from '../../user-model/roles.js'
 import {
   NCCRD_HOSTNAME,
   SAEON_AUTH_CLIENT_SECRET,
@@ -53,57 +53,100 @@ export default () => {
           new Strategy({ client }, async (tokenSet, userInfo, cb) => {
             const { id_token } = tokenSet
             const { email, sub: saeonId, name } = userInfo
+            const emailAddress = email.toLowerCase()
 
-            const transaction = new mssql.Transaction(await pool.connect())
-            await transaction.begin()
+            try {
+              const transaction = new mssql.Transaction(await pool.connect())
+              await transaction.begin()
 
-            // Create/retrieve user
-            const userQuery = new mssql.PreparedStatement(transaction)
-            userQuery.input('emailAddress', mssql.NVarChar)
-            userQuery.input('saeonId', mssql.NVarChar)
-            userQuery.input('name', mssql.NVarChar)
-            userQuery.input('id_token', mssql.NVarChar)
-            await userQuery.prepare(`
-              ;with currentUser as (
-                select
-                @emailAddress emailAddress,
-                @saeonId saeonId,
-                @name name,
-                @id_token id_token
-              )
-              merge Users as target
-              using currentUser as source on target.emailAddress = source.emailAddress
-              when matched and coalesce(target.saeonId, '') <> source.saeonId then update
-                set
-                  target.saeonId = source.saeonId,
-                  target.name = source.name,
-                  target.id_token = source.id_token
-              when not matched by target then insert (emailAddress, saeonId, name, id_token)
-                values (
-                  source.emailAddress,
-                  source.saeonId,
-                  source.name,
-                  source.id_token
-                );`)
+              // Create/retrieve user
+              const upsertUserQuery = new mssql.PreparedStatement(transaction)
+              upsertUserQuery.input('emailAddress', mssql.NVarChar)
+              upsertUserQuery.input('saeonId', mssql.NVarChar)
+              upsertUserQuery.input('name', mssql.NVarChar)
+              upsertUserQuery.input('id_token', mssql.NVarChar)
+              await upsertUserQuery.prepare(`
+                ;with currentUser as (
+                  select
+                  @emailAddress emailAddress,
+                  @saeonId saeonId,
+                  @name name,
+                  @id_token id_token
+                )
+                
+                merge Users as target
+                using currentUser as source on target.emailAddress = source.emailAddress
+                
+                when matched then update
+                  set
+                    target.saeonId = source.saeonId,
+                    target.name = source.name,
+                    target.id_token = source.id_token
+                
+                when not matched by target then insert (emailAddress, saeonId, name, id_token)
+                  values (
+                    source.emailAddress,
+                    source.saeonId,
+                    source.name,
+                    source.id_token
+                  );`)
 
-            const userQueryResult = await userQuery.execute({
-              emailAddress: email.toLowerCase(),
-              name,
-              saeonId,
-              id_token,
-            })
+              await upsertUserQuery
+                .execute({
+                  emailAddress,
+                  name,
+                  saeonId,
+                  id_token,
+                })
+                .finally(() => upsertUserQuery.unprepare())
 
-            await userQuery.unprepare()
+              // Make sure that the user has at least the basic role
+              const userXRoleQuery = new mssql.PreparedStatement(transaction)
+              userXRoleQuery.input('emailAddress', mssql.NVarChar)
+              userXRoleQuery.input('roleName', mssql.NVarChar)
+              await userXRoleQuery.prepare(`
+                insert into UserRoleXref (userId, roleId)
+                select distinct
+                  u.id userId,
+                  ( select id from Roles r where r.name =  @roleName) roleId
+                from Users u
+                where
+                  u.emailAddress = @emailAddress
+                  and not exists (
+                    select 1
+                    from UserRoleXref
+                    where userId = u.id
+                  );`)
 
-            console.log('result', userQueryResult)
+              await userXRoleQuery
+                .execute({
+                  emailAddress,
+                  roleName: userRole.name,
+                })
+                .finally(() => userXRoleQuery.unprepare())
 
-            // Commit transaction
-            await transaction.commit()
+              // Get the user back
+              const userQuery = new mssql.PreparedStatement(transaction)
+              userQuery.input('emailAddress', mssql.NVarChar)
+              await userQuery.prepare(`
+                select *
+                from Users u
+                where emailAddress = @emailAddress
+                for json auto, without_array_wrapper;`)
 
-            // const result = await query(sql)
-            // const user = result.recordset[0]
-            // cb(null, user)
-            cb(new Error('no user'), null)
+              const user = await userQuery
+                .execute({ emailAddress })
+                .then(async result => result.recordset[0])
+                .finally(() => userQuery.unprepare())
+
+              // Commit transaction
+              await transaction.commit()
+
+              cb(null, user)
+            } catch (error) {
+              console.error('Error authenticating user', error)
+              cb(error, null)
+            }
           })
         )
       })

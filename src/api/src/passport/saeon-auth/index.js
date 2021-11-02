@@ -51,6 +51,7 @@ export default () => {
         passport.use(
           'oidc',
           new Strategy({ client }, async (tokenSet, userInfo, cb) => {
+            console.log('token set', tokenSet)
             const { id_token } = tokenSet
             const { email, sub: saeonId, name } = userInfo
             const emailAddress = email.toLowerCase()

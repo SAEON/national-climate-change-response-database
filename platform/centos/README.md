@@ -125,7 +125,7 @@ systemctl enable nginx
 systemctl start nginx
 ```
 
-### Configure Nginx
+### Configure Nginx TSL
 
 ```sh
 ssh <user>@<hostname>
@@ -144,17 +144,13 @@ Obtain SSL certs - the following two files are expected to exist:
 /opt/ssl/nccrd.saeon.ac.za.key
 ```
 
-### Copy Nginx configuration files
-
-Manually copy two files from this repository onto the server
+### Configure Nginx server blocks
+Refernce nginx files are defined in `src/nginx`. Overwrite the target nginx configuration with these files (obviously adjusting for the specific deployment environment)
 
 ```txt
-platform/centos/nginx/nginx.conf => /etc/nginx/nginx.conf (overwrite the existing file)
-platform/centos/nginx/nccrd.conf => /etc/nginx/conf.d/nccrd.conf (change <hostname> to the correct hostname)
+src/nginx/nginx.conf => /etc/nginx/nginx.conf (overwrite the main configuration file)
+src/nginx/conf.d/ => /etc/nginx/conf.d/ (overwrite the conf.d configuration directory)
 ```
-
-\*NOTE - **Did you replace <hostname> in nccrd.conf??\***
-
 ## Install and configure firewalld
 
 ```sh

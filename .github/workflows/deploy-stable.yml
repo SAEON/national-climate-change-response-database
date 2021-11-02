@@ -113,7 +113,7 @@ jobs:
           script: |
             echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" > /home/runner/nccrd-stable/deploy/stable/docker-compose.env
             echo "NCCRD_IMAGE=${{ needs.build-nccrd.outputs.image }}" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
-            echo "NGINX_IMAGE=${{ needs.build-nginx.outputs.image }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
+            echo "NGINX_IMAGE=${{ needs.build-nginx.outputs.image }}" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
             echo "MSSQL_USERNAME=${{ secrets.MSSQL_USERNAME }}" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
             echo "MSSQL_PASSWORD=${{ secrets.MSSQL_PASSWORD }}" >> /home/runner/nccrd-stable/deploy/stable/docker-compose.env
             sudo /opt/deploy-docker-stack.sh /home/runner/nccrd-stable/deploy/stable/docker-compose.yml /home/runner/nccrd-stable/deploy/stable/docker-compose.env nccrd_stable

@@ -42,7 +42,7 @@ jobs:
         with:
           context: src/nginx
           push: ${{ github.event_name != 'pull_request' }}
-          tags: SAEON/nccrd-nginx:latest
+          tags: saeon/nccrd_next:nginx
 
       - name: Build and push NCCRD
         uses: docker/build-push-action@v2
@@ -84,6 +84,6 @@ jobs:
             echo "MSSQL_PASSWORD=${{ secrets.MSSQL_PASSWORD }}" > /home/runner/nccrd-next/deploy/next/docker-compose.env
             echo "MSSQL_USERNAME=${{ secrets.MSSQL_USERNAME }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
             echo "NCCRD_IMAGE=${{ needs.build.outputs.nccrd }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "NGINX_IMAGE=SAEON/nccrd-nginx:latest" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
+            echo "NGINX_IMAGE=saeon/nccrd_next:nginx" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
             echo "SAEON_AUTH_CLIENT_SECRET=${{ secrets.SAEON_AUTH_CLIENT_SECRET }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
             sudo /opt/deploy-docker-stack.sh /home/runner/nccrd-next/deploy/next/docker-compose.yml /home/runner/nccrd-next/deploy/next/docker-compose.env nccrd_next

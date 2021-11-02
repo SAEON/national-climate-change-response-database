@@ -180,7 +180,6 @@ docker run \
   --network nccrd \
   --name nccrd \
   -e 'SAEON_AUTH_CLIENT_ID=' \
-  -e 'SAEON_AUTH_CLIENT_SCOPES=' \
   -e 'SAEON_AUTH_CLIENT_SECRET=' \
   -e 'NCCRD_HOSTNAME=http://localhost:3000' \
   -e 'NCCRD_DEPLOYMENT_ENV=development' \

@@ -25,7 +25,7 @@ export const NCCRD_HOSTNAME = process.env.NCCRD_HOSTNAME || 'http://localhost:30
 
 export const SAEON_AUTH_CLIENT_SECRET = process.env.SAEON_AUTH_CLIENT_SECRET || ''
 export const SAEON_AUTH_CLIENT_ID = process.env.SAEON_AUTH_CLIENT_ID || 'SAEON.NCCIS'
-export const SAEON_AUTH_CLIENT_SCOPES = process.env.SAEON_AUTH_CLIENT_SCOPES || 'SAEON.NCCIS openid'
+export const SAEON_AUTH_CLIENT_SCOPES = 'SAEON.NCCIS openid'
 export const SAEON_AUTH_OAUTH_REDIRECT_ADDRESS = `${NCCRD_HOSTNAME}/http/authenticate/redirect/saeon`
 
 export const NCCRD_DEPLOYMENT_ENV = process.env.NCCRD_DEPLOYMENT_ENV || 'development'

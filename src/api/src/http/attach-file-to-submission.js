@@ -2,15 +2,15 @@ import { createReadStream, createWriteStream } from 'fs'
 import { join, normalize, sep } from 'path'
 import { UPLOADS_DIRECTORY } from '../config.js'
 import ensureDirectory from '../lib/ensure-directory.js'
-import logSql from '../lib/log-sql.js'
+import PERMISSIONS from '../user-model/permissions.js'
+import { pool } from '../mssql/pool.js'
 
 const MAX_UPLOAD_SIZE_MB = 10
 
 export default async ctx => {
-  const { PERMISSIONS, user, mssql } = ctx
-  const { query } = mssql
+  const { user } = ctx
   const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS.attachFileToSubmission })
+  await ensurePermission({ ctx, permission: PERMISSIONS['attach-file-to-submission'] })
   const { submissionId, formName } = ctx.query
 
   if (!submissionId || !formName) {
@@ -41,26 +41,39 @@ export default async ctx => {
       writeStream.on('error', error => reject(error))
     })
 
+    ctx.response.status = 201
+
     /**
      * Register this upload to an in-progress
      * submission, along with the user id
      */
-    const sql = `
-    insert into WebSubmissionFiles (name, filePath, webSubmissionId, createdBy, createdAt)
-    output inserted.id
-    values (
-      '${sanitizeSqlValue(name)}',
-      '${sanitizeSqlValue(filePath)}',
-      '${sanitizeSqlValue(submissionId)}',
-      '${sanitizeSqlValue(user.info(ctx).id)}',
-      '${new Date().toISOString()}'
-    );`
-
-    logSql(sql, 'Attach submission file')
-    const result = await query(sql)
-
-    ctx.response.status = 201
-    ctx.body = result.recordset[0].id
+    ctx.body = await pool
+      .connect()
+      .then(pool =>
+        pool
+          .request()
+          .input('name', name)
+          .input('filePath', filePath)
+          .input('webSubmissionId', submissionId)
+          .input('createdBy', user.info(ctx).id)
+          .input('createdAt', new Date().toISOString()).query(`
+            insert into WebSubmissionFiles (
+              name,
+              filePath,
+              webSubmissionId,
+              createdBy,
+              createdAt
+            )
+            output inserted.id
+            values (
+              @name,
+              @filePath,
+              @webSubmissionId,
+              @createdBy,
+              @createdAt
+            );`)
+      )
+      .then(result => result.recordset[0].id)
   } catch (error) {
     if (error.message.includes('UNIQUE KEY')) {
       ctx.response.status = 409

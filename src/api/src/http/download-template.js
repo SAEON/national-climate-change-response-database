@@ -1,25 +1,33 @@
 import { createReadStream } from 'fs'
 import { basename } from 'path'
+import PERMISSIONS from '../user-model/permissions.js'
+import { pool } from '../mssql/pool.js'
 
 export default async ctx => {
-  const { PERMISSIONS, user, mssql } = ctx
-  const { query } = mssql
+  const { user } = ctx
   const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS.createSubmission })
+  await ensurePermission({ ctx, permission: PERMISSIONS['create-submission'] })
   const { id = undefined } = ctx.query
 
   try {
     /**
      * Get path of most recent Excel template
      */
-    const filePath = (
-      await query(`
-      select top 1
-        filePath
-      from ExcelSubmissionTemplates
-      ${id ? `where id = '${sanitizeSqlValue(id)}'` : ''}
-      order by createdAt desc`)
-    ).recordset[0].filePath
+    const filePath = await pool
+      .connect()
+      .then(pool =>
+        id
+          ? pool.request().input('id', id).query(`
+              select top 1 filePath
+              from ExcelSubmissionTemplates
+              where id = @id
+              order by createdAt desc;`)
+          : pool.request().query(`
+              select top 1 filePath
+              from ExcelSubmissionTemplates
+              order by createdAt desc;`)
+      )
+      .then(result => result.recordset[0].filePath)
 
     /**
      * Send the file as a download

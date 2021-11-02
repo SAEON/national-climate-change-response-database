@@ -1,4 +1,3 @@
-import logSql from '../../lib/log-sql.js'
 import xlsx from 'xlsx-populate'
 import { Readable } from 'stream'
 import {
@@ -17,6 +16,9 @@ import {
   adaptationInputFields,
 } from '../../graphql/schema/index.js'
 import parseProgressData from './_parse-progress-data.js'
+import PERMISSIONS from '../../user-model/permissions.js'
+import mssql from 'mssql'
+import { pool } from '../../mssql/pool.js'
 
 const vocabFields = {
   project: projectVocabularyFields,
@@ -25,10 +27,9 @@ const vocabFields = {
 }
 
 export default async ctx => {
-  const { PERMISSIONS, user, mssql } = ctx
-  const { query } = mssql
+  const { user } = ctx
   const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS.downloadSubmission })
+  await ensurePermission({ ctx, permission: PERMISSIONS['download-submission'] })
   const { id } = ctx.query
 
   if (!id) {
@@ -40,23 +41,34 @@ export default async ctx => {
     /**
      * Find most recent template path
      */
-    const getTemplateFilePath = `select top 1 filePath from ExcelSubmissionTemplates order by createdAt desc;`
-    logSql(getTemplateFilePath, 'Excel template path (submission-download)')
-    const filePath = (await query(getTemplateFilePath)).recordset[0].filePath
+    const filePath = await pool
+      .connect()
+      .then(pool =>
+        pool
+          .request()
+          .query('select top 1 filePath from ExcelSubmissionTemplates order by createdAt desc;')
+      )
+      .then(result => result.recordset[0].filePath)
 
     /**
      * Get the submission data
      */
-    const getSubmissionData = `select * from Submissions where id = '${sanitizeSqlValue(id)}';`
-    logSql(getSubmissionData, 'Submission')
-    const submission = (await query(getSubmissionData)).recordset[0]
+    const submission = await pool
+      .connect()
+      .then(pool =>
+        pool
+          .request()
+          .input('id', mssql.UniqueIdentifier, id)
+          .query(`select * from Submissions where id = @id`)
+      )
+      .then(result => result.recordset[0])
 
     if (!submission) {
       throw new Error(`Submission with ID ${id} does not exist`)
     }
 
     const project = JSON.parse(submission.project)
-    let mitigation = JSON.parse(submission.mitigation)
+    const mitigation = JSON.parse(submission.mitigation)
     const adaptation = JSON.parse(submission.adaptation)
 
     /**

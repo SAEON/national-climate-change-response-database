@@ -7,6 +7,7 @@ import { nanoid } from 'nanoid'
 import createUserInputIterator from '../../lib/xlsx/user-input-iterator/index.js'
 import createCompileSheetIterator from '../../lib/xlsx/compile-sheet-iterator/index.js'
 import saveSubmission from './_save-submission.js'
+import PERMISSIONS from '../../user-model/permissions.js'
 
 const MAX_UPLOAD_SIZE_MB = 20
 
@@ -15,9 +16,9 @@ export const _COMPILE_TOP_LEFT = 'A3'
 export const _COMPILE_BOTTOM_RIGHT = `I111`
 
 export default async ctx => {
-  const { PERMISSIONS, user } = ctx
+  const { user } = ctx
   const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS.createSubmission })
+  await ensurePermission({ ctx, permission: PERMISSIONS['create-submission'] })
 
   const result = {
     inserted: [],

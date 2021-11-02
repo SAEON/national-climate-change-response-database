@@ -1,44 +1,49 @@
-import query from '../../mssql/query.js'
-import logSql from '../../lib/log-sql.js'
+import { pool } from '../../mssql/pool.js'
 
-export default async (userId, { project, mitigation = {}, adaptation = {} }) => {
-  const sql = `
-    merge Submissions t
-    using (
-      select
-        '${sanitizeSqlValue(JSON.stringify(project))}' project,
-        '${sanitizeSqlValue(JSON.stringify(mitigation))}' mitigation,
-        '${sanitizeSqlValue(JSON.stringify(adaptation))}' adaptation,
-        1 isSubmitted,
-        '${sanitizeSqlValue(JSON.stringify({ term: 'Pending' }))}' submissionStatus,
-        '${sanitizeSqlValue(userId)}'' createdBy,
-        '${new Date().toISOString()}' createdAt
-    ) s on t.id = null
-    when not matched then insert (
-      project,
-      mitigation,
-      adaptation,
-      isSubmitted,
-      submissionStatus,
-      createdBy,
-      createdAt
+export default async (userId, { project, mitigation = {}, adaptation = {} }) =>
+  await pool
+    .connect()
+    .then(pool =>
+      pool
+        .request()
+        .input('project', JSON.stringify(project))
+        .input('mitigation', JSON.stringify(mitigation))
+        .input('adaptation', JSON.stringify(adaptation))
+        .input('submissionStatus', JSON.stringify({ term: 'pending' }))
+        .input('createdBy', userId)
+        .input('createdAt', new Date().toISOString()).query(`
+            merge Submissions t
+            using (
+              select
+                @project project,
+                @mitigation mitigation,
+                @adaptation adaptation,
+                1 isSubmitted,
+                @submissionStatus submissionStatus,
+                @createdBy createdBy,
+                @createdAt createdAt
+            ) s on t.id = null
+            when not matched then insert (
+              project,
+              mitigation,
+              adaptation,
+              isSubmitted,
+              submissionStatus,
+              createdBy,
+              createdAt
+            )
+            values (
+              s.project,
+              s.mitigation,
+              s.adaptation,
+              s.isSubmitted,
+              s.submissionStatus,
+              s.createdBy,
+              s.createdAt
+            )
+            output
+              $action,
+              inserted.id,
+              inserted._projectTitle;`)
     )
-    values (
-      s.project,
-      s.mitigation,
-      s.adaptation,
-      s.isSubmitted,
-      s.submissionStatus,
-      s.createdBy,
-      s.createdAt
-    )
-
-    output
-      $action,
-      inserted.id,
-      inserted._projectTitle;`
-
-  logSql(sql, 'Save submission (Excel)')
-  const response = await query(sql)
-  return { ...response.recordset[0] }
-}
+    .then(result => ({ ...result.recordset[0] }))

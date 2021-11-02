@@ -1,5 +1,5 @@
 import { NCCRD_HOSTNAME, SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS } from '../config.js'
-import logSql from '../lib/log-sql.js'
+import { pool } from '../mssql/pool.js'
 
 export default async ctx => {
   /**
@@ -13,18 +13,22 @@ export default async ctx => {
    * Otherwise log user out of Oauth2 server
    */
   try {
-    const { user, mssql } = ctx
+    const { user } = ctx
     const userId = user.info(ctx).id
-    const { query } = mssql
-    const sql = `select id_token from Users where id = '${sanitizeSqlValue(userId)}'`
-    logSql(sql, 'User', true)
-    const response = await query(sql)
-    const { id_token } = response.recordset[0]
+
+    const id_token = await pool
+      .connect()
+      .then(pool =>
+        pool.request().input('id', userId).query('select id_token from Users where id = @id')
+      )
+      .then(result => result.recordset[0].id_token)
+
     ctx.session = null
     return ctx.redirect(
       `${SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS}?id_token_hint=${id_token}&post_logout_redirect_uri=${NCCRD_HOSTNAME}/http/logout`
     )
   } catch (error) {
+    console.error('Error logging user out', error)
     ctx.session = null
     return ctx.redirect(`${SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS}`)
   }

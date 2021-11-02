@@ -1,14 +1,15 @@
 import { createReadStream, createWriteStream, stat } from 'fs'
 import { join, normalize, sep } from 'path'
 import { SUBMISSION_TEMPLATES_DIRECTORY } from '../config.js'
+import PERMISSIONS from '../user-model/permissions.js'
+import { pool } from '../mssql/pool.js'
 
 const MAX_UPLOAD_SIZE_MB = 5
 
 export default async ctx => {
-  const { PERMISSIONS, user, mssql } = ctx
-  const { query } = mssql
+  const { user } = ctx
   const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS.uploadTemplate })
+  await ensurePermission({ ctx, permission: PERMISSIONS['upload-template'] })
 
   const { path, name, size: sizeInBytes } = ctx.request.files['excel-submission-template']
   const sizeInMB = (sizeInBytes / (1024 * 1024)).toFixed(2)
@@ -53,13 +54,15 @@ export default async ctx => {
      * correct template users must download and
      * keeping track of old templates
      */
-    await query(`
-      insert into ExcelSubmissionTemplates (filePath, createdBy, createdAt)
-      values (
-        '${sanitizeSqlValue(filePath)}',
-        ${user.info(ctx).id},
-        '${new Date().toISOString()}'
-      );`)
+    await pool.connect().then(pool =>
+      pool
+        .request()
+        .input('filePath', filePath)
+        .input('createdBy', user.info(ctx).id)
+        .input('createdAt', new Date().toISOString()).query(`
+            insert into ExcelSubmissionTemplates (filePath, createdBy, createdAt)
+            values ( @filePath, @createdBy, @createdAt);`)
+    )
 
     ctx.response.status = 201
     ctx.body = 'File upload successful'

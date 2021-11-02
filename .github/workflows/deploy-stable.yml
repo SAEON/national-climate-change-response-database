@@ -3,7 +3,7 @@ name: deploy@stable
 on:
   push:
     branches:
-      - next
+      - stable
 
 # on:
 #   push:

@@ -11,6 +11,20 @@ networks:
     attachable: true    
 
 services:
+  nginx:
+    image: $NGINX_IMAGE
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    ports:
+      - 10000:80
+    networks:
+      - nccrd_stable
+
   nccrd:
     image: $NCCRD_IMAGE
     deploy:
@@ -38,7 +52,5 @@ services:
         NCCRD_HOSTNAME: https://nccrd.environment.gov.za
         NCCRD_SSL_ENV: production
         SAEON_AUTH_CLIENT_SECRET: $SAEON_AUTH_CLIENT_SECRET
-    ports:
-      - 10000:3000
     networks:
       - nccrd_stable

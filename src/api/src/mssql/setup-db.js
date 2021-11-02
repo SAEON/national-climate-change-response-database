@@ -7,7 +7,7 @@ import seedAdmins from './install-admins/index.js'
 import seedSysAdmins from './install-sysadmins/index.js'
 import installSchema from './install-schema.js'
 
-const info = msg => console.info('========== MSSQL ==========', msg)
+const info = msg => console.info(msg)
 
 /**
  * Initial schema

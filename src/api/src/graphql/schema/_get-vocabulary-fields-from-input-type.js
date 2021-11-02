@@ -1,6 +1,6 @@
 export default (defs, inputType) => {
-  console.log(`input\\s${inputType}`)
   const regex = new RegExp(`input\\s${inputType}\\s{(.|\\n)*?}`, 'g')
+
   return defs
     .match(regex)[0]
     .split('\n')

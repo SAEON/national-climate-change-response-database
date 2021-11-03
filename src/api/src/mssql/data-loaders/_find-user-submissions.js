@@ -1,20 +1,22 @@
 import DataLoader from 'dataloader'
-import query from '../query.js'
+import { pool } from '../pool.js'
 import sift from 'sift'
-import logSql from '../../lib/log-sql.js'
 
 export default () =>
   new DataLoader(
     async keys => {
-      const sql = `
-        select *
+      const _pool = await pool.connect()
+      const request = _pool.request()
+      keys.forEach((key, i) => request.input(`key_${i}`, key))
+
+      const result = await request.query(`
+        select
+          *
         from Submissions s
         where
-        deletedAt is null
-        and s.createdBy in (${keys.join(',')})`
+          deletedAt is null
+          and s.createdBy in (${keys.map((_, i) => `@key_${i}`)})`)
 
-      logSql(sql, 'User submissions (batched)')
-      const result = await query(sql)
       return keys.map(createdBy => result.recordset.filter(sift({ createdBy })))
     },
     {

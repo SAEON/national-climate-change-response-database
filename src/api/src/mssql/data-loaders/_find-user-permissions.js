@@ -1,12 +1,15 @@
 import DataLoader from 'dataloader'
-import query from '../query.js'
 import sift from 'sift'
-import logSql from '../../lib/log-sql.js'
+import { pool } from '../pool.js'
 
 export default () =>
   new DataLoader(
     async keys => {
-      const sql = `
+      const _pool = await pool.connect()
+      const request = _pool.request()
+      keys.forEach((key, i) => request.input(`key_${i}`, key))
+
+      const result = await request.query(`
         select
           x.userId,
           p.id,
@@ -16,10 +19,9 @@ export default () =>
         join UserRoleXref x on x.roleId = r.id
         join PermissionRoleXref px on px.roleId = r.id
         join Permissions p on p.id = px.permissionId
-        where x.userId in (${keys.join(',')})`
+        where
+          x.userId in (${keys.map((_, i) => `@key_${i}`)})`)
 
-      logSql(sql, 'User permissions (batched)')
-      const result = await query(sql)
       return keys.map(id => result.recordset.filter(sift({ userId: id })))
     },
     {

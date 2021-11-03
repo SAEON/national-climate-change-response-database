@@ -1,12 +1,15 @@
 import DataLoader from 'dataloader'
-import query from '../query.js'
+import { pool } from '../pool.js'
 import sift from 'sift'
-import logSql from '../../lib/log-sql.js'
 
 export default () =>
   new DataLoader(
     async keys => {
-      const sql = `
+      const _pool = await pool.connect()
+      const request = _pool.request()
+      keys.forEach((key, i) => request.input(`key_${i}`, key))
+
+      const result = await request.query(`
         select
           x.roleId,
           p.id,
@@ -14,10 +17,9 @@ export default () =>
           p.description
         from Permissions p
         join PermissionRoleXref x on x.permissionId = p.id
-        where x.roleId in (${keys.join(',')})`
+        where
+          x.roleId in (${keys.map((_, i) => `@key_${i}`)})`)
 
-      logSql(sql, 'Find role permissions')
-      const result = await query(sql)
       return keys.map(id => result.recordset.filter(sift({ roleId: id })))
     },
     {

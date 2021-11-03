@@ -1,23 +1,25 @@
 import DataLoader from 'dataloader'
-import query from '../query.js'
+import { pool } from '../pool.js'
 import sift from 'sift'
-import logSql from '../../lib/log-sql.js'
 
 export default () =>
   new DataLoader(
     async keys => {
-      const sql = `
-        select
-          x.userId,
-          r.id,
-          r.name,
-          r.description
-        from Roles r
-        join UserRoleXref x on x.roleId = r.id
-        where x.userId in (${keys.join(',')})`
+      const _pool = await pool.connect()
+      const request = _pool.request()
+      keys.forEach((key, i) => request.input(`key_${i}`, key))
 
-      logSql(sql, 'User roles (batched)')
-      const result = await query(sql)
+      const result = await request.query(`
+      select
+        x.userId,
+        r.id,
+        r.name,
+        r.description
+      from Roles r
+      join UserRoleXref x on x.roleId = r.id
+      where
+        x.userId in (${keys.map((_, i) => `@key_${i}`)})`)
+
       return keys.map(id => result.recordset.filter(sift({ userId: id })))
     },
     {

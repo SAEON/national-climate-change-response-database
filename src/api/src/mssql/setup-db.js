@@ -1,13 +1,13 @@
 import { readdirSync, statSync } from 'fs'
 import { join, normalize, sep } from 'path'
 import { SUBMISSION_TEMPLATES_DIRECTORY } from '../config.js'
-import query from './query.js'
+import { pool } from './pool.js'
 import installUserModel from './install-user-model/index.js'
 import seedAdmins from './install-admins/index.js'
 import seedSysAdmins from './install-sysadmins/index.js'
 import installSchema from './install-schema.js'
 
-const info = msg => console.info(msg)
+const info = (...args) => console.info(...args)
 
 /**
  * Initial schema
@@ -20,30 +20,38 @@ const info = msg => console.info(msg)
 
   /**
    * Register existing template uploads
-   * with SQL Server
-   *
-   * Not user input - query doesn't need to be sanitized
+   * with SQL Server. Useful for system
+   * migrations from old servers
    */
   const excelTemplates = readdirSync(SUBMISSION_TEMPLATES_DIRECTORY)
-  console.info('Loading existing Excel submission templates', excelTemplates)
   for (const filename of excelTemplates) {
-    const filePath = normalize(join(SUBMISSION_TEMPLATES_DIRECTORY, `.${sep}${filename}`))
-    const createdAt = statSync(filePath)?.ctime?.toISOString() || new Date().toISOString()
     try {
-      await query(`
-      merge ExcelSubmissionTemplates t
-      using (
-        select
-          '${sanitizeSqlValue(filePath)}' filePath,
-          '${sanitizeSqlValue(createdAt)}' createdAt
-      ) s on s.filePath = t.filePath
-      when not matched then insert (filePath, createdAt)
-      values (
-        s.filePath,
-        s.createdAt
-      );`)
+      const filePath = normalize(join(SUBMISSION_TEMPLATES_DIRECTORY, `.${sep}${filename}`))
+      const createdAt = statSync(filePath)?.ctime?.toISOString() || new Date().toISOString()
+
+      await pool.connect().then(pool =>
+        pool
+          .request()
+          .input('filePath', filePath)
+          .input('createdAt', createdAt)
+          .query(
+            `merge ExcelSubmissionTemplates t
+            using (
+              select
+                @filePath filePath,
+                @createdAt createdAt
+            ) s on s.filePath = t.filePath
+            when not matched then insert (filePath, createdAt)
+            values (
+              s.filePath,
+              s.createdAt
+            );`
+          )
+          .then(() => info('Registered Excel submission template', filename))
+      )
     } catch (error) {
       console.error('Error registering existing templates', error.message)
+      throw error
     }
   }
 })().catch(error => {

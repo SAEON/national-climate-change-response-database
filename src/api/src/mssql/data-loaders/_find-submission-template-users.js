@@ -1,19 +1,21 @@
 import DataLoader from 'dataloader'
-import query from '../query.js'
+import { pool } from '../pool.js'
 import sift from 'sift'
-import logSql from '../../lib/log-sql.js'
 
 export default () =>
   new DataLoader(
     async keys => {
-      const sql = `
-        select u.*
+      const _pool = await pool.connect()
+      const request = _pool.request()
+      keys.forEach((key, i) => request.input(`key_${i}`, key))
+      const result = await request.query(`
+        select
+          u.*
         from ExcelSubmissionTemplates t
         join Users u on u.id = t.createdBy
-        where t.createdBy in (${keys.join(',')})`
+        where
+          t.createdBy in (${keys.map((_, i) => `@key_${i}`)})`)
 
-      logSql(sql, 'Find submission template owners')
-      const result = await query(sql)
       return keys.map(id => result.recordset.filter(sift({ id })))
     },
     {

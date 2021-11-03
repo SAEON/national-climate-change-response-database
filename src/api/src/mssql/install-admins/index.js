@@ -1,51 +1,61 @@
-import { NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES } from '../../config.js'
+import { NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES as _USERS } from '../../config.js'
 import { pool } from '../pool.js'
-
-const USERS = NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES.split(',')
-  .filter(_ => _)
-  .map(_ => _.toLowerCase())
+import mssql from 'mssql'
 
 export default async () => {
+  const USERS = _USERS
+    .split(',')
+    .filter(_ => _)
+    .map(_ => _.toLowerCase())
+
   if (USERS.length) {
+    // Start transaction
+    const transaction = new mssql.Transaction(await pool.connect())
+    await transaction.begin()
+
     try {
-      await pool.connect().then(pool => {
-        const request = pool.request()
-        USERS.forEach((user, i) => request.input(`user_${i}`, user))
-        return request.query(`
-          begin transaction ProvisionUsers
-          begin try
-      
-            -- Users
-            merge Users t
-            using (
-              ${USERS.map((_, i) => `select @user_${i} emailAddress`).join(' union ')}
-            ) s on s.emailAddress = t.emailAddress
-            when not matched then insert (emailAddress)
-            values (s.emailAddress);
-      
-            -- UserRoleXref
-            merge UserRoleXref t
-            using (
-              select
+      for (const user of USERS) {
+        // Upsert user
+        const p1 = new mssql.PreparedStatement(transaction)
+        p1.input('user', mssql.NVarChar)
+        await p1.prepare(`
+          merge Users t
+          using (
+            select @user emailAddress
+          ) s on s.emailAddress = t.emailAddress
+          when not matched then insert (emailAddress)
+          values (s.emailAddress);`)
+        await p1.execute({ user })
+        await p1.unprepare()
+
+        // Upsert xref
+        const p2 = new mssql.PreparedStatement(transaction)
+        p2.input('user', mssql.NVarChar)
+        await p2.prepare(`
+          merge UserRoleXref t
+          using (
+            select
               u.id userId,
               r.id roleId
-              from Users u
-              join Roles r on r.name = 'admin'
-              where u.emailAddress in (${USERS.map((_, i) => `@user_${i}`).join(',')})
-            ) s on s.userId = t.userId and s.roleId = t.roleId
-            when not matched then insert (userId, roleId)
-            values (s.userId, s.roleId);
-          
-          commit transaction ProvisionUsers;
-          end try
-          begin catch
-            rollback transaction ProvisionUsers
-          end catch`)
-      })
+            from Users u
+            join Roles r on r.name = 'admin'
+            where
+              u.emailAddress = @user
+          ) s on s.userId = t.userId and s.roleId = t.roleId
+          when not matched then insert (userId, roleId)
+          values (s.userId, s.roleId);`)
+        await p2.execute({ user })
+        await p2.unprepare()
+
+        console.info('admin (default):', user)
+      }
+
+      // Commit the transaction
+      await transaction.commit()
     } catch (error) {
       console.error('Unable to provision admin users', error.message)
+      await transaction.rollback()
       process.exit(1)
     }
   }
-  return { defaultAdmins: USERS }
 }

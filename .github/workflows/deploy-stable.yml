@@ -2,13 +2,8 @@ name: deploy@stable
 
 on:
   push:
-    branches:
-      - stable
-
-# on:
-#   push:
-#     tags:
-#       - '*'
+    tags:
+      - '*'
 
 env:
   REGISTRY: ghcr.io

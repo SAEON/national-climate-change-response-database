@@ -18,7 +18,7 @@ jobs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Check out source code (shared) 
-        uses: SAEON/checkout@v2
+        uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_REF }}
       - name: Log in to the Container registry
@@ -49,7 +49,7 @@ jobs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Check out source code (shared) 
-        uses: SAEON/checkout@v2
+        uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_REF }}
       - name: Log in to the Container registry
@@ -81,12 +81,12 @@ jobs:
     runs-on: github-runner.saeon.int
     steps:
       - name: Check out source code (int)
-        uses: SAEON/checkout@v2
+        uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_REF }}
 
       - name: (SCP) Copy Docker files to app server
-        uses: SAEON/scp-action@master
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
           username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
@@ -96,7 +96,7 @@ jobs:
           target: "nccrd-next"
 
       - name: (SSH) Deploy Docker stack
-        uses: SAEON/ssh-action@master
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEPLOYMENT_HOSTNAME }}
           username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}

@@ -1,6 +1,5 @@
-export default async ({ tree, id: vocabularyId }, { simplified = true }, ctx) => {
+export default async ({ tree, id: vocabularyId }, _, ctx) => {
   const { findGeometry } = ctx.mssql.dataFinders
-  const field = simplified ? 'geometry_simplified' : 'geometry'
-  const result = (await findGeometry({ tree, vocabularyId, simplified }))[0]
-  return result?.[field]
+  const result = (await findGeometry({ tree, vocabularyId }))[0]
+  return result?.geometry
 }

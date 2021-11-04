@@ -24,8 +24,7 @@ export const makeDataFinders = () => {
     findUserSubmissions: userId => findUserSubmissions.load(userId),
     findUserPermissions: userId => findUserPermissions.load(userId),
     findRolePermissions: roleId => findRolePermissions.load(roleId),
-    findGeometry: ({ vocabularyId, tree, simplified = true }) =>
-      findGeometry.load({ vocabularyId, tree, simplified }),
+    findGeometry: ({ vocabularyId, tree }) => findGeometry.load({ vocabularyId, tree }),
     findSubmissionTemplateUsers: userId => findSubmissionTemplateUsers.load(userId),
   }
 }

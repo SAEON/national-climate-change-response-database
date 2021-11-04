@@ -1,11 +1,21 @@
 import DataLoader from 'dataloader'
-import query from '../query.js'
+import { pool } from '../pool.js'
 import sift from 'sift'
-import logSql from '../../lib/log-sql.js'
 
 export default () =>
   new DataLoader(
     async keys => {
+      const ids = keys
+        .map(({ ids }) => ids)
+        .flat()
+        .filter(_ => _)
+      const trees = [...new Set(keys.map(({ tree }) => tree))]
+
+      const request = (await pool.connect()).request()
+
+      ids.forEach((id, i) => request.input(`id_${i}`, id))
+      trees.forEach((tree, i) => request.input(`tree_${i}`, tree))
+
       const sql = `
         select
         p.id,
@@ -25,23 +35,15 @@ export default () =>
           join Trees t on t.id = vxt.treeId
         
           where
-          parent.id in (${
-            keys
-              .map(({ ids }) => ids)
-              .flat()
-              .filter(_ => _)
-              .join(',') || null
-          })
-          and t.name in (${[...new Set(keys.map(({ tree }) => `'${tree}'`))].join(',') || null})
+          parent.id in (${ids.map((_, i) => `@id_${i}`).join(',')})
+          and t.name in (${trees.map((_, i) => `@tree_${i}`).join(',')})
         ) p
         left outer join VocabularyXrefVocabulary vxv on vxv.parentId = p.id and vxv.treeId = p.treeId
         left outer join Vocabulary children on children.id = vxv.childId
         
         for json auto`
 
-      logSql(sql, 'Controlled vocabulary (batched)')
-
-      const results = await query(sql)
+      const results = await request.query(sql)
 
       /**
        * Rows are wrapped in 2D array,

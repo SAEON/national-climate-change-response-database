@@ -1,43 +1,36 @@
 import DataLoader from 'dataloader'
-import query from '../query.js'
+import { pool } from '../pool.js'
 import sift from 'sift'
-import logSql from '../../lib/log-sql.js'
 
 export default () =>
   new DataLoader(
     async keys => {
-      const vocabularyIds = []
+      const ids = []
       const trees = []
-      const fields = []
-
-      keys.forEach(({ vocabularyId, tree, simplified }) => {
-        vocabularyIds.push(vocabularyId)
-        trees.push(tree)
-        fields.push(simplified ? 'geometry_simplified' : 'geometry')
+      keys.forEach(({ vocabularyId, tree }) => {
+        if (!ids.includes(vocabularyId)) ids.push(vocabularyId)
+        if (!trees.includes(tree)) trees.push(tree)
       })
+
+      const request = (await pool.connect()).request()
+      trees.forEach((tree, i) => request.input(`tree_${i}`, tree))
+      ids.forEach((id, i) => request.input(`id_${i}`, id))
 
       const sql = `
         select
           vxt.vocabularyId,
           t.name tree,
-          ${[...new Set(fields)].map(field => `[${field}].STAsText() [${field}]`).join(',')}
+          [geometry].STAsText() [geometry]
         from VocabularyXrefTree vxt
         join Trees t on t.id = vxt.treeId
         join GeometryXrefVocabularyTreeX gx on gx.vocabularyXrefTreeId = vxt.id
         join Geometries g on g.id = gx.geometryId
-
         where
-          t.name in (${
-            [...new Set(trees)]
-              .map(tree => `'${sanitizeSqlValue(tree)}'`)
-              .join(',') /* eslint-disable-line */
-          })
-          and vxt.vocabularyId in (${[...new Set(vocabularyIds)].join(',')})`
+          t.name in (${trees.map((_, i) => `@tree_${i}`).join(',')})
+          and vxt.vocabularyId in (${ids.map((_, i) => `@id_${i}`).join(',')})`
 
-      logSql(sql, 'Find geometry')
-
-      const results = await query(sql)
-      const rows = results.recordset
+      const result = await request.query(sql)
+      const rows = result.recordset
       return keys.map(({ vocabularyId, tree }) => rows.filter(sift({ tree, vocabularyId })))
     },
     {

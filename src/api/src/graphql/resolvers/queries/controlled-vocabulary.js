@@ -1,13 +1,15 @@
-import logSql from '../../../lib/log-sql.js'
+import { pool } from '../../../mssql/pool.js'
 
-export default async (_, { root, roots, tree }, ctx) => {
-  const { query } = ctx.mssql
-
+export default async (_, { root, roots, tree }) => {
   if (!root && !roots) {
     throw new Error('Either a vocabulary "root" or "roots" argument must be provided')
   }
 
   const _roots = roots?.length ? roots : [root]
+
+  const request = (await pool.connect()).request()
+  request.input('tree', tree)
+  _roots.forEach((root, i) => request.input(`root_${i}`, root))
 
   const sql = `
     select
@@ -29,18 +31,16 @@ export default async (_, { root, roots, tree }, ctx) => {
       join Trees t on t.id = vxt.treeId
       
       where
-      parent.term in (${_roots.map(root => `'${sanitizeSqlValue(root)}'`).join(',')})
-      and t.name = '${sanitizeSqlValue(tree)}'
+      parent.term in (${_roots.map((_, i) => `@root_${i}`).join(',')})
+      and t.name = @tree
     ) p
     left outer join VocabularyXrefVocabulary vxv on vxv.parentId = p.id and vxv.treeId = p.treeId
     left outer join Vocabulary children on children.id = vxv.childId
     
     for json auto`
 
-  logSql(sql, 'Controlled vocabulary')
-
-  const response = await query(sql)
-  const results = response.recordset[0] || []
+  const result = await request.query(sql)
+  const results = result.recordset[0] || []
 
   return results.map(result => {
     const { children, ...record } = result

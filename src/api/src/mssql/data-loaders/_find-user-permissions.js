@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader'
-import sift from 'sift'
 import { pool } from '../pool.js'
+import sift from 'sift'
 
 export default () =>
   new DataLoader(

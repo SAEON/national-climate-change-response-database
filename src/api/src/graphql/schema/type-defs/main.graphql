@@ -39,7 +39,7 @@ type ControlledVocabulary {
   children: [ControlledVocabulary!]
   tree: String!
   root: String!
-  geometry(simplified: Boolean): WKT_4326
+  geometry: WKT_4326
 }
 
 input VocabularyFilterInput {

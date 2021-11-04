@@ -6,28 +6,21 @@ on:
       - '*'
 
 jobs:
-  source-code:
-    runs-on: github-runner.saeon.int
+  pkg-build:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           ref: stable
 
-  pkg:
-    needs: [source-code]
-    runs-on: github-runner.saeon.int
-    steps:
       - name: Build binaries via Docker
         run: |
           docker image build -t nccrd-binaries -f pkg.Dockerfile .
+
       - name: Get binaries from Docker context
         run: |
           docker cp $(docker create --rm nccrd-binaries):/app/binaries/ ./
 
-  release:
-    needs: [pkg]
-    runs-on: github-runner.saeon.int
-    steps:
       - name: Publish binaries
         uses: softprops/action-gh-release@v1
         with:
@@ -36,4 +29,5 @@ jobs:
             binaries/nccrd-macos
             binaries/nccrd-win.exe
         env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_NCCRD_RELEASES }}
+          # GITHUB_TOKEN: ${{ secrets.PUBLISH_NCCRD_RELEASES }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -145,12 +145,14 @@ Obtain SSL certs - the following two files are expected to exist:
 ```
 
 ### Configure Nginx server blocks
+
 Reference nginx files are defined in `src/nginx`. Overwrite the target nginx configuration with these files (obviously adjusting for the specific deployment environment)
 
 ```txt
 src/nginx/nginx.conf => /etc/nginx/nginx.conf (overwrite the main configuration file)
 src/nginx/conf.d/ => /etc/nginx/conf.d/ (overwrite the conf.d configuration directory)
 ```
+
 ## Install and configure firewalld
 
 ```sh

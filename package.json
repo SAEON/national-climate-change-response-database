@@ -12,7 +12,7 @@
     "start:bundled": "npm run build:bundled && npm --prefix src/api run start:prod",
     "pkg": "rimraf binaries/ && npm run build:bundled && npm --prefix src/api run rollup && pkg package.json --compress GZip",
     "************ REPOSITORY TOOLING **********": "",
-    "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql|md)\"",
+    "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql|md|yml)\"",
     "lint": "npm --prefix src/api run lint & npm --prefix src/client run lint",
     "clean-installed-files": "find . -name node_modules -type d -exec rm -rv {} + && find . -name package-lock.json -type f -delete",
     "doc": "doctoc README.md && doctoc src/README.md && doctoc src/api/README.md && doctoc src/client/README.md && doctoc platform/README.md && doctoc platform/centos/README.md && doctoc platform/windows/README.md",

@@ -8,7 +8,7 @@ networks:
   nccrd_next:
     name: nccrd_next
     driver: overlay
-    attachable: true    
+    attachable: true
 
 services:
   nginx:
@@ -33,7 +33,7 @@ services:
         condition: 'any'
         delay: 5s
         max_attempts: 3
-        window: 120s   
+        window: 120s
     volumes:
       - nccrd_next:/nccrd-assets
     environment:

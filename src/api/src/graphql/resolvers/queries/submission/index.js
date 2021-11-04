@@ -1,16 +1,19 @@
-import logSql from '../../../../lib/log-sql.js'
+import { pool } from '../../../../mssql/pool.js'
 
-export default async (_, { id, isSubmitted = undefined }, ctx) => {
-  const { query } = ctx.mssql
+export default async (_, { id, isSubmitted = undefined }) => {
+  const request = (await pool.connect()).request()
+  request.input('id', id)
+  if (isSubmitted !== undefined) {
+    request.input('isSubmitted', isSubmitted ? 1 : 0)
+  }
 
-  const sql = `
-    select *
+  const result = await request.query(`
+    select
+      *
     from Submissions s
-    where 
-    id = '${sanitizeSqlValue(id)}'
-    ${isSubmitted === undefined ? '' : `and isSubmitted = ${isSubmitted ? 1 : 0}`};`
+    where
+      id = @id
+      ${isSubmitted === undefined ? '' : 'and isSubmitted = @isSubmitted'}`)
 
-  logSql(sql, 'Submission')
-  const result = await query(sql)
   return result.recordset[0]
 }

@@ -1,21 +1,20 @@
-import logSql from '../../../lib/log-sql.js'
+import { pool } from '../../../mssql/pool.js'
 
-export default async (self, { ids = [] }, ctx) => {
-  const { query } = ctx.mssql
+export default async (_, { ids = [] }) =>
+  await pool.connect().then(async pool => {
+    const request = pool.request()
+    ids.forEach((id, i) => request.input(`id_${i}`, id))
 
-  const sql = `
-  select
-  u.*
-  from Users u
-  ${
-    ids.length
-      ? `
-        where 
-        u.id in (${ids.join(',')})`
-      : ''
-  }`
+    const result = await pool.query(`
+      select u.*
+      from Users u
+      ${
+        ids.length
+          ? `
+            where 
+            u.id in (${ids.map((_, i) => `@id_${i}`)})`
+          : ''
+      }`)
 
-  logSql(sql, 'Users')
-  const result = await query(sql)
-  return result.recordset
-}
+    return result.recordset
+  })

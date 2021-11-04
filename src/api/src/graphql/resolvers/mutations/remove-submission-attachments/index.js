@@ -1,45 +1,44 @@
 import { unlink } from 'fs'
-import logSql from '../../../../lib/log-sql.js'
+import { pool } from '../../../../mssql/pool.js'
+import mssql from 'mssql'
 
-export default async (self, { ids, submissionId }, ctx) => {
-  const { query } = ctx.mssql
+export default async (_, { ids, submissionId }) => {
+  const successfulDeletes = []
 
-  /**
-   * Get paths to files that should be deleted
-   */
-  const findFilesSql = `
-   select *
-   from WebSubmissionFiles
-   where webSubmissionId = '${sanitizeSqlValue(submissionId)}'
-   and id in (${ids.join(',')});`
+  for (const id of ids) {
+    const transaction = new mssql.Transaction(await pool.connect())
+    try {
+      await transaction.begin()
+      const filePath = (
+        await transaction.request().input('submissionId', submissionId).input('id', id).query(`
+          select
+            *
+          from WebSubmissionFiles
+          where
+            webSubmissionId = @submissionId
+            and id = @id;`)
+      ).recordset[0].filePath
 
-  logSql(findFilesSql, 'Project files')
-  const files = await query(findFilesSql)
-  const filePaths = files.recordset.map(({ filePath }) => filePath)
+      // Unlink the file
+      await new Promise((resolve, reject) =>
+        unlink(filePath, error => (error ? reject(error) : resolve()))
+      )
 
-  /**
-   * First unlink the files
-   */
-  await Promise.all(
-    filePaths.map(
-      path =>
-        new Promise((resolve, reject) =>
-          unlink(path, error => (error ? reject(error) : resolve(path)))
-        )
-    )
-  )
+      // Once the file is unlinked, delete the database entry
+      await transaction.request().input('submissionId', submissionId).input('id', id).query(`
+        delete from WebSubmissionFiles
+        where
+          webSubmissionId = @submissionId
+          and id = @id;`)
 
-  /**
-   * Then delete corresponding
-   * database entries
-   */
-  const deleteFilesSql = `
-     delete from WebSubmissionFiles
-     where webSubmissionId = '${sanitizeSqlValue(submissionId)}'
-     and id in (${ids.join(',')});`
+      successfulDeletes.push(id)
 
-  logSql(deleteFilesSql, 'Delete files SQL')
-  await query(deleteFilesSql)
+      transaction.commit()
+    } catch (error) {
+      console.error('Error removing attachment', id, error)
+      transaction.rollback()
+    }
+  }
 
-  return { ids }
+  return { ids: successfulDeletes }
 }

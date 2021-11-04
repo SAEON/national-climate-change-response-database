@@ -1,5 +1,4 @@
-export default async (self, args, ctx) => {
-  const { query } = ctx.mssql
-  const result = await query('select * from [Permissions]')
-  return result.recordset
-}
+import { pool } from '../../../mssql/pool.js'
+
+export default async () =>
+  (await (await pool.connect()).request().query('select * from Permissions')).recordset

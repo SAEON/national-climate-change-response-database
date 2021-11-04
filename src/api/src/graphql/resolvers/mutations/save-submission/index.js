@@ -1,4 +1,4 @@
-import logSql from '../../../../lib/log-sql.js'
+import { pool } from '../../../../mssql/pool.js'
 
 export default async (
   _,
@@ -13,27 +13,37 @@ export default async (
   },
   ctx
 ) => {
-  const { query } = ctx.mssql
   const { user } = ctx
   const userId = user.info(ctx).id
+
+  const request = (await pool.connect()).request()
+  request
+    .input('project', JSON.stringify(project))
+    .input('mitigation', JSON.stringify(mitigation))
+    .input('adaptation', JSON.stringify(adaptation))
+    .input('userId', userId)
+    .input('createdAt', new Date().toISOString())
+    .input('submissionComments', submissionComments)
+    .input('isSubmitted', isSubmitted)
+    .input('submissionId', submissionId)
+
+  if (submissionStatus) {
+    request.input('submissionStatus', JSON.stringify(submissionStatus))
+  }
 
   const sql = `
     merge Submissions t
     using (
       select
-        '${sanitizeSqlValue(JSON.stringify(project))}' project,
-        '${sanitizeSqlValue(JSON.stringify(mitigation))}' mitigation,
-        '${sanitizeSqlValue(JSON.stringify(adaptation))}' adaptation,
-        ${isSubmitted ? 1 : 0} isSubmitted,
-        ${
-          submissionStatus
-            ? `'${sanitizeSqlValue(JSON.stringify(submissionStatus))}' submissionStatus,`
-            : ''
-        }
-        '${sanitizeSqlValue(submissionComments)}' submissionComments,
-        ${userId} createdBy,
-        '${new Date().toISOString()}' createdAt
-    ) s on t.id = '${sanitizeSqlValue(submissionId)}'
+        @project project,
+        @mitigation mitigation,
+        @adaptation adaptation,
+        @isSubmitted isSubmitted,
+        ${submissionStatus ? `@submissionStatus submissionStatus,` : ''}
+        @submissionComments submissionComments,
+        @userId createdBy,
+        @createdAt createdAt
+    ) s on t.id = @submissionId
     when not matched then insert (
       project,
       mitigation,
@@ -66,8 +76,6 @@ export default async (
       $action,
       inserted.*;`
 
-  logSql(sql, 'Save submission')
-  const response = await query(sql)
-  const output = response.recordset[0]
-  return output
+  const result = await request.query(sql)
+  return result.recordset[0]
 }

@@ -6,16 +6,13 @@ import createSubmission from '../mutations/create-submission/index.js'
 import deleteSubmission from '../mutations/delete-submission/index.js'
 import removeSubmissionAttachments from '../mutations/remove-submission-attachments/index.js'
 import saveSubmission from '../mutations/save-submission/index.js'
-import query from '../../../mssql/query.js'
+import { pool } from '../../../mssql/pool.js'
 
-const getSubmissionOwner = async id =>
-  (
-    await query(
-      `select *
-     from Submissions
-     where id = '${sanitizeSqlValue(id)}';`
-    )
-  ).recordset[0].userId
+const getSubmissionOwner = id =>
+  pool
+    .connect()
+    .then(pool => pool.request().input('id', id).query(`select * from Submissions where id = @id;`))
+    .then(({ recordset }) => recordset[0].userId)
 
 export default {
   createSubmission: authorize(PERMISSIONS['create-submission'])(createSubmission),

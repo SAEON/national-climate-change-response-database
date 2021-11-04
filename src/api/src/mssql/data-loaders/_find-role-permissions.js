@@ -18,7 +18,7 @@ export default () =>
         from Permissions p
         join PermissionRoleXref x on x.permissionId = p.id
         where
-          x.roleId in (${keys.map((_, i) => `@key_${i}`)})`)
+          x.roleId in (${keys.map((_, i) => `@key_${i}`)});`)
 
       return keys.map(id => result.recordset.filter(sift({ roleId: id })))
     },

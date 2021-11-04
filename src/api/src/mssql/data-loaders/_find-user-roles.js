@@ -10,15 +10,15 @@ export default () =>
       keys.forEach((key, i) => request.input(`key_${i}`, key))
 
       const result = await request.query(`
-      select
-        x.userId,
-        r.id,
-        r.name,
-        r.description
-      from Roles r
-      join UserRoleXref x on x.roleId = r.id
-      where
-        x.userId in (${keys.map((_, i) => `@key_${i}`)})`)
+        select
+          x.userId,
+          r.id,
+          r.name,
+          r.description
+        from Roles r
+        join UserRoleXref x on x.roleId = r.id
+        where
+          x.userId in (${keys.map((_, i) => `@key_${i}`)});`)
 
       return keys.map(id => result.recordset.filter(sift({ userId: id })))
     },

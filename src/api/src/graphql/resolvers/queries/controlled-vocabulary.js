@@ -37,7 +37,7 @@ export default async (_, { root, roots, tree }) => {
     left outer join VocabularyXrefVocabulary vxv on vxv.parentId = p.id and vxv.treeId = p.treeId
     left outer join Vocabulary children on children.id = vxv.childId
     
-    for json auto`
+    for json auto;`
 
   const result = await request.query(sql)
   const results = result.recordset[0] || []

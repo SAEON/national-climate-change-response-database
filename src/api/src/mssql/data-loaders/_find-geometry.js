@@ -27,7 +27,7 @@ export default () =>
         join Geometries g on g.id = gx.geometryId
         where
           t.name in (${trees.map((_, i) => `@tree_${i}`).join(',')})
-          and vxt.vocabularyId in (${ids.map((_, i) => `@id_${i}`).join(',')})`
+          and vxt.vocabularyId in (${ids.map((_, i) => `@id_${i}`).join(',')});`
 
       const result = await request.query(sql)
       const rows = result.recordset

@@ -15,7 +15,7 @@ export default () =>
         from Submissions s
         where
           deletedAt is null
-          and s.createdBy in (${keys.map((_, i) => `@key_${i}`)})`)
+          and s.createdBy in (${keys.map((_, i) => `@key_${i}`)});`)
 
       return keys.map(createdBy => result.recordset.filter(sift({ createdBy })))
     },

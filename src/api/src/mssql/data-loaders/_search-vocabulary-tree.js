@@ -18,10 +18,10 @@ export default () =>
 
       const sql = `
         select
-        p.id,
-        p.term,
-        p.tree,
-        children.id id
+          p.id,
+          p.term,
+          p.tree,
+          children.id id
         
         from (
           select
@@ -35,13 +35,13 @@ export default () =>
           join Trees t on t.id = vxt.treeId
         
           where
-          parent.id in (${ids.map((_, i) => `@id_${i}`).join(',')})
-          and t.name in (${trees.map((_, i) => `@tree_${i}`).join(',')})
+            parent.id in (${ids.map((_, i) => `@id_${i}`).join(',')})
+            and t.name in (${trees.map((_, i) => `@tree_${i}`).join(',')})
         ) p
         left outer join VocabularyXrefVocabulary vxv on vxv.parentId = p.id and vxv.treeId = p.treeId
         left outer join Vocabulary children on children.id = vxv.childId
         
-        for json auto`
+        for json auto;`
 
       const results = await request.query(sql)
 

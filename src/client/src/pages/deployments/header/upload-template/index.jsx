@@ -1,15 +1,15 @@
 import Icon from 'mdi-react/MicrosoftExcelIcon'
-import Hidden from '@material-ui/core/Hidden'
+import Hidden from '@mui/material/Hidden'
 import { NCCRD_API_HTTP_ADDRESS } from '../../../../config'
-import Divider from '@material-ui/core/Divider'
+import Divider from '@mui/material/Divider'
 import FileUploadDialogue from './upload-dialogue'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles'
 
 export default () => {
   const theme = useTheme()
 
   return (
-    <Hidden xsDown>
+    <Hidden smDown>
       <Divider
         flexItem
         orientation="vertical"

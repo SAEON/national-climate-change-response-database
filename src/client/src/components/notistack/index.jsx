@@ -1,5 +1,5 @@
 import { SnackbarProvider } from 'notistack'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles'
 
 export default ({ children }) => {
   const theme = useTheme()

@@ -1,15 +1,15 @@
 import EditIcon from 'mdi-react/EditIcon'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
-import Tooltip from '@material-ui/core/Tooltip'
-import Hidden from '@material-ui/core/Hidden'
-import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@mui/material/Tooltip'
+import Hidden from '@mui/material/Hidden'
+import IconButton from '@mui/material/IconButton'
 
 export default ({ id }) => {
   return (
     <Tooltip placement="bottom" title="Edit this project">
       <span>
-        <Hidden xsDown>
+        <Hidden smDown>
           <Button
             component={Link}
             to={`/submissions/${id}/edit`}

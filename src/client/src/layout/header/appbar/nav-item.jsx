@@ -1,8 +1,8 @@
 import { forwardRef } from 'react'
 import { Link, Route } from 'react-router-dom'
-import MenuItem from '@material-ui/core/MenuItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
 
 export default forwardRef(({ onClick, label, to, Icon, exact = false, href }, ref) => (
   <Route path={to} exact={exact}>

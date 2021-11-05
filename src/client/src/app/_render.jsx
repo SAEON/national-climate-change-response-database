@@ -1,6 +1,4 @@
 import ApolloProvider from '../components/apollo'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns'
 import ClientInfoProvider from '../contexts/client-info'
 import AuthenticationProvider from '../contexts/authentication'
 import AuthorizationProvider from '../contexts/authorization'
@@ -12,7 +10,9 @@ import ErrorBoundary from '../components/error-boundary'
 import CookieConsent from '../components/cookie-consent'
 import DetectDevice from '../components/detect-device'
 import Layout from '../layout'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import CssBaseline from '@mui/material/CssBaseline'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
 
 export default () => {
   return (
@@ -26,13 +26,13 @@ export default () => {
                   <AuthenticationProvider>
                     <AuthorizationProvider>
                       <BackgroundImageProvider>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
                           <SnackbarProvider>
                             <DefaultApplicationNotices>
                               <Layout />
                             </DefaultApplicationNotices>
                           </SnackbarProvider>
-                        </MuiPickersUtilsProvider>
+                        </LocalizationProvider>
                       </BackgroundImageProvider>
                     </AuthorizationProvider>
                   </AuthenticationProvider>

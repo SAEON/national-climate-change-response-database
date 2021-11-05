@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { context as filterContext } from '../context'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import { useTheme } from '@mui/material/styles'
 import ResultCard from './result-card'
 
 export default () => {

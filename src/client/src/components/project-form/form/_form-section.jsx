@@ -1,7 +1,7 @@
-import CardContent from '@material-ui/core/CardContent'
-import useTheme from '@material-ui/core/styles/useTheme'
+import CardContent from '@mui/material/CardContent'
+import { useTheme } from '@mui/material/styles'
 import Collapse from '../../collapse'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import Icon from 'mdi-react/EditIcon'
 
 export default ({ title, fields, RenderField, formName }) => {

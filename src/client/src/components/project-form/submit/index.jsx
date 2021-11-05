@@ -1,13 +1,13 @@
 import { useContext } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
-import Button from '@material-ui/core/Button'
-import CardHeader from '@material-ui/core/CardHeader'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
+import Button from '@mui/material/Button'
+import CardHeader from '@mui/material/CardHeader'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardActions from '@mui/material/CardActions'
 import { context as formContext, convertFormToGqlInput } from '../context'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
 export default () => {
   const history = useHistory()

@@ -1,5 +1,5 @@
-import Typography from '@material-ui/core/Typography'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Typography from '@mui/material/Typography'
+import { useTheme } from '@mui/material/styles'
 
 const renderValue = value => {
   if (value?.term) {

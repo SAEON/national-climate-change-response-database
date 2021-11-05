@@ -4,12 +4,12 @@ import GraphQLFormProvider, { context as formContext } from './context'
 import Submit from './submit'
 import Loading from '../loading'
 import AvatarIcon from './_avatar-icon'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles'
 import SyncStatus from './_sync-status'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import BottomNav from './bottom-nav'
 import SyncIcon from 'mdi-react/SyncIcon'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 
 const GeneralDetailsForm = lazy(() => import('./sections/general-details'))
 const MitigationDetailsForm = lazy(() => import('./sections/mitigation-details'))

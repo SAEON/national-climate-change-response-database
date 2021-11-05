@@ -1,4 +1,4 @@
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from '@mui/material/Avatar'
 import useStyles from './style'
 import clsx from 'clsx'
 import CompleteIcon from 'mdi-react/CheckBoldIcon'

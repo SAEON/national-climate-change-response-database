@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { context as authContext } from '../../../../contexts/authorization'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 import { gql, useMutation } from '@apollo/client'
 import MessageDialogue from '../../../../components/message-dialogue'

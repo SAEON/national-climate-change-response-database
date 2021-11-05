@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 import Loading from '../../components/loading'
 
 export default ({ children, tKey }) => (

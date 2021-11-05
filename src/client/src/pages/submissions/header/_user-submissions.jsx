@@ -1,13 +1,13 @@
 import { useContext } from 'react'
 import Icon from 'mdi-react/FileUserIcon'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
-import Tooltip from '@material-ui/core/Tooltip'
-import Hidden from '@material-ui/core/Hidden'
-import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@mui/material/Tooltip'
+import Hidden from '@mui/material/Hidden'
+import IconButton from '@mui/material/IconButton'
 import { context as authContext } from '../../../contexts/authorization'
-import Divider from '@material-ui/core/Divider'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Divider from '@mui/material/Divider'
+import { useTheme } from '@mui/material/styles'
 
 export default () => {
   const theme = useTheme()
@@ -22,7 +22,7 @@ export default () => {
     <>
       <Tooltip placement="bottom" title="View your project submissions">
         <span>
-          <Hidden xsDown>
+          <Hidden smDown>
             <Button
               component={Link}
               to={`/user/submissions`}

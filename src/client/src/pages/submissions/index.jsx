@@ -4,8 +4,8 @@ import Filters from './filters'
 import { useSnackbar } from 'notistack'
 import Header from './header'
 import Results from './results'
-import Grid from '@material-ui/core/Grid'
-import Hidden from '@material-ui/core/Hidden'
+import Grid from '@mui/material/Grid'
+import Hidden from '@mui/material/Hidden'
 import Wrapper from '../../components/page-wrapper'
 import FilterContextProvider from './context'
 
@@ -26,7 +26,7 @@ export default () => {
       <Wrapper>
         <Grid container direction="row" spacing={2}>
           {/* FILTERS */}
-          <Hidden smDown>
+          <Hidden mdDown>
             <Grid container item md={4} spacing={1}>
               <Grid xs item>
                 <Filters />

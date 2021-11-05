@@ -1,7 +1,6 @@
 import Submit from './submit-project'
 import Wrapper from './_wrapper'
-import useTheme from '@material-ui/core/styles/useTheme'
-import { alpha } from '@material-ui/core/styles/colorManipulator'
+import { useTheme, alpha } from '@mui/material/styles'
 import About from './about'
 import Explore from './explore-projects'
 import Header from './header'

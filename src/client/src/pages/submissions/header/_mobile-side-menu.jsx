@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import Drawer from '@material-ui/core/SwipeableDrawer'
-import Grid from '@material-ui/core/Grid'
+import Drawer from '@mui/material/SwipeableDrawer'
+import Grid from '@mui/material/Grid'
 import CloseIcon from 'mdi-react/CloseIcon'
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 import FilterIcon from 'mdi-react/FilterIcon'
 
 export default ({ Filters, filters }) => {
@@ -20,7 +20,11 @@ export default ({ Filters, filters }) => {
       >
         <Grid container>
           <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <IconButton aria-label="Toggle search filters" onClick={() => setShowSidebar(false)}>
+            <IconButton
+              aria-label="Toggle search filters"
+              onClick={() => setShowSidebar(false)}
+              size="large"
+            >
               <CloseIcon />
             </IconButton>
           </Grid>

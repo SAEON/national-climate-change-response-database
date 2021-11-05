@@ -1,8 +1,8 @@
 import { useState, useCallback, memo } from 'react'
-import List from '@material-ui/core/List'
-import Grid from '@material-ui/core/Grid'
-import useTheme from '@material-ui/core/styles/useTheme'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import List from '@mui/material/List'
+import Grid from '@mui/material/Grid'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import NavItem from './_nav-item'
 
 const RenderNavContent = memo(

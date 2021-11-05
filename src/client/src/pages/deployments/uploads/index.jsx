@@ -1,15 +1,15 @@
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardContent from '@material-ui/core/CardContent'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@material-ui/data-grid'
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 import DownloadIcon from 'mdi-react/DownloadIcon'
-import Link from '@material-ui/core/Link'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Link from '@mui/material/Link'
+import { useTheme } from '@mui/material/styles'
 import useStyles from './style'
 import clsx from 'clsx'
 import { NCCRD_API_HTTP_ADDRESS } from '../../../config'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 
 export default ({ templates }) => {
   const theme = useTheme()

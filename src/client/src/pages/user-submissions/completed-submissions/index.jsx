@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@material-ui/data-grid'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Link from '@material-ui/core/Link'
+import { useTheme } from '@mui/material/styles'
+import Link from '@mui/material/Link'
 import { Link as RouterLink } from 'react-router-dom'
 
 export default ({ submissions }) => {
@@ -60,7 +60,11 @@ export default ({ submissions }) => {
                 disableColumnMenu: true,
                 flex: 1,
                 renderCell: ({ row: { formNumber } }) => (
-                  <Link component={RouterLink} to={`/submissions/${formNumber}/edit`}>
+                  <Link
+                    component={RouterLink}
+                    to={`/submissions/${formNumber}/edit`}
+                    underline="hover"
+                  >
                     Edit submission
                   </Link>
                 ),

@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react'
-import TextField from '@material-ui/core/TextField'
-import MenuItem from '@material-ui/core/MenuItem'
-import Typography from '@material-ui/core/Typography'
+import TextField from '@mui/material/TextField'
+import MenuItem from '@mui/material/MenuItem'
+import Typography from '@mui/material/Typography'
 import QuickForm from '../../../quick-form'
 import debounce from '../../../../lib/debounce'
 

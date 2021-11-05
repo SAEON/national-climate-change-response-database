@@ -1,5 +1,5 @@
-import Toolbar from '@material-ui/core/Toolbar'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Toolbar from '@mui/material/Toolbar'
+import { useTheme } from '@mui/material/styles'
 
 export default props => {
   const theme = useTheme()

@@ -1,17 +1,17 @@
 import { memo, useMemo, useState } from 'react'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 import ListInput from './list-input'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import QuickForm from '../../../../quick-form'
 import debounce from '../../../../../lib/debounce'
 import Toolbar from './toolbar'
 import Map from '../../../../ol-react'
-import AppBar from '@material-ui/core/AppBar'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import Box from '@material-ui/core/Box'
+import AppBar from '@mui/material/AppBar'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import Box from '@mui/material/Box'
 import Picker from './picker'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 
 const TabPanel = props => {
   const { children, value, index, ...other } = props

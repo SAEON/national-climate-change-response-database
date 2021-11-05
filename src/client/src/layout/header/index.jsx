@@ -1,9 +1,9 @@
 import { forwardRef } from 'react'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
 import BannerToolbar from './banner/toolbar'
 import Banner, { IMAGE_HEIGHT } from './banner'
-import Divider from '@material-ui/core/Divider'
+import Divider from '@mui/material/Divider'
 import ApplicationToolbar from './appbar'
 import { ElevationOnScroll, HideOnScroll } from './scroll-animations'
 

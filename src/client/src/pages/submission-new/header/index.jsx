@@ -2,9 +2,9 @@ import ToolbarHeader from '../../../components/toolbar-header'
 import DeleteSubmission from './delete-submission'
 import DownloadExcelTemplate from '../../../components/download-template'
 import UploadProject from '../../../components/submit-template'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Divider from '@material-ui/core/Divider'
-import Hidden from '@material-ui/core/Hidden'
+import { useTheme } from '@mui/material/styles'
+import Divider from '@mui/material/Divider'
+import Hidden from '@mui/material/Hidden'
 import ShareForm from './share-form'
 
 export default ({ id }) => {
@@ -12,7 +12,7 @@ export default ({ id }) => {
 
   return (
     <ToolbarHeader>
-      <Hidden xsDown>
+      <Hidden smDown>
         <DownloadExcelTemplate />
         <div style={{ marginLeft: theme.spacing(2) }} />
         <UploadProject />

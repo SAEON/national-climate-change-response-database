@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 import Icon from 'mdi-react/ContentCopyIcon'
-import Button from '@material-ui/core/Button'
-import Hidden from '@material-ui/core/Hidden'
+import Button from '@mui/material/Button'
+import Hidden from '@mui/material/Hidden'
 import MessageDialogue from '../../../../components/message-dialogue'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Typography from '@material-ui/core/Typography'
+import { useTheme } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 import CheckIcon from 'mdi-react/CheckCircleIcon'
 
 export default () => {
@@ -30,7 +30,7 @@ export default () => {
       Button={openFn => {
         return (
           <>
-            <Hidden xsDown>
+            <Hidden smDown>
               <Button
                 onClick={openFn}
                 disableElevation

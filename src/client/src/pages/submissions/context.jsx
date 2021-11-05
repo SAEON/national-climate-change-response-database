@@ -2,7 +2,7 @@ import { useState, createContext, useCallback, useContext } from 'react'
 import { context as authContext } from '../../contexts/authorization'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 import {
   projectFilters as projectFiltersConfig,
   adaptationFilters as adaptationFiltersConfig,

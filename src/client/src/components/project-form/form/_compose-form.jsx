@@ -1,4 +1,4 @@
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles'
 import FormSection from './_form-section'
 import { NCCRD_DEPLOYMENT_ENV } from '../../../config'
 import sift from 'sift'
@@ -59,38 +59,36 @@ ${JSON.stringify(sections, null, 2)}`
     }
   }
 
-  return (
-    <>
-      {Object.entries(sections).map(([title, sectionFields], i) => {
-        const _sectionFields = fields.filter(
-          sift({
-            name: {
-              $in: sectionFields,
-            },
-          })
-        )
+  return <>
+    {Object.entries(sections).map(([title, sectionFields], i) => {
+      const _sectionFields = fields.filter(
+        sift({
+          name: {
+            $in: sectionFields,
+          },
+        })
+      )
 
-        if (hideSections.includes(title)) {
-          return null
-        }
+      if (hideSections.includes(title)) {
+        return null
+      }
 
-        return (
-          <FormSection
-            formName={formName}
-            formNumber={formNumber}
-            key={title}
-            cardStyle={{ marginTop: i === 0 ? 'inherit' : theme.spacing(2) }}
-            title={title}
-            fields={sectionFields.map(_name => {
-              if (_name.match(/^__/)) {
-                return { name: _name, type: { name: 'dynamic' } }
-              }
-              return _sectionFields.find(({ name }) => _name === name)
-            })}
-            RenderField={RenderField}
-          />
-        )
-      })}
-    </>
-  )
+      return (
+        <FormSection
+          formName={formName}
+          formNumber={formNumber}
+          key={title}
+          cardStyle={{ marginTop: i === 0 ? 'inherit' : theme.spacing(2) }}
+          title={title}
+          fields={sectionFields.map(_name => {
+            if (_name.match(/^__/)) {
+              return { name: _name, type: { name: 'dynamic' } }
+            }
+            return _sectionFields.find(({ name }) => _name === name)
+          })}
+          RenderField={RenderField}
+        />
+      );
+    })}
+  </>;
 }

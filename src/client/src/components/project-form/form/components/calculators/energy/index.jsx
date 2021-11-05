@@ -1,7 +1,8 @@
 import { memo, useMemo } from 'react'
 import ControlledVocabularySelectMultiple from '../../controlled-vocabulary-select-multiple'
-import { DatePicker } from '@material-ui/pickers'
-import Grid from '@material-ui/core/Grid'
+import DatePicker from '@mui/lab/DatePicker'
+import TextField from '@mui/material/TextField'
+import Grid from '@mui/material/Grid'
 import InputTables from './input-tables'
 import SummaryTable from './summary-table'
 import QuickForm from '../../../../../quick-form'
@@ -26,21 +27,23 @@ export default memo(
                 {/* START DATE */}
                 <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
                   <DatePicker
-                    fullWidth
-                    inputVariant="outlined"
-                    margin="normal"
+                    renderInput={params => (
+                      <TextField
+                        helperText={'What year did/will the mitigation project start?'}
+                        fullWidth
+                        variant="outlined"
+                        margin="normal"
+                        {...params}
+                      />
+                    )}
                     clearable
                     autoOk
                     minDate="1990"
                     maxDate="2089"
-                    variant="dialog"
                     views={['year']}
-                    animateYearScrolling
-                    format="yyyy"
                     placeholder={'Start year'}
                     label={'Start year'}
                     id="energy-calculator-mitigation-start"
-                    helperText={'What year did/will the mitigation project start?'}
                     value={startYear}
                     onChange={value =>
                       update({
@@ -71,21 +74,23 @@ export default memo(
                 {/* END DATE */}
                 <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
                   <DatePicker
-                    fullWidth
-                    inputVariant="outlined"
-                    margin="normal"
+                    renderInput={params => (
+                      <TextField
+                        fullWidth
+                        helperText={'What year did/will the mitigation project end?'}
+                        variant="outlined"
+                        margin="normal"
+                        {...params}
+                      />
+                    )}
                     clearable
-                    variant="dialog"
                     autoOk
                     minDate="1990"
                     maxDate="2089"
                     views={['year']}
-                    animateYearScrolling
-                    format="yyyy"
                     placeholder={'End year'}
                     label={'End year'}
                     id="energy-calculator-mitigation-end"
-                    helperText={'What year did/will the mitigation project end?'}
                     value={endYear}
                     onChange={value =>
                       update({

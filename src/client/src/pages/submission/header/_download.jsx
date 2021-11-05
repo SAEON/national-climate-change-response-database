@@ -1,9 +1,9 @@
-import Hidden from '@material-ui/core/Hidden'
+import Hidden from '@mui/material/Hidden'
 import Download from '../../../components/download-record'
 
 export default ({ id, title }) => {
   return (
-    <Hidden smDown>
+    <Hidden mdDown>
       <Download variant="text" id={id} title={title} />
     </Hidden>
   )

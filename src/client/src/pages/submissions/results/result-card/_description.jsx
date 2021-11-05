@@ -1,6 +1,6 @@
-import Typography from '@material-ui/core/Typography'
-import CardContent from '@material-ui/core/CardContent'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import Typography from '@mui/material/Typography'
+import CardContent from '@mui/material/CardContent'
+import makeStyles from '@mui/styles/makeStyles';
 import clsx from 'clsx'
 
 const useStyles = makeStyles(() => ({

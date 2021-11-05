@@ -1,6 +1,6 @@
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import { useTheme } from '@mui/material/styles';
 import Delete from './_delete'
 import View from './_view'
 import Edit from './_edit'

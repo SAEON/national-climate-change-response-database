@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 import { context as authContext } from '../../../contexts/authorization'
 import { context as accessContext } from '../context'
-import CardContent from '@material-ui/core/CardContent'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Grid from '@material-ui/core/Grid'
+import CardContent from '@mui/material/CardContent'
+import { useTheme } from '@mui/material/styles'
+import Grid from '@mui/material/Grid'
 import { DataGrid } from '@material-ui/data-grid'
 import Collapse from '../../../components/collapse'
 

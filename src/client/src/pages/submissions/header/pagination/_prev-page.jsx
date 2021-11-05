@@ -1,6 +1,6 @@
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 import Icon from 'mdi-react/ChevronLeftIcon'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 import { useContext } from 'react'
 import { context as resultContext } from '../../context'
 

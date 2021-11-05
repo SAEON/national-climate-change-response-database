@@ -2,15 +2,15 @@ import { useContext } from 'react'
 import { context as authenticationContext } from '../../../contexts/authentication'
 import { context as clientInfoContext } from '../../../contexts/client-info'
 import { useLocation, Link } from 'react-router-dom'
-import MuiLink from '@material-ui/core/Link'
-import Toolbar from '@material-ui/core/Toolbar'
+import MuiLink from '@mui/material/Link'
+import Toolbar from '@mui/material/Toolbar'
 import { NCCRD_API_HTTP_ADDRESS } from '../../../config'
 import NavMenu from './nav-menu'
 import Breadcrumbs from './breadcrumbs'
-import Divider from '@material-ui/core/Divider'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Typography from '@material-ui/core/Typography'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Divider from '@mui/material/Divider'
+import { useTheme } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default () => {
   const theme = useTheme()
@@ -47,7 +47,7 @@ export default () => {
           component={Link}
           style={{ marginLeft: 'auto' }}
           to={`/login?redirect=${window.location.href}`}
-        >
+          underline="hover">
           <Typography style={{ paddingRight: theme.spacing(1) }} variant="overline">
             Log in
           </Typography>
@@ -58,12 +58,12 @@ export default () => {
         <MuiLink
           style={{ marginLeft: 'auto' }}
           href={`${NCCRD_API_HTTP_ADDRESS}/logout?redirect=${NCCRD_CLIENT_ADDRESS}`}
-        >
+          underline="hover">
           <Typography style={{ paddingRight: theme.spacing(1) }} variant="overline">
             Log out {smAndUp && `(${user.emailAddress})`}
           </Typography>
         </MuiLink>
       )}
     </Toolbar>
-  )
+  );
 }

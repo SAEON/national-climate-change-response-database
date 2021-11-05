@@ -1,8 +1,8 @@
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from '@mui/material/Avatar'
 import ProjectIcon from 'mdi-react/FormSelectIcon'
-import CardHeader from '@material-ui/core/CardHeader'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Typography from '@material-ui/core/Typography'
+import CardHeader from '@mui/material/CardHeader'
+import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography'
 
 export default ({ title }) => {
   const theme = useTheme()

@@ -1,6 +1,6 @@
 import { cloneElement } from 'react'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-import Collapse from '@material-ui/core/Collapse'
+import useScrollTrigger from '@mui/material/useScrollTrigger'
+import Collapse from '@mui/material/Collapse'
 
 export const ElevationOnScroll = ({ children }) => {
   const trigger = useScrollTrigger({

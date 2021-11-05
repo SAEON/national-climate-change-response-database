@@ -2,10 +2,10 @@ import { useMemo, memo } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import QuickFrom from '../../../../components/quick-form'
 import debounce from '../../../../lib/debounce'
-import TextField from '@material-ui/core/TextField'
+import TextField from '@mui/material/TextField'
 import Loading from '../../../../components/loading'
-import Typography from '@material-ui/core/Typography'
-import MenuItem from '@material-ui/core/MenuItem'
+import Typography from '@mui/material/Typography'
+import MenuItem from '@mui/material/MenuItem'
 
 export const DEFAULT_VALUE = '(NONE)'
 

@@ -1,9 +1,9 @@
 import { gql, useMutation } from '@apollo/client'
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 import DeleteIcon from 'mdi-react/DeleteIcon'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import { useHistory } from 'react-router-dom'
-import Hidden from '@material-ui/core/Hidden'
+import Hidden from '@mui/material/Hidden'
 import MessageDialogue from '../../../../components/message-dialogue'
 
 export default ({ id }) => {
@@ -36,7 +36,7 @@ export default ({ id }) => {
       Button={openFn => {
         return (
           <>
-            <Hidden xsDown>
+            <Hidden smDown>
               <Button
                 onClick={openFn}
                 disableElevation

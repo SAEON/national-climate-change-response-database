@@ -1,9 +1,9 @@
 import { Component } from 'react'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import Link from '@material-ui/core/Link'
+import DialogContentText from '@mui/material/DialogContentText'
+import Link from '@mui/material/Link'
 import MessageDialogue from '../../components/message-dialogue'
 import { NCCRD_TECHNICAL_CONTACT } from '../../config'
-import withStyles from '@material-ui/core/styles/withStyles'
+import withStyles from '@mui/styles/withStyles'
 import style from './style'
 import clsx from 'clsx'
 
@@ -40,7 +40,10 @@ class ErrorBoundary extends Component {
               Please try refreshing this page in a few minutes. If the error persists, or if
               assistance is required, please contact{' '}
               {
-                <Link variant="body1" href={`mailto:${NCCRD_TECHNICAL_CONTACT}`}>
+                <Link
+                  variant="body1"
+                  href={`mailto:${NCCRD_TECHNICAL_CONTACT}`}
+                  underline="hover">
                   {NCCRD_TECHNICAL_CONTACT}
                 </Link>
               }{' '}
@@ -60,7 +63,7 @@ class ErrorBoundary extends Component {
           </>
         }
       />
-    )
+    );
   }
 }
 

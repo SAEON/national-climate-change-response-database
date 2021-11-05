@@ -1,7 +1,7 @@
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardContent from '@material-ui/core/CardContent'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import { useTheme } from '@mui/material/styles'
 import FormattedObject from './_formatted-object'
 
 export default ({ title, json }) => {

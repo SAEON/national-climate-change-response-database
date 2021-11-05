@@ -1,14 +1,14 @@
 import { memo } from 'react'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import Tooltip from '@material-ui/core/Tooltip'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import Tooltip from '@mui/material/Tooltip'
 import clsx from 'clsx'
-import ButtonBase from '@material-ui/core/ButtonBase'
-import Card from '@material-ui/core/Card'
+import ButtonBase from '@mui/material/ButtonBase'
+import Card from '@mui/material/Card'
 import useStyles from './style'
-import useTheme from '@material-ui/core/styles/useTheme'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default memo(
   ({
@@ -25,7 +25,7 @@ export default memo(
     activeIndex,
   }) => {
     const theme = useTheme()
-    const xsAndDown = useMediaQuery(theme.breakpoints.down('xs'))
+    const xsAndDown = useMediaQuery(theme.breakpoints.down('sm'))
     const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
     const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
     const classes = useStyles()

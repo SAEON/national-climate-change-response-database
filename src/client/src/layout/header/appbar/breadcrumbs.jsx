@@ -1,8 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import makeStyles from '@mui/styles/makeStyles'
+import Typography from '@mui/material/Typography'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
 import { Link, useLocation } from 'react-router-dom'
-import MuiLink from '@material-ui/core/Link'
+import MuiLink from '@mui/material/Link'
 import navItems from './nav-items'
 import EditIcon from 'mdi-react/EditIcon'
 import SubmissionIcon from 'mdi-react/DatabaseAddIcon'
@@ -60,11 +60,11 @@ export default function IconBreadcrumbs() {
                   .join('/')
               }
               className={classes.link}
-            >
+              underline="hover">
               {Icon && <Icon size={18} className={classes.icon} />}
               {label}
             </MuiLink>
-          )
+          );
         })}
 
       {tree.slice(-1).map(({ label, breadcrumbsLabel, Icon, BreadcrumbsIcon } = {}) => {
@@ -83,5 +83,5 @@ export default function IconBreadcrumbs() {
         )
       })}
     </Breadcrumbs>
-  )
+  );
 }

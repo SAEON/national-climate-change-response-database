@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import IconButton from '@material-ui/core/IconButton'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogActions from '@material-ui/core/DialogActions'
-import Tooltip from '@material-ui/core/Tooltip'
-import Badge from '@material-ui/core/Badge'
+import IconButton from '@mui/material/IconButton'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import Tooltip from '@mui/material/Tooltip'
+import Badge from '@mui/material/Badge'
 import InfoIcon from 'mdi-react/InformationIcon'
 import { nanoid } from 'nanoid'
 
@@ -64,6 +64,7 @@ export default ({
                   setOpen(!open)
                 }}
                 {...iconProps}
+                size="large"
               >
                 {badgeProps ? (
                   badgeProps._component ? (

@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import DownloadIcon from 'mdi-react/DownloadIcon'
-import Button from '@material-ui/core/Button'
-import Hidden from '@material-ui/core/Hidden'
+import Button from '@mui/material/Button'
+import Hidden from '@mui/material/Hidden'
 import { context as authContext } from '../../../contexts/authorization'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Divider from '@material-ui/core/Divider'
+import { useTheme } from '@mui/material/styles'
+import Divider from '@mui/material/Divider'
 import MessageDialog from '../../../components/message-dialogue'
 
 export default () => {
@@ -22,7 +22,7 @@ export default () => {
         style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
       />
 
-      <Hidden smDown>
+      <Hidden mdDown>
         <MessageDialog
           title="Download submissions"
           text="This button is only shown to admins, and is not implemented yet"

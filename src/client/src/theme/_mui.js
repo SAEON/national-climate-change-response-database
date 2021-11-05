@@ -22,7 +22,7 @@ export default {
     },
   },
   palette: {
-    type: 'light',
+    mode: 'light',
     contrastThreshold: 3,
     primary: {
       main: 'rgb(0, 93, 40)',

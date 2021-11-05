@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { DataGrid } from '@material-ui/data-grid'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import PlusIcon from 'mdi-react/PlusIcon'
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 import useStyles from './style'
 import clsx from 'clsx'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogActions from '@material-ui/core/DialogActions'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import useTheme from '@material-ui/core/styles/useTheme'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import { useTheme } from '@mui/material/styles';
 import MessageDialogue from '../../../../message-dialogue'
-import TextField from '@material-ui/core/TextField'
+import TextField from '@mui/material/TextField'
 
 const NewPointForm = ({ closeFn, points, setPoints }) => {
   const [lat, setLat] = useState('')

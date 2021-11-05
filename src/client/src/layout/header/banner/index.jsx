@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import MuiLink from '@material-ui/core/Link'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import Typography from '@material-ui/core/Typography'
+import MuiLink from '@mui/material/Link'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import Typography from '@mui/material/Typography'
 import Toolbar from './toolbar'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 
 export const IMAGE_HEIGHT = 93
 
@@ -31,7 +31,7 @@ export default () => {
 
       {/* TITLE */}
       {mdAndUp && (
-        <MuiLink component={Link} to="/">
+        <MuiLink component={Link} to="/" underline="hover">
           <Typography
             color="textPrimary"
             style={{ display: 'flex', flexBasis: 0, flexGrow: 1, textAlign: 'center' }}
@@ -58,5 +58,5 @@ export default () => {
         </a>
       )}
     </Toolbar>
-  )
+  );
 }

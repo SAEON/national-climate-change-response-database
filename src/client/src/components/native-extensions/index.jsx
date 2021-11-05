@@ -19,7 +19,7 @@ export default ({ children }) => {
     String.prototype.titleize = function () {
       return this.split(/_|\s/g)
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ')
+        .join(' ');
     }
 
     // eslint-disable-next-line no-extend-native

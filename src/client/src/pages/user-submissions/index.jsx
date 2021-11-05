@@ -7,8 +7,8 @@ import Loading from '../../components/loading'
 import ContentNav from '../../components/content-nav'
 import CompletedIcon from 'mdi-react/CheckCircleIcon'
 import IncompleteIcon from 'mdi-react/ProgressWrenchIcon'
-import Fade from '@material-ui/core/Fade'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Fade from '@mui/material/Fade'
+import { useTheme } from '@mui/material/styles'
 
 const CompletedSubmissions = lazy(() => import('./completed-submissions'))
 const InprogressSubmissions = lazy(() => import('./inprogress-submissions'))

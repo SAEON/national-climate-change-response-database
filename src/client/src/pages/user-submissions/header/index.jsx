@@ -2,9 +2,9 @@ import DownloadExcelTemplate from '../../../components/download-template'
 import UploadProject from '../../../components/submit-template'
 import NewSubmission from '../../../components/new-submission'
 import ToolbarHeader from '../../../components/toolbar-header'
-import Divider from '@material-ui/core/Divider'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Hidden from '@material-ui/core/Hidden'
+import Divider from '@mui/material/Divider'
+import { useTheme } from '@mui/material/styles'
+import Hidden from '@mui/material/Hidden'
 
 export default () => {
   const theme = useTheme()
@@ -12,7 +12,7 @@ export default () => {
   return (
     <ToolbarHeader>
       <NewSubmission />
-      <Hidden xsDown>
+      <Hidden smDown>
         <Divider
           flexItem
           orientation="vertical"

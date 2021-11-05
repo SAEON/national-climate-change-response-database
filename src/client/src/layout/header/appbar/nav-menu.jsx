@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react'
 import { context as authContext } from '../../../contexts/authorization'
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 import MenuIcon from 'mdi-react/MenuIcon'
-import Menu from '@material-ui/core/Menu'
+import Menu from '@mui/material/Menu'
 import navItems from './nav-items'
 import NavItem from './nav-item'
 
@@ -16,6 +16,7 @@ export default () => {
         aria-controls="site-navigation-menu"
         aria-haspopup="true"
         onClick={e => setAnchorEl(e.currentTarget)}
+        size="large"
       >
         <MenuIcon size={18} />
       </IconButton>

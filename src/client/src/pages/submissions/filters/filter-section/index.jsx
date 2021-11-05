@@ -1,14 +1,13 @@
 import { useState } from 'react'
-import Typography from '@material-ui/core/Typography'
-import Collapse from '@material-ui/core/Collapse'
-import Paper from '@material-ui/core/Paper'
-import Box from '@material-ui/core/Box'
+import Typography from '@mui/material/Typography'
+import Collapse from '@mui/material/Collapse'
+import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
 import FilterHeader from './_header'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme, alpha } from '@mui/material/styles';
 import TextFilter from './_text-filter'
 import VocabularyFilter from './_vocabulary-filter'
 import { DEFAULT_VALUE as NA_VOCAB_SELECT } from './_vocabulary-filter'
-import { alpha } from '@material-ui/core/styles/colorManipulator'
 
 export default ({ filters, setFilter, title }) => {
   const _filters = Object.entries(filters)

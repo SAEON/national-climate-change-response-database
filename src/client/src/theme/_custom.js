@@ -1,4 +1,4 @@
-import { alpha } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@mui/material/styles'
 
 export default defaultTheme => ({
   link: {

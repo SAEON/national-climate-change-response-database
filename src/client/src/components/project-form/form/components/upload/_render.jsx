@@ -1,7 +1,7 @@
 import Upload from './upload-dialogue'
 import Clear from './clear-files-dialogue'
-import Typography from '@material-ui/core/Typography'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Typography from '@mui/material/Typography'
+import { useTheme } from '@mui/material/styles';
 import FileIcon from 'mdi-react/FileIcon'
 
 export default ({ value, submissionId, updateValue, placeholder, helperText, formName }) => {

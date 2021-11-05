@@ -1,19 +1,19 @@
-import Card from '@material-ui/core/Card'
+import Card from '@mui/material/Card'
 import { Link } from 'react-router-dom'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Tooltip from '@material-ui/core/Tooltip'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ButtonBase from '@material-ui/core/ButtonBase'
-import Typography from '@material-ui/core/Typography'
-import Fade from '@material-ui/core/Fade'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
+import Tooltip from '@mui/material/Tooltip'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ButtonBase from '@mui/material/ButtonBase'
+import Typography from '@mui/material/Typography'
+import Fade from '@mui/material/Fade'
 import SyncIcon from 'mdi-react/SyncIcon'
 
 export default ({ syncing, style, submissionId }) => {
   const theme = useTheme()
-  const xsAndDown = useMediaQuery(theme.breakpoints.down('xs'))
+  const xsAndDown = useMediaQuery(theme.breakpoints.down('sm'))
   const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
   const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
 

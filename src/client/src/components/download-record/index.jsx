@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 import { context as authContext } from '../../contexts/authorization'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import DownloadIcon from 'mdi-react/DownloadIcon'
 import Dialog from '../message-dialogue'
-import Link from '@material-ui/core/Link'
+import Link from '@mui/material/Link'
 import { NCCRD_API_HTTP_ADDRESS } from '../../config'
 
 export default ({ title, id, variant = 'outlined' }) => {
@@ -37,7 +37,7 @@ export default ({ title, id, variant = 'outlined' }) => {
             href={`${NCCRD_API_HTTP_ADDRESS}/download-submission?id=${id}`}
             key="download-link"
             onClick={closeFn}
-          >
+            underline="hover">
             Download record
           </Link>
         ),
@@ -58,5 +58,5 @@ export default ({ title, id, variant = 'outlined' }) => {
         </Button>
       )}
     />
-  )
+  );
 }

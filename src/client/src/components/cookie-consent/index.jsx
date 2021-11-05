@@ -1,8 +1,8 @@
 import { forwardRef } from 'react'
 import CookieConsent from 'react-cookie-consent'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import { useTheme } from '@mui/material/styles'
 
 export default ({ children }) => {
   const theme = useTheme()

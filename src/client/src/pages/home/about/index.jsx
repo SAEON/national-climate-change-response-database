@@ -1,7 +1,6 @@
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import useTheme from '@material-ui/core/styles/useTheme'
-import { alpha } from '@material-ui/core/styles/colorManipulator'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import { useTheme, alpha } from '@mui/material/styles'
 
 export default () => {
   const theme = useTheme()

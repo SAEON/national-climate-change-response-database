@@ -1,8 +1,8 @@
-import AppBar from '@material-ui/core/AppBar'
+import AppBar from '@mui/material/AppBar'
 import { cloneElement } from 'react'
-import Toolbar from '@material-ui/core/Toolbar'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Toolbar from '@mui/material/Toolbar'
+import useScrollTrigger from '@mui/material/useScrollTrigger'
+import { useTheme } from '@mui/material/styles'
 
 const AnimateVariant = ({ children }) =>
   cloneElement(children, {

@@ -10,8 +10,8 @@ import Wrapper from '../../components/page-wrapper'
 import ToolbarHeader from '../../components/toolbar-header'
 import AccessDenied from '../../components/access-denied'
 import UserRolesProvider from './context'
-import useTheme from '@material-ui/core/styles/useTheme'
-import Fade from '@material-ui/core/Fade'
+import { useTheme } from '@mui/material/styles'
+import Fade from '@mui/material/Fade'
 
 const Users = lazy(() => import('./users'))
 const Roles = lazy(() => import('./roles'))

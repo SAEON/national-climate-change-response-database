@@ -1,13 +1,13 @@
 import { useContext } from 'react'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles'
 import MobileSideMenu from './_mobile-side-menu'
-import Hidden from '@material-ui/core/Hidden'
+import Hidden from '@mui/material/Hidden'
 import { context as filterContext } from '../context'
 import NewSubmission from '../../../components/new-submission'
 import DownloadData from './_download-data'
 import Pagination from './pagination'
 import UserSubmissions from './_user-submissions'
-import Divider from '@material-ui/core/Divider'
+import Divider from '@mui/material/Divider'
 import ToolbarHeader from '../../../components/toolbar-header'
 
 export default ({ MobileFilters }) => {
@@ -43,7 +43,7 @@ export default ({ MobileFilters }) => {
 
       {/* DOWNLOAD PROJECT DATA */}
       <div style={{ marginLeft: 'auto' }} />
-      <Hidden smDown>
+      <Hidden mdDown>
         <DownloadData />
       </Hidden>
 

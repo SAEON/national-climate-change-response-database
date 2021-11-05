@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react'
-import { DatePicker } from '@material-ui/pickers'
+import DatePicker from '@mui/lab/DatePicker'
 import QuickForm from '../../../quick-form'
+import TextField from '@mui/material/TextField'
 import debounce from '../../../../lib/debounce'
 
 export default memo(
@@ -12,23 +13,27 @@ export default memo(
         {(update, { value }) => {
           return (
             <DatePicker
-              fullWidth
-              margin="normal"
-              inputVariant="outlined"
               clearable
               disabled={disabled}
               autoOk
               minDate="1990"
               maxDate="2089"
-              format="yyyy"
               views={['year']}
               placeholder={placeholder}
               label={name}
               id={`${name}`}
-              helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
               error={error}
               value={value}
               onChange={value => update({ value })}
+              renderInput={params => (
+                <TextField
+                  helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  {...params}
+                />
+              )}
             />
           )
         }}

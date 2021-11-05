@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react'
-import { DatePicker } from '@material-ui/pickers'
-import Grid from '@material-ui/core/Grid'
+import DatePicker from '@mui/lab/DatePicker'
+import TextField from '@mui/material/TextField'
+import Grid from '@mui/material/Grid'
 import InputTables from './input-tables'
 import QuickForm from '../../../../../quick-form'
 import debounce from '../../../../../../lib/debounce'
@@ -24,21 +25,23 @@ export default memo(
                 {/* START DATE */}
                 <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
                   <DatePicker
-                    fullWidth
-                    inputVariant="outlined"
-                    margin="normal"
+                    renderInput={params => (
+                      <TextField
+                        helperText={'What year did/will the mitigation project start?'}
+                        fullWidth
+                        variant="outlined"
+                        margin="normal"
+                        {...params}
+                      />
+                    )}
                     clearable
                     autoOk
                     minDate={'2000'}
                     maxDate={new Date().getFullYear().toString()}
-                    variant="dialog"
                     views={['year']}
-                    animateYearScrolling
-                    format="yyyy"
                     placeholder={'Start year'}
                     label={'Start year'}
                     id="progress-calculator-mitigation-start"
-                    helperText={'What year did/will the mitigation project start?'}
                     value={startYear}
                     onChange={value =>
                       update({
@@ -58,21 +61,23 @@ export default memo(
                 {/* END DATE */}
                 <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
                   <DatePicker
-                    fullWidth
-                    inputVariant="outlined"
-                    margin="normal"
+                    renderInput={params => (
+                      <TextField
+                        helperText={'Select up to previous calendar year'}
+                        fullWidth
+                        variant="outlined"
+                        margin="normal"
+                        {...params}
+                      />
+                    )}
                     clearable
-                    variant="dialog"
                     autoOk
                     minDate={'2000'}
                     maxDate={new Date().getFullYear().toString()}
                     views={['year']}
-                    animateYearScrolling
-                    format="yyyy"
                     placeholder={'End year'}
                     label={'End year'}
                     id="progress-calculator-mitigation-end"
-                    helperText={'Select up to previous calendar year'}
                     value={endYear}
                     onChange={value =>
                       update({

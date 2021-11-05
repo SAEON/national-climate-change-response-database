@@ -1,7 +1,7 @@
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles'
 import Download from './_download'
 import Edit from './_edit'
-import Hidden from '@material-ui/core/Hidden'
+import Hidden from '@mui/material/Hidden'
 import ToolbarHeader from '../../../components/toolbar-header'
 
 export default ({ id, title }) => {
@@ -13,7 +13,7 @@ export default ({ id, title }) => {
       <Edit id={id} />
 
       {/* DOWNLOAD PROJECT DATA */}
-      <Hidden xsDown>
+      <Hidden smDown>
         <div style={{ marginLeft: theme.spacing(2) }} />
         <Download id={id} title={title} />
       </Hidden>

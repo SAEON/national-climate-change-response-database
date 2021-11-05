@@ -1,4 +1,4 @@
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import ViewIcon from 'mdi-react/EyeIcon'
 import { Link } from 'react-router-dom'
 

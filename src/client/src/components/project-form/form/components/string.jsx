@@ -1,5 +1,5 @@
 import { useMemo, memo } from 'react'
-import TextField from '@material-ui/core/TextField'
+import TextField from '@mui/material/TextField'
 import QuickForm from '../../../quick-form'
 import debounce from '../../../../lib/debounce'
 

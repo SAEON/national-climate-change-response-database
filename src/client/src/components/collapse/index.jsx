@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import Collapse from '@material-ui/core/Collapse'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import IconButton from '@material-ui/core/IconButton'
+import Collapse from '@mui/material/Collapse'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import IconButton from '@mui/material/IconButton'
 import ExpandIcon from 'mdi-react/ChevronDownIcon'
 import CollapseIcon from 'mdi-react/ChevronUpIcon'
-import Avatar from '@material-ui/core/Avatar'
-import useTheme from '@material-ui/core/styles/useTheme'
+import Avatar from '@mui/material/Avatar'
+import { useTheme } from '@mui/material/styles'
 
 export default ({
   children,
@@ -40,7 +40,7 @@ export default ({
         title={title}
         action={[
           ...actions,
-          <IconButton key="in-out">
+          <IconButton key="in-out" size="large">
             {collapsed && <ExpandIcon />}
             {!collapsed && <CollapseIcon />}
           </IconButton>,

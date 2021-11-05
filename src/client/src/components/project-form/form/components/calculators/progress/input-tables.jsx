@@ -1,6 +1,6 @@
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import { DataGrid } from '@material-ui/data-grid'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles';
 import getCellValue from '../get-cell-value.js'
 import ControlledVocabularySelect from '../../controlled-vocabulary-select'
 import clsx from 'clsx'

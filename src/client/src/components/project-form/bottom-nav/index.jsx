@@ -1,10 +1,10 @@
 import { useContext, memo } from 'react'
 import { context as formContext } from '../context'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
 import PreviousIcon from 'mdi-react/ChevronLeftIcon'
 import NextIcon from 'mdi-react/ChevronRightIcon'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme } from '@mui/material/styles'
 
 const sections = [
   'generalDetailsFormValidation',

@@ -60,11 +60,12 @@ export default function IconBreadcrumbs() {
                   .join('/')
               }
               className={classes.link}
-              underline="hover">
+              underline="hover"
+            >
               {Icon && <Icon size={18} className={classes.icon} />}
               {label}
             </MuiLink>
-          );
+          )
         })}
 
       {tree.slice(-1).map(({ label, breadcrumbsLabel, Icon, BreadcrumbsIcon } = {}) => {
@@ -83,5 +84,5 @@ export default function IconBreadcrumbs() {
         )
       })}
     </Breadcrumbs>
-  );
+  )
 }

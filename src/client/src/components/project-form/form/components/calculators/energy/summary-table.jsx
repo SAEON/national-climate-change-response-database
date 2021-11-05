@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography'
 import { DataGrid } from '@material-ui/data-grid'
 import reduceGrid from '../reduce-grid.js'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 const columns = [
   { field: 'type', headerName: 'Renewable', editable: false, type: 'string', width: 200 },

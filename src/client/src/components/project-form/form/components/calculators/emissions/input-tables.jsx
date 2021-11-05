@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography'
 import { DataGrid } from '@material-ui/data-grid'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import getCellValue from '../get-cell-value.js'
 
 const defaultColumns = [

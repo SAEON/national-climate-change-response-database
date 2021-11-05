@@ -2,7 +2,7 @@ import Card from '@mui/material/Card'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from 'mdi-react/DeleteIcon'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 export default ({ points, setPoints }) => {
   const theme = useTheme()

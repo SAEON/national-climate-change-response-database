@@ -1,7 +1,7 @@
 import Avatar from '@mui/material/Avatar'
 import ProjectIcon from 'mdi-react/FormSelectIcon'
 import CardHeader from '@mui/material/CardHeader'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 export default ({ title }) => {

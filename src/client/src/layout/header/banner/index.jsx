@@ -3,7 +3,7 @@ import MuiLink from '@mui/material/Link'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Typography from '@mui/material/Typography'
 import Toolbar from './toolbar'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 
 export const IMAGE_HEIGHT = 93
 
@@ -58,5 +58,5 @@ export default () => {
         </a>
       )}
     </Toolbar>
-  );
+  )
 }

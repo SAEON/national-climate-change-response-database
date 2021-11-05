@@ -47,7 +47,8 @@ export default () => {
           component={Link}
           style={{ marginLeft: 'auto' }}
           to={`/login?redirect=${window.location.href}`}
-          underline="hover">
+          underline="hover"
+        >
           <Typography style={{ paddingRight: theme.spacing(1) }} variant="overline">
             Log in
           </Typography>
@@ -58,12 +59,13 @@ export default () => {
         <MuiLink
           style={{ marginLeft: 'auto' }}
           href={`${NCCRD_API_HTTP_ADDRESS}/logout?redirect=${NCCRD_CLIENT_ADDRESS}`}
-          underline="hover">
+          underline="hover"
+        >
           <Typography style={{ paddingRight: theme.spacing(1) }} variant="overline">
             Log out {smAndUp && `(${user.emailAddress})`}
           </Typography>
         </MuiLink>
       )}
     </Toolbar>
-  );
+  )
 }

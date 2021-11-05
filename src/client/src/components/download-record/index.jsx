@@ -37,7 +37,8 @@ export default ({ title, id, variant = 'outlined' }) => {
             href={`${NCCRD_API_HTTP_ADDRESS}/download-submission?id=${id}`}
             key="download-link"
             onClick={closeFn}
-            underline="hover">
+            underline="hover"
+          >
             Download record
           </Link>
         ),
@@ -58,5 +59,5 @@ export default ({ title, id, variant = 'outlined' }) => {
         </Button>
       )}
     />
-  );
+  )
 }

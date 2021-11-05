@@ -70,5 +70,5 @@ export default form => {
         return [field, value]
       })
       .filter(_ => _)
-  );
+  )
 }

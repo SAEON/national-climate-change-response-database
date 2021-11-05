@@ -1,6 +1,6 @@
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import Delete from './_delete'
 import View from './_view'
 import Edit from './_edit'

@@ -4,7 +4,7 @@ import Collapse from '@mui/material/Collapse'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import FilterHeader from './_header'
-import { useTheme, alpha } from '@mui/material/styles';
+import { useTheme, alpha } from '@mui/material/styles'
 import TextFilter from './_text-filter'
 import VocabularyFilter from './_vocabulary-filter'
 import { DEFAULT_VALUE as NA_VOCAB_SELECT } from './_vocabulary-filter'

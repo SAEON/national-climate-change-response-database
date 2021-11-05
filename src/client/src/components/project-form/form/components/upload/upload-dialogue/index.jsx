@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Tooltip from '@mui/material/Tooltip'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import UploadIcon from 'mdi-react/UploadIcon'
 import FileIcon from 'mdi-react/FileIcon'
 import CancelIcon from 'mdi-react/CancelIcon'

@@ -19,26 +19,28 @@ export default () => {
     return <Loading />
   }
 
-  return <>
-    <Header />
-    <Wrapper>
-      <Card
-        style={{ border: 'none', width: '100%', backgroundColor: theme.backgroundColor }}
-        variant="outlined"
-      >
-        <CardContent>
-          <Typography gutterBottom>
-            Hi {emailAddress}. This page is not completed yet. In the future there will be all
-            sorts of useful things.
-          </Typography>
-          <Typography>
-            In the meantime, you can look at your completed and incomplete submissions{' '}
-            <MuiLink component={Link} to="/user/submissions" underline="hover">
-              here
-            </MuiLink>
-          </Typography>
-        </CardContent>
-      </Card>
-    </Wrapper>
-  </>;
+  return (
+    <>
+      <Header />
+      <Wrapper>
+        <Card
+          style={{ border: 'none', width: '100%', backgroundColor: theme.backgroundColor }}
+          variant="outlined"
+        >
+          <CardContent>
+            <Typography gutterBottom>
+              Hi {emailAddress}. This page is not completed yet. In the future there will be all
+              sorts of useful things.
+            </Typography>
+            <Typography>
+              In the meantime, you can look at your completed and incomplete submissions{' '}
+              <MuiLink component={Link} to="/user/submissions" underline="hover">
+                here
+              </MuiLink>
+            </Typography>
+          </CardContent>
+        </Card>
+      </Wrapper>
+    </>
+  )
 }

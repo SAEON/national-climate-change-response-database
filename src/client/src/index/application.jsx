@@ -5,11 +5,11 @@ import theme from '../theme'
 
 const Render = lazy(() => import('./_render'))
 
-export default () => (
+export default ({ children }) => (
   <StyledEngineProvider injectFirst>
     <ThemeProvider theme={theme}>
       <Suspense fallback={<Loading />}>
-        <Render />
+        <Render>{children}</Render>
       </Suspense>
     </ThemeProvider>
   </StyledEngineProvider>

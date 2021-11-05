@@ -4,7 +4,7 @@
   "description": "National Climate Change Response Database",
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack",
-    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|ts|tsx|css|scss)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --open",
+    "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|ts|tsx|css|scss)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --config webpack/index.js",
     "lint": "eslint -c .eslintrc.cjs \"src/**/*.{js,jsx}\"",
     "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
     "ncu": "ncu -x react-router,react-router-dom",

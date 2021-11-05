@@ -40,10 +40,7 @@ class ErrorBoundary extends Component {
               Please try refreshing this page in a few minutes. If the error persists, or if
               assistance is required, please contact{' '}
               {
-                <Link
-                  variant="body1"
-                  href={`mailto:${NCCRD_TECHNICAL_CONTACT}`}
-                  underline="hover">
+                <Link variant="body1" href={`mailto:${NCCRD_TECHNICAL_CONTACT}`} underline="hover">
                   {NCCRD_TECHNICAL_CONTACT}
                 </Link>
               }{' '}
@@ -63,7 +60,7 @@ class ErrorBoundary extends Component {
           </>
         }
       />
-    );
+    )
   }
 }
 

@@ -1,5 +1,5 @@
 import { memo, useMemo, useState } from 'react'
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles'
 import ListInput from './list-input'
 import Typography from '@mui/material/Typography'
 import QuickForm from '../../../../quick-form'

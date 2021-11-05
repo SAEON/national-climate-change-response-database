@@ -66,7 +66,7 @@ export default ({ routes }) => {
         >
           <Container style={{ display: 'flex', justifyContent: 'center' }}>
             <Typography variant="overline" variantMapping={{ overline: 'p' }}>
-              © SAEON 2020 - {new Date().getFullYear()}
+              © DFFE 2020 - {new Date().getFullYear()}
             </Typography>
           </Container>
         </Toolbar>

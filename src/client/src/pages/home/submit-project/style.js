@@ -57,7 +57,7 @@ export default makeStyles(theme => ({
   },
   imageTitle: {
     position: 'relative',
-    padding: `calc(${theme.spacing(2)} ${theme.spacing(4)} ${theme.spacing(1)} + 6px)`,
+    padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
   },
   imageMarked: {
     height: 3,

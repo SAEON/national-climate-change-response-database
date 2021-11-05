@@ -28,6 +28,7 @@ export default [
     label: 'Home',
     Icon: HomeIcon,
     exact: true,
+    includeInFooter: true,
     to: '/',
     render: () => (
       <Transition>
@@ -47,6 +48,7 @@ export default [
         <SubmissionsPage />
       </Transition>
     ),
+    includeInFooter: true,
   },
   {
     label: 'Submit project',
@@ -58,6 +60,7 @@ export default [
         <CreateSubmission />
       </Transition>
     ),
+    includeInFooter: true,
   },
 
   {
@@ -135,6 +138,7 @@ export default [
     to: '/login',
     exact: true,
     excludeFromNav: true,
+    includeInFooter: true,
     render: () => (
       <Transition>
         <LoginPage />

@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import { Link, useLocation } from 'react-router-dom'
 import MuiLink from '@mui/material/Link'
-import navItems from './nav-items'
 import EditIcon from 'mdi-react/EditIcon'
 import SubmissionIcon from 'mdi-react/DatabaseAddIcon'
 
@@ -19,13 +18,15 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function IconBreadcrumbs() {
+export default ({ contentBase = '/', routes }) => {
   const classes = useStyles()
   const { pathname } = useLocation() // Trigger re-render on location changes
-  const tree = [...new Set(pathname.split('/'))].map(p => {
+  const normalizedPathname = pathname.replace(contentBase, '/')
+
+  const tree = [...new Set(normalizedPathname.split('/'))].map(p => {
     return (
-      navItems.find(({ to }) => {
-        to = to.replace('/', '')
+      routes.find(({ to }) => {
+        to = to.replace(contentBase, '').replace('/', '')
         return to === p
       }) || { label: p?.titleize() || '404 (Not found)' }
     )
@@ -60,7 +61,6 @@ export default function IconBreadcrumbs() {
                   .join('/')
               }
               className={classes.link}
-              underline="hover"
             >
               {Icon && <Icon size={18} className={classes.icon} />}
               {label}

@@ -53,14 +53,6 @@ export default ({ calculator = 'type1', ...args }) => {
     return type1({ ...args })
   }
 
-  if (calculator === 'energy') {
-    return type1({ ...args })
-  }
-
-  if (calculator === 'emissions') {
-    return type1({ ...args })
-  }
-
   if (calculator === 'progress') {
     return type2({ ...args })
   }

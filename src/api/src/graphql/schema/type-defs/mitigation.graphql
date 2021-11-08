@@ -109,22 +109,4 @@ input MitigationInput {
   Achieved progress :: Achieved progress by project
   """
   progressData: JSON
-
-  """
-  Energy data :: Does the project have energy data?
-  """
-  hasEnergyData: Boolean
-  """
-  Energy data :: Input mitigation energy data
-  """
-  energyData: JSON
-
-  """
-  Emissions data :: Does the project have emissions data?
-  """
-  hasEmissionsData: Boolean
-  """
-  Emissions data :: Input mitigation emissions data
-  """
-  emissionsData: JSON
 }

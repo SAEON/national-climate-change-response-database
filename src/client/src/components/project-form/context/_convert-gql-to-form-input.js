@@ -20,14 +20,6 @@ export default ({ ...form }) => {
           }
         }
 
-        if (field === 'energyData') {
-          throw new Error('Not implemented')
-        }
-
-        if (field === 'emissionsData') {
-          throw new Error('Not implemented')
-        }
-
         if (field === 'progressData') {
           return [field, value]
         }

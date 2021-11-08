@@ -143,14 +143,6 @@ export default ({ calculatorType = 'type1', ...args }) => {
     return type1({ ...args })
   }
 
-  if (calculatorType === 'energy') {
-    return type1({ ...args })
-  }
-
-  if (calculatorType === 'emissions') {
-    return type1({ ...args })
-  }
-
   if (calculatorType === 'progress') {
     return fixProgressCalculatorGrids({ ...args })
   }

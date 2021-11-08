@@ -29,26 +29,6 @@ export default form => {
          * submitted
          */
 
-        /* ENERGY CALCULATOR */
-
-        if (field === 'energyData') {
-          if (!form.hasEnergyData?.toBoolean()) {
-            return [field, undefined]
-          }
-
-          return [field, value]
-        }
-
-        /* EMISSIONS CALCULATOR */
-
-        if (field === 'emissionsData') {
-          if (!form.hasEmissionsData?.toBoolean()) {
-            return [field, undefined]
-          }
-
-          return [field, value]
-        }
-
         /* PROGRESS CALCULATOR */
 
         if (field === 'progressData') {

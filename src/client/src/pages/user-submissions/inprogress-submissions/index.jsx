@@ -1,82 +1,77 @@
 import { useMemo } from 'react'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import { DataGrid } from '@material-ui/data-grid'
-import { useTheme } from '@mui/material/styles'
+import DataGrid from 'react-data-grid'
 import Link from '@mui/material/Link'
 import { Link as RouterLink } from 'react-router-dom'
 
-export default ({ submissions }) => {
-  const theme = useTheme()
+const headerRenderer = ({ column }) => (
+  <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
+)
+
+export default ({ active, submissions }) => {
   const inProgressSubmissions = useMemo(
     () => [...submissions].filter(({ isSubmitted }) => !isSubmitted),
     [submissions]
   )
 
+  if (!active) {
+    return null
+  }
+
   return (
-    <Card
-      style={{ border: 'none', width: '100%', backgroundColor: theme.backgroundColor }}
-      variant="outlined"
-    >
-      <CardContent style={{ padding: 0 }}>
-        <div style={{ height: 1000 }}>
-          <DataGrid
-            pageSize={25}
-            rowHeight={theme.spacing(5)}
-            columns={[
-              {
-                field: 'title',
-                headerName: 'Title',
-                width: 250,
-              },
-              {
-                field: 'intervention',
-                headerName: 'Intervention',
-                width: 160,
-              },
-              {
-                field: 'isSubmitted',
-                headerName: 'Submitted',
-                sortable: false,
-                filterable: false,
-                disableColumnMenu: true,
-                width: 120,
-              },
-              {
-                field: '_edit',
-                headerName: ` `,
-                sortable: false,
-                filterable: false,
-                disableColumnMenu: true,
-                flex: 1,
-                renderCell: ({ row: { formNumber } }) => (
-                  <Link
-                    component={RouterLink}
-                    to={`/submissions/new/${formNumber}`}
-                    underline="hover"
-                  >
-                    Continue submission
-                  </Link>
-                ),
-              },
-            ]}
-            rows={inProgressSubmissions.map(
-              ({
-                id,
-                _id,
-                project: { title = '', interventionType: { term: intervention = '' } = {} } = {},
-                isSubmitted,
-              }) => ({
-                id: _id,
-                formNumber: id,
-                intervention,
-                title,
-                isSubmitted: isSubmitted ? 'Yes' : 'No',
-              })
-            )}
-          />
-        </div>
-      </CardContent>
-    </Card>
+    <div style={{ height: 1000 }}>
+      <DataGrid
+        style={{ height: '100%' }}
+        enableVirtualization={true}
+        columns={[
+          {
+            key: 'title',
+            name: 'Title',
+            width: 250,
+            headerRenderer,
+          },
+          {
+            key: 'intervention',
+            name: 'Intervention',
+            width: 160,
+            headerRenderer,
+          },
+          {
+            key: 'isSubmitted',
+            name: 'Submitted',
+            width: 120,
+            headerRenderer,
+          },
+          {
+            key: '_edit',
+            name: '',
+            formatter: ({ row: { formNumber } }) => (
+              <div style={{ width: '100%', textAlign: 'center' }}>
+                <Link
+                  component={RouterLink}
+                  to={`/submissions/new/${formNumber}`}
+                  underline="hover"
+                >
+                  Continue submission
+                </Link>
+              </div>
+            ),
+          },
+        ]}
+        rows={inProgressSubmissions.map(
+          ({
+            id,
+            _id,
+            project: { title = '', interventionType: { term: intervention = '' } = {} } = {},
+            isSubmitted,
+          }) => ({
+            id: _id,
+            formNumber: id,
+            intervention,
+            title,
+            isSubmitted: isSubmitted ? 'Yes' : 'No',
+          })
+        )}
+      />
+    </div>
   )
 }

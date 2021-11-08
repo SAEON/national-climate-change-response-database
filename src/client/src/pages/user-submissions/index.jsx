@@ -1,11 +1,11 @@
-import { lazy, Suspense, useContext } from 'react'
+import { lazy, Suspense, useContext, useState } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
-import Wrapper from '../../components/page-wrapper'
 import { gql, useQuery } from '@apollo/client'
 import Header from './header'
 import Loading from '../../components/loading'
-import ContentNav from '../../components/content-nav'
+import VerticalTabs from '../../packages/vertical-tabs'
 import CompletedIcon from 'mdi-react/CheckCircleIcon'
+import Container from '@mui/material/Container'
 import IncompleteIcon from 'mdi-react/ProgressWrenchIcon'
 import Fade from '@mui/material/Fade'
 import { useTheme } from '@mui/material/styles'
@@ -17,18 +17,19 @@ const sections = [
   {
     primaryText: 'Completed submissions',
     secondaryText: 'Show your completed submissions',
-    Icon: CompletedIcon,
-    Section: CompletedSubmissions,
+    Icon: () => <CompletedIcon />,
+    Render: CompletedSubmissions,
   },
   {
     primaryText: 'Incomplete submissions',
     secondaryText: 'Show your incomplete submissions (continue from previous)',
-    Icon: IncompleteIcon,
-    Section: InprogressSubmissions,
+    Icon: () => <IncompleteIcon />,
+    Render: InprogressSubmissions,
   },
 ]
 
 export default () => {
+  const [activeIndex, setActiveIndex] = useState(0)
   const theme = useTheme()
   const { user: { id = 0 } = {}, authenticate } = useContext(authenticationContext)
   const isAuthenticated = authenticate()
@@ -72,38 +73,23 @@ export default () => {
   return (
     <>
       <Header />
-      <Wrapper>
-        <ContentNav navItems={sections}>
-          {({ activeIndex }) =>
-            sections.map(({ Section, primaryText }, i) => (
-              <Suspense
-                key={primaryText}
-                fallback={
-                  <Fade
-                    timeout={theme.transitions.duration.regular}
-                    in={activeIndex === i}
-                    key={'loading'}
-                  >
-                    <span>
-                      <Loading />
-                    </span>
-                  </Fade>
-                }
-              >
-                <Fade
-                  timeout={theme.transitions.duration.regular}
-                  in={activeIndex === i}
-                  key={'loaded'}
-                >
+      <div style={{ marginTop: theme.spacing(2) }} />
+      <Container style={{ minHeight: 1000 }}>
+        <VerticalTabs activeIndex={activeIndex} setActiveIndex={setActiveIndex} navItems={sections}>
+          {sections.map(({ Render, primaryText }, i) => {
+            return (
+              <Suspense key={primaryText} fallback={<Loading />}>
+                <Fade in={activeIndex === i} key={`loaded-${i}`}>
                   <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
-                    <Section submissions={data.user.submissions} />
+                    <Render active={activeIndex === i} submissions={data.user.submissions} />
                   </span>
                 </Fade>
               </Suspense>
-            ))
-          }
-        </ContentNav>
-      </Wrapper>
+            )
+          })}
+        </VerticalTabs>
+      </Container>
+      <div style={{ marginTop: theme.spacing(2) }} />
     </>
   )
 }

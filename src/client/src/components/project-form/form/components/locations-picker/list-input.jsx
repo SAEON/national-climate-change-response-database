@@ -1,11 +1,9 @@
 import { useState } from 'react'
-import { DataGrid } from '@material-ui/data-grid'
+import DataGrid from 'react-data-grid'
 import Button from '@mui/material/Button'
 import PlusIcon from 'mdi-react/PlusIcon'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from 'mdi-react/DeleteIcon'
-import useStyles from './style'
-import clsx from 'clsx'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import AppBar from '@mui/material/AppBar'
@@ -13,6 +11,10 @@ import Toolbar from '@mui/material/Toolbar'
 import { useTheme } from '@mui/material/styles'
 import MessageDialogue from '../../../../message-dialogue'
 import TextField from '@mui/material/TextField'
+
+const headerRenderer = ({ column }) => (
+  <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
+)
 
 const NewPointForm = ({ closeFn, points, setPoints }) => {
   const [lat, setLat] = useState('')
@@ -63,103 +65,88 @@ const NewPointForm = ({ closeFn, points, setPoints }) => {
 }
 
 export default ({ points, setPoints }) => {
-  const classes = useStyles()
   const theme = useTheme()
 
   return (
-    <DataGrid
-      disableSelectionOnClick
-      disableColumnSelector
-      components={{
-        Footer: () => (
-          <AppBar
-            style={{ zIndex: 1 }}
-            variant="outlined"
-            elevation={0}
-            color="default"
-            position="relative"
-          >
-            <Toolbar
-              variant="dense"
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                paddingRight: theme.spacing(1),
-              }}
-            >
-              <MessageDialogue
-                title="Add location point"
-                tooltipProps={{
-                  title: 'Add location point',
-                }}
-                Button={openFn => (
-                  <Button
-                    onClick={openFn}
-                    disableElevation
-                    variant="outlined"
-                    color="primary"
-                    size="small"
-                    startIcon={<PlusIcon size={18} />}
-                  >
-                    Add point
-                  </Button>
-                )}
-              >
-                {closeFn => (
-                  <NewPointForm setPoints={setPoints} points={points} closeFn={closeFn} />
-                )}
-              </MessageDialogue>
-            </Toolbar>
-          </AppBar>
-        ),
-      }}
-      columns={[
-        {
-          field: 'id',
-          cellClassName: () => clsx(classes.cell),
-          sortable: false,
-          filterable: false,
-          disableColumnMenu: true,
-          headerName: 'ID',
-          width: 50,
-        },
-        {
-          field: 'xy',
-          sortable: false,
-          filterable: false,
-          disableColumnMenu: true,
-          headerName: 'Lat / Long',
-          valueGetter: ({
-            row: {
-              xy: [x, y],
-            },
-          }) => `${x} / ${y}`,
-          flex: 1,
-        },
-        {
-          field: '_delete',
-          sortable: false,
-          filterable: false,
-          disableColumnMenu: true,
-          headerName: ` `,
-          width: 100,
-          cellClassName: () => clsx(classes.cell),
-          renderCell: ({ row: { id: _i } }) => {
-            return (
-              <IconButton
-                onClick={() => setPoints(points.filter((_, i) => i !== _i - 1))}
-                size="small"
-              >
-                <DeleteIcon size={18} />
-              </IconButton>
-            )
+    <div style={{ height: '100%' }}>
+      <DataGrid
+        style={{ height: 'calc(100% - 48px)' }}
+        enableVirtualization={true}
+        columns={[
+          {
+            key: 'id',
+            headerRenderer,
+            name: 'ID',
+            width: 50,
           },
-        },
-      ]}
-      rows={points.map(([x, y], i) => ({
-        id: i + 1,
-        xy: [x, y],
-      }))}
-    />
+          {
+            key: 'xy',
+            headerRenderer,
+            name: 'Lat / Long',
+            formatter: ({
+              row: {
+                xy: [x, y],
+              },
+            }) => `${x} / ${y}`,
+          },
+          {
+            key: '_delete',
+            name: '',
+            width: 100,
+            formatter: ({ row: { id: _i } }) => (
+              <div style={{ width: '100%', textAlign: 'center' }}>
+                <IconButton
+                  onClick={() => setPoints(points.filter((_, i) => i !== _i - 1))}
+                  size="small"
+                >
+                  <DeleteIcon size={18} />
+                </IconButton>
+              </div>
+            ),
+          },
+        ]}
+        rows={points.map(([x, y], i) => ({
+          id: i + 1,
+          xy: [x, y],
+        }))}
+      />
+      <AppBar
+        style={{ zIndex: 1 }}
+        variant="outlined"
+        elevation={0}
+        color="default"
+        position="relative"
+      >
+        <Toolbar
+          variant="dense"
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            paddingRight: theme.spacing(1),
+          }}
+        >
+          <MessageDialogue
+            title="Add location point"
+            tooltipProps={{
+              title: 'Add location point',
+            }}
+            Button={openFn => (
+              <Button
+                onClick={openFn}
+                disableElevation
+                variant="outlined"
+                color="primary"
+                size="small"
+                startIcon={<PlusIcon size={18} />}
+              >
+                Add point
+              </Button>
+            )}
+          >
+            {closeFn => <NewPointForm setPoints={setPoints} points={points} closeFn={closeFn} />}
+          </MessageDialogue>
+        </Toolbar>
+      </AppBar>
+    </div>
   )
 }

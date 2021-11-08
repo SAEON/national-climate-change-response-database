@@ -15,6 +15,7 @@
     "dhparams",
     "EPSG",
     "firewalld",
+    "fulltext",
     "hssp",
     "hsss",
     "iisnode",

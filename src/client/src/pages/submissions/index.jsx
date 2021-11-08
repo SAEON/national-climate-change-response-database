@@ -6,10 +6,12 @@ import Header from './header'
 import Results from './results'
 import Grid from '@mui/material/Grid'
 import Hidden from '@mui/material/Hidden'
-import Wrapper from '../../components/page-wrapper'
+import Container from '@mui/material/Container'
 import FilterContextProvider from './context'
+import useTheme from '@mui/material/styles/useTheme'
 
 export default () => {
+  const theme = useTheme()
   const { hasPermission } = useContext(authContext)
   const { enqueueSnackbar } = useSnackbar()
 
@@ -23,7 +25,8 @@ export default () => {
   return (
     <FilterContextProvider>
       <Header MobileFilters={Filters} />
-      <Wrapper>
+      <div style={{ marginTop: theme.spacing(2) }} />
+      <Container style={{ minHeight: 1000 }}>
         <Grid container direction="row" spacing={2}>
           {/* FILTERS */}
           <Hidden mdDown>
@@ -41,7 +44,8 @@ export default () => {
             </Grid>
           </Grid>
         </Grid>
-      </Wrapper>
+      </Container>
+      <div style={{ marginTop: theme.spacing(2) }} />
     </FilterContextProvider>
   )
 }

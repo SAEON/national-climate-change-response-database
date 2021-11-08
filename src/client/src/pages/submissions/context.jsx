@@ -2,7 +2,6 @@ import { useState, createContext, useCallback, useContext } from 'react'
 import { context as authContext } from '../../contexts/authorization'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
-import Fade from '@mui/material/Fade'
 import {
   projectFilters as projectFiltersConfig,
   adaptationFilters as adaptationFiltersConfig,
@@ -142,11 +141,7 @@ export default ({ children }) => {
   )
 
   if (loading) {
-    return (
-      <Fade key="loading-in" in={Boolean(loading)}>
-        <Loading />
-      </Fade>
-    )
+    return <Loading />
   }
 
   if (error) {
@@ -175,9 +170,7 @@ export default ({ children }) => {
         totalRecords,
       }}
     >
-      <Fade in={Boolean(data)} key="data-in">
-        <div>{children}</div>
-      </Fade>
+      <div>{children}</div>
     </context.Provider>
   )
 }

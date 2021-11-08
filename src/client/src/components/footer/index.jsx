@@ -13,7 +13,12 @@ export default ({ routes }) => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <AppBar position="relative" style={{ backgroundColor: theme.palette.grey[800] }}>
+      <AppBar
+        variant="outlined"
+        elevation={0}
+        position="relative"
+        style={{ backgroundColor: theme.palette.grey[800] }}
+      >
         {/* DISCLAIMERS */}
         <Toolbar style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <Container style={{ paddingTop: theme.spacing(4), paddingBottom: theme.spacing(4) }}>

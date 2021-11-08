@@ -44,7 +44,13 @@ const Input = ({ update, points }) => {
 
   return (
     <>
-      <AppBar style={{ zIndex: 1 }} variant="outlined" color="default" position="relative">
+      <AppBar
+        style={{ zIndex: 1 }}
+        variant="outlined"
+        elevation={0}
+        color="default"
+        position="relative"
+      >
         <Tabs
           indicatorColor="primary"
           textColor="primary"

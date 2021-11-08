@@ -72,7 +72,13 @@ export default ({ points, setPoints }) => {
       disableColumnSelector
       components={{
         Footer: () => (
-          <AppBar style={{ zIndex: 1 }} variant="outlined" color="default" position="relative">
+          <AppBar
+            style={{ zIndex: 1 }}
+            variant="outlined"
+            elevation={0}
+            color="default"
+            position="relative"
+          >
             <Toolbar
               variant="dense"
               style={{

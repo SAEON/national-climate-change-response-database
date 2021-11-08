@@ -97,18 +97,6 @@ export default [
     ),
   },
   {
-    label: 'Your profile',
-    Icon: UserIcon,
-    to: '/user',
-    requiredPermission: 'create-submission',
-    excludeFromNav: true,
-    render: () => (
-      <Transition>
-        <UserPage />
-      </Transition>
-    ),
-  },
-  {
     label: 'Your submissions',
     Icon: UserSubmissionIcon,
     to: '/user/submissions',
@@ -120,6 +108,19 @@ export default [
       </Transition>
     ),
   },
+  {
+    label: 'Your profile',
+    Icon: UserIcon,
+    to: '/user',
+    requiredPermission: 'create-submission',
+    excludeFromNav: true,
+    render: () => (
+      <Transition>
+        <UserPage />
+      </Transition>
+    ),
+  },
+
   {
     label: 'Deployments',
     Icon: DeploymentsIcon,

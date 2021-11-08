@@ -38,9 +38,7 @@ export default ({ title }) => {
           justifyContent: 'center',
         }}
       >
-        <Typography color="textPrimary" variant="h5" variantMapping={{ h5: 'h1' }}>
-          {title || 'SAEON Data'}
-        </Typography>
+        {title || <Typography>NCCRD</Typography>}
       </header>
 
       {/* SA FLAG */}

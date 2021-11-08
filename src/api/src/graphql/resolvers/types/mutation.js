@@ -1,4 +1,4 @@
-import assignUserRoles from '../mutations/assign-user-roles/index.js'
+import assignRolesToUser from '../mutations/assign-roles-to-user/index.js'
 import seedDatabase from '../mutations/seed-database/index.js'
 import PERMISSIONS from '../../../user-model/permissions.js'
 import authorize from '../../../user-model/authorize.js'
@@ -21,7 +21,7 @@ export default {
       PERMISSIONS['delete-submission'],
       await getSubmissionOwner(args[1].id)
     )(deleteSubmission)(...args),
-  assignUserRoles: authorize(PERMISSIONS['assign-role'])(assignUserRoles),
+  assignRolesToUser: authorize(PERMISSIONS['assign-role'])(assignRolesToUser),
   seedDatabase: authorize(PERMISSIONS['seed-database'])(seedDatabase),
   removeSubmissionAttachments: authorize(PERMISSIONS['attach-file-to-submission'])(
     removeSubmissionAttachments

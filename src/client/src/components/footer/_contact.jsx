@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import {  NCCRD_TECHNICAL_CONTACT } from '../../config'
+import { NCCRD_TECHNICAL_CONTACT } from '../../config'
 
 export default () => {
   return (

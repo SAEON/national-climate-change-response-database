@@ -1,18 +1,18 @@
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
-import Fade from '@mui/material/Fade'
 import Loading from '../../components/loading'
 
 export const context = createContext()
 
 export default ({ children }) => {
+  const [selectedUsers, setSelectedUsers] = useState(() => new Set())
+
   const { loading, error, data } = useQuery(gql`
     query {
       users {
         id
         emailAddress
         name
-        familyName
         roles {
           id
           name
@@ -40,11 +40,7 @@ export default ({ children }) => {
   `)
 
   if (loading) {
-    return (
-      <Fade in={Boolean(loading)} key="loading-in">
-        <Loading />
-      </Fade>
-    )
+    return <Loading />
   }
 
   if (error) {
@@ -53,5 +49,9 @@ export default ({ children }) => {
 
   const { users, roles, permissions } = data
 
-  return <context.Provider value={{ users, roles, permissions }}>{children}</context.Provider>
+  return (
+    <context.Provider value={{ users, selectedUsers, setSelectedUsers, roles, permissions }}>
+      {children}
+    </context.Provider>
+  )
 }

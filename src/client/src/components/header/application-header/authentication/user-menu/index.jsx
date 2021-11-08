@@ -15,7 +15,7 @@ export default props => {
     <div>
       {/* MENU TRIGGER */}
       <Tooltip title={`Hi ${props.user.name || props.user.emailAddress}`}>
-        <IconButton onClick={onOpen} size="large">
+        <IconButton color="primary" onClick={onOpen} size="large">
           <UserIcon />
         </IconButton>
       </Tooltip>

@@ -2,6 +2,7 @@ const path = require('path')
 require('dotenv').config({ path: path.join(__dirname, './.env') })
 const fs = require('fs')
 const configureRules = require('./rules.js')
+const loadAliases = require('./load-aliases.js')
 const configureDevServer = require('./dev-server')
 const configurePlugins = require('./plugins.js')
 
@@ -32,7 +33,7 @@ module.exports = () => {
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx'],
-      alias: {},
+      alias: loadAliases(ROOT, mode),
     },
     optimization: {
       minimize: ['local', 'development'].includes(NCCRD_DEPLOYMENT_ENV) ? false : true,

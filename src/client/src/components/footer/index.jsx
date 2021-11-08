@@ -13,7 +13,7 @@ export default ({ routes }) => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <AppBar position="relative" style={{backgroundColor: theme.palette.grey[800]}}>
+      <AppBar position="relative" style={{ backgroundColor: theme.palette.grey[800] }}>
         {/* DISCLAIMERS */}
         <Toolbar style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <Container style={{ paddingTop: theme.spacing(4), paddingBottom: theme.spacing(4) }}>
@@ -61,9 +61,7 @@ export default ({ routes }) => {
         </Toolbar>
 
         {/* COPYRIGHT */}
-        <Toolbar
-          style={{ backgroundColor: theme.palette.grey[900], minHeight: theme.spacing(1) }}
-        >
+        <Toolbar style={{ backgroundColor: theme.palette.grey[900], minHeight: theme.spacing(1) }}>
           <Container style={{ display: 'flex', justifyContent: 'center' }}>
             <Typography variant="overline" variantMapping={{ overline: 'p' }}>
               © DFFE 2020 - {new Date().getFullYear()}

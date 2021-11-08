@@ -6,7 +6,15 @@ export default ({ children }) => (
     client={
       new ApolloClient({
         cache: new InMemoryCache({
-          typePolicies: {},
+          typePolicies: {
+            User: {
+              fields: {
+                roles: {
+                  merge: (existing, incoming) => incoming,
+                },
+              },
+            },
+          },
         }),
         link: new HttpLink({
           uri: NCCRD_API_GQL_ADDRESS,

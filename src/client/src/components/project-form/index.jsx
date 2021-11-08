@@ -1,5 +1,5 @@
-import { useContext, lazy, Suspense, useMemo, memo } from 'react'
-import ContentNav from '../content-nav'
+import { useContext, lazy, Suspense, useMemo, memo, useState } from 'react'
+import VerticalTabs from '../../packages/vertical-tabs'
 import GraphQLFormProvider, { context as formContext } from './context'
 import Submit from './submit'
 import Loading from '../loading'
@@ -16,6 +16,8 @@ const MitigationDetailsForm = lazy(() => import('./sections/mitigation-details')
 const AdaptationDetailsForm = lazy(() => import('./sections/adaptation-details'))
 
 const FormController = () => {
+  const [activeIndex, setActiveIndex] = useState(0)
+
   const theme = useTheme()
   const lgAndUp = useMediaQuery(theme.breakpoints.up('lg'))
   const {
@@ -53,7 +55,7 @@ const FormController = () => {
   const navItems = useMemo(
     () => [
       {
-        Section: GeneralDetailsForm,
+        Render: GeneralDetailsForm,
         primaryText: 'General',
         secondaryText: 'Basic project details',
         Icon: () => (
@@ -65,7 +67,7 @@ const FormController = () => {
         ),
       },
       {
-        Section: MitigationDetailsForm,
+        Render: MitigationDetailsForm,
         disabled: !mitigationsRequired,
         primaryText: 'Mitigation details',
         secondaryText: 'Project mitigation details',
@@ -78,7 +80,7 @@ const FormController = () => {
         ),
       },
       {
-        Section: AdaptationDetailsForm,
+        Render: AdaptationDetailsForm,
         disabled: !adaptationsRequired,
         primaryText: 'Adaptation details',
         secondaryText: 'Project adaptation details',
@@ -134,69 +136,46 @@ const FormController = () => {
     [syncing, submissionId, style]
   )
 
-  return (
-    <ContentNav
-      navItems={mode === 'edit' ? [...navItems, syncingNavItem] : [...navItems, submitNavItem]}
-    >
-      {({ activeIndex, setActiveIndex }) => (
-        <>
-          {[navItems[0], navItems[1], navItems[2]].map(({ Section, primaryText }, i) => (
-            <Suspense
-              key={primaryText}
-              fallback={
-                <Fade
-                  timeout={theme.transitions.duration.standard}
-                  in={activeIndex === i}
-                  key={'loading'}
-                >
-                  <span>
-                    <Loading />
-                  </span>
-                </Fade>
-              }
-            >
-              <Fade
-                timeout={theme.transitions.duration.standard}
-                in={activeIndex === i}
-                key={'loaded'}
-              >
-                <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
-                  <Section />
-                </span>
-              </Fade>
-            </Suspense>
-          ))}
+  const sections = mode === 'edit' ? [...navItems, syncingNavItem] : [...navItems, submitNavItem]
 
-          <Suspense
-            fallback={
-              <Fade
-                timeout={theme.transitions.duration.standard}
-                in={activeIndex === 3}
-                key={'loading'}
-              >
-                <span>
-                  <Loading />
-                </span>
-              </Fade>
-            }
-          >
-            <Fade
-              timeout={theme.transitions.duration.standard}
-              in={activeIndex === 3}
-              key={'loaded'}
-            >
-              <span style={{ display: activeIndex === 3 ? 'inherit' : 'none' }}>
-                <Submit key="submit" />
+  return (
+    <VerticalTabs activeIndex={activeIndex} setActiveIndex={setActiveIndex} navItems={sections}>
+      {[navItems[0], navItems[1], navItems[2]].map(({ Render, primaryText }, i) => {
+        return (
+          <Suspense key={primaryText} fallback={<Loading />}>
+            <Fade in={activeIndex === i} key={`loaded-${i}`}>
+              <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+                <Render active={activeIndex === i} />
               </span>
             </Fade>
           </Suspense>
+        )
+      })}
 
-          {mode !== 'edit' ? (
-            <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
-          ) : null}
-        </>
-      )}
-    </ContentNav>
+      <Suspense
+        fallback={
+          <Fade
+            timeout={theme.transitions.duration.standard}
+            in={activeIndex === 3}
+            key={'loading'}
+          >
+            <span>
+              <Loading />
+            </span>
+          </Fade>
+        }
+      >
+        <Fade timeout={theme.transitions.duration.standard} in={activeIndex === 3} key={'loaded'}>
+          <span style={{ display: activeIndex === 3 ? 'inherit' : 'none' }}>
+            <Submit key="submit" />
+          </span>
+        </Fade>
+      </Suspense>
+
+      {mode !== 'edit' ? (
+        <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
+      ) : null}
+    </VerticalTabs>
   )
 }
 

@@ -7,8 +7,6 @@ import {
 } from '../../form'
 import { context as formContext } from '../../context'
 
-const EnergyCalculator = lazy(() => import('../../form/components/calculators/energy'))
-const EmissionsCalculator = lazy(() => import('../../form/components/calculators/emissions'))
 const ProgressCalculator = lazy(() => import('../../form/components/calculators/progress'))
 const FileUpload = lazy(() => import('../../form/components/upload'))
 
@@ -70,63 +68,6 @@ export default ({ field, formName }) => {
         />
       </Suspense>
     )
-  }
-
-  /**
-   * Energy input & calculator
-   */
-  if (fieldName === 'hasEnergyData') {
-    return (
-      <GqlBoundFormInput
-        key={fieldName}
-        field={field}
-        value={value || ''}
-        updateValue={val => updateForm({ [fieldName]: val, energyData: undefined })}
-        multiline={multilineFields.includes(fieldName)}
-      />
-    )
-  } else if (fieldName === 'energyData') {
-    if (form.hasEnergyData?.toBoolean()) {
-      return (
-        <Suspense key={fieldName} fallback={<Loading />}>
-          <EnergyCalculator
-            calculator={form[fieldName] || {}}
-            updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
-          />
-        </Suspense>
-      )
-    } else {
-      return null
-    }
-  }
-
-  /**
-   * Emissions input & calculator
-   * (Hidden for now)
-   */
-  if (fieldName === 'hasEmissionsData') {
-    return (
-      <GqlBoundFormInput
-        key={fieldName}
-        field={field}
-        value={value || ''}
-        updateValue={val => updateForm({ [fieldName]: val, energyData: undefined })}
-        multiline={multilineFields.includes(fieldName)}
-      />
-    )
-  } else if (fieldName === 'emissionsData') {
-    if (form.hasEmissionsData?.toBoolean()) {
-      return (
-        <Suspense key={fieldName} fallback={<Loading />}>
-          <EmissionsCalculator
-            calculator={form[fieldName] || {}}
-            updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
-          />
-        </Suspense>
-      )
-    } else {
-      return null
-    }
   }
 
   /**

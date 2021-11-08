@@ -1,13 +1,10 @@
 import Typography from '@mui/material/Typography'
-import { DataGrid } from '@material-ui/data-grid'
+import DataGrid, { TextEditor } from 'react-data-grid'
 import { useTheme } from '@mui/material/styles'
 import getCellValue from '../get-cell-value.js'
 import ControlledVocabularySelect from '../../controlled-vocabulary-select'
-import clsx from 'clsx'
-import useStyles from './style'
 
 export default ({ calculator, updateCalculator }) => {
-  const classes = useStyles()
   const theme = useTheme()
   const { startYear = null, endYear = null, grid1 = {}, grid2 = {} } = calculator
 
@@ -36,14 +33,14 @@ export default ({ calculator, updateCalculator }) => {
       endYear: _end,
       currentYear: year,
       grid: grid1,
-      field: 'achieved',
+      key: 'achieved',
     }),
     achievedUnit: getCellValue({
       calculator: 'progress',
       endYear: _end,
       currentYear: year,
       grid: grid1,
-      field: 'achievedUnit',
+      key: 'achievedUnit',
     }),
   }))
 
@@ -55,7 +52,7 @@ export default ({ calculator, updateCalculator }) => {
       endYear: _end,
       currentYear: year,
       grid: grid2,
-      field: 'expenditureZar',
+      key: 'expenditureZar',
     }),
   }))
 
@@ -88,26 +85,21 @@ export default ({ calculator, updateCalculator }) => {
       </Typography>
       <div style={{ height: rows1.length <= 6 ? rows1.length * 52 + 58 : 300, width: '100%' }}>
         <DataGrid
-          pageSize={100}
+          style={{ height: '100%' }}
+          enableVirtualization={true}
           columns={[
-            { field: 'year', headerName: 'Year', editable: false, width: 120 },
+            { key: 'year', name: 'Year', width: 120 },
             {
-              field: 'achieved',
-              headerName: 'How much was generated/saved/avoided achieved',
+              key: 'achieved',
+              name: 'How much was generated/saved/avoided achieved',
               type: 'number',
-              editable: true,
+              editor: TextEditor,
               width: 450,
             },
             {
-              field: 'achievedUnit',
-              headerName: 'Unit of achievements',
-              editable: false,
-              flex: 1,
-              sortable: false,
-              filterable: false,
-              disableColumnMenu: true,
-              cellClassName: () => clsx(classes.cell),
-              renderCell: ({ row: { id, achievedUnit } }) => (
+              key: 'achievedUnit',
+              name: 'Unit of achievements',
+              formatter: ({ row: { id, achievedUnit } }) => (
                 <ControlledVocabularySelect
                   tree={'mitigationUnits'}
                   root="Unit"
@@ -138,7 +130,7 @@ export default ({ calculator, updateCalculator }) => {
           ]}
           rows={rows1}
           hideFooter={rows1.length < 100 ? true : false}
-          onEditCellChangeCommitted={({ id, field, props }) => {
+          onEditCellChangeCommitted={({ id, key, props }) => {
             return updateCalculator(
               Object.assign(
                 { ...calculator },
@@ -149,7 +141,7 @@ export default ({ calculator, updateCalculator }) => {
                       [id]: Object.assign(
                         { ...(grid1?.[id] || {}) },
                         {
-                          [field]: props.value,
+                          [key]: props.value,
                         }
                       ),
                     }
@@ -185,18 +177,17 @@ export default ({ calculator, updateCalculator }) => {
         <DataGrid
           pageSize={100}
           columns={[
-            { field: 'year', headerName: 'Year', editable: false, width: 120 },
+            { key: 'year', name: 'Year', editable: false, width: 120 },
             {
-              field: 'expenditureZar',
-              headerName: 'Expenditure in (ZAR)',
+              key: 'expenditureZar',
+              name: 'Expenditure in (ZAR)',
               type: 'number',
-              editable: true,
-              width: 350,
+              editor: TextEditor,
             },
           ]}
           rows={rows2}
           hideFooter={rows2.length < 100 ? true : false}
-          onEditCellChangeCommitted={({ id, field, props }) => {
+          onEditCellChangeCommitted={({ id, key, props }) => {
             return updateCalculator(
               Object.assign(
                 { ...calculator },
@@ -207,7 +198,7 @@ export default ({ calculator, updateCalculator }) => {
                       [id]: Object.assign(
                         { ...(grid2?.[id] || {}) },
                         {
-                          [field]: props.value,
+                          [key]: props.value,
                         }
                       ),
                     }

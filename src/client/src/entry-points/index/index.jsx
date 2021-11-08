@@ -15,8 +15,15 @@ render(
     <Header
       title={
         <Tooltip title="National Climate Change Response Database">
-          <Typography color="textPrimary" variant="h5" variantMapping={{ h5: 'h1' }}>
-            NCCRD {NCCRD_DEPLOYMENT_ENV === 'production' ? '' : '(dev)'}
+          <Typography
+            fontSize="1.5rem"
+            color="textPrimary"
+            variant="overline"
+            variantMapping={{ overline: 'h1' }}
+          >
+            {NCCRD_DEPLOYMENT_ENV === 'production'
+              ? 'National Climate Change Response Database'
+              : 'NCCRD:DEV'}
           </Typography>
         </Tooltip>
       }

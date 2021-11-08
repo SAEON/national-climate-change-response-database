@@ -81,11 +81,22 @@ export const TEMP_DIRECTORY = normalize(join(FILES_DIRECTORY, `.${sep}temp`))
   await ensureDirectory(UPLOADS_DIRECTORY)
   await ensureDirectory(TEMP_DIRECTORY)
 })().catch(error => {
-  console.error(
-    'Please create directory',
-    FILES_DIRECTORY,
-    'that can be used by the current process',
-    error
-  )
+  if (FILES_DIRECTORY.includes('snapshot')) {
+    console.error(
+      'ERROR - missing application directory.',
+      'Please specify the FILES_DIRECTORY environment variable when starting the application',
+      `If you are executing this application via Powershell, try: $env:FILES_DIRECTORY="./assets"; .\\nccrd-win.exe'`,
+      error
+    )
+  } else {
+    console.error(
+      'ERROR - missing application directory.',
+      'Please create directory',
+      FILES_DIRECTORY,
+      'that can be used by the current process',
+      error
+    )
+  }
+
   process.exit(1)
 })

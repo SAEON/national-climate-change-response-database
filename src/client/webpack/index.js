@@ -1,5 +1,4 @@
 const path = require('path')
-require('dotenv').config({ path: path.join(__dirname, './.env') })
 const fs = require('fs')
 const configureRules = require('./rules.js')
 const loadAliases = require('./load-aliases.js')
@@ -7,6 +6,9 @@ const configureDevServer = require('./dev-server')
 const configurePlugins = require('./plugins.js')
 
 const ROOT = path.normalize(path.join(__dirname, '../'))
+
+require('dotenv').config({ path: path.join(ROOT, './.env') })
+
 const { NODE_ENV: mode, NCCRD_DEPLOYMENT_ENV = 'local' } = process.env
 
 const entries = Object.fromEntries(

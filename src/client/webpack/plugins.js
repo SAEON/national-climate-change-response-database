@@ -1,10 +1,11 @@
 const webpack = require('webpack')
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
-const dotenv = require('dotenv').config({ path: path.join(__dirname, './.env') })
 const packageJson = require('../package.json')
 const loadEntryPoints = require('./load-entry-points.js')
 
+const ROOT = path.normalize(path.join(__dirname, '../'))
+const dotenv = require('dotenv').config({ path: path.join(ROOT, './.env') })
 const { NODE_ENV: mode, NCCRD_DEPLOYMENT_ENV = 'local', NCCRD_HOSTNAME = '' } = process.env
 
 module.exports = (ROOT, output) => {

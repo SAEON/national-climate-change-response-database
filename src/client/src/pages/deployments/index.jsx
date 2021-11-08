@@ -7,14 +7,16 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import Wrapper from '../../components/page-wrapper'
+import Container from '@mui/material/Container'
 import AccessDenied from '../../components/access-denied'
 import Header from './header'
 import Templates from './uploads'
+import useTheme from '@mui/material/styles/useTheme'
 
 const POLLING_INTERVAL = 1000
 
 export default () => {
+  const theme = useTheme()
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
 
@@ -23,11 +25,7 @@ export default () => {
   }
 
   if (!hasPermission('/deployments')) {
-    return (
-      <Wrapper>
-        <AccessDenied requiredPermission="/deployments" />
-      </Wrapper>
-    )
+    return <AccessDenied requiredPermission="/deployments" />
   }
 
   const { error, loading, data, startPolling } = useQuery(
@@ -59,7 +57,8 @@ export default () => {
   return (
     <>
       <Header />
-      <Wrapper>
+      <div style={{ marginTop: theme.spacing(2) }} />
+      <Container style={{ minHeight: 1000 }}>
         <Templates templates={data.submissionTemplates} />
         <div style={{ margin: 16 }} />
         <Card>
@@ -76,7 +75,8 @@ export default () => {
             </Typography>
           </CardContent>
         </Card>
-      </Wrapper>
+      </Container>
+      <div style={{ marginTop: theme.spacing(2) }} />
     </>
   )
 }

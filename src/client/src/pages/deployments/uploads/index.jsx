@@ -1,62 +1,48 @@
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-import { DataGrid } from '@material-ui/data-grid'
+import DataGrid from 'react-data-grid'
 import IconButton from '@mui/material/IconButton'
 import DownloadIcon from 'mdi-react/DownloadIcon'
 import Link from '@mui/material/Link'
-import { useTheme } from '@mui/material/styles'
-import useStyles from './style'
-import clsx from 'clsx'
 import { NCCRD_API_HTTP_ADDRESS } from '../../../config'
 import Tooltip from '@mui/material/Tooltip'
 
-export default ({ templates }) => {
-  const theme = useTheme()
-  const classes = useStyles()
+const headerRenderer = ({ column }) => (
+  <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
+)
 
+export default ({ templates }) => {
   return (
     <Card>
       <CardHeader title="Uploaded templates" />
       <CardContent>
         <div style={{ height: 500 }}>
           <DataGrid
-            pageSize={25}
-            rowHeight={theme.spacing(5)}
+            style={{ height: '100%' }}
+            enableVirtualization={true}
             columns={[
+              { key: 'createdBy', name: 'Uploaded by', headerRenderer, size: 100 },
               {
-                field: 'id',
-                sortable: false,
-                filterable: false,
-                disableColumnMenu: true,
-                headerName: 'ID',
-                width: 50,
-              },
-              { field: 'createdBy', headerName: 'Uploaded by', flex: 0.5 },
-              {
-                field: 'createdAt',
-                headerName: 'Created at',
-                flex: 0.6,
-                filterable: false,
-                disableColumnMenu: true,
+                key: 'createdAt',
+                name: 'Created at',
+                headerRenderer,
+                formatter: ({ row: { createdAt } }) => '' + createdAt,
+                size: 100,
               },
               {
-                field: 'filePath',
-                headerName: 'File name',
-                flex: 1,
-                filterable: false,
-                disableColumnMenu: true,
+                key: 'filePath',
+                name: 'File name',
+                headerRenderer,
+                size: 100,
               },
               {
-                field: '_download',
-                sortable: false,
-                filterable: false,
-                disableColumnMenu: true,
-                cellClassName: () => clsx(classes.cell),
-                headerName: ` `,
+                key: '_download',
+                name: '',
                 width: 100,
-                renderCell: ({ row: { id } }) => {
-                  return (
+                headerRenderer,
+                formatter: ({ row: { id } }) => (
+                  <div style={{ width: '100%', textAlign: 'center' }}>
                     <Tooltip title="Download template">
                       <IconButton
                         target="_blank"
@@ -68,8 +54,8 @@ export default ({ templates }) => {
                         <DownloadIcon size={18} />
                       </IconButton>
                     </Tooltip>
-                  )
-                },
+                  </div>
+                ),
               },
             ]}
             rows={[...templates]

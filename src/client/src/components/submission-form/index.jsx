@@ -173,7 +173,10 @@ const FormController = () => {
       </Suspense>
 
       {mode !== 'edit' ? (
-        <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
+        <>
+          <div style={{ marginTop: theme.spacing(2) }} />
+          <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
+        </>
       ) : null}
     </VerticalTabs>
   )

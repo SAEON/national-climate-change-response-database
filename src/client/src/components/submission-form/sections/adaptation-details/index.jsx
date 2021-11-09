@@ -37,7 +37,12 @@ const Compose = memo(({ fields }) => {
  * Don't render ComposeForm directly,
  * as that will trigger many re-renders
  */
-export default () => {
+export default ({ active }) => {
   const { adaptationFields } = useContext(formContext)
+
+  if (!active) {
+    return null
+  }
+
   return <Compose fields={adaptationFields} />
 }

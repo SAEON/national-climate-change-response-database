@@ -5,6 +5,7 @@ import Button from '@mui/material/Button'
 import PreviousIcon from 'mdi-react/ChevronLeftIcon'
 import NextIcon from 'mdi-react/ChevronRightIcon'
 import { useTheme } from '@mui/material/styles'
+import Toolbar from '@mui/material/Toolbar'
 
 const sections = [
   'generalDetailsFormValidation',
@@ -73,29 +74,35 @@ const Buttons = memo(
 
     return (
       <Grid container>
-        <Grid item container xs={12}>
-          <Button
-            color="inherit"
-            onClick={previousFn}
-            disabled={!hasPrevious}
-            style={{ minWidth: 152, margin: theme.spacing(1), marginLeft: 'auto' }}
-            startIcon={<PreviousIcon size={18} />}
-            disableElevation
-            variant="contained"
+        <Grid item container xs={12} justifyContent="flex-end">
+          <Toolbar
+            disableGutters
+            variant="dense"
+            style={{ backgroundColor: theme.palette.common.white }}
           >
-            Previous section
-          </Button>
-          <Button
-            style={{ minWidth: 152, margin: theme.spacing(1), marginRight: 0 }}
-            color="inherit"
-            onClick={nextFn}
-            endIcon={<NextIcon size={18} />}
-            disableElevation
-            variant="contained"
-            disabled={!hasNext}
-          >
-            Next section
-          </Button>
+            <Button
+              style={{ minWidth: 152, marginLeft: theme.spacing(1) }}
+              onClick={previousFn}
+              disabled={!hasPrevious}
+              startIcon={<PreviousIcon size={18} />}
+              disableElevation
+              variant="text"
+              size="small"
+            >
+              Previous section
+            </Button>
+            <Button
+              style={{ minWidth: 152, marginLeft: theme.spacing(1), marginRight: theme.spacing(1) }}
+              size="small"
+              onClick={nextFn}
+              endIcon={<NextIcon size={18} />}
+              disableElevation
+              variant="text"
+              disabled={!hasNext}
+            >
+              Next section
+            </Button>
+          </Toolbar>
         </Grid>
       </Grid>
     )

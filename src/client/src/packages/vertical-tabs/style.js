@@ -1,5 +1,3 @@
-import { alpha } from '@mui/material/styles'
-
 import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => {
@@ -8,6 +6,7 @@ export default makeStyles(theme => {
       borderRadius: 0,
     },
     buttonBase: {
+      backgroundColor: theme.palette.common.white,
       transition: theme.transitions.create(['all']),
       [theme.breakpoints.up('lg')]: {
         minHeight: theme.spacing(10),
@@ -15,7 +14,7 @@ export default makeStyles(theme => {
     },
     active: {
       transition: theme.transitions.create(['all']),
-      backgroundColor: alpha(theme.palette.primary.main, 0.3),
+      backgroundColor: '#b2cebe',
       [theme.breakpoints.up('lg')]: {
         minHeight: theme.spacing(16),
       },

@@ -47,45 +47,48 @@ export default memo(
         }
         placement="right"
       >
-        <ButtonBase
-          disabled={disabled}
-          className={clsx(classes.buttonBase, {
-            [classes.active]: i === activeIndex,
-          })}
-          onClick={onClick}
-          style={{ width: '100%' }}
-        >
-          <ListItem style={{ justifyContent: 'center' }}>
-            {(xsAndDown || mdAndUp) && (
-              <ListItemIcon style={{ justifyContent: 'center' }}>
-                <Icon active={activeIndex === i} />
-              </ListItemIcon>
-            )}
+        <span>
+          <ButtonBase
+            disabled={disabled}
+            className={clsx(classes.buttonBase, {
+              [classes.active]: i === activeIndex,
+              [classes.disabled]: disabled,
+            })}
+            onClick={onClick}
+            style={{ width: '100%' }}
+          >
+            <ListItem style={{ justifyContent: 'center' }}>
+              {(xsAndDown || mdAndUp) && (
+                <ListItemIcon style={{ justifyContent: 'center' }}>
+                  <Icon active={activeIndex === i} />
+                </ListItemIcon>
+              )}
 
-            {smAndUp && (
-              <ListItemText
-                primaryTypographyProps={{
-                  variant: 'overline',
-                  display: 'block',
-                }}
-                style={{
-                  textAlign: mdAndUp ? 'left' : 'center',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                }}
-                primary={primaryText || 'Missing primaryText'}
-                secondary={mdAndUp && (secondaryText || 'Missing secondaryText')}
-              />
-            )}
+              {smAndUp && (
+                <ListItemText
+                  primaryTypographyProps={{
+                    variant: 'overline',
+                    display: 'block',
+                  }}
+                  style={{
+                    textAlign: mdAndUp ? 'left' : 'center',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}
+                  primary={primaryText || 'Missing primaryText'}
+                  secondary={mdAndUp && (secondaryText || 'Missing secondaryText')}
+                />
+              )}
 
-            {(xsAndDown || mdAndUp) && SecondaryIcon && (
-              <ListItemIcon style={{ justifyContent: 'center' }}>
-                <SecondaryIcon />
-              </ListItemIcon>
-            )}
-          </ListItem>
-        </ButtonBase>
+              {(xsAndDown || mdAndUp) && SecondaryIcon && (
+                <ListItemIcon style={{ justifyContent: 'center' }}>
+                  <SecondaryIcon />
+                </ListItemIcon>
+              )}
+            </ListItem>
+          </ButtonBase>
+        </span>
       </Tooltip>
     )
   },

@@ -6,29 +6,29 @@ import NavItem from './_nav-item'
 
 export default ({ navItems, children, activeIndex, setActiveIndex }) => {
   const theme = useTheme()
-  const lgAndUp = useMediaQuery(theme.breakpoints.up('lg'))
+  const lgUp = useMediaQuery(theme.breakpoints.up('lg'))
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} lg={3}>
         <List
           style={{
-            backgroundColor: theme.palette.common.white,
             padding: 0,
             display: 'flex',
-            flexDirection: lgAndUp ? 'column' : 'row',
+            flexDirection: lgUp ? 'column' : 'row',
             maxHeight: 1000,
             overflow: 'auto',
           }}
         >
           {navItems.map((props, i) => (
-            <NavItem
-              i={i}
-              onClick={() => setActiveIndex(i)}
-              activeIndex={activeIndex}
-              {...props}
-              key={i}
-            />
+            <span key={i} style={{ flex: '1 1 0' }}>
+              <NavItem
+                i={i}
+                onClick={() => setActiveIndex(i)}
+                activeIndex={activeIndex}
+                {...props}
+              />
+            </span>
           ))}
         </List>
       </Grid>

@@ -7,7 +7,7 @@ import Header from './header'
 import Wrapper from '../../components/page-wrapper'
 import AccessDenied from '../../components/access-denied'
 
-const ProjectForm = lazy(() => import('../../components/project-form'))
+const ProjectForm = lazy(() => import('../../components/submission-form'))
 
 const LoadProject = ({ id }) => {
   const { hasPermission, user } = useContext(authorizationContext)

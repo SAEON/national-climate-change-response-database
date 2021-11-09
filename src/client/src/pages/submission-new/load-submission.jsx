@@ -4,7 +4,7 @@ import Wrapper from '../../components/page-wrapper'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
 
-const ProjectForm = lazy(() => import('../../components/project-form'))
+const ProjectForm = lazy(() => import('../../components/submission-form'))
 
 export default ({ id }) => {
   const { error, loading, data } = useQuery(

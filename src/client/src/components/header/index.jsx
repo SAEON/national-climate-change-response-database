@@ -32,7 +32,7 @@ const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) 
       {/* PUSH CONTENT DOWN */}
       <HideOnScroll contentRef={contentRef}>
         <ApplicationBanner_>
-          <div style={Object.assign({ margin: 9 }, mdDown ? {} : { minHeight: IMAGE_HEIGHT })} />
+          <div style={{ minHeight: IMAGE_HEIGHT, ...(mdDown ? {} : { margin: 9 }) }} />
         </ApplicationBanner_>
       </HideOnScroll>
       <ApplicationHeader_ />

@@ -1,10 +1,12 @@
 import { useQuery, gql } from '@apollo/client'
 import Loading from '../../components/loading'
 import Header from './header'
+import Container from '@mui/material/Container'
 import Render from './render'
-import Wrapper from '../../components/page-wrapper'
+import useTheme from '@mui/material/styles/useTheme'
 
 export default ({ id }) => {
+  const theme = useTheme()
   const { error, loading, data } = useQuery(
     gql`
       query submission($id: ID!) {
@@ -43,7 +45,8 @@ export default ({ id }) => {
   return (
     <>
       <Header id={id} {...project} />
-      <Wrapper>
+      <div style={{ marginTop: theme.spacing(2) }} />
+      <Container style={{ minHeight: 1000 }}>
         <Render
           submission={{ submissionStatus, submissionComments }}
           project={project}
@@ -128,7 +131,8 @@ export default ({ id }) => {
             ],
           }}
         />
-      </Wrapper>
+      </Container>
+      <div style={{ marginTop: theme.spacing(2) }} />
     </>
   )
 }

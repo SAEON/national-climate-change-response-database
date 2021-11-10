@@ -1,4 +1,3 @@
-import Wrapper from '../../components/page-wrapper'
 import Header from '../../components/toolbar-header'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
@@ -10,6 +9,7 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { NCCRD_API_HTTP_ADDRESS } from '../../config'
 import getUriState from '../../lib/get-uri-state'
+import Container from '@mui/material/Container'
 import NrfIcon from '../../icons/nrf-icon'
 import useTheme from '@mui/styles/useTheme'
 
@@ -20,7 +20,8 @@ export default () => {
   return (
     <>
       <Header />
-      <Wrapper>
+      <div style={{ marginTop: theme.spacing(2) }} />
+      <Container style={{ minHeight: 1000 }}>
         <Grid container justifyContent="center">
           <Grid item xs={12} sm={8} md={4} style={{ display: 'flex', justifyContent: 'center' }}>
             <Card variant="outlined" style={{ width: '100%' }}>
@@ -67,7 +68,8 @@ export default () => {
             </Card>
           </Grid>
         </Grid>
-      </Wrapper>
+      </Container>
+      <div style={{ marginTop: theme.spacing(2) }} />
     </>
   )
 }

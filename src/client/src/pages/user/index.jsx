@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
 import Loading from '../../components/loading'
 import Header from './header'
-import Wrapper from '../../components/page-wrapper'
+import Container from '@mui/material/Container'
 
 export default () => {
   const theme = useTheme()
@@ -22,7 +22,8 @@ export default () => {
   return (
     <>
       <Header />
-      <Wrapper>
+      <div style={{ marginTop: theme.spacing(2) }} />
+      <Container style={{ minHeight: 1000 }}>
         <Card
           style={{ border: 'none', width: '100%', backgroundColor: theme.backgroundColor }}
           variant="outlined"
@@ -40,7 +41,8 @@ export default () => {
             </Typography>
           </CardContent>
         </Card>
-      </Wrapper>
+      </Container>
+      <div style={{ marginTop: theme.spacing(2) }} />
     </>
   )
 }

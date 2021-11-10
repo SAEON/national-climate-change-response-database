@@ -3,16 +3,37 @@ import VerticalTabs from '../../packages/vertical-tabs'
 import GraphQLFormProvider, { context as formContext } from './context'
 import Finalize from './finalize'
 import Loading from '../loading'
-import AvatarIcon from './_avatar-icon'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import BottomNav from './bottom-nav'
+import BottomNav from './sections/navigation'
 import SyncIcon from 'mdi-react/SyncIcon'
 import Fade from '@mui/material/Fade'
+import useStyles from './style'
+import Avatar from '@mui/material/Avatar'
+import clsx from 'clsx'
+import CompleteIcon from 'mdi-react/CheckBoldIcon'
 
 const GeneralDetailsForm = lazy(() => import('./sections/general-details'))
 const MitigationDetailsForm = lazy(() => import('./sections/mitigation-details'))
 const AdaptationDetailsForm = lazy(() => import('./sections/adaptation-details'))
+
+const AvatarIcon = ({ i, complete, started, disabled, enabled }) => {
+  const classes = useStyles()
+
+  return (
+    <Avatar
+      className={clsx(classes.small, {
+        [classes.started]: started && !complete,
+        [classes.completeAvatar]: complete,
+        [classes.disabled]: disabled,
+        [classes.enabled]: enabled,
+      })}
+    >
+      {!complete && i}
+      {complete && <CompleteIcon className={clsx(classes.complete)} />}
+    </Avatar>
+  )
+}
 
 const FormController = () => {
   const [activeIndex, setActiveIndex] = useState(0)

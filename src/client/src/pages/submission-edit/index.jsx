@@ -4,12 +4,14 @@ import Loading from '../../components/loading'
 import { context as authenticationContext } from '../../contexts/authentication'
 import { context as authorizationContext } from '../../contexts/authorization'
 import Header from './header'
-import Wrapper from '../../components/page-wrapper'
+import useTheme from '@mui/material/styles/useTheme'
 import AccessDenied from '../../components/access-denied'
+import Container from '@mui/material/Container'
 
 const ProjectForm = lazy(() => import('../../components/submission-form'))
 
 const LoadProject = ({ id }) => {
+  const theme = useTheme()
   const { hasPermission, user } = useContext(authorizationContext)
 
   const { error, loading, data } = useQuery(
@@ -66,7 +68,8 @@ const LoadProject = ({ id }) => {
   return (
     <>
       <Header />
-      <Wrapper>
+      <div style={{ marginTop: theme.spacing(2) }} />
+      <Container style={{ minHeight: 1000 }}>
         <Suspense fallback={<Loading />}>
           <ProjectForm
             mode={isSubmitted ? 'edit' : undefined}
@@ -77,7 +80,8 @@ const LoadProject = ({ id }) => {
             isSubmitted={isSubmitted}
           />
         </Suspense>
-      </Wrapper>
+      </Container>
+      <div style={{ marginTop: theme.spacing(2) }} />
     </>
   )
 }

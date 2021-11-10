@@ -26,9 +26,9 @@ const schema = makeExecutableSchema({
 })
 
 console.info('Building input type fields list from GraphQL schema')
-const typeFields = graphqlSync(
+const typeFields = graphqlSync({
   schema,
-  print(
+  source: print(
     gql`
       query {
         p: __type(name: "ProjectInput") {
@@ -57,8 +57,8 @@ const typeFields = graphqlSync(
         }
       }
     `
-  )
-).data
+  ),
+}).data
 
 export const projectVocabularyFields = _projectVocabularyFields
 export const mitigationVocabularyFields = _mitigationVocabularyFields

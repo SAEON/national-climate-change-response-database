@@ -7,8 +7,10 @@ import ExpandIcon from 'mdi-react/ChevronDownIcon'
 import CollapseIcon from 'mdi-react/ChevronUpIcon'
 import Avatar from '@mui/material/Avatar'
 import { useTheme } from '@mui/material/styles'
+import useLocalStorage from '../../hooks/use-localstorage'
 
 export default ({
+  id = undefined,
   children,
   title,
   subheader = undefined,
@@ -19,7 +21,9 @@ export default ({
   cardStyle = {},
 }) => {
   const theme = useTheme()
-  const [collapsed, setCollapsed] = useState(!defaultExpanded)
+  const [collapsed, setCollapsed] = id
+    ? useLocalStorage(id, !defaultExpanded)
+    : useState(!defaultExpanded)
 
   return (
     <Card

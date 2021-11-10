@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid'
 import InputTables from './input-tables'
 import QuickForm from '../../../../../quick-form'
 import debounce from '../../../../../../lib/debounce'
+import { parseISO, subYears, addYears } from 'date-fns'
 
 export default memo(
   ({ calculator = {}, updateCalculator = {} }) => {
@@ -12,6 +13,8 @@ export default memo(
       () => debounce(({ calculator }) => updateCalculator(calculator)),
       [updateCalculator]
     )
+
+    const min = subYears(new Date(), 50)
 
     return (
       <QuickForm effect={effect} calculator={calculator}>
@@ -36,8 +39,8 @@ export default memo(
                     )}
                     clearable
                     autoOk
-                    minDate={'2000'}
-                    maxDate={new Date().getFullYear().toString()}
+                    minDate={min}
+                    maxDate={new Date()}
                     views={['year']}
                     placeholder={'Start year'}
                     label={'Start year'}
@@ -72,8 +75,8 @@ export default memo(
                     )}
                     clearable
                     autoOk
-                    minDate={'2000'}
-                    maxDate={new Date().getFullYear().toString()}
+                    minDate={min}
+                    maxDate={new Date()}
                     views={['year']}
                     placeholder={'End year'}
                     label={'End year'}

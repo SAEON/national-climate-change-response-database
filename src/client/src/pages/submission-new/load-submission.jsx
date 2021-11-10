@@ -1,12 +1,15 @@
 import { lazy, Suspense } from 'react'
 import Header from './header'
-import Wrapper from '../../components/page-wrapper'
+import Container from '@mui/material/Container'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../components/loading'
+import useTheme from '@mui/material/styles/useTheme'
 
 const ProjectForm = lazy(() => import('../../components/submission-form'))
 
 export default ({ id }) => {
+  const theme = useTheme()
+
   const { error, loading, data } = useQuery(
     gql`
       query submission($id: ID!, $isSubmitted: Boolean) {
@@ -49,7 +52,8 @@ export default ({ id }) => {
   return (
     <>
       <Header id={id} />
-      <Wrapper>
+      <div style={{ marginTop: theme.spacing(2) }} />
+      <Container style={{ minHeight: 1000 }}>
         <Suspense fallback={<Loading />}>
           <ProjectForm
             submissionId={id}
@@ -58,7 +62,8 @@ export default ({ id }) => {
             adaptation={adaptation}
           />
         </Suspense>
-      </Wrapper>
+      </Container>
+      <div style={{ marginTop: theme.spacing(2) }} />
     </>
   )
 }

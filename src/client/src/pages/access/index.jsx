@@ -10,7 +10,7 @@ import Container from '@mui/material/Container'
 import Header from './header'
 import AccessDenied from '../../components/access-denied'
 import UserRolesProvider from './context'
-import { useTheme } from '@mui/material/styles'
+import useTheme from '@mui/material/styles/useTheme'
 import Fade from '@mui/material/Fade'
 
 const Users = lazy(() => import('./users'))
@@ -49,7 +49,7 @@ export default () => {
 
   const sections = useMemo(
     () => _sections.filter(({ requiredPermission }) => hasPermission(requiredPermission)),
-    []
+    [hasPermission]
   )
 
   if (!isAuthenticated) {

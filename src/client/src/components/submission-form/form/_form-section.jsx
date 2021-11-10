@@ -9,6 +9,7 @@ export default ({ title, fields, RenderField, formName, defaultExpanded = false 
 
   return (
     <Collapse
+      id={`${window.location.href}-${formName}-${title}`}
       defaultExpanded={defaultExpanded}
       avatarStyle={{
         width: theme.spacing(4),

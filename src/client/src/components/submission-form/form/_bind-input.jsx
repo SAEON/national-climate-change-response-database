@@ -27,7 +27,7 @@ export default ({ field, value, disabled = false, updateValue, multiline }) => {
         helperText={helperText}
         name={placeholder}
         key={fieldName}
-        value={value}
+        value={value || ''}
         setValue={updateValue}
       />
     )
@@ -42,7 +42,7 @@ export default ({ field, value, disabled = false, updateValue, multiline }) => {
         placeholder={placeholder}
         name={placeholder}
         helperText={helperText}
-        value={value || null} // null is allowed here
+        value={value || new Date().toISOString()}
         setValue={updateValue}
       />
     )

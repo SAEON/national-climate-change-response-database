@@ -249,7 +249,7 @@ export default ({ field }) => {
     <GqlBoundFormInput
       key={fieldName}
       field={field}
-      value={value || ''}
+      value={value}
       updateValue={val => updateForm({ [fieldName]: val })}
       multiline={multilineFields.includes(fieldName)}
     />

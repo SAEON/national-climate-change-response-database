@@ -3,6 +3,7 @@ import DatePicker from '@mui/lab/DatePicker'
 import QuickForm from '../../../quick-form'
 import TextField from '@mui/material/TextField'
 import debounce from '../../../../lib/debounce'
+import { parseISO, subYears, addYears } from 'date-fns'
 
 export default memo(
   ({ helperText, name, placeholder, error, disabled = false, value, setValue }) => {
@@ -16,17 +17,17 @@ export default memo(
               clearable
               disabled={disabled}
               autoOk
-              minDate="1990"
-              maxDate="2089"
+              minDate={subYears(new Date(), 50)}
+              maxDate={addYears(new Date(), 100)}
               views={['year']}
               placeholder={placeholder}
               label={name}
               id={`${name}`}
-              error={error}
-              value={value}
-              onChange={value => update({ value })}
+              value={parseISO(value)}
+              onChange={value => update({ value: value.toISOString() })}
               renderInput={params => (
                 <TextField
+                  error={error}
                   helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}
                   variant="outlined"
                   fullWidth

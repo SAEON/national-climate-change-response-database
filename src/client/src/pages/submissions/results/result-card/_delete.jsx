@@ -46,7 +46,7 @@ export default ({ id, createdBy }) => {
           startIcon={<DeleteIcon size={18} />}
           color="primary"
           size="small"
-          variant="outlined"
+          variant="text"
         >
           Delete
         </Button>

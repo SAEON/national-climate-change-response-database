@@ -26,7 +26,7 @@ export default ({ id, createdBy }) => {
       startIcon={<EditIcon size={18} />}
       color="primary"
       size="small"
-      variant="outlined"
+      variant="text"
     >
       Edit
     </Button>

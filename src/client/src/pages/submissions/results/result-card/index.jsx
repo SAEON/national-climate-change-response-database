@@ -19,7 +19,7 @@ export default ({ id, project, createdBy }) => {
         <Delete createdBy={createdBy} id={id} />
         <View id={id} />
         <Edit createdBy={createdBy} id={id} />
-        <Download id={id} title={project.title} />
+        <Download variant="text" id={id} title={project.title} />
       </CardActions>
     </Card>
   )

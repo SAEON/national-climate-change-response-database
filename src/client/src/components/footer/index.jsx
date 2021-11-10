@@ -22,7 +22,7 @@ export default ({ routes }) => {
         {/* DISCLAIMERS */}
         <Toolbar style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <Container style={{ paddingTop: theme.spacing(4), paddingBottom: theme.spacing(4) }}>
-            <Grid container>
+            <Grid container spacing={4}>
               <Grid container item xs={12} sm={6}>
                 {routes
                   .filter(({ includeInFooter }) => includeInFooter)

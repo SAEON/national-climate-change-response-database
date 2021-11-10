@@ -9,6 +9,7 @@ const Compose = memo(({ fields }) => {
       formName="adaptation"
       RenderField={RenderField}
       fields={fields}
+      defaultExpanded={['Adaptation details']}
       sections={{
         'Adaptation details': [
           'adaptationSector',

@@ -4,12 +4,12 @@ import Collapse from '../../collapse'
 import Typography from '@mui/material/Typography'
 import Icon from 'mdi-react/EditIcon'
 
-export default ({ title, fields, RenderField, formName }) => {
+export default ({ title, fields, RenderField, formName, defaultExpanded = false }) => {
   const theme = useTheme()
 
   return (
     <Collapse
-      defaultExpanded={false}
+      defaultExpanded={defaultExpanded}
       avatarStyle={{
         width: theme.spacing(4),
         height: theme.spacing(4),

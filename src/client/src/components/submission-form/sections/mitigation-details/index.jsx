@@ -10,6 +10,7 @@ const Compose = memo(({ fields }) => {
       RenderField={RenderField}
       fields={fields}
       hideSections={[]}
+      defaultExpanded={['Host sector']}
       sections={{
         'Host sector': ['hostSector', 'hostSubSectorPrimary', 'hostSubSectorSecondary'],
         'Project type': ['mitigationType', 'mitigationSubType'],

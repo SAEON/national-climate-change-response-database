@@ -9,7 +9,7 @@ export default ({ title, fields, RenderField, formName }) => {
 
   return (
     <Collapse
-      defaultExpanded
+      defaultExpanded={false}
       avatarStyle={{
         width: theme.spacing(4),
         height: theme.spacing(4),

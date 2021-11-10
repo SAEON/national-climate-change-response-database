@@ -47,7 +47,9 @@ export default ({
         ]}
       />
 
-      <Collapse in={!collapsed}>{children}</Collapse>
+      <Collapse unmountOnExit in={!collapsed}>
+        {children}
+      </Collapse>
     </Card>
   )
 }

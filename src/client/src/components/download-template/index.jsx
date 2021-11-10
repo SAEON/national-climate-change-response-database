@@ -7,9 +7,11 @@ import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
 import { NCCRD_API_HTTP_ADDRESS } from '../../config'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default () => {
   const theme = useTheme()
+  const lgUp = useMediaQuery(theme.breakpoints.up('lg'))
   const isAuthenticated = useContext(authenticationContext)
 
   return (
@@ -42,9 +44,9 @@ export default () => {
             size="small"
             variant="text"
             color="primary"
-            startIcon={<Icon size={18} />}
+            startIcon={lgUp ? <Icon size={18} /> : null}
           >
-            Download submission template
+            Excel template
           </Button>
         )
       }}

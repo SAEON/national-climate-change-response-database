@@ -15,6 +15,7 @@ import CancelIcon from 'mdi-react/CancelIcon'
 import AcceptIcon from 'mdi-react/CheckCircleIcon'
 import { NCCRD_API_HTTP_ADDRESS } from '../../config'
 import CircularProgress from '@mui/material/CircularProgress'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const uploadAddress = `${NCCRD_API_HTTP_ADDRESS}/submit-completed-templates`
 
@@ -25,6 +26,7 @@ export default ({ isAuthenticated }) => {
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState(null)
   const theme = useTheme()
+  const lgUp = useMediaQuery(theme.breakpoints.up('lg'))
 
   useEffect(
     () => () => {
@@ -41,7 +43,7 @@ export default ({ isAuthenticated }) => {
       <Tooltip placement="bottom" title={'Submit a completed Excel template'}>
         <span>
           <Button
-            startIcon={<UploadIcon size={18} />}
+            startIcon={lgUp ? <UploadIcon size={18} /> : null}
             onClick={() => {
               isAuthenticated.authenticate()
               setError(null)

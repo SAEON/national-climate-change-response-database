@@ -21,7 +21,12 @@ const Entry = () => {
       <Header
         title={
           <Tooltip title="National Climate Change Response Database">
-            <Typography color="textPrimary" variant="h5" variantMapping={{ h5: 'h1' }}>
+            <Typography
+              style={mdDown ? { fontSize: '16px' } : {}}
+              color="textPrimary"
+              variant="h5"
+              variantMapping={{ h5: 'h1' }}
+            >
               {NCCRD_DEPLOYMENT_ENV === 'production'
                 ? mdDown
                   ? 'NCCRD'

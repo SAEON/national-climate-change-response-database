@@ -1,6 +1,5 @@
 import Typography from '@mui/material/Typography'
 import Toolbar_ from './toolbar'
-import Hidden from '@mui/material/Hidden'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import useTheme from '@mui/material/styles/useTheme'
 
@@ -12,7 +11,7 @@ export const useImageHeight = () => {
     return 93
   }
 
-  return 1
+  return 40
 }
 
 export const Toolbar = Toolbar_
@@ -29,15 +28,14 @@ export default ({ title }) => {
   return (
     <Toolbar_>
       {/* DFFE LOGO */}
-      <Hidden lgDown>
-        <a {...aProps} href="http://www.environment.gov.za/">
-          <img
-            style={{ maxHeight: imageHeight, width: 'auto' }}
-            src="/dffe-logo.jpg"
-            alt="SA Government"
-          />
-        </a>
-      </Hidden>
+
+      <a {...aProps} href="http://www.environment.gov.za/">
+        <img
+          style={{ maxHeight: imageHeight, width: 'auto' }}
+          src="/dffe-logo.jpg"
+          alt="SA Government"
+        />
+      </a>
 
       {/* TITLE */}
       <header
@@ -55,20 +53,18 @@ export default ({ title }) => {
       </header>
 
       {/* SA FLAG */}
-      <Hidden lgDown>
-        <a {...aProps} href="http://www.environment.gov.za/">
-          <img
-            style={{
-              maxHeight: imageHeight,
-              width: 'auto',
-              display: 'block',
-              marginLeft: 'auto',
-            }}
-            src="/sa-flag.jpg"
-            alt="SA Government"
-          />
-        </a>
-      </Hidden>
+      <a {...aProps} href="http://www.environment.gov.za/">
+        <img
+          style={{
+            maxHeight: imageHeight,
+            width: 'auto',
+            display: 'block',
+            marginLeft: 'auto',
+          }}
+          src="/sa-flag.jpg"
+          alt="SA Government"
+        />
+      </a>
     </Toolbar_>
   )
 }

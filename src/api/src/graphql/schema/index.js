@@ -1,6 +1,5 @@
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import { graphqlSync } from 'graphql'
-import { print } from 'graphql/language/printer.js'
+import { graphqlSync, print } from 'graphql'
 import { gql } from 'apollo-server-koa'
 import { join } from 'path'
 import { readFileSync, readdirSync } from 'fs'
@@ -24,7 +23,6 @@ const typeDefs = SCHEMA_PARTS.map(name => `${_import(`./type-defs/${name}`)}`).j
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
-  inheritResolversFromInterfaces: true,
 })
 
 console.info('Building input type fields list from GraphQL schema')

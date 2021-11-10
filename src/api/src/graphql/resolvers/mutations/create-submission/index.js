@@ -1,24 +1,13 @@
-import logSql from '../../../../lib/log-sql.js'
+import { pool } from '../../../../mssql/pool.js'
 
 export default async (self, args, ctx) => {
-  const { query } = ctx.mssql
-
-  const sql = `
-    insert into Submissions (
-      userId,
-      createdBy,
-      createdAt
-    )
-
-    output inserted.*
-    
-    values (
-      ${ctx.user.info(ctx).id},
-      ${ctx.user.info(ctx).id},
-      '${new Date().toISOString()}'
-    );`
-
-  logSql(sql, 'Create submission')
-  const result = await query(sql)
-  return result.recordset[0]
+  return await (
+    await (await pool.connect())
+      .request()
+      .input('id', ctx.user.info(ctx).id)
+      .input('createdAt', new Date().toISOString()).query(`
+      insert into Submissions (userId, createdBy, createdAt)
+      output inserted.*
+      values ( @id, @id, @createdAt );`)
+  ).recordset[0]
 }

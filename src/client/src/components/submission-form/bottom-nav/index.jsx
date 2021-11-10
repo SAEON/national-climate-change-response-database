@@ -76,12 +76,12 @@ const Buttons = memo(
       <Grid container>
         <Grid item container xs={12} justifyContent="flex-end">
           <Toolbar
-            disableGutters
             variant="dense"
-            style={{ backgroundColor: theme.palette.common.white }}
+            disableGutters
+            style={{ backgroundColor: theme.palette.grey[100], flex: 1 }}
           >
             <Button
-              style={{ minWidth: 152, marginLeft: theme.spacing(1) }}
+              style={{ marginLeft: theme.spacing(1) }}
               onClick={previousFn}
               disabled={!hasPrevious}
               startIcon={<PreviousIcon size={18} />}
@@ -91,8 +91,9 @@ const Buttons = memo(
             >
               Previous section
             </Button>
+            <div style={{ marginLeft: 'auto' }} />
             <Button
-              style={{ minWidth: 152, marginLeft: theme.spacing(1), marginRight: theme.spacing(1) }}
+              style={{ marginRight: theme.spacing(1) }}
               size="small"
               onClick={nextFn}
               endIcon={<NextIcon size={18} />}

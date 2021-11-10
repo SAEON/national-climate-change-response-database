@@ -1,11 +1,10 @@
 import { useContext, lazy, Suspense, useMemo, memo, useState } from 'react'
 import VerticalTabs from '../../packages/vertical-tabs'
 import GraphQLFormProvider, { context as formContext } from './context'
-import Submit from './submit'
+import Finalize from './finalize'
 import Loading from '../loading'
 import AvatarIcon from './_avatar-icon'
 import { useTheme } from '@mui/material/styles'
-import SyncStatus from './_sync-status'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import BottomNav from './bottom-nav'
 import SyncIcon from 'mdi-react/SyncIcon'
@@ -27,7 +26,6 @@ const FormController = () => {
     mitigationFormsValidation,
     adaptationFormsValidation,
     syncing,
-    submissionId,
   } = useContext(formContext)
 
   const { isComplete: generalDetailsFormComplete, isStarted: generalDetailsFormStarted } =
@@ -108,10 +106,10 @@ const FormController = () => {
   const style = useMemo(() => (lgAndUp ? { marginTop: theme.spacing(2) } : {}), [lgAndUp, theme])
 
   const submitNavItem = useMemo(
-    () => ({
+    () => mode => ({
       style,
       disabled: !canSubmit,
-      primaryText: 'Submit',
+      primaryText: mode === 'edit' ? 'Status' : 'Submit',
       SecondaryIcon: () => (
         <SyncIcon
           style={{
@@ -121,25 +119,21 @@ const FormController = () => {
         />
       ),
       syncing,
-      secondaryText: 'Review submission',
+      secondaryText: mode === 'edit' ? (syncing ? 'Saving ...' : 'Saved') : 'Review submission',
       Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={4} />,
     }),
     [style, canSubmit, syncing, theme.palette.warning.main, theme.palette.success.main]
   )
 
-  const syncingNavItem = useMemo(
-    () => ({
-      style,
-      syncing,
-      Component: props => <SyncStatus submissionId={submissionId} {...props} syncing={syncing} />,
-    }),
-    [syncing, submissionId, style]
-  )
-
-  const sections = mode === 'edit' ? [...navItems, syncingNavItem] : [...navItems, submitNavItem]
+  const sections =
+    mode === 'edit' ? [...navItems, submitNavItem('edit')] : [...navItems, submitNavItem('new')]
 
   return (
     <VerticalTabs activeIndex={activeIndex} setActiveIndex={setActiveIndex} navItems={sections}>
+      {/* TOP BAR */}
+      <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
+      <div style={{ marginBottom: theme.spacing(2) }} />
+
       {[navItems[0], navItems[1], navItems[2]].map(({ Render, primaryText }, i) => {
         return (
           <Suspense key={primaryText} fallback={<Loading />}>
@@ -167,17 +161,14 @@ const FormController = () => {
       >
         <Fade timeout={theme.transitions.duration.standard} in={activeIndex === 3} key={'loaded'}>
           <span style={{ display: activeIndex === 3 ? 'inherit' : 'none' }}>
-            <Submit key="submit" />
+            <Finalize key="finalize" mode={mode} />
           </span>
         </Fade>
       </Suspense>
 
-      {mode !== 'edit' ? (
-        <>
-          <div style={{ marginTop: theme.spacing(2) }} />
-          <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
-        </>
-      ) : null}
+      {/* BOTTOM BAR */}
+      <div style={{ marginBottom: theme.spacing(2) }} />
+      <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
     </VerticalTabs>
   )
 }

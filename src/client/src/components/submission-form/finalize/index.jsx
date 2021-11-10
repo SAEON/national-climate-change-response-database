@@ -9,7 +9,7 @@ import CardActions from '@mui/material/CardActions'
 import { context as formContext, convertFormToGqlInput } from '../context'
 import Typography from '@mui/material/Typography'
 
-export default () => {
+export default ({ mode }) => {
   const history = useHistory()
   const { generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm, submissionId } =
     useContext(formContext)
@@ -75,12 +75,12 @@ export default () => {
   return (
     <div>
       <Card variant="outlined">
-        <CardHeader title={'Finalize and submit'} />
+        <CardHeader title={mode === 'edit' ? 'Edits saved' : 'Finalize and submit'} />
         <CardContent>
           <Typography variant="body2">
-            Please check the form before finalizing the submission - once you have finalized the
-            submission you will not be able to edit project information except via requesting
-            assistance
+            {mode === 'edit'
+              ? 'Your edits have already been saved!'
+              : `Please check the form before finalizing the submission - once you have finalized the submission you will not be able to edit project information except via requesting assistance`}
           </Typography>
         </CardContent>
         <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -103,7 +103,7 @@ export default () => {
             disableElevation
           >
             {loading && 'Loading'}
-            {!loading && 'submit'}
+            {!loading && mode === 'edit' ? 'Okay' : 'submit'}
           </Button>
         </CardActions>
       </Card>

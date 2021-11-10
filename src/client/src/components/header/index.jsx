@@ -2,7 +2,7 @@ import { useContext, forwardRef } from 'react'
 import { context as layoutContext } from '../../contexts/layout'
 import AppBar from '@mui/material/AppBar'
 import ApplicationBanner, {
-  IMAGE_HEIGHT,
+  useImageHeight,
   Toolbar as ApplicationBanner_,
 } from './application-banner'
 import AppHeader, { Toolbar as ApplicationHeader_ } from './application-header'
@@ -13,8 +13,9 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) => {
+  const imageHeight = useImageHeight()
   const theme = useTheme()
-  const mdDown = useMediaQuery(theme.breakpoints.down('lg'))
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
     <div ref={ref}>
@@ -32,7 +33,7 @@ const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) 
       {/* PUSH CONTENT DOWN */}
       <HideOnScroll contentRef={contentRef}>
         <ApplicationBanner_>
-          <div style={{ minHeight: IMAGE_HEIGHT, ...(mdDown ? {} : { margin: 9 }) }} />
+          <div style={{ minHeight: imageHeight, ...(mdDown ? {} : { margin: 9 }) }} />
         </ApplicationBanner_>
       </HideOnScroll>
       <ApplicationHeader_ />

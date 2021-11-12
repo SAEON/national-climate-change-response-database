@@ -23,8 +23,5 @@ module.exports = (ROOT, mode) => ({
   'react-dom': path.resolve(ROOT, './node_modules/react-dom'),
 
   // @saeon/quick-form
-  '@saeon/quick-form': path.resolve(
-    ROOT,
-    './node_modules/@saeon/quick-form/dist/esm'
-  ),
+  '@saeon/quick-form': path.resolve(ROOT, './node_modules/@saeon/quick-form/dist/esm'),
 })

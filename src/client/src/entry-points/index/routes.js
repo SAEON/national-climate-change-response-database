@@ -9,6 +9,8 @@ import SubmissionsIcon from 'mdi-react/DatabaseIcon'
 import UserSubmissionIcon from 'mdi-react/AccountIcon'
 import LoginIcon from 'mdi-react/LoginIcon'
 import Transition from '../../components/page-transition'
+import TermsIcon from 'mdi-react/ContractIcon'
+import PrivacyIcon from 'mdi-react/LockCheckIcon'
 
 const HomePage = lazy(() => import('../../pages/home'))
 const AccessPage = lazy(() => import('../../pages/access'))
@@ -22,8 +24,38 @@ const UserSubmissionsPage = lazy(() => import('../../pages/user-submissions'))
 const UserPage = lazy(() => import('../../pages/user'))
 const UsersPage = lazy(() => import('../../pages/users'))
 const LoginPage = lazy(() => import('../../pages/login'))
+const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
+const PaiaPopiaPage = lazy(() => import('../../pages/paia-popia'))
 
 export default [
+  {
+    group: 'legal',
+    label: 'Terms of Use',
+    Icon: TermsIcon,
+    exact: true,
+    render: () => (
+      <Transition>
+        <TermsOfUsePage />
+      </Transition>
+    ),
+    to: '/terms-of-use',
+    excludeFromNav: true,
+    includeInFooter: true,
+  },
+  {
+    group: 'legal',
+    label: 'PAIA & POPIA',
+    Icon: PrivacyIcon,
+    exact: true,
+    render: () => (
+      <Transition>
+        <PaiaPopiaPage />
+      </Transition>
+    ),
+    to: '/paia-popia',
+    excludeFromNav: true,
+    includeInFooter: true,
+  },
   {
     label: 'Home',
     Icon: HomeIcon,

@@ -7,9 +7,13 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useTheme } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
 import Contact from './_contact'
+import Legal from './_legal'
+import PageRoutes from './_page-routes'
 
 export default ({ routes }) => {
   const theme = useTheme()
+
+  const _routes = routes.filter(({ includeInFooter }) => includeInFooter)
 
   return (
     <div style={{ position: 'relative' }}>
@@ -23,42 +27,13 @@ export default ({ routes }) => {
         <Toolbar style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <Container style={{ paddingTop: theme.spacing(4), paddingBottom: theme.spacing(4) }}>
             <Grid container spacing={4}>
-              <Grid container item xs={12} sm={6}>
-                {routes
-                  .filter(({ includeInFooter }) => includeInFooter)
-                  .map(({ label, Icon, to }) => (
-                    <Grid item xs={12} key={label}>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <Icon size={18} />
-                        <Typography
-                          component={({ style, ...otherProps }) => (
-                            <Link
-                              {...otherProps}
-                              style={Object.assign(
-                                { ...style },
-                                { color: 'white', marginLeft: theme.spacing(1) }
-                              )}
-                              to={to}
-                              component={RouterLink}
-                              key={label}
-                            >
-                              {label}
-                            </Link>
-                          )}
-                          variant="overline"
-                        >
-                          {label}
-                        </Typography>
-                      </div>
-                    </Grid>
-                  ))}
+              <Grid container item xs={12} sm={4}>
+                <PageRoutes routes={_routes} />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid container item xs={12} sm={4}>
+                <Legal routes={_routes} />
+              </Grid>
+              <Grid item xs={12} sm={4}>
                 <Contact />
               </Grid>
             </Grid>

@@ -18,6 +18,12 @@ export default ({
   value = DEFAULT_VALUE,
   isRequired = false,
   disabled = false,
+  margin = 'normal',
+  size = 'medium',
+  SelectProps = {},
+  InputProps = {},
+  inputProps = {},
+  variant = 'outlined',
   filterChildren = null,
 }) => {
   const theme = useTheme()
@@ -106,6 +112,10 @@ export default ({
     <TextField
       id={name}
       select
+      size={size}
+      SelectProps={SelectProps}
+      InputProps={InputProps}
+      inputProps={inputProps}
       disabled={disabled}
       label={placeholder}
       placeholder={placeholder}
@@ -120,8 +130,8 @@ export default ({
           onChange(options.find(({ term }) => term === value))
         }
       }}
-      variant="outlined"
-      margin="normal"
+      variant={variant}
+      margin={margin}
       value={value.term}
       error={isRequired ? value === DEFAULT_VALUE.term || error : error}
     >

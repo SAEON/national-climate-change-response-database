@@ -1,5 +1,5 @@
-import AchievementTable from './_achievement'
-import ExpenditureTable from './_expenditure'
+import AchievementTable from './achievement'
+import ExpenditureTable from './expenditure'
 import getCellValue from '../../get-cell-value.js'
 
 export default ({ calculator, updateCalculator }) => {
@@ -24,7 +24,24 @@ export default ({ calculator, updateCalculator }) => {
         grid1={grid1}
         calculator={calculator}
         updateCalculator={updateCalculator}
-        years={years}
+        rows={years.map(year => ({
+          id: year,
+          year,
+          achieved: getCellValue({
+            calculator: 'progress',
+            endYear: _end,
+            currentYear: year,
+            grid: grid1,
+            field: 'achieved',
+          }),
+          achievedUnit: getCellValue({
+            calculator: 'progress',
+            endYear: _end,
+            currentYear: year,
+            grid: grid1,
+            field: 'achievedUnit',
+          }),
+        }))}
       />
 
       {/* EXPENDITURE CALCULATOR */}

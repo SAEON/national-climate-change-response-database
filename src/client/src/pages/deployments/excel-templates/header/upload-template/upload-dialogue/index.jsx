@@ -29,7 +29,7 @@ export default ({ id, tooltipProps, title, Icon, apiAddress }) => {
             variant="text"
             color="primary"
           >
-            Upload submission template
+            New template
           </Button>
         </span>
       </Tooltip>

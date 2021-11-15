@@ -78,6 +78,7 @@ jobs:
           context: .
           build-args: |
             NCCRD_HOSTNAME=https://nccrd.saeon.ac.za
+            NCCRD_CLIENT_DEFAULT_NOTICES="This is the DEVELOPMENT deployment,warn"
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

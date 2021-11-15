@@ -8,9 +8,10 @@ import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import Icon from 'mdi-react/AccountMultiplePlusIcon'
+import CancelIcon from 'mdi-react/CancelIcon'
 import Mutation from './_mutation'
 
-const Form = lazy(() => import('./_form'))
+const Form = lazy(() => import('./form'))
 
 const OpenDialog = ({ setOpen }) => {
   return (
@@ -22,6 +23,14 @@ const OpenDialog = ({ setOpen }) => {
         </Suspense>
       </DialogContent>
       <DialogActions>
+        <Button
+          size="small"
+          onClick={() => setOpen(false)}
+          variant="text"
+          startIcon={<CancelIcon size={18} />}
+        >
+          Cancel
+        </Button>
         <Mutation setOpen={setOpen} />
       </DialogActions>
     </Provider>
@@ -34,13 +43,18 @@ export default () => {
   return (
     <>
       {/* DIALOG */}
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog disableScrollLock open={open} onClose={() => setOpen(false)}>
         <OpenDialog setOpen={setOpen} />
       </Dialog>
 
       {/* TOGGLE */}
       <Tooltip title="Add application tenant">
-        <Button onClick={() => setOpen(true)} variant="text" startIcon={<Icon size={18} />}>
+        <Button
+          size="small"
+          onClick={() => setOpen(true)}
+          variant="text"
+          startIcon={<Icon size={18} />}
+        >
           Add tenant
         </Button>
       </Tooltip>

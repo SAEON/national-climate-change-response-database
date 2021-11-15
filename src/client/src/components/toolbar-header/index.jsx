@@ -1,5 +1,5 @@
 import AppBar from '@mui/material/AppBar'
-import { cloneElement } from 'react'
+import { cloneElement, forwardRef } from 'react'
 import Toolbar from '@mui/material/Toolbar'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import useTheme from '@mui/material/styles/useTheme'
@@ -14,12 +14,14 @@ const AnimateVariant = ({ children }) =>
       : 'dense',
   })
 
-export default ({ children, style, ...props }) => {
+export default forwardRef(({ children, style, ...props }, ref) => {
   const theme = useTheme()
+
   return (
     <AppBar color="inherit" variant="outlined" elevation={0} position="sticky" {...props}>
       <AnimateVariant>
         <Toolbar
+          ref={ref}
           style={{
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
@@ -34,4 +36,4 @@ export default ({ children, style, ...props }) => {
       </AnimateVariant>
     </AppBar>
   )
-}
+})

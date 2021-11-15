@@ -1,3 +1,3 @@
 export default () => {
-  return 'hi'
+  return null
 }

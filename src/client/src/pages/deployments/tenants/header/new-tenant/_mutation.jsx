@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button'
+import AcceptIcon from 'mdi-react/TickIcon'
 
 export default ({ setOpen }) => {
   return (
@@ -8,6 +9,7 @@ export default ({ setOpen }) => {
       }}
       variant="text"
       size="small"
+      startIcon={<AcceptIcon size={18} />}
     >
       Confirm
     </Button>

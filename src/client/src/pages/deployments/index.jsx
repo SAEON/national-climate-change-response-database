@@ -33,6 +33,7 @@ const _sections = [
 
 export default () => {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [ref, setRef] = useState(null)
   const theme = useTheme()
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
@@ -57,7 +58,7 @@ export default () => {
 
   return (
     <>
-      <Header />
+      <Header ref={el => setRef(el)} />
       <div style={{ marginTop: theme.spacing(2) }} />
       <Container style={{ minHeight: 1000 }}>
         <VerticalTabs activeIndex={activeIndex} setActiveIndex={setActiveIndex} navItems={sections}>
@@ -69,7 +70,7 @@ export default () => {
                     {disabled ? (
                       <AccessDenied noContainer requiredPermission={requiredPermission} />
                     ) : (
-                      <Render active={activeIndex === i} />
+                      <Render headerRef={ref} active={activeIndex === i} />
                     )}
                   </span>
                 </Fade>

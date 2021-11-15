@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Tooltip from '@mui/material/Tooltip'
-import { useTheme } from '@mui/material/styles'
+import useTheme from '@mui/material/styles/useTheme'
 import UploadIcon from 'mdi-react/UploadIcon'
 import FileIcon from 'mdi-react/FileIcon'
 import CancelIcon from 'mdi-react/CancelIcon'
@@ -74,19 +74,17 @@ export default memo(
                 setFiles(e.target.files)
               }}
             />
-            {
-              <label htmlFor="upload-selection-input">
-                <Button
-                  disabled={uploading}
-                  variant="contained"
-                  disableElevation
-                  size="medium"
-                  component="span"
-                >
-                  Select files
-                </Button>
-              </label>
-            }
+            <label htmlFor="upload-selection-input">
+              <Button
+                disabled={uploading}
+                variant="contained"
+                disableElevation
+                size="medium"
+                component="span"
+              >
+                Select files
+              </Button>
+            </label>
 
             {/* Upload selection details */}
             {[...files].map(file => {

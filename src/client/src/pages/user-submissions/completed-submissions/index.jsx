@@ -75,13 +75,13 @@ export default ({ active, submissions }) => {
             _id,
             project: { title = '', interventionType: { term: intervention = '' } = {} } = {},
             isSubmitted,
-            submissionStatus: { term: status },
+            submissionStatus,
             submissionComments: comments,
-          }) => ({
+          } = {}) => ({
             id: _id,
             formNumber: id,
             title,
-            status,
+            status: submissionStatus?.term,
             intervention,
             comments,
             isSubmitted: isSubmitted ? 'Yes' : 'No',

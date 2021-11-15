@@ -1,19 +1,20 @@
+import { createPortal } from 'react-dom'
 import Provider from './_context'
 import Table from './table'
 import Header from './header'
-import useTheme from '@mui/material/styles/useTheme'
 
-export default ({ active }) => {
-  const theme = useTheme()
-
+export default ({ active, headerRef }) => {
   if (!active) {
+    return null
+  }
+
+  if (!headerRef) {
     return null
   }
 
   return (
     <Provider>
-      <Header />
-      <div style={{ marginTop: theme.spacing(2) }} />
+      {createPortal(<Header />, headerRef)}
       <Table />
     </Provider>
   )

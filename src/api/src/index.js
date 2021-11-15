@@ -17,9 +17,10 @@ import clientSession from './middleware/client-session.js'
 import whitelistRoutes from './middleware/whitelist-routes.js'
 import blacklistRoutes from './middleware/blacklist-routes.js'
 import logReqDetails from './middleware/log-req-details.js'
-import fourOfour from './middleware/404.js'
+import fourOFour from './middleware/404.js'
 import clientInfoRoute from './http/client-info.js'
 import authenticateRoute from './http/authenticate.js'
+import createTenantRoute from './http/create-tenant/index.js'
 import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
 import uploadTemplateRoute from './http/upload-template.js'
@@ -87,11 +88,12 @@ app
       .post('/http/upload-template', uploadTemplateRoute)
       .post('/http/attach-file-to-submission', attachFileToSubmission)
       .post('/http/submit-completed-templates', submitCompletedTemplates)
+      .post('/http/create-tenant', createTenantRoute)
       .get('/http/download-template', downloadTemplateRoute)
       .get('/http/download-submission', downloadSubmission)
       .routes()
   )
-  .use(fourOfour)
+  .use(fourOFour)
   .use(mount('/', reactClient))
   .use(blacklistRoutes(staticSpaMiddleware, '/http', '/graphql')) // Resolve all paths to the React.js entry (SPA)
 

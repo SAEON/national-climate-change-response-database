@@ -15,10 +15,10 @@ const Field = memo(
             <TextField
               margin="normal"
               fullWidth
-              placeholder="e.g. your.hostname.co.za"
-              helperText="What hostname should this tenant be accessed on?"
+              placeholder="New deployment"
+              helperText="What should the title of the application be?"
               variant="outlined"
-              label="Hostname"
+              label="Title"
               value={value}
               onChange={({ target: { value } }) => update({ value })}
             />
@@ -33,5 +33,5 @@ const Field = memo(
 export default () => {
   const { form, setForm } = useContext(formContext)
 
-  return <Field value={form.domain} updateForm={hostname => setForm({ ...form, hostname })} />
+  return <Field value={form.title} updateForm={title => setForm({ ...form, title })} />
 }

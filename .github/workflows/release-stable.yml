@@ -29,5 +29,4 @@ jobs:
             binaries/nccrd-macos
             binaries/nccrd-win.exe
         env:
-          # GITHUB_TOKEN: ${{ secrets.PUBLISH_NCCRD_RELEASES }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

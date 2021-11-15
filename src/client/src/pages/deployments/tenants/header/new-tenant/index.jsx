@@ -16,8 +16,8 @@ const Form = lazy(() => import('./form'))
 const OpenDialog = ({ setOpen }) => {
   return (
     <Provider>
-      <DialogTitle>New application tenant</DialogTitle>
-      <DialogContent>
+      <DialogTitle>New deployment</DialogTitle>
+      <DialogContent dividers>
         <Suspense fallback={<Loading />}>
           <Form />
         </Suspense>
@@ -43,7 +43,7 @@ export default () => {
   return (
     <>
       {/* DIALOG */}
-      <Dialog disableScrollLock open={open} onClose={() => setOpen(false)}>
+      <Dialog scroll="paper" open={open} onClose={() => setOpen(false)}>
         <OpenDialog setOpen={setOpen} />
       </Dialog>
 

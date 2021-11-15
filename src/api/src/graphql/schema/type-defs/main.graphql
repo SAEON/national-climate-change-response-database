@@ -134,6 +134,10 @@ type Query {
   permissions: [Permission!]!
 }
 
+type Tenant {
+  id: ID!
+}
+
 type Mutation {
   """
   Create and update a submission

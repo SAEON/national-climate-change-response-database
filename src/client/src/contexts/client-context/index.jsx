@@ -1,6 +1,5 @@
 import { createContext } from 'react'
 import WithFetch from './with-fetch'
-import Loading from '../../components/loading'
 import { NCCRD_API_HTTP_ADDRESS } from '../../config'
 
 export const context = createContext()
@@ -10,7 +9,7 @@ export default ({ children }) => {
     <WithFetch uri={`${NCCRD_API_HTTP_ADDRESS}/client-context`}>
       {({ error, loading, data }) => {
         if (loading) {
-          return <Loading />
+          return <p style={{ marginLeft: 16 }}>Loading...</p>
         }
 
         if (error) {

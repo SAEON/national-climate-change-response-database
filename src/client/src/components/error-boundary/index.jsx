@@ -1,11 +1,5 @@
 import { Component } from 'react'
-import DialogContentText from '@mui/material/DialogContentText'
-import Link from '@mui/material/Link'
-import MessageDialogue from '../../components/message-dialogue'
 import { NCCRD_TECHNICAL_CONTACT } from '../../config'
-import withStyles from '@mui/styles/withStyles'
-import style from './style'
-import clsx from 'clsx'
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -19,7 +13,7 @@ class ErrorBoundary extends Component {
 
   render() {
     const { props, state } = this
-    const { children, classes } = props
+    const { children } = props
     const { error } = state
 
     // NO APP ERROR
@@ -27,41 +21,28 @@ class ErrorBoundary extends Component {
       return children
     }
 
-    // APP ERROR
     return (
-      <MessageDialogue
-        permanent
-        hideIcon
-        defaultOpen
-        title="Application Error"
-        text={
-          <>
-            <DialogContentText variant="body2" gutterBottom>
-              Please try refreshing this page in a few minutes. If the error persists, or if
-              assistance is required, please contact{' '}
-              {
-                <Link variant="body1" href={`mailto:${NCCRD_TECHNICAL_CONTACT}`} underline="hover">
-                  {NCCRD_TECHNICAL_CONTACT}
-                </Link>
-              }{' '}
-              with a screenshot of this page so that we may resolve the issue speedily
-            </DialogContentText>
-            <DialogContentText
-              component={({ children }) => (
-                <pre className={clsx(classes.errorMessage)}>
-                  <code>{children}</code>
-                </pre>
-              )}
-              gutterBottom
-              style={{ marginBottom: 16 }}
-            >
-              {error}
-            </DialogContentText>
-          </>
-        }
-      />
+      <div style={{ marginLeft: 16 }}>
+        <p>
+          <b>Application Error</b>
+        </p>
+        <p>
+          Please try refreshing this page in a few minutes. If the error persists, or if assistance
+          is required, please contact{' '}
+          <a href={`mailto:${NCCRD_TECHNICAL_CONTACT}`}>{NCCRD_TECHNICAL_CONTACT}</a> with a
+          screenshot of this page so that we may resolve the issue speedily
+        </p>
+        <pre
+          style={{
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+          }}
+        >
+          {error}
+        </pre>
+      </div>
     )
   }
 }
 
-export default withStyles(style, { withTheme: true })(ErrorBoundary)
+export default ErrorBoundary

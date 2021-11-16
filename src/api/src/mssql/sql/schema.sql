@@ -84,6 +84,34 @@ create table UserRoleXref (
 );
 end
 
+
+
+
+-- Themes
+if not exists (
+	select *
+	from sys.objects
+	where
+		object_id = OBJECT_ID(N'[dbo].[MuiThemes]')
+		and type = 'U'
+)
+begin
+create table MuiThemes (
+	id uniqueidentifier not null primary key default (newsequentialid()),
+	name nvarchar(255) not null unique,
+	theme nvarchar(max),
+  constraint json_theme check ( isjson(theme) = 1)
+);
+end
+
+
+
+
+
+
+
+
+
 -- Vocabulary
 if not exists (
 	select *
@@ -240,7 +268,6 @@ create table Submissions (
 	_projectTitle as JSON_VALUE(project, '$.title'),
 	_projectDescription as JSON_VALUE(project, '$.description'),
 	index ix_submissions nonclustered (id),
-	index ix_submissions_id nonclustered (id),
 	constraint json_research check( isjson(research) = 1),
 	constraint json_submissionStatus check( isjson(submissionStatus) = 1),
 	constraint json_project check( isjson(project) = 1),

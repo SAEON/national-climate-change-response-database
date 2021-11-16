@@ -39,11 +39,7 @@ export default ({
   return (
     <div style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(1), maxWidth: '100%' }}>
       <FormControl margin="normal" fullWidth>
-        <InputLabel
-          error={error}
-          id={`${id}-label`}
-          style={{ top: value.length ? -8 : -5, left: 12 }}
-        >
+        <InputLabel error={error} id={`${id}-label`}>
           {label}
         </InputLabel>
         <Select

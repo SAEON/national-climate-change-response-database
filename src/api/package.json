@@ -38,7 +38,7 @@
     "apollo-server-koa": "3.5",
     "base64url": "^3.0.1",
     "cookie": "^0.4.1",
-    "csv": "^5.5.3",
+    "csv": "^6.0.1",
     "dataloader": "^2.0.0",
     "date-fns": "^2.25.0",
     "dotenv": "^10.0.0",

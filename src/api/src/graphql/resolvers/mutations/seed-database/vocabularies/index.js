@@ -1,9 +1,8 @@
 import { createReadStream, readdirSync } from 'fs'
 import { join } from 'path'
 import getCurrentDirectory from '../../../../../lib/get-current-directory.js'
-import csv from 'csv'
+import { parse } from 'csv'
 import { performance } from 'perf_hooks'
-const { parse } = csv
 
 const __dirname = getCurrentDirectory(import.meta)
 

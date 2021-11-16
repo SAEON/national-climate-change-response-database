@@ -3,15 +3,11 @@ import { pool } from '../pool.js'
 import mssql from 'mssql'
 
 export default async () => {
-  for (const { name, description } of Object.values(permissions)) {
-    const transaction = new mssql.Transaction(await pool.connect())
-    await transaction.begin()
+  const transaction = new mssql.Transaction(await pool.connect())
+  await transaction.begin()
 
-    // Insert permissions
-    const upsert = new mssql.PreparedStatement(transaction)
-    upsert.input('name', mssql.NVarChar)
-    upsert.input('description', mssql.NVarChar)
-    await upsert.prepare(`
+  for (const { name, description } of Object.values(permissions)) {
+    await transaction.request().input('name', name).input('description', description).query(`
       merge Permissions t
       using (
         select
@@ -28,10 +24,7 @@ export default async () => {
       when matched then update
         set
           t.description = s.description;`)
-    await upsert.execute({ name, description })
-    await upsert.unprepare()
-
-    // Commit transactions
-    await transaction.commit()
   }
+
+  await transaction.commit()
 }

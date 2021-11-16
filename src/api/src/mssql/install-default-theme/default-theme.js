@@ -1,6 +1,4 @@
-import { createTheme } from '@mui/material/styles'
-
-export default createTheme({
+export default {
   breakpoints: {
     values: {
       xs: 0,
@@ -32,4 +30,4 @@ export default createTheme({
       },
     },
   },
-})
+}

@@ -31,7 +31,7 @@ export default ({ filters, setFilter, title }) => {
         unmountOnExit
         in={!collapsed}
       >
-        <Paper style={{ backgroundColor: alpha(theme.backgroundColor, 0.9) }}>
+        <Paper style={{ backgroundColor: alpha(theme.palette.common.white, 0.9) }}>
           <Box px={3} py={2}>
             {_filters.length ? (
               _filters.map(([field, info]) => {

@@ -1,4 +1,4 @@
-import { NCCRD_HOSTNAME } from '../config.js'
+import { NCCRD_HOSTNAME } from '../../config.js'
 
 export default async ctx => {
   const ipAddress = ctx.request.headers['X-Real-IP'] || ctx.request.ip

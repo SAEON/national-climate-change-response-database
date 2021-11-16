@@ -12,7 +12,7 @@ export default ({ requiredPermission = 'NA', noContainer = false }) => {
 
   if (noContainer) {
     return (
-      <Card variant="outlined" style={{ backgroundColor: theme.backgroundColor }}>
+      <Card variant="outlined">
         <CardHeader
           avatar={
             <Avatar
@@ -38,7 +38,7 @@ export default ({ requiredPermission = 'NA', noContainer = false }) => {
 
   return (
     <Container>
-      <Card variant="outlined" style={{ backgroundColor: theme.backgroundColor }}>
+      <Card variant="outlined">
         <CardHeader
           avatar={
             <Avatar

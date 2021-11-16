@@ -16,22 +16,16 @@ export default async () => {
     try {
       for (const user of USERS) {
         // Upsert user
-        const p1 = new mssql.PreparedStatement(transaction)
-        p1.input('user', mssql.NVarChar)
-        await p1.prepare(`
+        await transaction.request().input('user', user).query(`
           merge Users t
           using (
             select @user emailAddress
           ) s on s.emailAddress = t.emailAddress
           when not matched then insert (emailAddress)
           values (s.emailAddress);`)
-        await p1.execute({ user })
-        await p1.unprepare()
 
         // Upsert xref
-        const p2 = new mssql.PreparedStatement(transaction)
-        p2.input('user', mssql.NVarChar)
-        await p2.prepare(`
+        await transaction.request().input('user', user).query(`
           merge UserRoleXref t
           using (
             select
@@ -44,8 +38,6 @@ export default async () => {
           ) s on s.userId = t.userId and s.roleId = t.roleId
           when not matched then insert (userId, roleId)
           values (s.userId, s.roleId);`)
-        await p2.execute({ user })
-        await p2.unprepare()
 
         console.info('admin (default):', user)
       }

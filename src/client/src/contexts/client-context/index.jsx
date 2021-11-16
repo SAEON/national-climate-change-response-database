@@ -7,7 +7,7 @@ export const context = createContext()
 
 export default ({ children }) => {
   return (
-    <WithFetch uri={`${NCCRD_API_HTTP_ADDRESS}/client-info`}>
+    <WithFetch uri={`${NCCRD_API_HTTP_ADDRESS}/client-context`}>
       {({ error, loading, data }) => {
         if (loading) {
           return <Loading />

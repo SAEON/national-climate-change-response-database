@@ -1,5 +1,5 @@
 import ApolloProvider from '../components/apollo'
-import ClientInfoProvider from '../contexts/client-info'
+import ClientInfoProvider from '../contexts/client-context'
 import AuthenticationProvider from '../contexts/authentication'
 import AuthorizationProvider from '../contexts/authorization'
 import SnackbarProvider from '../components/notistack'

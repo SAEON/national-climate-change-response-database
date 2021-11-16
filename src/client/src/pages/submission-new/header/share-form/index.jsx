@@ -20,7 +20,18 @@ export default () => {
           <Typography gutterBottom>
             This form will be available on the link below until it is submitted
           </Typography>
-          <pre style={{ ...theme.pre }}>{window.location.href}</pre>
+          <pre
+            style={{
+              backgroundColor: theme.palette.grey[100],
+              borderRadius: theme.shape.borderRadius,
+              border: `1px solid ${theme.palette.grey[200]}`,
+              whiteSpace: 'pre-wrap',
+              wordBreak: 'break-all',
+              padding: theme.spacing(1),
+            }}
+          >
+            {window.location.href}
+          </pre>
         </>
       }
       tooltipProps={{

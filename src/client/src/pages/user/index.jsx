@@ -24,10 +24,7 @@ export default () => {
       <Header />
       <div style={{ marginTop: theme.spacing(2) }} />
       <Container style={{ minHeight: 1000 }}>
-        <Card
-          style={{ border: 'none', width: '100%', backgroundColor: theme.backgroundColor }}
-          variant="outlined"
-        >
+        <Card style={{ border: 'none', width: '100%' }} variant="outlined">
           <CardContent>
             <Typography gutterBottom>
               Hi {emailAddress}. This page is not completed yet. In the future there will be all

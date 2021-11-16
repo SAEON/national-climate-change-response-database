@@ -16,7 +16,6 @@ export default ({ points, setPoints }) => {
         zIndex: 1,
         margin: '10px 10px 0 0',
         padding: theme.spacing(1),
-        backgroundColor: theme.backgroundColor,
       }}
     >
       <Tooltip title={'Remove all points'}>

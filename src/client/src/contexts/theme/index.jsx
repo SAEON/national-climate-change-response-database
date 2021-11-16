@@ -4,13 +4,33 @@ import { ThemeProvider, StyledEngineProvider, createTheme } from '@mui/material/
 
 export const context = createContext()
 
-const Provider = ({ initialTheme, children }) => {
-  const [theme, setTheme] = useState(createTheme(initialTheme))
+const Provider = ({ staticTheme, children }) => {
+  const [theme, setTheme] = useState(createTheme(staticTheme))
 
   return (
-    <context.Provider value={{ theme, setTheme: theme => setTheme(createTheme(theme)) }}>
+    <context.Provider
+      value={{
+        resetTheme: () => setTheme(createTheme(staticTheme)),
+        staticTheme,
+        theme,
+        updateTheme: newTheme => setTheme(createTheme(newTheme)),
+      }}
+    >
       <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <div
+            id="bg"
+            style={{
+              position: 'fixed',
+              background: `radial-gradient(${theme.palette.primary.main}, ${theme.palette.primary.dark}, ${theme.palette.tertiary.main})`,
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          />
+          {children}
+        </ThemeProvider>
       </StyledEngineProvider>
     </context.Provider>
   )
@@ -18,6 +38,5 @@ const Provider = ({ initialTheme, children }) => {
 
 export default ({ children }) => {
   const { theme } = useContext(clientContext)
-
-  return <Provider initialTheme={JSON.parse(theme)}>{children}</Provider>
+  return <Provider staticTheme={JSON.parse(theme)}>{children}</Provider>
 }

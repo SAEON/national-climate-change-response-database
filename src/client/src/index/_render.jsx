@@ -4,7 +4,6 @@ import AuthorizationProvider from '../contexts/authorization'
 import SnackbarProvider from '../components/notistack'
 import NativeExtensions from '../components/native-extensions'
 import DefaultApplicationNotices from '../components/default-application-notices'
-import BackgroundImageProvider from '../contexts/background-image'
 import CookieConsent from '../components/cookie-consent'
 import DetectDevice from '../components/detect-device'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -23,15 +22,13 @@ export default ({ children }) => {
               <CookieConsent>
                 <AuthenticationProvider>
                   <AuthorizationProvider>
-                    <BackgroundImageProvider>
-                      <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <SnackbarProvider>
-                          <DefaultApplicationNotices>
-                            <LayoutProvider>{children}</LayoutProvider>
-                          </DefaultApplicationNotices>
-                        </SnackbarProvider>
-                      </LocalizationProvider>
-                    </BackgroundImageProvider>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <SnackbarProvider>
+                        <DefaultApplicationNotices>
+                          <LayoutProvider>{children}</LayoutProvider>
+                        </DefaultApplicationNotices>
+                      </SnackbarProvider>
+                    </LocalizationProvider>
                   </AuthorizationProvider>
                 </AuthenticationProvider>
               </CookieConsent>

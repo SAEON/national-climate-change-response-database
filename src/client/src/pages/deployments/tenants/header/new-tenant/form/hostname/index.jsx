@@ -33,5 +33,5 @@ const Field = memo(
 export default () => {
   const { form, setForm } = useContext(formContext)
 
-  return <Field value={form.domain} updateForm={hostname => setForm({ ...form, hostname })} />
+  return <Field value={form.hostname} updateForm={hostname => setForm({ ...form, hostname })} />
 }

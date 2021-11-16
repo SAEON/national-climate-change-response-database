@@ -1,34 +1,30 @@
-import { memo, useContext, useRef } from 'react'
+import { memo, useContext, useRef, useEffect } from 'react'
 import { context as formContext } from '../../_context'
+import { context as themeContext } from '../../../../../../../contexts/theme'
 import Q from '@saeon/quick-form'
-import debounce from '../../../../../../../lib/debounce'
 import AceEditor from 'react-ace'
-import useTheme from '@mui/material/styles/useTheme'
-import Typography from '@mui/material/Typography'
 import 'ace-builds/webpack-resolver'
 import 'ace-builds/src-min-noconflict/mode-json'
-import 'ace-builds/src-min-noconflict/theme-vibrant_ink'
+import 'ace-builds/src-min-noconflict/theme-chrome'
 import 'ace-builds/src-min-noconflict/ext-language_tools'
 
 const Field = memo(
-  ({ value, updateForm }) => {
-    const theme = useTheme()
+  ({ value, updateForm, updateTheme, resetTheme }) => {
     const ref = useRef(null)
+
+    useEffect(() => {
+      return () => {
+        resetTheme()
+      }
+    }, [resetTheme])
 
     return (
       <>
-        <Typography
-          style={{ marginTop: theme.spacing(4), display: 'block' }}
-          gutterBottom
-          variant="overline"
-        >
-          Theme editor
-        </Typography>
         <div
           style={{
-            height: 500,
+            height: '100%',
             width: '100%',
-            marginBottom: theme.spacing(4),
+            border: '1px solid #c4c4c4',
           }}
         >
           <Q value={JSON.stringify(value, null, 2)}>
@@ -39,15 +35,18 @@ const Field = memo(
                   height="100%"
                   width="100%"
                   name={`ace-editor}`}
-                  value={value}
-                  onValidate={debounce(annotations => {
+                  onValidate={annotations => {
                     const error = annotations.find(({ type }) => type === 'error')
-                    if (!error) updateForm(value)
-                  })}
-                  onChange={debounce(value => update({ value }))}
+                    if (!error) {
+                      updateForm(JSON.parse(value))
+                      updateTheme(JSON.parse(value))
+                    }
+                  }}
+                  onChange={value => update({ value })}
+                  defaultValue={value}
                   editorProps={{ $blockScrolling: false, $blockSelectEnabled: true }}
                   mode="json"
-                  theme="vibrant_ink"
+                  theme="chrome"
                   setOptions={{
                     wrap: true,
                     enableBasicAutocompletion: false,
@@ -85,6 +84,14 @@ const Field = memo(
 
 export default () => {
   const { form, setForm } = useContext(formContext)
+  const { updateTheme, resetTheme } = useContext(themeContext)
 
-  return <Field value={form.theme} updateForm={theme => setForm({ ...form, theme })} />
+  return (
+    <Field
+      resetTheme={resetTheme}
+      updateTheme={updateTheme}
+      value={form.theme}
+      updateForm={theme => setForm({ ...form, theme })}
+    />
+  )
 }

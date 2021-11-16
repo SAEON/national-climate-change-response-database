@@ -40,6 +40,7 @@ export const admin = {
     permissions['view-roles'],
     permissions['/access'],
     permissions['/deployments'],
+    permissions['create-tenant'],
   ]),
 }
 

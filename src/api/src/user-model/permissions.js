@@ -71,4 +71,8 @@ export default Object.freeze({
     name: '/deployments',
     description: 'View the /deployments route on the UI',
   },
+  'create-tenant': {
+    name: 'create-tenant',
+    description: 'Add tenant to the deployed application',
+  },
 })

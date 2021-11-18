@@ -8,7 +8,9 @@ import { CircularProgress } from '@mui/material'
 
 export default ({ setOpen }) => {
   const { form } = useContext(formContext)
-  const { post, response, loading, error } = useFetch(NCCRD_API_HTTP_ADDRESS)
+  const { post, response, loading, error } = useFetch(NCCRD_API_HTTP_ADDRESS, {
+    credentials: 'include',
+  })
 
   if (error) {
     throw error
@@ -20,7 +22,7 @@ export default ({ setOpen }) => {
         await post('/create-tenant', { ...form })
         // setOpen(false)
       }}
-      disabled={loading}
+      disabled={!form.valid || loading}
       variant="text"
       size="small"
       startIcon={loading ? <CircularProgress size={14} /> : <AcceptIcon size={18} />}

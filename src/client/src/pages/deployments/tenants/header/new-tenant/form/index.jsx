@@ -32,9 +32,8 @@ const Form = memo(() => {
 })
 
 export default () => {
-  const { resetForm } = useContext(formContext)
-  const ref = useRef(resetForm)
-
+  // Reset the form on dismount
+  const ref = useRef(useContext(formContext).resetForm)
   useEffect(() => () => ref.current && ref.current(), [])
 
   return <Form />

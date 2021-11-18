@@ -12,6 +12,7 @@ export default memo(({ children, staticTheme }) => {
       flag: [],
       logo: [],
       theme: staticTheme,
+      valid: false,
     }),
     [staticTheme]
   )

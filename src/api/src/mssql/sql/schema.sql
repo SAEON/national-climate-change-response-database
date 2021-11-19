@@ -101,8 +101,8 @@ create table Tenants (
   shortTitle nvarchar(10),
   description nvarchar(2000),
   theme nvarchar(max) not null,
-  logoImagePath nvarchar(500),
-  fileImagePath nvarchar(500),
+  logoUrl nvarchar(500) not null,
+  flagUrl nvarchar(500) not null,
   geofence geometry,
   constraint json_theme check ( isjson(theme) = 1 )
 );

@@ -68,6 +68,8 @@ export const UPLOADS_DIRECTORY = normalize(join(FILES_DIRECTORY, `.${sep}uploads
 
 export const TEMP_DIRECTORY = normalize(join(FILES_DIRECTORY, `.${sep}temp`))
 
+export const IMAGES_DIRECTORY = normalize(join(FILES_DIRECTORY, `.${sep}images`))
+
 /**
  * Ensure required directories exists
  */
@@ -77,6 +79,7 @@ export const TEMP_DIRECTORY = normalize(join(FILES_DIRECTORY, `.${sep}temp`))
   await ensureDirectory(SUBMITTED_TEMPLATES_DIRECTORY)
   await ensureDirectory(UPLOADS_DIRECTORY)
   await ensureDirectory(TEMP_DIRECTORY)
+  await ensureDirectory(IMAGES_DIRECTORY)
 })().catch(error => {
   if (FILES_DIRECTORY.includes('snapshot')) {
     console.error(

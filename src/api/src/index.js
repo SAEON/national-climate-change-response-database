@@ -21,6 +21,7 @@ import fourOFour from './middleware/404.js'
 import clientContextRoute from './http/client-context/index.js'
 import authenticateRoute from './http/authenticate.js'
 import createTenantRoute from './http/create-tenant/index.js'
+import publicImageRoute from './http/public-image/index.js'
 import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
 import uploadTemplateRoute from './http/upload-template.js'
@@ -84,6 +85,7 @@ app
       .get('/http/authenticate/redirect/saeon', saeonAuthenticate, loginSuccessRoute) // passport
       .get('/http/login', saeonLogin) // passport
       .get('/http/authenticate', authenticateRoute)
+      .get('/http/public-image/:name', publicImageRoute)
       .get('/http/logout', logoutRoute)
       .post('/http/upload-template', uploadTemplateRoute)
       .post('/http/attach-file-to-submission', attachFileToSubmission)

@@ -13,14 +13,14 @@ export default async ctx => {
         shortTitle,
         description,
         theme,
-        logoImagePath,
-        fileImagePath
+        logoUrl,
+        flagUrl
       from Tenants
       where
         hostname = @hostname;`)
   ).recordset[0]
 
-  const { theme, title, description, shortTitle } = tenant || {}
+  const { theme, title, description, shortTitle, logoUrl, flagUrl } = tenant || {}
 
   ctx.body = {
     ipAddress,
@@ -29,6 +29,8 @@ export default async ctx => {
     title,
     shortTitle,
     description,
+    logoUrl,
+    flagUrl,
     theme,
   }
 }

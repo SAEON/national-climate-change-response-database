@@ -9,6 +9,8 @@ export default async () =>
     .input('title', 'National Climate Change Response Database')
     .input('shortTitle', 'NCCRD')
     .input('description', 'National Climate Change Response Database')
+    .input('logoUrl', 'http/public-image/dffe-logo.jpg')
+    .input('flagUrl', 'http/public-image/sa-flag.jpg')
     .input('theme', JSON.stringify(theme)).query(`
       merge Tenants t
       using (
@@ -17,6 +19,8 @@ export default async () =>
         @title title,
         @shortTitle shortTitle,
         @description description,
+        @logoUrl logoUrl,
+        @flagUrl flagUrl,
         @theme theme
       ) s on s.hostname = t.hostname
       
@@ -26,11 +30,15 @@ export default async () =>
           title,
           shortTitle,
           description,
+          logoUrl,
+          flagUrl,
           theme
         ) values (
           s.hostname,
           s.title,
           s.shortTitle,
+          s.logoUrl,
+          s.flagUrl,
           s.description,
           s.theme
         )
@@ -40,4 +48,6 @@ export default async () =>
           t.title = s.title,
           t.shortTitle = s.shortTitle,
           t.description = s.description,
+          t.logoUrl = s.logoUrl,
+          t.flagUrl = s.flagUrl,
           t.theme = s.theme;`)

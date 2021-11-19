@@ -10,7 +10,7 @@ import Q from '@saeon/quick-form'
 import debounce from '../../../../../../../lib/debounce'
 
 const Field = memo(
-  ({ uploading, value, updateForm }) => {
+  ({ value, updateForm }) => {
     const theme = useTheme()
     const effect = useMemo(() => debounce(({ value }) => updateForm(value)), [updateForm])
 
@@ -34,7 +34,6 @@ const Field = memo(
                 <label htmlFor="upload-geofence-shapefile">
                   <Button
                     fullWidth
-                    disabled={uploading}
                     variant="outlined"
                     disableElevation
                     size="large"
@@ -69,13 +68,7 @@ const Field = memo(
 )
 
 export default () => {
-  const { form, setForm, uploadingGeofence } = useContext(formContext)
+  const { form, setForm } = useContext(formContext)
 
-  return (
-    <Field
-      uploading={uploadingGeofence}
-      value={form.shapefiles}
-      updateForm={shapefiles => setForm({ ...form, shapefiles })}
-    />
-  )
+  return <Field value={form.shapefiles} updateForm={shapefiles => setForm({ shapefiles })} />
 }

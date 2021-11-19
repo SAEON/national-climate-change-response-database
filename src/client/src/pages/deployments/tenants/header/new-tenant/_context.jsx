@@ -8,6 +8,8 @@ export default memo(({ children, staticTheme }) => {
     () => ({
       hostname: '',
       title: `New deployment ${nanoid(10)}`,
+      shortTitle: '',
+      description: '',
       shapefiles: [],
       flag: [],
       logo: [],
@@ -23,7 +25,7 @@ export default memo(({ children, staticTheme }) => {
     <context.Provider
       value={{
         form,
-        setForm,
+        setForm: obj => setForm(form => ({ ...form, ...obj })),
         resetForm: () => setForm(defaultForm),
       }}
     >

@@ -1,4 +1,7 @@
+import { useContext } from 'react'
+import { context as clientContext } from '../../../contexts/client-context'
 import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip'
 import Toolbar_ from './toolbar'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import useTheme from '@mui/material/styles/useTheme'
@@ -22,7 +25,10 @@ const aProps = {
   rel: 'noreferrer',
 }
 
-export default ({ title }) => {
+export default () => {
+  const theme = useTheme()
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'))
+  const { title, shortTitle, description } = useContext(clientContext)
   const imageHeight = useImageHeight()
 
   return (
@@ -49,7 +55,16 @@ export default ({ title }) => {
           justifyContent: 'center',
         }}
       >
-        {title || <Typography>NCCRD</Typography>}
+        <Tooltip title={description}>
+          <Typography
+            style={mdDown ? { fontSize: '16px' } : {}}
+            color="textPrimary"
+            variant="h5"
+            variantMapping={{ h5: 'h1' }}
+          >
+            {mdDown ? shortTitle : title}
+          </Typography>
+        </Tooltip>
       </header>
 
       {/* SA FLAG */}

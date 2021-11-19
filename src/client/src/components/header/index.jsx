@@ -12,7 +12,7 @@ import ElevationOnScroll from './animations/elevation-on-scroll'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
-const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) => {
+const FullHeader = forwardRef(({ contentBase, contentRef, routes }, ref) => {
   const imageHeight = useImageHeight()
   const theme = useTheme()
   const mdDown = useMediaQuery(theme.breakpoints.down('md'))
@@ -22,7 +22,7 @@ const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) 
       <ElevationOnScroll>
         <AppBar color="inherit">
           <HideOnScroll contentRef={contentRef}>
-            <ApplicationBanner title={title} />
+            <ApplicationBanner />
           </HideOnScroll>
           <Divider />
           <AppHeader contentBase={contentBase} routes={routes} />
@@ -41,7 +41,7 @@ const FullHeader = forwardRef(({ contentBase, title, contentRef, routes }, ref) 
   )
 })
 
-export default ({ title, routes }) => {
+export default ({ routes }) => {
   const { setHeaderRef, contentRef } = useContext(layoutContext)
-  return <FullHeader title={title} contentRef={contentRef} ref={setHeaderRef} routes={routes} />
+  return <FullHeader contentRef={contentRef} ref={setHeaderRef} routes={routes} />
 }

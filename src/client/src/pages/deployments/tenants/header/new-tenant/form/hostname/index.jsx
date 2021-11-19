@@ -48,9 +48,6 @@ export default () => {
   const { form, setForm } = useContext(formContext)
 
   return (
-    <Field
-      value={form.hostname}
-      updateForm={(hostname, valid) => setForm({ ...form, hostname, valid })}
-    />
+    <Field value={form.hostname} updateForm={(hostname, valid) => setForm({ hostname, valid })} />
   )
 }

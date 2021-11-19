@@ -6,7 +6,7 @@ import installUserModel from './install-user-model/index.js'
 import seedAdmins from './install-admins/index.js'
 import seedSysAdmins from './install-sysadmins/index.js'
 import installSchema from './install-schema.js'
-import seedMuiThemes from './install-default-theme/index.js'
+import seedDefaultTenant from './install-default-tenant/index.js'
 
 const info = (...args) => console.info(...args)
 
@@ -18,7 +18,7 @@ const info = (...args) => console.info(...args)
   await installUserModel().then(() => info('User model seeded!'))
   await seedAdmins().then(() => info('Admin users seeded!'))
   await seedSysAdmins().then(() => info('System admin users seeded!'))
-  await seedMuiThemes().then(() => info('MUI default theme seeded!'))
+  await seedDefaultTenant().then(() => info('Default tenant seeded!'))
 
   /**
    * Register existing template uploads

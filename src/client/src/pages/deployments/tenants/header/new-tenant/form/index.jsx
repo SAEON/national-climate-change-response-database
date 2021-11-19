@@ -7,6 +7,8 @@ import Theme from './theme'
 import Geofence from './geofence'
 import Flag from './flag'
 import Title from './title'
+import ShortTitle from './short-title'
+import Description from './description'
 import Grid from '@mui/material/Grid'
 import DialogContent from '@mui/material/DialogContent'
 
@@ -16,8 +18,10 @@ const Form = memo(() => {
       <FormGroup>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <Title />
             <Hostname />
+            <Title />
+            <ShortTitle />
+            <Description />
             <Logo />
             <Flag />
             <Geofence />

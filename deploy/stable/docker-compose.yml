@@ -45,7 +45,6 @@ services:
       MSSQL_PASSWORD: $MSSQL_PASSWORD
       MSSQL_PORT: 2433
       MSSQL_USERNAME: $MSSQL_USERNAME
-      NCCRD_API_ALLOWED_ORIGINS: https://nccrd.environment.gov.za
       NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES: 'TMakholela@environment.gov.za,tmakholela@yahoo.com,rditlopo@environment.gov.za'
       NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
       NCCRD_DEPLOYMENT_ENV: production

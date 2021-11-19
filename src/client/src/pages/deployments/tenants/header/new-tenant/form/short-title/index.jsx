@@ -15,10 +15,10 @@ const Field = memo(
             <TextField
               margin="normal"
               fullWidth
-              placeholder="New deployment"
-              helperText="What should the title of the application be?"
+              placeholder="New Dep."
+              helperText="The shortened title is displayed on mobile devices instead of the title"
               variant="outlined"
-              label="Title"
+              label="Title (short)"
               value={value}
               onChange={({ target: { value } }) => update({ value })}
             />
@@ -33,5 +33,5 @@ const Field = memo(
 export default () => {
   const { form, setForm } = useContext(formContext)
 
-  return <Field value={form.title} updateForm={title => setForm({ title })} />
+  return <Field value={form.shortTitle} updateForm={shortTitle => setForm({ shortTitle })} />
 }

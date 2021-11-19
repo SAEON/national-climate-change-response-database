@@ -10,7 +10,7 @@ import Q from '@saeon/quick-form'
 import debounce from '../../../../../../../lib/debounce'
 
 const Field = memo(
-  ({ uploading, value, updateForm }) => {
+  ({ value, updateForm }) => {
     const theme = useTheme()
     const effect = useMemo(() => debounce(({ value }) => updateForm(value)), [updateForm])
 
@@ -33,7 +33,6 @@ const Field = memo(
                 <label htmlFor="upload-flag">
                   <Button
                     fullWidth
-                    disabled={uploading}
                     variant="outlined"
                     disableElevation
                     size="large"
@@ -67,13 +66,7 @@ const Field = memo(
 )
 
 export default () => {
-  const { form, setForm, uploadingFlag } = useContext(formContext)
+  const { form, setForm } = useContext(formContext)
 
-  return (
-    <Field
-      uploading={uploadingFlag}
-      value={form.flag}
-      updateForm={flag => setForm({ ...form, flag })}
-    />
-  )
+  return <Field value={form.flag} updateForm={flag => setForm({ flag })} />
 }

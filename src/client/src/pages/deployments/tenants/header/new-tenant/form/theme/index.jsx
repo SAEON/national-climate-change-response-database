@@ -91,7 +91,7 @@ export default () => {
       resetTheme={resetTheme}
       updateTheme={updateTheme}
       value={form.theme}
-      updateForm={theme => setForm({ ...form, theme })}
+      updateForm={theme => setForm({ theme })}
     />
   )
 }

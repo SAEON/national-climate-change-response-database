@@ -1,10 +1,19 @@
-import { NCCRD_API_ALLOWED_ORIGINS } from '../config.js'
+import { pool } from '../mssql/pool.js'
 
 export default async (ctx, next) => {
   const { method, headers } = ctx.req
   const { origin } = headers
 
-  if (NCCRD_API_ALLOWED_ORIGINS.includes(origin)) {
+  const allowed = Boolean(
+    (
+      await (await pool.connect())
+        .request()
+        .input('hostname', new URL(origin).hostname)
+        .query(`select hostname from Tenants where hostname = @hostname`)
+    ).recordset[0]?.hostname
+  )
+
+  if (allowed) {
     ctx.set('Access-Control-Allow-Origin', origin)
   }
 

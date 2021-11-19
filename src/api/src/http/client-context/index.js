@@ -6,17 +6,29 @@ export default async ctx => {
   const userAgent = ctx.request.headers['user-agent']
   const origin = ctx.request.headers['origin'] || NCCRD_HOSTNAME
 
-  const theme = (
-    await (await pool.connect())
-      .request()
-      .input('name', 'default')
-      .query(`select theme from MuiThemes where name = @name;`)
-  ).recordset[0].theme
+  const tenant = (
+    await (await pool.connect()).request().input('hostname', new URL(origin).hostname).query(`
+      select
+        title,
+        shortTitle,
+        description,
+        theme,
+        logoImagePath,
+        fileImagePath
+      from Tenants
+      where
+        hostname = @hostname;`)
+  ).recordset[0]
+
+  const { theme, title, description, shortTitle } = tenant || {}
 
   ctx.body = {
     ipAddress,
     userAgent,
     origin,
+    title,
+    shortTitle,
+    description,
     theme,
   }
 }

@@ -1,13 +1,13 @@
 import theme from './default-theme.js'
 import { pool } from '../pool.js'
-import { NCCRD_HOSTNAME } from '../../config.js'
+import { NCCRD_HOSTNAME, DEFAULT_SHORTNAME } from '../../config.js'
 
 export default async () =>
   await (await pool.connect())
     .request()
     .input('hostname', new URL(NCCRD_HOSTNAME).hostname)
     .input('title', 'National Climate Change Response Database')
-    .input('shortTitle', 'NCCRD')
+    .input('shortTitle', DEFAULT_SHORTNAME)
     .input('description', 'National Climate Change Response Database')
     .input('logoUrl', 'http/public-image/dffe-logo.jpg')
     .input('flagUrl', 'http/public-image/sa-flag.jpg')
@@ -37,9 +37,9 @@ export default async () =>
           s.hostname,
           s.title,
           s.shortTitle,
+          s.description,
           s.logoUrl,
           s.flagUrl,
-          s.description,
           s.theme
         )
 

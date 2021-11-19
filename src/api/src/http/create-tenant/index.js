@@ -1,40 +1,59 @@
 import PERMISSIONS from '../../user-model/permissions.js'
 import { pool } from '../../mssql/pool.js'
 
+/**
+ * Creates the new tenant
+ */
 export default async ctx => {
   const { user } = ctx
   const { ensurePermission } = user
   await ensurePermission({ ctx, permission: PERMISSIONS['create-tenant'] })
+
+  const logo = ctx.request.files['logo']
+  const flag = ctx.request.files['flag']
+  const shapefiles = Object.entries(ctx.request.files)
+    .filter(([name]) => name.includes('geofence-'))
+    .map(([, file]) => file)
+
+  /**
+   * If logo included, copy to the
+   * file system and keep track of
+   * path
+   */
+  if (logo) {
+    // TODO
+  }
+
+  /**
+   * If flag included, copy to the
+   * file system and keep track of
+   * path
+   */
+  if (flag) {
+    // TODO
+  }
+
   const {
     hostname,
     title = null,
     shortTitle = null,
     description = null,
-    flag = null,
-    logo = null,
-    shapefiles = null,
     theme = null,
-  } = ctx.request.body
+  } = JSON.parse(ctx.request.body.json)
 
-  const result = await (await pool.connect())
+  await (await pool.connect())
     .request()
     .input('hostname', hostname)
     .input('title', title)
     .input('shortTitle', shortTitle)
     .input('description', description)
-    .input('logoImagePath', null)
-    .input('fileImagePath', null)
-    .input('geofence', null)
     .input('theme', JSON.stringify(theme)).query(`
       insert into Tenants (
         hostname,
         title,
         shortTitle,
         description,
-        theme,
-        logoImagePath,
-        fileImagePath,
-        geofence
+        theme
       )
       output inserted.*
       values (
@@ -42,13 +61,8 @@ export default async ctx => {
         @title,
         @shortTitle,
         @description,
-        @theme,
-        @logoImagePath,
-        @fileImagePath,
-        @geofence
+        @theme
       );`)
 
-  await new Promise(res => setTimeout(res, 5000))
-
-  ctx.body = result.recordset[0]
+  ctx.status = 201
 }

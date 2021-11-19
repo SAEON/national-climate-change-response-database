@@ -86,6 +86,7 @@ end
 
 
 -- Tenants
+drop table Tenants;
 if not exists (
   select *
   from sys.objects
@@ -101,8 +102,8 @@ create table Tenants (
   shortTitle nvarchar(10),
   description nvarchar(2000),
   theme nvarchar(max) not null,
-  logoUrl nvarchar(500) not null,
-  flagUrl nvarchar(500) not null,
+  logoUrl nvarchar(500),
+  flagUrl nvarchar(500),
   geofence geometry,
   constraint json_theme check ( isjson(theme) = 1 )
 );

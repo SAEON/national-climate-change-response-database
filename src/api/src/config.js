@@ -46,6 +46,8 @@ export const MSSQL_HOSTNAME = process.env.MSSQL_HOSTNAME || '127.0.0.1'
 
 export const MSSQL_DATABASE = process.env.MSSQL_DATABASE || 'nccrd'
 
+export const DEFAULT_SHORTNAME = 'NCCRD'
+
 export const MSSQL_PORT = parseInt(process.env.MSSQL_PORT || 1433, 10)
 
 export const LOG_SQL_QUERIES = (process.env.LOG_SQL_QUERIES || 'true').toBoolean()

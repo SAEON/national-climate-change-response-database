@@ -10,13 +10,10 @@ const DEFAULT_IMAGES = ['dffe-logo.jpg', 'sa-flag.jpg']
 
 export default async ctx => {
   const name = sanitize(ctx.params.name)
-  console.log('hi', name)
 
-  // If it's a default image, then it's in ./images/
   if (DEFAULT_IMAGES.includes(name)) {
     ctx.body = createReadStream(join(__dirname, `.${sep}images${sep}${name}`))
+  } else {
+    ctx.body = createReadStream(join(IMAGES_DIRECTORY, `.${sep}${name}`))
   }
-
-  // Otherwise it's in the file system
-  ctx.body = createReadStream(join(IMAGES_DIRECTORY, `.${sep}${name}`))
 }

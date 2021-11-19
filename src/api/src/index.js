@@ -90,7 +90,7 @@ app
       .post('/http/upload-template', uploadTemplateRoute)
       .post('/http/attach-file-to-submission', attachFileToSubmission)
       .post('/http/submit-completed-templates', submitCompletedTemplates)
-      .post('/http/create-tenant', createTenantRoute)
+      .put('/http/create-tenant', createTenantRoute)
       .get('/http/download-template', downloadTemplateRoute)
       .get('/http/download-submission', downloadSubmission)
       .routes()

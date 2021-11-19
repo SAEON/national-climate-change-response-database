@@ -1,4 +1,4 @@
-import { NCCRD_HOSTNAME } from '../../config.js'
+import { NCCRD_HOSTNAME, DEFAULT_SHORTNAME } from '../../config.js'
 import { pool } from '../../mssql/pool.js'
 
 export default async ctx => {
@@ -13,8 +13,8 @@ export default async ctx => {
         shortTitle,
         description,
         theme,
-        logoUrl,
-        flagUrl
+        coalesce(logoUrl, ( select logoUrl from Tenants where shortTitle = '${DEFAULT_SHORTNAME}' ) ) logoUrl,
+        coalesce(flagUrl, ( select flagUrl from Tenants where shortTitle = '${DEFAULT_SHORTNAME}' ) ) flagUrl
       from Tenants
       where
         hostname = @hostname;`)

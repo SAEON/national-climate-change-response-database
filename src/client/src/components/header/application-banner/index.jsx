@@ -5,15 +5,12 @@ import Tooltip from '@mui/material/Tooltip'
 import Toolbar_ from './toolbar'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import useTheme from '@mui/material/styles/useTheme'
+import { NCCRD_HOSTNAME } from '../../../config'
 
 export const useImageHeight = () => {
   const theme = useTheme()
   const lgUp = useMediaQuery(theme.breakpoints.up('lg'))
-
-  if (lgUp) {
-    return 93
-  }
-
+  if (lgUp) return 93
   return 40
 }
 
@@ -28,7 +25,7 @@ const aProps = {
 export default () => {
   const theme = useTheme()
   const mdDown = useMediaQuery(theme.breakpoints.down('md'))
-  const { title, shortTitle, description } = useContext(clientContext)
+  const { title, shortTitle, description, logoUrl, flagUrl } = useContext(clientContext)
   const imageHeight = useImageHeight()
 
   return (
@@ -37,9 +34,10 @@ export default () => {
 
       <a {...aProps} href="http://www.environment.gov.za/">
         <img
+          crossOrigin="use-credentials"
           style={{ maxHeight: imageHeight, width: 'auto' }}
-          src="/dffe-logo.jpg"
-          alt="SA Government"
+          src={`${NCCRD_HOSTNAME}/${logoUrl}`}
+          alt={`Logo: ${title} (${description})`}
         />
       </a>
 
@@ -76,8 +74,9 @@ export default () => {
             display: 'block',
             marginLeft: 'auto',
           }}
-          src="/sa-flag.jpg"
-          alt="SA Government"
+          src={`${NCCRD_HOSTNAME}/${flagUrl}`}
+          alt={`Flag: ${title} (${description})`}
+          crossOrigin="use-credentials"
         />
       </a>
     </Toolbar_>

@@ -1,25 +1,51 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { context as formContext } from './_context'
 import Button from '@mui/material/Button'
 import AcceptIcon from 'mdi-react/TickIcon'
-import useFetch from 'use-http'
 import { NCCRD_API_HTTP_ADDRESS } from '../../../../../config'
 import { CircularProgress } from '@mui/material'
 
 export default ({ setOpen }) => {
-  const { form } = useContext(formContext)
-  const { post, response, loading, error } = useFetch(NCCRD_API_HTTP_ADDRESS, {
-    credentials: 'include',
-  })
-
-  if (error) {
-    throw error
-  }
+  const [loading, setLoading] = useState(false)
+  const {
+    form: { flag, logo, shapefiles, ...form },
+  } = useContext(formContext)
 
   return (
     <Button
       onClick={async () => {
-        await post('/create-tenant', { ...form })
+        setLoading(true)
+        const url = `${NCCRD_API_HTTP_ADDRESS}/create-tenant`
+
+        const formData = new FormData()
+        formData.append('json', JSON.stringify(form))
+
+        if (logo.constructor === FileList) {
+          const file = logo[0]
+          formData.append('logo', file, file.name)
+        }
+
+        if (flag.constructor === FileList) {
+          const file = flag[0]
+          formData.append('flag', file, file.name)
+        }
+
+        if (shapefiles.constructor === FileList) {
+          for (const file of shapefiles) {
+            formData.append(`geofence-${file.name}`, file, file.name)
+          }
+        }
+
+        const result = await fetch(url, {
+          method: 'PUT',
+          credentials: 'include',
+          mode: 'cors',
+          body: formData,
+        }).then(res => res.status)
+
+        console.log('l', result)
+
+        setLoading(false)
         // setOpen(false)
       }}
       disabled={!form.valid || loading}

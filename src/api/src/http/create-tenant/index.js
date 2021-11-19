@@ -1,5 +1,6 @@
 import PERMISSIONS from '../../user-model/permissions.js'
 import { pool } from '../../mssql/pool.js'
+import { IMAGES_DIRECTORY } from '../../config.js'
 
 /**
  * Creates the new tenant

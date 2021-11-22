@@ -1,5 +1,5 @@
 import FormGroup from '@mui/material/FormGroup'
-import { useContext, useRef, useEffect, memo } from 'react'
+import { useContext, useRef, useEffect } from 'react'
 import { context as formContext } from '../_context'
 import Hostname from './hostname'
 import Logo from './logo'
@@ -12,7 +12,7 @@ import Description from './description'
 import Grid from '@mui/material/Grid'
 import DialogContent from '@mui/material/DialogContent'
 
-const Form = memo(() => {
+const Form = () => {
   return (
     <DialogContent dividers>
       <FormGroup>
@@ -33,11 +33,12 @@ const Form = memo(() => {
       </FormGroup>
     </DialogContent>
   )
-})
+}
 
 export default () => {
   // Reset the form on dismount
-  const ref = useRef(useContext(formContext).resetForm)
+  const { resetForm } = useContext(formContext)
+  const ref = useRef(resetForm)
   useEffect(() => () => ref.current && ref.current(), [])
 
   return <Form />

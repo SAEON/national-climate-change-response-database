@@ -5,9 +5,9 @@ import Q from '@saeon/quick-form'
 import debounce from '../../../../../../../lib/debounce'
 
 const Field = memo(
-  ({ value, updateForm }) => {
+  ({ error, value, updateForm }) => {
     const effect = useMemo(
-      () => debounce(({ value, valid }) => updateForm(value, valid)),
+      () => debounce(({ value, valid, putError }) => updateForm(value, valid, putError)),
       [updateForm]
     )
 
@@ -19,15 +19,16 @@ const Field = memo(
               margin="normal"
               fullWidth
               required
-              error={!valid}
+              error={Boolean(error || !valid)}
               placeholder="e.g. your.hostname.co.za"
-              helperText="What hostname should this tenant be accessed on?"
+              helperText={error || 'What hostname should this tenant be accessed on?'}
               variant="outlined"
               label="Hostname"
               value={value}
               onChange={({ target: { value } }) =>
                 update({
                   value,
+                  putError: undefined,
                   valid: Boolean(
                     value.match(
                       /(?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)/
@@ -41,13 +42,20 @@ const Field = memo(
       </Q>
     )
   },
-  () => true
+  ({ error: a }, { error: b }) => {
+    if (a !== b) return false
+    return true
+  }
 )
 
 export default () => {
   const { form, setForm } = useContext(formContext)
 
   return (
-    <Field value={form.hostname} updateForm={(hostname, valid) => setForm({ hostname, valid })} />
+    <Field
+      error={form.putError}
+      value={form.hostname}
+      updateForm={(hostname, valid, putError) => setForm({ hostname, valid, putError })}
+    />
   )
 }

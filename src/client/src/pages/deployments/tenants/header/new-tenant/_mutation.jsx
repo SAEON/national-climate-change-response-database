@@ -9,44 +9,58 @@ export default ({ setOpen }) => {
   const [loading, setLoading] = useState(false)
   const {
     form: { flag, logo, shapefiles, ...form },
+    setForm,
   } = useContext(formContext)
 
   return (
     <Button
       onClick={async () => {
-        setLoading(true)
-        const url = `${NCCRD_API_HTTP_ADDRESS}/create-tenant`
+        try {
+          setLoading(true)
+          const url = `${NCCRD_API_HTTP_ADDRESS}/create-tenant`
 
-        const formData = new FormData()
-        formData.append('json', JSON.stringify(form))
+          const formData = new FormData()
+          formData.append('json', JSON.stringify(form))
 
-        if (logo.constructor === FileList) {
-          const file = logo[0]
-          formData.append('logo', file, file.name)
-        }
-
-        if (flag.constructor === FileList) {
-          const file = flag[0]
-          formData.append('flag', file, file.name)
-        }
-
-        if (shapefiles.constructor === FileList) {
-          for (const file of shapefiles) {
-            formData.append(`geofence-${file.name}`, file, file.name)
+          if (logo.constructor === FileList) {
+            const file = logo[0]
+            formData.append('logo', file, file.name)
           }
+
+          if (flag.constructor === FileList) {
+            const file = flag[0]
+            formData.append('flag', file, file.name)
+          }
+
+          if (shapefiles.constructor === FileList) {
+            for (const file of shapefiles) {
+              formData.append(`geofence-${file.name}`, file, file.name)
+            }
+          }
+
+          const status = await fetch(url, {
+            method: 'PUT',
+            credentials: 'include',
+            mode: 'cors',
+            body: formData,
+          }).then(res => res.status)
+
+          if (status === 409) {
+            throw new Error(
+              'Conflict - this hostname is already in use. Please provide a unique domain name'
+            )
+          }
+
+          if (status !== 201) {
+            throw new Error(`Unexpected HTTP status returned for PUT request: ${status}`)
+          }
+
+          // setOpen(false)
+        } catch (error) {
+          setForm({ putError: error.message })
+        } finally {
+          setLoading(false)
         }
-
-        const result = await fetch(url, {
-          method: 'PUT',
-          credentials: 'include',
-          mode: 'cors',
-          body: formData,
-        }).then(res => res.status)
-
-        console.log('l', result)
-
-        setLoading(false)
-        // setOpen(false)
       }}
       disabled={!form.valid || loading}
       variant="text"

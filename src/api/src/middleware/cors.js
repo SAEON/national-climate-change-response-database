@@ -4,17 +4,19 @@ export default async (ctx, next) => {
   const { method, headers } = ctx.req
   const { origin } = headers
 
-  const allowed = Boolean(
-    (
-      await (await pool.connect())
-        .request()
-        .input('hostname', new URL(origin).hostname)
-        .query(`select hostname from Tenants where hostname = @hostname`)
-    ).recordset[0]?.hostname
-  )
+  if (origin) {
+    const allowed = Boolean(
+      (
+        await (await pool.connect())
+          .request()
+          .input('hostname', new URL(origin).hostname)
+          .query(`select hostname from Tenants where hostname = @hostname`)
+      ).recordset[0]?.hostname
+    )
 
-  if (allowed) {
-    ctx.set('Access-Control-Allow-Origin', origin)
+    if (allowed) {
+      ctx.set('Access-Control-Allow-Origin', origin)
+    }
   }
 
   ctx.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')

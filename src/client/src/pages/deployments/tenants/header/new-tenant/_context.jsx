@@ -15,11 +15,14 @@ export default memo(({ children, staticTheme }) => {
       logo: [],
       theme: staticTheme,
       valid: false,
+      putError: undefined,
     }),
     [staticTheme]
   )
 
   const [form, setForm] = useState(defaultForm)
+
+  console.log(form.putError)
 
   return (
     <context.Provider

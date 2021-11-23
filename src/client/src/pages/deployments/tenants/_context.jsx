@@ -13,6 +13,7 @@ export default ({ children }) => {
           hostname
           title
           shortTitle
+          frontMatter
           description
           theme
         }

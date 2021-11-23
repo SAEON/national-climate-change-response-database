@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import { context as clientContext } from '../../../contexts/client-context'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { useTheme, alpha } from '@mui/material/styles'
@@ -12,6 +14,7 @@ const image = {
 }
 
 export default () => {
+  const { explore: pageContent } = JSON.parse(useContext(clientContext).frontMatter)
   const classes = useStyles()
   const theme = useTheme()
 
@@ -27,20 +30,13 @@ export default () => {
           }}
           variant="h4"
         >
-          Explore climate mitigation and adaptation projects
+          {pageContent.title}
         </Typography>
         <Typography
           style={{ textAlign: 'left', color: alpha(theme.palette.common.black, 0.9) }}
           variant="body2"
         >
-          The NCCRD is part of the National Climate Change Information System. It is designed to
-          capture and store the details of climate change interventions including adaptation,
-          mitigation and crosscutting efforts from across wide range of stakeholders in South Africa
-          such as industrial entities, research, non-governmental organisations as well as
-          government institutions and entities. Information on climate change related projects
-          contained in the NCCRD include details mitigation and adaptation projects that features
-          specifications on general project overview, description of funding sources and details
-          about project supporters as well as related activity data related to the projects
+          {pageContent.content}
         </Typography>
       </Grid>
 

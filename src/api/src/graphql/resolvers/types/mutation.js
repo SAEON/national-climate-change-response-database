@@ -6,6 +6,7 @@ import createSubmission from '../mutations/create-submission/index.js'
 import deleteSubmission from '../mutations/delete-submission/index.js'
 import removeSubmissionAttachments from '../mutations/remove-submission-attachments/index.js'
 import saveSubmission from '../mutations/save-submission/index.js'
+import updateTenant from '../mutations/update-tenant/index.js'
 import { pool } from '../../../mssql/pool.js'
 
 const getSubmissionOwner = id =>
@@ -26,6 +27,7 @@ export default {
   removeSubmissionAttachments: authorize(PERMISSIONS['attach-file-to-submission'])(
     removeSubmissionAttachments
   ),
+  updateTenant: authorize(PERMISSIONS['update-tenant'])(updateTenant),
   saveSubmission: async (...args) =>
     authorize(
       PERMISSIONS['update-submission'],

@@ -82,16 +82,10 @@ type PageInfo {
   totalRecords: Int!
 }
 
-type Tenant {
-  id: ID!
-  hostname: String!
-  title: String
-  shortTitle: String
-  description: String
-  theme: JSON!
-}
-
 type Query {
+  """
+  Retrieve all tenanted versions of this deployment
+  """
   tenants: [Tenant!]!
   """
   Get a list of all the the Excel submission templates that have been uploaded
@@ -144,7 +138,30 @@ type Query {
   permissions: [Permission!]!
 }
 
+type Tenant {
+  id: ID!
+  hostname: String!
+  title: String
+  shortTitle: String
+  frontMatter: JSON!
+  description: String
+  theme: JSON!
+}
+
+input TenantInput {
+  hostname: String
+  title: String
+  shortTitle: String
+  frontMatter: JSON
+  description: String
+  theme: JSON
+}
+
 type Mutation {
+  """
+  Update tenant
+  """
+  updateTenant(id: ID, input: TenantInput!): Tenant
   """
   Create and update a submission
   """

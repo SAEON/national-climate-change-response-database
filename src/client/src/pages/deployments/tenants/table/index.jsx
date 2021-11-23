@@ -2,6 +2,8 @@ import { useContext } from 'react'
 import { context as tenantsContext } from '../_context'
 import DataGrid from 'react-data-grid'
 import IconButton from '@mui/material/IconButton'
+import JsonIcon from 'mdi-react/CodeJsonIcon'
+import JsonEditor from './json-editor'
 import ViewIcon from 'mdi-react/EyeIcon'
 import Tooltip from '@mui/material/Tooltip'
 
@@ -16,15 +18,40 @@ const Table = ({ tenants }) => {
         style={{ height: '100%' }}
         enableVirtualization={true}
         columns={[
-          { key: 'hostname', name: 'Hostname', headerRenderer },
-          { key: 'title', name: 'Title', headerRenderer },
-          { key: 'shortTitle', name: 'Title (short)', headerRenderer },
-          { key: 'frontMatter', name: 'Home page content', headerRenderer },
-          { key: 'description', name: 'Description', headerRenderer },
+          { key: 'hostname', name: 'Hostname', resizable: true, headerRenderer },
+          { key: 'title', name: 'Title', resizable: true, headerRenderer },
+          { key: 'shortTitle', name: 'Title (short)', resizable: true, headerRenderer },
+          {
+            key: 'frontMatter',
+            name: 'Home page content',
+            editor: JsonEditor,
+            editorOptions: {
+              renderFormatter: true,
+            },
+            resizable: true,
+            formatter: props => {
+              return (
+                <div
+                  style={{
+                    width: '100%',
+                    alignItems: 'center',
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <JsonIcon size={18} />
+                </div>
+              )
+            },
+            headerRenderer,
+          },
+          { key: 'description', name: 'Description', resizable: true, headerRenderer },
           {
             key: '_view',
             name: '',
             headerRenderer,
+            resizable: true,
             width: 100,
             formatter: ({ row: { hostname } }) => (
               <div style={{ width: '100%', textAlign: 'center' }}>

@@ -86,7 +86,7 @@ end
 
 
 -- Tenants
-drop table Tenants;
+-- drop table Tenants;
 if not exists (
   select *
   from sys.objects

@@ -1,8 +1,11 @@
+import { useContext } from 'react'
+import { context as clientContext } from '../../../contexts/client-context'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { useTheme, alpha } from '@mui/material/styles'
 
 export default () => {
+  const { about: pageContent } = JSON.parse(useContext(clientContext).frontMatter)
   const theme = useTheme()
 
   return (
@@ -18,7 +21,7 @@ export default () => {
           }}
           variant="h4"
         >
-          Welcome to the National Climate Change Response Database
+          {pageContent.title}
         </Typography>
       </Grid>
       <Grid item lg={6} style={{ flexGrow: 1 }}>
@@ -30,17 +33,7 @@ export default () => {
           }}
           variant="body2"
         >
-          The platform is developed and managed by the Department of Forestry, Fisheries and the
-          Environment (DFFE) to facilitate the monitoring and tracking of national, provincial and
-          local responses to climate change. As outlined in both the National Development Plan (NDP)
-          and National Climate Change Response Policy (2011), South Africa has committed to a just
-          transition to a low carbon economy and climate-resilient society. The country is projected
-          to face a higher frequency of climate-related disasters that are increasing in intensity,
-          and these events are likely to be associated with impacts that are on par with, if not
-          worse than those already experienced. The National Climate Change Response Database
-          (NCCRD) is intended as a resource to collect and track interventions on climate change
-          (adaptation and mitigation) on past, current and future climate change response efforts
-          (policies, plans, strategies, projects and research) across South Africa.
+          {pageContent.content}
         </Typography>
       </Grid>
     </Grid>

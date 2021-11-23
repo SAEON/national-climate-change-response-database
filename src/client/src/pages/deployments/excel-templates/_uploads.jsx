@@ -26,13 +26,11 @@ export default () => {
             name: 'Created at',
             headerRenderer,
             formatter: ({ row: { createdAt } }) => '' + createdAt,
-            size: 100,
           },
           {
             key: 'filePath',
             name: 'File name',
             headerRenderer,
-            size: 100,
           },
           {
             key: '_download',

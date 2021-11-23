@@ -75,4 +75,8 @@ export default Object.freeze({
     name: 'create-tenant',
     description: 'Add tenant to the deployed application',
   },
+  'view-tenants': {
+    name: 'view-tenants',
+    description: 'View tenants associated with this software deployment',
+  },
 })

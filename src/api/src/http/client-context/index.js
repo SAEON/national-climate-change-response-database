@@ -11,6 +11,7 @@ export default async ctx => {
       select
         title,
         shortTitle,
+        coalesce(frontMatter, ( select frontMatter from Tenants where shortTitle = '${DEFAULT_SHORTNAME}' ) ) frontMatter,
         description,
         theme,
         coalesce(logoUrl, ( select logoUrl from Tenants where shortTitle = '${DEFAULT_SHORTNAME}' ) ) logoUrl,
@@ -20,7 +21,7 @@ export default async ctx => {
         hostname = @hostname;`)
   ).recordset[0]
 
-  const { theme, title, description, shortTitle, logoUrl, flagUrl } = tenant || {}
+  const { theme, title, description, shortTitle, frontMatter, logoUrl, flagUrl } = tenant || {}
 
   ctx.body = {
     ipAddress,
@@ -28,6 +29,7 @@ export default async ctx => {
     origin,
     title,
     shortTitle,
+    frontMatter,
     description,
     logoUrl,
     flagUrl,

@@ -1,4 +1,4 @@
-import roles from '../../user-model/roles.js'
+import * as roles from '../../user-model/roles.js'
 import { pool } from '../pool.js'
 import mssql from 'mssql'
 

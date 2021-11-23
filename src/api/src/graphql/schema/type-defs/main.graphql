@@ -82,7 +82,17 @@ type PageInfo {
   totalRecords: Int!
 }
 
+type Tenant {
+  id: ID!
+  hostname: String!
+  title: String
+  shortTitle: String
+  description: String
+  theme: JSON!
+}
+
 type Query {
+  tenants: [Tenant!]!
   """
   Get a list of all the the Excel submission templates that have been uploaded
   """
@@ -132,10 +142,6 @@ type Query {
   Search permissions
   """
   permissions: [Permission!]!
-}
-
-type Tenant {
-  id: ID!
 }
 
 type Mutation {

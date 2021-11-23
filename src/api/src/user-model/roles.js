@@ -41,6 +41,7 @@ export const admin = {
     permissions['/access'],
     permissions['/deployments'],
     permissions['create-tenant'],
+    permissions['view-tenants'],
   ]),
 }
 
@@ -49,5 +50,3 @@ export const sysadmin = {
   description: 'System administrators',
   permissions: deduplicate([...admin.permissions, permissions['seed-database']]),
 }
-
-export default [user, dffe, admin, sysadmin]

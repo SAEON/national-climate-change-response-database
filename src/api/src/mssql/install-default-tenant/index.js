@@ -1,4 +1,5 @@
 import theme from './default-theme.js'
+import frontMatter from './front-matter.js'
 import { pool } from '../pool.js'
 import { NCCRD_HOSTNAME, DEFAULT_SHORTNAME } from '../../config.js'
 
@@ -10,6 +11,7 @@ export default async () =>
     .input('shortTitle', DEFAULT_SHORTNAME)
     .input('description', 'National Climate Change Response Database')
     .input('logoUrl', 'http/public-image/dffe-logo.jpg')
+    .input('frontMatter', JSON.stringify(frontMatter))
     .input('flagUrl', 'http/public-image/sa-flag.jpg')
     .input('theme', JSON.stringify(theme)).query(`
       merge Tenants t
@@ -18,6 +20,7 @@ export default async () =>
         @hostname hostname,
         @title title,
         @shortTitle shortTitle,
+        @frontMatter frontMatter,
         @description description,
         @logoUrl logoUrl,
         @flagUrl flagUrl,
@@ -29,6 +32,7 @@ export default async () =>
           hostname,
           title,
           shortTitle,
+          frontMatter,
           description,
           logoUrl,
           flagUrl,
@@ -37,6 +41,7 @@ export default async () =>
           s.hostname,
           s.title,
           s.shortTitle,
+          s.frontMatter,
           s.description,
           s.logoUrl,
           s.flagUrl,
@@ -47,6 +52,7 @@ export default async () =>
         then update set
           t.title = s.title,
           t.shortTitle = s.shortTitle,
+          t.frontMatter = s.frontMatter,
           t.description = s.description,
           t.logoUrl = s.logoUrl,
           t.flagUrl = s.flagUrl,

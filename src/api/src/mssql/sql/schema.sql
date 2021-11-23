@@ -86,6 +86,7 @@ end
 
 
 -- Tenants
+drop table Tenants;
 if not exists (
   select *
   from sys.objects
@@ -99,11 +100,13 @@ create table Tenants (
   hostname nvarchar(255) not null unique,
   title nvarchar(255),
   shortTitle nvarchar(10),
+  frontMatter nvarchar(max),
   description nvarchar(2000),
   theme nvarchar(max) not null,
   logoUrl nvarchar(500),
   flagUrl nvarchar(500),
   geofence geometry,
+  constraint frontMatter_json check ( isjson(frontMatter) = 1 ),
   constraint json_theme check ( isjson(theme) = 1 )
 );
 end

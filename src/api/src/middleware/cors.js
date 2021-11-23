@@ -5,15 +5,12 @@ export default async (ctx, next) => {
   const { origin } = headers
 
   if (origin) {
-    const allowed = Boolean(
-      (
-        await (await pool.connect())
-          .request()
-          .input('hostname', new URL(origin).hostname)
-          .query(`select hostname from Tenants where hostname = @hostname`)
-      ).recordset[0]?.hostname
-    )
+    const result = await (await pool.connect())
+      .request()
+      .input('hostname', new URL(origin).hostname)
+      .query(`select hostname from Tenants where hostname = @hostname`)
 
+    const allowed = result.recordset.length
     if (allowed) {
       ctx.set('Access-Control-Allow-Origin', origin)
     }

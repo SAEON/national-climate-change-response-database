@@ -19,7 +19,7 @@ module.exports = (ROOT, output) => {
     http2: false, // TODO - make this true, but then the API needs to also be https for dev purposes
     host: 'localhost',
     open: ['http://localhost:3001'],
-    allowedHosts: ['.localhost, localhost'],
+    allowedHosts: 'all',
     static: {
       staticOptions: {
         contentBase: path.join(ROOT, output),

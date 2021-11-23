@@ -4,7 +4,6 @@ import mssql from 'mssql'
 import { normalize, join, sep } from 'path'
 import { IMAGES_DIRECTORY } from '../../config.js'
 import { createReadStream, createWriteStream } from 'fs'
-import { nanoid } from 'nanoid'
 import sanitize from 'sanitize-filename'
 
 /**

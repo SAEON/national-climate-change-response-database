@@ -26,7 +26,7 @@ const makePool = ({ user, password, server, database, port }) => {
       min: 0,
       idleTimeoutMillis: 30 * 1000,
     },
-    arrayRowMode: true,
+    arrayRowMode: false,
     options: {
       enableArithAbort: true,
       useUTC: true,

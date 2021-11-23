@@ -1,8 +1,11 @@
 import PERMISSIONS from '../../user-model/permissions.js'
 import { pool } from '../../mssql/pool.js'
 import mssql from 'mssql'
+import { normalize, join, sep } from 'path'
 import { IMAGES_DIRECTORY } from '../../config.js'
+import { createReadStream, createWriteStream } from 'fs'
 import { nanoid } from 'nanoid'
+import sanitize from 'sanitize-filename'
 
 /**
  * Creates the new tenant
@@ -38,7 +41,7 @@ export default async ctx => {
   await transaction.begin()
 
   try {
-    await transaction
+    const newTenantResult = await transaction
       .request()
       .input('hostname', hostname)
       .input('title', title)
@@ -52,7 +55,7 @@ export default async ctx => {
           description,
           theme
         )
-        output inserted.*
+        output inserted.id
         values (
           @hostname,
           @title,
@@ -61,14 +64,31 @@ export default async ctx => {
           @theme
         );`)
 
+    const newTenantId = newTenantResult.recordset[0].id
+
     /**
      * If logo included, copy to the
      * file system and keep track of
      * path
      */
     if (logo) {
-      // TODO
-      console.log('logo', logo)
+      const filename = `${sanitize(hostname)}-${logo.name}`
+      const imgUrl = `http/public-image/${filename}`
+      const filePath = normalize(join(IMAGES_DIRECTORY, `.${sep}${filename}`))
+      const readStream = createReadStream(logo.path)
+      const writeStream = createWriteStream(filePath)
+
+      await new Promise((resolve, reject) => {
+        readStream
+          .pipe(writeStream)
+          .on('finish', () => resolve())
+          .on('error', () => reject())
+      })
+
+      await transaction.request().input('id', newTenantId).input('logoUrl', imgUrl).query(`
+        update Tenants
+        set logoUrl = @logoUrl
+        where id = @id;`)
     }
 
     /**
@@ -77,7 +97,23 @@ export default async ctx => {
      * path
      */
     if (flag) {
-      // TODO
+      const filename = `${sanitize(hostname)}-${flag.name}`
+      const imgUrl = `http/public-image/${filename}`
+      const filePath = normalize(join(IMAGES_DIRECTORY, `.${sep}${filename}`))
+      const readStream = createReadStream(flag.path)
+      const writeStream = createWriteStream(filePath)
+
+      await new Promise((resolve, reject) => {
+        readStream
+          .pipe(writeStream)
+          .on('finish', () => resolve())
+          .on('error', () => reject())
+      })
+
+      await transaction.request().input('id', newTenantId).input('flagUrl', imgUrl).query(`
+        update Tenants
+        set flagUrl = @flagUrl
+        where id = @id;`)
     }
 
     await transaction.commit()

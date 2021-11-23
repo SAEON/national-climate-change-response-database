@@ -22,14 +22,41 @@ const Table = ({ tenants }) => {
           { key: 'title', name: 'Title', resizable: true, headerRenderer },
           { key: 'shortTitle', name: 'Title (short)', resizable: true, headerRenderer },
           {
-            key: 'frontMatter',
-            name: 'Home page content',
-            editor: JsonEditor,
+            key: 'theme',
+            name: 'Theme',
+            width: 100,
+            editor: props => <JsonEditor {...props} />,
             editorOptions: {
               renderFormatter: true,
             },
             resizable: true,
-            formatter: props => {
+            formatter: () => {
+              return (
+                <div
+                  style={{
+                    width: '100%',
+                    alignItems: 'center',
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <JsonIcon size={18} />
+                </div>
+              )
+            },
+            headerRenderer,
+          },
+          {
+            key: 'frontMatter',
+            name: 'Page content',
+            width: 100,
+            editor: props => <JsonEditor {...props} />,
+            editorOptions: {
+              renderFormatter: true,
+            },
+            resizable: true,
+            formatter: () => {
               return (
                 <div
                   style={{

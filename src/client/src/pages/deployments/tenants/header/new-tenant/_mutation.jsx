@@ -55,7 +55,7 @@ export default ({ setOpen }) => {
             throw new Error(`Unexpected HTTP status returned for PUT request: ${status}`)
           }
 
-          // setOpen(false)
+          setOpen(false)
         } catch (error) {
           setForm({ putError: error.message })
         } finally {

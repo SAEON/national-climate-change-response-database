@@ -27,8 +27,7 @@ export default ({ row, column: { key }, onClose }) => {
     `,
     {
       update: (cache, { data: { updateTenant: tenant } }) => {
-        console.log(tenant)
-        // onClose()
+        onClose()
       },
     }
   )
@@ -112,7 +111,7 @@ export default ({ row, column: { key }, onClose }) => {
               variables: {
                 id: row.id,
                 input: {
-                  frontMatter: JSON.parse(valueRef.current),
+                  [key]: JSON.parse(valueRef.current),
                 },
               },
             })

@@ -3,9 +3,10 @@ import { pool } from '../../mssql/pool.js'
 import mssql from 'mssql'
 import { normalize, join, sep } from 'path'
 import { IMAGES_DIRECTORY } from '../../config.js'
-import { createReadStream, createWriteStream, readFileSync } from 'fs'
+import { createReadStream, createWriteStream, readFile } from 'fs'
 import sanitize from 'sanitize-filename'
 import shp from 'shpjs'
+import { stringify } from 'wkt'
 
 /**
  * Creates the new tenant
@@ -68,9 +69,22 @@ export default async ctx => {
      * Add the geofence
      */
     if (shapefile) {
-      const buffer = readFileSync(shapefile.path)
+      const buffer = await new Promise((y, n) =>
+        readFile(shapefile.path, { encoding: null }, (e, data) => (e ? n(e) : y(data)))
+      )
       const geoJson = await shp(buffer)
-      console.log('data', geoJson)
+
+      if (geoJson.features.length !== 1) {
+        throw new Error('Incorrect polygon format for geofence - geoJson.features.length !== 1')
+      }
+
+      await transaction
+        .request()
+        .input('id', newTenantId)
+        .input('geofence', stringify(geoJson.features[0].geometry)).query(`
+          update Tenants
+          set geofence = @geofence
+          where id = @id;`)
     }
 
     /**

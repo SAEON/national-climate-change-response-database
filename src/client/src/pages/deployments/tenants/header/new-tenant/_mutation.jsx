@@ -88,7 +88,7 @@ export default ({ setOpen }) => {
             },
           })
 
-          setOpen(false)
+          // setOpen(false)
         } catch (error) {
           setForm({ putError: error.message })
         } finally {

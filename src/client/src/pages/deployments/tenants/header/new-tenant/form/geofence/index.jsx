@@ -43,8 +43,9 @@ const Field = memo(
                 </label>
                 <FormHelperText>
                   Tenant deployments differ from the main deployment only in that all
-                  location-related information is bounded (geofenced). Create a geofence by uploading a shapefile as an archive (zip) or .shp file. Please use the highest
-                  resolution shapefile possible.
+                  location-related information is bounded (geofenced). Create a geofence by
+                  uploading a shapefile as an archive (zip) or .shp file. Please use the highest
+                  resolution shapefile possible. The file must use the UTF8 format
                 </FormHelperText>
               </FormControl>
 
@@ -68,5 +69,5 @@ const Field = memo(
 export default () => {
   const { form, setForm } = useContext(formContext)
 
-  return <Field value={form.shapefile} updateForm={shapefile => setForm({  shapefile })} />
+  return <Field value={form.shapefile} updateForm={shapefile => setForm({ shapefile })} />
 }

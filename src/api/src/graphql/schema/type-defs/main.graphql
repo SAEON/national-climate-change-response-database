@@ -161,7 +161,12 @@ type Mutation {
   """
   Update tenant
   """
-  updateTenant(id: ID, input: TenantInput!): Tenant
+  updateTenant(id: ID!, input: TenantInput!): Tenant
+  """
+  Delete tenant
+  Returns a list of deleted tenant IDs
+  """
+  deleteTenants(ids: [ID!]!): [ID!]!
   """
   Create and update a submission
   """

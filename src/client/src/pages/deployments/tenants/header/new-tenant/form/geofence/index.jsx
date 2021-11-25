@@ -26,7 +26,6 @@ const Field = memo(
                   style={{ display: 'none' }}
                   id="upload-geofence-shapefile"
                   type="file"
-                  multiple
                   onChange={e => {
                     update({ value: e.target.files })
                   }}
@@ -39,14 +38,13 @@ const Field = memo(
                     size="large"
                     component="span"
                   >
-                    Select geofences (shapefiles)
+                    Select geofence (shapefile)
                   </Button>
                 </label>
                 <FormHelperText>
                   Tenant deployments differ from the main deployment only in that all
-                  location-related information is bounded (geofenced). Geofences (shapefiles) are
-                  required to be uploaded as archives (zip) or .shp files. Please use the highest
-                  resolution shapefile(s) possible
+                  location-related information is bounded (geofenced). Create a geofence by uploading a shapefile as an archive (zip) or .shp file. Please use the highest
+                  resolution shapefile possible.
                 </FormHelperText>
               </FormControl>
 
@@ -70,5 +68,5 @@ const Field = memo(
 export default () => {
   const { form, setForm } = useContext(formContext)
 
-  return <Field value={form.shapefiles} updateForm={shapefiles => setForm({ shapefiles })} />
+  return <Field value={form.shapefile} updateForm={shapefile => setForm({  shapefile })} />
 }

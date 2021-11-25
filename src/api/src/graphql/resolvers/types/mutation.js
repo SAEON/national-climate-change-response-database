@@ -7,6 +7,7 @@ import deleteSubmission from '../mutations/delete-submission/index.js'
 import removeSubmissionAttachments from '../mutations/remove-submission-attachments/index.js'
 import saveSubmission from '../mutations/save-submission/index.js'
 import updateTenant from '../mutations/update-tenant/index.js'
+import deleteTenants from '../mutations/delete-tenants/index.js'
 import { pool } from '../../../mssql/pool.js'
 
 const getSubmissionOwner = id =>
@@ -28,6 +29,7 @@ export default {
     removeSubmissionAttachments
   ),
   updateTenant: authorize(PERMISSIONS['update-tenant'])(updateTenant),
+  deleteTenants: authorize(PERMISSIONS['delete-tenant'])(deleteTenants),
   saveSubmission: async (...args) =>
     authorize(
       PERMISSIONS['update-submission'],

@@ -10,7 +10,7 @@ export default memo(({ children, staticTheme }) => {
       title: `New deployment ${nanoid(10)}`,
       shortTitle: '',
       description: '',
-      shapefiles: [],
+      shapefile: [],
       flag: [],
       logo: [],
       theme: staticTheme,

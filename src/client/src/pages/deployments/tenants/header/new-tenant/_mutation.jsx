@@ -2,13 +2,16 @@ import { useContext, useState } from 'react'
 import { context as formContext } from './_context'
 import Button from '@mui/material/Button'
 import AcceptIcon from 'mdi-react/TickIcon'
+import { gql } from '@apollo/client'
 import { NCCRD_API_HTTP_ADDRESS } from '../../../../../config'
+import { useApolloClient } from '@apollo/client'
 import { CircularProgress } from '@mui/material'
 
 export default ({ setOpen }) => {
+  const { cache } = useApolloClient()
   const [loading, setLoading] = useState(false)
   const {
-    form: { flag, logo, shapefiles, ...form },
+    form: { flag, logo, shapefile, ...form },
     setForm,
   } = useContext(formContext)
 
@@ -32,18 +35,22 @@ export default ({ setOpen }) => {
             formData.append('flag', file, file.name)
           }
 
-          if (shapefiles.constructor === FileList) {
-            for (const file of shapefiles) {
-              formData.append(`geofence-${file.name}`, file, file.name)
-            }
+          if (shapefile.constructor === FileList) {
+            const file = shapefile[0]
+            formData.append(`geofence`, file, file.name)
           }
 
-          const status = await fetch(url, {
+          const res = await fetch(url, {
             method: 'PUT',
             credentials: 'include',
+            headers: {
+              accept: 'application/json',
+            },
             mode: 'cors',
             body: formData,
-          }).then(res => res.status)
+          })
+
+          const status = res.status
 
           if (status === 409) {
             throw new Error(
@@ -54,6 +61,32 @@ export default ({ setOpen }) => {
           if (status !== 201) {
             throw new Error(`Unexpected HTTP status returned for PUT request: ${status}`)
           }
+
+          const newTenant = await res.json()
+
+          const query = gql`
+            query {
+              tenants {
+                id
+                hostname
+                title
+                shortTitle
+                frontMatter
+                description
+                theme
+              }
+            }
+          `
+
+          const { tenants: existingTenants } = cache.read({ query })
+          const tenants = [...existingTenants, { __typename: 'Tenant', ...newTenant }]
+
+          cache.writeQuery({
+            query,
+            data: {
+              tenants,
+            },
+          })
 
           setOpen(false)
         } catch (error) {

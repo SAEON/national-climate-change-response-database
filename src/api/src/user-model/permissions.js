@@ -79,6 +79,10 @@ export default Object.freeze({
     name: 'update-tenant',
     description: 'Update a tenant',
   },
+  'delete-tenant': {
+    name: 'delete-tenant',
+    description: 'Delete a tenant',
+  },
   'view-tenants': {
     name: 'view-tenants',
     description: 'View tenants associated with this software deployment',

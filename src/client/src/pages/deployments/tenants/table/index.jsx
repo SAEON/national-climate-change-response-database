@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { context as tenantsContext } from '../_context'
-import DataGrid from 'react-data-grid'
+import DataGrid, { SelectColumn } from 'react-data-grid'
 import IconButton from '@mui/material/IconButton'
 import JsonIcon from 'mdi-react/CodeJsonIcon'
 import JsonEditor from './json-editor'
@@ -11,13 +11,18 @@ const headerRenderer = ({ column }) => (
   <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
 )
 
-const Table = ({ tenants }) => {
+const Table = ({ rows, setRows, selectedRows, setSelectedRows }) => {
   return (
     <div style={{ height: 1000 }}>
       <DataGrid
         style={{ height: '100%' }}
         enableVirtualization={true}
+        onSelectedRowsChange={setSelectedRows}
+        selectedRows={selectedRows}
+        rowKeyGetter={row => row.id}
+        onRowsChange={setRows}
         columns={[
+          SelectColumn,
           { key: 'hostname', name: 'Hostname', resizable: true, headerRenderer },
           { key: 'title', name: 'Title', resizable: true, headerRenderer },
           { key: 'shortTitle', name: 'Title (short)', resizable: true, headerRenderer },
@@ -98,19 +103,20 @@ const Table = ({ tenants }) => {
             ),
           },
         ]}
-        rows={[...tenants]
-          .sort(({ hostname: a }, { hostname: b }) => {
-            if (a > b) return 1
-            if (a < b) return -1
-            return 0
-          })
-          .map(t => ({ ...t }))}
+        rows={rows}
       />
     </div>
   )
 }
 
 export default () => {
-  const { tenants } = useContext(tenantsContext)
-  return <Table tenants={tenants} />
+  const { rows, setRows, selectedRows, setSelectedRows } = useContext(tenantsContext)
+  return (
+    <Table
+      rows={rows}
+      setRows={setRows}
+      selectedRows={selectedRows}
+      setSelectedRows={setSelectedRows}
+    />
+  )
 }

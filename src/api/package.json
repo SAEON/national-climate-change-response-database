@@ -60,6 +60,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.60.1",
     "sanitize-filename": "^1.6.3",
+    "shpjs": "^4.0.2",
     "sift": "^15.0.0",
     "sql-formatter": "^4.0.2",
     "wkt": "^0.1.1",

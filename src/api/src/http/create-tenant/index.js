@@ -3,8 +3,9 @@ import { pool } from '../../mssql/pool.js'
 import mssql from 'mssql'
 import { normalize, join, sep } from 'path'
 import { IMAGES_DIRECTORY } from '../../config.js'
-import { createReadStream, createWriteStream } from 'fs'
+import { createReadStream, createWriteStream, readFileSync } from 'fs'
 import sanitize from 'sanitize-filename'
+import shp from 'shpjs'
 
 /**
  * Creates the new tenant
@@ -24,9 +25,7 @@ export default async ctx => {
 
   const logo = ctx.request.files['logo']
   const flag = ctx.request.files['flag']
-  const shapefiles = Object.entries(ctx.request.files)
-    .filter(([name]) => name.includes('geofence-'))
-    .map(([, file]) => file)
+  const shapefile = ctx.request.files['geofence']
 
   /**
    * Insert tenant details
@@ -66,12 +65,21 @@ export default async ctx => {
     const newTenantId = newTenantResult.recordset[0].id
 
     /**
+     * Add the geofence
+     */
+    if (shapefile) {
+      const buffer = readFileSync(shapefile.path)
+      const geoJson = await shp(buffer)
+      console.log('data', geoJson)
+    }
+
+    /**
      * If logo included, copy to the
      * file system and keep track of
      * path
      */
     if (logo) {
-      const filename = `${sanitize(hostname)}-${logo.name}`
+      const filename = `logo-${sanitize(hostname)}-${logo.name}`
       const imgUrl = `http/public-image/${filename}`
       const filePath = normalize(join(IMAGES_DIRECTORY, `.${sep}${filename}`))
       const readStream = createReadStream(logo.path)
@@ -96,7 +104,7 @@ export default async ctx => {
      * path
      */
     if (flag) {
-      const filename = `${sanitize(hostname)}-${flag.name}`
+      const filename = `flag-${sanitize(hostname)}-${flag.name}`
       const imgUrl = `http/public-image/${filename}`
       const filePath = normalize(join(IMAGES_DIRECTORY, `.${sep}${filename}`))
       const readStream = createReadStream(flag.path)
@@ -116,6 +124,20 @@ export default async ctx => {
     }
 
     await transaction.commit()
+
+    /**
+     * Return the new tenant
+     */
+    ctx.status = 201
+    const tenant = await (
+      await pool.connect()
+    )
+      .request()
+      .input('id', newTenantId)
+      .query(`select * from Tenants where id = @id`)
+      .then(({ recordset: r }) => r[0])
+
+    ctx.body = JSON.stringify(tenant)
   } catch (error) {
     console.error('Unable to create tenant', error)
     // Remove logo if added
@@ -128,6 +150,4 @@ export default async ctx => {
       return (ctx.status = 400)
     }
   }
-
-  ctx.status = 201
 }

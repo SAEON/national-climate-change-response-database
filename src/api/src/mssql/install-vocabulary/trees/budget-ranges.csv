@@ -1,0 +1,12 @@
+parent,term,tree
+,Estimated budget,budgetRanges
+Estimated budget,< R10k,budgetRanges
+Estimated budget,R10k - R50K,budgetRanges
+Estimated budget,R50k - R100k,budgetRanges
+Estimated budget,R100k - R500k,budgetRanges
+Estimated budget,R500k - R1m,budgetRanges
+Estimated budget,R1m - R5m,budgetRanges
+Estimated budget,R5m - R10m,budgetRanges
+Estimated budget,R10m - R50m,budgetRanges
+Estimated budget,R50m - R100m,budgetRanges
+Estimated budget,> R100m,budgetRanges

@@ -1,9 +1,0 @@
-parent,term,tree
-,Unit,mitigationUnits
-Unit,"kWh (total energy savings)",mitigationUnits
-Unit,"kWh (Power generated)",mitigationUnits
-Unit,"MW installed capacity (Installed capacity)",mitigationUnits
-Unit,"MJ (Fuel consumption)",mitigationUnits
-Unit,"tons of waste reduced",mitigationUnits
-Unit,"tons of waste reused",mitigationUnits
-Unit,"tons of waste recycled",mitigationUnits

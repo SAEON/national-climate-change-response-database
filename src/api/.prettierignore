@@ -1,5 +1,5 @@
 **/node_modules/**
 **/package-lock.json
 **/client-dist/**
-src/mssql/install-default-tenant/default-geofence.js
+src/mssql/install-geometries/geojson/**/*.json
 bin

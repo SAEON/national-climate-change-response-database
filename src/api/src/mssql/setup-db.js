@@ -2,11 +2,13 @@ import { readdirSync, statSync } from 'fs'
 import { join, normalize, sep } from 'path'
 import { SUBMISSION_TEMPLATES_DIRECTORY } from '../config.js'
 import { pool } from './pool.js'
-import installUserModel from './install-user-model/index.js'
-import seedAdmins from './install-admins/index.js'
-import seedSysAdmins from './install-sysadmins/index.js'
 import installSchema from './install-schema.js'
-import seedDefaultTenant from './install-default-tenant/index.js'
+import installUserModel from './install-user-model/index.js'
+import installAdmins from './install-admins/index.js'
+import installSysadmins from './install-sysadmins/index.js'
+import installDefaultTenant from './install-default-tenant/index.js'
+import installVocabulary from './install-vocabulary/index.js'
+import installGeometries from './install-geometries/index.js'
 
 const info = (...args) => console.info(...args)
 
@@ -14,11 +16,13 @@ const info = (...args) => console.info(...args)
  * Initial schema
  */
 ;(async () => {
-  await installSchema().then(() => info('Schema created (or already exists)'))
-  await installUserModel().then(() => info('User model seeded!'))
-  await seedAdmins().then(() => info('Admin users seeded!'))
-  await seedSysAdmins().then(() => info('System admin users seeded!'))
-  await seedDefaultTenant().then(() => info('Default tenant seeded!'))
+  await installSchema().then(() => info('Installed schema\n'))
+  await installUserModel().then(() => info('Installed user model\n'))
+  await installSysadmins().then(() => info('Installed sysadmins\n'))
+  await installAdmins().then(() => info('Installed admins\n'))
+  await installDefaultTenant().then(() => info('Installed default tenant\n'))
+  await installVocabulary().then(() => info('Installed vocabulary\n'))
+  await installGeometries().then(() => info('Installed geometry\n'))
 
   /**
    * Register existing template uploads

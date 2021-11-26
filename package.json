@@ -30,7 +30,8 @@
       "src/api/bin/sql/**/*",
       "src/api/bin/erm.sql",
       "src/api/bin/client-dist/**/*",
-      "src/api/bin/images/**/*"
+      "src/api/bin/images/**/*",
+      "src/api/bin/geojson/**/*"
     ],
     "targets": [
       "node16-linux-x64",

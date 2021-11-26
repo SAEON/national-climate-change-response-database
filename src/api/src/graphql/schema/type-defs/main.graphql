@@ -179,7 +179,7 @@ type Mutation {
     submissionStatus: JSON
     submissionComments: String
   ): Submission
-  seedDatabase(erm: Boolean, vocabularies: Boolean): JSON!
+  seedDatabase(erm: Boolean): JSON!
   createSubmission: Submission!
   deleteSubmission(id: ID!): ID!
   removeSubmissionAttachments(submissionId: ID!, ids: [Int!]!): JSON!

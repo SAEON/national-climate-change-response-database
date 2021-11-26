@@ -1,0 +1,17 @@
+parent,term,tree
+,Hazard,hazards
+Hazard,Disease outbreak,hazards
+Hazard,Drought,hazards
+Hazard,Earthquake,hazards
+Hazard,Floods,hazards
+Hazard,Hailstorm,hazards
+Hazard,Heavy rainfall,hazards
+Hazard,Lightning,hazards
+Hazard,Mud-slide,hazards
+Hazard,Plantation fire (Sugarcane/forest),hazards
+Hazard,Snow,hazards
+Hazard,Strong winds,hazards
+Hazard,Structural collapse,hazards
+Hazard,Structural fire,hazards
+Hazard,Veld fire,hazards
+Hazard,Other (Please specify),hazards

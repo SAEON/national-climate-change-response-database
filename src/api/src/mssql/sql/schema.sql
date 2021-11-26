@@ -196,31 +196,11 @@ if not exists (
 )
 begin
 create table Geometries (
-  id int not null identity primary key,
-  name nvarchar(255) not null unique,
-  shortname nvarchar(10) null,
-  description nvarchar(4000),
+  id uniqueidentifier not null primary key default (newsequentialid()),
+  properties nvarchar(max),
+  code as JSON_VALUE(properties, '$.CODE') persisted unique,
   [geometry] geometry not null,
-  [geometry_simplified] geometry null
-);
-
-create unique index Geometries_unique_shortname on Geometries(shortname) where shortname is not null;
-end
-
--- GeometryXrefVocabularyTreeX
-if not exists (
-  select *
-  from sys.objects
-  where
-    object_id = OBJECT_ID(N'[dbo].[GeometryXrefVocabularyTreeX]')
-    and type = 'U'
-)
-begin
-create table GeometryXrefVocabularyTreeX (
-  id int not null identity primary key,
-  vocabularyXrefTreeId int not null foreign key references VocabularyXrefTree (id),
-  geometryId int not null foreign key references Geometries (id),
-  unique (vocabularyXrefTreeId, geometryId)
+  constraint json_properties check ( isjson(properties) = 1 )
 );
 end
 

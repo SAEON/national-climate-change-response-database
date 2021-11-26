@@ -1,13 +1,9 @@
 import theme from './default-theme.js'
 import frontMatter from './front-matter.js'
-import geofence from './default-geofence.js'
 import { pool } from '../pool.js'
 import { NCCRD_HOSTNAME, DEFAULT_SHORTNAME } from '../../config.js'
-import { stringify } from 'wkt'
 
 export default async () => {
-  const geofenceWKT = stringify(geofence.features[0].geometry)
-
   await (await pool.connect())
     .request()
     .input('hostname', new URL(NCCRD_HOSTNAME).hostname)
@@ -17,7 +13,7 @@ export default async () => {
     .input('logoUrl', 'http/public-image/dffe-logo.jpg')
     .input('frontMatter', JSON.stringify(frontMatter))
     .input('flagUrl', 'http/public-image/sa-flag.jpg')
-    .input('geofence', geofenceWKT)
+    .input('geofence', null)
     .input('theme', JSON.stringify(theme)).query(`
       merge Tenants t
       using (

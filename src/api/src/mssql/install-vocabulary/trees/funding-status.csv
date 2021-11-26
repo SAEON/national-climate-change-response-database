@@ -1,0 +1,5 @@
+parent,term,tree
+,Funding status,projectFunding
+Funding status,Not funded,projectFunding
+Funding status,Partially funded,projectFunding
+Funding status,Fully funded,projectFunding

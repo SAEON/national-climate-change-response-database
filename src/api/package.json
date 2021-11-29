@@ -4,7 +4,7 @@
   "description": "Node.js API",
   "type": "module",
   "scripts": {
-    "start": "nodemon --ignore 'src/client-dist/**/*' --ext js,graphql,json --watch ./src --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && TZ=utc node --trace-warnings --experimental-json-modules src'",
+    "start": "nodemon --exec 'prettier --write \"src/**/*.@(js|json|graphql)\" && TZ=utc node --trace-warnings --experimental-json-modules src'",
     "start:prod": "TZ=utc node --no-warnings --experimental-json-modules src",
     "lint": "eslint -c .eslintrc.cjs \"./**/*.{js,mjs,cjs}\"",
     "rollup": "rimraf bin && rollup --config rollup.config.js && cp -r src/http/public-image/images bin/images && cp -r src/mssql/install-geometries/geojson bin/geojson && cp -r src/mssql/install-vocabulary/trees bin/trees && cp -r src/graphql/schema/type-defs bin/type-defs && cp -r src/mssql/sql bin/sql && cp src/graphql/resolvers/mutations/seed-database/erm/erm.sql bin/erm.sql && cp -r src/client-dist bin/client-dist",
@@ -23,7 +23,7 @@
     "eslint": "^8.3.0",
     "nodemon": "^2.0.15",
     "npm-check-updates": "^12.0.2",
-    "prettier": "^2.4.1"
+    "prettier": "^2.5.0"
   },
   "dependencies": {
     "@babel/cli": "^7.16.0",

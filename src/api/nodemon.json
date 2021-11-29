@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "ignore": ["src/client-dist/**/*"],
+  "watch": ["src"],
+  "ext": "js,graphql,json",
+  "events": {
+    "start": "echo nodemon start",
+    "restart": "echo nodemon restart"
+  }
+}

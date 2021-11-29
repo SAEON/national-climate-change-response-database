@@ -13,7 +13,6 @@ export default async () => {
     .input('logoUrl', 'http/public-image/dffe-logo.jpg')
     .input('frontMatter', JSON.stringify(frontMatter))
     .input('flagUrl', 'http/public-image/sa-flag.jpg')
-    .input('geofence', null)
     .input('theme', JSON.stringify(theme)).query(`
       merge Tenants t
       using (
@@ -26,7 +25,7 @@ export default async () => {
         @theme theme,
         @logoUrl logoUrl,
         @flagUrl flagUrl,
-        geometry::STGeomFromText(@geofence, 4326) geofence
+        ( select id from Geometries where code = 'ZA') geofence
       ) s on s.hostname = t.hostname
       
       when not matched

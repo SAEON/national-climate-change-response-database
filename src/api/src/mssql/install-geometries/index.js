@@ -24,6 +24,15 @@ const load = async f =>
 export default async () => {
   const t0 = performance.now()
 
+  const c = await (
+    await (await pool.connect()).request().query(`select count(id) c from Geometries;`)
+  ).recordset[0].c
+
+  if (c > 0) {
+    console.info('Skipping geometry installing (already installed)')
+    return
+  }
+
   /**
    * All geometries are loaded in a single transaction
    */
@@ -36,7 +45,7 @@ export default async () => {
   const za = await load('za-boundary.geojson')
   const { properties, geometry } = za.features[0]
   await query(transaction, { properties, geometry })
-  console.info('Loaded ZAR geometry')
+  console.info('Loaded ZA geometry')
 
   /**
    * Provinces

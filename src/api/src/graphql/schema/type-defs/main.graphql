@@ -82,7 +82,20 @@ type PageInfo {
   totalRecords: Int!
 }
 
+type Geometry {
+  id: ID!
+  name: String!
+  code: String!
+  parentCode: String
+  properties: JSON!
+  geometry: WKT_4326
+}
+
 type Query {
+  """
+  Retrieve geometries
+  """
+  geometries: [Geometry!]!
   """
   Retrieve all tenanted versions of this deployment
   """

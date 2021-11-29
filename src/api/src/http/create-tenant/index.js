@@ -3,10 +3,8 @@ import { pool } from '../../mssql/pool.js'
 import mssql from 'mssql'
 import { normalize, join, sep } from 'path'
 import { IMAGES_DIRECTORY } from '../../config.js'
-import { createReadStream, createWriteStream, readFile } from 'fs'
+import { createReadStream, createWriteStream } from 'fs'
 import sanitize from 'sanitize-filename'
-import shp from 'shpjs'
-import { stringify } from 'wkt'
 
 /**
  * Creates the new tenant
@@ -22,11 +20,13 @@ export default async ctx => {
     shortTitle = null,
     description = null,
     theme = null,
+    geofence = null,
   } = JSON.parse(ctx.request.body.json)
+
+  console.log('geofence', geofence)
 
   const logo = ctx.request.files['logo']
   const flag = ctx.request.files['flag']
-  const shapefile = ctx.request.files['geofence']
 
   /**
    * Insert tenant details
@@ -64,28 +64,6 @@ export default async ctx => {
         );`)
 
     const newTenantId = newTenantResult.recordset[0].id
-
-    /**
-     * Add the geofence
-     */
-    if (shapefile) {
-      const buffer = await new Promise((y, n) =>
-        readFile(shapefile.path, { encoding: null }, (e, data) => (e ? n(e) : y(data)))
-      )
-      const geoJson = await shp(buffer)
-
-      if (geoJson.features.length !== 1) {
-        throw new Error('Incorrect polygon format for geofence - geoJson.features.length !== 1')
-      }
-
-      await transaction
-        .request()
-        .input('id', newTenantId)
-        .input('geofence', stringify(geoJson.features[0].geometry)).query(`
-          update Tenants
-          set geofence = @geofence
-          where id = @id;`)
-    }
 
     /**
      * If logo included, copy to the

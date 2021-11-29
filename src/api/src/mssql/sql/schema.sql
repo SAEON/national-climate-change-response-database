@@ -84,6 +84,25 @@ create table UserRoleXref (
 );
 end
 
+-- Geometries
+if not exists (
+  select *
+  from sys.objects
+  where
+    object_id = OBJECT_ID(N'[dbo].[Geometries]')
+    and type = 'U'
+)
+begin
+create table Geometries (
+  id uniqueidentifier not null primary key default (newsequentialid()),
+  properties nvarchar(max),
+  code as JSON_VALUE(properties, '$.code'),
+  parentCode as JSON_VALUE(properties, '$.parentCode'),
+  [name] as JSON_VALUE(properties, '$.name'),
+  [geometry] geometry not null,
+  constraint json_properties check ( isjson(properties) = 1 )
+);
+end
 
 -- Tenants
 if not exists (
@@ -104,7 +123,7 @@ create table Tenants (
   theme nvarchar(max) not null,
   logoUrl nvarchar(500),
   flagUrl nvarchar(500),
-  geofence geometry,
+  geofence uniqueidentifier foreign key references Geometries (id),
   constraint frontMatter_json check ( isjson(frontMatter) = 1 ),
   constraint json_theme check ( isjson(theme) = 1 )
 );
@@ -185,25 +204,6 @@ create table VocabularyXrefVocabulary (
 );
 end
 
--- Geometries
-if not exists (
-  select *
-  from sys.objects
-  where
-    object_id = OBJECT_ID(N'[dbo].[Geometries]')
-    and type = 'U'
-)
-begin
-create table Geometries (
-  id uniqueidentifier not null primary key default (newsequentialid()),
-  properties nvarchar(max),
-  code as JSON_VALUE(properties, '$.code'),
-  parentCode as JSON_VALUE(properties, '$.parentCode'),
-  [name] as JSON_VALUE(properties, '$.name'),
-  [geometry] geometry not null,
-  constraint json_properties check ( isjson(properties) = 1 )
-);
-end
 
 -- ExcelSubmissionTemplates
 if not exists (

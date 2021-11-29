@@ -10,7 +10,7 @@ export default async (transaction, { properties, geometry }) =>
         select
           @properties properties,
           @geometry geometry
-      ) s on json_value(s.properties, '$.CODE') = json_value(t.properties, '$.CODE')
+      ) s on json_value(s.properties, '$.code') = json_value(t.properties, '$.code')
 
       when not matched
         then insert (

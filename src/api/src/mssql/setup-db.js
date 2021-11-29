@@ -20,9 +20,9 @@ const info = (...args) => console.info(...args)
   await installUserModel().then(() => info('Installed user model\n'))
   await installSysadmins().then(() => info('Installed sysadmins\n'))
   await installAdmins().then(() => info('Installed admins\n'))
+  await installGeometries().then(() => info('Installed geometry\n'))
   await installDefaultTenant().then(() => info('Installed default tenant\n'))
   await installVocabulary().then(() => info('Installed vocabulary\n'))
-  await installGeometries().then(() => info('Installed geometry\n'))
 
   /**
    * Register existing template uploads

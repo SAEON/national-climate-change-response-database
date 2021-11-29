@@ -35,11 +35,6 @@ export default ({ setOpen }) => {
             formData.append('flag', file, file.name)
           }
 
-          if (shapefile.constructor === FileList) {
-            const file = shapefile[0]
-            formData.append(`geofence`, file, file.name)
-          }
-
           const res = await fetch(url, {
             method: 'PUT',
             credentials: 'include',

@@ -22,9 +22,9 @@ const Form = () => {
             <Title />
             <ShortTitle />
             <Description />
+            <Geofence />
             <Logo />
             <Flag />
-            <Geofence />
           </Grid>
           <Grid item xs={12} md={6}>
             <Theme />

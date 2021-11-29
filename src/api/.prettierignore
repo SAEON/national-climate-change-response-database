@@ -1,5 +1,5 @@
 **/node_modules/**
 **/package-lock.json
 **/client-dist/**
-src/mssql/install-geometries/geojson/**/*.json
+src/mssql/install-geometries/geojson/**/*.geojson
 bin

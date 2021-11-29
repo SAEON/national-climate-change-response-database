@@ -86,7 +86,6 @@ end
 
 
 -- Tenants
--- drop table Tenants;
 if not exists (
   select *
   from sys.objects
@@ -198,7 +197,9 @@ begin
 create table Geometries (
   id uniqueidentifier not null primary key default (newsequentialid()),
   properties nvarchar(max),
-  code as JSON_VALUE(properties, '$.CODE') persisted unique,
+  code as JSON_VALUE(properties, '$.code'),
+  parentCode as JSON_VALUE(properties, '$.parentCode'),
+  [name] as JSON_VALUE(properties, '$.name'),
   [geometry] geometry not null,
   constraint json_properties check ( isjson(properties) = 1 )
 );

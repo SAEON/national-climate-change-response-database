@@ -1,5 +1,5 @@
 {
-  "verbose": true,
+  "verbose": false,
   "ignore": ["src/client-dist/**/*"],
   "watch": ["src"],
   "ext": "js,graphql,json",

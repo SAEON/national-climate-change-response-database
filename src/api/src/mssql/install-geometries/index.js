@@ -33,32 +33,64 @@ export default async () => {
   /**
    * South Africa
    */
-  const za = await load('za-boundary.json')
+  const za = await load('za-boundary.geojson')
   const { properties, geometry } = za.features[0]
   await query(transaction, { properties, geometry })
+  console.info('Loaded ZAR geometry')
 
   /**
    * Provinces
    */
-  // TODO
+  const provinces = (await load('za-provinces.geojson')).features
+  for (const feature of provinces) {
+    const properties = {
+      ...feature.properties,
+      code: feature.properties.ADM1_ID,
+      name: feature.properties.ADM1_EN,
+      parentCode: 'ZA',
+    }
+    await query(transaction, {
+      properties,
+      geometry: feature.geometry,
+    })
+  }
+  console.info('Loaded provinces geometry')
 
   /**
    * Districts
    */
-  const districts = (await load('za-district-municipalities.json')).features
+  const districts = (await load('za-district-municipalities.geojson')).features
   for (const feature of districts) {
-    const { properties, geometry } = feature
-    await query(transaction, { properties, geometry })
+    const properties = {
+      ...feature.properties,
+      code: feature.properties.DISTRICT,
+      name: feature.properties.DISTRICT_N,
+      parentCode: feature.properties.PROVINCE,
+    }
+    await query(transaction, {
+      properties,
+      geometry: feature.geometry,
+    })
   }
+  console.info('Loaded district municipality geometry')
 
   /**
    * Local municipalities
    */
-  const municipalities = (await load('za-local-municipalities.json')).features
-  for (const feature of municipalities) {
-    const { properties, geometry } = feature
-    // await query(transaction, { properties, geometry }) // TODO - wait for CODE
+  const regions = (await load('za-local-municipalities.geojson')).features
+  for (const feature of regions) {
+    const properties = {
+      ...feature.properties,
+      code: feature.properties.CAT_B,
+      name: feature.properties.MUNICNAME,
+      parentCode: feature.properties.DISTRICT,
+    }
+    await query(transaction, {
+      properties,
+      geometry: feature.geometry,
+    })
   }
+  console.info('Loaded local municipality geometry')
 
   await transaction.commit()
 

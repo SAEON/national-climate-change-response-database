@@ -84,16 +84,16 @@ create table UserRoleXref (
 );
 end
 
--- Geometries
+-- Regions
 if not exists (
   select *
   from sys.objects
   where
-    object_id = OBJECT_ID(N'[dbo].[Geometries]')
+    object_id = OBJECT_ID(N'[dbo].[Regions]')
     and type = 'U'
 )
 begin
-create table Geometries (
+create table Regions (
   id uniqueidentifier not null primary key default (newsequentialid()),
   properties nvarchar(max),
   code as JSON_VALUE(properties, '$.code'),
@@ -123,7 +123,7 @@ create table Tenants (
   theme nvarchar(max) not null,
   logoUrl nvarchar(500),
   flagUrl nvarchar(500),
-  geofence uniqueidentifier foreign key references Geometries (id),
+  regionId uniqueidentifier foreign key references Regions (id),
   constraint frontMatter_json check ( isjson(frontMatter) = 1 ),
   constraint json_theme check ( isjson(theme) = 1 )
 );
@@ -142,7 +142,10 @@ begin
 create table Vocabulary (
   id int not null identity primary key,
   term nvarchar(850) not null unique,
-  description nvarchar(4000) null,
+  properties nvarchar(max),
+  description as JSON_VALUE(properties, '$.description'),
+  code as JSON_VALUE(properties, '$.code'),
+  constraint properties_json check ( isjson(properties) = 1 ),
   index ix_vocablulary_terms nonclustered (term)
 );
 end
@@ -204,6 +207,22 @@ create table VocabularyXrefVocabulary (
 );
 end
 
+-- VocabularyXrefRegion
+if not exists (
+  select *
+  from sys.objects
+  where
+    object_id = OBJECT_ID(N'[dbo].[VocabularyXrefRegion]')
+    and type = 'U'
+)
+begin
+create table VocabularyXrefRegion (
+  id int not null identity primary key,
+  vocabularyId int not null foreign key references Vocabulary (id),
+  regionId uniqueidentifier not null foreign key references Regions (id),
+  unique (vocabularyId, regionId)
+);
+end
 
 -- ExcelSubmissionTemplates
 if not exists (

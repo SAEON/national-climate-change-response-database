@@ -8,7 +8,7 @@ import installAdmins from './install-admins/index.js'
 import installSysadmins from './install-sysadmins/index.js'
 import installDefaultTenant from './install-default-tenant/index.js'
 import installVocabulary from './install-vocabulary/index.js'
-import installGeometries from './install-geometries/index.js'
+import installRegionGeometries from './install-region-geometries/index.js'
 
 const info = (...args) => console.info(...args)
 
@@ -20,9 +20,9 @@ const info = (...args) => console.info(...args)
   await installUserModel().then(() => info('Installed user model\n'))
   await installSysadmins().then(() => info('Installed sysadmins\n'))
   await installAdmins().then(() => info('Installed admins\n'))
-  await installGeometries().then(() => info('Installed geometry\n'))
-  await installDefaultTenant().then(() => info('Installed default tenant\n'))
+  await installRegionGeometries().then(() => info('Installed region geometries\n'))
   await installVocabulary().then(() => info('Installed vocabulary\n'))
+  await installDefaultTenant().then(() => info('Installed default tenant\n'))
 
   /**
    * Register existing template uploads

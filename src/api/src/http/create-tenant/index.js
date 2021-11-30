@@ -20,10 +20,8 @@ export default async ctx => {
     shortTitle = null,
     description = null,
     theme = null,
-    geofence = null,
+    geofence: { id: vocabularyId = null } = {},
   } = JSON.parse(ctx.request.body.json)
-
-  console.log('geofence', geofence)
 
   const logo = ctx.request.files['logo']
   const flag = ctx.request.files['flag']
@@ -39,6 +37,15 @@ export default async ctx => {
   const transaction = new mssql.Transaction(await pool.connect())
   await transaction.begin()
 
+  /**
+   * Get the regional geometry ID
+   */
+  const regionId = await transaction
+    .request()
+    .input('vocabularyId', vocabularyId)
+    .query(`select regionId from VocabularyXrefRegion where vocabularyId = @vocabularyId;`)
+    .then(({ recordset: r }) => r[0].regionId)
+
   try {
     const newTenantResult = await transaction
       .request()
@@ -46,12 +53,14 @@ export default async ctx => {
       .input('title', title)
       .input('shortTitle', shortTitle)
       .input('description', description)
+      .input('regionId', regionId || null)
       .input('theme', JSON.stringify(theme)).query(`
         insert into Tenants (
           hostname,
           title,
           shortTitle,
           description,
+          regionId,
           theme
         )
         output inserted.id
@@ -60,6 +69,7 @@ export default async ctx => {
           @title,
           @shortTitle,
           @description,
+          @regionId,
           @theme
         );`)
 
@@ -132,10 +142,6 @@ export default async ctx => {
     ctx.body = JSON.stringify(tenant)
   } catch (error) {
     console.error('Unable to create tenant', error)
-    // Remove logo if added
-    // Remove flag if added
-    // Remove shapefiles if added
-
     if (error.message.includes('Violation of UNIQUE KEY constraint')) {
       return (ctx.status = 409)
     } else {

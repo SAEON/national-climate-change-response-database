@@ -5,7 +5,7 @@ export default async (transaction, { properties, geometry }) =>
     .request()
     .input('geometry', stringify(geometry))
     .input('properties', JSON.stringify(properties)).query(`
-      merge Geometries t
+      merge Regions t
       using (
         select
           @properties properties,

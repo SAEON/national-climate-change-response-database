@@ -24,7 +24,7 @@ export default () =>
         from VocabularyXrefTree vxt
         join Trees t on t.id = vxt.treeId
         join GeometryXrefVocabularyTreeX gx on gx.vocabularyXrefTreeId = vxt.id
-        join Geometries g on g.id = gx.geometryId
+        join Regions g on g.id = gx.geometryId
         where
           t.name in (${trees.map((_, i) => `@tree_${i}`).join(',')})
           and vxt.vocabularyId in (${ids.map((_, i) => `@id_${i}`).join(',')});`

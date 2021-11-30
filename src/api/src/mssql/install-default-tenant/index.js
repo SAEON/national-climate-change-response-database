@@ -25,7 +25,7 @@ export default async () => {
         @theme theme,
         @logoUrl logoUrl,
         @flagUrl flagUrl,
-        ( select id from Geometries where code = 'ZA') geofence
+        ( select id from Regions where code = 'ZA') regionId
       ) s on s.hostname = t.hostname
       
       when not matched
@@ -38,7 +38,7 @@ export default async () => {
           theme,
           logoUrl,
           flagUrl,
-          geofence
+          regionId
           
         ) values (
           s.hostname,
@@ -49,7 +49,7 @@ export default async () => {
           s.theme,
           s.logoUrl,
           s.flagUrl,
-          s.geofence
+          s.regionId
         )
 
       when matched
@@ -61,5 +61,5 @@ export default async () => {
           t.theme = s.theme,
           t.logoUrl = s.logoUrl,
           t.flagUrl = s.flagUrl,
-          t.geofence = s.geofence;`)
+          t.regionId = s.regionId;`)
 }

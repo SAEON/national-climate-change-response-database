@@ -26,6 +26,7 @@ export default async () => {
      * First reset the vocabulary model
      */
     await transaction.request().query('delete from VocabularyXrefVocabulary;')
+    await transaction.request().query('delete from VocabularyXrefRegion;')
     await transaction.request().query('delete from VocabularyXrefTree;')
     await transaction.request().query('delete from Trees;')
     await transaction.request().query('delete from Vocabulary;')
@@ -37,7 +38,7 @@ export default async () => {
         parse({ columns: true, skipEmptyLines: true })
       )
 
-      for await (let { parent, term, tree } of parser) {
+      for await (let { parent, term, tree, ...properties } of parser) {
         parent = parent.trim()
         term = term.trim()
         tree = tree.trim()
@@ -69,6 +70,17 @@ export default async () => {
             values (S.term);`)
 
         /**
+         * Append any properties to this vocabulary term
+         */
+        await transaction
+          .request()
+          .input('term', term)
+          .input('properties', JSON.stringify(properties)).query(`
+            update Vocabulary
+              set properties = @properties
+              where term = @term;`)
+
+        /**
          * Make sure term is associated with this tree
          */
         await transaction.request().input('term', term).input('tree', tree).query(`
@@ -94,13 +106,50 @@ export default async () => {
                     (select id from Vocabulary where term = @term) childId,
                     (select id from Trees where name = @tree) treeId
                 ) t where parentId <> ''
-              ) S on
-              S.parentId = T.parentId
-              and S.childId = T.childId
-              and S.treeId = T.treeId
+              ) S on S.parentId = T.parentId
+                and S.childId = T.childId
+                and S.treeId = T.treeId
               when not matched then insert (parentId, childId, treeId)
               values (S.parentId, S.childId, S.treeId);`)
       }
+    }
+
+    /**
+     * Loop through region terms,
+     * and associate each region term with
+     * a region vocabulary
+     *
+     * It's better to do this in many statements
+     * to make it easier to find where terms and
+     * names in the regions table diverge
+     */
+    const terms = await transaction
+      .request()
+      .query(
+        `select distinct
+          v.id,
+          v.code
+
+        from Trees t
+        join VocabularyXrefTree x on x.treeId = t.id
+        join Vocabulary v on v.id = x.vocabularyId
+
+        where
+          t.name = 'regions';`
+      )
+      .then(({ recordset: r }) => r)
+
+    for (const { id: vocabularyId, code } of terms) {
+      await transaction.request().input('vocabularyId', vocabularyId).input('code', code).query(`
+        merge VocabularyXrefRegion t
+        using (
+          select
+            @vocabularyId vocabularyId,
+            ( select id from Regions where code = @code ) regionId
+        ) s on s.vocabularyId = t.vocabularyId and s.regionId = t.regionId
+        when not matched
+          then insert (vocabularyId, regionId)
+          values (s.vocabularyId, s.regionId);`)
     }
 
     await transaction.commit()

@@ -73,7 +73,7 @@ app
   .use(formidable())
   .use(koaBody())
   .use(koaSession(passportCookieConfig, app))
-  .use(cors)
+  .use(cors(app))
   .use(logReqDetails)
   .use(clientSession)
   .use(koaPassport.initialize())

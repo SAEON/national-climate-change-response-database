@@ -1,18 +1,31 @@
 import { pool } from '../mssql/pool.js'
 
-export default async (ctx, next) => {
+export default app => async (ctx, next) => {
   const { method, headers } = ctx.req
   const { origin } = headers
 
   if (origin) {
     const result = await (await pool.connect())
       .request()
-      .input('hostname', new URL(origin).hostname)
-      .query(`select hostname from Tenants where hostname = @hostname`)
+      .input('hostname', new URL(origin).hostname).query(`
+        select
+          id,
+          hostname
+        from Tenants
+        where hostname = @hostname`)
 
     const allowed = result.recordset.length
     if (allowed) {
       ctx.set('Access-Control-Allow-Origin', origin)
+
+      /**
+       * Add the tenant ID to the request context
+       * This should probably be done in create-request-context.js
+       * But then there's an additional DB trip
+       */
+      app.context.tenant = {
+        ...result.recordset[0],
+      }
     }
   }
 

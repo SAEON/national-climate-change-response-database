@@ -71,7 +71,7 @@ export default [
   {
     breadcrumbsLabel: 'Submissions',
     BreadcrumbsIcon: SubmissionsIcon,
-    label: 'Search Submissions',
+    label: 'Search submissions',
     Icon: SearchSubmissionsIcon,
     exact: true,
     to: '/submissions',
@@ -83,7 +83,7 @@ export default [
     includeInFooter: true,
   },
   {
-    label: 'Submit project',
+    label: 'New submission',
     Icon: SubmitIcon,
     exact: true,
     to: '/submissions/new',

@@ -15,7 +15,10 @@ export default memo(
     setValue,
     value,
   }) => {
-    const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
+    const effect = useMemo(
+      () => debounce(({ value: newValue }) => setValue(newValue), 250),
+      [setValue]
+    )
 
     return (
       <QuickForm effect={effect} value={value}>
@@ -50,7 +53,9 @@ export default memo(
    * Don't re-render unless unmounted or the error
    * state changes
    */
-  ({ error: a }, { error: b }) => {
-    return a === b
+  ({ error: aE, value: aV }, { error: bE, value: bV }) => {
+    if (aE !== bE) return false
+    if (aV !== bV) return false
+    return true
   }
 )

@@ -4,6 +4,12 @@ import { pool } from '../mssql/pool.js'
 import schema from '../graphql/schema/index.js'
 import userModel from '../user-model/index.js'
 
+/**
+ * Look in middleware/cors.js
+ * to see where app.context.tenant
+ * is set (avoids unnecessary DB trip)
+ */
+
 export default app => async (ctx, next) => {
   app.context.userInfo = ctx.state.user
 

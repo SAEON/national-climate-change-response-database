@@ -19,7 +19,7 @@ export default () => {
             color="primary"
             startIcon={<SubmitIcon size={18} />}
           >
-            Submit project
+            New submission
           </Button>
         </Hidden>
         <Hidden smUp>

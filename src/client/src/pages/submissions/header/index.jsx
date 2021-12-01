@@ -26,7 +26,7 @@ export default ({ MobileFilters }) => {
         />
       </Hidden>
 
-      {/* SUBMIT PROJECT */}
+      {/* NEW SUBMISSION */}
       <NewSubmission />
       <div style={{ marginLeft: theme.spacing(2) }} />
 

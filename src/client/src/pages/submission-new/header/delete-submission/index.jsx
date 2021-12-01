@@ -17,7 +17,7 @@ export default ({ id }) => {
     {
       onCompleted: ({ deleteSubmission: id }) => {
         if (id) {
-          history.push('/')
+          history.goBack()
         }
       },
       update: (cache, { data: { deleteSubmission: id } }) =>

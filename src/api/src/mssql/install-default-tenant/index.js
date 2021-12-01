@@ -13,6 +13,7 @@ export default async () => {
     .input('logoUrl', 'http/public-image/dffe-logo.jpg')
     .input('frontMatter', JSON.stringify(frontMatter))
     .input('flagUrl', 'http/public-image/sa-flag.jpg')
+    .input('includeUnboundedSubmissions', 1)
     .input('theme', JSON.stringify(theme)).query(`
       merge Tenants t
       using (
@@ -25,7 +26,8 @@ export default async () => {
         @theme theme,
         @logoUrl logoUrl,
         @flagUrl flagUrl,
-        ( select id from Regions where code = 'ZA') regionId
+        ( select id from Regions where code = 'ZA') regionId,
+        @includeUnboundedSubmissions includeUnboundedSubmissions
       ) s on s.hostname = t.hostname
       
       when not matched
@@ -38,7 +40,8 @@ export default async () => {
           theme,
           logoUrl,
           flagUrl,
-          regionId
+          regionId,
+          includeUnboundedSubmissions
           
         ) values (
           s.hostname,
@@ -49,7 +52,8 @@ export default async () => {
           s.theme,
           s.logoUrl,
           s.flagUrl,
-          s.regionId
+          s.regionId,
+          s.includeUnboundedSubmissions
         )
 
       when matched
@@ -61,5 +65,6 @@ export default async () => {
           t.theme = s.theme,
           t.logoUrl = s.logoUrl,
           t.flagUrl = s.flagUrl,
-          t.regionId = s.regionId;`)
+          t.regionId = s.regionId,
+          t.includeUnboundedSubmissions = s.includeUnboundedSubmissions;`)
 }

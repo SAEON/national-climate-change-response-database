@@ -6,7 +6,7 @@ import debounce from '../../../../lib/debounce'
 
 export default memo(
   ({ name, placeholder, disabled = false, helperText, error, value, setValue }) => {
-    const effect = useMemo(() => debounce(({ value }) => setValue(value), 100), [setValue])
+    const effect = useMemo(() => debounce(({ value }) => setValue(value), 250), [setValue])
 
     return (
       <QuickForm effect={effect} value={value}>

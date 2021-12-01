@@ -65,13 +65,14 @@ export default ({ field }) => {
         name={fieldName}
         value={value}
         error={isRequired && !value?.length}
-        onChange={val =>
+        onChange={val => {
+          const nationalIndex = val.findIndex(({ term }) => term === 'National')
           updateForm({
-            [fieldName]: val,
+            [fieldName]: nationalIndex >= 0 ? [val[nationalIndex]] : val,
             districtMunicipality: undefined,
             localMunicipality: undefined,
           })
-        }
+        }}
         label={placeholder}
         helperText={helperText}
       />
@@ -115,6 +116,10 @@ export default ({ field }) => {
         helperText={helperText}
       />
     )
+  } else if (fieldName === 'cityOrTown') {
+    if (!form.province?.length) {
+      return null
+    }
   }
 
   /**

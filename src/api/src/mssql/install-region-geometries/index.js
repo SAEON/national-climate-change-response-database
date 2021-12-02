@@ -8,10 +8,8 @@ import insertRegion from './_insert-region-query.js'
 const __dirname = getCurrentDirectory(import.meta)
 
 const load = async (f, dir = `.${sep}geojson`) => {
-  console.info('hi', 'a')
   const path = normalize(join(__dirname, dir, f))
-  console.info('hi', 'b')
-  return await import(path).then(({ default: json }) => json)
+  return await import(path, { assert: { type: 'json' } }).then(({ default: json }) => json)
 }
 
 /**
@@ -33,7 +31,6 @@ export default async () => {
    *  - Load all Regions
    *  - Associate regions vocab with regional polygons
    */
-  console.log('going', 1)
   const transaction = new mssql.Transaction(await pool.connect())
   await transaction.begin()
 
@@ -41,16 +38,12 @@ export default async () => {
     await transaction.request().query(`select count(id) count from Regions;`)
   ).recordset[0]
 
-  console.log('going', 2)
-
   /**
    * Install Regions
    */
   if (count < 1) {
     // SA
-    console.log('going', 3)
     const za = await load('za-boundary.geojson')
-    console.log('going', 4)
     const { properties, geometry } = za.features[0]
     await insertRegion(transaction, { properties, geometry })
     console.info('Loaded ZA geometry')

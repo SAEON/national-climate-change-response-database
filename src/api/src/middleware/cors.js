@@ -20,11 +20,11 @@ export default app => async (ctx, next) => {
     }
 
     const result = await (await pool.connect()).request().input('hostname', hostname).query(`
-        select
-          id,
-          hostname
-        from Tenants
-        where hostname = @hostname`)
+      select
+        id,
+        hostname
+      from Tenants
+      where hostname = @hostname`)
 
     const allowed = result.recordset.length
     if (allowed) {

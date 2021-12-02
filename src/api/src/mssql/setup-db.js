@@ -26,6 +26,7 @@ const info = (...args) => console.info(...args)
     await installDefaultTenant().then(() => info('Installed default tenant\n'))
   } catch (error) {
     console.error('Unable to setup database', error)
+    process.exit(1)
   }
 
   /**

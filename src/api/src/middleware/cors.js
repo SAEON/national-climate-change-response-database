@@ -1,24 +1,12 @@
 import { pool } from '../mssql/pool.js'
+import getHostnameFromOrigin from '../lib/get-hostname-from-origin.js'
 
 export default app => async (ctx, next) => {
   const { method, headers } = ctx.req
   const { origin } = headers
 
   if (origin) {
-    /**
-     * Some environments pass origin with protocol
-     * some just pass the hostname
-     *
-     * Either is fine since the value is parametrized
-     * before sending to SQL Server
-     */
-    let hostname
-    try {
-      hostname = new URL(origin).hostname
-    } catch (error) {
-      hostname = origin
-    }
-
+    const hostname = getHostnameFromOrigin(origin)
     const result = await (await pool.connect()).request().input('hostname', hostname).query(`
       select
         id,

@@ -7,7 +7,7 @@ import insertRegion from './_insert-region-query.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 
-const load = async (dir = `.${sep}geojson`, f) => {
+const load = async (f, dir = `.${sep}geojson`) => {
   const path = normalize(join(__dirname, dir, f))
   console.info('hi', path)
   return await import(path).then(({ default: json }) => json)

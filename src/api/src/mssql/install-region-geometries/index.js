@@ -32,6 +32,7 @@ export default async () => {
    *  - Load all Regions
    *  - Associate regions vocab with regional polygons
    */
+  console.log('going', 1)
   const transaction = new mssql.Transaction(await pool.connect())
   await transaction.begin()
 
@@ -39,12 +40,16 @@ export default async () => {
     await transaction.request().query(`select count(id) count from Regions;`)
   ).recordset[0]
 
+  console.log('going', 2)
+
   /**
    * Install Regions
    */
   if (count < 1) {
     // SA
+    console.log('going', 3)
     const za = await load('za-boundary.geojson')
+    console.log('going', 4)
     const { properties, geometry } = za.features[0]
     await insertRegion(transaction, { properties, geometry })
     console.info('Loaded ZA geometry')

@@ -5,6 +5,7 @@ export default app => async (ctx, next) => {
   const { origin } = headers
 
   if (origin) {
+    console.log('origin', origin)
     const result = await (await pool.connect())
       .request()
       .input('hostname', new URL(origin).hostname).query(`

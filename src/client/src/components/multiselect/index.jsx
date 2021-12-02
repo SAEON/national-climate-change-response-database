@@ -30,6 +30,7 @@ export default ({
   error = false,
   helperText = '',
   chipProps = {},
+  isOptionDisabled = () => false,
   disabled = false,
   loading = false,
 }) => {
@@ -98,7 +99,7 @@ export default ({
           )}
         >
           {options.map(option => (
-            <MenuItem key={option} value={option}>
+            <MenuItem disabled={isOptionDisabled(option)} key={option} value={option}>
               <Checkbox checked={value.indexOf(option) > -1} />
               <ListItemText primary={option} style={{ overflowX: 'auto' }} />
             </MenuItem>

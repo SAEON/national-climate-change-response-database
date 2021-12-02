@@ -14,6 +14,7 @@ export default ({
   label,
   id,
   error,
+  isOptionDisabled = undefined,
 }) => {
   const theme = useTheme()
 
@@ -96,6 +97,7 @@ export default ({
       id={id}
       disabled={disabled}
       error={error}
+      isOptionDisabled={isOptionDisabled}
       options={options.map(({ term }) => term)}
       value={value?.map(({ term }) => term) || []}
       helperText={<span dangerouslySetInnerHTML={{ __html: helperText || '' }}></span>}

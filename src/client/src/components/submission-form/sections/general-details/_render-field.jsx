@@ -61,6 +61,11 @@ export default ({ field }) => {
         id="select-province"
         key={fieldName}
         tree={tree}
+        isOptionDisabled={option =>
+          Boolean(value?.find(({ term }) => term === 'National')) && option !== 'National'
+            ? true
+            : false
+        }
         roots={['South Africa']}
         name={fieldName}
         value={value}

@@ -5,10 +5,21 @@ export default app => async (ctx, next) => {
   const { origin } = headers
 
   if (origin) {
-    console.log('origin', origin)
-    const result = await (await pool.connect())
-      .request()
-      .input('hostname', new URL(origin).hostname).query(`
+    /**
+     * Some environments pass origin with protocol
+     * some just pass the hostname
+     *
+     * Either is fine since the value is parametrized
+     * before sending to SQL Server
+     */
+    let hostname
+    try {
+      hostname = new URL(origin).hostname
+    } catch (error) {
+      hostname = origin
+    }
+
+    const result = await (await pool.connect()).request().input('hostname', hostname).query(`
         select
           id,
           hostname

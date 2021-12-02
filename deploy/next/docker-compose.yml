@@ -14,12 +14,18 @@ services:
   nginx:
     image: $NGINX_IMAGE
     deploy:
+      placement:
+        max_replicas_per_node: 1      
       replicas: 1
+      rollback_config:
+        parallelism: 0
+      update_config:
+        parallelism: 0
+        order: start-first
+        failure_action: rollback
       restart_policy:
         condition: any
         delay: 5s
-        max_attempts: 3
-        window: 120s
     ports:
       - 9000:80
     networks:
@@ -28,12 +34,18 @@ services:
   nccrd:
     image: $NCCRD_IMAGE
     deploy:
+      placement:
+        max_replicas_per_node: 1      
       replicas: 1
+      rollback_config:
+        parallelism: 0
+      update_config:
+        parallelism: 0
+        order: start-first
+        failure_action: rollback
       restart_policy:
-        condition: 'any'
+        condition: any
         delay: 5s
-        max_attempts: 3
-        window: 120s
     volumes:
       - nccrd_next:/nccrd-assets
     environment:

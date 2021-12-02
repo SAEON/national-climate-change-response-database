@@ -1,14 +1,17 @@
 import { pool } from '../pool.js'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
 import { performance } from 'perf_hooks'
-import { join } from 'path'
+import { join, normalize, sep } from 'path'
 import mssql from 'mssql'
 import insertRegion from './_insert-region-query.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 
-const load = async (dir = './geojson', f) =>
-  await import(join(__dirname, dir, f)).then(({ default: json }) => json)
+const load = async (dir = `.${sep}geojson`, f) => {
+  const path = normalize(join(__dirname, dir, f))
+  console.info('hi', path)
+  return await import(path).then(({ default: json }) => json)
+}
 
 /**
  * South Africa

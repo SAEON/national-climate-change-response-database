@@ -16,13 +16,17 @@ const info = (...args) => console.info(...args)
  * Initial schema
  */
 ;(async () => {
-  await installSchema().then(() => info('Installed schema\n'))
-  await installUserModel().then(() => info('Installed user model\n'))
-  await installSysadmins().then(() => info('Installed sysadmins\n'))
-  await installAdmins().then(() => info('Installed admins\n'))
-  await installRegionGeometries().then(() => info('Installed region geometries\n'))
-  await installVocabulary().then(() => info('Installed vocabulary\n'))
-  await installDefaultTenant().then(() => info('Installed default tenant\n'))
+  try {
+    await installSchema().then(() => info('Installed schema\n'))
+    await installUserModel().then(() => info('Installed user model\n'))
+    await installSysadmins().then(() => info('Installed sysadmins\n'))
+    await installAdmins().then(() => info('Installed admins\n'))
+    await installRegionGeometries().then(() => info('Installed region geometries\n'))
+    await installVocabulary().then(() => info('Installed vocabulary\n'))
+    await installDefaultTenant().then(() => info('Installed default tenant\n'))
+  } catch (error) {
+    console.error('Unable to setup database', error)
+  }
 
   /**
    * Register existing template uploads

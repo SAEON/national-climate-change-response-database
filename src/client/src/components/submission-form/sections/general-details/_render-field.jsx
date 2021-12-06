@@ -41,7 +41,7 @@ export default ({ field }) => {
   /**
    * WKT_4326
    */
-  if (fieldName === 'yx') {
+  if (fieldName === 'xy') {
     return (
       <Suspense key={fieldName} fallback={<Loading />}>
         <LocationsPicker

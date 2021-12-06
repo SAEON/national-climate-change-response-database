@@ -26,7 +26,7 @@
       ltrim(str(LonCalculated, 25, 10)) lng
      from tb_erm_Project_Location_Data ld
      where ld.ProjectDetailsId = p.ProjectDetailsId for json path
-    ) yx,
+    ) xy,
     p.ProjectTitle title,
     p.Description description,
     case TypeOfIntervention

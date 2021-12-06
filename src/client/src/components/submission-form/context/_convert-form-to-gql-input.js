@@ -13,12 +13,12 @@ export default form => {
           return null
         }
 
-        if (field === 'yx') {
+        if (field === 'xy') {
           return [
             field,
             stringify({
               type: 'GeometryCollection',
-              geometries: (value || []).map(([x, y]) => ({ type: 'Point', coordinates: [y, x] })),
+              geometries: (value || []).map(([x, y]) => ({ type: 'Point', coordinates: [x, y] })),
             }),
           ]
         }

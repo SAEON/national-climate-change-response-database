@@ -19,14 +19,14 @@ export default project => {
             }
           }
 
-          if (field === 'yx') {
+          if (field === 'xy') {
             return [
               field,
               stringify({
                 type: 'GeometryCollection',
-                geometries: (value || []).map(({ lat: y, lng: x }) => ({
+                geometries: (value || []).map(({ lng: x, lat: y }) => ({
                   type: 'Point',
-                  coordinates: [y, x],
+                  coordinates: [x, y],
                 })),
               }),
             ]

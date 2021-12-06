@@ -132,7 +132,7 @@ export default async ctx => {
         }
       } else if (field === 'startYear' || field === 'endYear') {
         value = new Date(_value).getFullYear().toString()
-      } else if (field === 'yx') {
+      } else if (field === 'xy') {
         value = _value // TODO
       } else {
         value = _value
@@ -163,7 +163,7 @@ export default async ctx => {
           } else {
             value = _value.term
           }
-        } else if (field === 'yx') {
+        } else if (field === 'xy') {
           value = 'TODO'
         } else {
           value = _value
@@ -194,7 +194,7 @@ export default async ctx => {
         } else {
           value = _value.term
         }
-      } else if (field === 'yx') {
+      } else if (field === 'xy') {
         value = 'TODO'
       } else {
         value = _value

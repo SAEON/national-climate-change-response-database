@@ -21,7 +21,7 @@ export default mitigation => {
             }
           }
 
-          if (field === 'yx') {
+          if (field === 'xy') {
             return [field, value]
           }
 

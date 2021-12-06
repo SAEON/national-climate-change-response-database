@@ -33,7 +33,7 @@ const Compose = memo(({ fields }) => (
         'districtMunicipality',
         'localMunicipality',
         'cityOrTown',
-        'yx',
+        'xy',
       ],
       'Project manager': [
         'projectManagerName',

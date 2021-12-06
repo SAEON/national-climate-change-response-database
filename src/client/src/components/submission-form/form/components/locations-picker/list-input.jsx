@@ -82,7 +82,7 @@ export default ({ points, setPoints }) => {
           {
             key: 'xy',
             headerRenderer,
-            name: 'Lat / Long',
+            name: 'Long / Lat',
             formatter: ({
               row: {
                 xy: [x, y],

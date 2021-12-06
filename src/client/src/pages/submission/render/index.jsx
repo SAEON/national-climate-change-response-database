@@ -46,11 +46,11 @@ export default ({
                       return [field, value.map(({ term }) => term).join(', ')]
                     }
 
-                    if (field === 'yx') {
+                    if (field === 'xy') {
                       return [
                         'coordinates',
                         parse(value)
-                          .geometries.map(({ coordinates: [y, x] }) => `(${x} ${y})`)
+                          .geometries.map(({ coordinates: [x, y] }) => `(${x} ${y})`)
                           .join(', '),
                       ]
                     }

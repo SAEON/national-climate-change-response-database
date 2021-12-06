@@ -37,9 +37,9 @@ input ProjectInput {
   actualBudget: Money
 
   """
-  GPS point location(s) :: Include relevant point locations
+  GPS point location(s) :: Include relevant point locations (x / y)
   """
-  yx: WKT_4326
+  xy: WKT_4326
 
   """
   Name ::

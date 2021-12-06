@@ -92,8 +92,8 @@ export default ({ points = [], setPoints }) => {
         layers: [
           ...map.getLayerGroup().getLayers().getArray(),
           new VectorLayer({
-            id: `yx-points`,
-            title: 'YX points',
+            id: `xy-points`,
+            title: 'XY points',
             source,
           }),
         ],
@@ -107,7 +107,7 @@ export default ({ points = [], setPoints }) => {
             .getLayerGroup()
             .getLayers()
             .getArray()
-            .filter(layer => layer.get('id') !== 'yx-points'),
+            .filter(layer => layer.get('id') !== 'xy-points'),
         })
       )
     }

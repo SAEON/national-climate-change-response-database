@@ -117,7 +117,7 @@ export default ({ id }) => {
               'province',
               'districtMunicipality',
               'localMunicipality',
-              'yx',
+              'xy',
             ],
             'Project manager': [
               'projectManagerName',

@@ -31,8 +31,8 @@ import downloadTemplateRoute from './http/download-template.js'
 import downloadSubmission from './http/download-submission/index.js'
 import apolloServer from './graphql/index.js'
 import configureSaeonAuth from './passport/saeon-auth/index.js'
-import passportCookieConfig from './passport/cookie-config.js'
-import { NCCRD_PORT, NCCRD_API_KEY } from './config.js'
+import { NCCRD_PORT, NCCRD_API_KEY, NCCRD_SSL_ENV } from './config.js'
+import hoursToMilliseconds from './lib/hours-to-ms.js'
 import getCurrentDirectory from './lib/get-current-directory.js'
 import path from 'path'
 import './mssql/setup-db.js'
@@ -72,7 +72,23 @@ app
   ) // Only compress the http / graphql api responses
   .use(formidable())
   .use(koaBody())
-  .use(koaSession(passportCookieConfig, app))
+  .use(async (ctx, next) =>
+    koaSession(
+      {
+        key: 'koa.sess',
+        maxAge: hoursToMilliseconds(12),
+        autoCommit: true,
+        overwrite: true,
+        httpOnly: true,
+        signed: true,
+        rolling: true,
+        renew: false,
+        secure: NCCRD_SSL_ENV === 'development' ? false : true,
+        sameSite: NCCRD_SSL_ENV === 'development' ? 'lax' : 'none',
+      },
+      app
+    )(ctx, next)
+  )
   .use(cors(app))
   .use(logReqDetails)
   .use(clientSession)

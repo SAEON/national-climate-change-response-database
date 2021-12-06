@@ -21,12 +21,13 @@ export default ({ children }) => {
     ;(async () => {
       setAuthenticating(true)
       try {
-        const response = await fetch(`${NCCRD_API_HTTP_ADDRESS}/authenticate`, {
+        const res = await fetch(`${NCCRD_API_HTTP_ADDRESS}/authenticate`, {
           credentials: 'include',
           mode: 'cors',
           signal: abortController.signal,
         })
-        const user = await response.json()
+
+        const user = await res.json()
         setUser(user)
         setAuthenticating(false)
       } catch (error) {

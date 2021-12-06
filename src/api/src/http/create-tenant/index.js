@@ -20,7 +20,7 @@ export default async ctx => {
     shortTitle = null,
     description = null,
     theme = null,
-    geofence: { id: vocabularyId = null } = {},
+    geofence: { id: vocabularyTerm = null } = {},
   } = JSON.parse(ctx.request.body.json)
 
   const logo = ctx.request.files['logo']
@@ -42,8 +42,15 @@ export default async ctx => {
    */
   const regionId = await transaction
     .request()
-    .input('vocabularyId', vocabularyId)
-    .query(`select regionId from VocabularyXrefRegion where vocabularyId = @vocabularyId;`)
+    .input('vocabularyTerm', vocabularyTerm)
+    .query(
+      `select
+        x.regionId
+      from Vocabulary v
+      join VocabularyXrefRegion x on x.vocabularyId = v.id
+      where
+        v.term = @vocabularyTerm;`
+    )
     .then(({ recordset: r }) => r[0].regionId)
 
   try {

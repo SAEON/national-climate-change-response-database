@@ -4,6 +4,7 @@ import mssql from 'mssql'
 import { normalize, join, sep } from 'path'
 import { IMAGES_DIRECTORY } from '../../config.js'
 import { createReadStream, createWriteStream } from 'fs'
+import mergeTenantsSubmissions from '../../lib/sql/merge-tenants-submissions.js'
 import sanitize from 'sanitize-filename'
 
 /**
@@ -132,6 +133,14 @@ export default async ctx => {
         where id = @id;`)
     }
 
+    // Associate existing submissions with the new tenant
+    await transaction
+      .request()
+      .input('tenantId', newTenantId)
+      .input('submissionId', null) // This means "all submissions"
+      .query(mergeTenantsSubmissions)
+
+    // Commit the transaction
     await transaction.commit()
 
     /**

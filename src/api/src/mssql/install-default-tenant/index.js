@@ -2,9 +2,10 @@ import theme from './default-theme.js'
 import frontMatter from './front-matter.js'
 import { pool } from '../pool.js'
 import { NCCRD_HOSTNAME, DEFAULT_SHORTNAME } from '../../config.js'
+import mergeTenantsSubmissions from '../../lib/sql/merge-tenants-submissions.js'
 
 export default async () => {
-  await (await pool.connect())
+  const res = await (await pool.connect())
     .request()
     .input('hostname', new URL(NCCRD_HOSTNAME).hostname)
     .input('title', 'National Climate Change Response Database')
@@ -66,5 +67,19 @@ export default async () => {
           t.logoUrl = s.logoUrl,
           t.flagUrl = s.flagUrl,
           t.regionId = s.regionId,
-          t.includeUnboundedSubmissions = s.includeUnboundedSubmissions;`)
+          t.includeUnboundedSubmissions = s.includeUnboundedSubmissions
+          
+      output
+          $action,
+          inserted.id;`)
+
+  console.info('Installed default tenant. Configuring tenant...')
+
+  await (
+    await pool.connect()
+  )
+    .request()
+    .input('tenantId', res.recordset[0].id)
+    .input('submissionId', null) // This means "all submissions"
+    .query(mergeTenantsSubmissions)
 }

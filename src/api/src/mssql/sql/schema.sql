@@ -303,3 +303,20 @@ create table WebSubmissionFiles (
   createdAt datetime2 not null
 );
 end
+
+-- TenantXrefSubmission
+if not exists (
+  select *
+  from sys.objects
+  where
+    object_id = OBJECT_ID(N'[dbo].[TenantXrefSubmission]')
+    and type = 'U'
+)
+begin
+create table TenantXrefSubmission (
+  id int not null identity primary key,
+  tenantId int not null foreign key references Tenants (id),
+  submissionId uniqueidentifier not null foreign key references Submissions (id),
+  index ix_TenantXrefSubmission_tenantId_submissionId unique nonclustered (tenantId, submissionId),
+);
+end

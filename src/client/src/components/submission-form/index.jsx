@@ -5,7 +5,7 @@ import Finalize from './finalize'
 import Loading from '../loading'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import BottomNav from './sections/navigation'
+import Navigation from './sections/navigation'
 import SyncIcon from 'mdi-react/SyncIcon'
 import Fade from '@mui/material/Fade'
 import useStyles from './style'
@@ -152,7 +152,7 @@ const FormController = () => {
   return (
     <VerticalTabs activeIndex={activeIndex} setActiveIndex={setActiveIndex} navItems={sections}>
       {/* TOP BAR */}
-      <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
+      <Navigation currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
       <div style={{ marginBottom: theme.spacing(2) }} />
 
       {[navItems[0], navItems[1], navItems[2]].map(({ Render, primaryText }, i) => {
@@ -196,7 +196,7 @@ const FormController = () => {
 
       {/* BOTTOM BAR */}
       <div style={{ marginBottom: theme.spacing(2) }} />
-      <BottomNav currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
+      <Navigation currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
     </VerticalTabs>
   )
 }

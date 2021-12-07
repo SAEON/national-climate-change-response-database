@@ -11,7 +11,7 @@ export default ({ setOpen }) => {
   const { cache } = useApolloClient()
   const [loading, setLoading] = useState(false)
   const {
-    form: { flag, logo, shapefile, ...form },
+    form: { flag, logo, ...form },
     setForm,
   } = useContext(formContext)
 
@@ -83,7 +83,7 @@ export default ({ setOpen }) => {
             },
           })
 
-          // setOpen(false)
+          setOpen(false)
         } catch (error) {
           setForm({ putError: error.message })
         } finally {

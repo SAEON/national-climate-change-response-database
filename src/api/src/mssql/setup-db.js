@@ -23,7 +23,7 @@ const info = (...args) => console.info(...args)
     await installAdmins().then(() => info('Installed admins\n'))
     await installRegionGeometries().then(() => info('Installed region geometries\n'))
     await installVocabulary().then(() => info('Installed vocabulary\n'))
-    await installDefaultTenant().then(() => info('Installed default tenant\n'))
+    await installDefaultTenant().then(() => info('Finished installing default tenant\n'))
   } catch (error) {
     console.error('Unable to setup database', error)
     process.exit(1)

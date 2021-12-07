@@ -31,6 +31,15 @@ const Buttons = memo(
 
     const section = sections[currentIndex]
 
+    const scrollFn = fn => () => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      })
+      fn()
+    }
+
     if (section === 'submit') {
       hasNext = false
       hasPrevious = true
@@ -82,7 +91,7 @@ const Buttons = memo(
           >
             <Button
               style={{ marginLeft: theme.spacing(1) }}
-              onClick={previousFn}
+              onClick={scrollFn(previousFn)}
               disabled={!hasPrevious}
               startIcon={<PreviousIcon size={18} />}
               disableElevation
@@ -95,7 +104,7 @@ const Buttons = memo(
             <Button
               style={{ marginRight: theme.spacing(1) }}
               size="small"
-              onClick={nextFn}
+              onClick={scrollFn(nextFn)}
               endIcon={<NextIcon size={18} />}
               disableElevation
               variant="text"

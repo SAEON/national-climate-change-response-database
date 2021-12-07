@@ -17,6 +17,12 @@ export default async (_, { ids }, ctx) => {
         .query(`select logoUrl, flagUrl from Tenants where id = @id;`)
         .then(({ recordset: r }) => r[0])
 
+      // Delete from TenantXrefSubmission
+      await transaction
+        .request()
+        .input('id', id)
+        .query('delete from TenantXrefSubmission where tenantId = @id;')
+
       try {
         // Delete logo (if exists)
         if (logoUrl) {
@@ -35,7 +41,7 @@ export default async (_, { ids }, ctx) => {
         console.error('Unable to delete tenant assets. Clean up folder manually', error)
       }
 
-      // Delete DB entry
+      // Delete Tenant entry
       await transaction.request().input('id', id).query(`delete from Tenants where id = @id;`)
     }
 

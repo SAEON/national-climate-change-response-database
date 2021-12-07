@@ -5,21 +5,21 @@ export default async (_, { id, isSubmitted = undefined }, ctx) => {
     tenant: { id: tenantId },
   } = ctx
 
-  console.log('tenant ID (/submission:id)', tenantId)
-
   const request = (await pool.connect()).request()
   request.input('id', id)
+  request.input('tenantId', tenantId)
   if (isSubmitted !== undefined) {
     request.input('isSubmitted', isSubmitted ? 1 : 0)
   }
 
-  const result = await request.query(`
+  return (
+    await request.query(`
     select
       *
     from Submissions s
     where
-      id = @id
+      exists ( select tenantId from TenantXrefSubmission x where x.tenantId = @tenantId and x.submissionId = @id )
+      and id = @id
       ${isSubmitted === undefined ? '' : 'and isSubmitted = @isSubmitted'}`)
-
-  return result.recordset[0]
+  ).recordset[0]
 }

@@ -11,13 +11,11 @@ export default async (_, args, ctx) => {
   const { query } = ctx.mssql
   const { limit = MAX_PAGE_SIZE } = args
 
-  console.log('tenant ID (/submissions)', tenantId)
-
   if (limit > MAX_PAGE_SIZE) {
     throw new Error(`Submissions request is limited to a maximum page size of ${MAX_PAGE_SIZE}`)
   }
 
-  const sql = makeRecordsQuery(MAX_PAGE_SIZE)(args)
+  const sql = makeRecordsQuery(MAX_PAGE_SIZE)({ ...args, tenantId })
   logSql(sql, 'Submissions')
   const result = await query(sql)
   return result.recordset

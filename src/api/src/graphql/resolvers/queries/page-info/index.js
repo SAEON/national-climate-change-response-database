@@ -6,11 +6,15 @@ export default async (_, args, ctx) => {
   const { query } = ctx.mssql
   const { limit = MAX_PAGE_SIZE, offset = 0 } = args
 
+  const {
+    tenant: { id: tenantId },
+  } = ctx
+
   if (limit > MAX_PAGE_SIZE) {
     throw new Error(`Submissions request is limited to a maximum page size of ${MAX_PAGE_SIZE}`)
   }
 
-  const sql = makeAggregationQuery(args)
+  const sql = makeAggregationQuery({ ...args, tenantId })
 
   logSql(sql, 'Submissions (page info)')
   const result = await query(sql)

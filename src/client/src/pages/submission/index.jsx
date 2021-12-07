@@ -4,6 +4,7 @@ import Header from './header'
 import Container from '@mui/material/Container'
 import Render from './render'
 import useTheme from '@mui/material/styles/useTheme'
+import FourO4 from '../../components/404'
 
 export default ({ id }) => {
   const theme = useTheme()
@@ -33,8 +34,18 @@ export default ({ id }) => {
     throw error
   }
 
-  const { mitigation, adaptation, project, submissionStatus, submissionComments } =
-    data.submission || undefined
+  if (!data.submission) {
+    return (
+      <>
+        <div style={{ marginTop: theme.spacing(2) }} />
+        <Container style={{ minHeight: 1000 }}>
+          <FourO4 />
+        </Container>
+      </>
+    )
+  }
+
+  const { mitigation, adaptation, project, submissionStatus, submissionComments } = data.submission
 
   if (!project) {
     throw new Error(

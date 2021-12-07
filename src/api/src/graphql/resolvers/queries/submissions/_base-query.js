@@ -1,6 +1,7 @@
 export default ({
   isSubmitted = true,
   submissionStatus = undefined,
+  tenantId,
   projectFilters: {
     title: { value: titleFilter = undefined } = {},
     province: { value: provinceFilter = undefined } = {},
@@ -13,7 +14,10 @@ export default ({
   return `
     Submissions s
     where
-      deletedAt is null
+      exists ( select 1 from TenantXrefSubmission x where x.tenantId = '${sanitizeSqlValue(
+        tenantId
+      )}' and x.submissionId = s.id)
+      and deletedAt is null
       and isSubmitted = ${isSubmitted ? 1 : 0}
       ${
         submissionStatus

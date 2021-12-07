@@ -47,7 +47,7 @@ export default ({ id }) => {
     adaptation,
     submissionComments: __submissionComments,
     submissionStatus: __submissionStatus,
-  } = data.submission
+  } = data.submission || {}
 
   return (
     <>

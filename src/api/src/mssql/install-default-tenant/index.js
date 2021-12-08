@@ -5,7 +5,7 @@ import { NCCRD_HOSTNAME, DEFAULT_SHORTNAME } from '../../config.js'
 import mergeTenantsSubmissions from '../../lib/sql/merge-tenants-submissions.js'
 
 export default async () => {
-  const res = await (await pool.connect())
+  await (await pool.connect())
     .request()
     .input('hostname', new URL(NCCRD_HOSTNAME).hostname)
     .input('title', 'National Climate Change Response Database')
@@ -73,13 +73,13 @@ export default async () => {
           $action,
           inserted.id;`)
 
-  console.info('Installed default tenant. Configuring tenant...')
+  console.info('Installed default tenant. Populating TenantXrefSubmission...')
 
   await (
     await pool.connect()
   )
     .request()
-    .input('tenantId', res.recordset[0].id)
+    .input('tenantId', null) // This means "all tenants"
     .input('submissionId', null) // This means "all submissions"
     .query(mergeTenantsSubmissions)
 }

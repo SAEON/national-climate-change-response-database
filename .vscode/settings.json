@@ -58,6 +58,7 @@
     "stdio",
     "terrestris",
     "tsql",
+    "uniqueidentifier",
     "unprepare",
     "usermod"
   ],

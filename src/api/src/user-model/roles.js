@@ -39,7 +39,7 @@ export const admin = {
     permissions['view-permissions'],
     permissions['view-roles'],
     permissions['/access'],
-    permissions['/deployments'],
+    permissions['/deployment'],
     permissions['create-tenant'],
     permissions['view-tenants'],
     permissions['update-tenant'],

@@ -19,7 +19,7 @@ const SubmissionPage = lazy(() => import('../../pages/submission'))
 const EditSubmissionPage = lazy(() => import('../../pages/submission-edit'))
 const CreateSubmission = lazy(() => import('../../pages/submission-create'))
 const NewSubmissionPage = lazy(() => import('../../pages/submission-new'))
-const DeploymentsPage = lazy(() => import('../../pages/deployments'))
+const DeploymentPage = lazy(() => import('../../pages/deployment'))
 const UserSubmissionsPage = lazy(() => import('../../pages/user-submissions'))
 const UserPage = lazy(() => import('../../pages/user'))
 const UsersPage = lazy(() => import('../../pages/users'))
@@ -154,14 +154,14 @@ export default [
   },
 
   {
-    label: 'Deployments',
+    label: 'Deployment',
     Icon: DeploymentsIcon,
-    to: '/deployments',
+    to: '/deployment',
     exact: true,
-    requiredPermission: '/deployments',
+    requiredPermission: '/deployment',
     render: () => (
       <Transition>
-        <DeploymentsPage />
+        <DeploymentPage />
       </Transition>
     ),
   },

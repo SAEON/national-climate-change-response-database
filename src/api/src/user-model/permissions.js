@@ -67,9 +67,9 @@ export default Object.freeze({
     name: '/access',
     description: 'View the /access route on the UI',
   },
-  '/deployments': {
-    name: '/deployments',
-    description: 'View the /deployments route on the UI',
+  '/deployment': {
+    name: '/deployment',
+    description: 'View the /deployment route on the UI',
   },
   'create-tenant': {
     name: 'create-tenant',

@@ -6,6 +6,7 @@ import { gql } from '@apollo/client'
 import { NCCRD_API_HTTP_ADDRESS } from '../../../../../config'
 import { useApolloClient } from '@apollo/client'
 import { CircularProgress } from '@mui/material'
+import { DEFAULT_VALUE as defaultSelectValue } from '../../../../../components/submission-form/form/components/controlled-vocabulary-select'
 
 export default ({ setOpen }) => {
   const { cache } = useApolloClient()
@@ -15,8 +16,11 @@ export default ({ setOpen }) => {
     setForm,
   } = useContext(formContext)
 
+  const disabled = !form.valid || form.geofence?.term === defaultSelectValue.term || loading
+
   return (
     <Button
+      disabled={disabled}
       onClick={async () => {
         try {
           setLoading(true)
@@ -90,7 +94,6 @@ export default ({ setOpen }) => {
           setLoading(false)
         }
       }}
-      disabled={!form.valid || loading}
       variant="text"
       size="small"
       startIcon={loading ? <CircularProgress size={14} /> : <AcceptIcon size={18} />}

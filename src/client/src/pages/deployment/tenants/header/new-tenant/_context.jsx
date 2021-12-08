@@ -1,5 +1,6 @@
 import { createContext, useState, memo, useMemo } from 'react'
 import { nanoid } from 'nanoid'
+import { DEFAULT_VALUE as defaultSelectValue } from '../../../../../components/submission-form/form/components/controlled-vocabulary-select'
 
 export const context = createContext()
 
@@ -10,7 +11,7 @@ export default memo(({ children, staticTheme }) => {
       title: `New deployment ${nanoid(10)}`,
       shortTitle: '',
       description: '',
-      geofence: { term: '(NONE)' },
+      geofence: defaultSelectValue,
       flag: [],
       logo: [],
       theme: staticTheme,

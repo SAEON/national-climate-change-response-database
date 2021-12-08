@@ -5,7 +5,7 @@ import { gql, useQuery } from '@apollo/client'
 import { useTheme } from '@mui/material/styles'
 import Loading from '../../../loading'
 
-const DEFAULT_VALUE = { term: '(NONE)' }
+export const DEFAULT_VALUE = { term: '(NONE)' }
 
 export default ({
   root,
@@ -133,7 +133,7 @@ export default ({
       variant={variant}
       margin={margin}
       value={value.term}
-      error={isRequired ? value === DEFAULT_VALUE.term || error : error}
+      error={isRequired ? value?.term === DEFAULT_VALUE.term || error : error}
     >
       {[DEFAULT_VALUE, ...options].map(({ term }) => {
         return (

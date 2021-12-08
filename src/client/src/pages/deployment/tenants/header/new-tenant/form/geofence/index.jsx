@@ -8,7 +8,7 @@ const Field = ({ value, updateForm }) => {
       root="South Africa"
       tree="regions"
       value={value}
-      error={false}
+      isRequired
       onChange={updateForm}
       placeholder="Select geofence"
       helperText="Tenant deployments differ from the main deployment only in that all location-related information is bounded (geofenced). Geofences are loaded into the application on startup and stored in the database as geometry data. This list shows available geofences"

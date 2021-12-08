@@ -81,7 +81,9 @@ set @submissionId_ = @submissionId;
       coalesce(x.submissionLocation, x.xy) is null
       and x.includeUnboundedSubmissions = 1
     )
-) merge TenantXrefSubmission t using (
+)
+
+merge TenantXrefSubmission t using (
   select
     *
   from

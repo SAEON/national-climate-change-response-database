@@ -11,6 +11,7 @@ import userModel from '../user-model/index.js'
  */
 
 export default app => async (ctx, next) => {
+  console.log(ctx.session)
   app.context.userInfo = ctx.state.user
 
   app.context.gql = {

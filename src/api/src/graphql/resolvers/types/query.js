@@ -10,7 +10,7 @@ import submissionTemplates from '../queries/submission-templates.js'
 import submission from '../queries/submission/index.js'
 import pageInfo from '../queries/page-info/index.js'
 import tenants from '../queries/tenants/index.js'
-import geometries from '../queries/geometries/index.js'
+import regions from '../queries/regions/index.js'
 
 export default {
   users: authorize(PERMISSIONS['view-users'])(users),
@@ -18,10 +18,10 @@ export default {
   permissions: authorize(PERMISSIONS['view-permissions'])(permissions),
   submissionTemplates: authorize(PERMISSIONS['view-submission-templates'])(submissionTemplates),
   tenants: authorize(PERMISSIONS['view-tenants'])(tenants),
-  geometries, // TODO - choose permission when decided
   submission,
   submissions,
   pageInfo,
+  regions,
   user,
   controlledVocabulary,
 }

@@ -7,12 +7,14 @@ import LayerGroup from 'ol/layer/Group'
 import Feature from 'ol/Feature'
 import Point from 'ol/geom/Point'
 
-export default ({ points = [], setPoints }) => {
+export default ({ geofencePolygons, points = [], setPoints }) => {
   const { map } = useContext(mapContext)
   const source = useMemo(() => new VectorSource({ wrapX: false }), [])
   const awaitGeometryFunction = useRef(null)
 
-  const draw = useMemo(
+  // TODO use geofencePolygons to reject invalid locations
+
+  const drawInteraction = useMemo(
     () =>
       new Draw({
         type: 'Point',
@@ -38,9 +40,9 @@ export default ({ points = [], setPoints }) => {
         }
       })
     if (!added) {
-      map.addInteraction(draw)
+      map.addInteraction(drawInteraction)
     }
-  }, [draw, map])
+  }, [drawInteraction, map])
 
   const mouseleave = useCallback(() => {
     map
@@ -122,16 +124,16 @@ export default ({ points = [], setPoints }) => {
    * box, delete box, etc.
    */
   useEffect(() => {
-    map.addInteraction(draw)
+    map.addInteraction(drawInteraction)
     map.getViewport().addEventListener('mouseenter', mouseenter)
     map.getViewport().addEventListener('mouseleave', mouseleave)
 
     return () => {
       map.getViewport().removeEventListener('mouseenter', mouseenter)
       map.getViewport().removeEventListener('mouseleave', mouseleave)
-      awaitGeometryFunction.current?.then(() => map.removeInteraction(draw))
+      awaitGeometryFunction.current?.then(() => map.removeInteraction(drawInteraction))
     }
-  }, [map, draw, mouseenter, mouseleave])
+  }, [map, drawInteraction, mouseenter, mouseleave])
 
   return null
 }

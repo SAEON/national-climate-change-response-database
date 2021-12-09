@@ -39,20 +39,6 @@ export default ({ field }) => {
   }
 
   /**
-   * WKT_4326
-   */
-  if (fieldName === 'xy') {
-    return (
-      <Suspense key={fieldName} fallback={<Loading />}>
-        <LocationsPicker
-          setPoints={points => updateForm({ [fieldName]: points })}
-          points={form[fieldName] || []}
-        />
-      </Suspense>
-    )
-  }
-
-  /**
    * Controlled vocabulary
    */
   if (fieldName === 'province') {
@@ -125,6 +111,20 @@ export default ({ field }) => {
     if (!form.province?.length) {
       return null
     }
+  } else if (fieldName === 'xy') {
+    return (
+      <Suspense key={fieldName} fallback={<Loading />}>
+        <LocationsPicker
+          geofence={
+            form.localMunicipality ||
+            form.districtMunicipality ||
+            form.province || [{ term: 'National' }]
+          }
+          setPoints={points => updateForm({ [fieldName]: points })}
+          points={form[fieldName] || []}
+        />
+      </Suspense>
+    )
   }
 
   /**

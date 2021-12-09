@@ -38,7 +38,7 @@ type ControlledVocabulary {
   children: [ControlledVocabulary!]
   tree: String!
   root: String!
-  geometry: WKT_4326
+  geometry(simplify: Boolean): WKT_4326
 }
 
 input VocabularyFilterInput {
@@ -82,20 +82,17 @@ type PageInfo {
   totalRecords: Int!
 }
 
-type Geometry {
+type Region {
   id: ID!
   name: String!
-  code: String!
-  parentCode: String
-  properties: JSON!
-  geometry: WKT_4326
+  geometry: WKT_4326!
 }
 
 type Query {
   """
-  Retrieve geometries
+  Find geometries for region
   """
-  geometries: [Geometry!]!
+  regions(terms: [String!]!, simplify: Boolean): [Region!]!
   """
   Retrieve all tenanted versions of this deployment
   """

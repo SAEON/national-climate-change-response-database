@@ -5,7 +5,9 @@ import Typography from '@mui/material/Typography'
 import QuickForm from '../../../../quick-form'
 import debounce from '../../../../../lib/debounce'
 import Toolbar from './toolbar'
-import Map from '../../../../ol-react'
+import Map, { GeometryLayer } from '../../../../ol-react'
+import Loading from '../../../../loading'
+import { gql, useQuery } from '@apollo/client'
 import AppBar from '@mui/material/AppBar'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
@@ -13,6 +15,42 @@ import Box from '@mui/material/Box'
 import Picker from './picker'
 import Fade from '@mui/material/Fade'
 import { alpha } from '@mui/material/styles'
+
+export default ({ onChange, points, setPoints, geofence }) => {
+  const { loading, error, data } = useQuery(
+    gql`
+      query regions($terms: [String!]!) {
+        regions(terms: $terms) {
+          id
+          name
+          geometry
+        }
+      }
+    `,
+    {
+      variables: {
+        terms: geofence.map(({ term }) => term),
+      },
+    }
+  )
+
+  if (loading) {
+    return <Loading />
+  }
+
+  if (error) {
+    throw error
+  }
+
+  return (
+    <LocationBounds
+      geofencePolygons={data.regions}
+      onChange={onChange}
+      points={points}
+      setPoints={setPoints}
+    />
+  )
+}
 
 const TabPanel = props => {
   const { children, value, index, ...other } = props
@@ -39,7 +77,7 @@ function a11yProps(index) {
   }
 }
 
-const Input = ({ update, points }) => {
+const Input = ({ geofencePolygons, update, points }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
   const theme = useTheme()
 
@@ -71,7 +109,14 @@ const Input = ({ update, points }) => {
       <TabPanel value={activeTabIndex} index={0}>
         <div style={{ width: '100%', height: 400, border, position: 'relative' }}>
           <Map>
-            <Picker setPoints={points => update({ points })} points={points} />
+            {geofencePolygons.map(({ geometry, id }) => (
+              <GeometryLayer key={id} id={id} geometry={geometry} />
+            ))}
+            <Picker
+              geofencePolygons={geofencePolygons}
+              setPoints={points => update({ points })}
+              points={points}
+            />
             <Toolbar points={points} setPoints={points => update({ points })} />
           </Map>
         </div>
@@ -85,38 +130,25 @@ const Input = ({ update, points }) => {
   )
 }
 
-const LocationBounds = memo(
-  ({ points, setPoints }) => {
-    const theme = useTheme()
-    const effect = useMemo(() => debounce(({ points }) => setPoints(points)), [setPoints])
+const LocationBounds = memo(({ points, setPoints, geofencePolygons }) => {
+  const theme = useTheme()
+  const effect = useMemo(() => debounce(({ points }) => setPoints(points)), [setPoints])
 
-    return (
-      <QuickForm effect={effect} points={points}>
-        {(update, { points }) => {
-          return (
-            <div style={{ marginTop: theme.spacing(3) }}>
-              <Typography
-                style={{ display: 'block', textAlign: 'center', marginBottom: theme.spacing(1) }}
-                variant="overline"
-              >
-                Add GPS location points
-              </Typography>
-              <Input update={update} points={points} />
-            </div>
-          )
-        }}
-      </QuickForm>
-    )
-  },
-  /**
-   * State is managed internally, and synced
-   * to context.
-   *
-   * Never re-render this component once mounted
-   */
-  () => true
-)
-
-export default ({ onChange, points, setPoints }) => {
-  return <LocationBounds onChange={onChange} points={points} setPoints={setPoints} />
-}
+  return (
+    <QuickForm effect={effect} points={points}>
+      {(update, { points }) => {
+        return (
+          <div style={{ marginTop: theme.spacing(3) }}>
+            <Typography
+              style={{ display: 'block', textAlign: 'center', marginBottom: theme.spacing(1) }}
+              variant="overline"
+            >
+              Add GPS location points
+            </Typography>
+            <Input geofencePolygons={geofencePolygons} update={update} points={points} />
+          </div>
+        )
+      }}
+    </QuickForm>
+  )
+})

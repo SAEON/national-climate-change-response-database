@@ -28,8 +28,8 @@ declare @submissionId_ uniqueidentifier;
 set @submissionId_ = @submissionId;
 
 ;with _source as (
-  select
-    distinct x.tenantId,
+  select distinct
+    x.tenantId,
     x.submissionId
   from
     (
@@ -39,8 +39,7 @@ set @submissionId_ = @submissionId;
         t.regionId,
         t.includeUnboundedSubmissions,
         JSON_VALUE(value, '$.term') submissionLocation,
-        case
-          JSON_VALUE(s.project, '$.xy')
+        case JSON_VALUE(s.project, '$.xy')
           when 'GEOMETRYCOLLECTION ()' then null
           else JSON_VALUE(s.project, '$.xy')
         end xy

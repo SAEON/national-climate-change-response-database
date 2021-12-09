@@ -28,6 +28,7 @@ export default ({ children }) => {
         })
 
         const user = await res.json()
+        console.log('user', user)
         setUser(user)
         setAuthenticating(false)
       } catch (error) {

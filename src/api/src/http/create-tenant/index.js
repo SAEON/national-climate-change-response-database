@@ -136,7 +136,6 @@ export default async ctx => {
     // Associate existing submissions with the new tenant
     await transaction
       .request()
-      .input('isSubmitted', null)
       .input('tenantId', newTenantId)
       .input('submissionId', null) // This means "all submissions"
       .query(mergeTenantsSubmissions)

@@ -85,7 +85,6 @@ export default async (
     // Update submission-tenant matrix
     await transaction
       .request()
-      .input('isSubmitted', null)
       .input('tenantId', null) // This save can effect other tenants, so don't limit to this tenant
       .input('submissionId', submissionId)
       .query(mergeTenantSubmissions)

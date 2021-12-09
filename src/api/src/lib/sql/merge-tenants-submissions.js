@@ -27,9 +27,6 @@ set @tenantId_ = @tenantId;
 declare @submissionId_ uniqueidentifier;
 set @submissionId_ = @submissionId;
 
-declare @isSubmitted_ bit;
-set @isSubmitted_ = @isSubmitted;
-
 ;with _source as (
   select distinct
     x.tenantId,
@@ -40,6 +37,7 @@ set @isSubmitted_ = @isSubmitted;
         s.id submissionId,
         t.id tenantId,
         t.regionId,
+        s.isSubmitted,
         t.includeUnboundedSubmissions,
         JSON_VALUE(value, '$.term') submissionLocation,
         case JSON_VALUE(s.project, '$.xy')
@@ -62,7 +60,6 @@ set @isSubmitted_ = @isSubmitted;
       where
         s.id = coalesce(@submissionId_, s.id)
         and s.deletedAt is null
-        and s.isSubmitted = coalesce(@isSubmitted_, s.isSubmitted)
     ) x
     left outer join dbo.Vocabulary v on v.term = x.submissionLocation
     left outer join dbo.VocabularyXrefRegion vxr on vxr.vocabularyId = v.id
@@ -83,6 +80,7 @@ set @isSubmitted_ = @isSubmitted;
       coalesce(x.submissionLocation, x.xy) is null
       and x.includeUnboundedSubmissions = 1
     )
+    or x.isSubmitted = 0
 )
 
 merge TenantXrefSubmission t using (

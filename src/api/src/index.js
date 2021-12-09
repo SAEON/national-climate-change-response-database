@@ -72,8 +72,8 @@ app
   ) // Only compress the http / graphql api responses
   .use(formidable())
   .use(koaBody())
-  .use(async (ctx, next) =>
-    koaSession(
+  .use(async (ctx, next) => {
+    return koaSession(
       {
         key: 'koa.sess',
         maxAge: hoursToMilliseconds(12),
@@ -88,7 +88,7 @@ app
       },
       app
     )(ctx, next)
-  )
+  })
   .use(cors(app))
   .use(logReqDetails)
   .use(clientSession)

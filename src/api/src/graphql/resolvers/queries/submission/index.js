@@ -1,12 +1,12 @@
 import { pool } from '../../../../mssql/pool.js'
 
-export default async (_, { id, isSubmitted = undefined }, ctx) => {
+export default async (_, { id: submissionId, isSubmitted = undefined }, ctx) => {
   const {
     tenant: { id: tenantId },
   } = ctx
 
   const request = (await pool.connect()).request()
-  request.input('id', id)
+  request.input('id', submissionId)
   request.input('tenantId', tenantId)
   if (isSubmitted !== undefined) {
     request.input('isSubmitted', isSubmitted ? 1 : 0)

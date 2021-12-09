@@ -27,6 +27,9 @@ set @tenantId_ = @tenantId;
 declare @submissionId_ uniqueidentifier;
 set @submissionId_ = @submissionId;
 
+declare @isSubmitted_ bit;
+set @isSubmitted_ = @isSubmitted;
+
 ;with _source as (
   select distinct
     x.tenantId,
@@ -59,7 +62,7 @@ set @submissionId_ = @submissionId;
       where
         s.id = coalesce(@submissionId_, s.id)
         and s.deletedAt is null
-        and s.isSubmitted = 1
+        and s.isSubmitted = coalesce(@isSubmitted_, s.isSubmitted)
     ) x
     left outer join dbo.Vocabulary v on v.term = x.submissionLocation
     left outer join dbo.VocabularyXrefRegion vxr on vxr.vocabularyId = v.id

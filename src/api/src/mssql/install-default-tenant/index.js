@@ -79,6 +79,7 @@ export default async () => {
     await pool.connect()
   )
     .request()
+    .input('isSubmitted', null)
     .input('tenantId', null) // This means "all tenants"
     .input('submissionId', null) // This means "all submissions"
     .query(mergeTenantsSubmissions)

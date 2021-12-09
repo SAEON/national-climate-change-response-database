@@ -15,6 +15,7 @@ export default async (_, { id }, ctx) => {
 
     await transaction
       .request()
+      .input('isSubmitted', null)
       .input('tenantId', null)
       .input('submissionId', id)
       .query(mergeTenantsSubmissions)

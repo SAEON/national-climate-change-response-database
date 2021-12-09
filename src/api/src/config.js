@@ -48,6 +48,9 @@ export const MSSQL_DATABASE = process.env.MSSQL_DATABASE || 'nccrd'
 
 export const DEFAULT_SHORTNAME = 'NCCRD'
 
+// Useful for quicker debugging. Don't use in production
+export const SKIP_INSTALLS = process.env.SKIP_INSTALLS || false
+
 export const MSSQL_PORT = parseInt(process.env.MSSQL_PORT || 1433, 10)
 
 export const LOG_SQL_QUERIES = (process.env.LOG_SQL_QUERIES || 'true').toBoolean()

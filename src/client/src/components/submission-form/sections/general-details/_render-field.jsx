@@ -115,11 +115,7 @@ export default ({ field }) => {
     return (
       <Suspense key={fieldName} fallback={<Loading />}>
         <LocationsPicker
-          geofence={
-            form.localMunicipality ||
-            form.districtMunicipality ||
-            form.province || [{ term: 'National' }]
-          }
+          geofence={form.localMunicipality || form.districtMunicipality || form.province || []}
           setPoints={points => updateForm({ [fieldName]: points })}
           points={form[fieldName] || []}
         />

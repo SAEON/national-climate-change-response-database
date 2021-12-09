@@ -1,6 +1,6 @@
 import { readdirSync, statSync } from 'fs'
 import { join, normalize, sep } from 'path'
-import { SUBMISSION_TEMPLATES_DIRECTORY } from '../config.js'
+import { SUBMISSION_TEMPLATES_DIRECTORY, SKIP_INSTALLS } from '../config.js'
 import { pool } from './pool.js'
 import installSchema from './install-schema.js'
 import installUserModel from './install-user-model/index.js'
@@ -17,13 +17,17 @@ const info = (...args) => console.info(...args)
  */
 ;(async () => {
   try {
-    await installSchema().then(() => info('Installed schema\n'))
-    await installUserModel().then(() => info('Installed user model\n'))
-    await installSysadmins().then(() => info('Installed sysadmins\n'))
-    await installAdmins().then(() => info('Installed admins\n'))
-    await installRegionGeometries().then(() => info('Installed region geometries\n'))
-    await installVocabulary().then(() => info('Installed vocabulary\n'))
-    await installDefaultTenant().then(() => info('Finished installing default tenant\n'))
+    if (SKIP_INSTALLS) {
+      info("======= WARNING ======= skipping schema installs. Don't do this on production")
+    } else {
+      await installSchema().then(() => info('Installed schema\n'))
+      await installUserModel().then(() => info('Installed user model\n'))
+      await installSysadmins().then(() => info('Installed sysadmins\n'))
+      await installAdmins().then(() => info('Installed admins\n'))
+      await installRegionGeometries().then(() => info('Installed region geometries\n'))
+      await installVocabulary().then(() => info('Installed vocabulary\n'))
+      await installDefaultTenant().then(() => info('Finished installing default tenant\n'))
+    }
   } catch (error) {
     console.error('Unable to setup database', error)
     process.exit(1)

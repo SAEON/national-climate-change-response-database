@@ -12,7 +12,8 @@ export default app => async (ctx, next) => {
         id,
         hostname
       from Tenants
-      where hostname = @hostname`)
+      where
+        hostname = @hostname`)
 
     const allowed = result.recordset.length
     if (allowed) {

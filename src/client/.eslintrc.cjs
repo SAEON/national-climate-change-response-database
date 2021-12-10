@@ -32,6 +32,7 @@ module.exports = {
     'no-prototype-builtins': 0,
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
   },
   settings: {
     react: {

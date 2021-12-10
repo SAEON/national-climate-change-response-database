@@ -7,6 +7,7 @@ import LayerGroup from 'ol/layer/Group'
 import Feature from 'ol/Feature'
 import Point from 'ol/geom/Point'
 
+// eslint-disable-next-line
 export default ({ geofencePolygons, points = [], setPoints }) => {
   const { map } = useContext(mapContext)
   const source = useMemo(() => new VectorSource({ wrapX: false }), [])

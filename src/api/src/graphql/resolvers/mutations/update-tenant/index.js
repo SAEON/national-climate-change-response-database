@@ -39,9 +39,7 @@ export default async (
     where
       id = @id;`
 
-  console.log('sql', sql)
-
-  const update = await request.query(sql)
+  await request.query(sql)
 
   return { id }
 }

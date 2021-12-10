@@ -25,22 +25,21 @@ import publicImageRoute from './http/public-image/index.js'
 import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
 import uploadTemplateRoute from './http/upload-template.js'
+import oauthAuthenticationCallbackRoute from './http/oauth-authentication-callback.js'
+import loginRoute from './http/login.js'
 import attachFileToSubmission from './http/attach-file-to-submission.js'
 import submitCompletedTemplates from './http/submit-completed-templates/index.js'
 import downloadTemplateRoute from './http/download-template.js'
 import downloadSubmission from './http/download-submission/index.js'
 import apolloServer from './graphql/index.js'
-import configureSaeonAuth from './passport/saeon-auth/index.js'
 import { NCCRD_PORT, NCCRD_API_KEY, NCCRD_SSL_ENV } from './config.js'
 import hoursToMilliseconds from './lib/hours-to-ms.js'
 import getCurrentDirectory from './lib/get-current-directory.js'
 import path from 'path'
+import './passport/index.js'
 import './mssql/setup-db.js'
 
 const __dirname = getCurrentDirectory(import.meta)
-
-// Configure passport authentication
-const { login: saeonLogin, authenticate: saeonAuthenticate } = configureSaeonAuth()
 
 // Configure static files server
 const SPA_PATH = path.join(__dirname, 'client-dist')
@@ -60,6 +59,10 @@ const app = new Koa()
 app.keys = [NCCRD_API_KEY]
 app.proxy = true
 app
+  .use(async (ctx, next) => {
+    console.log('entry', ctx.headers)
+    return await next()
+  })
   .use(
     whitelistRoutes(
       koaCompress({
@@ -72,7 +75,11 @@ app
   ) // Only compress the http / graphql api responses
   .use(formidable())
   .use(koaBody())
+  .use(koaPassport.initialize())
+  .use(koaPassport.session())
   .use(async (ctx, next) => {
+    console.log('koa session middleware')
+    console.log(ctx.headers)
     return koaSession(
       {
         key: 'koa.sess',
@@ -84,7 +91,7 @@ app
         rolling: true,
         renew: false,
         secure: NCCRD_SSL_ENV === 'development' ? false : true,
-        sameSite: NCCRD_SSL_ENV === 'development' ? 'lax' : 'none',
+        sameSite: 'none', // NCCRD_SSL_ENV === 'development' ? 'lax' : 'none',
       },
       app
     )(ctx, next)
@@ -92,14 +99,12 @@ app
   .use(cors(app))
   .use(logReqDetails)
   .use(clientSession)
-  .use(koaPassport.initialize())
-  .use(koaPassport.session())
   .use(createRequestContext(app))
   .use(
     new KoaRouter()
       .get('/http/client-context', clientContextRoute)
-      .get('/http/authenticate/redirect/saeon', saeonAuthenticate, loginSuccessRoute) // passport
-      .get('/http/login', saeonLogin) // passport
+      .get('/http/authenticate/redirect/saeon', oauthAuthenticationCallbackRoute, loginSuccessRoute) // passport
+      .get('/http/login', loginRoute) // passport
       .get('/http/authenticate', authenticateRoute)
       .get('/http/public-image/:name', publicImageRoute)
       .get('/http/logout', logoutRoute)

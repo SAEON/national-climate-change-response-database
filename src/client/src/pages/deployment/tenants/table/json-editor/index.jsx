@@ -26,7 +26,7 @@ export default ({ row, column: { key }, onClose }) => {
       }
     `,
     {
-      update: (cache, { data: { updateTenant: tenant } }) => {
+      onCompleted: () => {
         onClose()
       },
     }

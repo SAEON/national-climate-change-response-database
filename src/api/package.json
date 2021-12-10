@@ -20,10 +20,10 @@
   "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^8.3.0",
+    "eslint": "^8.4.1",
     "nodemon": "^2.0.15",
-    "npm-check-updates": "^12.0.2",
-    "prettier": "^2.5.0"
+    "npm-check-updates": "^12.0.3",
+    "prettier": "^2.5.1"
   },
   "dependencies": {
     "@babel/cli": "^7.16.0",
@@ -42,7 +42,7 @@
     "dataloader": "^2.0.0",
     "date-fns": "^2.27.0",
     "dotenv": "^10.0.0",
-    "graphql": "^16.0.1",
+    "graphql": "^16.1.0",
     "graphql-type-json": "^0.3.2",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
@@ -56,12 +56,12 @@
     "mssql": "^7.3.0",
     "nanoid": "^3.1.30",
     "object-hash": "^2.2.0",
-    "openid-client": "^5.0.2",
+    "openid-client": "^5.1.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.60.2",
+    "rollup": "^2.61.0",
     "sanitize-filename": "^1.6.3",
     "shpjs": "^4.0.2",
-    "sift": "^15.0.0",
+    "sift": "^15.1.0",
     "sql-formatter": "^4.0.2",
     "wkt": "^0.1.1",
     "xlsx-populate": "^1.21.0"

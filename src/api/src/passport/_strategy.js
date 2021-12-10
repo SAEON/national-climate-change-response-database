@@ -20,12 +20,13 @@ export default hydra =>
         token_endpoint_auth_method: 'client_secret_post',
         response_types: ['code'],
       }),
+      sessionKey: 'oauth-session-key',
       params: {},
       passReqToCallback: true,
       usePKCE: false,
     },
     async (req, tokenSet, userInfo, cb) => {
-      console.log('Im the verification oauth function')
+      console.log('User verification fun called', req.headers)
       const { id_token } = tokenSet
       const { email, sub: saeonId, name } = userInfo
       const emailAddress = email.toLowerCase()

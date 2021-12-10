@@ -60,7 +60,7 @@ app.keys = [NCCRD_API_KEY]
 app.proxy = true
 app
   .use(async (ctx, next) => {
-    console.log('entry', ctx.headers)
+    console.log('HTTP request received')
     return await next()
   })
   .use(
@@ -78,17 +78,15 @@ app
   .use(koaPassport.initialize())
   .use(koaPassport.session())
   .use(async (ctx, next) => {
-    console.log('koa session middleware')
-    console.log(ctx.headers)
     return koaSession(
       {
-        key: 'koa.sess',
+        key: 'koa.session',
         maxAge: hoursToMilliseconds(12),
         autoCommit: true,
-        overwrite: true,
+        overwrite: false,
         httpOnly: true,
         signed: true,
-        rolling: true,
+        rolling: false,
         renew: false,
         secure: NCCRD_SSL_ENV === 'development' ? false : true,
         sameSite: 'none', // NCCRD_SSL_ENV === 'development' ? 'lax' : 'none',

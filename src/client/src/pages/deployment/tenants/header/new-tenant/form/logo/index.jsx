@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
-import Q from '@saeon/quick-form'
+import Q from '../../../../../../../components/quick-form'
 import debounce from '../../../../../../../lib/debounce'
 
 const Field = memo(

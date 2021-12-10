@@ -9,7 +9,7 @@ const Compose = memo(
     const effect = useMemo(() => debounce(({ value }) => updateValue(value)), [updateValue])
 
     return (
-      <QuickForm effect={effect} value={value}>
+      <QuickForm effects={[effect]} value={value}>
         {(update, { value }) => (
           <Render
             formName={formName}

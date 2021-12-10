@@ -11,7 +11,7 @@ export default memo(
     const effect = useMemo(() => debounce(({ value }) => setValue(value)), [setValue])
 
     return (
-      <QuickForm effect={effect} value={value}>
+      <QuickForm effects={[effect]} value={value}>
         {(update, { value }) => {
           return (
             <TextField

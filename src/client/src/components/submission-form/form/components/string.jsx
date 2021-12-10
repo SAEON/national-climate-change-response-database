@@ -21,7 +21,7 @@ export default memo(
     )
 
     return (
-      <QuickForm effect={effect} value={value}>
+      <QuickForm effects={[effect]} value={value}>
         {(update, { value }) => {
           return (
             <TextField

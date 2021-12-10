@@ -7,7 +7,6 @@ export default app => async (ctx, next) => {
 
   if (origin) {
     const hostname = getHostnameFromOrigin(origin)
-    console.log('checking cors origin', hostname)
     const result = await (await pool.connect()).request().input('hostname', hostname).query(`
       select
         id,

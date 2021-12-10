@@ -13,7 +13,6 @@ import koaPassport from 'koa-passport'
 import zlib from 'zlib'
 import createRequestContext from './middleware/create-request-context.js'
 import cors from './middleware/cors.js'
-import clientSession from './middleware/client-session.js'
 import whitelistRoutes from './middleware/whitelist-routes.js'
 import blacklistRoutes from './middleware/blacklist-routes.js'
 import logReqDetails from './middleware/log-req-details.js'
@@ -60,9 +59,23 @@ app.keys = [NCCRD_API_KEY]
 app.proxy = true
 app
   .use(async (ctx, next) => {
-    console.log('HTTP request received')
-    return await next()
+    return koaSession(
+      {
+        key: 'koa.session',
+        maxAge: hoursToMilliseconds(12),
+        autoCommit: true,
+        overwrite: false,
+        httpOnly: true,
+        signed: true,
+        rolling: false,
+        renew: false,
+        secure: NCCRD_SSL_ENV === 'development' ? false : true,
+        sameSite: NCCRD_SSL_ENV === 'development' ? 'lax' : 'none',
+      },
+      app
+    )(ctx, next)
   })
+  .use(cors(app))
   .use(
     whitelistRoutes(
       koaCompress({
@@ -77,26 +90,7 @@ app
   .use(koaBody())
   .use(koaPassport.initialize())
   .use(koaPassport.session())
-  .use(async (ctx, next) => {
-    return koaSession(
-      {
-        key: 'koa.session',
-        maxAge: hoursToMilliseconds(12),
-        autoCommit: true,
-        overwrite: false,
-        httpOnly: true,
-        signed: true,
-        rolling: false,
-        renew: false,
-        secure: NCCRD_SSL_ENV === 'development' ? false : true,
-        sameSite: 'none', // NCCRD_SSL_ENV === 'development' ? 'lax' : 'none',
-      },
-      app
-    )(ctx, next)
-  })
-  .use(cors(app))
   .use(logReqDetails)
-  .use(clientSession)
   .use(createRequestContext(app))
   .use(
     new KoaRouter()

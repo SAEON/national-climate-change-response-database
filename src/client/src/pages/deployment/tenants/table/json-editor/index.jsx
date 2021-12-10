@@ -10,7 +10,7 @@ import 'ace-builds/webpack-resolver'
 import 'ace-builds/src-min-noconflict/mode-json'
 import 'ace-builds/src-min-noconflict/theme-chrome'
 import 'ace-builds/src-min-noconflict/ext-language_tools'
-import Q from '@saeon/quick-form'
+import Q from '../../../../../components/quick-form'
 
 export default ({ row, column: { key }, onClose }) => {
   const value = row[key]

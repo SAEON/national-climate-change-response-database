@@ -135,7 +135,7 @@ const LocationBounds = memo(({ points, setPoints, geofencePolygons }) => {
   const effect = useMemo(() => debounce(({ points }) => setPoints(points)), [setPoints])
 
   return (
-    <QuickForm effect={effect} points={points}>
+    <QuickForm effects={[effect]} points={points}>
       {(update, { points }) => {
         return (
           <div style={{ marginTop: theme.spacing(3) }}>

@@ -1,7 +1,7 @@
 import { memo, useContext, useRef, useEffect } from 'react'
 import { context as formContext } from '../../_context'
 import { context as themeContext } from '../../../../../../../contexts/theme'
-import Q from '@saeon/quick-form'
+import Q from '../../../../../../../components/quick-form'
 import AceEditor from 'react-ace'
 import 'ace-builds/webpack-resolver'
 import 'ace-builds/src-min-noconflict/mode-json'

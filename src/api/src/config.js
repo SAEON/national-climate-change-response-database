@@ -36,7 +36,7 @@ export const NCCRD_PORT = process.env.NCCRD_PORT || 3000
 
 export const NCCRD_API_GQL_ADDRESS = `${NCCRD_HOSTNAME}/graphql`
 
-export const NCCRD_CLIENT_ID = process.env.NCCRD_CLIENT_ID || 'client.sess'
+export const NCCRD_CLIENT_ID = process.env.NCCRD_CLIENT_ID || 'client.session'
 
 export const MSSQL_USERNAME = process.env.MSSQL_USERNAME || 'sa'
 

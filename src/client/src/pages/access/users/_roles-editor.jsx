@@ -7,7 +7,7 @@ import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import { gql, useMutation } from '@apollo/client'
-import QuickForm from '@saeon/quick-form'
+import QuickForm from '../../../components/quick-form'
 
 export default ({ row: user, onClose, roles }) => {
   const userId = user.id

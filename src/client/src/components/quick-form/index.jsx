@@ -1,24 +1,26 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect, useRef, createRef } from 'react'
 
-export default ({ children, effect, ...formFields }) => {
+export default ({ children, effects = [], ...formFields }) => {
   const [fields, updateAllFields] = useState(formFields)
 
-  const effectRef = useRef(null)
+  const refs = useRef(
+    effects.reduce((refs, effect, i) => {
+      const ref = createRef()
+      ref.current = effect
+      return Object.assign(refs, { [i]: ref })
+    }, {})
+  )
 
-  useEffect(() => {
-    if (!effectRef.current) {
-      effectRef.current = effect
-    }
-  }, [effect])
-
-  useEffect(() => {
-    if (effectRef.current) {
-      effectRef.current(fields)
-    }
-  }, [fields])
+  useEffect(
+    () =>
+      Object.entries(refs.current).forEach(([, { current: effect }]) => {
+        effect(fields)
+      }),
+    [fields]
+  )
 
   const updateForm = obj => {
-    updateAllFields(Object.assign({ ...fields }, obj))
+    updateAllFields(fields => Object.assign({ ...fields }, obj))
   }
 
   return children(updateForm, {

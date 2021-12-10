@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react'
 import InputTables from './tables'
-import QuickForm from '@saeon/quick-form'
+import QuickForm from '../../../../../quick-form'
 import debounce from '../../../../../../lib/debounce'
 import DateRange from './date-range'
 

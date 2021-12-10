@@ -1,7 +1,7 @@
 import { memo, useContext, useMemo } from 'react'
 import { context as formContext } from '../../_context'
 import TextField from '@mui/material/TextField'
-import Q from '@saeon/quick-form'
+import Q from '../../../../../../../components/quick-form'
 import debounce from '../../../../../../../lib/debounce'
 
 const Field = memo(

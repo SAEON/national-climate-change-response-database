@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField'
 import Loading from '../../../../components/loading'
 import Typography from '@mui/material/Typography'
 import MenuItem from '@mui/material/MenuItem'
+import useTheme from '@mui/material/styles/useTheme'
 
 export const DEFAULT_VALUE = '(NONE)'
 
@@ -52,6 +53,7 @@ const Component = memo(
 )
 
 export default ({ tree, root, ...props }) => {
+  const theme = useTheme()
   const { error, loading, data } = useQuery(
     gql`
       query controlledVocabulary($root: String, $tree: String!) {
@@ -73,7 +75,17 @@ export default ({ tree, root, ...props }) => {
   )
 
   if (loading) {
-    return <Loading />
+    return (
+      <div
+        style={{
+          marginTop: theme.spacing(2),
+          marginBottom: theme.spacing(2),
+          minHeight: theme.spacing(6),
+        }}
+      >
+        <Loading msg={<Typography variant="overline">Loading vocabulary</Typography>} />
+      </div>
+    )
   }
 
   if (error) {

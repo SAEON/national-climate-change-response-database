@@ -29,7 +29,7 @@ Issuer.discover(ODP_AUTH_WELL_KNOWN)
       await (await pool.connect()).request().query(`select hostname from Tenants;`)
     ).recordset.map(({ hostname }) => [
       hostname,
-      `${protocol}//${hostname}:${port}${ODP_AUTH_REDIRECT_PATH}`,
+      `${protocol}//${hostname}${port ? `:${port}` : ''}${ODP_AUTH_REDIRECT_PATH}`,
     ])
 
     tenants.forEach(([id, cbUri]) => {

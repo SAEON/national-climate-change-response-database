@@ -8,10 +8,8 @@ import { NCCRD_HOSTNAME, SAEON_AUTH_CLIENT_SCOPES } from '../config.js'
  * a string, which needs to be parsed to be read
  * as undefined as a JavaScript value
  */
-export default async (ctx, next) => {
-  console.log('This is the login route')
-  console.log('session', ctx.session)
-  return passport.authenticate('oidc', {
+export default async (ctx, next) =>
+  passport.authenticate('oidc', {
     scope: SAEON_AUTH_CLIENT_SCOPES,
     state: base64url(
       JSON.stringify({
@@ -23,4 +21,3 @@ export default async (ctx, next) => {
       })
     ),
   })(ctx, next)
-}

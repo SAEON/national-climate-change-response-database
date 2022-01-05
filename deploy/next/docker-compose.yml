@@ -25,7 +25,7 @@ services:
         failure_action: rollback
       restart_policy:
         condition: any
-        delay: 5s
+        delay: 30s
     ports:
       - 9000:80
     networks:
@@ -45,7 +45,7 @@ services:
         failure_action: rollback
       restart_policy:
         condition: any
-        delay: 5s
+        delay: 30s
     volumes:
       - nccrd_next:/nccrd-assets
     environment:

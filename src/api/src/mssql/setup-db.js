@@ -1,6 +1,6 @@
 import { readdirSync, statSync } from 'fs'
 import { join, normalize, sep } from 'path'
-import { SUBMISSION_TEMPLATES_DIRECTORY, SKIP_INSTALLS } from '../config.js'
+import { SUBMISSION_TEMPLATES_DIRECTORY, SKIP_INSTALLS } from '../config/index.js'
 import { pool } from './pool.js'
 import installSchema from './install-schema.js'
 import installUserModel from './install-user-model/index.js'

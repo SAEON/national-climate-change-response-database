@@ -1,4 +1,4 @@
-import { LOG_REQUEST_DETAILS } from '../config.js'
+import { LOG_REQUEST_DETAILS } from '../config/index.js'
 
 export default async (ctx, next) => {
   if (LOG_REQUEST_DETAILS) {

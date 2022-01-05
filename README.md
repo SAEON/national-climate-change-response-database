@@ -13,8 +13,8 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
   - [Local development](#local-development)
 - [Deployment](#deployment)
   - [Configuration](#configuration)
-    - [NCCRD_SSL_ENV](#nccrd_ssl_env)
-    - [NCCRD_DEPLOYMENT_ENV](#nccrd_deployment_env)
+    - [SSL_ENV](#nccrd_ssl_env)
+    - [DEPLOYMENT_ENV](#nccrd_deployment_env)
     - [Other vars](#other-vars)
   - [Proxy headers](#proxy-headers)
   - [Deploy bundled API + client](#deploy-bundled-api--client)
@@ -103,14 +103,14 @@ Several mechanisms are available to deploy this project from source code:
 
 ## Configuration
 
-#### NCCRD_SSL_ENV
+#### SSL_ENV
 
 - `production`
 - `development`
 
 "production" is for deployment behind an SSL-offloading proxy server. In this case, incoming requests MUST have the X-Forwarded-Proto header explicitly set to "https", otherwise all server requests will fail
 
-#### NCCRD_DEPLOYMENT_ENV
+#### DEPLOYMENT_ENV
 
 - `production`
 - `development`
@@ -179,18 +179,18 @@ docker network create --driver bridge nccrd
 docker run \
   --network nccrd \
   --name nccrd \
-  -e 'SAEON_AUTH_CLIENT_ID=' \
-  -e 'SAEON_AUTH_CLIENT_SECRET=' \
-  -e 'NCCRD_HOSTNAME=http://localhost:3000' \
-  -e 'NCCRD_DEPLOYMENT_ENV=development' \
+  -e 'ODP_AUTH_CLIENT_ID=' \
+  -e 'ODP_AUTH_CLIENT_SECRET=' \
+  -e 'HOSTNAME=http://localhost:3000' \
+  -e 'DEPLOYMENT_ENV=development' \
   -e 'FILES_DIRECTORY=' \
-  -e 'NCCRD_SSL_ENV=development' \
+  -e 'SSL_ENV=development' \
   -e 'MSSQL_HOSTNAME=sql-server' \
   -e 'MSSQL_USERNAME=sa' \
   -e 'MSSQL_PASSWORD=password!123#' \
   -e 'MSSQL_DATABASE=nccrd' \
   -e 'MSSQL_PORT=1433' \
-  -e 'NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES=name@email.com"' \
+  -e 'DEFAULT_ADMIN_EMAIL_ADDRESSES=name@email.com"' \
   -e 'NCCRD_TECHNICAL_CONTACT=other-name@email.com' \
   -e 'NCCRD_CLIENT_DEFAULT_NOTICES=Welcome to the National Climate Change Response Database!,info' \
   -p 3000:3000 \
@@ -243,13 +243,13 @@ MSSQL_PASSWORD='password!123#'
 MSSQL_PORT=1433
 MSSQL_USERNAME='sa'
 FILES_DIRECTORY=''
-NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES=''
-NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES=''
-NCCRD_DEPLOYMENT_ENV='development'
-NCCRD_SSL_ENV='development'
-NCCRD_HOSTNAME='http://localhost:3000'
-NCCRD_PORT=3000
-SAEON_AUTH_CLIENT_SECRET='<secret>'
+DEFAULT_SYSADMIN_EMAIL_ADDRESSES=''
+DEFAULT_ADMIN_EMAIL_ADDRESSES=''
+DEPLOYMENT_ENV='development'
+SSL_ENV='development'
+HOSTNAME='http://localhost:3000'
+PORT=3000
+ODP_AUTH_CLIENT_SECRET='<secret>'
 ```
 
 ## Linux & Mac
@@ -262,13 +262,13 @@ MSSQL_PASSWORD='password!123#' \
 MSSQL_PORT=1433 \
 MSSQL_USERNAME='sa' \
 FILES_DIRECTORY= \
-NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES='' \
-NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES='' \
-NCCRD_DEPLOYMENT_ENV='development' \
-NCCRD_SSL_ENV='development' \
-NCCRD_HOSTNAME='http://localhost:3000' \
-NCCRD_PORT=3000 \
-SAEON_AUTH_CLIENT_SECRET='<secret>' \
+DEFAULT_SYSADMIN_EMAIL_ADDRESSES='' \
+DEFAULT_ADMIN_EMAIL_ADDRESSES='' \
+DEPLOYMENT_ENV='development' \
+SSL_ENV='development' \
+HOSTNAME='http://localhost:3000' \
+PORT=3000 \
+ODP_AUTH_CLIENT_SECRET='<secret>' \
 nccrd-<linux or mac>
 ```
 
@@ -284,13 +284,13 @@ $env:MSSQL_PASSWORD="password!123#";
 $env:MSSQL_PORT="1433";
 $env:MSSQL_USERNAME="sa";
 $env:FILES_DIRECTORY="./assets";
-$env:NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES="your-email@host.com";
-$env:NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES="your-email2@host.com";
-$env:NCCRD_DEPLOYMENT_ENV="development";
-$env:NCCRD_SSL_ENV="development";
-$env:NCCRD_HOSTNAME="http://localhost:3000";
-$env:NCCRD_PORT="3000";
-$env:SAEON_AUTH_CLIENT_SECRET="<secret>";
+$env:DEFAULT_SYSADMIN_EMAIL_ADDRESSES="your-email@host.com";
+$env:DEFAULT_ADMIN_EMAIL_ADDRESSES="your-email2@host.com";
+$env:DEPLOYMENT_ENV="development";
+$env:SSL_ENV="development";
+$env:HOSTNAME="http://localhost:3000";
+$env:PORT="3000";
+$env:ODP_AUTH_CLIENT_SECRET="<secret>";
 .\nccrd-win.exe
 ```
 

@@ -1,6 +1,6 @@
 import { createReadStream, createWriteStream } from 'fs'
 import { join, normalize, sep } from 'path'
-import { UPLOADS_DIRECTORY } from '../../config.js'
+import { UPLOADS_DIRECTORY } from '../../config/index.js'
 import ensureDirectory from '../../lib/ensure-directory.js'
 import xlsx from 'xlsx-populate'
 import { nanoid } from 'nanoid'

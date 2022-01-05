@@ -9,7 +9,7 @@ const ROOT = path.normalize(path.join(__dirname, '../'))
 
 require('dotenv').config({ path: path.join(ROOT, './.env') })
 
-const { NODE_ENV: mode, NCCRD_DEPLOYMENT_ENV = 'local' } = process.env
+const { NODE_ENV: mode, DEPLOYMENT_ENV = 'local' } = process.env
 
 const entries = Object.fromEntries(
   fs
@@ -38,7 +38,7 @@ module.exports = () => {
       alias: loadAliases(ROOT, mode),
     },
     optimization: {
-      minimize: ['local', 'development'].includes(NCCRD_DEPLOYMENT_ENV) ? false : true,
+      minimize: ['local', 'development'].includes(DEPLOYMENT_ENV) ? false : true,
       splitChunks: { chunks: 'all' },
     },
     module: {

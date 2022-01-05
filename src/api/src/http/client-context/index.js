@@ -1,11 +1,11 @@
-import { NCCRD_HOSTNAME, DEFAULT_SHORTNAME } from '../../config.js'
+import { HOSTNAME, DEFAULT_SHORTNAME } from '../../config/index.js'
 import { pool } from '../../mssql/pool.js'
 import getHostnameFromOrigin from '../../lib/get-hostname-from-origin.js'
 
 export default async ctx => {
   const ipAddress = ctx.request.headers['X-Real-IP'] || ctx.request.ip
   const userAgent = ctx.request.headers['user-agent']
-  const origin = ctx.request.headers['origin'] || NCCRD_HOSTNAME
+  const origin = ctx.request.headers['origin'] || HOSTNAME
   const hostname = getHostnameFromOrigin(origin)
 
   const tenant = (

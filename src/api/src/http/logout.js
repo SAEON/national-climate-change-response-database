@@ -1,4 +1,4 @@
-import { NCCRD_HOSTNAME, SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS } from '../config.js'
+import { HOSTNAME, ODP_AUTH_LOGOUT_REDIRECT } from '../config/index.js'
 import { pool } from '../mssql/pool.js'
 
 export default async ctx => {
@@ -6,7 +6,7 @@ export default async ctx => {
    * User is already logged out
    */
   if (ctx.session.isNew) {
-    return ctx.redirect(NCCRD_HOSTNAME)
+    return ctx.redirect(HOSTNAME)
   }
 
   /**
@@ -25,11 +25,11 @@ export default async ctx => {
 
     ctx.session = null
     return ctx.redirect(
-      `${SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS}?id_token_hint=${id_token}&post_logout_redirect_uri=${NCCRD_HOSTNAME}/http/logout`
+      `${ODP_AUTH_LOGOUT_REDIRECT}?id_token_hint=${id_token}&post_logout_redirect_uri=${HOSTNAME}/http/logout`
     )
   } catch (error) {
     console.error('Error logging user out', error)
     ctx.session = null
-    return ctx.redirect(`${SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS}`)
+    return ctx.redirect(`${ODP_AUTH_LOGOUT_REDIRECT}`)
   }
 }

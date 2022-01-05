@@ -1,6 +1,6 @@
 import passport from 'koa-passport'
 import base64url from 'base64url'
-import { NCCRD_HOSTNAME, SAEON_AUTH_CLIENT_SCOPES } from '../config.js'
+import { HOSTNAME, ODP_AUTH_SCOPES } from '../config/index.js'
 
 /**
  * If /login is called without a 'redirect'
@@ -10,14 +10,14 @@ import { NCCRD_HOSTNAME, SAEON_AUTH_CLIENT_SCOPES } from '../config.js'
  */
 export default async (ctx, next) =>
   passport.authenticate('oidc', {
-    scope: SAEON_AUTH_CLIENT_SCOPES,
+    scope: ODP_AUTH_SCOPES,
     state: base64url(
       JSON.stringify({
         redirect: ctx.request.query.redirect
           ? ctx.request.query.redirect == 'undefined'
-            ? `${NCCRD_HOSTNAME}`
+            ? `${HOSTNAME}`
             : ctx.request.query.redirect
-          : NCCRD_HOSTNAME,
+          : HOSTNAME,
       })
     ),
   })(ctx, next)

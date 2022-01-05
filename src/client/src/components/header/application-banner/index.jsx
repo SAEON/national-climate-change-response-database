@@ -5,7 +5,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Toolbar_ from './toolbar'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import useTheme from '@mui/material/styles/useTheme'
-import { NCCRD_HOSTNAME } from '../../../config'
+import { HOSTNAME } from '../../../config'
 
 export const useImageHeight = () => {
   const theme = useTheme()
@@ -36,7 +36,7 @@ export default () => {
         <img
           crossOrigin="use-credentials"
           style={{ maxHeight: imageHeight, width: 'auto' }}
-          src={`${NCCRD_HOSTNAME}/${logoUrl}`}
+          src={`${HOSTNAME}/${logoUrl}`}
           alt={`Logo: ${title} (${description})`}
         />
       </a>
@@ -74,7 +74,7 @@ export default () => {
             display: 'block',
             marginLeft: 'auto',
           }}
-          src={`${NCCRD_HOSTNAME}/${flagUrl}`}
+          src={`${HOSTNAME}/${flagUrl}`}
           alt={`Flag: ${title} (${description})`}
           crossOrigin="use-credentials"
         />

@@ -1,12 +1,12 @@
-import * as config from '../config.js'
+import * as config from '../config/index.js'
 
 const mask = str => str?.replace(/./g, '*').padEnd(60, '*')
 
-const { NCCRD_DEPLOYMENT_ENV } = config
+const { DEPLOYMENT_ENV } = config
 
 const MASKED_FIELDS =
-  NCCRD_DEPLOYMENT_ENV === 'production'
-    ? ['NCCRD_API_KEY', 'SAEON_AUTH_CLIENT_SECRET', 'MSSQL_USERNAME', 'MSSQL_PASSWORD']
+  DEPLOYMENT_ENV === 'production'
+    ? ['API_KEY', 'ODP_AUTH_CLIENT_SECRET', 'MSSQL_USERNAME', 'MSSQL_PASSWORD']
     : []
 
 console.info(

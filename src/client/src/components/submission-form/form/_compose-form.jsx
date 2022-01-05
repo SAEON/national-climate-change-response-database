@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material/styles'
 import FormSection from './_form-section'
-import { NCCRD_DEPLOYMENT_ENV } from '../../../config'
+import { DEPLOYMENT_ENV } from '../../../config'
 import sift from 'sift'
 
 /**
@@ -36,7 +36,7 @@ export default ({
    * Check that the form is configured properly
    * (But not in production - strictly for development!)
    */
-  if (NCCRD_DEPLOYMENT_ENV !== 'production') {
+  if (DEPLOYMENT_ENV !== 'production') {
     const _fields = Object.entries(sections)
       .map(([, fields]) => fields)
       .flat()

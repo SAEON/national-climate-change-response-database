@@ -6,7 +6,7 @@ import {
   MSSQL_HOSTNAME,
   MSSQL_DATABASE,
   MSSQL_PORT,
-} from '../config.js'
+} from '../config/index.js'
 
 const { ConnectionPool } = mssql
 

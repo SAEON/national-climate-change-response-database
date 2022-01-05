@@ -31,7 +31,7 @@ import submitCompletedTemplates from './http/submit-completed-templates/index.js
 import downloadTemplateRoute from './http/download-template.js'
 import downloadSubmission from './http/download-submission/index.js'
 import apolloServer from './graphql/index.js'
-import { NCCRD_PORT, NCCRD_API_KEY, NCCRD_SSL_ENV } from './config.js'
+import { PORT, API_KEY, SSL_ENV } from './config/index.js'
 import hoursToMilliseconds from './lib/hours-to-ms.js'
 import getCurrentDirectory from './lib/get-current-directory.js'
 import path from 'path'
@@ -55,7 +55,7 @@ const staticSpaMiddleware = async (ctx, next) => {
 
 // Configure api
 const app = new Koa()
-app.keys = [NCCRD_API_KEY]
+app.keys = [API_KEY]
 app.proxy = true
 app
   .use(async (ctx, next) => {
@@ -69,8 +69,8 @@ app
         signed: true,
         rolling: false,
         renew: false,
-        secure: NCCRD_SSL_ENV === 'development' ? false : true,
-        sameSite: NCCRD_SSL_ENV === 'development' ? 'lax' : 'none',
+        secure: SSL_ENV === 'development' ? false : true,
+        sameSite: SSL_ENV === 'development' ? 'lax' : 'none',
       },
       app
     )(ctx, next)
@@ -122,7 +122,7 @@ apolloServer
   .catch(error => console.error('Unable to start Apollo server', error))
 
 // Start public HTTP server
-httpServer.listen(NCCRD_PORT, () => {
+httpServer.listen(PORT, () => {
   console.info(`NCCRD API server ready`)
   console.info(`NCCRD GraphQL server ready`)
   console.info(`NCCRD GraphQL subscriptions server ready`)

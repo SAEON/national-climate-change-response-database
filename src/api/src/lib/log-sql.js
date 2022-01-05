@@ -1,4 +1,4 @@
-import { LOG_SQL_QUERIES } from '../config.js'
+import { LOG_SQL_QUERIES } from '../config/index.js'
 import { format } from 'sql-formatter'
 
 export default (sql, name, force = false) => {

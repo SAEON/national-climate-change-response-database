@@ -57,11 +57,11 @@ services:
       MSSQL_PASSWORD: $MSSQL_PASSWORD
       MSSQL_PORT: 3433
       MSSQL_USERNAME: $MSSQL_USERNAME
-      NCCRD_DEFAULT_ADMIN_EMAIL_ADDRESSES: ''
-      NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
-      NCCRD_DEPLOYMENT_ENV: production
-      NCCRD_HOSTNAME: https://nccrd.saeon.ac.za
-      NCCRD_SSL_ENV: production
-      SAEON_AUTH_CLIENT_SECRET: $SAEON_AUTH_CLIENT_SECRET
+      DEFAULT_ADMIN_EMAIL_ADDRESSES: ''
+      DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
+      DEPLOYMENT_ENV: production
+      HOSTNAME: https://nccrd.saeon.ac.za
+      SSL_ENV: production
+      ODP_AUTH_CLIENT_SECRET: $ODP_AUTH_CLIENT_SECRET
     networks:
       - nccrd_next

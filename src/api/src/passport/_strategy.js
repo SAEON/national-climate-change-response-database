@@ -2,21 +2,21 @@ import { pool } from '../mssql/pool.js'
 import mssql from 'mssql'
 import { Strategy } from 'openid-client'
 import {
-  SAEON_AUTH_CLIENT_SECRET,
-  SAEON_AUTH_CLIENT_ID,
-  SAEON_AUTH_OAUTH_REDIRECT_ADDRESS,
-  SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS,
-} from '../config.js'
+  ODP_AUTH_CLIENT_SECRET,
+  ODP_AUTH_CLIENT_ID,
+  ODP_AUTH_REDIRECT_ADDRESS,
+  ODP_AUTH_LOGOUT_REDIRECT,
+} from '../config/index.js'
 import { user as userRole } from '../user-model/roles.js'
 
-export default hydra =>
+export default oauthProvider =>
   new Strategy(
     {
-      client: new hydra.Client({
-        client_id: SAEON_AUTH_CLIENT_ID,
-        client_secret: SAEON_AUTH_CLIENT_SECRET,
-        redirect_uris: [SAEON_AUTH_OAUTH_REDIRECT_ADDRESS],
-        post_logout_redirect_uris: [SAEON_AUTH_LOGOUT_REDIRECT_ADDRESS],
+      client: new oauthProvider.Client({
+        client_id: ODP_AUTH_CLIENT_ID,
+        client_secret: ODP_AUTH_CLIENT_SECRET,
+        redirect_uris: [ODP_AUTH_REDIRECT_ADDRESS],
+        post_logout_redirect_uris: [ODP_AUTH_LOGOUT_REDIRECT],
         token_endpoint_auth_method: 'client_secret_post',
         response_types: ['code'],
       }),
@@ -26,7 +26,6 @@ export default hydra =>
       usePKCE: false,
     },
     async (req, tokenSet, userInfo, cb) => {
-      console.log('User verification fun called', req.headers)
       const { id_token } = tokenSet
       const { email, sub: saeonId, name } = userInfo
       const emailAddress = email.toLowerCase()

@@ -1,13 +1,13 @@
 import theme from './default-theme.js'
 import frontMatter from './front-matter.js'
 import { pool } from '../pool.js'
-import { NCCRD_HOSTNAME, DEFAULT_SHORTNAME } from '../../config.js'
+import { HOSTNAME, DEFAULT_SHORTNAME } from '../../config/index.js'
 import mergeTenantsSubmissions from '../../lib/sql/merge-tenants-submissions.js'
 
 export default async () => {
   await (await pool.connect())
     .request()
-    .input('hostname', new URL(NCCRD_HOSTNAME).hostname)
+    .input('hostname', new URL(HOSTNAME).hostname)
     .input('title', 'National Climate Change Response Database')
     .input('shortTitle', DEFAULT_SHORTNAME)
     .input('description', 'National Climate Change Response Database')

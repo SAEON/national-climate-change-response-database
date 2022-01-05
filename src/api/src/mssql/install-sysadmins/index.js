@@ -1,4 +1,4 @@
-import { NCCRD_DEFAULT_SYSADMIN_EMAIL_ADDRESSES as _USERS } from '../../config.js'
+import { DEFAULT_SYSADMIN_EMAIL_ADDRESSES as _USERS } from '../../config/index.js'
 import { pool } from '../pool.js'
 import mssql from 'mssql'
 

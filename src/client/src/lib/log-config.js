@@ -1,6 +1,6 @@
 import * as config from '../config'
 
-if (config.NCCRD_DEPLOYMENT_ENV !== 'production') {
+if (config.DEPLOYMENT_ENV !== 'production') {
   console.log(
     'Configuration',
     Object.fromEntries(

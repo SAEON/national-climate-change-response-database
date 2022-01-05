@@ -1,5 +1,5 @@
 import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
-import { NCCRD_API_GQL_ADDRESS } from '../../config'
+import { GQL_HOSTNAME } from '../../config'
 
 export default ({ children }) => (
   <ApolloProvider
@@ -17,7 +17,7 @@ export default ({ children }) => (
           },
         }),
         link: new HttpLink({
-          uri: NCCRD_API_GQL_ADDRESS,
+          uri: GQL_HOSTNAME,
           credentials: 'include',
         }),
       })

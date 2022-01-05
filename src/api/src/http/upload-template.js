@@ -1,6 +1,6 @@
 import { createReadStream, createWriteStream, stat } from 'fs'
 import { join, normalize, sep } from 'path'
-import { SUBMISSION_TEMPLATES_DIRECTORY } from '../config.js'
+import { SUBMISSION_TEMPLATES_DIRECTORY } from '../config/index.js'
 import PERMISSIONS from '../user-model/permissions.js'
 import { pool } from '../mssql/pool.js'
 

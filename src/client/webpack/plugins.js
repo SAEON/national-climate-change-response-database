@@ -6,21 +6,21 @@ const loadEntryPoints = require('./load-entry-points.js')
 
 const ROOT = path.normalize(path.join(__dirname, '../'))
 const dotenv = require('dotenv').config({ path: path.join(ROOT, './.env') })
-const { NODE_ENV: mode, NCCRD_DEPLOYMENT_ENV = 'local', NCCRD_HOSTNAME = '' } = process.env
+const { NODE_ENV: mode, DEPLOYMENT_ENV = 'local', HOSTNAME = '' } = process.env
 
 module.exports = (ROOT, output) => {
   return [
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(mode),
-        NCCRD_DEPLOYMENT_ENV: JSON.stringify(NCCRD_DEPLOYMENT_ENV),
-        NCCRD_HOSTNAME: JSON.stringify(NCCRD_HOSTNAME),
+        DEPLOYMENT_ENV: JSON.stringify(DEPLOYMENT_ENV),
+        HOSTNAME: JSON.stringify(HOSTNAME),
         PACKAGE_NAME: JSON.stringify(packageJson.name),
         PACKAGE_DESCRIPTION: JSON.stringify(packageJson.description),
         PACKAGE_KEYWORDS: JSON.stringify(packageJson.keywords),
         ...Object.fromEntries(
           Object.entries(dotenv.parsed || {})
-            .filter(([key]) => key !== 'NCCRD_DEPLOYMENT_ENV')
+            .filter(([key]) => key !== 'DEPLOYMENT_ENV')
             .map(([key, value]) => [key, JSON.stringify(value)])
         ),
       },

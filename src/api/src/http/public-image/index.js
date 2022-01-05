@@ -1,7 +1,7 @@
 import { createReadStream } from 'fs'
 import { join, sep } from 'path'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
-import { IMAGES_DIRECTORY } from '../../config.js'
+import { IMAGES_DIRECTORY } from '../../config/index.js'
 import sanitize from 'sanitize-filename'
 
 const __dirname = getCurrentDirectory(import.meta)

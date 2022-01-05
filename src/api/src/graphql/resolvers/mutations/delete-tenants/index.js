@@ -1,7 +1,7 @@
 import mssql from 'mssql'
 import { basename, sep, normalize, join } from 'path'
 import { unlink } from 'fs'
-import { IMAGES_DIRECTORY } from '../../../../config.js'
+import { IMAGES_DIRECTORY } from '../../../../config/index.js'
 
 export default async (_, { ids }, ctx) => {
   const { pool } = ctx.mssql

@@ -1,16 +1,40 @@
+import { pool } from '../mssql/pool.js'
 import passport from 'koa-passport'
 import { Issuer } from 'openid-client'
-import { ODP_AUTH_CLIENT_SECRET, ODP_AUTH_CLIENT_ID, ODP_AUTH_WELL_KNOWN } from '../config/index.js'
+import {
+  ODP_AUTH_CLIENT_SECRET,
+  ODP_AUTH_CLIENT_ID,
+  ODP_AUTH_WELL_KNOWN,
+  HOSTNAME,
+  ODP_AUTH_REDIRECT_PATH,
+} from '../config/index.js'
 import strategy from './_strategy.js'
 import './_serialize-user.js'
 import './_deserialize-user.js'
+const { port, protocol } = new URL(HOSTNAME)
 
 if (!ODP_AUTH_CLIENT_ID || !ODP_AUTH_CLIENT_SECRET) {
   console.error('OAUTH credentials not provided')
   process.exit(1)
 }
 
+/**
+ * Each tenant needs it's own authentication client
+ * This is configured on startup, so when a tenant
+ * is added to the deployment, restart the app
+ */
 Issuer.discover(ODP_AUTH_WELL_KNOWN)
-  .then(oauthProvider => passport.use('oidc', strategy(oauthProvider)))
+  .then(async issuer => {
+    const tenants = (
+      await (await pool.connect()).request().query(`select hostname from Tenants;`)
+    ).recordset.map(({ hostname }) => [
+      hostname,
+      `${protocol}//${hostname}:${port}${ODP_AUTH_REDIRECT_PATH}`,
+    ])
+
+    tenants.forEach(([id, cbUri]) => {
+      passport.use(id, strategy({ issuer, redirect_uri: cbUri }))
+    })
+  })
   .then(() => console.info('Authentication configured successfully'))
   .catch(error => console.error('Unable to configure oauth2 oidc strategy', error))

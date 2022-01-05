@@ -1,11 +1,11 @@
 import { useEffect, useContext } from 'react'
 import { useSnackbar } from 'notistack'
-import { NCCRD_CLIENT_DEFAULT_NOTICES } from '../../config'
+import { DEFAULT_NOTICES } from '../../config'
 import { context as authContext } from '../../contexts/authentication'
 
 /**
  * Example of a notice:
- * NCCRD_CLIENT_DEFAULT_NOTICES=Some message,warning;Some other message,info
+ * DEFAULT_NOTICES=Some message,warning;Some other message,info
  */
 export default ({ children }) => {
   const { enqueueSnackbar } = useSnackbar()
@@ -19,7 +19,7 @@ export default ({ children }) => {
   useEffect(
     () =>
       (async () => {
-        for (const { msg, variant } of NCCRD_CLIENT_DEFAULT_NOTICES.split(';')
+        for (const { msg, variant } of DEFAULT_NOTICES.split(';')
           .filter(_ => _)
           .map(str => {
             const [msg, variant] = str.split(',').map(s => s.trim())

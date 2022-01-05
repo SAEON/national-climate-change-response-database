@@ -1,5 +1,5 @@
 export const DEPLOYMENT_ENV = process.env.DEPLOYMENT_ENV || 'development'
-export const NCCRD_CLIENT_DEFAULT_NOTICES = process.env.NCCRD_CLIENT_DEFAULT_NOTICES || '' // "msg,info;msg2,warn;msg3,error;etd"
+export const DEFAULT_NOTICES = process.env.DEFAULT_NOTICES || '' // "msg,info;msg2,warn;msg3,error;etd"
 
 export const HOSTNAME = process.env.HOSTNAME
   ? process.env.HOSTNAME === 'origin'

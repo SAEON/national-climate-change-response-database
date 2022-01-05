@@ -9,7 +9,7 @@ import { HOSTNAME, ODP_AUTH_SCOPES } from '../config/index.js'
  * as undefined as a JavaScript value
  */
 export default async (ctx, next) =>
-  passport.authenticate('oidc', {
+  passport.authenticate(ctx.tenant.hostname, {
     scope: ODP_AUTH_SCOPES,
     state: base64url(
       JSON.stringify({

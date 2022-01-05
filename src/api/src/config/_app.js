@@ -6,7 +6,7 @@ config()
 
 const __dirname = getCurrentDirectory(import.meta)
 const p = (...args) => normalize(join(...args))
-const n = (k, p) => normalize(process.env[k] || join(__dirname, p))
+const _ = (k, _p) => p(process.env[k] || join(__dirname, _p))
 
 export const HOSTNAME = process.env.HOSTNAME || 'http://localhost:3000'
 
@@ -16,7 +16,7 @@ export const DEFAULT_ADMIN_EMAIL_ADDRESSES = process.env.DEFAULT_ADMIN_EMAIL_ADD
 export const DEFAULT_SHORTNAME = 'NCCRD'
 export const DEFAULT_SYSADMIN_EMAIL_ADDRESSES = process.env.DEFAULT_SYSADMIN_EMAIL_ADDRESSES || ''
 export const DEPLOYMENT_ENV = process.env.DEPLOYMENT_ENV || 'development'
-export const FILES_DIRECTORY = n('FILES_DIRECTORY', `..${sep}..${sep}assets`)
+export const FILES_DIRECTORY = _('FILES_DIRECTORY', `..${sep}..${sep}assets`)
 export const GQL_HOSTNAME = `${HOSTNAME}/graphql`
 export const IMAGES_DIRECTORY = p(FILES_DIRECTORY, `.${sep}images`)
 export const LOG_REQUEST_DETAILS = (process.env.LOG_REQUEST_DETAILS || 'true').toBoolean()

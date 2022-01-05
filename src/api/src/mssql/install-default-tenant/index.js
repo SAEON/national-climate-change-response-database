@@ -43,7 +43,6 @@ export default async () => {
           flagUrl,
           regionId,
           includeUnboundedSubmissions
-          
         ) values (
           s.hostname,
           s.title,

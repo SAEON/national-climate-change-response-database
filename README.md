@@ -192,7 +192,7 @@ docker run \
   -e 'MSSQL_PORT=1433' \
   -e 'DEFAULT_ADMIN_EMAIL_ADDRESSES=name@email.com"' \
   -e 'NCCRD_TECHNICAL_CONTACT=other-name@email.com' \
-  -e 'NCCRD_CLIENT_DEFAULT_NOTICES=Welcome to the National Climate Change Response Database!,info' \
+  -e 'DEFAULT_NOTICES=Welcome to the National Climate Change Response Database!,info' \
   -p 3000:3000 \
   -d nccrd
 ```

@@ -25,6 +25,7 @@ export default ({
   formName,
   fields,
   RenderField,
+  validation,
   sections,
   defaultExpanded = [],
   formNumber = 0,
@@ -85,6 +86,7 @@ ${JSON.stringify(sections, null, 2)}`
         return (
           <FormSection
             formName={formName}
+            validation={validation}
             formNumber={formNumber}
             key={title}
             defaultExpanded={defaultExpanded.includes(title)}

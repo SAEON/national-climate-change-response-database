@@ -3,10 +3,11 @@ import { ComposeForm } from '../../form'
 import { context as formContext } from '../../context'
 import RenderField from './_render-field'
 
-const Compose = memo(({ fields }) => {
+const Compose = memo(({ fields, validation }) => {
   return (
     <ComposeForm
       formName="mitigation"
+      validation={validation}
       RenderField={RenderField}
       fields={fields}
       hideSections={[]}
@@ -51,11 +52,11 @@ const Compose = memo(({ fields }) => {
  * as that will trigger many re-renders
  */
 export default ({ active }) => {
-  const { mitigationFields } = useContext(formContext)
+  const { mitigationFields, mitigationFormsValidation } = useContext(formContext)
 
   if (!active) {
     return null
   }
 
-  return <Compose fields={mitigationFields} />
+  return <Compose validation={mitigationFormsValidation} fields={mitigationFields} />
 }

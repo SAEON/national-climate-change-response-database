@@ -3,12 +3,13 @@ import { ComposeForm } from '../../form'
 import { context as formContext } from '../../context'
 import RenderField from './_render-field'
 
-const Compose = memo(({ fields }) => (
+const Compose = memo(({ fields, validation }) => (
   <ComposeForm
     formName="project"
     RenderField={RenderField}
     fields={fields}
     defaultExpanded={['Project overview']}
+    validation={validation}
     sections={{
       'Project overview': [
         'title',
@@ -53,11 +54,11 @@ const Compose = memo(({ fields }) => (
  * as that will trigger many re-renders
  */
 export default ({ active }) => {
-  const { projectFields } = useContext(formContext)
+  const { projectFields, generalDetailsFormValidation } = useContext(formContext)
 
   if (!active) {
     return null
   }
 
-  return <Compose fields={projectFields} />
+  return <Compose validation={generalDetailsFormValidation} fields={projectFields} />
 }

@@ -93,7 +93,7 @@ input ProjectInput {
   """
   Province :: Select province(s) :: regions
   """
-  province: [ControlledVocabularyInput]
+  province: [ControlledVocabularyInput]!
   """
   District municipality :: Select district municipality(s) :: regions
   """

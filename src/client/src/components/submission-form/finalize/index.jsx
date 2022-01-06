@@ -11,11 +11,24 @@ import Typography from '@mui/material/Typography'
 
 export default ({ mode }) => {
   const history = useHistory()
-  const { generalDetailsForm, mitigationDetailsForm, adaptationDetailsForm, submissionId } =
-    useContext(formContext)
+  const {
+    generalDetailsForm,
+    generalDetailsFormValidation,
+    mitigationDetailsForm,
+    mitigationFormsValidation,
+    adaptationDetailsForm,
+    adaptationFormsValidation,
+    submissionId,
+  } = useContext(formContext)
 
   const { __submissionStatus: submissionStatus, __submissionComments: submissionComments } =
     generalDetailsForm
+
+  const formComplete =
+    generalDetailsFormValidation.isComplete &&
+    (generalDetailsForm.interventionType?.term === 'Cross Cutting' ||
+      mitigationFormsValidation.isComplete ||
+      adaptationFormsValidation.isComplete)
 
   const [createSubmission, { error, loading }] = useMutation(
     gql`
@@ -85,6 +98,7 @@ export default ({ mode }) => {
         </CardContent>
         <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button
+            disabled={!formComplete}
             onClick={() =>
               createSubmission({
                 variables: {

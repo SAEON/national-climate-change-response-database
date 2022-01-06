@@ -54,16 +54,20 @@ const Buttons = memo(
     } else if (section === 'adaptationFormsValidation') {
       previousFn = () => setActiveIndex(0)
       hasPrevious = true
-      if (adaptationFormsValidation) {
+      if (adaptationFormsValidation && generalDetailsFormValidation) {
         hasNext = true
         nextFn = () => setActiveIndex(currentIndex + 1)
+      } else {
+        hasNext = false
       }
     } else if (section === 'mitigationFormsValidation') {
       previousFn = () => setActiveIndex(0)
       hasPrevious = true
-      if (mitigationFormsValidation) {
+      if (mitigationFormsValidation && generalDetailsFormValidation) {
         hasNext = true
         nextFn = () => setActiveIndex(currentIndex + 2)
+      } else {
+        hasNext = false
       }
     } else {
       if (generalDetailsFormValidation) {

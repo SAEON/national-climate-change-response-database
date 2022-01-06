@@ -33,7 +33,7 @@ export default ({
       variant="outlined"
       className={clsx({
         [classes.root]: true,
-        [classes.errorOutline]: error && !collapsed,
+        [classes.errorOutline]: error,
         [classes.errorBackground]: error && collapsed,
       })}
       style={{ width: '100%', ...cardStyle }}

@@ -1,4 +1,3 @@
-import ApolloProvider from '../components/apollo'
 import AuthenticationProvider from '../contexts/authentication'
 import AuthorizationProvider from '../contexts/authorization'
 import SnackbarProvider from '../components/notistack'
@@ -18,21 +17,19 @@ export default ({ children }) => {
       <CssBaseline>
         <DetectDevice>
           <NativeExtensions>
-            <ApolloProvider>
-              <CookieConsent>
-                <AuthenticationProvider>
-                  <AuthorizationProvider>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <SnackbarProvider>
-                        <DefaultApplicationNotices>
-                          <LayoutProvider>{children}</LayoutProvider>
-                        </DefaultApplicationNotices>
-                      </SnackbarProvider>
-                    </LocalizationProvider>
-                  </AuthorizationProvider>
-                </AuthenticationProvider>
-              </CookieConsent>
-            </ApolloProvider>
+            <CookieConsent>
+              <AuthenticationProvider>
+                <AuthorizationProvider>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <SnackbarProvider>
+                      <DefaultApplicationNotices>
+                        <LayoutProvider>{children}</LayoutProvider>
+                      </DefaultApplicationNotices>
+                    </SnackbarProvider>
+                  </LocalizationProvider>
+                </AuthorizationProvider>
+              </AuthenticationProvider>
+            </CookieConsent>
           </NativeExtensions>
         </DetectDevice>
       </CssBaseline>

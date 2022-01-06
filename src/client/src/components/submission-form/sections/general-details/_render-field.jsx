@@ -7,6 +7,7 @@ import {
 } from '../../form'
 import { context as formContext } from '../../context'
 import { context as authContext } from '../../../../contexts/authorization'
+import { context as clientContext } from '../../../../contexts/client-context'
 import Loading from '../../../loading'
 
 const LocationsPicker = lazy(() => import('../../form/components/locations-picker'))
@@ -22,12 +23,16 @@ const multilineFields = [
 
 export default ({ field }) => {
   const { hasPermission } = useContext(authContext)
+
+  const tenantContext = useContext(clientContext)
+
   const {
     generalDetailsForm: form,
     updateGeneralDetailsForm: updateForm,
     resetMitigationDetailsForm,
     resetAdaptationDetailsForm,
   } = useContext(formContext)
+
   const { name: fieldName, description, type } = field
   let [placeholder, helperText, tree] = description?.split('::').map(s => s.trim()) || []
   const { kind } = type
@@ -42,16 +47,17 @@ export default ({ field }) => {
    * Controlled vocabulary
    */
   if (fieldName === 'province') {
+    console.log('tenant', tenantContext)
     return (
       <ControlledVocabularySelectMultiple
         id="select-province"
         key={fieldName}
         tree={tree}
-        isOptionDisabled={option =>
-          Boolean(value?.find(({ term }) => term === 'National')) && option !== 'National'
+        isOptionDisabled={option => {
+          return Boolean(value?.find(({ term }) => term === 'National')) && option !== 'National'
             ? true
             : false
-        }
+        }}
         roots={['South Africa']}
         name={fieldName}
         value={value}

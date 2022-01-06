@@ -19,6 +19,7 @@ export default async () => {
       merge Tenants t
       using (
         select
+        1 isDefault,
         @hostname hostname,
         @title title,
         @shortTitle shortTitle,
@@ -34,6 +35,7 @@ export default async () => {
       when not matched
         then insert (
           hostname,
+          isDefault,
           title,
           shortTitle,
           frontMatter,
@@ -45,6 +47,7 @@ export default async () => {
           includeUnboundedSubmissions
         ) values (
           s.hostname,
+          s.isDefault,
           s.title,
           s.shortTitle,
           s.frontMatter,
@@ -58,6 +61,7 @@ export default async () => {
 
       when matched
         then update set
+          t.isDefault = s.isDefault,
           t.title = s.title,
           t.shortTitle = s.shortTitle,
           t.frontMatter = s.frontMatter,

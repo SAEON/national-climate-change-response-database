@@ -4,10 +4,22 @@ import Menu from '@mui/material/Menu'
 import MenuIcon from 'mdi-react/MenuIcon'
 import NavItem from './_nav-item'
 import { context as authorizationContext } from '../../../../contexts/authorization'
+import { context as clientContext } from '../../../../contexts/client-context'
+import checkTenantRouteAuthorization from '../../../../lib/check-tenant-route-authorization'
 
+/**
+ * SPA routes are shown based on 2 authorization conditions
+ *  (1) Does the current tenant have permission to show the route
+ *  (2) Does the current user have permission to see the route
+ *
+ * If any of these conditions are false, the route is hidden. If
+ * a user tries to navigate to that route specifically then only
+ * condition (2) applies.
+ */
 export default ({ routes }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const { hasPermission } = useContext(authorizationContext)
+  const tenantContext = useContext(clientContext)
 
   return (
     <>
@@ -29,10 +41,25 @@ export default ({ routes }) => {
         onClose={() => setAnchorEl(null)}
       >
         {routes
-          .filter(({ requiredPermission = false, excludeFromNav = false }) => {
+          .filter(({ requiredPermission = false, excludeFromNav = false, tenants }) => {
             if (excludeFromNav) {
               return false
             }
+
+            /**
+             * Authorization condition (1): does
+             * the tenant have permission to advertise
+             * this route
+             */
+            if (!checkTenantRouteAuthorization(tenants, tenantContext)) {
+              return false
+            }
+
+            /**
+             * Authorization condition (2): does
+             * the user have permission to access
+             * this route
+             */
             return requiredPermission ? hasPermission(requiredPermission) : true
           })
           .map(({ label, Icon, to, href }) => {

@@ -6,11 +6,13 @@ export default async ctx => {
   const ipAddress = ctx.request.headers['X-Real-IP'] || ctx.request.ip
   const userAgent = ctx.request.headers['user-agent']
   const origin = ctx.request.headers['origin'] || HOSTNAME
-  const hostname = getHostnameFromOrigin(origin)
+  const hostname_ = getHostnameFromOrigin(origin)
 
   const tenant = (
-    await (await pool.connect()).request().input('hostname', hostname).query(`
+    await (await pool.connect()).request().input('hostname', hostname_).query(`
       select
+        hostname,
+        isDefault,
         title,
         shortTitle,
         coalesce(frontMatter, ( select frontMatter from Tenants where shortTitle = '${DEFAULT_SHORTNAME}' ) ) frontMatter,
@@ -23,12 +25,24 @@ export default async ctx => {
         hostname = @hostname;`)
   ).recordset[0]
 
-  const { theme, title, description, shortTitle, frontMatter, logoUrl, flagUrl } = tenant || {}
+  const {
+    hostname,
+    theme,
+    title,
+    isDefault,
+    description,
+    shortTitle,
+    frontMatter,
+    logoUrl,
+    flagUrl,
+  } = tenant || {}
 
   ctx.body = {
+    hostname,
     ipAddress,
     userAgent,
     origin,
+    isDefault,
     title,
     shortTitle,
     frontMatter,

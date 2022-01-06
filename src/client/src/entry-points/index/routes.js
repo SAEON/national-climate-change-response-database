@@ -11,6 +11,8 @@ import LoginIcon from 'mdi-react/LoginIcon'
 import Transition from '../../components/page-transition'
 import TermsIcon from 'mdi-react/ContractIcon'
 import PrivacyIcon from 'mdi-react/LockCheckIcon'
+import SettingsIcon from 'mdi-react/SettingsIcon'
+import { DEFAULT_TENANT_ADDRESS } from '../../config'
 
 const HomePage = lazy(() => import('../../pages/home'))
 const AccessPage = lazy(() => import('../../pages/access'))
@@ -152,18 +154,41 @@ export default [
       </Transition>
     ),
   },
-
   {
     label: 'Deployment',
     Icon: DeploymentsIcon,
     to: '/deployment',
     exact: true,
     requiredPermission: '/deployment',
+    tenants: ['default'],
     render: () => (
       <Transition>
         <DeploymentPage />
       </Transition>
     ),
+  },
+  {
+    label: 'Access',
+    Icon: UsersIcon,
+    to: '/access',
+    exact: true,
+    requiredPermission: '/access',
+    tenants: ['default'],
+    render: () => (
+      <Transition>
+        <AccessPage />
+      </Transition>
+    ),
+  },
+  {
+    label: 'Main site',
+    Icon: SettingsIcon,
+    href: `${DEFAULT_TENANT_ADDRESS}`,
+    exact: true,
+    to: '',
+    requiredPermission: '/deployment',
+    includeInFooter: true,
+    tenants: ['!default'],
   },
   {
     label: 'Login',
@@ -178,19 +203,6 @@ export default [
       </Transition>
     ),
   },
-  {
-    label: 'Access',
-    Icon: UsersIcon,
-    to: '/access',
-    exact: true,
-    requiredPermission: '/access',
-    render: () => (
-      <Transition>
-        <AccessPage />
-      </Transition>
-    ),
-  },
-
   {
     label: 'Users',
     Icon: UsersIcon,

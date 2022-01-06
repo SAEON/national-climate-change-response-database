@@ -7,6 +7,8 @@ export const HOSTNAME = process.env.HOSTNAME
     : process.env.HOSTNAME
   : 'http://localhost:3000'
 
+export const DEFAULT_TENANT_ADDRESS = process.env.DEFAULT_TENANT_ADDRESS || 'http://localhost:3001'
+
 export const NCCRD_API_HTTP_ADDRESS = `${HOSTNAME}/http`
 export const GQL_HOSTNAME = `${HOSTNAME}/graphql`
 export const PACKAGE_DESCRIPTION = process.env.PACKAGE_DESCRIPTION.toString()

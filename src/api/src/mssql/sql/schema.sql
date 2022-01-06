@@ -115,6 +115,7 @@ if not exists (
 begin
 create table Tenants (
   id int not null identity primary key,
+  isDefault bit default 0,
   hostname nvarchar(255) not null unique,
   title nvarchar(255),
   shortTitle nvarchar(10),

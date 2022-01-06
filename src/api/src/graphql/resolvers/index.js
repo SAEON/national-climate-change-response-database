@@ -12,3 +12,4 @@ export { default as ControlledVocabulary } from './types/controlled-vocabulary/i
 export { default as WKT_4326 } from './types/wkt-4326.js'
 export { default as Tenant } from './types/tenant.js'
 export { default as Region } from './types/region/index.js'
+export { default as ClientContext } from './types/client-context/index.js'

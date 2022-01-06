@@ -47,16 +47,25 @@ export default ({ field }) => {
    * Controlled vocabulary
    */
   if (fieldName === 'province') {
-    console.log('tenant', tenantContext)
     return (
       <ControlledVocabularySelectMultiple
         id="select-province"
         key={fieldName}
         tree={tree}
         isOptionDisabled={option => {
-          return Boolean(value?.find(({ term }) => term === 'National')) && option !== 'National'
-            ? true
-            : false
+          let disabled = false
+
+          if (tenantContext.region.vocabulary[0].term === 'National') {
+            if (Boolean(value?.find(({ term }) => term === 'National')) && option !== 'National') {
+              disabled = true
+            }
+          } else {
+            if (option !== tenantContext.region.vocabulary[0].term) {
+              disabled = true
+            }
+          }
+
+          return disabled
         }}
         roots={['South Africa']}
         name={fieldName}

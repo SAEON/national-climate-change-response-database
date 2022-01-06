@@ -26,6 +26,23 @@ type Permission {
   description: String
 }
 
+type ClientContext {
+  id: ID!
+  hostname: String!
+  ipAddress: String
+  userAgent: String
+  origin: String
+  isDefault: Boolean!
+  title: String
+  shortTitle: String
+  frontMatter: JSON
+  description: String
+  logoUrl: String
+  flagUrl: String
+  theme: JSON
+  region: Region
+}
+
 input ControlledVocabularyInput {
   root: String!
   tree: String!
@@ -86,9 +103,14 @@ type Region {
   id: ID!
   name: String!
   geometry: WKT_4326!
+  vocabulary: [ControlledVocabulary!]!
 }
 
 type Query {
+  """
+  Retrieve the HTTP/Tenant information of the connecting client
+  """
+  clientContext: ClientContext!
   """
   Find geometries for region
   """

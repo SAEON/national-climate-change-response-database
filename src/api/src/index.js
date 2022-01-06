@@ -17,7 +17,6 @@ import whitelistRoutes from './middleware/whitelist-routes.js'
 import blacklistRoutes from './middleware/blacklist-routes.js'
 import logReqDetails from './middleware/log-req-details.js'
 import fourOFour from './middleware/404.js'
-import clientContextRoute from './http/client-context/index.js'
 import authenticateRoute from './http/authenticate.js'
 import createTenantRoute from './http/create-tenant/index.js'
 import publicImageRoute from './http/public-image/index.js'
@@ -94,7 +93,6 @@ app
   .use(createRequestContext(app))
   .use(
     new KoaRouter()
-      .get('/http/client-context', clientContextRoute)
       .get('/http/authenticate/redirect/saeon', oauthAuthenticationCallbackRoute, loginSuccessRoute) // passport
       .get('/http/login', loginRoute) // passport
       .get('/http/authenticate', authenticateRoute)

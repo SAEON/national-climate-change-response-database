@@ -11,6 +11,7 @@ import submission from '../queries/submission/index.js'
 import pageInfo from '../queries/page-info/index.js'
 import tenants from '../queries/tenants/index.js'
 import regions from '../queries/regions/index.js'
+import clientContext from '../queries/client-context/index.js'
 
 export default {
   users: authorize(PERMISSIONS['view-users'])(users),
@@ -18,6 +19,7 @@ export default {
   permissions: authorize(PERMISSIONS['view-permissions'])(permissions),
   submissionTemplates: authorize(PERMISSIONS['view-submission-templates'])(submissionTemplates),
   tenants: authorize(PERMISSIONS['view-tenants'])(tenants),
+  clientContext,
   submission,
   submissions,
   pageInfo,

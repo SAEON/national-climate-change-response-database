@@ -1,8 +1,8 @@
-import { HOSTNAME, DEFAULT_SHORTNAME } from '../../config/index.js'
-import { pool } from '../../mssql/pool.js'
-import getHostnameFromOrigin from '../../lib/get-hostname-from-origin.js'
+import { HOSTNAME, DEFAULT_SHORTNAME } from '../../../../config/index.js'
+import getHostnameFromOrigin from '../../../../lib/get-hostname-from-origin.js'
 
-export default async ctx => {
+export default async (self, args, ctx) => {
+  const { pool } = ctx.mssql
   const ipAddress = ctx.request.headers['X-Real-IP'] || ctx.request.ip
   const userAgent = ctx.request.headers['user-agent']
   const origin = ctx.request.headers['origin'] || HOSTNAME
@@ -11,6 +11,7 @@ export default async ctx => {
   const tenant = (
     await (await pool.connect()).request().input('hostname', hostname_).query(`
       select
+        id,
         hostname,
         isDefault,
         title,
@@ -18,6 +19,7 @@ export default async ctx => {
         coalesce(frontMatter, ( select frontMatter from Tenants where shortTitle = '${DEFAULT_SHORTNAME}' ) ) frontMatter,
         description,
         theme,
+        regionId,
         coalesce(logoUrl, ( select logoUrl from Tenants where shortTitle = '${DEFAULT_SHORTNAME}' ) ) logoUrl,
         coalesce(flagUrl, ( select flagUrl from Tenants where shortTitle = '${DEFAULT_SHORTNAME}' ) ) flagUrl
       from Tenants
@@ -26,23 +28,27 @@ export default async ctx => {
   ).recordset[0]
 
   const {
+    id,
     hostname,
     theme,
     title,
     isDefault,
     description,
+    regionId,
     shortTitle,
     frontMatter,
     logoUrl,
     flagUrl,
   } = tenant || {}
 
-  ctx.body = {
+  return {
+    id,
     hostname,
     ipAddress,
     userAgent,
     origin,
     isDefault,
+    regionId,
     title,
     shortTitle,
     frontMatter,

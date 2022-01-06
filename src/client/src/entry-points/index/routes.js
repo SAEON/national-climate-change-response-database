@@ -185,7 +185,7 @@ export default [
     Icon: SettingsIcon,
     href: `${DEFAULT_TENANT_ADDRESS}`,
     exact: true,
-    to: '',
+    to: '/no-route', // Hack - the to property is still required
     requiredPermission: '/deployment',
     includeInFooter: true,
     tenants: ['!default'],

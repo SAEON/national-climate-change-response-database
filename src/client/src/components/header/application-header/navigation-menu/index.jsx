@@ -11,10 +11,6 @@ import checkTenantRouteAuthorization from '../../../../lib/check-tenant-route-au
  * SPA routes are shown based on 2 authorization conditions
  *  (1) Does the current tenant have permission to show the route
  *  (2) Does the current user have permission to see the route
- *
- * If any of these conditions are false, the route is hidden. If
- * a user tries to navigate to that route specifically then only
- * condition (2) applies.
  */
 export default ({ routes }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -51,8 +47,10 @@ export default ({ routes }) => {
              * the tenant have permission to advertise
              * this route
              */
-            if (!checkTenantRouteAuthorization(tenants, tenantContext)) {
-              return false
+            if (tenants) {
+              if (!checkTenantRouteAuthorization(tenants, tenantContext)) {
+                return false
+              }
             }
 
             /**

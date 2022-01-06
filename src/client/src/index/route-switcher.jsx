@@ -11,22 +11,25 @@ export default withRouter(({ routes }) => {
 
   return (
     <Switch key={location.pathname || '/'}>
-      {routes.map(({ label: key, to: path, exact, render, tenants = [] }) => {
-        if (!checkTenantRouteAuthorization(tenants, tenantContext)) {
-          return (
-            <Route
-              key={key}
-              path={path}
-              exact={exact}
-              render={() => (
-                <>
-                  <div style={{ marginTop: theme.spacing(3) }} />
-                  <FourFour />
-                </>
-              )}
-            />
-          )
+      {routes.map(({ label: key, to: path, exact, render, tenants }) => {
+        if (tenants) {
+          if (!checkTenantRouteAuthorization(tenants, tenantContext)) {
+            return (
+              <Route
+                key={key}
+                path={path}
+                exact={exact}
+                render={() => (
+                  <>
+                    <div style={{ marginTop: theme.spacing(3) }} />
+                    <FourFour />
+                  </>
+                )}
+              />
+            )
+          }
         }
+
         return <Route key={key} path={path} exact={exact} render={render} />
       })}
     </Switch>

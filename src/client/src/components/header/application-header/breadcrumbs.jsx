@@ -26,6 +26,9 @@ export default ({ contentBase = '/', routes }) => {
   const tree = [...new Set(normalizedPathname.split('/'))].map(p => {
     return (
       routes.find(({ to }) => {
+        if (!to) {
+          return false
+        }
         to = to.replace(contentBase, '').replace('/', '')
         return to === p
       }) || { label: p?.titleize() || '404 (Not found)' }

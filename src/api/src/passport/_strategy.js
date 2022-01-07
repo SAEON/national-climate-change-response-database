@@ -72,7 +72,7 @@ export default ({ issuer, redirect_uri }) => {
           .request()
           .input('emailAddress', emailAddress)
           .input('roleName', userRole.name).query(`
-            insert into UserRoleXref (userId, roleId)
+            insert into UserXrefRoleXrefTenant (userId, roleId)
             select distinct
               u.id userId,
               ( select id from Roles r where r.name =  @roleName) roleId
@@ -81,7 +81,7 @@ export default ({ issuer, redirect_uri }) => {
               u.emailAddress = @emailAddress
               and not exists (
                 select 1
-                from UserRoleXref
+                from UserXrefRoleXrefTenant
                 where userId = u.id
               );`)
 

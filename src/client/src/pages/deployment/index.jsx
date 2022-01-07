@@ -20,14 +20,14 @@ const _sections = [
     secondaryText: 'Submission form for offline use (.xlsm)',
     Icon: () => <ExcelIcon />,
     Render: ExcelTemplates,
-    requiredPermission: '/deployments',
+    requiredPermission: '/deployment',
   },
   {
     primaryText: 'Tenants',
-    secondaryText: 'Provincial deployments',
+    secondaryText: 'Provincial deployment',
     Icon: () => <TenantIcon />,
     Render: Tenants,
-    requiredPermission: '/deployments',
+    requiredPermission: '/deployment',
   },
 ]
 
@@ -52,8 +52,8 @@ export default () => {
     return <Loading />
   }
 
-  if (!hasPermission('/deployments')) {
-    return <AccessDenied requiredPermission="/deployments" />
+  if (!hasPermission('/deployment')) {
+    return <AccessDenied requiredPermission="/deployment" />
   }
 
   return (

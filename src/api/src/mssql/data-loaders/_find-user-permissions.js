@@ -16,8 +16,8 @@ export default () =>
           p.name,
           p.description
         from Roles r
-        join UserRoleXref x on x.roleId = r.id
-        join PermissionRoleXref px on px.roleId = r.id
+        join UserXrefRoleXrefTenant x on x.roleId = r.id
+        join PermissionXrefRole px on px.roleId = r.id
         join Permissions p on p.id = px.permissionId
         where
           x.userId in (${keys.map((_, i) => `@key_${i}`)});`)

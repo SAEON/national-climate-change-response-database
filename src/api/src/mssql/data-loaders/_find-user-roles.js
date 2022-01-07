@@ -16,7 +16,7 @@ export default () =>
           r.name,
           r.description
         from Roles r
-        join UserRoleXref x on x.roleId = r.id
+        join UserXrefRoleXrefTenant x on x.roleId = r.id
         where
           x.userId in (${keys.map((_, i) => `@key_${i}`)});`)
 

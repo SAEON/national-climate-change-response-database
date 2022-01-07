@@ -34,8 +34,19 @@ import { PORT, API_KEY, SSL_ENV } from './config/index.js'
 import hoursToMilliseconds from './lib/hours-to-ms.js'
 import getCurrentDirectory from './lib/get-current-directory.js'
 import path from 'path'
-import './passport/index.js'
-import './mssql/setup-db.js'
+
+/**
+ * Authentication clients are
+ * created from DB entries. So
+ * these need to exist first
+ */
+import('./mssql/setup-db.js')
+  .then(({ default: fn }) => fn())
+  .catch(error => {
+    console.error(error.message)
+    process.exit(1)
+  })
+  .then(() => import('./passport/index.js'))
 
 const __dirname = getCurrentDirectory(import.meta)
 

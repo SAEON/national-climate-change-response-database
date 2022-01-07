@@ -14,11 +14,10 @@ export default async (ctx, ...permissions) => {
     request.input('userId', userId)
     permissions.forEach(({ name }, i) => request.input(`p_${i}`, name))
     const result = await request.query(`
-      select
-      1
+      select 1
       from Permissions p
-      join PermissionRoleXref xp on xp.permissionId = p.id
-      join UserRoleXref xu on xu.roleId = xp.roleId
+      join PermissionXrefRole xp on xp.permissionId = p.id
+      join UserXrefRoleXrefTenant xu on xu.roleId = xp.roleId
       join Users u on u.id = xu.userId
       where
         userId = @userId

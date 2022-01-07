@@ -30,7 +30,7 @@ export default async () => {
     for (const { name: permissionName } of permissions) {
       await transaction.request().input('roleName', name).input('permissionName', permissionName)
         .query(`
-          merge PermissionRoleXref t
+          merge PermissionXrefRole t
           using (
             select
               ( select id from Roles where name = @roleName ) roleId,

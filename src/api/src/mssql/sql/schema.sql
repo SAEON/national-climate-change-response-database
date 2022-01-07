@@ -50,37 +50,20 @@ create table Permissions (
 );
 end
 
--- PermissionRoleXref
+-- PermissionXrefRole
 if not exists (
   select *
   from sys.objects
   where
-    object_id = OBJECT_ID(N'[dbo].[PermissionRoleXref]')
+    object_id = OBJECT_ID(N'[dbo].[PermissionXrefRole]')
     and type = 'U'
 )
 begin
-create table PermissionRoleXref (
+create table PermissionXrefRole (
   id int not null identity primary key,
   roleId int not null foreign key references Roles (id),
   permissionId int not null foreign key references [Permissions] (id),
   unique (roleId, permissionId)
-);
-end
-
--- UserRoleXref
-if not exists (
-  select *
-  from sys.objects
-  where
-    object_id = OBJECT_ID(N'[dbo].[UserRoleXref]')
-    and type = 'U'
-)
-begin
-create table UserRoleXref (
-  id int not null identity primary key,
-  userId int not null foreign key references Users (id),
-  roleId int not null foreign key references Roles (id),
-  unique (userId, roleId)
 );
 end
 
@@ -131,6 +114,23 @@ create table Tenants (
 );
 end
 
+-- UserXrefRoleXrefTenant
+if not exists (
+  select *
+  from sys.objects
+  where
+    object_id = OBJECT_ID(N'[dbo].[UserXrefRoleXrefTenant]')
+    and type = 'U'
+)
+begin
+create table UserXrefRoleXrefTenant (
+  id int not null identity primary key,
+  userId int not null foreign key references Users (id),
+  roleId int not null foreign key references Roles (id),
+  tenantId int not null foreign key references Tenants (id),
+  unique (userId, roleId, tenantId)
+);
+end
 
 -- Vocabulary
 if not exists (

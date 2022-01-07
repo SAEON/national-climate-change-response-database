@@ -16,7 +16,7 @@ export default () =>
           p.name,
           p.description
         from Permissions p
-        join PermissionRoleXref x on x.permissionId = p.id
+        join PermissionXrefRole x on x.permissionId = p.id
         where
           x.roleId in (${keys.map((_, i) => `@key_${i}`)});`)
 

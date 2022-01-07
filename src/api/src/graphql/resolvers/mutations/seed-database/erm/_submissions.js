@@ -56,7 +56,7 @@ export default async ctx => {
           values (s.emailAddress);
 
           /* Make sure Users have correct role */
-          merge UserRoleXref t
+          merge UserXrefRoleXrefTenant t
           using (
             select
               id userId,

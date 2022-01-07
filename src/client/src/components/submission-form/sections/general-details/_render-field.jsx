@@ -54,13 +54,14 @@ export default ({ field }) => {
         tree={tree}
         isOptionDisabled={option => {
           let disabled = false
+          const tenant = tenantContext.region.vocabulary[0].term
 
-          if (tenantContext.region.vocabulary[0].term === 'National') {
+          if (tenant === 'South Africa') {
             if (Boolean(value?.find(({ term }) => term === 'National')) && option !== 'National') {
               disabled = true
             }
           } else {
-            if (option !== tenantContext.region.vocabulary[0].term) {
+            if (option !== tenant) {
               disabled = true
             }
           }

@@ -1,13 +1,7 @@
-import { DEFAULT_ADMIN_EMAIL_ADDRESSES as _USERS } from '../../config/index.js'
-import { pool } from '../pool.js'
 import mssql from 'mssql'
+import { pool } from '../pool.js'
 
-export default async () => {
-  const USERS = _USERS
-    .split(',')
-    .filter(_ => _)
-    .map(_ => _.toLowerCase())
-
+export default async ({ USERS, role }) => {
   if (USERS.length) {
     // Start transaction
     const transaction = new mssql.Transaction(await pool.connect())
@@ -24,28 +18,32 @@ export default async () => {
           when not matched then insert (emailAddress)
           values (s.emailAddress);`)
 
-        // Upsert xref
-        await transaction.request().input('user', user).query(`
-          merge UserRoleXref t
+        // Upsert xref (user/role/tenant)
+        await transaction.request().input('user', user).input('role', role).query(`
+          merge UserXrefRoleXrefTenant t
           using (
             select
               u.id userId,
-              r.id roleId
+              r.id roleId,
+              ( select id from Tenants where isDefault = 1 ) tenantId
             from Users u
-            join Roles r on r.name = 'admin'
+            join Roles r on r.name = @role
             where
               u.emailAddress = @user
-          ) s on s.userId = t.userId and s.roleId = t.roleId
-          when not matched then insert (userId, roleId)
-          values (s.userId, s.roleId);`)
+          ) s on
+            s.userId = t.userId
+            and s.roleId = t.roleId
+            and s.tenantId = t.tenantId
+          when not matched then insert (userId, roleId, tenantId)
+          values (s.userId, s.roleId, tenantId);`)
 
-        console.info('admin (default):', user)
+        console.info(`${role}:`, user)
       }
 
       // Commit the transaction
       await transaction.commit()
     } catch (error) {
-      console.error('Unable to provision admin users', error.message)
+      console.error(`Unable to provision ${role} users`, error.message)
       await transaction.rollback()
       process.exit(1)
     }

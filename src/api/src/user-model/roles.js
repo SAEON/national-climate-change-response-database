@@ -14,9 +14,9 @@ export const user = {
   ]),
 }
 
-export const dffe = {
-  name: 'dffe',
-  description: 'Non-privileged user from DFFE',
+export const maintainer = {
+  name: 'maintainer',
+  description: 'Validate and update submissions, and general application maintenance',
   permissions: deduplicate([
     ...user.permissions,
     permissions['update-submission'],
@@ -28,7 +28,7 @@ export const admin = {
   name: 'admin',
   description: 'Application administrator',
   permissions: deduplicate([
-    ...dffe.permissions,
+    ...maintainer.permissions,
     permissions['upload-template'],
     permissions['view-submission-templates'],
     permissions['delete-submission'],

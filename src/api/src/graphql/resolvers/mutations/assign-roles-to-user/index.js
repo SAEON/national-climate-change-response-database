@@ -11,7 +11,7 @@ export default async (self, { userId, roleIds }, ctx) => {
     begin transaction T
       begin try
 
-        delete from UserRoleXref
+        delete from UserXrefRoleXrefTenant
         where
           userId = ${userId}
           and roleId != ${sysadminId};
@@ -19,7 +19,7 @@ export default async (self, { userId, roleIds }, ctx) => {
         ${
           roleIds.length
             ? `
-              insert into UserRoleXref (userId, roleId)
+              insert into UserXrefRoleXrefTenant (userId, roleId)
               values ${roleIds.map(rId => `(${userId}, ${rId})`).join(',')};`
             : ''
         }

@@ -63,34 +63,36 @@ export default ({
       })}
 
       {/* MITIGATION */}
-      {Object.keys(mitigation).length &&
-        Object.entries(mitigationSections).map(([title, fieldNames]) => {
-          return (
-            <Grid item xs={12} key={title}>
-              <Card
-                title={title}
-                json={Object.fromEntries(
-                  Object.entries(mitigation).filter(([field]) => fieldNames.includes(field))
-                )}
-              />
-            </Grid>
-          )
-        })}
+      {Object.keys(mitigation).length
+        ? Object.entries(mitigationSections).map(([title, fieldNames]) => {
+            return (
+              <Grid item xs={12} key={title}>
+                <Card
+                  title={title}
+                  json={Object.fromEntries(
+                    Object.entries(mitigation).filter(([field]) => fieldNames.includes(field))
+                  )}
+                />
+              </Grid>
+            )
+          })
+        : null}
 
       {/* ADAPTATION */}
-      {Object.keys(adaptation).length &&
-        Object.entries(adaptationSections).map(([title, fieldNames]) => {
-          return (
-            <Grid item xs={12} key={title}>
-              <Card
-                title={title}
-                json={Object.fromEntries(
-                  Object.entries(adaptation).filter(([field]) => fieldNames.includes(field))
-                )}
-              />
-            </Grid>
-          )
-        })}
+      {Object.keys(adaptation).length
+        ? Object.entries(adaptationSections).map(([title, fieldNames]) => {
+            return (
+              <Grid item xs={12} key={title}>
+                <Card
+                  title={title}
+                  json={Object.fromEntries(
+                    Object.entries(adaptation).filter(([field]) => fieldNames.includes(field))
+                  )}
+                />
+              </Grid>
+            )
+          })
+        : null}
     </Grid>
   )
 }

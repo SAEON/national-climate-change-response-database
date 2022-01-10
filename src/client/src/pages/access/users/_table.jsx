@@ -58,7 +58,7 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
                 if (a < b) return -1
                 return 0
               })
-              .map(({ name }) => name.toUpperCase())
+              .map(({ name }) => `TENANT:${name.toUpperCase()}`)
               .join(', '),
         },
       ]}

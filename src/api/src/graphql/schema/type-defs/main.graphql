@@ -8,8 +8,21 @@ type User {
   id: Int!
   emailAddress: String!
   name: String
-  roles: [Role!]!
-  permissions: [Permission!]!
+  """
+  User's are considered in the context of a tenant
+  """
+  context(tenantId: ID): [Tenant]!
+}
+
+type Tenant {
+  id: ID!
+  hostname: String!
+  title: String
+  shortTitle: String
+  frontMatter: JSON!
+  description: String
+  theme: JSON!
+  roles: [Role]!
   submissions: [Submission!]!
 }
 
@@ -168,16 +181,6 @@ type Query {
   Search permissions
   """
   permissions: [Permission!]!
-}
-
-type Tenant {
-  id: ID!
-  hostname: String!
-  title: String
-  shortTitle: String
-  frontMatter: JSON!
-  description: String
-  theme: JSON!
 }
 
 input TenantInput {

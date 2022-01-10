@@ -12,15 +12,14 @@ export default () =>
       const result = await request.query(`
         select
           x.userId,
-          r.id,
-          r.name,
-          r.description
-        from Roles r
-        join UserXrefRoleXrefTenant x on x.roleId = r.id
+          ( select * from Tenants t where t.id = x.tenantId for json path, without_array_wrapper ) tenant,
+          ( select * from Roles r where r.id = xr.id for json path) roles
+        from UserXrefRoleXrefTenant x
+        join Roles xr on xr.id = x.roleId
         where
           x.userId in (${keys.map((_, i) => `@key_${i}`)});`)
 
-      return keys.map(id => result.recordset.filter(sift({ userId: id })))
+      return keys.map(userId => result.recordset.filter(sift({ userId })))
     },
     {
       batch: true,

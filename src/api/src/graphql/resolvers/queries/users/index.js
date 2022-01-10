@@ -1,7 +1,7 @@
-import { pool } from '../../../mssql/pool.js'
+export default async (_, { ids = [] }, ctx) => {
+  const { pool } = ctx.mssql
 
-export default async (_, { ids = [] }) =>
-  await pool.connect().then(async pool => {
+  return await pool.connect().then(async pool => {
     const request = pool.request()
     ids.forEach((id, i) => request.input(`id_${i}`, id))
 
@@ -18,3 +18,4 @@ export default async (_, { ids = [] }) =>
 
     return result.recordset
   })
+}

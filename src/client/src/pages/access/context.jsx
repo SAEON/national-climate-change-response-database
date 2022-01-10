@@ -17,6 +17,9 @@ export default ({ children }) => {
           id
           name
           description
+          tenant {
+            domain
+          }
         }
       }
 

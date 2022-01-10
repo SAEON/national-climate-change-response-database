@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
-import { NCCRD_API_HTTP_ADDRESS } from '../config'
+import { NCCRD_API_HTTP_ADDRESS } from '../../config'
 
 export const context = createContext()
 

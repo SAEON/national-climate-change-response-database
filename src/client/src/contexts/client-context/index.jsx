@@ -3,6 +3,10 @@ import { gql, useQuery } from '@apollo/client'
 
 export const context = createContext()
 
+/**
+ * The client context is a combination of
+ * tenant details and HTTP origin details
+ */
 export default ({ children }) => {
   const { error, loading, data } = useQuery(
     gql`

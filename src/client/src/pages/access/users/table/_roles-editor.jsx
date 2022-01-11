@@ -8,17 +8,23 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import { gql, useMutation } from '@apollo/client'
 import QuickForm from '../../../../components/quick-form'
+import Toolbar from '@mui/material/Toolbar'
+import AppBar from '@mui/material/AppBar'
+import useTheme from '@mui/material/styles/useTheme'
 
-export default ({ row: user, onClose, roles }) => {
-  const userId = user.id
+export default ({ row: user, onClose, roles, tenants }) => {
+  const theme = useTheme()
 
   const [assignRolesToUser, { error, loading }] = useMutation(
     gql`
-      mutation assignRolesToUser($userId: Int!, $roleIds: [Int!]!) {
-        assignRolesToUser(userId: $userId, roleIds: $roleIds) {
+      mutation assignRolesToUser($input: [UserTenantRoleInput!]!) {
+        assignRolesToUser(input: $input) {
           id
-          roles {
+          context {
             id
+            roles {
+              id
+            }
           }
         }
       }
@@ -36,16 +42,18 @@ export default ({ row: user, onClose, roles }) => {
 
   return (
     <QuickForm
-      tenantRoles={user.context.map(({ id, roles }) => ({
-        tenantId: id,
-        roleIds: roles.map(({ id }) => id),
+      input={user.context.map(({ id, roles }) => ({
+        userId: user.id,
+        tenantId: parseInt(id, 10),
+        roles: roles.map(({ id, name }) => ({ id, name })),
       }))}
     >
-      {(update, { tenantRoles }) => {
+      {(update, { input }) => {
         return (
           <Dialog
             scroll="paper"
-            maxWidth="xl"
+            maxWidth="sm"
+            fullWidth
             onClose={(e, reason) => {
               if (reason) {
                 return
@@ -55,89 +63,117 @@ export default ({ row: user, onClose, roles }) => {
             open={true}
           >
             <DialogTitle>Edit user roles</DialogTitle>
-            <DialogContent dividers={true}>hi</DialogContent>
+            <DialogContent style={{ margin: 0, padding: 0 }} dividers={true}>
+              {tenants.map(({ id: tenantId, hostname }) => (
+                <div key={hostname}>
+                  <AppBar elevation={0} variant="outlined" position="relative" color="primary">
+                    <Toolbar
+                      style={{ marginLeft: theme.spacing(3) }}
+                      disableGutters
+                      variant="dense"
+                    >
+                      {hostname}
+                    </Toolbar>
+                  </AppBar>
+                  <FormGroup
+                    style={{
+                      marginBottom: theme.spacing(3),
+                      paddingLeft: theme.spacing(3),
+                      paddingRight: theme.spacing(3),
+                    }}
+                  >
+                    {[...roles]
+                      .sort(({ name: a }, { name: b }) => {
+                        if (a > b) return 1
+                        if (a < b) return -1
+                        return 0
+                      })
+                      .map(role => {
+                        const { id: roleId, name } = role
+                        return (
+                          <FormControlLabel
+                            key={roleId}
+                            label={name}
+                            control={
+                              <Checkbox
+                                color="primary"
+                                disabled={name === 'sysadmin'}
+                                checked={Boolean(
+                                  input
+                                    .find(({ tenantId: _tenantId }) => tenantId == _tenantId)
+                                    ?.roles.find(({ id }) => id === roleId)
+                                )}
+                                onChange={({ target: { checked } }) => {
+                                  /**
+                                   * Check if user is already associated
+                                   * with tenant, or if it needs to be added
+                                   */
+                                  if (
+                                    !input.find(({ tenantId: _tenantId }) => tenantId == _tenantId)
+                                  ) {
+                                    return update({
+                                      input: [
+                                        ...input,
+                                        {
+                                          userId: user.id,
+                                          tenantId: parseInt(tenantId, 10),
+                                          roles: [role],
+                                        },
+                                      ],
+                                    })
+                                  }
+
+                                  /**
+                                   * Otherwise update the existing input
+                                   */
+                                  return update({
+                                    input: input.map(i => {
+                                      if (i.tenantId == tenantId) {
+                                        if (checked) {
+                                          i.roles = [...i.roles, role]
+                                        } else {
+                                          i.roles = i.roles.filter(({ id }) => id !== roleId)
+                                        }
+                                      }
+
+                                      return i
+                                    }),
+                                  })
+                                }}
+                              />
+                            }
+                          />
+                        )
+                      })}
+                  </FormGroup>
+                </div>
+              ))}
+            </DialogContent>
             <DialogActions>
               <Button disabled={loading} onClick={() => onClose()} size="small" variant="text">
                 Cancel
               </Button>
-              <Button disabled={loading} onClick={() => {}} size="small" variant="text">
+              <Button
+                disabled={loading}
+                onClick={() => {
+                  assignRolesToUser({
+                    variables: {
+                      input: input.map(({ roles, ...mutationArgs }) => ({
+                        ...mutationArgs,
+                        roleIds: roles.map(({ id }) => id),
+                      })),
+                    },
+                  })
+                }}
+                size="small"
+                variant="text"
+              >
                 Okay
               </Button>
             </DialogActions>
           </Dialog>
         )
       }}
-    </QuickForm>
-  )
-
-  return (
-    <QuickForm roleIds={user.roles.map(({ id }) => id)}>
-      {(update, { roleIds }) => (
-        <Dialog
-          scroll="paper"
-          maxWidth="xl"
-          onClose={(e, reason) => {
-            if (reason) {
-              return
-            }
-            onClose()
-          }}
-          open={true}
-        >
-          <DialogTitle>Edit user roles</DialogTitle>
-          <DialogContent dividers={true}>
-            <FormGroup>
-              {[...roles]
-                .sort(({ name: a }, { name: b }) => {
-                  if (a > b) return 1
-                  if (a < b) return -1
-                  return 0
-                })
-                .map(({ id, name }) => {
-                  return (
-                    <FormControlLabel
-                      key={name}
-                      control={
-                        <Checkbox
-                          onChange={({ target: { checked } }) => {
-                            update({
-                              roleIds: checked
-                                ? [...roleIds, id]
-                                : roleIds.filter(id_ => id_ !== id),
-                            })
-                          }}
-                          disabled={name === 'sysadmin'}
-                          checked={roleIds.includes(id)}
-                        />
-                      }
-                      label={name.toUpperCase()}
-                    />
-                  )
-                })}
-            </FormGroup>
-          </DialogContent>
-          <DialogActions>
-            <Button disabled={loading} onClick={() => onClose()} size="small" variant="text">
-              Cancel
-            </Button>
-            <Button
-              disabled={loading}
-              onClick={() => {
-                assignRolesToUser({
-                  variables: {
-                    userId,
-                    roleIds,
-                  },
-                })
-              }}
-              size="small"
-              variant="text"
-            >
-              Okay
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )}
     </QuickForm>
   )
 }

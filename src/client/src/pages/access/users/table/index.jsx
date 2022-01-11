@@ -13,7 +13,7 @@ const sortUsersByEmail = users =>
     return 0
   })
 
-export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
+export default ({ users, selectedUsers, setSelectedUsers, roles, tenants }) => {
   const [rows, setRows] = useState(sortUsersByEmail(users))
   useEffect(() => setRows(sortUsersByEmail(users)), [users])
 
@@ -69,7 +69,9 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
                 return [...roles, ...tenantRoles]
               }, [])
               .join(', '),
-          editor: props => <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />,
+          editor: props => (
+            <RolesEditor tenants={tenants} rows={rows} setRows={setRows} roles={roles} {...props} />
+          ),
         },
       ]}
     />

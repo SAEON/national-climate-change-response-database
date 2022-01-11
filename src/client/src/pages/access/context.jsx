@@ -24,6 +24,11 @@ export default ({ children }) => {
         }
       }
 
+      tenants {
+        id
+        hostname
+      }
+
       roles {
         id
         name
@@ -51,10 +56,12 @@ export default ({ children }) => {
     throw error
   }
 
-  const { users, roles, permissions } = data
+  const { users, roles, permissions, tenants } = data
 
   return (
-    <context.Provider value={{ users, selectedUsers, setSelectedUsers, roles, permissions }}>
+    <context.Provider
+      value={{ users, tenants, selectedUsers, setSelectedUsers, roles, permissions }}
+    >
       {children}
     </context.Provider>
   )

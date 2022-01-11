@@ -1,5 +1,6 @@
 import { lazy, Suspense, useContext, useState } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
+import { context as clientContext } from '../../contexts/client-context'
 import { gql, useQuery } from '@apollo/client'
 import Header from './header'
 import Loading from '../../components/loading'
@@ -32,6 +33,7 @@ export default () => {
   const [activeIndex, setActiveIndex] = useState(0)
   const theme = useTheme()
   const { user: { id = 0 } = {}, authenticate } = useContext(authenticationContext)
+  const { id: tenantId } = useContext(clientContext)
   const isAuthenticated = authenticate()
 
   if (!isAuthenticated) {
@@ -40,16 +42,18 @@ export default () => {
 
   const { error, loading, data } = useQuery(
     gql`
-      query user($id: Int!) {
+      query user($id: Int!, $tenantId: ID) {
         user(id: $id) {
           id
-          submissions {
-            id
-            _id
-            project
-            submissionStatus
-            submissionComments
-            isSubmitted
+          context(tenantId: $tenantId) {
+            submissions {
+              id
+              _id
+              project
+              submissionStatus
+              submissionComments
+              isSubmitted
+            }
           }
         }
       }
@@ -58,6 +62,7 @@ export default () => {
       fetchPolicy: 'network-only',
       variables: {
         id: parseInt(id, 10),
+        tenantId,
       },
     }
   )
@@ -81,7 +86,10 @@ export default () => {
               <Suspense key={primaryText} fallback={<Loading />}>
                 <Fade in={activeIndex === i} key={`loaded-${i}`}>
                   <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
-                    <Render active={activeIndex === i} submissions={data.user.submissions} />
+                    <Render
+                      active={activeIndex === i}
+                      submissions={data.user.context[0].submissions}
+                    />
                   </span>
                 </Fade>
               </Suspense>

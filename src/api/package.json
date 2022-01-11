@@ -26,11 +26,11 @@
     "prettier": "^2.5.1"
   },
   "dependencies": {
-    "@babel/cli": "^7.16.7",
+    "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.7",
     "@babel/eslint-parser": "^7.16.5",
     "@babel/eslint-plugin": "^7.16.5",
-    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
     "@graphql-tools/schema": "^8.3.1",
     "@koa/router": "^10.1.1",
     "@rollup/plugin-json": "^4.1.0",
@@ -41,7 +41,7 @@
     "csv": "^6.0.5",
     "dataloader": "^2.0.0",
     "date-fns": "^2.28.0",
-    "dotenv": "^10.0.0",
+    "dotenv": "^11.0.0",
     "graphql": "^16.2.0",
     "graphql-type-json": "^0.3.2",
     "koa": "^2.13.4",

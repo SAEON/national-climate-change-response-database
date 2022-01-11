@@ -72,7 +72,18 @@ export default () => {
         <VerticalTabs activeIndex={activeIndex} setActiveIndex={setActiveIndex} navItems={sections}>
           {sections.map(({ Render, primaryText }, i) => {
             return (
-              <Suspense key={primaryText} fallback={<Loading />}>
+              <Suspense
+                key={primaryText}
+                fallback={
+                  <div
+                    style={{
+                      marginBottom: theme.spacing(2),
+                    }}
+                  >
+                    <Loading />
+                  </div>
+                }
+              >
                 <Fade in={activeIndex === i} key={`loaded-${i}`}>
                   <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
                     <Render active={activeIndex === i} />

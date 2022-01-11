@@ -7,7 +7,7 @@ import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import { gql, useMutation } from '@apollo/client'
-import QuickForm from '../../../components/quick-form'
+import QuickForm from '../../../../components/quick-form'
 
 export default ({ row: user, onClose, roles }) => {
   const userId = user.id
@@ -33,6 +33,42 @@ export default ({ row: user, onClose, roles }) => {
   if (error) {
     throw error
   }
+
+  return (
+    <QuickForm
+      tenantRoles={user.context.map(({ id, roles }) => ({
+        tenantId: id,
+        roleIds: roles.map(({ id }) => id),
+      }))}
+    >
+      {(update, { tenantRoles }) => {
+        return (
+          <Dialog
+            scroll="paper"
+            maxWidth="xl"
+            onClose={(e, reason) => {
+              if (reason) {
+                return
+              }
+              onClose()
+            }}
+            open={true}
+          >
+            <DialogTitle>Edit user roles</DialogTitle>
+            <DialogContent dividers={true}>hi</DialogContent>
+            <DialogActions>
+              <Button disabled={loading} onClick={() => onClose()} size="small" variant="text">
+                Cancel
+              </Button>
+              <Button disabled={loading} onClick={() => {}} size="small" variant="text">
+                Okay
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )
+      }}
+    </QuickForm>
+  )
 
   return (
     <QuickForm roleIds={user.roles.map(({ id }) => id)}>

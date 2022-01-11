@@ -1,38 +1,81 @@
-import logSql from '../../../../lib/log-sql.js'
+import mssql from 'mssql'
 
-export default async (self, { userId, roleIds }, ctx) => {
-  const { query } = ctx.mssql
+export default async (self, { input }, ctx) => {
+  const { pool } = ctx.mssql
 
-  // The sysadmin role can only be configured at application start time
-  const sysadminId = (await query(`select id from Roles where name = 'sysadmin'`)).recordset[0].id
-  roleIds = roleIds.filter(id => id !== sysadminId)
+  /**
+   * Validate that user/tenant combinations
+   * in the input array are unique
+   */
+  input.reduce((acc, { userId, tenantId }) => {
+    const key = `${userId}-${tenantId}`
+    if (acc[key]) {
+      throw new Error(
+        'Invalid input - user/tenant combinations per object in the input array must be unique'
+      )
+    }
+    acc[key] = 1
+    return acc
+  }, {})
 
-  const sql = `
-    begin transaction T
-      begin try
+  /**
+   * The sysadmin role can only be
+   * configured at application start
+   * time
+   **/
+  const sysadminId = (
+    await (await pool.connect()).request().query(`select id from Roles where name = 'sysadmin'`)
+  ).recordset[0].id
 
-        delete from UserXrefRoleXrefTenant
-        where
-          userId = ${userId}
-          and roleId != ${sysadminId};
+  const transaction = new mssql.Transaction(await pool.connect())
+  await transaction.begin()
 
-        ${
-          roleIds.length
-            ? `
-              insert into UserXrefRoleXrefTenant (userId, roleId)
-              values ${roleIds.map(rId => `(${userId}, ${rId})`).join(',')};`
-            : ''
-        }
+  try {
+    for (const i of input) {
+      const { userId, tenantId } = i
+      const roleIds = i.roleIds.filter(id => id !== sysadminId)
 
-        select * from Users where id = ${userId};
-      commit transaction T
-      end try
-      begin catch
-        rollback transaction T
-      end catch
-  `
+      /**
+       * Delete all existing roles
+       * of a particular user/tenant
+       */
+      await transaction
+        .request()
+        .input('userId', userId)
+        .input('sysadminId', sysadminId)
+        .input('tenantId', tenantId).query(`
+          delete from UserXrefRoleXrefTenant
+          where userId = @userId
+          and tenantId = @tenantId
+          and roleId != @sysadminId;`)
 
-  logSql(sql, 'Assign user-roles')
-  const result = await query(sql)
-  return result.recordset[0]
+      /**
+       * Add roles to user/tenant (if
+       * they weren't all deleted)
+       */
+      if (roleIds.length) {
+        const request = transaction.request()
+        request.input('userId', userId)
+        request.input('tenantId', tenantId)
+        roleIds.forEach((id, i) => request.input(`role_${i}`, id))
+
+        await request.query(`
+          insert into UserXrefRoleXrefTenant (userId, roleId, tenantId)
+          values
+            ${roleIds.map((_, i) => `(@userId, @role_${i}, @tenantId)`)};`)
+      }
+    }
+
+    await transaction.commit()
+  } catch (error) {
+    console.error('Unable to assign roles to user', error)
+    throw error
+  }
+
+  return (
+    await (await pool.connect())
+      .request()
+      .input('userId', input[0].userId)
+      .query(`select * from Users where id = @userId`)
+  ).recordset[0]
 }

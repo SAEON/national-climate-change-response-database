@@ -221,5 +221,11 @@ type Mutation {
   """
   Assign roles to users
   """
-  assignRolesToUser(userId: Int!, roleIds: [Int!]!): User!
+  assignRolesToUser(input: [UserTenantRoleInput!]!): User!
+}
+
+input UserTenantRoleInput {
+  userId: Int!
+  tenantId: Int!
+  roleIds: [Int!]!
 }

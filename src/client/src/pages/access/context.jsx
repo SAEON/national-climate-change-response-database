@@ -13,12 +13,13 @@ export default ({ children }) => {
         id
         emailAddress
         name
-        roles {
+        context {
           id
-          name
-          description
-          tenant {
-            domain
+          hostname
+          roles {
+            id
+            name
+            description
           }
         }
       }

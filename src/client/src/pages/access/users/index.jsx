@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { context as userRolesContext } from '../context'
-import Table from './_table'
+import Table from './table'
 
 export default ({ active }) => {
   const { users, selectedUsers, setSelectedUsers, roles } = useContext(userRolesContext)

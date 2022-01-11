@@ -50,16 +50,26 @@ export default ({ users, selectedUsers, setSelectedUsers, roles }) => {
           editorOptions: {
             renderFormatter: true,
           },
-          editor: props => <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />,
-          formatter: ({ row: { roles } }) =>
-            [...roles]
-              .sort(({ name: a }, { name: b }) => {
+          formatter: ({ row: { context: tenants } }) =>
+            [...tenants]
+              .sort(({ hostname: a }, { hostname: b }) => {
                 if (a > b) return 1
                 if (a < b) return -1
                 return 0
               })
-              .map(({ name }) => `TENANT:${name.toUpperCase()}`)
+              .reduce((roles, tenant) => {
+                const { hostname, roles: _roles } = tenant
+                const tenantRoles = [..._roles]
+                  .sort(({ name: a }, { name: b }) => {
+                    if (a > b) return 1
+                    if (a < b) return -1
+                    return 0
+                  })
+                  .map(({ name }) => `${hostname}:${name}`.toUpperCase())
+                return [...roles, ...tenantRoles]
+              }, [])
               .join(', '),
+          editor: props => <RolesEditor rows={rows} setRows={setRows} roles={roles} {...props} />,
         },
       ]}
     />

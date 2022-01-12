@@ -7,46 +7,48 @@ export const context = createContext()
 export default ({ children }) => {
   const [selectedUsers, setSelectedUsers] = useState(() => new Set())
 
-  const { loading, error, data } = useQuery(gql`
-    query {
-      users {
-        id
-        emailAddress
-        name
-        context {
+  const { loading, error, data } = useQuery(
+    gql`
+      query accessPageData {
+        users {
+          id
+          emailAddress
+          name
+          context {
+            # id => Requesting this field causes caching bugs
+            hostname
+            roles {
+              # id => Requesting this field causes caching bugs
+              name
+              description
+            }
+          }
+        }
+
+        tenants {
           id
           hostname
-          roles {
+        }
+
+        roles {
+          id
+          name
+          description
+          permissions {
             id
             name
             description
           }
         }
-      }
 
-      tenants {
-        id
-        hostname
-      }
-
-      roles {
-        id
-        name
-        description
         permissions {
           id
           name
           description
         }
       }
-
-      permissions {
-        id
-        name
-        description
-      }
-    }
-  `)
+    `
+  )
 
   if (loading) {
     return <Loading />

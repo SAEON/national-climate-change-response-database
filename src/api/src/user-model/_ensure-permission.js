@@ -6,18 +6,23 @@ export default async (ctx, ...permissions) => {
     return
   }
 
-  const { userInfo } = ctx
+  if (!ctx.tenant) {
+    throw new Error('Authorization must be in the context of a tenant')
+  }
+
+  const { userInfo, tenant } = ctx
   const { id: userId } = userInfo
 
   try {
     const request = (await pool.connect()).request()
     request.input('userId', userId)
+    request.input('tenantId', tenant.id)
     permissions.forEach(({ name }, i) => request.input(`p_${i}`, name))
     const result = await request.query(`
       select 1
       from Permissions p
       join PermissionXrefRole xp on xp.permissionId = p.id
-      join UserXrefRoleXrefTenant xu on xu.roleId = xp.roleId
+      join UserXrefRoleXrefTenant xu on xu.roleId = xp.roleId and xu.tenantId = @tenantId
       join Users u on u.id = xu.userId
       where
         userId = @userId

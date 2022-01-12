@@ -60,6 +60,7 @@ export default ({ users, selectedUsers, setSelectedUsers, roles, tenants }) => {
               .reduce((roles, tenant) => {
                 const { hostname, roles: _roles } = tenant
                 const tenantRoles = [..._roles]
+                  .filter(({ name }) => name !== 'user')
                   .sort(({ name: a }, { name: b }) => {
                     if (a > b) return 1
                     if (a < b) return -1

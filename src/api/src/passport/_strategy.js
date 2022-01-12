@@ -39,8 +39,8 @@ export default ({ issuer, redirect_uri }) => {
         await transaction
           .request()
           .input('emailAddress', emailAddress)
-          .input('saeonId', name)
-          .input('name', saeonId)
+          .input('saeonId', saeonId)
+          .input('name', name)
           .input('id_token', id_token).query(`
             ;with currentUser as (
               select
@@ -72,18 +72,28 @@ export default ({ issuer, redirect_uri }) => {
           .request()
           .input('emailAddress', emailAddress)
           .input('roleName', userRole.name).query(`
-            insert into UserXrefRoleXrefTenant (userId, roleId)
-            select distinct
-              u.id userId,
-              ( select id from Roles r where r.name =  @roleName) roleId
-            from Users u
-            where
-              u.emailAddress = @emailAddress
-              and not exists (
-                select 1
-                from UserXrefRoleXrefTenant
-                where userId = u.id
-              );`)
+            merge UserXrefRoleXrefTenant t
+            using (
+              select distinct
+                u.id userId,
+                ( select id from Roles r where r.name =  @roleName) roleId,
+                c.id tenantId
+              from Users u
+              cross join ( select id from Tenants ) c
+              where
+                u.emailAddress = @emailAddress
+            ) s on
+              s.userId = t.userId and
+              s.roleId = t.roleId and
+              s.tenantId = t.tenantId
+
+            when not matched by target
+              then insert (userId, roleId, tenantId)
+            values (
+              s.userId,
+              s.roleId,
+              s.roleId
+            );`)
 
         // Get the user back
         const user = await transaction

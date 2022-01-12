@@ -15,7 +15,7 @@ const Field = memo(
             <TextField
               margin="normal"
               fullWidth
-              placeholder="New deployment"
+              placeholder="Title"
               helperText="What should the title of the application be?"
               variant="outlined"
               label="Title"

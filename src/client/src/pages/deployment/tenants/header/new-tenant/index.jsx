@@ -44,7 +44,7 @@ const ToggleDialog = ({ staticTheme }) => {
             style={{ cursor: 'move', textAlign: 'center' }}
             id="new-deployment-dialogue"
           >
-            New deployment
+            New tenant
           </DialogTitle>
           <Suspense fallback={<Loading />}>
             <Form />

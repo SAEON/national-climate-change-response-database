@@ -17,7 +17,7 @@ const Field = memo(
               fullWidth
               multiline
               minRows={2}
-              placeholder="New deployment description"
+              placeholder="Tenant description"
               helperText="The deployment description is shown as a tooltip for the application title"
               variant="outlined"
               label="Description"

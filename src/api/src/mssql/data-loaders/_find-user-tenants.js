@@ -12,8 +12,19 @@ export default () =>
       const result = await request.query(`
         select
           x.userId,
-          ( select roleId from UserXrefRoleXrefTenant x2 where x2.tenantId = x.tenantId for json path) roles,
-          ( select * from Tenants t where t.id = x.tenantId for json path) tenants
+          ( select
+              roleId
+            from UserXrefRoleXrefTenant x2
+            where
+              x2.tenantId = x.tenantId
+              and x2.userId = x.userId
+            for json path ) roles,
+          ( select
+              *
+            from Tenants t
+            where
+              t.id = x.tenantId
+            for json path ) tenants
         from (
           select distinct
             userId,

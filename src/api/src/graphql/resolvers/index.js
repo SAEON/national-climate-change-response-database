@@ -1,7 +1,7 @@
 export { default as JSON } from './types/json.js'
 export { default as DateTime } from './types/datetime.js'
 export { default as Void } from './types/void.js'
-export { default as Mutation } from './types/mutation.js'
+export { default as Mutation } from './types/mutation/index.js'
 export { default as Query } from './types/query/index.js'
 export { default as Submission } from './types/submission.js'
 export { default as SubmissionTemplate } from './types/submission-template.js'

@@ -24,21 +24,29 @@ export const maintainer = {
   ]),
 }
 
-export const admin = {
-  name: 'admin',
-  description: 'Application administrator',
+export const tenantAdmin = {
+  name: 'tenant-admin',
+  description: 'Tenant administrator',
   permissions: deduplicate([
     ...maintainer.permissions,
-    permissions['upload-template'],
     permissions['view-submission-templates'],
     permissions['delete-submission'],
-    permissions['update-users'],
     permissions['view-users'],
+    permissions['update-users'],
     permissions['assign-role'],
     permissions['assign-permission'],
     permissions['view-permissions'],
     permissions['view-roles'],
     permissions['/access'],
+  ]),
+}
+
+export const admin = {
+  name: 'admin',
+  description: 'Deployment administrator',
+  permissions: deduplicate([
+    ...tenantAdmin.permissions,
+    permissions['upload-template'],
     permissions['/deployment'],
     permissions['create-tenant'],
     permissions['view-tenants'],

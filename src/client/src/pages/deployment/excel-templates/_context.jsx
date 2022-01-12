@@ -1,10 +1,12 @@
 import { createContext } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import Loading from '../../../components/loading'
+import useTheme from '@mui/material/styles/useTheme'
 
 export const context = createContext()
 
 export default ({ children }) => {
+  const theme = useTheme()
   const POLLING_INTERVAL = 1000
 
   const { error, loading, data, startPolling } = useQuery(
@@ -24,7 +26,15 @@ export default ({ children }) => {
   )
 
   if (loading) {
-    return <Loading />
+    return (
+      <div
+        style={{
+          marginBottom: theme.spacing(2),
+        }}
+      >
+        <Loading />
+      </div>
+    )
   }
 
   if (error) {

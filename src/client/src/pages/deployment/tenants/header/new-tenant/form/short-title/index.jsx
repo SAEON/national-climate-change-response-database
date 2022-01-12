@@ -15,7 +15,7 @@ const Field = memo(
             <TextField
               margin="normal"
               fullWidth
-              placeholder="New Dep."
+              placeholder="Tnt"
               helperText="The shortened title is displayed on mobile devices instead of the title"
               variant="outlined"
               label="Title (short)"

@@ -8,7 +8,7 @@ export default memo(({ children, staticTheme }) => {
   const defaultForm = useMemo(
     () => ({
       hostname: '',
-      title: `New deployment ${nanoid(10)}`,
+      title: `Tenant ${nanoid(10)}`,
       shortTitle: '',
       description: '',
       geofence: defaultSelectValue,

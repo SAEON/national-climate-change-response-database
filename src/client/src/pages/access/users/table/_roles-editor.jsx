@@ -21,9 +21,9 @@ export default ({ row: user, onClose, roles, tenants }) => {
         assignRolesToUser(input: $input) {
           id
           context {
-            id
+            hostname
             roles {
-              id
+              name
             }
           }
         }
@@ -42,11 +42,18 @@ export default ({ row: user, onClose, roles, tenants }) => {
 
   return (
     <QuickForm
-      input={user.context.map(({ id, roles }) => ({
-        userId: user.id,
-        tenantId: parseInt(id, 10),
-        roles: roles.map(({ id, name }) => ({ id, name })),
-      }))}
+      input={user.context.map(({ hostname, roles: r }) => {
+        const tenantId = tenants.find(({ hostname: n }) => n === hostname).id
+
+        return {
+          userId: user.id,
+          tenantId: parseInt(tenantId, 10),
+          roles: r.map(({ name }) => {
+            const roleId = roles.find(({ name: n }) => n === name).id
+            return { id: roleId, name }
+          }),
+        }
+      })}
     >
       {(update, { input }) => {
         return (
@@ -97,7 +104,7 @@ export default ({ row: user, onClose, roles, tenants }) => {
                             control={
                               <Checkbox
                                 color="primary"
-                                disabled={name === 'sysadmin'}
+                                disabled={['sysadmin', 'user'].includes(name)}
                                 checked={Boolean(
                                   input
                                     .find(({ tenantId: _tenantId }) => tenantId == _tenantId)

@@ -1,6 +1,6 @@
 import { pool } from '../mssql/pool.js'
 
-export default async (ctx, ...permissions) => {
+export default async (ctx, validTenants, ...permissions) => {
   if (!ctx.userInfo) {
     ctx.throw(401)
     return
@@ -10,13 +10,19 @@ export default async (ctx, ...permissions) => {
     throw new Error('Authorization must be in the context of a tenant')
   }
 
-  const { userInfo, tenant } = ctx
+  if (validTenants && !validTenants.includes(ctx.tenant.id)) {
+    throw new Error(
+      'The tenant specified in the HTTP origin header is not valid for the specified operation'
+    )
+  }
+
+  const { userInfo } = ctx
   const { id: userId } = userInfo
 
   try {
     const request = (await pool.connect()).request()
     request.input('userId', userId)
-    request.input('tenantId', tenant.id)
+    request.input('tenantId', ctx.tenant.id)
     permissions.forEach(({ name }, i) => request.input(`p_${i}`, name))
     const result = await request.query(`
       select 1

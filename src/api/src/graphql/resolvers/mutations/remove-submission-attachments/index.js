@@ -1,9 +1,26 @@
 import { unlink } from 'fs'
-import { pool } from '../../../../mssql/pool.js'
 import mssql from 'mssql'
 
-export default async (_, { ids, submissionId }) => {
+export default async (_, { ids, submissionId }, ctx) => {
+  const { pool } = ctx.mssql
   const successfulDeletes = []
+
+  /**
+   * Validate that tenant is not spoofed
+   */
+  if (
+    !(
+      await (await pool.connect()).request().input('submissionId', submissionId).query(`
+        select
+          tenantId
+        from TenantXrefSubmission
+        where submissionId = @submissionId;`)
+    ).recordset
+      .map(({ tenantId }) => tenantId)
+      .includes(ctx.tenant.id)
+  ) {
+    throw new Error('Invalid tenant specified in origin header')
+  }
 
   for (const id of ids) {
     const transaction = new mssql.Transaction(await pool.connect())
@@ -36,6 +53,7 @@ export default async (_, { ids, submissionId }) => {
       transaction.commit()
     } catch (error) {
       console.error('Error removing attachment', id, error)
+      await transaction.rollback()
       transaction.rollback()
     }
   }

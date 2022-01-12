@@ -3,20 +3,30 @@ import { join, normalize, sep } from 'path'
 import { UPLOADS_DIRECTORY } from '../config/index.js'
 import ensureDirectory from '../lib/ensure-directory.js'
 import PERMISSIONS from '../user-model/permissions.js'
-import { pool } from '../mssql/pool.js'
 
 const MAX_UPLOAD_SIZE_MB = 10
 
 export default async ctx => {
-  const { user } = ctx
-  const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS['attach-file-to-submission'] })
+  const { pool } = ctx.mssql
   const { submissionId, formName } = ctx.query
-
   if (!submissionId || !formName) {
     ctx.status = 400
     return
   }
+
+  const { user } = ctx
+  const { ensurePermission } = user
+  await ensurePermission({
+    ctx,
+    permission: PERMISSIONS['attach-file-to-submission'],
+    validTenants: (
+      await (await pool.connect()).request().input('submissionId', submissionId).query(`
+        select
+          tenantId
+        from TenantXrefSubmission
+        where submissionId = @submissionId;`)
+    ).recordset.map(({ tenantId }) => tenantId),
+  })
 
   const { path, name, size: sizeInBytes } = ctx.request.files['attach-file-to-submission']
   const sizeInMB = (sizeInBytes / (1024 * 1024)).toFixed(2)

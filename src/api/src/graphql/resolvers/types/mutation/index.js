@@ -18,28 +18,28 @@ const getSubmissionOwner = id =>
 
 export default {
   // Submission
-  createSubmission: authorize(PERMISSIONS['create-submission'])(createSubmission),
+  createSubmission: authorize({ permission: PERMISSIONS['create-submission'] })(createSubmission),
   saveSubmission: async (...args) =>
-    authorize(
-      PERMISSIONS['update-submission'],
-      await getSubmissionOwner(args[1].submissionId)
-    )(saveSubmission)(...args),
+    authorize({
+      permission: PERMISSIONS['update-submission'],
+      resourceOwner: await getSubmissionOwner(args[1].submissionId),
+    })(saveSubmission)(...args),
   deleteSubmission: async (...args) =>
-    authorize(
-      PERMISSIONS['delete-submission'],
-      await getSubmissionOwner(args[1].id)
-    )(deleteSubmission)(...args),
-  removeSubmissionAttachments: authorize(PERMISSIONS['attach-file-to-submission'])(
+    authorize({
+      permission: PERMISSIONS['delete-submission'],
+      resourceOwner: await getSubmissionOwner(args[1].id),
+    })(deleteSubmission)(...args),
+  removeSubmissionAttachments: authorize({ permission: PERMISSIONS['attach-file-to-submission'] })(
     removeSubmissionAttachments
   ),
 
   // Access
-  assignRolesToUser: authorize(PERMISSIONS['assign-role'])(assignRolesToUser),
+  assignRolesToUser: authorize({ permission: PERMISSIONS['assign-role'] })(assignRolesToUser),
 
   // DB
-  seedDatabase: authorize(PERMISSIONS['seed-database'])(seedDatabase),
+  seedDatabase: authorize({ permission: PERMISSIONS['seed-database'] })(seedDatabase),
 
   // Tenants
-  updateTenant: authorize(PERMISSIONS['update-tenant'])(updateTenant),
-  deleteTenants: authorize(PERMISSIONS['delete-tenant'])(deleteTenants),
+  updateTenant: authorize({ permission: PERMISSIONS['update-tenant'] })(updateTenant),
+  deleteTenants: authorize({ permission: PERMISSIONS['delete-tenant'] })(deleteTenants),
 }

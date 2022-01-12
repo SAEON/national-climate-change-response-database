@@ -1,4 +1,4 @@
-export default (permission, resourceOwner = false) =>
+export default ({ permission, resourceOwner = false }) =>
   op =>
   async (...args) => {
     const [, , ctx] = args

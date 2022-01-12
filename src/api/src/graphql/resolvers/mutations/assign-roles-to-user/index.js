@@ -69,6 +69,7 @@ export default async (self, { input }, ctx) => {
     await transaction.commit()
   } catch (error) {
     console.error('Unable to assign roles to user', error)
+    await transaction.rollback()
     throw error
   }
 

@@ -31,10 +31,10 @@ export default ({ issuer, redirect_uri }) => {
       const { email, sub: saeonId, name } = userInfo
       const emailAddress = email.toLowerCase()
 
-      try {
-        const transaction = new mssql.Transaction(await pool.connect())
-        await transaction.begin()
+      const transaction = new mssql.Transaction(await pool.connect())
+      await transaction.begin()
 
+      try {
         // Create/retrieve user
         await transaction
           .request()
@@ -115,6 +115,7 @@ export default ({ issuer, redirect_uri }) => {
         cb(null, user)
       } catch (error) {
         console.error('Error authenticating user', error)
+        await transaction.rollback()
         cb(error, null)
       }
     }

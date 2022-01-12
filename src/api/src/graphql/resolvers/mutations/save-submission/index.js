@@ -89,10 +89,28 @@ export default async (
       .input('submissionId', submissionId)
       .query(mergeTenantSubmissions)
 
+    // Validate the tenant/submission is allowed
+    if (
+      !(
+        await transaction.request().input('submissionId', submissionId).query(`
+          select
+            tenantId
+          from TenantXrefSubmission
+          where submissionId = @submissionId;`)
+      ).recordset
+        .map(({ tenantId }) => tenantId)
+        .includes(ctx.tenant.id)
+    ) {
+      throw new Error(
+        'This save operation is not allowed as it effects tenant data the current user is not authorized to change'
+      )
+    }
+
     await transaction.commit()
     return result.recordset[0]
   } catch (error) {
     console.error('Error saving submission', submissionId)
+    await transaction.rollback()
     throw error
   }
 }

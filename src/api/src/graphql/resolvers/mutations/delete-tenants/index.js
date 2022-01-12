@@ -49,6 +49,7 @@ export default async (_, { ids }, ctx) => {
     return ids
   } catch (error) {
     console.error('Error deleting tenants', ids)
+    await transaction.rollback()
     throw error
   }
 }

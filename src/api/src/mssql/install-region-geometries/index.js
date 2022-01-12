@@ -34,74 +34,79 @@ export default async () => {
   const transaction = new mssql.Transaction(await pool.connect())
   await transaction.begin()
 
-  const { count } = await (
-    await transaction.request().query(`select count(id) count from Regions;`)
-  ).recordset[0]
+  try {
+    const { count } = await (
+      await transaction.request().query(`select count(id) count from Regions;`)
+    ).recordset[0]
 
-  /**
-   * Install Regions
-   */
-  if (count < 1) {
-    // SA
-    const za = await load('za-boundary.geojson')
-    const { properties, geometry } = za.features[0]
-    await insertRegion(transaction, { properties, geometry })
-    console.info('Loaded ZA geometry')
+    /**
+     * Install Regions
+     */
+    if (count < 1) {
+      // SA
+      const za = await load('za-boundary.geojson')
+      const { properties, geometry } = za.features[0]
+      await insertRegion(transaction, { properties, geometry })
+      console.info('Loaded ZA geometry')
 
-    // SA provinces
-    const provinces = (await load('za-provinces.geojson')).features
-    for (const feature of provinces) {
-      const properties = {
-        ...feature.properties,
-        code: feature.properties.ADM1_ID,
-        name: feature.properties.ADM1_EN,
-        parentCode: 'ZA',
+      // SA provinces
+      const provinces = (await load('za-provinces.geojson')).features
+      for (const feature of provinces) {
+        const properties = {
+          ...feature.properties,
+          code: feature.properties.ADM1_ID,
+          name: feature.properties.ADM1_EN,
+          parentCode: 'ZA',
+        }
+        await insertRegion(transaction, {
+          properties,
+          geometry: feature.geometry,
+        })
       }
-      await insertRegion(transaction, {
-        properties,
-        geometry: feature.geometry,
-      })
-    }
-    console.info('Loaded provinces geometry')
+      console.info('Loaded provinces geometry')
 
-    // SA district municipalities & metropolitan municipalities
-    const districts = (await load('za-district-municipalities.geojson')).features
-    for (const feature of districts) {
-      const properties = {
-        ...feature.properties,
-        code: feature.properties.DISTRICT,
-        name: feature.properties.DISTRICT_N,
-        parentCode: feature.properties.PROVINCE,
+      // SA district municipalities & metropolitan municipalities
+      const districts = (await load('za-district-municipalities.geojson')).features
+      for (const feature of districts) {
+        const properties = {
+          ...feature.properties,
+          code: feature.properties.DISTRICT,
+          name: feature.properties.DISTRICT_N,
+          parentCode: feature.properties.PROVINCE,
+        }
+        await insertRegion(transaction, {
+          properties,
+          geometry: feature.geometry,
+        })
       }
-      await insertRegion(transaction, {
-        properties,
-        geometry: feature.geometry,
-      })
-    }
-    console.info('Loaded district municipality geometry')
+      console.info('Loaded district municipality geometry')
 
-    // SA local municipalities (including local municipalities that are also metropolitan municipalities)
-    const regions = (await load('za-local-municipalities.geojson')).features
-    for (const feature of regions) {
-      const properties = {
-        ...feature.properties,
-        code: feature.properties.CAT_B,
-        name: feature.properties.MUNICNAME,
-        parentCode: feature.properties.DISTRICT,
+      // SA local municipalities (including local municipalities that are also metropolitan municipalities)
+      const regions = (await load('za-local-municipalities.geojson')).features
+      for (const feature of regions) {
+        const properties = {
+          ...feature.properties,
+          code: feature.properties.CAT_B,
+          name: feature.properties.MUNICNAME,
+          parentCode: feature.properties.DISTRICT,
+        }
+        await insertRegion(transaction, {
+          properties,
+          geometry: feature.geometry,
+        })
       }
-      await insertRegion(transaction, {
-        properties,
-        geometry: feature.geometry,
-      })
+      console.info('Loaded local municipality geometry')
+    } else {
+      console.info('Skipping geometry installing (already installed)')
     }
-    console.info('Loaded local municipality geometry')
-  } else {
-    console.info('Skipping geometry installing (already installed)')
+
+    await transaction.commit()
+
+    const t1 = performance.now()
+    const runtime = `${Math.round((t1 - t0) / 1000, 2)} seconds`
+    console.info('Regions loaded!', runtime)
+  } catch (error) {
+    await transaction.rollback()
+    throw error
   }
-
-  await transaction.commit()
-
-  const t1 = performance.now()
-  const runtime = `${Math.round((t1 - t0) / 1000, 2)} seconds`
-  console.info('Regions loaded!', runtime)
 }

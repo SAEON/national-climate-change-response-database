@@ -158,6 +158,7 @@ export default async ctx => {
     ctx.body = JSON.stringify(tenant)
   } catch (error) {
     console.error('Unable to create tenant', error)
+    await transaction.rollback()
     if (error.message.includes('Violation of UNIQUE KEY constraint')) {
       return (ctx.status = 409)
     } else {

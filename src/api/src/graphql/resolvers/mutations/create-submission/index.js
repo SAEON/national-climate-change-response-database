@@ -29,6 +29,7 @@ export default async (self, args, ctx) => {
     return submission
   } catch (error) {
     console.error('Unable to create submission', error)
+    await transaction.rollback()
     throw error
   }
 }

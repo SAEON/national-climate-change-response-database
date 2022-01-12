@@ -159,6 +159,7 @@ export default async () => {
     console.info('Vocabularies loaded!', runtime)
   } catch (error) {
     console.error('Error loading vocabulary trees', error)
+    await transaction.rollback()
     throw error
   }
 }

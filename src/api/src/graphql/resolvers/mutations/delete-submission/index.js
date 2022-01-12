@@ -22,6 +22,7 @@ export default async (_, { id }, ctx) => {
     await transaction.commit()
   } catch (error) {
     console.error('Error deleting tenants', id)
+    await transaction.rollback()
     throw error
   }
 

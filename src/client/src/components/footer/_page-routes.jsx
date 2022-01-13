@@ -28,7 +28,7 @@ export default ({ routes }) => {
             }
 
             if (requiredPermission) {
-              if (!hasPermission(requiredPermission)) {
+              if (!hasPermission || !hasPermission(requiredPermission)) {
                 return false
               }
             }

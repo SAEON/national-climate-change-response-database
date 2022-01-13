@@ -1,11 +1,17 @@
+import { useContext } from 'react'
+import { context as clientContext } from '../../contexts/client-context'
+import { context as authorizationContext } from '../../contexts/authentication'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import { useTheme } from '@mui/material/styles'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
+import checkTenantRouteAuthorization from '../../lib/check-tenant-route-authorization'
 
 export default ({ routes }) => {
   const theme = useTheme()
+  const tenantContext = useContext(clientContext)
+  const { hasPermission } = useContext(authorizationContext)
 
   return (
     <Grid container spacing={2}>
@@ -14,7 +20,22 @@ export default ({ routes }) => {
       </Grid>
       <Grid container item xs={12}>
         {routes
-          .filter(({ group }) => group !== 'legal')
+          .filter(({ group, tenants, requiredPermission = false }) => {
+            if (tenants) {
+              if (!checkTenantRouteAuthorization(tenants, tenantContext)) {
+                return false
+              }
+            }
+
+            if (requiredPermission) {
+              if (!hasPermission(requiredPermission)) {
+                return false
+              }
+            }
+
+            if (group === 'legal') return false
+            return true
+          })
           .map(({ label, Icon, to }) => (
             <Grid item xs={12} key={label}>
               <div

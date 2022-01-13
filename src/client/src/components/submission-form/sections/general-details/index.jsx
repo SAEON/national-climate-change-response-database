@@ -3,53 +3,58 @@ import { ComposeForm } from '../../form'
 import { context as formContext } from '../../context'
 import RenderField from './_render-field'
 
-const Compose = memo(({ fields, validation }) => {
-  return (
-    <ComposeForm
-      formName="project"
-      RenderField={RenderField}
-      fields={fields}
-      defaultExpanded={['Project overview']}
-      validation={validation}
-      sections={{
-        'Project overview': [
-          'title',
-          'interventionType',
-          'description',
-          'implementationStatus',
-          'implementingOrganization',
-          'otherImplementingPartners',
-          'startYear',
-          'endYear',
-          'link',
-        ],
-        'Project funding': [
-          'fundingOrganisation',
-          'fundingType',
-          'fundingTypeOther',
-          'actualBudget',
-          'estimatedBudget',
-        ],
-        'Geographic location(s)': [
-          'province',
-          'districtMunicipality',
-          'localMunicipality',
-          'cityOrTown',
-          'xy',
-        ],
-        'Project manager': [
-          'projectManagerName',
-          'projectManagerOrganization',
-          'projectManagerPosition',
-          'projectManagerEmail',
-          'projectManagerTelephone',
-          'projectManagerMobile',
-        ],
-        'Submission status': ['__submissionStatus', '__submissionComments'],
-      }}
-    />
-  )
-})
+const Compose = memo(
+  ({ fields, validation }) => {
+    return (
+      <ComposeForm
+        formName="project"
+        RenderField={RenderField}
+        fields={fields}
+        defaultExpanded={['Project overview']}
+        validation={validation}
+        sections={{
+          'Project overview': [
+            'title',
+            'interventionType',
+            'description',
+            'implementationStatus',
+            'implementingOrganization',
+            'otherImplementingPartners',
+            'startYear',
+            'endYear',
+            'link',
+          ],
+          'Project funding': [
+            'fundingOrganisation',
+            'fundingType',
+            'fundingTypeOther',
+            'actualBudget',
+            'estimatedBudget',
+          ],
+          'Geographic location(s)': [
+            'province',
+            'districtMunicipality',
+            'localMunicipality',
+            'cityOrTown',
+            'xy',
+          ],
+          'Project manager': [
+            'projectManagerName',
+            'projectManagerOrganization',
+            'projectManagerPosition',
+            'projectManagerEmail',
+            'projectManagerTelephone',
+            'projectManagerMobile',
+          ],
+          'Submission status': ['__submissionStatus', '__submissionComments'],
+        }}
+      />
+    )
+  },
+  ({ validation: a }, { validation: { b } }) => {
+    return JSON.stringify(a) == JSON.stringify(b)
+  }
+)
 
 /**
  * Don't render ComposeForm directly,

@@ -1,4 +1,4 @@
-import { useMemo, memo } from 'react'
+import { useCallback, memo } from 'react'
 import TextField from '@mui/material/TextField'
 import QuickForm from '../../../quick-form'
 import debounce from '../../../../lib/debounce'
@@ -15,13 +15,19 @@ export default memo(
     setValue,
     value,
   }) => {
-    const effect = useMemo(
-      () => debounce(({ value: newValue }) => setValue(newValue), 250),
-      [setValue]
-    )
-
     return (
-      <QuickForm effects={[effect]} value={value}>
+      <QuickForm
+        effects={[
+          useCallback(
+            () =>
+              debounce(({ value: newValue }) => {
+                setValue(newValue)
+              }, 250),
+            [setValue]
+          ),
+        ]}
+        value={value}
+      >
         {(update, { value }) => {
           return (
             <TextField
@@ -53,9 +59,13 @@ export default memo(
    * Don't re-render unless unmounted or the error
    * state changes
    */
-  ({ error: aE, value: aV }, { error: bE, value: bV }) => {
+  (a, b) => {
+    const { error: aE, value: aV } = a
+    const { error: bE, value: bV } = b
+
     if (aE !== bE) return false
     if (aV !== bV) return false
+
     return true
   }
 )

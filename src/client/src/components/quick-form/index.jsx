@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, createRef } from 'react'
 export default ({ children, effects = [], ...formFields }) => {
   const [fields, updateAllFields] = useState(formFields)
 
-  const refs = useRef(
+  const effectRefs = useRef(
     effects.reduce((refs, effect, i) => {
       const ref = createRef()
       ref.current = effect
@@ -11,13 +11,11 @@ export default ({ children, effects = [], ...formFields }) => {
     }, {})
   )
 
-  useEffect(
-    () =>
-      Object.entries(refs.current).forEach(([, { current: effect }]) => {
-        effect(fields)
-      }),
-    [fields]
-  )
+  useEffect(() => {
+    Object.entries(effectRefs.current).forEach(([, { current: effect }]) => {
+      effect(fields)
+    })
+  }, [fields])
 
   const updateForm = obj => {
     updateAllFields(fields => Object.assign({ ...fields }, obj))

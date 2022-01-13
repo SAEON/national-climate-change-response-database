@@ -1,19 +1,31 @@
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 import { context as mapContext } from '../../../../ol-react'
 import VectorSource from 'ol/source/Vector'
+import { useSnackbar } from 'notistack'
 import VectorLayer from 'ol/layer/Vector'
 import Draw from 'ol/interaction/Draw'
 import LayerGroup from 'ol/layer/Group'
 import Feature from 'ol/Feature'
 import Point from 'ol/geom/Point'
+import WKT from 'ol/format/WKT'
+
+const _wkt = new WKT()
 
 // eslint-disable-next-line
-export default ({ geofencePolygons, points = [], setPoints }) => {
+export default ({ geofencePolygons = [], points = [], setPoints }) => {
+  const { enqueueSnackbar } = useSnackbar()
   const { map } = useContext(mapContext)
   const source = useMemo(() => new VectorSource({ wrapX: false }), [])
   const awaitGeometryFunction = useRef(null)
 
-  // TODO use geofencePolygons to reject invalid locations
+  const fences = useMemo(() => {
+    return geofencePolygons.map(fence => {
+      return _wkt.readGeometry(fence.geometry, {
+        dataProjection: 'EPSG:4326',
+        featureProjection: 'EPSG:4326',
+      })
+    })
+  }, [geofencePolygons])
 
   const drawInteraction = useMemo(
     () =>
@@ -22,12 +34,28 @@ export default ({ geofencePolygons, points = [], setPoints }) => {
         source,
         geometryFunction: ([y, x]) => {
           awaitGeometryFunction.current = new Promise(resolve => {
+            if (fences.length) {
+              let isValid = false
+              fences.forEach(fence => {
+                if (fence.intersectsCoordinate([y, x])) {
+                  isValid = true
+                }
+              })
+              if (!isValid) {
+                enqueueSnackbar(
+                  'Point input is not within bounds of the selected project region(s). This is likely an error and should be corrected',
+                  {
+                    variant: 'warning',
+                  }
+                )
+              }
+            }
             resolve()
           })
           setPoints([...points, [y, x]])
         },
       }),
-    [source, setPoints, points]
+    [source, setPoints, points, fences, enqueueSnackbar]
   )
 
   const mouseenter = useCallback(() => {

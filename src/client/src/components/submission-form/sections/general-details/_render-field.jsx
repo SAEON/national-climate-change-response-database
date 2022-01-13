@@ -102,7 +102,6 @@ const RenderField = memo(
             updateForm({
               [fieldName]: val,
               localMunicipality: undefined,
-              xy: undefined,
             })
           }
           label={placeholder}
@@ -122,7 +121,7 @@ const RenderField = memo(
           name={fieldName}
           value={value}
           error={isRequired && !value?.length}
-          onChange={val => updateForm({ [fieldName]: val, xy: undefined, cityOrTown: 'test' })}
+          onChange={val => updateForm({ [fieldName]: val, cityOrTown: 'test' })}
           label={placeholder}
           helperText={helperText}
         />

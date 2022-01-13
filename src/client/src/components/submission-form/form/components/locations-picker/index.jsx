@@ -16,41 +16,52 @@ import Picker from './picker'
 import Fade from '@mui/material/Fade'
 import { alpha } from '@mui/material/styles'
 
-export default ({ onChange, points, setPoints, geofence }) => {
-  const { loading, error, data } = useQuery(
-    gql`
-      query regions($terms: [String!]!) {
-        regions(terms: $terms) {
-          id
-          name
-          geometry
+export default memo(
+  ({ onChange, points, setPoints, geofence }) => {
+    const { loading, error, data } = useQuery(
+      gql`
+        query regions($terms: [String!]!) {
+          regions(terms: $terms) {
+            id
+            name
+            geometry
+          }
         }
+      `,
+      {
+        variables: {
+          terms: geofence.map(({ term }) => term),
+        },
       }
-    `,
-    {
-      variables: {
-        terms: geofence.map(({ term }) => term),
-      },
+    )
+
+    if (loading) {
+      return <Loading />
     }
-  )
 
-  if (loading) {
-    return <Loading />
+    if (error) {
+      throw error
+    }
+
+    return (
+      <LocationBounds
+        geofencePolygons={data.regions}
+        onChange={onChange}
+        points={points}
+        setPoints={setPoints}
+      />
+    )
+  },
+  (a, b) => {
+    const { geofence: aGeofence, points: aPoints } = a
+    const { geofence: bGeofence, points: bPoints } = b
+
+    if (JSON.stringify(aGeofence) !== JSON.stringify(bGeofence)) return false
+    if (JSON.stringify(aPoints) !== JSON.stringify(bPoints)) return false
+
+    return true
   }
-
-  if (error) {
-    throw error
-  }
-
-  return (
-    <LocationBounds
-      geofencePolygons={data.regions}
-      onChange={onChange}
-      points={points}
-      setPoints={setPoints}
-    />
-  )
-}
+)
 
 const TabPanel = props => {
   const { children, value, index, ...other } = props
@@ -130,12 +141,18 @@ const Input = ({ geofencePolygons, update, points }) => {
   )
 }
 
-const LocationBounds = memo(({ points, setPoints, geofencePolygons }) => {
+const LocationBounds = ({ points, setPoints, geofencePolygons }) => {
   const theme = useTheme()
-  const effect = useMemo(() => debounce(({ points }) => setPoints(points)), [setPoints])
 
   return (
-    <QuickForm effects={[effect]} points={points}>
+    <QuickForm
+      effects={[
+        debounce(({ points }) => {
+          setPoints(points)
+        }),
+      ]}
+      points={points}
+    >
       {(update, { points }) => {
         return (
           <div style={{ marginTop: theme.spacing(3) }}>
@@ -151,4 +168,4 @@ const LocationBounds = memo(({ points, setPoints, geofencePolygons }) => {
       }}
     </QuickForm>
   )
-})
+}

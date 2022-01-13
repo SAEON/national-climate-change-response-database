@@ -92,7 +92,7 @@ export default ({ issuer, redirect_uri }) => {
             values (
               s.userId,
               s.roleId,
-              s.roleId
+              s.tenantId
             );`)
 
         // Get the user back

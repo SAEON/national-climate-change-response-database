@@ -1,4 +1,3 @@
-import packageJson from '../../package.json' assert { type: 'json' }
 import mssql from 'mssql'
 import {
   MSSQL_USERNAME,
@@ -31,7 +30,7 @@ const makePool = ({ user, password, server, database, port }) => {
       enableArithAbort: true,
       useUTC: true,
       encrypt: true,
-      appName: packageJson.name,
+      appName: 'nccrd',
       abortTransactionOnError: true,
       trustServerCertificate: true,
     },

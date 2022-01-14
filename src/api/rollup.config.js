@@ -2,8 +2,11 @@ import json from '@rollup/plugin-json'
 
 export default {
   input: 'src/index.js',
+  preserveEntrySignatures: false,
   external: [
     'xlsx-populate',
+    '@graphql-tools/schema',
+    'sanitize-filename',
     'stream',
     'apollo-server-core',
     'object-hash',
@@ -40,7 +43,7 @@ export default {
     'perf_hooks',
   ],
   output: {
-    file: 'bin/index.cjs',
+    dir: 'bin',
     format: 'cjs',
   },
   plugins: [json()],

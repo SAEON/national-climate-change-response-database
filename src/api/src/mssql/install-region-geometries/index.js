@@ -9,7 +9,9 @@ const __dirname = getCurrentDirectory(import.meta)
 
 const load = async (f, dir = `.${sep}geojson`) => {
   const path = normalize(join(__dirname, dir, f))
-  return await import(path, { assert: { type: 'json' } }).then(({ default: json }) => json)
+  return await import(path).then(({ default: json }) => {
+    return json
+  })
 }
 
 /**
@@ -44,13 +46,13 @@ export default async () => {
      */
     if (count < 1) {
       // SA
-      const za = await load('za-boundary.geojson')
+      const za = await load('za-boundary.js')
       const { properties, geometry } = za.features[0]
       await insertRegion(transaction, { properties, geometry })
       console.info('Loaded ZA geometry')
 
       // SA provinces
-      const provinces = (await load('za-provinces.geojson')).features
+      const provinces = (await load('za-provinces.js')).features
       for (const feature of provinces) {
         const properties = {
           ...feature.properties,
@@ -66,7 +68,7 @@ export default async () => {
       console.info('Loaded provinces geometry')
 
       // SA district municipalities & metropolitan municipalities
-      const districts = (await load('za-district-municipalities.geojson')).features
+      const districts = (await load('za-district-municipalities.js')).features
       for (const feature of districts) {
         const properties = {
           ...feature.properties,
@@ -82,7 +84,7 @@ export default async () => {
       console.info('Loaded district municipality geometry')
 
       // SA local municipalities (including local municipalities that are also metropolitan municipalities)
-      const regions = (await load('za-local-municipalities.geojson')).features
+      const regions = (await load('za-local-municipalities.js')).features
       for (const feature of regions) {
         const properties = {
           ...feature.properties,

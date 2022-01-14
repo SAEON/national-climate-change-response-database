@@ -12,7 +12,6 @@
     "ncu": "ncu",
     "ncu -u": "ncu -u"
   },
-  "bin": "bin/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SAEON/national-climate-change-systems.git"

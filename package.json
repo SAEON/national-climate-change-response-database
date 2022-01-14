@@ -22,7 +22,7 @@
     "ncu": "ncu",
     "ncu -u": "ncu -u"
   },
-  "bin": "src/api/bin/index.cjs",
+  "bin": "src/api/bin/index.js",
   "pkg": {
     "assets": [
       "src/api/bin/trees/**/*",

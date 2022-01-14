@@ -16,8 +16,8 @@ const makePool = ({ user, password, server, database, port }) => {
     server,
     database,
     port,
-    connectionTimeout: 15 * 1000,
-    requestTimeout: 15 * 1000,
+    connectionTimeout: 30 * 1000,
+    requestTimeout: 30 * 1000,
     parseJSON: true,
     driver: 'tedious',
     pool: {

@@ -116,8 +116,7 @@ export default ({ mode }) => {
             color="primary"
             disableElevation
           >
-            {loading && 'Loading'}
-            {!loading && mode === 'edit' ? 'Okay' : 'submit'}
+            {loading ? 'Loading' : mode === 'edit' ? 'Okay' : 'Submit'}
           </Button>
         </CardActions>
       </Card>

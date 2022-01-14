@@ -4,7 +4,7 @@ FROM node:17.3.1 as client
 ARG DEPLOYMENT_ENV=production
 ARG DEFAULT_NOTICES=
 ARG NCCRD_TECHNICAL_CONTACT=zd.smith@saeon.nrf.ac.za
-ARG DEFAULT_TENANT_ADDRESS=http://localhost:3001
+ARG DEFAULT_TENANT_ADDRESS
 
 WORKDIR /nccrd-client
 

@@ -6,7 +6,7 @@ const loadEntryPoints = require('./load-entry-points.js')
 
 const ROOT = path.normalize(path.join(__dirname, '../'))
 const dotenv = require('dotenv').config({ path: path.join(ROOT, './.env') })
-const { NODE_ENV: mode, DEPLOYMENT_ENV = 'local', HOSTNAME = '', DEFAULT_TENANT_ADDRESS = '' } = process.env
+const { NODE_ENV: mode, DEPLOYMENT_ENV = 'local', HOSTNAME = '', DEFAULT_TENANT_ADDRESS } = process.env
 
 module.exports = (ROOT, output) => {
   return [

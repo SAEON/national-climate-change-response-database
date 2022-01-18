@@ -10,7 +10,6 @@ export const user = {
     permissions['attach-file-to-submission'],
     permissions['create-submission'],
     permissions['download-submission'],
-    permissions['download-all-submissions'],
   ]),
 }
 

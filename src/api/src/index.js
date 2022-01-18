@@ -28,7 +28,7 @@ import loginRoute from './http/login.js'
 import attachFileToSubmission from './http/attach-file-to-submission.js'
 import submitCompletedTemplates from './http/submit-completed-templates/index.js'
 import downloadTemplateRoute from './http/download-template.js'
-import downloadSubmission from './http/download-submission/index.js'
+import downloadSubmissions from './http/download-submissions/index.js'
 import apolloServer from './graphql/index.js'
 import { PORT, API_KEY, SSL_ENV } from './config/index.js'
 import hoursToMilliseconds from './lib/hours-to-ms.js'
@@ -114,7 +114,7 @@ app
       .post('/http/submit-completed-templates', submitCompletedTemplates)
       .put('/http/create-tenant', createTenantRoute)
       .get('/http/download-template', downloadTemplateRoute)
-      .get('/http/download-submission', downloadSubmission)
+      .get('/http/download-submissions', downloadSubmissions)
       .routes()
   )
   .use(fourOFour)

@@ -45,7 +45,7 @@ Setup the repository for development on a local machine. The Node.js and React s
 2. Node.js **node:^16**
 
 ```sh
-# Make sure that Node.js ^node:17.3.1 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+# Make sure that Node.js ^node:16.13.2 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 # Assuming an Ubuntu Linux environment
 curl -sL https://deb.nodesource.com/setup_17.x | sudo -E bash -
 sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings

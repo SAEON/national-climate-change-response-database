@@ -1,5 +1,5 @@
 # Build client
-FROM node:17.3.1 as client
+FROM node:16.13.2 as client
 
 ARG DEPLOYMENT_ENV=production
 ARG DEFAULT_NOTICES=
@@ -23,7 +23,7 @@ RUN npm run build
 
 
 # Start API
-FROM node:17.3.1-alpine
+FROM node:16.13.2-alpine
 
 ARG ODP_AUTH_CLIENT_ID=SAEON.NCCIS
 ENV ODP_AUTH_CLIENT_ID=$ODP_AUTH_CLIENT_ID

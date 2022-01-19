@@ -14,7 +14,7 @@ export default adaptation => {
       Object.fromEntries(
         Object.entries(_adaptation).map(([field, value]) => {
           if (adaptationVocabularyFields.includes(field)) {
-            if (adaptationInputFields[field] === 'LIST') {
+            if (adaptationInputFields[field].kind === 'LIST') {
               return [field, value.map(({ _: term }) => ({ term }))]
             } else {
               return [field, { term: value }]

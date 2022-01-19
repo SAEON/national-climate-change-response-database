@@ -12,7 +12,7 @@ export default project => {
       Object.fromEntries(
         Object.entries(_project).map(([field, value]) => {
           if (projectVocabularyFields.includes(field)) {
-            if (projectInputFields[field] === 'LIST') {
+            if (projectInputFields[field].kind === 'LIST') {
               return [field, value.map(({ _: term }) => ({ term }))]
             } else {
               return [field, { term: value }]

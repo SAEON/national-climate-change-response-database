@@ -34,6 +34,7 @@ const typeFields = graphqlSync({
         p: __type(name: "ProjectInput") {
           inputFields {
             name
+            description
             type {
               kind
             }
@@ -42,6 +43,7 @@ const typeFields = graphqlSync({
         m: __type(name: "MitigationInput") {
           inputFields {
             name
+            description
             type {
               kind
             }
@@ -50,6 +52,7 @@ const typeFields = graphqlSync({
         a: __type(name: "AdaptationInput") {
           inputFields {
             name
+            description
             type {
               kind
             }
@@ -64,13 +67,22 @@ export const projectVocabularyFields = _projectVocabularyFields
 export const mitigationVocabularyFields = _mitigationVocabularyFields
 export const adaptationVocabularyFields = _adaptationVocabularyFields
 export const projectInputFields = Object.fromEntries(
-  typeFields.p.inputFields.map(({ name, type: { kind } }) => [name, kind])
+  typeFields.p.inputFields.map(({ name, type: { kind }, description }) => [
+    name,
+    { kind, description },
+  ])
 )
 export const mitigationInputFields = Object.fromEntries(
-  typeFields.m.inputFields.map(({ name, type: { kind } }) => [name, kind])
+  typeFields.m.inputFields.map(({ name, type: { kind }, description }) => [
+    name,
+    { kind, description },
+  ])
 )
 export const adaptationInputFields = Object.fromEntries(
-  typeFields.a.inputFields.map(({ name, type: { kind } }) => [name, kind])
+  typeFields.a.inputFields.map(({ name, type: { kind }, description }) => [
+    name,
+    { kind, description },
+  ])
 )
 
 export default schema

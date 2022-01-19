@@ -14,7 +14,7 @@ export default mitigation => {
       Object.fromEntries(
         Object.entries(_mitigation).map(([field, value]) => {
           if (mitigationVocabularyFields.includes(field)) {
-            if (mitigationInputFields[field] === 'LIST') {
+            if (mitigationInputFields[field].kind === 'LIST') {
               return [field, value.map(({ _: term }) => ({ term }))]
             } else {
               return [field, { term: value }]

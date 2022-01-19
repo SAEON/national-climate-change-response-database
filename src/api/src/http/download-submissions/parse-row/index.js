@@ -8,6 +8,7 @@ import {
 } from '../../../graphql/schema/index.js'
 import parseProgressData from './parse-progress-data/index.js'
 const generalVocabularyFields = ['submissionStatus']
+import { stringify as stringifySync } from 'csv/sync'
 
 const generalInputFields = {
   /**
@@ -39,7 +40,37 @@ const parseValue = ({ key, obj, vocabFields, inputFields }) => {
   }
 
   if (key === 'progressData') {
-    return JSON.stringify(parseProgressData(value))
+    const tables = Object.entries(parseProgressData(value)).reduce(
+      (tables, [key, value]) => {
+        // Progress
+        if (key.includes('_progress')) {
+          key = key.replace('_progress_calc_', '')
+          key = key.split('_')
+          const col = key[0]
+          const row = key[1]
+          tables.progress[row - 1] = tables.progress[row - 1] || {}
+          tables.progress[row - 1][col] = value
+        } else {
+          // Expenditure
+          key = key.replace('_expenditure_calc_', '')
+          key = key.split('_')
+          const col = key[0]
+          const row = key[1]
+          tables.expenditure[row - 1] = tables.expenditure[row - 1] || {}
+          tables.expenditure[row - 1][col] = value
+        }
+
+        return tables
+      },
+      { expenditure: [], progress: [] }
+    )
+
+    return `
+### PROGRESS DATA
+${stringifySync(tables.progress, { header: true, delimiter: ';', quoted: false })}
+
+### EXPENDITURE DATA
+${stringifySync(tables.expenditure, { header: true, delimiter: ';', quoted: false })}`
   }
 
   if (key === 'fileUploads') {

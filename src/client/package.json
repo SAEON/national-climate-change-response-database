@@ -1,7 +1,7 @@
 {
   "name": "nccrd",
   "version": "1.0.0",
-  "description": "National Climate Change Response Database",
+  "description": "Climate Change Response Database",
   "scripts": {
     "build": "rimraf ./dist && NODE_ENV=production webpack --config webpack/index.js",
     "start": "rimraf ./dist && onchange \"src/**/*.@(js|jsx|ts|tsx|css|scss)\" -- prettier --write {{changed}} & NODE_ENV=development webpack serve --port 3001 --config webpack/index.js",

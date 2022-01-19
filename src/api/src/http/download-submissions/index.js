@@ -1,11 +1,17 @@
 import { Readable } from 'stream'
-
-import parseProgressData from './_parse-progress-data.js'
 import PERMISSIONS from '../../user-model/permissions.js'
 import { format } from 'date-fns'
 import { pool } from '../../mssql/pool.js'
 import parseRow from './parse-row/index.js'
 import makeHeaderRow from './make-header-row/index.js'
+import { stringify as stringifySync } from 'csv/sync'
+
+const csvOptions = {
+  delimiter: ',',
+  quoted: true,
+}
+
+const stringifyRow = row => stringifySync([row], csvOptions)
 
 /**
  * Stream downloads to user in CSV
@@ -24,6 +30,8 @@ export default async ctx => {
     ctx.response = 400
     return
   }
+
+  console.info('Download requested by user', user.info(ctx).id, 'for IDS', ids.join(', '))
 
   /**
    * Get a list of all keys
@@ -54,37 +62,45 @@ export default async ctx => {
     { key: 'createdAt' },
     { key: 'userId' },
     { key: 'createdBy' },
+    { key: 'research' },
     ...keys,
   ].reduce((map, { key }, i) => ({ ...map, [key]: i }), {})
 
   try {
+    // Set up the download stream
     const dataStream = new Readable()
     dataStream._read = () => {} // https://stackoverflow.com/a/44091532/3114742
-    dataStream.push(makeHeaderRow({ columns }))
+    ctx.body = dataStream
+    ctx.attachment(`CCRD download ${format(new Date(), 'yyyy-MM-dd HH-mm-ss')}.csv`)
 
+    // Push the CSV headers to the download
+    dataStream.push(stringifyRow(makeHeaderRow({ columns })))
+
+    // Create a MSSQL streaming query
     const request = (await pool.connect()).request()
     request.stream = true
     ids.forEach((id, i) => request.input(`id_${i}`, id))
     request.query(
-      `select * from Submissions where id in (${ids.map((_, i) => `@id_${i}`).join(', ')})`
+      `select
+        *
+       from Submissions
+       where
+        id in (${ids.map((_, i) => `@id_${i}`).join(', ')})`
     )
 
+    // Push rows to download one at a time
     request.on('row', submission => {
-      dataStream.push(parseRow({ submission, columns }))
+      dataStream.push(stringifyRow(parseRow({ submission, columns })))
     })
 
     request.on('error', error => {
-      console.error(error)
+      console.error('Error generating download for IDs', ids.join(';'), error.message)
       throw error
     })
 
-    request.on('done', result => {
-      console.info('Download complete', result)
+    request.on('done', () => {
       dataStream.push(null)
     })
-
-    ctx.body = dataStream
-    ctx.attachment(`CCRD download ${format(new Date(), 'yyyy-MM-dd HH-mm-ss')}.csv`)
   } catch (error) {
     console.error(error.message)
     ctx.response.status = 404

@@ -1,4 +1,4 @@
-import fixGridValues from './fix-grid-values.js'
+import fixGridValues from './_fix-grid-values.js'
 
 /**
  * grid1 => progress data

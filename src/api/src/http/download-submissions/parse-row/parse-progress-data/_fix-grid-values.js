@@ -1,4 +1,4 @@
-import getCellValue from './get-cell-value.js'
+import getCellValue from './_get-cell-value.js'
 
 export default ({ calculator }) => {
   const { grid1 = {}, grid2 = {}, startYear: _startYear, endYear: _endYear } = calculator

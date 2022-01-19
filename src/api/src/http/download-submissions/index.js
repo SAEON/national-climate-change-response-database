@@ -24,7 +24,7 @@ export default async ctx => {
 
   // await ensurePermission({ ctx, permission: PERMISSIONS['download-submission'] })
 
-  const ids = decodeURIComponent(ctx.query.ids).split(',')
+  const ids = JSON.parse(ctx.request.body.ids)
 
   if (!ids?.length) {
     ctx.response = 400

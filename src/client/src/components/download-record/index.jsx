@@ -12,6 +12,60 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Tooltip from '@mui/material/Tooltip'
 import Icon from '@mui/material/Icon'
+import { format } from 'date-fns'
+
+/**
+ * https://gist.github.com/devloco/5f779216c988438777b76e7db113d05c
+ */
+const DownloadButton = ({ closeFn, id }) => {
+  return (
+    <Button
+      size="small"
+      variant="text"
+      onClick={async () => {
+        const url = `${NCCRD_API_HTTP_ADDRESS}/download-submissions`
+        const formData = new FormData()
+        formData.append('ids', JSON.stringify([id]))
+
+        const res = await fetch(url, {
+          method: 'POST',
+          credentials: 'include',
+          mode: 'cors',
+          body: formData,
+        })
+
+        const obj = {
+          filename: `CCRD download ${format(new Date(), 'yyyy-MM-dd HH-mm-ss')}.csv`,
+          blob: await res.blob(),
+        }
+
+        const blob = new Blob([obj.blob], { type: 'text/csv' })
+
+        // MS Edge and IE don't allow using a blob object directly as link href, instead it is necessary to use msSaveOrOpenBlob
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(blob)
+        } else {
+          // For other browsers: create a link pointing to the ObjectURL containing the blob.
+          const objUrl = window.URL.createObjectURL(blob)
+
+          let link = document.createElement('a')
+          link.href = objUrl
+          link.download = obj.filename
+          link.click()
+
+          // For Firefox it is necessary to delay revoking the ObjectURL.
+          setTimeout(() => {
+            window.URL.revokeObjectURL(objUrl)
+          }, 250)
+        }
+
+        closeFn()
+      }}
+    >
+      Download submission data
+    </Button>
+  )
+}
 
 const OpenedDialog = ({ title, id, closeFn }) => {
   const isAuthenticated = useContext(authenticationContext)
@@ -61,16 +115,7 @@ const OpenedDialog = ({ title, id, closeFn }) => {
         </span>
       </DialogContent>
       <DialogActions>
-        <Link
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`${NCCRD_API_HTTP_ADDRESS}/download-submissions?ids=${encodeURIComponent(id)}`}
-          key="download-link"
-          onClick={closeFn}
-          underline="hover"
-        >
-          Download record
-        </Link>
+        <DownloadButton closeFn={closeFn} id={id} />
       </DialogActions>
     </>
   )

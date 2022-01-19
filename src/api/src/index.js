@@ -114,7 +114,7 @@ app
       .post('/http/submit-completed-templates', submitCompletedTemplates)
       .put('/http/create-tenant', createTenantRoute)
       .get('/http/download-template', downloadTemplateRoute)
-      .get('/http/download-submissions', downloadSubmissions)
+      .post('/http/download-submissions', downloadSubmissions)
       .routes()
   )
   .use(fourOFour)

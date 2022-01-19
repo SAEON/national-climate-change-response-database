@@ -1,18 +1,10 @@
-import { useContext } from 'react'
-import DownloadIcon from 'mdi-react/DownloadIcon'
-import Button from '@mui/material/Button'
 import Hidden from '@mui/material/Hidden'
-import { context as authContext } from '../../../contexts/authorization'
 import { useTheme } from '@mui/material/styles'
 import Divider from '@mui/material/Divider'
-import MessageDialog from '../../../components/message-dialogue'
+import DownloadRecord from '../../../components/download-record'
 
 export default () => {
   const theme = useTheme()
-  const { hasPermission } = useContext(authContext)
-  if (!hasPermission('download-all-submissions')) {
-    return null
-  }
 
   return (
     <>
@@ -23,25 +15,10 @@ export default () => {
       />
 
       <Hidden mdDown>
-        <MessageDialog
-          title="Download submissions"
-          text="This button is only shown to admins, and is not implemented yet"
-          tooltipProps={{
-            title: 'Download all submissions from current filter context',
-            placement: 'bottom',
-          }}
-          Button={fn => (
-            <Button
-              disableElevation
-              size="small"
-              variant="text"
-              color="primary"
-              onClick={fn}
-              startIcon={<DownloadIcon size={18} />}
-            >
-              Download all (filtered) data
-            </Button>
-          )}
+        <DownloadRecord
+          buttonTitle="Download submission data"
+          title="All (filtered) submissions"
+          search={'everything'}
         />
       </Hidden>
     </>

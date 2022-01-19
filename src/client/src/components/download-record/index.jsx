@@ -17,7 +17,7 @@ import { format } from 'date-fns'
 /**
  * https://gist.github.com/devloco/5f779216c988438777b76e7db113d05c
  */
-const DownloadButton = ({ closeFn, id }) => {
+const DownloadButton = ({ closeFn, id, search }) => {
   return (
     <Button
       size="small"
@@ -25,7 +25,14 @@ const DownloadButton = ({ closeFn, id }) => {
       onClick={async () => {
         const url = `${NCCRD_API_HTTP_ADDRESS}/download-submissions`
         const formData = new FormData()
-        formData.append('ids', JSON.stringify([id]))
+
+        if (id) {
+          formData.append('ids', JSON.stringify([id]))
+        }
+
+        if (search) {
+          formData.append('search', JSON.stringify(search))
+        }
 
         const res = await fetch(url, {
           method: 'POST',
@@ -67,7 +74,7 @@ const DownloadButton = ({ closeFn, id }) => {
   )
 }
 
-const OpenedDialog = ({ title, id, closeFn }) => {
+const OpenedDialog = ({ title, id, search, closeFn }) => {
   const isAuthenticated = useContext(authenticationContext)
   const { hasPermission } = useContext(authContext)
 
@@ -115,19 +122,19 @@ const OpenedDialog = ({ title, id, closeFn }) => {
         </span>
       </DialogContent>
       <DialogActions>
-        <DownloadButton closeFn={closeFn} id={id} />
+        <DownloadButton search={search} closeFn={closeFn} id={id} />
       </DialogActions>
     </>
   )
 }
 
-export default ({ title, id }) => {
+export default ({ title, search, id, buttonTitle }) => {
   const [open, setOpen] = useState(false)
 
   return (
     <>
       {/* TOGGLE */}
-      <Tooltip title="Download this record as Excel file" placement="top">
+      <Tooltip title="Download submission data as CSV file" placement="top">
         <span>
           <Button
             onClick={() => setOpen(!open)}
@@ -136,14 +143,14 @@ export default ({ title, id }) => {
             size="small"
             variant="text"
           >
-            Download
+            {buttonTitle || 'Download'}
           </Button>
         </span>
       </Tooltip>
 
       {/* DIALOG */}
-      <Dialog id={id} open={open} onClose={() => setOpen(false)}>
-        <OpenedDialog closeFn={() => setOpen(false)} id={id} title={title} />
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <OpenedDialog closeFn={() => setOpen(false)} id={id} title={title} search={search} />
       </Dialog>
     </>
   )

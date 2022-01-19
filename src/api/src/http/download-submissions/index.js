@@ -23,8 +23,20 @@ export default async ctx => {
   const { ensurePermission } = user
 
   // await ensurePermission({ ctx, permission: PERMISSIONS['download-submission'] })
+  let { ids, search } = ctx.request.body
 
-  const ids = JSON.parse(ctx.request.body.ids)
+  if (ids && search) {
+    throw new Error(
+      'Either specify a list of IDs to download, or a search object to resolve IDs (not both)'
+    )
+  }
+
+  if (search) {
+    // TODO resolve search to ids, or should this define a where clause?
+    ids = []
+  } else {
+    ids = JSON.parse(ctx.request.body.ids)
+  }
 
   if (!ids?.length) {
     ctx.response = 400
@@ -71,7 +83,7 @@ export default async ctx => {
     const dataStream = new Readable()
     dataStream._read = () => {} // https://stackoverflow.com/a/44091532/3114742
     ctx.body = dataStream
-    ctx.attachment(`CCRD download ${format(new Date(), 'yyyy-MM-dd HH-mm-ss')}.csv`)
+    ctx.attachment(`CCRD download ${format(new Date(), 'yyyy-MM-dd HH-mm-ss')}.csv`) // This doesn't seem to go through to the client
 
     // Push the CSV headers to the download
     dataStream.push(stringifyRow(makeHeaderRow({ columns })))

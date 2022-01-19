@@ -4,14 +4,13 @@ import Collapse from '@mui/material/Collapse'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import FilterHeader from './_header'
-import { useTheme, alpha } from '@mui/material/styles'
+import { alpha } from '@mui/material/styles'
 import TextFilter from './_text-filter'
 import VocabularyFilter from './_vocabulary-filter'
 import { DEFAULT_VALUE as NA_VOCAB_SELECT } from './_vocabulary-filter'
 
 export default ({ filters, setFilter, title }) => {
   const _filters = Object.entries(filters)
-  const theme = useTheme()
 
   const [collapsed, setCollapsed] = useState(
     !Object.entries(filters).reduce((isFiltered, [, { value }]) => {
@@ -26,12 +25,12 @@ export default ({ filters, setFilter, title }) => {
     <div>
       <FilterHeader title={title} collapsed={collapsed} setCollapsed={setCollapsed} />
       <Collapse
-        style={{ width: '100%' }}
+        sx={{ width: '100%' }}
         key={`result-list-collapse-${title}`}
         unmountOnExit
         in={!collapsed}
       >
-        <Paper style={{ backgroundColor: alpha(theme.palette.common.white, 0.9) }}>
+        <Paper sx={theme => ({ backgroundColor: alpha(theme.palette.common.white, 0.9) })}>
           <Box px={3} py={2}>
             {_filters.length ? (
               _filters.map(([field, info]) => {

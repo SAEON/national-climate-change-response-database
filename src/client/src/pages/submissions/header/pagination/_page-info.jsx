@@ -14,7 +14,7 @@ export default () => {
 
   return (
     <Typography
-      style={{ marginLeft: theme.spacing(1), marginRight: theme.spacing(1) }}
+      sx={theme => ({ marginLeft: theme.spacing(1), marginRight: theme.spacing(1) })}
       variant="overline"
     >
       {min} - {max} of {totalRecords} {lgUp ? 'submissions' : ''}

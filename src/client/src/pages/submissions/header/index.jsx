@@ -22,7 +22,7 @@ export default ({ MobileFilters }) => {
         <Divider
           flexItem
           orientation="vertical"
-          style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+          sx={theme => ({ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) })}
         />
       </Hidden>
 
@@ -34,7 +34,7 @@ export default ({ MobileFilters }) => {
         <Divider
           flexItem
           orientation="vertical"
-          style={{ marginLeft: theme.spacing(0), marginRight: theme.spacing(2) }}
+          sx={theme => ({ marginLeft: theme.spacing(0), marginRight: theme.spacing(2) })}
         />
       </Hidden>
 
@@ -52,7 +52,7 @@ export default ({ MobileFilters }) => {
       <Divider
         flexItem
         orientation="vertical"
-        style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+        sx={theme => ({ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) })}
       />
       <Pagination />
     </ToolbarHeader>

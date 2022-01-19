@@ -7,10 +7,8 @@ import Hidden from '@mui/material/Hidden'
 import IconButton from '@mui/material/IconButton'
 import { context as authContext } from '../../../contexts/authorization'
 import Divider from '@mui/material/Divider'
-import { useTheme } from '@mui/material/styles'
 
 export default () => {
-  const theme = useTheme()
   const _authContext = useContext(authContext)
   const { isAuthenticated } = _authContext
 
@@ -46,7 +44,7 @@ export default () => {
       <Divider
         flexItem
         orientation="vertical"
-        style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
+        sx={theme => ({ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) })}
       />
     </>
   )

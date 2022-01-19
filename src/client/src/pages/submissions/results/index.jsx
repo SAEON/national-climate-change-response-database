@@ -11,7 +11,7 @@ export default () => {
 
   if (!records.length) {
     return (
-      <Card variant="outlined" style={{ width: '100%' }}>
+      <Card variant="outlined" sx={{ width: '100%' }}>
         <CardContent>
           <Typography>No submissions</Typography>
         </CardContent>

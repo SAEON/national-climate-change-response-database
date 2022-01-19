@@ -19,7 +19,7 @@ export default ({ Filters, filters }) => {
         onClose={() => setShowSidebar(false)}
       >
         <Grid container>
-          <Grid item xs={12} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             <IconButton
               aria-label="Toggle search filters"
               onClick={() => setShowSidebar(false)}

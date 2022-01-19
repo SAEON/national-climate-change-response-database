@@ -26,7 +26,7 @@ export default () => {
     <FilterContextProvider>
       <Header MobileFilters={Filters} />
       <div style={{ marginTop: theme.spacing(2) }} />
-      <Container style={{ minHeight: 1000 }}>
+      <Container sx={{ minHeight: 1000 }}>
         <Grid container direction="row" spacing={2}>
           {/* FILTERS */}
           <Hidden mdDown>

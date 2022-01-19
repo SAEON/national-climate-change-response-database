@@ -7,9 +7,7 @@ import ExpandIcon from 'mdi-react/ChevronDownIcon'
 import CollapseIcon from 'mdi-react/ChevronUpIcon'
 import Avatar from '@mui/material/Avatar'
 import useLocalStorage from '../../hooks/use-localstorage'
-
-import clsx from 'clsx'
-import useStyles from './style'
+import color from 'color'
 
 export default ({
   id = undefined,
@@ -23,7 +21,6 @@ export default ({
   cardStyle = {},
   error = false,
 }) => {
-  const classes = useStyles()
   const [collapsed, setCollapsed] = id
     ? useLocalStorage(id, !defaultExpanded)
     : useState(!defaultExpanded)
@@ -31,12 +28,16 @@ export default ({
   return (
     <Card
       variant="outlined"
-      className={clsx({
-        [classes.root]: true,
-        [classes.errorOutline]: error,
-        [classes.errorBackground]: error && collapsed,
+      sx={theme => ({
+        width: '100%',
+        backgroundColor:
+          error && collapsed
+            ? color(theme.palette.error.light).lighten(0.5).hex()
+            : theme.palette.common.white,
+        transition: theme.transitions.create(['background-color', 'outline']),
+        outline: error ? `1px solid ${theme.palette.error.light}` : 'none',
+        ...cardStyle,
       })}
-      style={{ width: '100%', ...cardStyle }}
     >
       <CardHeader
         subheader={subheader || ''}

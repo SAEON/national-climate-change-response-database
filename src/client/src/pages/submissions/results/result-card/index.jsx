@@ -9,10 +9,10 @@ import Description from './_description'
 
 export default ({ id, project, createdBy }) => {
   return (
-    <Card variant="outlined" style={{ width: '100%' }}>
+    <Card variant="outlined" sx={{ width: '100%' }}>
       <Title {...project} />
       <Description {...project} />
-      <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Delete createdBy={createdBy} id={id} />
         <View id={id} />
         <Edit createdBy={createdBy} id={id} />

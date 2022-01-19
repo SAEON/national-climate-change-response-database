@@ -9,7 +9,7 @@ import ExpandLessIcon from 'mdi-react/ExpandLessIcon'
 export default ({ title, collapsed, setCollapsed }) => {
   return (
     <AppBar
-      style={{ zIndex: 200 }}
+      sx={{ zIndex: 200 }}
       position="relative"
       color="inherit"
       elevation={collapsed ? 0 : 4}
@@ -18,7 +18,7 @@ export default ({ title, collapsed, setCollapsed }) => {
       <Toolbar variant="regular">
         <Typography
           onClick={() => setCollapsed(!collapsed)}
-          style={{ cursor: 'pointer' }}
+          sx={{ cursor: 'pointer' }}
           variant="overline"
           noWrap
         >

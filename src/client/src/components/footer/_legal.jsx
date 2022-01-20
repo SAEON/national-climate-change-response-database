@@ -1,12 +1,10 @@
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
-import { useTheme } from '@mui/material/styles'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
+import { Div } from '../../components/html-tags'
 
 export default ({ routes }) => {
-  const theme = useTheme()
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -17,8 +15,8 @@ export default ({ routes }) => {
           .filter(({ group }) => group === 'legal')
           .map(({ label, Icon, to }) => (
             <Grid item xs={12} key={label}>
-              <div
-                style={{
+              <Div
+                sx={{
                   display: 'flex',
                   alignItems: 'center',
                 }}
@@ -28,9 +26,9 @@ export default ({ routes }) => {
                   component={({ style, ...otherProps }) => (
                     <Link
                       {...otherProps}
-                      style={Object.assign(
+                      sx={Object.assign(
                         { ...style },
-                        { color: 'white', marginLeft: theme.spacing(1) }
+                        { color: 'white', marginLeft: theme => theme.spacing(1) }
                       )}
                       to={to}
                       component={RouterLink}
@@ -43,7 +41,7 @@ export default ({ routes }) => {
                 >
                   {label}
                 </Typography>
-              </div>
+              </Div>
             </Grid>
           ))}
       </Grid>

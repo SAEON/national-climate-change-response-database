@@ -10,19 +10,18 @@ import { NCCRD_API_HTTP_ADDRESS } from '../../config'
 import getUriState from '../../lib/get-uri-state'
 import Container from '@mui/material/Container'
 import NrfIcon from '../../icons/nrf-icon'
-import useTheme from '@mui/styles/useTheme'
+import { Main, Div } from '../../components/html-tags'
 
 export default () => {
   const { redirect = window.location.href } = getUriState()
-  const theme = useTheme()
 
   return (
     <>
-      <main style={{ height: '82vh', display: 'flex', alignItems: 'center' }} id="login">
-        <Container style={{ display: 'flex', justifyContent: 'center' }}>
+      <Main sx={{ height: '82vh', display: 'flex', alignItems: 'center' }} id="login">
+        <Container sx={{ display: 'flex', justifyContent: 'center' }}>
           <Grid container justifyContent="center">
-            <Grid item xs={12} sm={8} md={4} style={{ display: 'flex', justifyContent: 'center' }}>
-              <Card variant="outlined" style={{ width: '100%' }}>
+            <Grid item xs={12} sm={8} md={4} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Card variant="outlined" sx={{ width: '100%' }}>
                 <CardHeader title="Log in" />
                 <CardContent>
                   <Typography gutterBottom variant="body2">
@@ -31,11 +30,11 @@ export default () => {
                   </Typography>
                 </CardContent>
                 <CardActions
-                  style={{
+                  sx={{
                     display: 'flex',
                     justifyContent: 'flex-start',
                     flexDirection: 'column',
-                    padding: theme.spacing(2),
+                    padding: theme => theme.spacing(2),
                   }}
                 >
                   <Button
@@ -50,10 +49,10 @@ export default () => {
                     Log in
                   </Button>
                   <Typography
-                    style={{
+                    sx={{
                       display: 'block',
                       textAlign: 'right',
-                      marginTop: theme.spacing(4),
+                      marginTop: theme => theme.spacing(4),
                     }}
                     variant="caption"
                   >
@@ -67,8 +66,8 @@ export default () => {
             </Grid>
           </Grid>
         </Container>
-      </main>
-      <div style={{ height: '8vh' }} />
+      </Main>
+      <Div sx={{ height: '8vh' }} />
     </>
   )
 }

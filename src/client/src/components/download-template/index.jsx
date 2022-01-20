@@ -19,7 +19,7 @@ export default () => {
       title="Download Excel template"
       text={
         <>
-          <Typography style={{ marginBottom: theme.spacing(2) }} variant="body2">
+          <Typography sx={{ marginBottom: theme => theme.spacing(2) }} variant="body2">
             You can submit filled-in Excel templates on this page.
           </Typography>
           <Typography variant="body2">

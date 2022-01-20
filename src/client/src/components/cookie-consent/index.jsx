@@ -2,16 +2,18 @@ import { forwardRef } from 'react'
 import CookieConsent from 'react-cookie-consent'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
+
+const Cookie = styled(CookieConsent)({
+  background: theme => theme.palette.primary.dark,
+  zIndex: 1200,
+})
 
 export default ({ children }) => {
-  const theme = useTheme()
-
   return (
     <>
-      <CookieConsent
+      <Cookie
         overlay={false}
-        style={{ background: theme.palette.primary.dark, zIndex: 1200 }}
         ariaAcceptLabel="Allow cookies"
         ButtonComponent={forwardRef((props, ref) => {
           return (
@@ -19,7 +21,7 @@ export default ({ children }) => {
               {...Object.fromEntries(Object.entries(props).filter(([k]) => k !== 'style'))}
               color="secondary"
               variant="contained"
-              style={{ marginRight: theme.spacing(1) }}
+              sx={{ marginRight: theme => theme.spacing(1) }}
               ref={ref}
             >
               Okay
@@ -32,7 +34,7 @@ export default ({ children }) => {
           This website uses cookies to enhance the user experience. Without cookies, this website
           will not work as expected
         </Typography>
-      </CookieConsent>
+      </Cookie>
       {children}
     </>
   )

@@ -6,10 +6,10 @@ import Container from '@mui/material/Container'
 import AccessDenied from '../../components/access-denied'
 import VerticalTabs from '../../packages/vertical-tabs'
 import Header from './header'
-import useTheme from '@mui/material/styles/useTheme'
 import ExcelIcon from 'mdi-react/MicrosoftExcelIcon'
 import Fade from '@mui/material/Fade'
 import TenantIcon from 'mdi-react/AccountGroupIcon'
+import { Div, Span } from '../../components/html-tags'
 
 const ExcelTemplates = lazy(() => import('./excel-templates'))
 const Tenants = lazy(() => import('./tenants'))
@@ -34,7 +34,6 @@ const _sections = [
 export default () => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [ref, setRef] = useState(null)
-  const theme = useTheme()
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)
 
@@ -59,38 +58,38 @@ export default () => {
   return (
     <>
       <Header ref={el => setRef(el)} />
-      <div style={{ marginTop: theme.spacing(2) }} />
-      <Container style={{ minHeight: 1000 }}>
+      <Div sx={{ marginTop: theme => theme.spacing(2) }} />
+      <Container sx={{ minHeight: 1000 }}>
         <VerticalTabs activeIndex={activeIndex} setActiveIndex={setActiveIndex} navItems={sections}>
           {sections.map(({ requiredPermission, Render, primaryText, disabled }, i) => {
             return (
               <Suspense
                 key={primaryText}
                 fallback={
-                  <div
-                    style={{
-                      marginBottom: theme.spacing(2),
+                  <Div
+                    sx={{
+                      marginBottom: theme => theme.spacing(2),
                     }}
                   >
                     <Loading />
-                  </div>
+                  </Div>
                 }
               >
                 <Fade in={activeIndex === i} key={`loaded-${i}`}>
-                  <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+                  <Span sx={{ display: activeIndex === i ? 'inherit' : 'none' }}>
                     {disabled ? (
                       <AccessDenied noContainer requiredPermission={requiredPermission} />
                     ) : (
                       <Render headerRef={ref} active={activeIndex === i} />
                     )}
-                  </span>
+                  </Span>
                 </Fade>
               </Suspense>
             )
           })}
         </VerticalTabs>
       </Container>
-      <div style={{ marginTop: theme.spacing(2) }} />
+      <Div sx={{ marginTop: theme => theme.spacing(2) }} />
     </>
   )
 }

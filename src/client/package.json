@@ -30,7 +30,6 @@
     "@material-ui/data-grid": "^4.0.0-alpha.37",
     "@mui/lab": "^5.0.0-alpha.65",
     "@mui/material": "^5.3.0",
-    "@mui/styles": "^5.3.0",
     "@svgr/webpack": "^6.2.0",
     "abortcontroller-polyfill": "^1.7.3",
     "ace-builds": "^1.4.13",

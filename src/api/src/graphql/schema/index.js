@@ -37,6 +37,9 @@ const typeFields = graphqlSync({
             description
             type {
               kind
+              ofType {
+                kind
+              }
             }
           }
         }
@@ -46,6 +49,9 @@ const typeFields = graphqlSync({
             description
             type {
               kind
+              ofType {
+                kind
+              }
             }
           }
         }
@@ -55,6 +61,9 @@ const typeFields = graphqlSync({
             description
             type {
               kind
+              ofType {
+                kind
+              }
             }
           }
         }
@@ -67,21 +76,21 @@ export const projectVocabularyFields = _projectVocabularyFields
 export const mitigationVocabularyFields = _mitigationVocabularyFields
 export const adaptationVocabularyFields = _adaptationVocabularyFields
 export const projectInputFields = Object.fromEntries(
-  typeFields.p.inputFields.map(({ name, type: { kind }, description }) => [
+  typeFields.p.inputFields.map(({ name, type: { kind, ofType }, description }) => [
     name,
-    { kind, description },
+    { kind: ofType?.kind || kind, description },
   ])
 )
 export const mitigationInputFields = Object.fromEntries(
-  typeFields.m.inputFields.map(({ name, type: { kind }, description }) => [
+  typeFields.m.inputFields.map(({ name, type: { kind, ofType }, description }) => [
     name,
-    { kind, description },
+    { kind: ofType?.kind || kind, description },
   ])
 )
 export const adaptationInputFields = Object.fromEntries(
-  typeFields.a.inputFields.map(({ name, type: { kind }, description }) => [
+  typeFields.a.inputFields.map(({ name, type: { kind, ofType }, description }) => [
     name,
-    { kind, description },
+    { kind: ofType?.kind || kind, description },
   ])
 )
 

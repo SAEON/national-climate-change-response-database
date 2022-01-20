@@ -5,6 +5,7 @@ import { pool } from '../../mssql/pool.js'
 import parseRow from './parse-row/index.js'
 import makeHeaderRow from './make-header-row/index.js'
 import { stringify as stringifySync } from 'csv/sync'
+import buildSearchSql from './build-search-sql/index.js'
 
 const csvOptions = {
   delimiter: ',',
@@ -31,19 +32,10 @@ export default async ctx => {
     )
   }
 
-  if (search) {
-    // TODO resolve search to ids, or should this define a where clause?
-    ids = []
-  } else {
-    ids = JSON.parse(ctx.request.body.ids)
-  }
-
-  if (!ids?.length) {
+  if (!ids?.length && !search) {
     ctx.response = 400
     return
   }
-
-  console.info('Download requested by user', user.info(ctx).id, 'for IDS', ids.join(', '))
 
   /**
    * Get a list of all keys
@@ -83,7 +75,7 @@ export default async ctx => {
     const dataStream = new Readable()
     dataStream._read = () => {} // https://stackoverflow.com/a/44091532/3114742
     ctx.body = dataStream
-    ctx.attachment(`CCRD download ${format(new Date(), 'yyyy-MM-dd HH-mm-ss')}.csv`) // This doesn't seem to go through to the client
+    ctx.attachment(`CCRD download ${format(new Date(), 'yyyy-MM-dd HH-mm-ss')}.csv`) // This doesn't seem to go through to the client, when the client uses the fetch API
 
     // Push the CSV headers to the download
     dataStream.push(stringifyRow(makeHeaderRow({ columns })))
@@ -91,14 +83,23 @@ export default async ctx => {
     // Create a MSSQL streaming query
     const request = (await pool.connect()).request()
     request.stream = true
-    ids.forEach((id, i) => request.input(`id_${i}`, id))
-    request.query(
-      `select
-        *
-       from Submissions
-       where
-        id in (${ids.map((_, i) => `@id_${i}`).join(', ')})`
-    )
+
+    let sql
+
+    if (search) {
+      sql = buildSearchSql({ search, request })
+    } else {
+      ids = JSON.parse(ctx.request.body.ids)
+      ids.forEach((id, i) => request.input(`id_${i}`, id))
+      sql = `
+        select
+          *
+        from Submissions
+        where
+          id in (${ids.map((_, i) => `@id_${i}`).join(', ')})`
+    }
+
+    request.query(sql)
 
     // Push rows to download one at a time
     request.on('row', submission => {
@@ -106,7 +107,11 @@ export default async ctx => {
     })
 
     request.on('error', error => {
-      console.error('Error generating download for IDs', ids.join(';'), error.message)
+      console.error(
+        'Error generating download for IDs or search',
+        ids?.join(';') || JSON.stringify(search),
+        error.message
+      )
       throw error
     })
 

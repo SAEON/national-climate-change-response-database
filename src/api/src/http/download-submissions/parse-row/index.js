@@ -29,11 +29,21 @@ const generalInputFields = {
   },
 }
 
-const parseValue = ({ key, obj, vocabFields, inputFields }) => {
+const parseValue = (id, { key, obj, vocabFields, inputFields }) => {
   const value = obj[key]
   if (vocabFields.includes(key)) {
     if (inputFields[key].kind === 'LIST') {
-      return value?.map(({ term }) => term).join(',') || ''
+      try {
+        return value?.map(({ term }) => term).join(',') || ''
+      } catch (error) {
+        console.error(
+          'Error parsing submission ID',
+          id,
+          'A vocabulary field expecting a list is stored as an object. Field',
+          key
+        )
+        return value?.term || ''
+      }
     }
 
     return value?.term || ''
@@ -107,7 +117,7 @@ export default ({ submission, columns }) => {
   // Project fields
   for (const key in project) {
     const i = columns[`project.${key}`]
-    row[i] = parseValue({
+    row[i] = parseValue(submission.id, {
       key,
       obj: project,
       vocabFields: projectVocabularyFields,
@@ -118,7 +128,7 @@ export default ({ submission, columns }) => {
   // Mitigation fields
   for (const key in mitigation) {
     const i = columns[`mitigation.${key}`]
-    row[i] = parseValue({
+    row[i] = parseValue(submission.id, {
       key,
       obj: mitigation,
       vocabFields: mitigationVocabularyFields,
@@ -129,7 +139,7 @@ export default ({ submission, columns }) => {
   // adaptation fields
   for (const key in adaptation) {
     const i = columns[`adaptation.${key}`]
-    row[i] = parseValue({
+    row[i] = parseValue(submission.id, {
       key,
       obj: adaptation,
       vocabFields: adaptationVocabularyFields,
@@ -140,7 +150,7 @@ export default ({ submission, columns }) => {
   // General fields
   for (const key in fields) {
     const i = columns[key]
-    row[i] = parseValue({
+    row[i] = parseValue(submission.id, {
       key,
       obj: fields,
       vocabFields: generalVocabularyFields,

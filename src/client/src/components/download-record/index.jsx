@@ -13,16 +13,24 @@ import DialogActions from '@mui/material/DialogActions'
 import Tooltip from '@mui/material/Tooltip'
 import Icon from '@mui/material/Icon'
 import { format } from 'date-fns'
+import CircularProgress from '@mui/material/CircularProgress'
 
 /**
  * https://gist.github.com/devloco/5f779216c988438777b76e7db113d05c
  */
 const DownloadButton = ({ closeFn, id, search }) => {
+  const [loading, setLoading] = useState(false)
+
   return (
     <Button
+      disabled={loading}
       size="small"
       variant="text"
+      startIcon={
+        loading ? <CircularProgress size={14} /> : <Icon component={DownloadIcon} size={16} />
+      }
       onClick={async () => {
+        setLoading(true)
         const url = `${NCCRD_API_HTTP_ADDRESS}/download-submissions`
         const formData = new FormData()
 
@@ -69,7 +77,7 @@ const DownloadButton = ({ closeFn, id, search }) => {
         closeFn()
       }}
     >
-      Download submission data
+      {loading ? 'Preparing download...' : 'Download submission data'}
     </Button>
   )
 }

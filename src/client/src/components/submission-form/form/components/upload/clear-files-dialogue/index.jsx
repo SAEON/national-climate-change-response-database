@@ -7,7 +7,6 @@ import Button from '@mui/material/Button'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Tooltip from '@mui/material/Tooltip'
-import { useTheme } from '@mui/material/styles'
 import CancelIcon from 'mdi-react/CancelIcon'
 import AcceptIcon from 'mdi-react/CheckCircleIcon'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -16,7 +15,6 @@ import DeleteIcon from 'mdi-react/DeleteIcon'
 export default memo(
   ({ value, updateValue, submissionId, disabled }) => {
     const [open, setOpen] = useState(false)
-    const theme = useTheme()
 
     const [removeFiles, { error, loading }] = useMutation(
       gql`
@@ -41,7 +39,7 @@ export default memo(
         <Tooltip placement="top" title={'Remove all files'}>
           <span>
             <Button
-              style={{ marginRight: theme.spacing(2) }}
+              sx={{ marginRight: theme => theme.spacing(2) }}
               variant="outlined"
               disableElevation
               disabled={disabled}
@@ -59,20 +57,24 @@ export default memo(
           <DialogTitle>Remove files</DialogTitle>
 
           <DialogContent>
-            <Typography variant="body2" style={{ marginBottom: theme.spacing(2) }}>
+            <Typography variant="body2" sx={{ marginBottom: theme => theme.spacing(2) }}>
               Are you sure you want to remove all uploaded files?
             </Typography>
 
             {/* Error text */}
             {error && (
-              <Typography color="error" variant="body2" style={{ marginTop: theme.spacing(2) }}>
+              <Typography
+                color="error"
+                variant="body2"
+                sx={{ marginTop: theme => theme.spacing(2) }}
+              >
                 {error.message}
               </Typography>
             )}
           </DialogContent>
 
           {/* ACTIONS */}
-          <DialogActions style={{ justifyContent: 'flex-end' }}>
+          <DialogActions sx={{ justifyContent: 'flex-end' }}>
             <Button
               color="primary"
               size="small"
@@ -82,7 +84,7 @@ export default memo(
               onClick={() => {
                 setOpen(false)
               }}
-              style={{ minWidth: 105 }}
+              sx={{ minWidth: 105 }}
             >
               Cancel
             </Button>
@@ -100,7 +102,7 @@ export default memo(
               variant="outlined"
               disableElevation
               startIcon={loading ? <CircularProgress size={14} /> : <AcceptIcon size={16} />}
-              style={{ minWidth: 105 }}
+              sx={{ minWidth: 105 }}
             >
               Confirm
             </Button>

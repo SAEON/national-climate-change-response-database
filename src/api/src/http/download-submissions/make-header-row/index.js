@@ -8,11 +8,11 @@ const fieldToHumanOverrides = {
   id: 'ID',
   submissionStatus: 'Submission status',
   submissionComments: 'Submission comments',
-  submissionType: 'Submission type',
+  submissionType: 'Submission type (OLD ERM field)',
   createdAt: 'Created at',
   userId: 'User (ID)',
   createdBy: 'Created by (User ID)',
-  research: 'Research',
+  research: 'Research (OLD ERM field)',
 }
 
 const fieldToHuman = {

@@ -86,6 +86,11 @@ const OpenedDialog = ({ title, id, search, closeFn }) => {
   const isAuthenticated = useContext(authenticationContext)
   const { hasPermission } = useContext(authContext)
 
+  const redirect =
+    search || window.location.href.includes(id)
+      ? window.location.href
+      : `${window.location.href}/${id}`
+
   if (!isAuthenticated.user) {
     return (
       <>
@@ -95,13 +100,7 @@ const OpenedDialog = ({ title, id, search, closeFn }) => {
           prompted to sign up, and then downloads will be available
         </DialogContent>
         <DialogActions>
-          <Link
-            component={RouterLink}
-            to={`/login?redirect=${window.location.href}${
-              window.location.href.includes(id) ? '' : `/${id}`
-            }`}
-            underline="hover"
-          >
+          <Link component={RouterLink} to={`/login?redirect=${redirect}`} underline="hover">
             Login
           </Link>
         </DialogActions>

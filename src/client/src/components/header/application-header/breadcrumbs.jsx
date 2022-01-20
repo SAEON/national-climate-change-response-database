@@ -1,25 +1,23 @@
-import makeStyles from '@mui/styles/makeStyles'
 import Typography from '@mui/material/Typography'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import { Link, useLocation } from 'react-router-dom'
 import MuiLink from '@mui/material/Link'
+import MuiIcon from '@mui/material/Icon'
 import EditIcon from 'mdi-react/EditIcon'
 import SubmissionIcon from 'mdi-react/DatabaseAddIcon'
 
-const useStyles = makeStyles(theme => ({
-  link: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  icon: {
-    marginRight: theme.spacing(0.5),
-    width: 18,
-    height: 18,
-  },
-}))
+const sxLink = {
+  display: 'flex',
+  alignItems: 'center',
+}
+
+const sxIcon = {
+  marginRight: theme => theme.spacing(0.5),
+  width: 18,
+  height: 18,
+}
 
 export default ({ contentBase = '/', routes }) => {
-  const classes = useStyles()
   const { pathname } = useLocation() // Trigger re-render on location changes
   const normalizedPathname = pathname.replace(contentBase, '/')
 
@@ -44,8 +42,8 @@ export default ({ contentBase = '/', routes }) => {
           if (label === 'New') {
             Icon = SubmissionIcon
             return (
-              <Typography key={label} color="inherit" className={classes.link}>
-                {Icon && <Icon size={18} className={classes.icon} />}
+              <Typography key={label} color="inherit" sx={sxLink}>
+                {Icon && <MuiIcon component={Icon} size={18} sx={sxIcon} />}
                 {label}
               </Typography>
             )
@@ -63,9 +61,9 @@ export default ({ contentBase = '/', routes }) => {
                   .map(({ to, label }) => to || label)
                   .join('/')
               }
-              className={classes.link}
+              sx={sxLink}
             >
-              {Icon && <Icon size={18} className={classes.icon} />}
+              {Icon && <MuiIcon component={Icon} size={18} sx={sxIcon} />}
               {label}
             </MuiLink>
           )
@@ -80,8 +78,8 @@ export default ({ contentBase = '/', routes }) => {
         }
 
         return (
-          <Typography key={label} color="textPrimary" className={classes.link}>
-            {Icon && <Icon size={18} className={classes.icon} />}
+          <Typography key={label} color="textPrimary" sx={sxLink}>
+            {Icon && <MuiIcon component={Icon} size={18} sx={sxIcon} />}
             {label}
           </Typography>
         )

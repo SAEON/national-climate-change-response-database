@@ -8,29 +8,37 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import Navigation from './sections/navigation'
 import SyncIcon from 'mdi-react/SyncIcon'
 import Fade from '@mui/material/Fade'
-import useStyles from './style'
 import Avatar from '@mui/material/Avatar'
-import clsx from 'clsx'
 import CompleteIcon from 'mdi-react/CheckBoldIcon'
+import Icon from '@mui/material/Icon'
+import { Span, Div } from '../../components/html-tags'
 
 const GeneralDetailsForm = lazy(() => import('./sections/general-details'))
 const MitigationDetailsForm = lazy(() => import('./sections/mitigation-details'))
 const AdaptationDetailsForm = lazy(() => import('./sections/adaptation-details'))
 
 const AvatarIcon = ({ i, complete, started, disabled, enabled }) => {
-  const classes = useStyles()
-
   return (
     <Avatar
-      className={clsx(classes.small, {
-        [classes.started]: started && !complete,
-        [classes.completeAvatar]: complete,
-        [classes.disabled]: disabled,
-        [classes.enabled]: enabled,
-      })}
+      sx={{
+        width: theme => theme.spacing(3),
+        height: theme => theme.spacing(3),
+        backgroundColor: theme =>
+          started && !complete
+            ? theme.palette.warning.main
+            : complete
+            ? theme.palette.common.white
+            : disabled
+            ? theme.palette.error.light
+            : enabled
+            ? theme.palette.success.light
+            : 'default',
+      }}
     >
       {!complete && i}
-      {complete && <CompleteIcon className={clsx(classes.complete)} />}
+      {complete && (
+        <Icon component={CompleteIcon} sx={{ color: theme => theme.palette.success.main }} />
+      )}
     </Avatar>
   )
 }
@@ -132,18 +140,19 @@ const FormController = () => {
       disabled: !canSubmit,
       primaryText: mode === 'edit' ? 'Status' : 'Submit',
       SecondaryIcon: () => (
-        <SyncIcon
-          style={{
-            color: syncing ? theme.palette.warning.main : theme.palette.success.main,
+        <Icon
+          sx={{
+            color: theme => (syncing ? theme.palette.warning.main : theme.palette.success.main),
           }}
           size={18}
+          component={SyncIcon}
         />
       ),
       syncing,
       secondaryText: mode === 'edit' ? (syncing ? 'Saving ...' : 'Saved') : 'Review submission',
       Icon: () => <AvatarIcon disabled={!canSubmit} enabled={canSubmit} i={4} />,
     }),
-    [style, canSubmit, syncing, theme.palette.warning.main, theme.palette.success.main]
+    [style, canSubmit, syncing]
   )
 
   const sections =
@@ -153,22 +162,22 @@ const FormController = () => {
     <VerticalTabs activeIndex={activeIndex} setActiveIndex={setActiveIndex} navItems={sections}>
       {/* TOP BAR */}
       <Navigation currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
-      <div style={{ marginBottom: theme.spacing(2) }} />
+      <Div sx={{ marginBottom: theme => theme.spacing(2) }} />
 
       {[navItems[0], navItems[1], navItems[2]].map(({ Render, primaryText }, i) => {
         return (
           <Suspense
             key={primaryText}
             fallback={
-              <div style={{ marginBottom: theme.spacing(2) }}>
+              <Div sx={{ marginBottom: theme => theme.spacing(2) }}>
                 <Loading />
-              </div>
+              </Div>
             }
           >
             <Fade in={activeIndex === i} key={`loaded-${i}`}>
-              <span style={{ display: activeIndex === i ? 'inherit' : 'none' }}>
+              <Span sx={{ display: activeIndex === i ? 'inherit' : 'none' }}>
                 <Render active={activeIndex === i} />
-              </span>
+              </Span>
             </Fade>
           </Suspense>
         )
@@ -181,21 +190,21 @@ const FormController = () => {
             in={activeIndex === 3}
             key={'loading'}
           >
-            <span>
+            <Span>
               <Loading />
-            </span>
+            </Span>
           </Fade>
         }
       >
         <Fade timeout={theme.transitions.duration.standard} in={activeIndex === 3} key={'loaded'}>
-          <span style={{ display: activeIndex === 3 ? 'inherit' : 'none' }}>
+          <Span sx={{ display: activeIndex === 3 ? 'inherit' : 'none' }}>
             <Finalize key="finalize" mode={mode} />
-          </span>
+          </Span>
         </Fade>
       </Suspense>
 
       {/* BOTTOM BAR */}
-      <div style={{ marginBottom: theme.spacing(2) }} />
+      <Div sx={{ marginBottom: theme => theme.spacing(2) }} />
       <Navigation currentIndex={activeIndex} setActiveIndex={setActiveIndex} />
     </VerticalTabs>
   )

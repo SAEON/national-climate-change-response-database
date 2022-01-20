@@ -8,18 +8,8 @@ import MenuItem from '@mui/material/MenuItem'
 import Checkbox from '@mui/material/Checkbox'
 import FormHelperText from '@mui/material/FormHelperText'
 import ListItemText from '@mui/material/ListItemText'
-import { useTheme } from '@mui/material/styles'
-import makeStyles from '@mui/styles/makeStyles'
 import Loading from '../../components/loading'
-import clsx from 'clsx'
-
-const useStyles = makeStyles(theme => ({
-  select: {
-    '& .MuiSelect-icon': {
-      marginRight: theme.spacing(1),
-    },
-  },
-}))
+import { Div } from '../../components/html-tags'
 
 export default ({
   id,
@@ -34,17 +24,24 @@ export default ({
   disabled = false,
   loading = false,
 }) => {
-  const classes = useStyles()
-  const theme = useTheme()
-
   return (
-    <div style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(1), maxWidth: '100%' }}>
+    <Div
+      sx={theme => ({
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(1),
+        maxWidth: '100%',
+      })}
+    >
       <FormControl margin="normal" fullWidth>
         <InputLabel error={error} id={`${id}-label`}>
           {label}
         </InputLabel>
         <Select
-          className={clsx(classes.select)}
+          sx={{
+            '& .MuiSelect-icon': {
+              marginRight: theme => theme.spacing(1),
+            },
+          }}
           disabled={disabled}
           fullWidth
           error={error}
@@ -70,9 +67,9 @@ export default ({
           input={<OutlinedInput id={`${id}-input-label`} label={label} />}
           renderValue={selected => (
             <Box
-              style={{
+              sx={{
                 display: 'inline-flex',
-                gap: theme.spacing(1),
+                gap: theme => theme.spacing(1),
                 flexWrap: 'wrap',
                 alignItems: 'flex-start',
                 maxWidth: '100%',
@@ -108,6 +105,6 @@ export default ({
         </Select>
         <FormHelperText style={{ marginLeft: 14 }}>{helperText}</FormHelperText>
       </FormControl>
-    </div>
+    </Div>
   )
 }

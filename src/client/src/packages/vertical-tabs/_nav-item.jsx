@@ -3,9 +3,7 @@ import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Tooltip from '@mui/material/Tooltip'
-import clsx from 'clsx'
 import ButtonBase from '@mui/material/ButtonBase'
-import useStyles from './style'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
@@ -27,7 +25,6 @@ export default memo(
     const xsAndDown = useMediaQuery(theme.breakpoints.down('sm'))
     const smAndUp = useMediaQuery(theme.breakpoints.up('sm'))
     const mdAndUp = useMediaQuery(theme.breakpoints.up('md'))
-    const classes = useStyles()
 
     if (Component) {
       return <Component style={style} />
@@ -47,48 +44,58 @@ export default memo(
         }
         placement="right"
       >
-        <span>
-          <ButtonBase
-            disabled={disabled}
-            className={clsx(classes.buttonBase, {
-              [classes.active]: i === activeIndex,
-              [classes.disabled]: disabled,
-            })}
-            onClick={onClick}
-            style={{ width: '100%' }}
-          >
-            <ListItem style={{ justifyContent: 'center' }}>
-              {(xsAndDown || mdAndUp) && (
-                <ListItemIcon style={{ justifyContent: 'center' }}>
-                  <Icon active={activeIndex === i} />
-                </ListItemIcon>
-              )}
+        <ButtonBase
+          disabled={disabled}
+          sx={{
+            transition: theme.transitions.create(['all']),
+            backgroundColor: theme.palette.common.white,
+            [theme.breakpoints.up('lg')]: {
+              minHeight: theme.spacing(10),
+            },
+            ...(i === activeIndex
+              ? {
+                  backgroundColor: '#b2cebe',
+                  [theme.breakpoints.up('lg')]: {
+                    minHeight: theme.spacing(16),
+                  },
+                }
+              : {}),
+            ...(disabled ? { backgroundColor: theme.palette.grey[200] } : {}),
+          }}
+          onClick={onClick}
+          style={{ width: '100%' }}
+        >
+          <ListItem style={{ justifyContent: 'center' }}>
+            {(xsAndDown || mdAndUp) && (
+              <ListItemIcon style={{ justifyContent: 'center' }}>
+                <Icon active={activeIndex === i} />
+              </ListItemIcon>
+            )}
 
-              {smAndUp && (
-                <ListItemText
-                  primaryTypographyProps={{
-                    variant: 'overline',
-                    display: 'block',
-                  }}
-                  style={{
-                    textAlign: mdAndUp ? 'left' : 'center',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}
-                  primary={primaryText || 'Missing primaryText'}
-                  secondary={mdAndUp && (secondaryText || 'Missing secondaryText')}
-                />
-              )}
+            {smAndUp && (
+              <ListItemText
+                primaryTypographyProps={{
+                  variant: 'overline',
+                  display: 'block',
+                }}
+                style={{
+                  textAlign: mdAndUp ? 'left' : 'center',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+                primary={primaryText || 'Missing primaryText'}
+                secondary={mdAndUp && (secondaryText || 'Missing secondaryText')}
+              />
+            )}
 
-              {(xsAndDown || mdAndUp) && SecondaryIcon && (
-                <ListItemIcon style={{ justifyContent: 'center' }}>
-                  <SecondaryIcon />
-                </ListItemIcon>
-              )}
-            </ListItem>
-          </ButtonBase>
-        </span>
+            {(xsAndDown || mdAndUp) && SecondaryIcon && (
+              <ListItemIcon style={{ justifyContent: 'center' }}>
+                <SecondaryIcon />
+              </ListItemIcon>
+            )}
+          </ListItem>
+        </ButtonBase>
       </Tooltip>
     )
   },

@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider'
 import DownloadRecord from '../../../components/download-record'
 
 const Download = memo(
-  ({ filters }) => {
+  ({ filters, totalRecords }) => {
     return (
       <>
         <Divider
@@ -16,7 +16,7 @@ const Download = memo(
 
         <Hidden mdDown>
           <DownloadRecord
-            buttonTitle="Download submission data"
+            buttonTitle={`Download ${totalRecords} submission${totalRecords === 1 ? '' : 's'}`}
             title="All (filtered) submissions"
             search={filters}
           />
@@ -28,7 +28,8 @@ const Download = memo(
 )
 
 export default () => {
-  const { projectFilters, mitigationFilters, adaptationFilters } = useContext(filterContext)
+  const { projectFilters, mitigationFilters, adaptationFilters, totalRecords } =
+    useContext(filterContext)
 
   const project = useMemo(
     () =>
@@ -54,6 +55,7 @@ export default () => {
 
   return (
     <Download
+      totalRecords={totalRecords}
       filters={{
         project,
         mitigation,

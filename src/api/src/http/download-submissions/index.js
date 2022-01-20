@@ -6,6 +6,7 @@ import parseRow from './parse-row/index.js'
 import makeHeaderRow from './make-header-row/index.js'
 import { stringify as stringifySync } from 'csv/sync'
 import buildSearchSql from './build-search-sql/index.js'
+import logSql from '../../lib/log-sql.js'
 
 const csvOptions = {
   delimiter: ',',
@@ -23,7 +24,7 @@ export default async ctx => {
   const { user } = ctx
   const { ensurePermission } = user
 
-  // await ensurePermission({ ctx, permission: PERMISSIONS['download-submission'] })
+  await ensurePermission({ ctx, permission: PERMISSIONS['download-submission'] })
   let { ids, search } = ctx.request.body
 
   if (ids && search) {
@@ -98,6 +99,8 @@ export default async ctx => {
         where
           id in (${ids.map((_, i) => `@id_${i}`).join(', ')})`
     }
+
+    logSql(sql, `Submission(s) download. User ID: ${user.info(ctx).id}`, true)
 
     request.query(sql)
 

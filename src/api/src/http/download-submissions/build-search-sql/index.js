@@ -1,10 +1,12 @@
-import logSql from '../../../lib/log-sql.js'
 import {
   projectInputFields,
   projectVocabularyFields,
   mitigationInputFields,
+  mitigationVocabularyFields,
   adaptationInputFields,
+  adaptationVocabularyFields,
 } from '../../../graphql/schema/index.js'
+import controlledVocabularyFragment from './_controlled-vocabulary-query-fragment.js'
 
 export default ({ search, request }) => {
   let { project = {}, mitigation = {}, adaptation = {} } = JSON.parse(search)
@@ -14,35 +16,38 @@ export default ({ search, request }) => {
   adaptation = Object.entries(adaptation)
 
   if (project.length) {
-    console.log('project', project)
     project.forEach(([, { value }], i) => {
       request.input(`project_${i}`, value)
     })
   }
 
   if (mitigation.length) {
-    console.log('mitigation', mitigation)
+    mitigation.forEach(([, { value }], i) => {
+      request.input(`mitigation_${i}`, value)
+    })
   }
 
   if (adaptation.length) {
-    console.log('adaptation', adaptation)
+    adaptation.forEach(([, { value }], i) => {
+      request.input(`adaptation_${i}`, value)
+    })
   }
 
   const sql = `
     select
       *
-    from Submissions
+    from Submissions s
     where
       deletedAt is null
       and isSubmitted = 1
 
-      -- PROJECT
       ${
+        // PROJECT
         project.length
           ? project
               .map(([field, { type }], i) => {
                 if (field === 'title') {
-                  return `and json_value(project, '$.title') like '%' + @project_${i} + '%'`
+                  return `and json_value(project, '$.title') like @project_${i}`
                 }
 
                 if (field === 'submissionStatus') {
@@ -50,26 +55,55 @@ export default ({ search, request }) => {
                 }
 
                 if (type === 'controlledVocabulary' && projectVocabularyFields.includes(field)) {
-                  if (projectInputFields[field].kind === 'LIST') {
-                    return `and 1 = 2` // TODO
-                  }
-
-                  return `and json_value(project, '$.${field}.term') = @project_${i}`
+                  return controlledVocabularyFragment({
+                    path: 'project',
+                    kind: projectInputFields[field].kind,
+                    i,
+                    field,
+                  })
                 }
 
-                return ''
+                throw new Error('Unexpected project filter value')
               })
               .join('\n')
           : ''
       }
       
-      -- MITIGATION
-      ${mitigation.length ? `and 1 = 1` : ''}
-      
-      -- ADAPTATION
-      ${adaptation.length ? `and 1 = 1` : ''};`
+      ${
+        // MITIGATION
+        mitigation.length
+          ? mitigation.map(([field, { type }], i) => {
+              if (type === 'controlledVocabulary' && mitigationVocabularyFields.includes(field)) {
+                return controlledVocabularyFragment({
+                  path: 'mitigation',
+                  kind: mitigationInputFields[field].kind,
+                  i,
+                  field,
+                })
+              }
 
-  logSql(sql, 'Download', true)
+              throw new Error('Unexpected mitigation filter value')
+            })
+          : ''
+      }
+      
+      ${
+        // ADAPTATION
+        adaptation.length
+          ? adaptation.map(([field, { type }], i) => {
+              if (type === 'controlledVocabulary' && adaptationVocabularyFields.includes(field)) {
+                return controlledVocabularyFragment({
+                  path: 'adaptation',
+                  kind: adaptationInputFields[field].kind,
+                  i,
+                  field,
+                })
+              }
+
+              throw new Error('Unexpected adaptation filter value')
+            })
+          : ''
+      };`
 
   return sql
 }

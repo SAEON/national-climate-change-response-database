@@ -24,7 +24,7 @@ export default ({
           ? `and json_value(submissionStatus, '$.term') = '${sanitizeSqlValue(submissionStatus)}'`
           : ''
       }
-      ${titleFilter ? `and _projectTitle like '%${sanitizeSqlValue(titleFilter)}%'` : ''}
+      ${titleFilter ? `and _projectTitle like '${sanitizeSqlValue(titleFilter)}'` : ''}
       ${
         provinceFilter
           ? `and s.id in (

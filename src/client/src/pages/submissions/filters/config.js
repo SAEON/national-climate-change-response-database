@@ -1,7 +1,8 @@
 export const projectFilters = {
   title: {
     label: 'Filter by title',
-    helperText: 'Returns partial and close matches',
+    helperText:
+      'Returns exact matches by default. Search for partial matches using the "%" symbol - for example "%mpu%"',
     type: 'fulltext',
     value: '',
   },

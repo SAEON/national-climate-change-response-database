@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField'
 
 export default memo(
   ({ field, info: { type, value, label = '', helperText = '' }, setValue }) => {
-    const effect = useMemo(() => debounce(({ value }) => setValue(value), 500), [setValue])
+    const effect = useMemo(() => debounce(({ value }) => setValue(value), 1000), [setValue])
 
     return (
       <QuickFrom effects={[effect]} value={value}>

@@ -4,8 +4,9 @@ import Grid from '@mui/material/Grid'
 import CloseIcon from 'mdi-react/CloseIcon'
 import IconButton from '@mui/material/IconButton'
 import FilterIcon from 'mdi-react/FilterIcon'
+import Filters from '../filters'
 
-export default ({ Filters, filters }) => {
+export default () => {
   const [showSidebar, setShowSidebar] = useState(false)
 
   return (
@@ -29,7 +30,7 @@ export default ({ Filters, filters }) => {
             </IconButton>
           </Grid>
           <Grid item xs={12}>
-            <Filters filters={filters} />
+            <Filters />
           </Grid>
         </Grid>
       </Drawer>

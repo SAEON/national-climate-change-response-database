@@ -1,24 +1,19 @@
-import { useContext } from 'react'
-import { useTheme } from '@mui/material/styles'
 import MobileSideMenu from './_mobile-side-menu'
 import Hidden from '@mui/material/Hidden'
-import { context as filterContext } from '../context'
 import NewSubmission from '../../../components/new-submission'
 import DownloadData from './_download-data'
 import Pagination from './pagination'
 import UserSubmissions from './_user-submissions'
 import Divider from '@mui/material/Divider'
 import ToolbarHeader from '../../../components/toolbar-header'
+import { Div } from '../../../components/html-tags'
 
-export default ({ MobileFilters }) => {
-  const { filters } = useContext(filterContext)
-  const theme = useTheme()
-
+export default () => {
   return (
     <ToolbarHeader>
       {/* MOBILE FILTERS */}
       <Hidden mdUp>
-        <MobileSideMenu Filters={MobileFilters} filters={filters} />
+        <MobileSideMenu />
         <Divider
           flexItem
           orientation="vertical"
@@ -28,7 +23,7 @@ export default ({ MobileFilters }) => {
 
       {/* NEW SUBMISSION */}
       <NewSubmission />
-      <div style={{ marginLeft: theme.spacing(2) }} />
+      <Div sx={{ marginLeft: theme => theme.spacing(2) }} />
 
       <Hidden smUp>
         <Divider
@@ -42,13 +37,12 @@ export default ({ MobileFilters }) => {
       <UserSubmissions />
 
       {/* DOWNLOAD PROJECT DATA */}
-      <div style={{ marginLeft: 'auto' }} />
+      <Div sx={{ marginLeft: 'auto' }} />
       <Hidden mdDown>
         <DownloadData />
       </Hidden>
 
       {/* Pagination */}
-
       <Divider
         flexItem
         orientation="vertical"

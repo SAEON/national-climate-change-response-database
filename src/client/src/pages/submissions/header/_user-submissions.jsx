@@ -7,6 +7,7 @@ import Hidden from '@mui/material/Hidden'
 import IconButton from '@mui/material/IconButton'
 import { context as authContext } from '../../../contexts/authorization'
 import Divider from '@mui/material/Divider'
+import { Span } from '../../../components/html-tags'
 
 export default () => {
   const _authContext = useContext(authContext)
@@ -19,7 +20,7 @@ export default () => {
   return (
     <>
       <Tooltip placement="bottom" title="View your project submissions">
-        <span>
+        <Span>
           <Hidden smDown>
             <Button
               component={Link}
@@ -38,7 +39,7 @@ export default () => {
               <Icon size={18} />
             </IconButton>
           </Hidden>
-        </span>
+        </Span>
       </Tooltip>
 
       <Divider

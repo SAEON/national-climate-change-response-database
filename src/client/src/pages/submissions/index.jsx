@@ -8,10 +8,9 @@ import Grid from '@mui/material/Grid'
 import Hidden from '@mui/material/Hidden'
 import Container from '@mui/material/Container'
 import FilterContextProvider from './context'
-import useTheme from '@mui/material/styles/useTheme'
+import { Div } from '../../components/html-tags'
 
 export default () => {
-  const theme = useTheme()
   const { hasPermission } = useContext(authContext)
   const { enqueueSnackbar } = useSnackbar()
 
@@ -24,8 +23,8 @@ export default () => {
 
   return (
     <FilterContextProvider>
-      <Header MobileFilters={Filters} />
-      <div style={{ marginTop: theme.spacing(2) }} />
+      <Header />
+      <Div sx={{ marginTop: theme => theme.spacing(2) }} />
       <Container sx={{ minHeight: 1000 }}>
         <Grid container direction="row" spacing={2}>
           {/* FILTERS */}
@@ -45,7 +44,7 @@ export default () => {
           </Grid>
         </Grid>
       </Container>
-      <div style={{ marginTop: theme.spacing(2) }} />
+      <Div sx={{ marginTop: theme => theme.spacing(2) }} />
     </FilterContextProvider>
   )
 }

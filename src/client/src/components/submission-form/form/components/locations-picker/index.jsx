@@ -1,5 +1,4 @@
-import { memo, useMemo, useState } from 'react'
-import { useTheme } from '@mui/material/styles'
+import { memo, useState } from 'react'
 import ListInput from './list-input'
 import Typography from '@mui/material/Typography'
 import QuickForm from '../../../../quick-form'
@@ -15,6 +14,7 @@ import Box from '@mui/material/Box'
 import Picker from './picker'
 import Fade from '@mui/material/Fade'
 import { alpha } from '@mui/material/styles'
+import { Div } from '../../../../html-tags'
 
 export default memo(
   ({ onChange, points, setPoints, geofence }) => {
@@ -67,7 +67,7 @@ const TabPanel = props => {
   const { children, value, index, ...other } = props
 
   return (
-    <div
+    <Div
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
@@ -77,7 +77,7 @@ const TabPanel = props => {
       <Fade in={value === index} key={index}>
         <Box p={0}>{children}</Box>
       </Fade>
-    </div>
+    </Div>
   )
 }
 
@@ -90,17 +90,11 @@ function a11yProps(index) {
 
 const Input = ({ geofencePolygons, update, points }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
-  const theme = useTheme()
-
-  const border = useMemo(
-    () => `1px solid ${alpha(theme.palette.common.black, 0.12)}`,
-    [theme.palette.common.black]
-  )
 
   return (
     <>
       <AppBar
-        style={{ zIndex: 1 }}
+        sx={{ zIndex: 1 }}
         variant="outlined"
         elevation={0}
         color="default"
@@ -118,7 +112,14 @@ const Input = ({ geofencePolygons, update, points }) => {
         </Tabs>
       </AppBar>
       <TabPanel value={activeTabIndex} index={0}>
-        <div style={{ width: '100%', height: 400, border, position: 'relative' }}>
+        <Div
+          sx={{
+            width: '100%',
+            height: 400,
+            border: theme => `1px solid ${alpha(theme.palette.common.black, 0.12)}`,
+            position: 'relative',
+          }}
+        >
           <Map>
             {geofencePolygons.map(({ geometry, id }) => (
               <GeometryLayer key={id} id={id} geometry={geometry} />
@@ -130,20 +131,25 @@ const Input = ({ geofencePolygons, update, points }) => {
             />
             <Toolbar points={points} setPoints={points => update({ points })} />
           </Map>
-        </div>
+        </Div>
       </TabPanel>
       <TabPanel value={activeTabIndex} index={1}>
-        <div style={{ width: '100%', height: 400, border, position: 'relative' }}>
+        <Div
+          sx={{
+            width: '100%',
+            height: 400,
+            border: theme => `1px solid ${alpha(theme.palette.common.black, 0.12)}`,
+            position: 'relative',
+          }}
+        >
           <ListInput setPoints={points => update({ points })} points={points} />
-        </div>
+        </Div>
       </TabPanel>
     </>
   )
 }
 
 const LocationBounds = ({ points, setPoints, geofencePolygons }) => {
-  const theme = useTheme()
-
   return (
     <QuickForm
       effects={[
@@ -155,15 +161,19 @@ const LocationBounds = ({ points, setPoints, geofencePolygons }) => {
     >
       {(update, { points }) => {
         return (
-          <div style={{ marginTop: theme.spacing(3) }}>
+          <Div sx={{ marginTop: theme => theme.spacing(3) }}>
             <Typography
-              style={{ display: 'block', textAlign: 'center', marginBottom: theme.spacing(1) }}
+              sx={{
+                display: 'block',
+                textAlign: 'center',
+                marginBottom: theme => theme.spacing(1),
+              }}
               variant="overline"
             >
               Add GPS location points
             </Typography>
             <Input geofencePolygons={geofencePolygons} update={update} points={points} />
-          </div>
+          </Div>
         )
       }}
     </QuickForm>

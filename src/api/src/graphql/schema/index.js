@@ -18,8 +18,31 @@ const _import = p =>
     encoding: 'utf-8',
   })
 
-const SCHEMA_PARTS = readdirSync(join(__dirname, './type-defs'))
-const typeDefs = SCHEMA_PARTS.map(name => `${_import(`./type-defs/${name}`)}`).join('\n')
+/**
+ * Load GraphQL definition strings
+ */
+const STATIC_SCHEMA_PARTS = readdirSync(join(__dirname, './type-defs'))
+
+/**
+ * Load GraphQL enum of database migrations
+ */
+const DB_MIGRATION_ENUM = `enum Migrations { ${readdirSync(
+  join(__dirname, '../resolvers/mutations/migrate-database/migrations')
+)
+  .map(entry => entry.replaceAll('-', '_').toUpperCase())
+  .join(' ')} }`
+
+/**
+ * Merge GraphQL definition strings
+ */
+const typeDefs = [
+  ...STATIC_SCHEMA_PARTS.map(name => `${_import(`./type-defs/${name}`)}`),
+  DB_MIGRATION_ENUM,
+].join('\n')
+
+/**
+ * Create GraphQL schema from type definition string
+ */
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,

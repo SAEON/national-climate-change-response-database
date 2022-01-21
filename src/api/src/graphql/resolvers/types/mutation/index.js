@@ -9,6 +9,7 @@ import saveSubmission from '../../mutations/save-submission/index.js'
 import updateTenant from '../../mutations/update-tenant/index.js'
 import deleteTenants from '../../mutations/delete-tenants/index.js'
 import { pool } from '../../../../mssql/pool.js'
+import migrateDatabase from '../../mutations/migrate-database/index.js'
 
 const getSubmissionOwner = id =>
   pool
@@ -38,6 +39,7 @@ export default {
 
   // DB
   seedDatabase: authorize({ permission: PERMISSIONS['seed-database'] })(seedDatabase),
+  migrateDatabase: authorize({ permission: PERMISSIONS['migrate-database'] })(migrateDatabase),
 
   // Tenants
   updateTenant: authorize({ permission: PERMISSIONS['update-tenant'] })(updateTenant),

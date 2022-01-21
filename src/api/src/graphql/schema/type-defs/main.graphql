@@ -192,7 +192,14 @@ input TenantInput {
   theme: JSON
 }
 
+# enum Migrations => built dynamically
+
 type Mutation {
+  """
+  Run scripts on the database. These scripts should
+  be idempotent in case they are run multiple times
+  """
+  migrateDatabase(migration: Migrations!): Boolean!
   """
   Update tenant
   """

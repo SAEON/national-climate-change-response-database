@@ -39,6 +39,10 @@ export default Object.freeze({
     name: 'seed-database',
     description: 'Seed the SQL Server database',
   },
+  'migrate-database': {
+    name: 'migrate-database',
+    description: 'Run database migration scripts',
+  },
   'upload-template': {
     name: 'upload-template',
     description: 'Upload Excel submission template',

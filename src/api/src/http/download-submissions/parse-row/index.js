@@ -30,8 +30,10 @@ const generalInputFields = {
 }
 
 const parseValue = (id, { key, obj, vocabFields, inputFields }) => {
-  const value = obj[key]
+  let value = obj[key]
+
   if (vocabFields.includes(key)) {
+    value = typeof value === 'string' ? JSON.parse(value) : value
     if (inputFields[key].kind === 'LIST') {
       try {
         return value?.map(({ term }) => term).join(',') || ''
@@ -117,6 +119,7 @@ export default ({ submission, columns }) => {
   // Project fields
   for (const key in project) {
     const i = columns[`project.${key}`]
+    if (isNaN(i)) continue
     row[i] = parseValue(submission.id, {
       key,
       obj: project,
@@ -128,6 +131,7 @@ export default ({ submission, columns }) => {
   // Mitigation fields
   for (const key in mitigation) {
     const i = columns[`mitigation.${key}`]
+    if (isNaN(i)) continue
     row[i] = parseValue(submission.id, {
       key,
       obj: mitigation,
@@ -139,6 +143,7 @@ export default ({ submission, columns }) => {
   // adaptation fields
   for (const key in adaptation) {
     const i = columns[`adaptation.${key}`]
+    if (isNaN(i)) continue
     row[i] = parseValue(submission.id, {
       key,
       obj: adaptation,
@@ -150,6 +155,7 @@ export default ({ submission, columns }) => {
   // General fields
   for (const key in fields) {
     const i = columns[key]
+    if (isNaN(i)) continue
     row[i] = parseValue(submission.id, {
       key,
       obj: fields,

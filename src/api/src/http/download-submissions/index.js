@@ -63,12 +63,12 @@ export default async ctx => {
     { key: 'id' },
     { key: 'submissionStatus' },
     { key: 'submissionComments' },
+    ...keys,
     { key: 'submissionType' },
     { key: 'createdAt' },
     { key: 'userId' },
     { key: 'createdBy' },
     { key: 'research' },
-    ...keys,
   ].reduce((map, { key }, i) => ({ ...map, [key]: i }), {})
 
   try {

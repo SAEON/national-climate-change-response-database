@@ -10,7 +10,7 @@ export default ({ calculator, update }) => {
   return (
     <Grid container spacing={2}>
       {/* START DATE */}
-      <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
+      <Grid item xs={12} sm={6} sx={{ paddingTop: 0, paddingBottom: 0 }}>
         <DatePicker
           renderInput={params => (
             <TextField
@@ -46,7 +46,7 @@ export default ({ calculator, update }) => {
       </Grid>
 
       {/* END DATE */}
-      <Grid item xs={12} sm={6} style={{ paddingTop: 0, paddingBottom: 0 }}>
+      <Grid item xs={12} sm={6} sx={{ paddingTop: 0, paddingBottom: 0 }}>
         <DatePicker
           renderInput={params => (
             <TextField

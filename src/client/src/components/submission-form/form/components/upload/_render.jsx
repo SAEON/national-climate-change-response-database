@@ -1,33 +1,30 @@
 import Upload from './upload-dialogue'
 import Clear from './clear-files-dialogue'
 import Typography from '@mui/material/Typography'
-import { useTheme } from '@mui/material/styles'
 import FileIcon from 'mdi-react/FileIcon'
+import { Div } from '../../../../html-tags'
+import Icon from '@mui/material/Icon'
 
 export default ({ value, submissionId, updateValue, placeholder, helperText, formName }) => {
-  const theme = useTheme()
-
   return (
     <>
       {/* DISPLAY UPLOADED FILES */}
-      <div style={{ marginBottom: theme.spacing(2) }}>
+      <Div sx={{ marginBottom: theme => theme.spacing(2) }}>
         {value?.map(({ name }) => (
           <Typography
             key={name}
             variant="body2"
-            style={{ marginTop: theme.spacing(2), display: 'flex' }}
+            sx={{ marginTop: theme => theme.spacing(2), display: 'flex' }}
           >
-            <FileIcon size={18} style={{ marginRight: theme.spacing(1) }} /> {name}
+            <Icon component={FileIcon} size={18} sx={{ marginRight: theme => theme.spacing(1) }} />{' '}
+            {name}
           </Typography>
         ))}
         {!value?.length && <Typography variant="body2">(No uploads)</Typography>}
-      </div>
+      </Div>
 
       {/* ACTIONS */}
-      <div
-        style={{ display: 'flex', justifyContent: 'flex-end' }}
-        onClick={e => e.stopPropagation()}
-      >
+      <Div sx={{ display: 'flex', justifyContent: 'flex-end' }} onClick={e => e.stopPropagation()}>
         <Clear
           disabled={!value?.length}
           value={value}
@@ -44,7 +41,7 @@ export default ({ value, submissionId, updateValue, placeholder, helperText, for
           placeholder={placeholder}
           helperText={helperText}
         />
-      </div>
+      </Div>
     </>
   )
 }

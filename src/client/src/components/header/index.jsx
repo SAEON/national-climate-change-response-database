@@ -11,6 +11,7 @@ import HideOnScroll from './animations/hide-on-scroll'
 import ElevationOnScroll from './animations/elevation-on-scroll'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { Div } from '../html-tags'
 
 const FullHeader = forwardRef(({ contentBase, contentRef, routes }, ref) => {
   const imageHeight = useImageHeight()
@@ -18,7 +19,7 @@ const FullHeader = forwardRef(({ contentBase, contentRef, routes }, ref) => {
   const mdDown = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
-    <div ref={ref}>
+    <Div ref={ref}>
       <ElevationOnScroll>
         <AppBar color="inherit">
           <HideOnScroll contentRef={contentRef}>
@@ -33,11 +34,11 @@ const FullHeader = forwardRef(({ contentBase, contentRef, routes }, ref) => {
       {/* PUSH CONTENT DOWN */}
       <HideOnScroll contentRef={contentRef}>
         <ApplicationBanner_>
-          <div style={{ minHeight: imageHeight, ...(mdDown ? {} : { margin: 9 }) }} />
+          <Div sx={{ minHeight: `${imageHeight}px`, ...(mdDown ? {} : { margin: 1 }) }} />
         </ApplicationBanner_>
       </HideOnScroll>
       <ApplicationHeader_ />
-    </div>
+    </Div>
   )
 })
 

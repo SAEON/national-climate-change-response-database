@@ -6,6 +6,7 @@ import Toolbar_ from './toolbar'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import useTheme from '@mui/material/styles/useTheme'
 import { HOSTNAME } from '../../../config'
+import { A, Img, Header } from '../../html-tags'
 
 export const useImageHeight = () => {
   const theme = useTheme()
@@ -32,17 +33,17 @@ export default () => {
     <Toolbar_>
       {/* DFFE LOGO */}
 
-      <a {...aProps} href="http://www.environment.gov.za/">
-        <img
+      <A {...aProps} href="http://www.environment.gov.za/">
+        <Img
           crossOrigin="use-credentials"
           style={{ maxHeight: imageHeight, width: 'auto' }}
           src={`${HOSTNAME}/${logoUrl}`}
           alt={`Logo: ${title} (${description})`}
         />
-      </a>
+      </A>
 
       {/* TITLE */}
-      <header
+      <Header
         style={{
           display: 'flex',
           flexBasis: 0,
@@ -63,11 +64,11 @@ export default () => {
             {mdDown ? shortTitle : title}
           </Typography>
         </Tooltip>
-      </header>
+      </Header>
 
       {/* SA FLAG */}
-      <a {...aProps} href="http://www.environment.gov.za/">
-        <img
+      <A {...aProps} href="http://www.environment.gov.za/">
+        <Img
           style={{
             maxHeight: imageHeight,
             width: 'auto',
@@ -78,7 +79,7 @@ export default () => {
           alt={`Flag: ${title} (${description})`}
           crossOrigin="use-credentials"
         />
-      </a>
+      </A>
     </Toolbar_>
   )
 }

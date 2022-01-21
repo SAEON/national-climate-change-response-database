@@ -1,25 +1,26 @@
 import Typography from '@mui/material/Typography'
-import DataGrid, { TextEditor } from 'react-data-grid'
-import useTheme from '@mui/material/styles/useTheme'
+import DataGrid_, { TextEditor } from 'react-data-grid'
+import { styled } from '@mui/material/styles'
 import AchievedUnitEditor from './_unit-editor'
+import { Div } from '../../../../../../../html-tags'
+
+const DataGrid = styled(DataGrid_)({})
 
 const headerRenderer = ({ column }) => (
-  <div style={{ width: '100%', textAlign: 'center' }}>{column.name}</div>
+  <Div sx={{ width: '100%', textAlign: 'center' }}>{column.name}</Div>
 )
 
 export default ({ rows, updateCalculator, calculator, grid1 }) => {
-  const theme = useTheme()
-
   return (
     <>
       {/* PREAMBLE */}
       <Typography
         variant="overline"
-        style={{
+        sx={{
           textAlign: 'center',
-          marginTop: theme.spacing(2),
-          marginRight: theme.spacing(2),
-          marginLeft: theme.spacing(2),
+          marginTop: theme => theme.spacing(2),
+          marginRight: theme => theme.spacing(2),
+          marginLeft: theme => theme.spacing(2),
           display: 'block',
         }}
       >
@@ -27,11 +28,11 @@ export default ({ rows, updateCalculator, calculator, grid1 }) => {
       </Typography>
       <Typography
         variant="caption"
-        style={{
+        sx={{
           display: 'block',
           textAlign: 'center',
           fontStyle: 'italic',
-          marginBottom: theme.spacing(2),
+          marginBottom: theme => theme.spacing(2),
         }}
       >
         e.g a Number of Kilowatt-hours of electricity generated, Kilowatt-hours of electricity
@@ -39,11 +40,9 @@ export default ({ rows, updateCalculator, calculator, grid1 }) => {
       </Typography>
 
       {/* TABLE */}
-      <div
-        style={{ height: rows.length <= 6 ? rows.length * 35 + 2 * 35 + 2 : 300, width: '100%' }}
-      >
+      <Div sx={{ height: rows.length <= 6 ? rows.length * 35 + 2 * 35 + 2 : 300, width: '100%' }}>
         <DataGrid
-          style={{ height: '100%' }}
+          sx={{ height: '100%' }}
           enableVirtualization={true}
           onRowsChange={(rows, { column: { key }, indexes: [i] }) => {
             const value = rows[i][key]
@@ -93,7 +92,7 @@ export default ({ rows, updateCalculator, calculator, grid1 }) => {
           ]}
           rows={rows}
         />
-      </div>
+      </Div>
     </>
   )
 }

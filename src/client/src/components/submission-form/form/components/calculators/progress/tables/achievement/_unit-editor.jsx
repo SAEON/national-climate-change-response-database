@@ -1,9 +1,7 @@
 import ControlledVocabularySelect from '../../../../controlled-vocabulary-select'
-import useTheme from '@mui/material/styles/useTheme'
+import { Div } from '../../../../../../../html-tags'
 
 export default ({ calculator, updateCalculator, grid1, row: { id, achievedUnit } }) => {
-  const theme = useTheme()
-
   return (
     <ControlledVocabularySelect
       tree={'mitigationUnits'}
@@ -13,17 +11,17 @@ export default ({ calculator, updateCalculator, grid1, row: { id, achievedUnit }
       variant="standard"
       SelectProps={{
         renderValue: value => (
-          <div
-            style={{
-              padding: theme.spacing(0.5),
-              paddingRight: theme.spacing(4),
+          <Div
+            sx={{
+              padding: theme => theme.spacing(0.5),
+              paddingRight: theme => theme.spacing(4),
               whiteSpace: 'nowrap',
               textOverflow: 'ellipsis',
               overflow: 'hidden',
             }}
           >
             {value}
-          </div>
+          </Div>
         ),
         SelectDisplayProps: { style: { padding: 0 } },
       }}

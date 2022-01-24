@@ -49,7 +49,7 @@ export default ({
         },
         title: {
           left: 'center',
-          text: 'Spend by intervention type',
+          text: 'Budgeted intervention spend',
           subtext: 'ZAR/year',
         },
         tooltip: {

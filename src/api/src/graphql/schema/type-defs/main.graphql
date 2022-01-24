@@ -119,7 +119,15 @@ type Region {
   vocabulary: [ControlledVocabulary!]!
 }
 
+# enum Migrations => built dynamically
+
+# enum Charts => build dynamically
+
 type Query {
+  """
+
+  """
+  chart(id: Chart!): JSON!
   """
   Retrieve the HTTP/Tenant information of the connecting client
   """
@@ -191,8 +199,6 @@ input TenantInput {
   description: String
   theme: JSON
 }
-
-# enum Migrations => built dynamically
 
 type Mutation {
   """

@@ -33,11 +33,21 @@ const DB_MIGRATION_ENUM = `enum Migrations { ${readdirSync(
   .join(' ')} }`
 
 /**
+ * Load GraphQL enum of chart types
+ */
+const CHART_TYPES_ENUM = `enum Chart { ${readdirSync(
+  join(__dirname, '../resolvers/queries/chart/chart-types')
+)
+  .map(entry => entry.replaceAll('-', '_').toUpperCase())
+  .join(' ')} }`
+
+/**
  * Merge GraphQL definition strings
  */
 const typeDefs = [
   ...STATIC_SCHEMA_PARTS.map(name => `${_import(`./type-defs/${name}`)}`),
   DB_MIGRATION_ENUM,
+  CHART_TYPES_ENUM,
 ].join('\n')
 
 /**

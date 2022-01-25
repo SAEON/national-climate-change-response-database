@@ -31,11 +31,12 @@ const sql = `
       intervention,
       actualBudget,
       estimatedBudget,
+      coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) coalescedBudget,
       fundingSource,
       startYear,
       endYear,
       (endYear - startYear + 1) activeYears,
-      round(actualBudget / (endYear - startYear + 1), 0) annualBudget
+      round(coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) / (endYear - startYear + 1), 0) annualBudget
     from T1
   )
 

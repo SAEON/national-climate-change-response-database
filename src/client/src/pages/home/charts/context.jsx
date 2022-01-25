@@ -6,13 +6,13 @@ export const context = createContext()
 export default ({ ...props }) => {
   const { loading, data, error } = useQuery(
     gql`
-      query ($ANNUAL_FUNDING_BY_INTERVENTION: Chart!) {
-        ANNUAL_FUNDING_BY_INTERVENTION: chart(id: $ANNUAL_FUNDING_BY_INTERVENTION)
+      query ($SPEND_BUDGET: Chart!) {
+        SPEND_BUDGET: chart(id: $SPEND_BUDGET)
       }
     `,
     {
       variables: {
-        ANNUAL_FUNDING_BY_INTERVENTION: 'ANNUAL_FUNDING_BY_INTERVENTION',
+        SPEND_BUDGET: 'SPEND_BUDGET',
       },
     }
   )

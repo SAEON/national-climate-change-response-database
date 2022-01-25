@@ -321,3 +321,23 @@ create table TenantXrefSubmission (
   index ix_TenantXrefSubmission_tenantId_submissionId unique nonclustered (tenantId, submissionId),
 );
 end
+
+
+/**
+ * FUNCTIONS
+ */
+
+-- ESTIMATE_SPEND
+if not exists (
+  select *
+  from sys.objects
+  where
+    object_id = OBJECT_ID(N'[dbo].[ESTIMATE_SPEND]')
+    and type = 'FN'
+)
+begin
+DECLARE @sql NVARCHAR(MAX);
+SET @sql = N'create function [dbo].[ESTIMATE_SPEND] ( @estimatedBudget nvarchar(500) ) returns bigint as begin declare @result bigint ;with cte as ( select cast( replace(replace(replace(trim(value), ''R'', ''''), ''m'', ''000000''), ''k'', ''000'') as bigint ) val from string_split(@estimatedBudget, ''-'') ) select @result = avg(val) from cte return @result end';
+EXEC sp_executesql @sql;
+end
+

@@ -1,6 +1,6 @@
 import Provider from './context'
 import Grid from '@mui/material/Grid'
-import Echart, { ANNUAL_FUNDING_BY_INTERVENTION } from './echarts'
+import Chart, { SPEND_BUDGET } from './chart'
 import Typography from '@mui/material/Typography'
 import { alpha } from '@mui/material/styles'
 
@@ -18,16 +18,16 @@ export default () => (
     </Typography>
     <Grid container spacing={2}>
       <Grid item xs={12} md={6} container justifyContent="center">
-        <Echart>{ANNUAL_FUNDING_BY_INTERVENTION}</Echart>
+        <Chart>{SPEND_BUDGET}</Chart>
       </Grid>
       <Grid item xs={12} md={6} container justifyContent="center">
-        <Echart>{() => 'ACTUAL INTERVENTION SPEND'}</Echart>
+        <Chart>{() => 'ACTUAL INTERVENTION SPEND'}</Chart>
       </Grid>
       <Grid item xs={12} md={6} container justifyContent="center">
-        <Echart>{() => 'PROJECTS BY INTERVENTION BY SECTOR'}</Echart>
+        <Chart>{() => 'PROJECTS BY INTERVENTION BY SECTOR'}</Chart>
       </Grid>
       <Grid item xs={12} md={6} container justifyContent="center">
-        <Echart>{() => 'MAP SECTOR'}</Echart>
+        <Chart>{() => 'MAP SECTOR'}</Chart>
       </Grid>
     </Grid>
   </Provider>

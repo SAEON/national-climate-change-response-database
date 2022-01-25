@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles'
 import Icon from 'mdi-react/AlertIcon'
 import Tooltip from '@mui/material/Tooltip'
 
-export { default as ANNUAL_FUNDING_BY_INTERVENTION } from './annual-funding-by-intervention'
+export { default as SPEND_BUDGET } from './spend-budget'
 
 const ErrorIcon = styled(Icon)(({ theme }) => ({
   color: theme.palette.error.main,

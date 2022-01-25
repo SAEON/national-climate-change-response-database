@@ -7,6 +7,12 @@ import Icon from 'mdi-react/AlertIcon'
 import Tooltip from '@mui/material/Tooltip'
 
 export { default as SPEND_BUDGET } from './spend-budget'
+export { default as FUNDING_SOURCE } from './funding-source'
+export { default as OPERATIONAL_PROJECTS } from './operational-projects'
+export { default as OPERATIONAL_PROJECTS_BY_YEAR } from './operational-projects-by-year'
+export { default as PROJECT_COUNT } from './project-count'
+export { default as SECTOR_BUDGET } from './sector-budget'
+export { default as SECTOR_FUNDING } from './sector-funding'
 
 const ErrorIcon = styled(Icon)(({ theme }) => ({
   color: theme.palette.error.main,

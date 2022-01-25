@@ -96,7 +96,7 @@ export default {
     },
     lineStyle: {
       width: 1,
-      color: '#aaa',
+      color: '#aaaaaa',
     },
     symbolSize: '6',
     symbol: 'emptyCircle',

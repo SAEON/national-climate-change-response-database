@@ -13,6 +13,8 @@ const sql = `
       end actualBudget,
       JSON_VALUE(s.project, '$.estimatedBudget.term') estimatedBudget,
       JSON_VALUE(s.project, '$.fundingType.term') fundingSource,
+      JSON_VALUE(s.mitigation, '$.hostSector.term') mitigationSector,
+      JSON_VALUE(s.adaptation, '$.adaptationSector.term') adaptationSector,      
       year(convert(datetimeoffset, JSON_VALUE(s.project, '$.startYear')) at time zone 'South Africa Standard Time') startYear,
       year(convert(datetimeoffset, JSON_VALUE(s.project, '$.endYear')) at time zone 'South Africa Standard Time') endYear
     from Submissions s
@@ -29,6 +31,13 @@ const sql = `
       id,
       implementationStatus,
       intervention,
+      coalesce(
+        case intervention
+          when 'Mitigation' then mitigationSector
+          when 'Adaptation' then adaptationSector
+          else null
+        end, 'Not reported'
+      ) hostSector,
       actualBudget,
       estimatedBudget,
       coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) coalescedBudget,

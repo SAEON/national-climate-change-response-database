@@ -27,7 +27,8 @@ export default ({ ...props }) => {
 
   return (
     <Typography variant="overline" {...props}>
-      {a.total} Adaptation projects. {m.total} Mitigation projects. {c.total} Cross cutting projects
+      <b>{a.total}</b> Adaptation projects. <b>{m.total}</b> Mitigation projects. <b>{c.total}</b>{' '}
+      Cross cutting projects
     </Typography>
   )
 }

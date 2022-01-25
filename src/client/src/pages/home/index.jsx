@@ -21,7 +21,7 @@ export default () => (
     </Div>
     <Div sx={{ ...bg2 }}>
       <Wrapper>
-        <Charts />
+        <Explore />
       </Wrapper>
     </Div>
     <Div sx={{ ...bg3 }}>
@@ -31,7 +31,7 @@ export default () => (
     </Div>
     <Div sx={{ ...bg2 }}>
       <Wrapper>
-        <Explore />
+        <Charts />
       </Wrapper>
     </Div>
   </>

@@ -19,8 +19,8 @@ const ErrorIcon = styled(Icon)(({ theme }) => ({
 }))
 
 const Outline = styled(Div)(({ theme }) => ({
-  width: 500,
-  height: 500,
+  width: '100%',
+  height: '100%',
   border: `1px solid ${theme.palette.common.white}`,
   justifyContent: 'center',
   alignItems: 'center',

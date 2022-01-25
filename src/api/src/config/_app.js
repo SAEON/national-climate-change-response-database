@@ -1,8 +1,6 @@
 import { join, normalize, sep } from 'path'
-import { config } from 'dotenv'
 import getCurrentDirectory from '../lib/get-current-directory.js'
 import ensureDirectory from '../lib/ensure-directory.js'
-config()
 
 const __dirname = getCurrentDirectory(import.meta)
 const p = (...args) => normalize(join(...args))
@@ -21,7 +19,7 @@ export const GQL_HOSTNAME = `${HOSTNAME}/graphql`
 export const IMAGES_DIRECTORY = p(FILES_DIRECTORY, `.${sep}images`)
 export const LOG_REQUEST_DETAILS = (process.env.LOG_REQUEST_DETAILS || 'true').toBoolean()
 export const PORT = process.env.PORT || 3000
-export const SKIP_INSTALLS = process.env.SKIP_INSTALLS || false // For debugging
+export const SKIP_INSTALLS = (process.env.SKIP_INSTALLS || 'false').toBoolean() // For debugging only
 export const SSL_ENV = process.env.SSL_ENV || 'development'
 export const SUBMISSION_TEMPLATES_DIRECTORY = p(FILES_DIRECTORY, `.${sep}submission-templates`)
 export const SUBMITTED_TEMPLATES_DIRECTORY = p(FILES_DIRECTORY, `.${sep}submitted-templates`)

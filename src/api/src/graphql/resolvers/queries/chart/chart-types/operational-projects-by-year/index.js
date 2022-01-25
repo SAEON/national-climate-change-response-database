@@ -10,7 +10,7 @@ const sql = `
   from Submissions s
   join TenantXrefSubmission x on x.submissionId = s.id
   where
-    x.tenantId = 1
+    x.tenantId = @tenantId
     and deletedAt is null
     and isSubmitted = 1
     and JSON_VALUE(s.submissionStatus, '$.term') = 'Accepted'

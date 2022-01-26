@@ -25,6 +25,7 @@ export default ({ ...props }) => {
       }
     `,
     {
+      fetchPolicy: 'no-cache',
       variables: {
         SPEND_BUDGET: 'SPEND_BUDGET',
         FUNDING_SOURCE: 'FUNDING_SOURCE',

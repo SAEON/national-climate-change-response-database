@@ -9,7 +9,7 @@ export default ({
 
   return (
     <BarChart
-      title={'Funding source'}
+      title={'Funding source breakdown'}
       categories={chart.categories}
       xAxis={{ name: 'Intervention type' }}
       series={Object.entries(chart.series).map(([, series]) => series)}

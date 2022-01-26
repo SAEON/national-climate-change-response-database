@@ -9,8 +9,7 @@ import Chart, {
   SECTOR_BUDGET,
   SECTOR_FUNDING,
 } from './chart'
-import Typography from '@mui/material/Typography'
-import { styled, alpha } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 
 const StyledGrid = styled(Grid)({
   minHeight: 450,
@@ -19,25 +18,9 @@ const StyledGrid = styled(Grid)({
 export default () => {
   return (
     <Provider>
-      <Typography
-        sx={theme => ({
-          textAlign: 'center',
-          marginBottom: theme.spacing(1),
-          color: alpha(theme.palette.common.black, 0.9),
-        })}
-        variant="h4"
-      >
-        Project status and summary
-      </Typography>
       <Grid container spacing={3}>
-        <Grid item container justifyContent={'center'}>
-          <PROJECT_COUNT
-            sx={{
-              marginTop: theme => theme.spacing(4),
-              padding: theme => theme.spacing(2),
-              fontSize: '1.3rem',
-            }}
-          />
+        <Grid item xs={12}>
+          <PROJECT_COUNT />
         </Grid>
         <StyledGrid item xs={12} md={6} container justifyContent="center">
           <Chart>{SPEND_BUDGET}</Chart>

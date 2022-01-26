@@ -1,45 +1,11 @@
-import { useTheme, alpha } from '@mui/material/styles'
 import Echarts from 'echarts-for-react'
-import echartsTheme from '../../../../theme/echarts'
+import echartsTheme from '../../../../../theme/echarts'
+import _seriesTemplate from './_series-template'
+import _transformData from './_transform-data'
 
-export const seriesTemplate = {
-  stack: 'Total',
-  type: 'bar',
-  label: {
-    show: false,
-  },
-  emphasis: {
-    itemStyle: {
-      shadowBlur: 8,
-      shadowOffsetX: 0,
-    },
-  },
-}
+export const seriesTemplate = _seriesTemplate
 
-export const transformData = (data, { d1, d2, fact }) =>
-  data.reduce(
-    (data, row, index, array) => {
-      const d1Value = row[d1]
-      const d2Value = row[d2]
-      const factValue = row[fact]
-
-      let i = data.categories.findIndex(x => x === d1Value)
-      if (i < 0) {
-        data.categories.push(d1Value)
-        i = data.categories.length - 1
-      }
-
-      data.series[d2Value] = data.series[d2Value] || {
-        ...seriesTemplate,
-        name: d2Value,
-        data: new Array(array.length).fill(0),
-      }
-
-      data.series[d2Value].data[i] = factValue
-      return data
-    },
-    { series: {}, categories: [] }
-  )
+export const transformData = _transformData
 
 export default ({
   categories,
@@ -49,8 +15,6 @@ export default ({
   yAxis = {},
   xAxis = {},
 }) => {
-  const theme = useTheme()
-
   return (
     <Echarts
       theme={echartsTheme}
@@ -61,7 +25,7 @@ export default ({
             type: 'inside',
           },
         ],
-        backgroundColor: alpha(theme.palette.common.white, 0.3),
+        backgroundColor: 'transparent',
         legend,
         axisPointer: {
           type: 'shadow',

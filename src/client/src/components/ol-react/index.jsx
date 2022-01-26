@@ -3,14 +3,14 @@ import Map from 'ol/Map'
 import View from 'ol/View'
 import LayerGroup from 'ol/layer/Group'
 import { defaults as defaultControls } from 'ol/control'
-import baseLayer from './layers/osm'
+import osm from './layers/osm'
 export { default as GeometryLayer } from './_geometry-layer'
 import MousePosition from 'ol/control/MousePosition'
 import { createStringXY } from 'ol/coordinate'
 
 export const context = createContext()
 
-export default ({ children = [] }) => {
+export default ({ children = [], baseLayer = [osm()] }) => {
   const mapDomRef = useRef(null)
 
   const mousePositionControl = useMemo(
@@ -27,7 +27,7 @@ export default ({ children = [] }) => {
   const map = useMemo(() => {
     return new Map({
       layers: new LayerGroup({
-        layers: [baseLayer()],
+        layers: [...baseLayer],
       }),
       controls: defaultControls({
         zoom: false,

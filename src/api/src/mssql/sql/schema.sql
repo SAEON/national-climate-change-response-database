@@ -81,9 +81,11 @@ create table Regions (
   properties nvarchar(max),
   code as JSON_VALUE(properties, '$.code'),
   parentCode as JSON_VALUE(properties, '$.parentCode'),
-  [name] as JSON_VALUE(properties, '$.name'),
+  [name] as JSON_VALUE(properties, '$.name') persisted,
   [geometry] geometry not null,
-  constraint json_properties check ( isjson(properties) = 1 )
+  [centroid] as [geometry].STCentroid() persisted,
+  constraint json_properties check ( isjson(properties) = 1 ),
+  index ix_name nonclustered ([name])
 );
 end
 

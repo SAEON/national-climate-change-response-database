@@ -4,7 +4,9 @@ import Container from '@mui/material/Container'
 export default ({ children }) => {
   return (
     <Container>
-      <Box py={12}>{children}</Box>
+      <Box paddingTop={6} paddingBottom={12}>
+        {children}
+      </Box>
     </Container>
   )
 }

@@ -14,6 +14,7 @@ export default ({ ...props }) => {
         $SECTOR_BUDGET: Chart!
         $SECTOR_FUNDING: Chart!
         $OPERATIONAL_PROJECTS_BY_YEAR: Chart!
+        $POINT_LOCATIONS: Chart!
       ) {
         SPEND_BUDGET: chart(id: $SPEND_BUDGET)
         FUNDING_SOURCE: chart(id: $FUNDING_SOURCE)
@@ -22,6 +23,7 @@ export default ({ ...props }) => {
         SECTOR_BUDGET: chart(id: $SECTOR_BUDGET)
         SECTOR_FUNDING: chart(id: $SECTOR_FUNDING)
         OPERATIONAL_PROJECTS_BY_YEAR: chart(id: $OPERATIONAL_PROJECTS_BY_YEAR)
+        POINT_LOCATIONS: chart(id: $POINT_LOCATIONS)
       }
     `,
     {
@@ -34,9 +36,14 @@ export default ({ ...props }) => {
         SECTOR_BUDGET: 'SECTOR_BUDGET',
         SECTOR_FUNDING: 'SECTOR_FUNDING',
         OPERATIONAL_PROJECTS_BY_YEAR: 'OPERATIONAL_PROJECTS_BY_YEAR',
+        POINT_LOCATIONS: 'POINT_LOCATIONS',
       },
     }
   )
 
-  return <context.Provider value={{ loading, error, data }} {...props} />
+  if (error) {
+    throw error
+  }
+
+  return <context.Provider value={{ loading, data }} {...props} />
 }

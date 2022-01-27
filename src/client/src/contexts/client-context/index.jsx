@@ -27,6 +27,7 @@ export default ({ children }) => {
           region {
             id
             name
+            centroid
             vocabulary {
               term
             }

@@ -23,6 +23,7 @@ export default () =>
         r.code,
         r.parentCode,
         r.name,
+        r.centroid.STAsText() centroid,
         ( select
             v.id,
             v.code,

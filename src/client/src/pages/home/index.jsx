@@ -16,7 +16,9 @@ const bg3 = { backgroundColor: theme => alpha(theme.palette.common.black, 0.4) }
 export default () => (
   <>
     <Header />
-    <HeatMap />
+    <HeatMap>
+      <About />
+    </HeatMap>
     {/* <Div sx={bg1}>
       <Wrapper>
         <About />

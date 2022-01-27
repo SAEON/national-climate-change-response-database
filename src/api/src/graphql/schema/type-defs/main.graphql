@@ -115,6 +115,7 @@ type PageInfo {
 type Region {
   id: ID!
   name: String!
+  centroid: WKT_4326
   geometry: WKT_4326!
   vocabulary: [ControlledVocabulary!]!
 }

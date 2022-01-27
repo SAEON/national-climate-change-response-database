@@ -11,7 +11,7 @@ export default () =>
     source: new TileWMS({
       url: URL,
       params: {
-        LAYERS: 'TOPO-OSM-WMS',
+        LAYERS: 'TOPO-WMS',
         TILED: false,
       },
       serverType: 'geoserver',

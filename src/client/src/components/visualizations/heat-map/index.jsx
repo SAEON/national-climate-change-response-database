@@ -25,7 +25,6 @@ export default ({ data }) => {
 
       const heatMap = new HeatmapLayer({
         gradient: ['#893448', '#d95850', '#eb8146', '#ffb248', '#f2d643', '#ebdba4'],
-        opacity: 0,
         source: new VectorSource({
           features,
         }),
@@ -34,8 +33,10 @@ export default ({ data }) => {
         // weight: feature => feature.get('normalizedBudget'),
       })
 
+      console.log('map', map)
+      console.log('layer', heatMap)
+
       map.addLayer(heatMap)
-      heatMap.setOpacity(1)
     }
   }, [data, map])
 

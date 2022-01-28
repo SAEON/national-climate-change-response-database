@@ -15,6 +15,7 @@ const bg3 = { backgroundColor: theme => alpha(theme.palette.common.black, 0.4) }
 
 const MapData = () => {
   const { data } = useContext(dataContext)
+  console.log('rendering heat map', data)
   return <HeatMap data={data} />
 }
 

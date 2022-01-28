@@ -1,7 +1,7 @@
 module.exports = mode => [
   {
     test: /\.(js|jsx|ts|tsx)$/,
-    exclude: mode === 'production' ? /@babel(?:\/|\\{1,2})runtime|core-js/ : /node_modules/,
+    exclude: /node_modules/, //  mode === 'production' ? /@babel(?:\/|\\{1,2})runtime|core-js/ : /node_modules/,
     use: {
       loader: 'babel-loader',
       options: {

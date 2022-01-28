@@ -1,10 +1,11 @@
-import { useEffect, useContext } from 'react'
-import { context as mapContext } from '../../../components/ol-react'
 import VectorSource from 'ol/source/Vector'
 import WKT from 'ol/format/WKT'
 import { Heatmap as HeatmapLayer } from 'ol/layer'
 
-export const makeLayer = data => {
+/**
+ * Returns an ol/Layer instance
+ */
+export default data => {
   const format = new WKT()
   return new HeatmapLayer({
     gradient: ['#893448', '#d95850', '#eb8146', '#ffb248', '#f2d643', '#ebdba4'],
@@ -22,16 +23,4 @@ export const makeLayer = data => {
     blur: 100,
     radius: 80,
   })
-}
-
-export default ({ data }) => {
-  const { map } = useContext(mapContext)
-
-  useEffect(() => {
-    if (data) {
-      map.addLayer(makeLayer(data))
-    }
-  }, [data, map])
-
-  return null
 }

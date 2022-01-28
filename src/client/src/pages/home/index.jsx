@@ -5,7 +5,7 @@ import MapProvider from '../../components/ol-react'
 import baseLayer from '../../components/ol-react/layers/terrestris-base-map'
 import Container from '@mui/material/Container'
 import { alpha } from '@mui/material/styles'
-import { makeLayer as makeHeatmap } from '../../components/visualizations/heat-map'
+import heatMap from '../../components/visualizations/heat-map'
 import Header from './header'
 import { Div } from '../../components/html-tags'
 import BoxButton from '../../components/fancy-buttons/box-button'
@@ -62,7 +62,7 @@ const Layout = () => {
             }}
             interactions={[]}
             controls={[]}
-            baseLayer={[baseLayer(), makeHeatmap(data)]}
+            baseLayer={[baseLayer(), heatMap(data)]}
           ></MapProvider>
         )}
       </Div>

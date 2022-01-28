@@ -1,41 +1,30 @@
-import { useContext } from 'react'
-import { context as clientContext } from '../../contexts/client-context'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
+import Submit from './submit-project'
+import Wrapper from './_wrapper'
+import { alpha } from '@mui/material/styles'
+import Overview from './overview'
+import Explore from './explore-projects'
 import { Div } from '../../components/html-tags'
 
-export default () => {
-  const { about: pageContent } = JSON.parse(useContext(clientContext).frontMatter)
+const bg1 = { backgroundColor: theme => alpha(theme.palette.common.black, 0.25) }
+const bg2 = { backgroundColor: theme => alpha(theme.palette.common.white, 0.7) }
+const bg3 = { backgroundColor: theme => alpha(theme.palette.common.black, 0.4) }
 
-  return (
-    <>
-      <Div sx={{ marginTop: theme => theme.spacing(2) }} />
-      <Container>
-        <Card variant="outlined" sx={{ minHeight: 1000 }}>
-          <CardContent>
-            <Typography
-              variant="h4"
-              sx={{
-                textAlign: 'center',
-                marginBottom: theme => theme.spacing(3),
-              }}
-            >
-              {pageContent.title}
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                textAlign: 'left',
-              }}
-            >
-              {pageContent.content}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Container>
-      <Div sx={{ marginTop: theme => theme.spacing(2) }} />
-    </>
-  )
-}
+export default () => (
+  <>
+    <Div sx={{ ...bg1 }}>
+      <Wrapper>
+        <Overview />
+      </Wrapper>
+    </Div>
+    <Div sx={{ ...bg2 }}>
+      <Wrapper>
+        <Explore />
+      </Wrapper>
+    </Div>
+    <Div sx={{ ...bg3 }}>
+      <Wrapper>
+        <Submit />
+      </Wrapper>
+    </Div>
+  </>
+)

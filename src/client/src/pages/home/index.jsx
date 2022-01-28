@@ -5,11 +5,12 @@ import MapProvider from '../../components/ol-react'
 import baseLayer from '../../components/ol-react/layers/terrestris-base-map'
 import Container from '@mui/material/Container'
 import { alpha } from '@mui/material/styles'
-import HeatMap from '../../components/visualizations/heat-map'
+import { makeLayer as makeHeatmap } from '../../components/visualizations/heat-map'
 import Header from './header'
 import { Div } from '../../components/html-tags'
 import BoxButton from '../../components/fancy-buttons/box-button'
 import { parse } from 'wkt'
+import Fade from '@mui/material/Fade'
 
 const bg3 = { backgroundColor: theme => alpha(theme.palette.common.black, 0.4) }
 
@@ -26,42 +27,44 @@ const Layout = () => {
     <>
       <Header />
       <Div sx={{ height: 'calc(100vh - 220px)', with: '100%', position: 'relative' }}>
-        <Div
-          sx={{
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-            zIndex: 99,
-            opacity: 1,
-            backgroundColor: theme => alpha(theme.palette.common.black, 0.4),
-            backgroundImage: theme =>
-              `linear-gradient(${alpha(
-                theme.palette.primary.main,
-                0.1
-              )} 0.7000000000000001px, transparent 0.7000000000000001px)`,
-            backgroundSize: '10px 10px',
-          }}
-        />
-        <MapProvider
-          view={{
-            zoom: isDefaultTenant ? 6.5 : 7.5,
-            center: [x, y],
-          }}
-          interactions={[]}
-          controls={[]}
-          baseLayer={[baseLayer()]}
-        >
-          {data && <HeatMap data={data} />}
-          <Div sx={{ position: 'absolute', zIndex: 100, left: 0, right: 0, top: 0, bottom: 0 }}>
-            <Div sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-              <Container>
-                <Div sx={{ height: 100 }}>
-                  <BoxButton title={`Explore ${regionName} climate change response projects`} />
-                </Div>
-              </Container>
-            </Div>
+        <Div sx={{ position: 'absolute', zIndex: 100, left: 0, right: 0, top: 0, bottom: 0 }}>
+          <Div sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+            <Container>
+              <Div sx={{ height: 100 }}>
+                <BoxButton title={`Explore ${regionName} climate change response projects`} />
+              </Div>
+            </Container>
           </Div>
-        </MapProvider>
+        </Div>
+        <Fade timeout={2000} key="map" in={true}>
+          <Div
+            sx={{
+              height: '100%',
+              width: '100%',
+              position: 'absolute',
+              zIndex: 99,
+              opacity: 1,
+              backgroundColor: theme => alpha(theme.palette.common.black, 0.4),
+              backgroundImage: theme =>
+                `linear-gradient(${alpha(
+                  theme.palette.primary.main,
+                  0.1
+                )} 0.7000000000000001px, transparent 0.7000000000000001px)`,
+              backgroundSize: '10px 10px',
+            }}
+          />
+        </Fade>
+        {data && (
+          <MapProvider
+            view={{
+              zoom: isDefaultTenant ? 6.5 : 7.5,
+              center: [x, y],
+            }}
+            interactions={[]}
+            controls={[]}
+            baseLayer={[baseLayer(), makeHeatmap(data)]}
+          ></MapProvider>
+        )}
       </Div>
 
       <Div sx={bg3}>

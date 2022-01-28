@@ -4,16 +4,12 @@ import VectorSource from 'ol/source/Vector'
 import WKT from 'ol/format/WKT'
 import { Heatmap as HeatmapLayer } from 'ol/layer'
 
-export default ({ data }) => {
-  const { map } = useContext(mapContext)
-  console.log('rendering heat map')
-
-  useEffect(() => {
-    if (data) {
-      console.log('adding data layer', data)
-      const format = new WKT()
-
-      const features = data.POINT_LOCATIONS.data.map(({ xy, normalizedBudget }) => {
+export const makeLayer = data => {
+  const format = new WKT()
+  return new HeatmapLayer({
+    gradient: ['#893448', '#d95850', '#eb8146', '#ffb248', '#f2d643', '#ebdba4'],
+    source: new VectorSource({
+      features: data.POINT_LOCATIONS.data.map(({ xy, normalizedBudget }) => {
         const feature = format.readFeature(xy, {
           dataProjection: 'EPSG:4326',
           featureProjection: 'EPSG:4326',
@@ -21,22 +17,19 @@ export default ({ data }) => {
 
         feature.set('normalizedBudget', normalizedBudget)
         return feature
-      })
+      }),
+    }),
+    blur: 100,
+    radius: 80,
+  })
+}
 
-      const heatMap = new HeatmapLayer({
-        gradient: ['#893448', '#d95850', '#eb8146', '#ffb248', '#f2d643', '#ebdba4'],
-        source: new VectorSource({
-          features,
-        }),
-        blur: 100,
-        radius: 80,
-        // weight: feature => feature.get('normalizedBudget'),
-      })
+export default ({ data }) => {
+  const { map } = useContext(mapContext)
 
-      console.log('map', map)
-      console.log('layer', heatMap)
-
-      map.addLayer(heatMap)
+  useEffect(() => {
+    if (data) {
+      map.addLayer(makeLayer(data))
     }
   }, [data, map])
 

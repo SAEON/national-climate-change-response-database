@@ -6,9 +6,11 @@ import { Heatmap as HeatmapLayer } from 'ol/layer'
 
 export default ({ data }) => {
   const { map } = useContext(mapContext)
+  console.log('rendering heat map')
 
   useEffect(() => {
     if (data) {
+      console.log('adding data layer', data)
       const format = new WKT()
 
       const features = data.POINT_LOCATIONS.data.map(({ xy, normalizedBudget }) => {

@@ -38,7 +38,7 @@ module.exports = () => {
       alias: loadAliases(ROOT, mode),
     },
     optimization: {
-      minimize: ['local', 'development'].includes(DEPLOYMENT_ENV) ? false : true,
+      minimize: DEPLOYMENT_ENV === 'local' ? false : true,
       splitChunks: { chunks: 'all' },
     },
     module: {

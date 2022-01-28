@@ -16,8 +16,7 @@ RUN echo "NCCRD_TECHNICAL_CONTACT=$NCCRD_TECHNICAL_CONTACT" >> .env
 RUN echo "HOSTNAME=origin" >> .env
 
 COPY src/client .
-# RUN npm ci --only=production
-RUN npm install --force
+RUN npm ci --only=production
 RUN npm run build
 
 

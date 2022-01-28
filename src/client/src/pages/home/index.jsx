@@ -66,7 +66,7 @@ const Layout = () => {
             }}
             interactions={[]}
             controls={[]}
-            baseLayer={[baseLayer(), heatMap(data)]}
+            layers={[baseLayer(), heatMap(data)]}
           ></MapProvider>
         )}
       </Div>

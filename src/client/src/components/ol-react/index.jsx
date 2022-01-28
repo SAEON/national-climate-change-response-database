@@ -1,7 +1,6 @@
 import { createContext, useRef, useEffect, useMemo } from 'react'
 import Map from 'ol/Map'
 import View from 'ol/View'
-import LayerGroup from 'ol/layer/Group'
 import { defaults as defaultControls } from 'ol/control'
 import { defaults as defaultInteractions } from 'ol/interaction'
 import osm from './layers/osm'
@@ -14,7 +13,7 @@ export const context = createContext()
 export default ({
   view = {},
   children = [],
-  baseLayer = [osm()],
+  layers = [osm()],
   interactions = undefined,
   controls = undefined,
 }) => {
@@ -33,9 +32,7 @@ export default ({
 
   const map = useMemo(() => {
     return new Map({
-      layers: new LayerGroup({
-        layers: [...baseLayer],
-      }),
+      layers: [...layers],
       controls:
         controls ||
         defaultControls({
@@ -52,7 +49,7 @@ export default ({
         ...view,
       }),
     })
-  }, [baseLayer, controls, interactions, mousePositionControl, view])
+  }, [layers, controls, interactions, mousePositionControl, view])
 
   useEffect(() => {
     map.setTarget(mapDomRef.current)

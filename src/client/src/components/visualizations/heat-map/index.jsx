@@ -1,6 +1,6 @@
 import VectorSource from 'ol/source/Vector'
 import WKT from 'ol/format/WKT'
-import { Heatmap } from 'ol/layer'
+import Heatmap from 'ol/layer/Heatmap'
 
 window.VectorSource = VectorSource
 window.WKT = WKT

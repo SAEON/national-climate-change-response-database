@@ -17,7 +17,7 @@ RUN echo "HOSTNAME=origin" >> .env
 
 COPY src/client .
 # RUN npm ci --only=production
-RUN npm run install --force
+RUN npm install --force
 RUN npm run build
 
 

@@ -13,8 +13,12 @@ import { parse } from 'wkt'
 
 const bg3 = { backgroundColor: theme => alpha(theme.palette.common.black, 0.4) }
 
-const Layout = () => {
+const MapData = () => {
   const { data } = useContext(dataContext)
+  return <HeatMap data={data} />
+}
+
+export default () => {
   const {
     region: { name: regionName, centroid },
     isDefault: isDefaultTenant,
@@ -23,7 +27,8 @@ const Layout = () => {
   const [x, y] = parse(centroid).coordinates
 
   return (
-    <>
+    <ChartDataProvider>
+      <Header />
       <Div sx={{ height: 'calc(100vh - 220px)', with: '100%', position: 'relative' }}>
         <Div
           sx={{
@@ -50,7 +55,7 @@ const Layout = () => {
           controls={[]}
           baseLayer={[baseLayer()]}
         >
-          <HeatMap data={data} />
+          <MapData />
           <Div sx={{ position: 'absolute', zIndex: 100, left: 0, right: 0, top: 0, bottom: 0 }}>
             <Div sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
               <Container>
@@ -67,18 +72,9 @@ const Layout = () => {
         <Container
           sx={{ paddingTop: theme => theme.spacing(3), paddingBottom: theme => theme.spacing(3) }}
         >
-          TODO
+          4 boxes - link to about, charts, submit, and search each with a little blurb
         </Container>
       </Div>
-    </>
-  )
-}
-
-export default () => {
-  return (
-    <ChartDataProvider>
-      <Header />
-      <Layout />
     </ChartDataProvider>
   )
 }

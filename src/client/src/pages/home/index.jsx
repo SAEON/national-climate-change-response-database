@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { context as clientContext } from '../../contexts/client-context'
 import ChartDataProvider, { context as dataContext } from './context'
-import MapProvider, { context as mapContext } from '../../components/ol-react'
+import MapProvider from '../../components/ol-react'
 import baseLayer from '../../components/ol-react/layers/terrestris-base-map'
 import Container from '@mui/material/Container'
 import { alpha } from '@mui/material/styles'
@@ -14,15 +14,8 @@ import Fade from '@mui/material/Fade'
 
 const bg3 = { backgroundColor: theme => alpha(theme.palette.common.black, 0.4) }
 
-const Test = () => {
-  const { map } = useContext(mapContext)
-  window.map = map
-  return null
-}
-
 const Layout = () => {
   const { data } = useContext(dataContext)
-  window.data = data
   const {
     region: { name: regionName, centroid },
     isDefault: isDefaultTenant,
@@ -67,13 +60,10 @@ const Layout = () => {
               zoom: isDefaultTenant ? 6.5 : 7.5,
               center: [x, y],
             }}
-            // interactions={[]}
-            // controls={[]}
-            baseLayer={[baseLayer()]}
-            // baseLayer={[baseLayer(), heatMap(data)]}
-          >
-            <Test />
-          </MapProvider>
+            interactions={[]}
+            controls={[]}
+            baseLayer={[baseLayer(), heatMap(data)]}
+          ></MapProvider>
         )}
       </Div>
 

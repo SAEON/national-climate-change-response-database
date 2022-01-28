@@ -23,7 +23,7 @@ module.exports = () => {
 
   return {
     devtool: mode === 'production' ? false : false, // I haven't been able to get source maps to work nicely
-    target: mode === 'production' ? ['web', 'es5'] : 'web',
+    target: 'browserslist',
     mode,
     entry: entries,
     output: {

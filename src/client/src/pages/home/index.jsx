@@ -1,45 +1,84 @@
-import Submit from './submit-project'
-import Wrapper from './_wrapper'
+import { useContext } from 'react'
+import { context as clientContext } from '../../contexts/client-context'
+import ChartDataProvider, { context as dataContext } from './context'
+import MapProvider from '../../components/ol-react'
+import baseLayer from '../../components/ol-react/layers/terrestris-base-map'
 import Container from '@mui/material/Container'
 import { alpha } from '@mui/material/styles'
-import About from './about'
-import Explore from './explore-projects'
-import HeatMap from './charts/chart/heat-map'
+import HeatMap from '../../components/visualizations/heat-map'
 import Header from './header'
-import Charts from './charts'
 import { Div } from '../../components/html-tags'
+import BoxButton from '../../components/fancy-buttons/box-button'
+import { parse } from 'wkt'
 
-const bg1 = { backgroundColor: theme => alpha(theme.palette.common.black, 0.25) }
-const bg2 = { backgroundColor: theme => alpha(theme.palette.common.white, 0.7) }
 const bg3 = { backgroundColor: theme => alpha(theme.palette.common.black, 0.4) }
 
-export default () => (
-  <>
-    <Header />
-    <HeatMap>
-      <About />
-    </HeatMap>
-    {/* <Div sx={bg1}>
-      <Wrapper>
-        <About />
-      </Wrapper>
-    </Div>
-    <Div sx={bg2}>
-      <Wrapper>
-        <Explore />
-      </Wrapper>
-    </Div>
-    <Div sx={bg3}>
-      <Wrapper>
-        <Submit />
-      </Wrapper>
-    </Div> */}
-    <Div sx={bg3}>
-      <Container
-        sx={{ paddingTop: theme => theme.spacing(3), paddingBottom: theme => theme.spacing(3) }}
-      >
-        <Charts />
-      </Container>
-    </Div>
-  </>
-)
+const Layout = () => {
+  const { data } = useContext(dataContext)
+  const {
+    region: { name: regionName, centroid },
+    isDefault: isDefaultTenant,
+  } = useContext(clientContext)
+
+  const [x, y] = parse(centroid).coordinates
+
+  return (
+    <>
+      <Div sx={{ height: 'calc(100vh - 220px)', with: '100%', position: 'relative' }}>
+        <Div
+          sx={{
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            zIndex: 99,
+            opacity: 1,
+            backgroundColor: theme => alpha(theme.palette.common.black, 0.4),
+            backgroundImage: theme =>
+              `linear-gradient(${alpha(
+                theme.palette.primary.main,
+                0.1
+              )} 0.7000000000000001px, transparent 0.7000000000000001px)`,
+            backgroundSize: '10px 10px',
+          }}
+        />
+        <MapProvider
+          view={{
+            zoom: isDefaultTenant ? 6.5 : 7.5,
+            center: [x, y],
+          }}
+          interactions={[]}
+          controls={[]}
+          baseLayer={[baseLayer()]}
+        >
+          <HeatMap data={data} />
+          <Div sx={{ position: 'absolute', zIndex: 100, left: 0, right: 0, top: 0, bottom: 0 }}>
+            <Div sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <Container>
+                <Div sx={{ height: 100 }}>
+                  <BoxButton title={`Explore ${regionName} climate change response projects`} />
+                </Div>
+              </Container>
+            </Div>
+          </Div>
+        </MapProvider>
+      </Div>
+
+      <Div sx={bg3}>
+        <Container
+          sx={{ paddingTop: theme => theme.spacing(3), paddingBottom: theme => theme.spacing(3) }}
+        >
+          TODO
+        </Container>
+      </Div>
+    </>
+  )
+}
+
+export default () => {
+  return (
+    <ChartDataProvider>
+      <Header />
+      <Layout />
+    </ChartDataProvider>
+  )
+}

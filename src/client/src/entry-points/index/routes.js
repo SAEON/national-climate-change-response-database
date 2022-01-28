@@ -12,9 +12,13 @@ import Transition from '../../components/page-transition'
 import TermsIcon from 'mdi-react/ContractIcon'
 import PrivacyIcon from 'mdi-react/LockCheckIcon'
 import SettingsIcon from 'mdi-react/SettingsIcon'
+import AboutIcon from 'mdi-react/AboutIcon'
+import ReportsIcon from 'mdi-react/ChartBarStackedIcon'
 import { DEFAULT_TENANT_ADDRESS } from '../../config'
 
 const HomePage = lazy(() => import('../../pages/home'))
+const ReportsPage = lazy(() => import('../../pages/reports'))
+const AboutPage = lazy(() => import('../../pages/about'))
 const AccessPage = lazy(() => import('../../pages/access'))
 const SubmissionsPage = lazy(() => import('../../pages/submissions'))
 const SubmissionPage = lazy(() => import('../../pages/submission'))
@@ -69,6 +73,30 @@ export default [
         <HomePage />
       </Transition>
     ),
+  },
+  {
+    label: 'About',
+    Icon: AboutIcon,
+    exact: true,
+    render: () => (
+      <Transition>
+        <AboutPage />
+      </Transition>
+    ),
+    to: '/about',
+    includeInFooter: true,
+  },
+  {
+    label: 'Data reports',
+    Icon: ReportsIcon,
+    exact: true,
+    render: () => (
+      <Transition>
+        <ReportsPage />
+      </Transition>
+    ),
+    to: '/reports',
+    includeInFooter: true,
   },
   {
     breadcrumbsLabel: 'Submissions',

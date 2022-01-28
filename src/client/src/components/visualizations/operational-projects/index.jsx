@@ -1,4 +1,4 @@
-import BarChart, { transformData } from '../../echarts/bar-chart'
+import BarChart, { transformData } from '../_echarts/bar-chart'
 
 export default ({
   data: {

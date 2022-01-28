@@ -19,8 +19,14 @@ export default ({ routes }) => {
         position="relative"
         sx={{ backgroundColor: theme => theme.palette.grey[800] }}
       >
-        {/* DISCLAIMERS */}
-        <Toolbar sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        {/* MAIN */}
+        <Toolbar
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+          }}
+        >
           <Container
             sx={theme => ({ paddingTop: theme.spacing(4), paddingBottom: theme.spacing(4) })}
           >

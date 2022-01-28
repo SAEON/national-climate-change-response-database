@@ -1,5 +1,5 @@
 import Echarts from 'echarts-for-react'
-import echartsTheme from '../../../../../theme/echarts'
+import theme from '../themes/default'
 import _seriesTemplate from './_series-template'
 import _transformData from './_transform-data'
 
@@ -17,7 +17,7 @@ export default ({
 }) => {
   return (
     <Echarts
-      theme={echartsTheme}
+      theme={theme}
       style={{ height: '100%', width: '100%' }}
       option={{
         dataZoom: [

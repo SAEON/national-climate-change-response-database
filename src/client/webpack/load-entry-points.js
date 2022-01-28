@@ -13,6 +13,7 @@ module.exports = (ROOT, output) => {
           filename: path.join(ROOT, output, `${name}.html`),
           PUBLIC_PATH: '',
           chunks: [name],
+          minify: false,
         })
     )
 }

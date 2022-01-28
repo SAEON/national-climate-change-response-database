@@ -21,6 +21,10 @@ const Layout = () => {
     isDefault: isDefaultTenant,
   } = useContext(clientContext)
 
+  if (data) {
+    window.data = data
+  }
+
   const [x, y] = parse(centroid).coordinates
 
   return (

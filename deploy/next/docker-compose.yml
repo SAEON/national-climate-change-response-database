@@ -60,7 +60,7 @@ services:
       MSSQL_USERNAME: $MSSQL_USERNAME
       DEFAULT_ADMIN_EMAIL_ADDRESSES: ''
       DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za
-      DEPLOYMENT_ENV: development
+      DEPLOYMENT_ENV: production
       HOSTNAME: https://nccrd.saeon.ac.za
       SSL_ENV: production
       ODP_AUTH_CLIENT_SECRET: $ODP_AUTH_CLIENT_SECRET

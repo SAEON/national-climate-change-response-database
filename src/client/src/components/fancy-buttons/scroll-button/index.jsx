@@ -1,5 +1,5 @@
 import { styled, keyframes } from '@mui/material/styles'
-import { Div } from '../../html-tags'
+import ButtonBase from '@mui/material/ButtonBase'
 
 const animation = keyframes`
   0% {
@@ -18,13 +18,11 @@ const animation = keyframes`
   }
 `
 
-const StyledA = styled('a')(({ theme }) => ({
+const Button = styled(ButtonBase)(({ theme }) => ({
   cursor: 'pointer',
-  position: 'absolute',
-  bottom: '20px',
+  display: 'block',
   left: '50%',
   zIndex: 2,
-  display: ' inline-block',
   transform: 'translate(0, -50%)',
   color: theme.palette.common.white,
   transition: theme.transitions.create('opacity'),
@@ -71,14 +69,10 @@ const StyledSpan = styled('span')(({ theme }) => ({
   },
 }))
 
-const Button = ({ ...props }) => {
+export default ({ ...props }) => {
   return (
-    <Div {...props}>
-      <StyledA>
-        <StyledSpan />
-      </StyledA>
-    </Div>
+    <Button onClick={props.onClick || undefined} {...props}>
+      <StyledSpan />
+    </Button>
   )
 }
-
-export default styled(Button)({})

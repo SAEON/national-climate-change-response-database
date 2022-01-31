@@ -12,11 +12,11 @@ window.Heatmap = Heatmap
 export default data => {
   const format = new WKT()
   return new Heatmap({
-    weight: 'normalizedBudget',
+    weight: feature => feature.get('weighting'),
     gradient: ['#893448', '#d95850', '#eb8146', '#ffb248', '#f2d643', '#ebdba4'],
     source: new VectorSource({
       features: data.POINT_LOCATIONS.data
-        .map(({ xy, normalizedBudget }) =>
+        .map(({ xy, weighting }) =>
           xy
             .replace('GEOMETRYCOLLECTION (', '')
             .replace('))', ')')
@@ -27,13 +27,13 @@ export default data => {
                 featureProjection: 'EPSG:4326',
               })
 
-              feature.set('normalizedBudget', normalizedBudget)
+              feature.set('weighting', weighting)
               return feature
             })
         )
         .flat(),
     }),
-    blur: 55, // default 15
-    radius: 15, // default 8
+    blur: 25, // default 15
+    radius: 8, // default 8
   })
 }

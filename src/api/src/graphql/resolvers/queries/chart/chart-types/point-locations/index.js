@@ -48,7 +48,7 @@ const sql = `
     and isSubmitted = 1
     and JSON_VALUE(s.submissionStatus, '$.term') = 'Accepted'
 )
-  
+
 ,T2 as (
   select
     id,
@@ -74,24 +74,23 @@ const sql = `
     coalesce(geometry::STGeomFromText(xy, 4326), (select centroid from Regions where [name] = T1.coalescedRegion)) xy
   from T1
 )
-  
+
 ,T3 as (
-	select distinct
-		id,
-		coalescedRegion,
-		coalesce(budget, PERCENTILE_CONT(0.5) within group (order by budget) over()) budget,
-		PERCENTILE_CONT(0.3) within group (order by budget) over() usefulMinBudget,
-		PERCENTILE_CONT(0.7) within group (order by budget) over() usefulMaxBudget,
-		xy.STAsText() xy
-	from T2
-	where
-	  xy is not null
-	  and coalescedRegion != 'South Africa'
+  select distinct
+    id,
+    coalesce(budget, PERCENTILE_CONT(0.5) within group (order by budget) over()) budget,
+    PERCENTILE_CONT(0.3) within group (order by budget) over() usefulMinBudget,
+    PERCENTILE_CONT(0.7) within group (order by budget) over() usefulMaxBudget,
+    xy.STAsText() xy
+  from T2
+  where
+    xy is not null
+    and coalescedRegion != 'South Africa' -- TODO: Not sure how best to incorporate national provinces without GPS points into this query
 )
 
 select
 xy,
-( budget - usefulMinBudget ) / ( usefulMaxBudget  - usefulMinBudget ) normalizedBudget
+( budget - usefulMinBudget ) / ( usefulMaxBudget  - usefulMinBudget ) weighting
 from T3;`
 
 export default async ctx =>

@@ -33,7 +33,7 @@ export default data => {
         )
         .flat(),
     }),
-    blur: 25, // default 15
-    radius: 8, // default 8
+    blur: 80, // default 15
+    radius: 20, // default 8
   })
 }

@@ -24,15 +24,15 @@ export default () => {
         <Div
           sx={{
             position: 'absolute',
-            bottom: 0,
+            top: 0,
             right: 0,
             zIndex: 99,
             mr: theme => theme.spacing(1),
-            mb: theme => theme.spacing(1),
+            mt: theme => theme.spacing(1),
           }}
         >
           <Typography variant="overline" sx={{ color: theme => theme.palette.common.white }}>
-            {regionName}&apos; climate changes response region-density
+            {regionName}&apos; climate changes response by region
           </Typography>
         </Div>
         <Div sx={{ position: 'absolute', zIndex: 100, left: 0, right: 0, top: 0, bottom: 0 }}>

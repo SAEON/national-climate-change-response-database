@@ -53,7 +53,6 @@ export default ({
 
   useEffect(() => {
     map.setTarget(mapDomRef.current)
-    window.map = map
 
     return () => {
       map.dispose()

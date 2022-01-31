@@ -2,16 +2,13 @@ import VectorSource from 'ol/source/Vector'
 import WKT from 'ol/format/WKT'
 import Heatmap from 'ol/layer/Heatmap'
 
-window.VectorSource = VectorSource
-window.WKT = WKT
-window.Heatmap = Heatmap
-
 /**
  * Returns an ol/Layer instance
  */
-export default data => {
+export default ({ data, opacity }) => {
   const format = new WKT()
   return new Heatmap({
+    opacity,
     weight: feature => feature.get('weighting'),
     gradient: ['#893448', '#d95850', '#eb8146', '#ffb248', '#f2d643', '#ebdba4'],
     source: new VectorSource({

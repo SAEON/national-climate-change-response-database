@@ -8,7 +8,7 @@ import {
 } from '../../../graphql/schema/index.js'
 import controlledVocabularyFragment from './_controlled-vocabulary-query-fragment.js'
 
-export default ({ search, request }) => {
+export default ({ search, request, acceptedProjectsOnly }) => {
   let { project = {}, mitigation = {}, adaptation = {} } = JSON.parse(search)
 
   project = Object.entries(project)
@@ -40,6 +40,12 @@ export default ({ search, request }) => {
     where
       deletedAt is null
       and isSubmitted = 1
+
+      ${
+        acceptedProjectsOnly
+          ? `and upper(JSON_VALUE(s.submissionStatus, '$.term')) = 'ACCEPTED'`
+          : ''
+      }
 
       ${
         // PROJECT

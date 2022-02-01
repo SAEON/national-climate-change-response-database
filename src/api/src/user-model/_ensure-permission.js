@@ -1,4 +1,5 @@
 import { pool } from '../mssql/pool.js'
+import logSql from '../lib/log-sql.js'
 
 export default async (ctx, validTenants, ...permissions) => {
   if (!ctx.userInfo) {
@@ -19,27 +20,32 @@ export default async (ctx, validTenants, ...permissions) => {
   const { userInfo } = ctx
   const { id: userId } = userInfo
 
-  try {
-    const request = (await pool.connect()).request()
-    request.input('userId', userId)
-    request.input('tenantId', ctx.tenant.id)
-    permissions.forEach(({ name }, i) => request.input(`p_${i}`, name))
-    const result = await request.query(`
-      select 1
-      from Permissions p
-      join PermissionXrefRole xp on xp.permissionId = p.id
-      join UserXrefRoleXrefTenant xu on xu.roleId = xp.roleId and xu.tenantId = @tenantId
-      join Users u on u.id = xu.userId
-      where
-        userId = @userId
-        and p.name in (${permissions.map((p, i) => `@p_${i}`).join(',')});`)
+  const request = (await pool.connect()).request()
+  request.input('userId', userId)
+  request.input('tenantId', ctx.tenant.id)
+  permissions.forEach(({ name }, i) => request.input(`p_${i}`, name))
+  const sql = `
+    select 1
+    from Permissions p
+    join PermissionXrefRole xp on xp.permissionId = p.id
+    join UserXrefRoleXrefTenant xu on xu.roleId = xp.roleId and xu.tenantId = @tenantId
+    join Users u on u.id = xu.userId
+    where
+      userId = @userId
+      and p.name in (${permissions.map((p, i) => `@p_${i}`).join(',')});`
+  const result = await request.query(sql)
 
-    const isAuthorized = Boolean(result.recordset.length)
+  logSql(
+    sql,
+    `Ensure permission. User ID ${userId} / Tenant ID ${ctx.tenant.id} / Permission(s) ${permissions
+      .map(({ name }) => name)
+      .join(',')}`,
+    true
+  )
 
-    if (!isAuthorized) {
-      ctx.throw(403)
-    }
-  } catch (error) {
-    console.error('Error (ensurePermission)', error.message)
+  const isAuthorized = Boolean(result.recordset.length)
+
+  if (!isAuthorized) {
+    ctx.throw(403)
   }
 }

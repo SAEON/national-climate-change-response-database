@@ -23,8 +23,16 @@ const stringifyRow = row => stringifySync([row], csvOptions)
 export default async ctx => {
   const { user } = ctx
   const { ensurePermission } = user
-
   await ensurePermission({ ctx, permission: PERMISSIONS['download-submission'] })
+
+  // Check if user can see non-accepted projects
+  let acceptedProjectsOnly = false
+  try {
+    await ensurePermission({ ctx, permission: PERMISSIONS['validate-submission'] })
+  } catch (error) {
+    acceptedProjectsOnly = true
+  }
+
   let { ids, search } = ctx.request.body
 
   if (ids && search) {
@@ -37,6 +45,8 @@ export default async ctx => {
     ctx.response = 400
     return
   }
+
+  const fieldBlackList = ['project.projectManagerTelephone', 'project.projectManagerMobile']
 
   /**
    * Get a list of all keys
@@ -62,13 +72,9 @@ export default async ctx => {
   const columns = [
     { key: 'id' },
     { key: 'submissionStatus' },
-    { key: 'submissionComments' },
-    ...keys,
-    { key: 'submissionType' },
+    ...keys.filter(({ key }) => !fieldBlackList.includes(key)),
     { key: 'createdAt' },
-    { key: 'userId' },
     { key: 'createdBy' },
-    { key: 'research' },
   ].reduce((map, { key }, i) => ({ ...map, [key]: i }), {})
 
   try {
@@ -88,7 +94,7 @@ export default async ctx => {
     let sql
 
     if (search) {
-      sql = buildSearchSql({ search, request })
+      sql = buildSearchSql({ search, request, acceptedProjectsOnly })
     } else {
       ids = JSON.parse(ctx.request.body.ids)
       ids.forEach((id, i) => request.input(`id_${i}`, id))
@@ -97,7 +103,12 @@ export default async ctx => {
           *
         from Submissions
         where
-          id in (${ids.map((_, i) => `@id_${i}`).join(', ')})`
+          id in (${ids.map((_, i) => `@id_${i}`).join(', ')})
+          ${
+            acceptedProjectsOnly
+              ? `and upper(JSON_VALUE(s.submissionStatus, '$.term')) = 'ACCEPTED'`
+              : ''
+          };`
     }
 
     logSql(sql, `Submission(s) download. User ID: ${user.info(ctx).id}`, true)

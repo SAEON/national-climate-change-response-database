@@ -12,14 +12,6 @@ import { stringify as stringifySync } from 'csv/sync'
 
 const generalInputFields = {
   /**
-   * This field is not on the GraphQL
-   * type - it comes from the old ERM
-   * DB
-   */
-  research: {
-    kind: 'SCALAR',
-  },
-  /**
    * This field is in projectInputFields, however
    * it is saved in it's own column so needs to be
    * specified here
@@ -89,20 +81,18 @@ ${stringifySync(tables.expenditure, { header: true, delimiter: ';', quoted: fals
     return 'TODO - should this be a comma separated list of download URLs?'
   }
 
-  if (key === 'research') {
-    return JSON.stringify({
-      ['What is this?']:
-        'This information was found in the old ERM database, and was not discarded',
-      data: JSON.parse(value),
-    })
-  }
-
   if (key === 'createdAt' || key === 'deletedAt') {
     return value?.toISOString() || ''
   }
 
   if (typeof value === 'object') {
     return JSON.stringify(value)
+  }
+
+  if (key === 'startYear' || key === 'endYear') {
+    if (value?.length > 4) {
+      return new Date(value).getFullYear()
+    }
   }
 
   return value || ''

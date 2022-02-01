@@ -59,7 +59,8 @@ export default memo(
 
           <DialogContent>
             <Typography variant="body2" style={{ marginBottom: theme.spacing(2) }}>
-              Select one of more files to upload as part of this form submission
+              Select one of more files to upload as part of this form submission.{' '}
+              <b>NOTE: These files are made publicly available for downloading.</b>
             </Typography>
 
             {/* File selection */}

@@ -4,7 +4,7 @@ import { Div } from '../../components/html-tags'
 import MapProvider, { context as mapContext } from '../../components/ol-react'
 import terrestrisBaseMap from '../../components/ol-react/layers/terrestris-base-map'
 import osmBaseMap from '../../components/ol-react/layers/osm'
-import stamenBaseMap from '../../components/ol-react/layers/stamen-toner-map'
+import stamenTonerBaseMap from '../../components/ol-react/layers/stamen-toner-map'
 import heatMap from '../../components/visualizations/heat-map'
 import { context as dataContext } from './context'
 import { parse } from 'wkt'
@@ -111,8 +111,8 @@ const BaseLayerSwitcher = () => {
     const currentBaseId = currentBase.get('id')
     if (currentBaseId !== baseLayer) {
       const layer =
-        baseLayer === 'stamen'
-          ? stamenBaseMap({ id: 'stamen' })
+        baseLayer === 'toner'
+          ? stamenTonerBaseMap({ id: 'toner' })
           : baseLayer === 'OSM'
           ? osmBaseMap({ id: 'OSM' })
           : terrestrisBaseMap({ id: 'terrestris' })
@@ -148,9 +148,9 @@ const BaseLayerSwitcher = () => {
         sx={{ mt: theme => theme.spacing(1) }}
         variant="contained"
         disableElevation
-        color={baseLayer === 'stamen' ? 'primary' : 'inherit'}
+        color={baseLayer === 'toner' ? 'primary' : 'inherit'}
         size="small"
-        onClick={() => setBaseLayer('stamen')}
+        onClick={() => setBaseLayer('toner')}
       >
         Stamen
       </Button>

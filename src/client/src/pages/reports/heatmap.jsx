@@ -2,7 +2,9 @@ import { useContext, useEffect, useState } from 'react'
 import { context as clientContext } from '../../contexts/client-context'
 import { Div } from '../../components/html-tags'
 import MapProvider, { context as mapContext } from '../../components/ol-react'
-import baseLayer from '../../components/ol-react/layers/terrestris-base-map'
+import terrestrisBaseMap from '../../components/ol-react/layers/terrestris-base-map'
+import osmBaseMap from '../../components/ol-react/layers/osm'
+import stamenBaseMap from '../../components/ol-react/layers/stamen-toner-map'
 import heatMap from '../../components/visualizations/heat-map'
 import { context as dataContext } from './context'
 import { parse } from 'wkt'
@@ -100,6 +102,72 @@ const HeatMap = ({ zoom, blur, radius }) => {
   )
 }
 
+const BaseLayerSwitcher = () => {
+  const { map } = useContext(mapContext)
+  const [baseLayer, setBaseLayer] = useState('terrestris')
+
+  useEffect(() => {
+    const currentBase = map.getLayers().item(1)
+    const currentBaseId = currentBase.get('id')
+    if (currentBaseId !== baseLayer) {
+      const layer =
+        baseLayer === 'stamen'
+          ? stamenBaseMap({ id: 'stamen' })
+          : baseLayer === 'OSM'
+          ? osmBaseMap({ id: 'OSM' })
+          : terrestrisBaseMap({ id: 'terrestris' })
+
+      map.getLayers().insertAt(0, layer)
+      map.getLayers().removeAt(1)
+    }
+  }, [baseLayer, map])
+
+  return (
+    <Div
+      sx={{
+        zIndex: 1500,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        ml: theme => theme.spacing(1),
+        mt: theme => theme.spacing(1),
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <Button
+        variant="contained"
+        disableElevation
+        color={baseLayer === 'OSM' ? 'primary' : 'inherit'}
+        size="small"
+        onClick={() => setBaseLayer('OSM')}
+      >
+        OSM
+      </Button>
+      <Button
+        sx={{ mt: theme => theme.spacing(1) }}
+        variant="contained"
+        disableElevation
+        color={baseLayer === 'stamen' ? 'primary' : 'inherit'}
+        size="small"
+        onClick={() => setBaseLayer('stamen')}
+      >
+        Stamen
+      </Button>
+      <Button
+        sx={{ mt: theme => theme.spacing(1) }}
+        variant="contained"
+        disableElevation
+        color={baseLayer === 'terrestris' ? 'primary' : 'inherit'}
+        size="small"
+        onClick={() => setBaseLayer('terrestris')}
+      >
+        Elevation
+      </Button>
+    </Div>
+  )
+}
+
 export default () => {
   const {
     region: { centroid },
@@ -116,9 +184,10 @@ export default () => {
           zoom,
           center: [x, y],
         }}
-        layers={[baseLayer()]}
+        layers={[terrestrisBaseMap({ id: 'terrestris' })]}
       >
         <HeatMap zoom={zoom} blur={15} radius={8} />
+        <BaseLayerSwitcher />
       </MapProvider>
     </Div>
   )

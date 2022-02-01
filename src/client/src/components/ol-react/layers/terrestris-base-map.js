@@ -3,10 +3,10 @@ import { TileWMS } from 'ol/source'
 
 const URL = `https://ows.terrestris.de/osm-gray/service`
 
-export default () =>
+export default ({ id = 'terrestrisBaseMap' } = {}) =>
   new TileLayer({
     title: 'Terrestris Base Map',
-    id: 'terrestrisBaseMap',
+    id,
     visible: true,
     source: new TileWMS({
       url: URL,

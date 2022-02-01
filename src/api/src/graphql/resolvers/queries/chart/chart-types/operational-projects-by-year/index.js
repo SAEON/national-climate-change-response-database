@@ -5,6 +5,7 @@ const sql = `
   select
       JSON_VALUE(s.project, '$.implementationStatus.term') implementationStatus,
       JSON_VALUE(s.project, '$.interventionType.term') intervention,
+      YEAR(GETDATE()) currentYear,
       year(convert(datetimeoffset, JSON_VALUE(s.project, '$.startYear')) at time zone 'South Africa Standard Time') startYear,
       year(convert(datetimeoffset, JSON_VALUE(s.project, '$.endYear')) at time zone 'South Africa Standard Time') endYear
   from Submissions s
@@ -21,9 +22,17 @@ const sql = `
     implementationStatus,
     intervention,
     startYear,
-    endYear,
-    (endYear - startYear + 1) activeYears
+    case
+      when endYear >= currentYear then currentYear - 1
+    else endYear
+    end endYear,
+    (case
+      when endYear >= currentYear then currentYear - 1
+    else endYear
+    end - startYear + 1) activeYears
   from T1
+  where
+    startYear < currentYear
   )
   
   ,rws as (

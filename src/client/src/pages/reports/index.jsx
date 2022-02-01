@@ -2,17 +2,17 @@ import { useContext } from 'react'
 import ChartDataProvider, { context as dataContext } from './context'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
-import SPEND_BUDGET from '../../components/visualizations/spend-budget'
+import ESTIMATED_BUDGET from '../../components/visualizations/spend-budget'
 import FUNDING_SOURCE from '../../components/visualizations/funding-source'
 import OPERATIONAL_PROJECTS from '../../components/visualizations/operational-projects'
 import OPERATIONAL_PROJECTS_BY_YEAR from '../../components/visualizations/operational-projects-by-year'
 import PROJECT_COUNT from '../../components/visualizations/project-count'
 import SECTOR_BUDGET from '../../components/visualizations/sector-budget'
-import SECTOR_FUNDING from '../../components/visualizations/sector-funding'
 import { styled, alpha } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import Progress from '@mui/material/LinearProgress'
 import { Div } from '../../components/html-tags'
+import Heatmap from './heatmap'
 
 const StyledGrid = styled(Grid)({
   minHeight: 450,
@@ -53,9 +53,14 @@ const Layout = () => {
         <Grid item xs={12}>
           <PROJECT_COUNT data={data} />
         </Grid>
+        <StyledGrid item xs={12} container justifyContent="center">
+          <ChartContainer>
+            <Heatmap />
+          </ChartContainer>
+        </StyledGrid>
         <StyledGrid item xs={12} md={6} container justifyContent="center">
           <ChartContainer>
-            <SPEND_BUDGET data={data} />
+            <ESTIMATED_BUDGET data={data} />
           </ChartContainer>
         </StyledGrid>
         <StyledGrid item xs={12} md={6} container justifyContent="center">
@@ -76,11 +81,6 @@ const Layout = () => {
         <StyledGrid item xs={12} md={6} container justifyContent="center">
           <ChartContainer>
             <SECTOR_BUDGET data={data} />
-          </ChartContainer>
-        </StyledGrid>
-        <StyledGrid item xs={12} md={6} container justifyContent="center">
-          <ChartContainer>
-            <SECTOR_FUNDING data={data} />
           </ChartContainer>
         </StyledGrid>
       </Grid>

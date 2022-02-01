@@ -11,17 +11,17 @@ import { Div } from '../../components/html-tags'
 import ScrollButton from '../../components/fancy-buttons/scroll-button'
 import debounce from '../../lib/debounce'
 
-const fadeLayer = (layer, start = 0, end = 1) => {
+const fadeLayer = ({ layer, start = 0, end = 1 }) => {
   if (start >= end) return
   const newOpacity = layer.get('opacity') + 0.05
   layer.set('opacity', newOpacity)
-  setTimeout(() => fadeLayer(layer, newOpacity, end), 15)
+  setTimeout(() => fadeLayer({ layer, start: newOpacity, end }), 15)
 }
 
 const Button = ({ contentRef }) => {
   const [pageScrolled, setPageScrolled] = useState(false)
 
-  const onScroll = debounce(e => {
+  const onScroll = debounce(() => {
     const _pageScrolled = window.scrollY > 0
     if (pageScrolled != _pageScrolled) {
       setPageScrolled(_pageScrolled)
@@ -56,7 +56,7 @@ const HeatMap = ({ zoom }) => {
     if (data) {
       layer = heatMap({ data, opacity: 0, zoom })
       map.addLayer(layer)
-      fadeLayer(layer)
+      fadeLayer({ layer })
     }
 
     return () => {

@@ -12,7 +12,9 @@ const sql = `
       JSON_VALUE(s.project, '$.estimatedBudget.term') estimatedBudget,
       JSON_VALUE(s.project, '$.fundingType.term') fundingSource,
     JSON_VALUE(s.mitigation, '$.hostSector.term') mitigationSector,
-    JSON_VALUE(s.adaptation, '$.adaptationSector.term') adaptationSector
+    JSON_VALUE(s.adaptation, '$.adaptationSector.term') adaptationSector,
+    YEAR(GETDATE()) currentYear,
+    year(convert(datetimeoffset, JSON_VALUE(s.project, '$.startYear')) at time zone 'South Africa Standard Time') startYear
   from Submissions s
   join TenantXrefSubmission x on x.submissionId = s.id
   where
@@ -23,18 +25,20 @@ const sql = `
   )
   
   ,T2 as (
-  select
-      intervention,
-    coalesce(
-      case intervention
-        when 'Mitigation' then mitigationSector
-        when 'Adaptation' then adaptationSector
-        else null
-      end, 'Not reported'
-    ) hostSector,
-      coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) coalescedBudget,
-      fundingSource
-  from T1
+    select
+        intervention,
+      coalesce(
+        case intervention
+          when 'Mitigation' then mitigationSector
+          when 'Adaptation' then adaptationSector
+          else null
+        end, 'Not reported'
+      ) hostSector,
+        coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) coalescedBudget,
+        fundingSource
+    from T1
+    where
+        currentYear > startYear
   )
   
   select

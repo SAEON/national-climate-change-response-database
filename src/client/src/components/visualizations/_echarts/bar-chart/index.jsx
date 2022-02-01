@@ -20,6 +20,18 @@ export default ({
       theme={theme}
       style={{ height: '100%', width: '100%' }}
       option={{
+        toolbox: {
+          top: 5,
+          right: 5,
+          feature: {
+            saveAsImage: {
+              pixelRatio: 10,
+            },
+            magicType: {
+              type: ['line', 'bar', 'stack'],
+            },
+          },
+        },
         dataZoom: [
           {
             type: 'inside',

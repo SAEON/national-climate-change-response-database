@@ -13,6 +13,7 @@ const sql = `
       end actualBudget,
       JSON_VALUE(s.project, '$.estimatedBudget.term') estimatedBudget,
       JSON_VALUE(s.project, '$.fundingType.term') fundingSource,
+    YEAR(GETDATE()) currentYear,
       year(convert(datetimeoffset, JSON_VALUE(s.project, '$.startYear')) at time zone 'South Africa Standard Time') startYear,
       year(convert(datetimeoffset, JSON_VALUE(s.project, '$.endYear')) at time zone 'South Africa Standard Time') endYear
   from Submissions s
@@ -33,11 +34,19 @@ const sql = `
     estimatedBudget,
     fundingSource,
     startYear,
-    endYear,
-    (endYear - startYear + 1) activeYears,
+    case
+    when endYear >= currentYear then currentYear - 1
+    else endYear
+  end endYear,
+    (case
+    when endYear >= currentYear then currentYear - 1
+    else endYear
+  end - startYear + 1) activeYears,
     coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) coalescedBudget,
     round(coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) / (endYear - startYear + 1), 0) annualBudget
   from T1
+  where
+  startYear < currentYear
 )
   
 ,rws as (

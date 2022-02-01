@@ -27,9 +27,6 @@ const Button = styled(ButtonBase)(({ theme }) => ({
   transform: 'translate(0, -50%)',
   color: theme.palette.common.white,
   transition: theme.transitions.create('opacity'),
-  ':hover': {
-    opacity: '0.5',
-  },
 }))
 
 const StyledSpan = styled('span')(({ theme }) => ({
@@ -70,8 +67,20 @@ const StyledSpan = styled('span')(({ theme }) => ({
   },
 }))
 
-export default forwardRef((props, ref) => (
-  <Button ref={ref} onClick={props.onClick || undefined} {...props}>
-    <StyledSpan />
-  </Button>
-))
+export default forwardRef(({ sx = {}, onClick, ...otherProps }, ref) => {
+  return (
+    <Button
+      sx={{
+        ':hover': {
+          opacity: '0.5 !important',
+        },
+        ...sx,
+      }}
+      ref={ref}
+      onClick={onClick || undefined}
+      {...otherProps}
+    >
+      <StyledSpan />
+    </Button>
+  )
+})

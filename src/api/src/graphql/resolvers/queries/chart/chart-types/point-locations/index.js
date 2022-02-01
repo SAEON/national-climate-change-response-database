@@ -14,7 +14,8 @@ const sql = `
     JSON_VALUE(s.project, '$.estimatedBudget.term') estimatedBudget,
     JSON_VALUE(s.project, '$.fundingType.term') fundingSource,
     JSON_VALUE(s.mitigation, '$.hostSector.term') mitigationSector,
-    JSON_VALUE(s.adaptation, '$.adaptationSector.term') adaptationSector,      
+    JSON_VALUE(s.adaptation, '$.adaptationSector.term') adaptationSector,
+    YEAR(GETDATE()) currentYear,
     year(convert(datetimeoffset, JSON_VALUE(s.project, '$.startYear')) at time zone 'South Africa Standard Time') startYear,
     year(convert(datetimeoffset, JSON_VALUE(s.project, '$.endYear')) at time zone 'South Africa Standard Time') endYear,
     case JSON_VALUE(_province.[value], '$.term')
@@ -73,11 +74,14 @@ const sql = `
     coalescedRegion,
     coalesce(geometry::STGeomFromText(xy, 4326), (select centroid from Regions where [name] = T1.coalescedRegion)) xy
   from T1
+  where
+    currentYear > startYear
 )
 
 ,T3 as (
   select distinct
     id,
+    intervention,
     coalesce(budget, PERCENTILE_CONT(0.5) within group (order by budget) over()) budget,
     PERCENTILE_CONT(0.3) within group (order by budget) over() usefulMinBudget,
     PERCENTILE_CONT(0.7) within group (order by budget) over() usefulMaxBudget,
@@ -90,6 +94,7 @@ const sql = `
 
 select
 xy,
+intervention,
 ( budget - usefulMinBudget ) / ( usefulMaxBudget  - usefulMinBudget ) weighting
 from T3;`
 

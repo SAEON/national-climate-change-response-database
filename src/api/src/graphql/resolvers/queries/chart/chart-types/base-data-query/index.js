@@ -14,7 +14,8 @@ const sql = `
       JSON_VALUE(s.project, '$.estimatedBudget.term') estimatedBudget,
       JSON_VALUE(s.project, '$.fundingType.term') fundingSource,
       JSON_VALUE(s.mitigation, '$.hostSector.term') mitigationSector,
-      JSON_VALUE(s.adaptation, '$.adaptationSector.term') adaptationSector,      
+      JSON_VALUE(s.adaptation, '$.adaptationSector.term') adaptationSector,
+      YEAR(GETDATE()) currentYear,
       year(convert(datetimeoffset, JSON_VALUE(s.project, '$.startYear')) at time zone 'South Africa Standard Time') startYear,
       year(convert(datetimeoffset, JSON_VALUE(s.project, '$.endYear')) at time zone 'South Africa Standard Time') endYear
     from Submissions s
@@ -47,6 +48,8 @@ const sql = `
       (endYear - startYear + 1) activeYears,
       round(coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) / (endYear - startYear + 1), 0) annualBudget
     from T1
+    where
+      currentYear > startYear
   )
 
   select * from T2;`

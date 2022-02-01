@@ -5,7 +5,7 @@ import Heatmap from 'ol/layer/Heatmap'
 /**
  * Returns an ol/Layer instance
  */
-export default ({ data, opacity }) => {
+export default ({ data, opacity, zoom }) => {
   const format = new WKT()
   return new Heatmap({
     opacity,
@@ -30,7 +30,7 @@ export default ({ data, opacity }) => {
         )
         .flat(),
     }),
-    blur: 80, // default 15
-    radius: 20, // default 8
+    blur: 15 * (10 - zoom), // default 15
+    radius: 8 * (10 - zoom) - 4, // default 8
   })
 }

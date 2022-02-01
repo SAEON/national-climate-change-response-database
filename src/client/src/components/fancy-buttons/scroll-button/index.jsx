@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { styled, keyframes } from '@mui/material/styles'
 import ButtonBase from '@mui/material/ButtonBase'
 
@@ -69,10 +70,8 @@ const StyledSpan = styled('span')(({ theme }) => ({
   },
 }))
 
-export default ({ ...props }) => {
-  return (
-    <Button onClick={props.onClick || undefined} {...props}>
-      <StyledSpan />
-    </Button>
-  )
-}
+export default forwardRef((props, ref) => (
+  <Button ref={ref} onClick={props.onClick || undefined} {...props}>
+    <StyledSpan />
+  </Button>
+))

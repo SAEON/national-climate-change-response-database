@@ -76,8 +76,10 @@ const FancyButton = ({
   to = '/submissions',
   ...props
 }) => {
+  const { sx = {}, ...otherProps } = props
+
   return (
-    <Div sx={{ width: '100%', height: '100%' }} {...props}>
+    <Div sx={{ boxShadow: 5, width: '100%', height: '100%', ...sx }} {...otherProps}>
       <Button
         component={onClick || href ? undefined : Link}
         href={href}

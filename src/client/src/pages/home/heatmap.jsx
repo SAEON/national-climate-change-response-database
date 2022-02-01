@@ -1,5 +1,5 @@
 import { alpha } from '@mui/material/styles'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { context as clientContext } from '../../contexts/client-context'
 import MapProvider, { context as mapContext } from '../../components/ol-react'
 import baseLayer from '../../components/ol-react/layers/terrestris-base-map'
@@ -9,6 +9,7 @@ import Fade from '@mui/material/Fade'
 import { parse } from 'wkt'
 import { Div } from '../../components/html-tags'
 import ScrollButton from '../../components/fancy-buttons/scroll-button'
+import debounce from '../../lib/debounce'
 
 const fadeLayer = (layer, start = 0, end = 1) => {
   if (start >= end) return
@@ -17,14 +18,43 @@ const fadeLayer = (layer, start = 0, end = 1) => {
   setTimeout(() => fadeLayer(layer, newOpacity, end), 15)
 }
 
-const HeatMap = () => {
+const Button = ({ contentRef }) => {
+  const [pageScrolled, setPageScrolled] = useState(false)
+
+  const onScroll = debounce(e => {
+    const _pageScrolled = window.scrollY > 0
+    if (pageScrolled != _pageScrolled) {
+      setPageScrolled(_pageScrolled)
+    }
+  })
+
+  useEffect(() => {
+    window.addEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+    }
+  })
+
+  return (
+    <Fade timeout={500} key="scroll-button" in={!pageScrolled}>
+      <ScrollButton
+        onClick={() =>
+          window.scrollTo({ top: contentRef.current.offsetTop, left: 0, behavior: 'smooth' })
+        }
+        sx={{ bottom: 96, position: 'relative', zIndex: 101 }}
+      />
+    </Fade>
+  )
+}
+
+const HeatMap = ({ zoom }) => {
   const { data } = useContext(dataContext)
   const { map } = useContext(mapContext)
 
   useEffect(() => {
     let layer
     if (data) {
-      layer = heatMap({ data, opacity: 0 })
+      layer = heatMap({ data, opacity: 0, zoom })
       map.addLayer(layer)
       fadeLayer(layer)
     }
@@ -32,7 +62,7 @@ const HeatMap = () => {
     return () => {
       map.removeLayer(layer)
     }
-  }, [data, map])
+  }, [data, map, zoom])
 
   return null
 }
@@ -44,6 +74,8 @@ export default ({ children, contentRef }) => {
   } = useContext(clientContext)
 
   const [x, y] = parse(centroid).coordinates
+  const zoom = isDefaultTenant ? 6.5 : 7.5
+
   return (
     <Div sx={{ height: 'calc(100vh - 220px)', with: '100%', position: 'relative' }}>
       {children}
@@ -68,20 +100,15 @@ export default ({ children, contentRef }) => {
 
       <MapProvider
         view={{
-          zoom: isDefaultTenant ? 6.5 : 7.5,
+          zoom,
           center: [x, y],
         }}
         interactions={[]}
         controls={[]}
         layers={[baseLayer()]}
       >
-        <HeatMap />
-        <ScrollButton
-          onClick={() =>
-            window.scrollTo({ top: contentRef.current.offsetTop, left: 0, behavior: 'smooth' })
-          }
-          sx={{ bottom: 96, position: 'relative', zIndex: 101 }}
-        />
+        <HeatMap zoom={zoom} />
+        <Button contentRef={contentRef} />
       </MapProvider>
     </Div>
   )

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { context as clientContext } from '../../contexts/client-context'
 import { Div } from '../../components/html-tags'
 import MapProvider, { context as mapContext } from '../../components/ol-react'
@@ -6,7 +6,6 @@ import baseLayer from '../../components/ol-react/layers/terrestris-base-map'
 import heatMap from '../../components/visualizations/heat-map'
 import { context as dataContext } from './context'
 import { parse } from 'wkt'
-import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
 
 const fadeLayer = ({ layer, start = 0, end = 1 }) => {
@@ -17,6 +16,7 @@ const fadeLayer = ({ layer, start = 0, end = 1 }) => {
 }
 
 const HeatMap = ({ zoom, blur, radius }) => {
+  const [interventionType, setInterventionType] = useState(null)
   const { data } = useContext(dataContext)
   const { map } = useContext(mapContext)
 
@@ -29,9 +29,12 @@ const HeatMap = ({ zoom, blur, radius }) => {
         zoom,
         blur,
         radius,
-        filter: val => {
-          console.log('hi', val)
-          return true
+        filter: ({ intervention }) => {
+          if (interventionType === null) {
+            return true
+          }
+
+          return intervention === interventionType
         },
       })
       map.addLayer(layer)
@@ -41,7 +44,7 @@ const HeatMap = ({ zoom, blur, radius }) => {
     return () => {
       map.removeLayer(layer)
     }
-  }, [blur, data, map, radius, zoom])
+  }, [blur, data, interventionType, map, radius, zoom])
 
   return (
     <Div
@@ -58,8 +61,9 @@ const HeatMap = ({ zoom, blur, radius }) => {
         sx={{ mr: theme => theme.spacing(1) }}
         variant="contained"
         disableElevation
-        color="inherit"
+        color={interventionType === null ? 'primary' : 'inherit'}
         size="small"
+        onClick={() => setInterventionType(null)}
       >
         All
       </Button>
@@ -67,8 +71,9 @@ const HeatMap = ({ zoom, blur, radius }) => {
         sx={{ mr: theme => theme.spacing(1) }}
         variant="contained"
         disableElevation
-        color="inherit"
+        color={interventionType === 'Adaptation' ? 'primary' : 'inherit'}
         size="small"
+        onClick={() => setInterventionType('Adaptation')}
       >
         Adaptation
       </Button>
@@ -76,12 +81,19 @@ const HeatMap = ({ zoom, blur, radius }) => {
         sx={{ mr: theme => theme.spacing(1) }}
         variant="contained"
         disableElevation
-        color="inherit"
+        color={interventionType === 'Mitigation' ? 'primary' : 'inherit'}
         size="small"
+        onClick={() => setInterventionType('Mitigation')}
       >
         Mitigation
       </Button>
-      <Button variant="contained" disableElevation color="inherit" size="small">
+      <Button
+        onClick={() => setInterventionType('Cross cutting')}
+        variant="contained"
+        disableElevation
+        color={interventionType === 'Cross cutting' ? 'primary' : 'inherit'}
+        size="small"
+      >
         Cross cutting
       </Button>
     </Div>

@@ -4,7 +4,7 @@ const sql = `
 ;with T1 as (
   select JSON_VALUE(s.project, '$.interventionType.term') intervention,
   YEAR(GETDATE()) currentYear,
-      year(convert(datetimeoffset, JSON_VALUE(s.project, '$.startYear')) at time zone 'South Africa Standard Time') startYear
+  year(convert(datetimeoffset, JSON_VALUE(s.project, '$.startYear')) at time zone 'South Africa Standard Time') startYear
   from Submissions s
   join TenantXrefSubmission x on x.submissionId = s.id
   where

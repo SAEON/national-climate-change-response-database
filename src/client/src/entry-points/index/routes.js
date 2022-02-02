@@ -256,7 +256,7 @@ const routes = [
     Icon: LoginIcon,
     to: '/login',
     exact: true,
-    excludeFromNav: true,
+    excludeFromNav: isAuthenticated => !isAuthenticated,
     includeInFooter: true,
     render: () => (
       <Transition>

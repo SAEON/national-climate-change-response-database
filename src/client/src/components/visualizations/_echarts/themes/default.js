@@ -1,10 +1,10 @@
 export default {
-  color: ['#893448', '#d95850', '#eb8146', '#ffb248', '#f2d643', '#ebdba4'],
+  color: ['#002496', '#007AD4', '#00BEC6', '#00DCB4', '#F9F871', '#FFB74C', '#FF7355', '#9D0A8B'],
   backgroundColor: 'rgba(242,234,191,0.15)',
   textStyle: {},
   title: {
     textStyle: {
-      color: '#893448',
+      color: '#000',
     },
     subtextStyle: {
       color: '#d95850',

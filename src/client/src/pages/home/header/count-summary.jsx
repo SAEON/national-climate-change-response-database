@@ -18,7 +18,7 @@ const D = props => (
 const S = ({ sx = {}, ...props }) => (
   <Span
     sx={{
-      fontSize: '1rem',
+      fontSize: '0.9rem',
       fontWeight: 'bold',
       fontStyle: 'italic',
       marginRight: theme => theme.spacing(1),

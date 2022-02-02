@@ -17,7 +17,7 @@ import checkTenantRouteAuthorization from '../../../../lib/check-tenant-route-au
  */
 export default ({ routes }) => {
   const [anchorEl, setAnchorEl] = useState(null)
-  const { hasPermission } = useContext(authorizationContext)
+  const { hasPermission, isAuthenticated } = useContext(authorizationContext)
   const tenantContext = useContext(clientContext)
 
   return (
@@ -42,7 +42,11 @@ export default ({ routes }) => {
         {routes
           .filter(({ requiredPermission = false, excludeFromNav = false, tenants }) => {
             if (excludeFromNav) {
-              return false
+              if (typeof excludeFromNav === 'function') {
+                return excludeFromNav(isAuthenticated)
+              } else {
+                return false
+              }
             }
 
             /**

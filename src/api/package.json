@@ -57,7 +57,7 @@
     "object-hash": "^2.2.0",
     "openid-client": "^5.1.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.66.1",
+    "rollup": "^2.67.0",
     "sanitize-filename": "^1.6.3",
     "shpjs": "^4.0.2",
     "sift": "^15.1.3",

@@ -2,7 +2,7 @@ import BarChart, { transformData } from '../_echarts/bar-chart'
 
 export default ({
   data: {
-    OPERATIONAL_PROJECTS: { data },
+    PROJECT_COUNT: { data },
   },
 }) => {
   const chart = transformData(data, {
@@ -13,7 +13,7 @@ export default ({
 
   return (
     <BarChart
-      title={"Projects' status"}
+      title={'Project count by status'}
       categories={chart.categories}
       xAxis={{ name: 'Intervention type' }}
       yAxis={{

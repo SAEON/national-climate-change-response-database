@@ -24,11 +24,11 @@ export default ({
           top: 5,
           right: 5,
           feature: {
-            saveAsImage: {
-              pixelRatio: 10,
-            },
             magicType: {
               type: ['line', 'bar', 'stack'],
+            },
+            saveAsImage: {
+              pixelRatio: 10,
             },
           },
         },
@@ -49,6 +49,7 @@ export default ({
           text: title,
         },
         tooltip: {
+          appendToBody: true,
           trigger: 'axis',
           axisPointer: {
             type: 'cross',

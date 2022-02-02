@@ -3,6 +3,7 @@ import { pool } from '../../../../../../mssql/pool.js'
 const sql = `
 ;with T1 as (
   select JSON_VALUE(s.project, '$.interventionType.term') intervention,
+  coalesce(JSON_VALUE(s.project, '$.implementationStatus.term'), 'Not reported') implementationStatus,
   YEAR(GETDATE()) currentYear,
   year(convert(datetimeoffset, JSON_VALUE(s.project, '$.startYear')) at time zone 'South Africa Standard Time') startYear
   from Submissions s
@@ -16,12 +17,16 @@ const sql = `
   
 select
   intervention,
+  implementationStatus,
   count(intervention) [total]
 from T1
 where
   currentYear > startYear
 group by
-  intervention;`
+  intervention,
+  implementationStatus
+order by
+  total desc;`
 
 export default async ctx =>
   (

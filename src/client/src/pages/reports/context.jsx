@@ -10,14 +10,12 @@ export default ({ ...props }) => {
         $PROJECT_COUNT: Chart!
         $ESTIMATED_BUDGET: Chart!
         $FUNDING_SOURCE: Chart!
-        $OPERATIONAL_PROJECTS: Chart!
         $SECTOR_BUDGET: Chart!
         $OPERATIONAL_PROJECTS_BY_YEAR: Chart!
         $POINT_LOCATIONS: Chart!
       ) {
         ESTIMATED_BUDGET: chart(id: $ESTIMATED_BUDGET)
         FUNDING_SOURCE: chart(id: $FUNDING_SOURCE)
-        OPERATIONAL_PROJECTS: chart(id: $OPERATIONAL_PROJECTS)
         PROJECT_COUNT: chart(id: $PROJECT_COUNT)
         SECTOR_BUDGET: chart(id: $SECTOR_BUDGET)
         OPERATIONAL_PROJECTS_BY_YEAR: chart(id: $OPERATIONAL_PROJECTS_BY_YEAR)
@@ -29,7 +27,6 @@ export default ({ ...props }) => {
       variables: {
         ESTIMATED_BUDGET: 'ESTIMATED_BUDGET',
         FUNDING_SOURCE: 'FUNDING_SOURCE',
-        OPERATIONAL_PROJECTS: 'OPERATIONAL_PROJECTS',
         PROJECT_COUNT: 'PROJECT_COUNT',
         SECTOR_BUDGET: 'SECTOR_BUDGET',
         OPERATIONAL_PROJECTS_BY_YEAR: 'OPERATIONAL_PROJECTS_BY_YEAR',

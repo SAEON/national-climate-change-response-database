@@ -9,6 +9,9 @@ import heatMap from '../../components/visualizations/heat-map'
 import { context as dataContext } from './context'
 import { parse } from 'wkt'
 import Button from '@mui/material/Button'
+import Hidden from '@mui/material/Hidden'
+import { useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
 const fadeLayer = ({ layer, start = 0, end = 1 }) => {
   if (start >= end) return
@@ -21,6 +24,8 @@ const HeatMap = ({ zoom, blur, radius }) => {
   const [interventionType, setInterventionType] = useState(null)
   const { data } = useContext(dataContext)
   const { map } = useContext(mapContext)
+  const theme = useTheme()
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'))
 
   useEffect(() => {
     let layer
@@ -51,16 +56,18 @@ const HeatMap = ({ zoom, blur, radius }) => {
   return (
     <Div
       sx={{
-        zIndex: 1500,
+        zIndex: 9,
         position: 'absolute',
         top: 0,
         right: 0,
         mr: theme => theme.spacing(1),
         mt: theme => theme.spacing(1),
+        display: 'flex',
+        flexDirection: smDown ? 'column' : 'row',
       }}
     >
       <Button
-        sx={{ mr: theme => theme.spacing(1) }}
+        sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
         variant="contained"
         disableElevation
         color={interventionType === null ? 'primary' : 'inherit'}
@@ -70,7 +77,7 @@ const HeatMap = ({ zoom, blur, radius }) => {
         All
       </Button>
       <Button
-        sx={{ mr: theme => theme.spacing(1) }}
+        sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
         variant="contained"
         disableElevation
         color={interventionType === 'Adaptation' ? 'primary' : 'inherit'}
@@ -80,7 +87,7 @@ const HeatMap = ({ zoom, blur, radius }) => {
         Adaptation
       </Button>
       <Button
-        sx={{ mr: theme => theme.spacing(1) }}
+        sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
         variant="contained"
         disableElevation
         color={interventionType === 'Mitigation' ? 'primary' : 'inherit'}
@@ -125,7 +132,7 @@ const BaseLayerSwitcher = () => {
   return (
     <Div
       sx={{
-        zIndex: 1500,
+        zIndex: 9,
         position: 'absolute',
         top: 0,
         left: 0,
@@ -152,7 +159,7 @@ const BaseLayerSwitcher = () => {
         size="small"
         onClick={() => setBaseLayer('toner')}
       >
-        Stamen
+        Toner
       </Button>
       <Button
         sx={{ mt: theme => theme.spacing(1) }}
@@ -187,7 +194,9 @@ export default () => {
         layers={[terrestrisBaseMap({ id: 'terrestris' })]}
       >
         <HeatMap zoom={zoom} blur={15} radius={8} />
-        <BaseLayerSwitcher />
+        <Hidden smDown>
+          <BaseLayerSwitcher />
+        </Hidden>
       </MapProvider>
     </Div>
   )

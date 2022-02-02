@@ -19,14 +19,21 @@ export default () => {
     region: { name: regionName },
   } = useContext(clientContext)
 
-  const summary = useMemo(
+  const _data = useMemo(
     () =>
       data?.PROJECT_COUNT.data.reduce(
-        (summary, { intervention, total }) => ({ ...summary, [intervention]: total }),
-        { Adaptation: 0, Mitigation: 0, 'Cross Cutting': 0 }
+        (summary, { intervention, total }) => ({
+          ...summary,
+          [intervention.toUpperCase()]: (summary[intervention.toUpperCase()] || 0) + total,
+        }),
+        {}
       ),
     [data?.PROJECT_COUNT.data]
   )
+
+  const a = useMemo(() => _data?.ADAPTATION || '-', [_data?.ADAPTATION])
+  const m = useMemo(() => _data?.MITIGATION || '-', [_data?.MITIGATION])
+  const c = useMemo(() => _data?.['CROSS CUTTING'] || '-', [_data])
 
   return (
     <>
@@ -46,9 +53,9 @@ export default () => {
         >
           Project distribution ({regionName})
         </Typography>
-        <Caption>Mitigation: {summary?.Mitigation || '-'}</Caption>
-        <Caption>Adaptation: {summary?.Adaptation || '-'}</Caption>
-        <Caption>Cross cutting: {summary?.['Cross Cutting'] || '-'}</Caption>
+        <Caption>Mitigation: {m}</Caption>
+        <Caption>Adaptation: {a}</Caption>
+        <Caption>Cross cutting: {c}</Caption>
       </Div>
     </>
   )

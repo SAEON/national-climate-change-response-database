@@ -1,11 +1,24 @@
+import { useMemo } from 'react'
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import { alpha } from '@mui/material/styles'
 
 export default ({ data }) => {
-  const a = data?.PROJECT_COUNT.data.find(({ intervention }) => intervention === 'Adaptation')
-  const m = data?.PROJECT_COUNT.data.find(({ intervention }) => intervention === 'Mitigation')
-  const c = data?.PROJECT_COUNT.data.find(({ intervention }) => intervention === 'Cross Cutting')
+  const _data = useMemo(
+    () =>
+      data?.PROJECT_COUNT.data.reduce(
+        (summary, { intervention, total }) => ({
+          ...summary,
+          [intervention.toUpperCase()]: (summary[intervention.toUpperCase()] || 0) + total,
+        }),
+        {}
+      ),
+    [data?.PROJECT_COUNT.data]
+  )
+
+  const a = useMemo(() => _data?.ADAPTATION || '-', [_data?.ADAPTATION])
+  const m = useMemo(() => _data?.MITIGATION || '-', [_data?.MITIGATION])
+  const c = useMemo(() => _data?.['CROSS CUTTING'] || '-', [_data])
 
   return (
     <Card
@@ -24,8 +37,8 @@ export default ({ data }) => {
         }}
         variant="overline"
       >
-        <b>{a?.total || '-'}</b> Adaptation projects | <b>{m?.total || '-'}</b> Mitigation projects
-        | <b>{c?.total || '-'}</b> Cross cutting projects
+        <b>{a}</b> Adaptation projects | <b>{m}</b> Mitigation projects | <b>{c}</b> Cross cutting
+        projects
       </Typography>
     </Card>
   )

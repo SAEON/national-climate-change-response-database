@@ -18,39 +18,42 @@ const sql = `
   from Submissions s
   join TenantXrefSubmission x on x.submissionId = s.id
   where
-      x.tenantId = @tenantId
-      and deletedAt is null
-      and isSubmitted = 1
-      and JSON_VALUE(s.submissionStatus, '$.term') = 'Accepted'
-  )
-  
-  ,T2 as (
-    select
-        intervention,
-      coalesce(
-        case intervention
-          when 'Mitigation' then mitigationSector
-          when 'Adaptation' then adaptationSector
-          else null
-        end, 'Not reported'
-      ) hostSector,
-        coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) coalescedBudget,
-        fundingSource
-    from T1
-    where
-        currentYear > startYear
-  )
-  
+    x.tenantId = @tenantId
+    and deletedAt is null
+    and isSubmitted = 1
+    and JSON_VALUE(s.submissionStatus, '$.term') = 'Accepted'
+)
+
+,T2 as (
   select
-   intervention,
-   hostSector,
-   sum(coalescedBudget) budget
-    
-  from T2
-  
-  group by
-   intervention,
-   hostSector;`
+      intervention,
+    coalesce(
+      case intervention
+        when 'Mitigation' then mitigationSector
+        when 'Adaptation' then adaptationSector
+        else null
+      end, 'Not reported'
+    ) hostSector,
+      coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) coalescedBudget,
+      fundingSource
+  from T1
+  where
+      currentYear > startYear
+)
+
+select
+  intervention,
+  hostSector,
+  sum(coalescedBudget) budget
+
+from T2
+
+group by
+  intervention,
+  hostSector
+
+order by
+  budget desc;`
 
 export default async ctx =>
   (

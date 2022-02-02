@@ -22,7 +22,7 @@ export default ({
     '#F9F871',
     '#FFD357',
     '#FFA95B',
-  ],
+  ], // https://mycolor.space/
 }) => {
   const format = new WKT()
   return new Heatmap({

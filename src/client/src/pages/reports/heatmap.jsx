@@ -38,9 +38,9 @@ const HeatMap = ({ zoom, blur, radius }) => {
         filter: ({ intervention }) => {
           if (interventionType === null) {
             return true
+          } else {
+            return intervention === interventionType
           }
-
-          return intervention === interventionType
         },
       })
       map.addLayer(layer)

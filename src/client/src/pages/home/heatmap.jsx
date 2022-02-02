@@ -8,8 +8,11 @@ import heatMap from '../../components/visualizations/heat-map'
 import Fade from '@mui/material/Fade'
 import { parse } from 'wkt'
 import { Div } from '../../components/html-tags'
-import ScrollButton from '../../components/fancy-buttons/scroll-button'
+import ScrollButton_ from '../../components/fancy-buttons/scroll-button'
 import debounce from '../../lib/debounce'
+import { useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import Button from '@mui/material/Button'
 
 const fadeLayer = ({ layer, start = 0, end = 1 }) => {
   if (start >= end) return
@@ -18,7 +21,7 @@ const fadeLayer = ({ layer, start = 0, end = 1 }) => {
   setTimeout(() => fadeLayer({ layer, start: newOpacity, end }), 15)
 }
 
-const Button = ({ contentRef }) => {
+const ScrollButton = ({ contentRef }) => {
   const [pageScrolled, setPageScrolled] = useState(false)
 
   const onScroll = debounce(() => {
@@ -37,7 +40,7 @@ const Button = ({ contentRef }) => {
 
   return (
     <Fade timeout={500} key="scroll-button" in={!pageScrolled}>
-      <ScrollButton
+      <ScrollButton_
         onClick={() =>
           window.scrollTo({ top: contentRef.current.offsetTop, left: 0, behavior: 'smooth' })
         }
@@ -48,8 +51,11 @@ const Button = ({ contentRef }) => {
 }
 
 const HeatMap = ({ zoom }) => {
+  const [interventionType, setInterventionType] = useState(null)
   const { data } = useContext(dataContext)
   const { map } = useContext(mapContext)
+  const theme = useTheme()
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'))
   const {
     region: { geometry },
   } = useContext(clientContext)
@@ -62,6 +68,13 @@ const HeatMap = ({ zoom }) => {
         opacity: 0,
         zoom,
         gradient: ['#893448', '#d95850', '#eb8146', '#ffb248', '#f2d643', '#ebdba4'],
+        filter: ({ intervention }) => {
+          if (interventionType === null) {
+            return true
+          } else {
+            return intervention === interventionType
+          }
+        },
       })
       map.addLayer(layer)
       fadeLayer({ layer })
@@ -70,9 +83,56 @@ const HeatMap = ({ zoom }) => {
     return () => {
       map.removeLayer(layer)
     }
-  }, [data, geometry, map, zoom])
+  }, [data, geometry, interventionType, map, zoom])
 
-  return null
+  return (
+    <Div
+      sx={{
+        zIndex: 999,
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        mr: theme => theme.spacing(1),
+        mt: theme => theme.spacing(1),
+      }}
+    >
+      <Button
+        sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
+        variant="contained"
+        color={interventionType === null ? 'primary' : 'inherit'}
+        size="small"
+        onClick={() => setInterventionType(null)}
+      >
+        All
+      </Button>
+      <Button
+        sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
+        variant="contained"
+        color={interventionType === 'Adaptation' ? 'primary' : 'inherit'}
+        size="small"
+        onClick={() => setInterventionType('Adaptation')}
+      >
+        Adaptation
+      </Button>
+      <Button
+        sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
+        variant="contained"
+        color={interventionType === 'Mitigation' ? 'primary' : 'inherit'}
+        size="small"
+        onClick={() => setInterventionType('Mitigation')}
+      >
+        Mitigation
+      </Button>
+      <Button
+        onClick={() => setInterventionType('Cross cutting')}
+        variant="contained"
+        color={interventionType === 'Cross cutting' ? 'primary' : 'inherit'}
+        size="small"
+      >
+        Cross cutting
+      </Button>
+    </Div>
+  )
 }
 
 export default ({ children, contentRef }) => {
@@ -116,7 +176,7 @@ export default ({ children, contentRef }) => {
         layers={[baseLayer()]}
       >
         <HeatMap zoom={zoom} />
-        <Button contentRef={contentRef} />
+        <ScrollButton contentRef={contentRef} />
       </MapProvider>
     </Div>
   )

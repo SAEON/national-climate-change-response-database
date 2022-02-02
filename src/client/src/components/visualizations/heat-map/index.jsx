@@ -5,12 +5,30 @@ import Heatmap from 'ol/layer/Heatmap'
 /**
  * Returns an ol/Layer instance
  */
-export default ({ data, opacity, zoom, blur, radius, filter = () => true }) => {
+export default ({
+  data,
+  opacity,
+  zoom,
+  blur,
+  radius,
+  filter = () => true,
+  gradient = [
+    '#005D8B',
+    '#0082A6',
+    '#00A6AA',
+    '#20C89A',
+    '#96E480',
+    '#F9F871',
+    '#F9F871',
+    '#FFD357',
+    '#FFA95B',
+  ],
+}) => {
   const format = new WKT()
   return new Heatmap({
     opacity,
     weight: feature => feature.get('weighting'),
-    gradient: ['#893448', '#d95850', '#eb8146', '#ffb248', '#f2d643', '#ebdba4'],
+    gradient,
     source: new VectorSource({
       features: data.POINT_LOCATIONS.data
         .filter(filter)

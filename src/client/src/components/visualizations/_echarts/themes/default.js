@@ -1,5 +1,6 @@
+// https://mycolor.space/
 export default {
-  color: ['#002496', '#007AD4', '#00BEC6', '#00DCB4', '#F9F871', '#FFB74C', '#FF7355', '#9D0A8B'],
+  color: ['#005D28', '#9FAFA1', '#6C7B6E', '#9EADBD', '#6B7987', '#005D8B', '#008FC0'],
   backgroundColor: 'rgba(242,234,191,0.15)',
   textStyle: {},
   title: {

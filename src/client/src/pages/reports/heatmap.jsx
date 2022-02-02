@@ -9,8 +9,7 @@ import heatMap from '../../components/visualizations/heat-map'
 import { context as dataContext } from './context'
 import { parse } from 'wkt'
 import Button from '@mui/material/Button'
-import Hidden from '@mui/material/Hidden'
-import { useMediaQuery } from '@mui/material'
+import { Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
 const fadeLayer = ({ layer, start = 0, end = 1 }) => {
@@ -69,7 +68,6 @@ const HeatMap = ({ zoom, blur, radius }) => {
       <Button
         sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
         variant="contained"
-        disableElevation
         color={interventionType === null ? 'primary' : 'inherit'}
         size="small"
         onClick={() => setInterventionType(null)}
@@ -79,7 +77,6 @@ const HeatMap = ({ zoom, blur, radius }) => {
       <Button
         sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
         variant="contained"
-        disableElevation
         color={interventionType === 'Adaptation' ? 'primary' : 'inherit'}
         size="small"
         onClick={() => setInterventionType('Adaptation')}
@@ -89,7 +86,6 @@ const HeatMap = ({ zoom, blur, radius }) => {
       <Button
         sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
         variant="contained"
-        disableElevation
         color={interventionType === 'Mitigation' ? 'primary' : 'inherit'}
         size="small"
         onClick={() => setInterventionType('Mitigation')}
@@ -99,7 +95,6 @@ const HeatMap = ({ zoom, blur, radius }) => {
       <Button
         onClick={() => setInterventionType('Cross cutting')}
         variant="contained"
-        disableElevation
         color={interventionType === 'Cross cutting' ? 'primary' : 'inherit'}
         size="small"
       >
@@ -109,9 +104,53 @@ const HeatMap = ({ zoom, blur, radius }) => {
   )
 }
 
+export default () => {
+  const {
+    region: { centroid },
+    isDefault: isDefaultTenant,
+  } = useContext(clientContext)
+
+  const [x, y] = parse(centroid).coordinates
+  const zoom = (isDefaultTenant ? 6.5 : 7.5) - 1
+
+  return (
+    <Div sx={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
+      <MapProvider
+        controls={[]}
+        view={{
+          zoom,
+          center: [x, y],
+        }}
+        layers={[osmBaseMap({ id: 'OSM' })]}
+      >
+        <HeatMap zoom={zoom} blur={35} radius={12} />
+        {/* <BaseLayerSwitcher /> */}
+        <Div sx={{ position: 'absolute', bottom: 0, right: 0, zIndex: 10 }}>
+          <Typography
+            sx={{
+              fontStyle: 'italic',
+              mr: theme => theme.spacing(1),
+              mb: theme => theme.spacing(0.5),
+            }}
+            variant="caption"
+          >
+            NOTE: National projects without explicit GPS coordinates are excluded
+          </Typography>
+        </Div>
+      </MapProvider>
+    </Div>
+  )
+}
+
+/**
+ * Not currently used
+ * Adds a couple buttons to the map
+ * to toggle between base layers
+ */
+// eslint-disable-next-line
 const BaseLayerSwitcher = () => {
   const { map } = useContext(mapContext)
-  const [baseLayer, setBaseLayer] = useState('terrestris')
+  const [baseLayer, setBaseLayer] = useState('OSM')
 
   useEffect(() => {
     const currentBase = map.getLayers().item(1)
@@ -171,33 +210,6 @@ const BaseLayerSwitcher = () => {
       >
         Elevation
       </Button>
-    </Div>
-  )
-}
-
-export default () => {
-  const {
-    region: { centroid },
-    isDefault: isDefaultTenant,
-  } = useContext(clientContext)
-
-  const [x, y] = parse(centroid).coordinates
-  const zoom = (isDefaultTenant ? 6.5 : 7.5) - 1
-
-  return (
-    <Div sx={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
-      <MapProvider
-        view={{
-          zoom,
-          center: [x, y],
-        }}
-        layers={[terrestrisBaseMap({ id: 'terrestris' })]}
-      >
-        <HeatMap zoom={zoom} blur={15} radius={8} />
-        <Hidden smDown>
-          <BaseLayerSwitcher />
-        </Hidden>
-      </MapProvider>
     </Div>
   )
 }

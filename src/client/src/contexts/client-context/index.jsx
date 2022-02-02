@@ -28,6 +28,7 @@ export default ({ children }) => {
             id
             name
             centroid
+            geometry
             vocabulary {
               term
             }

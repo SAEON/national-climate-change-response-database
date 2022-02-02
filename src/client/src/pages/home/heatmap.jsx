@@ -50,11 +50,19 @@ const Button = ({ contentRef }) => {
 const HeatMap = ({ zoom }) => {
   const { data } = useContext(dataContext)
   const { map } = useContext(mapContext)
+  const {
+    region: { geometry },
+  } = useContext(clientContext)
 
   useEffect(() => {
     let layer
     if (data) {
-      layer = heatMap({ data, opacity: 0, zoom })
+      layer = heatMap({
+        data,
+        opacity: 0,
+        zoom,
+        gradient: ['#893448', '#d95850', '#eb8146', '#ffb248', '#f2d643', '#ebdba4'],
+      })
       map.addLayer(layer)
       fadeLayer({ layer })
     }
@@ -62,7 +70,7 @@ const HeatMap = ({ zoom }) => {
     return () => {
       map.removeLayer(layer)
     }
-  }, [data, map, zoom])
+  }, [data, geometry, map, zoom])
 
   return null
 }

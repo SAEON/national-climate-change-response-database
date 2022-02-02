@@ -23,6 +23,7 @@ export default () =>
         r.code,
         r.parentCode,
         r.name,
+        r.[geometry].Reduce(0.005).STAsText() [geometry],
         r.centroid.STAsText() centroid,
         ( select
             v.id,

@@ -1,20 +1,21 @@
 import { lazy } from 'react'
-import UsersIcon from 'mdi-react/AccountMultipleIcon'
-import UserIcon from 'mdi-react/AccountIcon'
-import HomeIcon from 'mdi-react/HomeIcon'
-import SearchSubmissionsIcon from 'mdi-react/DatabaseSearchIcon'
-import DeploymentsIcon from 'mdi-react/ServerIcon'
-import SubmitIcon from 'mdi-react/DatabaseAddIcon'
-import SubmissionsIcon from 'mdi-react/DatabaseIcon'
-import UserSubmissionIcon from 'mdi-react/AccountIcon'
-import LoginIcon from 'mdi-react/LoginIcon'
-import Transition from '../../components/page-transition'
-import TermsIcon from 'mdi-react/ContractIcon'
-import PrivacyIcon from 'mdi-react/LockCheckIcon'
-import SettingsIcon from 'mdi-react/SettingsIcon'
-import AboutIcon from 'mdi-react/AboutIcon'
-import ReportsIcon from 'mdi-react/ChartBarStackedIcon'
+import UsersIcon_ from 'mdi-react/AccountMultipleIcon'
+import UserIcon_ from 'mdi-react/AccountIcon'
+import HomeIcon_ from 'mdi-react/HomeIcon'
+import SearchSubmissionsIcon_ from 'mdi-react/DatabaseSearchIcon'
+import DeploymentsIcon_ from 'mdi-react/ServerIcon'
+import SubmitIcon_ from 'mdi-react/DatabaseAddIcon'
+import SubmissionsIcon_ from 'mdi-react/DatabaseIcon'
+import UserSubmissionIcon_ from 'mdi-react/AccountIcon'
+import LoginIcon_ from 'mdi-react/LoginIcon'
+import Transition_ from '../../components/page-transition'
+import TermsIcon_ from 'mdi-react/ContractIcon'
+import PrivacyIcon_ from 'mdi-react/LockCheckIcon'
+import SettingsIcon_ from 'mdi-react/SettingsIcon'
+import AboutIcon_ from 'mdi-react/InfoVariantIcon'
+import ReportsIcon_ from 'mdi-react/ChartBarStackedIcon'
 import { DEFAULT_TENANT_ADDRESS } from '../../config'
+import { styled } from '@mui/material/styles'
 
 const HomePage = lazy(() => import('../../pages/home'))
 const ReportsPage = lazy(() => import('../../pages/reports'))
@@ -33,7 +34,23 @@ const LoginPage = lazy(() => import('../../pages/login'))
 const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
 const PaiaPopiaPage = lazy(() => import('../../pages/paia-popia'))
 
-export default [
+const UsersIcon = styled(UsersIcon_)({})
+const UserIcon = styled(UserIcon_)({})
+const HomeIcon = styled(HomeIcon_)({})
+const SearchSubmissionsIcon = styled(SearchSubmissionsIcon_)({})
+const DeploymentsIcon = styled(DeploymentsIcon_)({})
+const SubmitIcon = styled(SubmitIcon_)({})
+const SubmissionsIcon = styled(SubmissionsIcon_)({})
+const UserSubmissionIcon = styled(UserSubmissionIcon_)({})
+const LoginIcon = styled(LoginIcon_)({})
+const Transition = styled(Transition_)({})
+const TermsIcon = styled(TermsIcon_)({})
+const PrivacyIcon = styled(PrivacyIcon_)({})
+const SettingsIcon = styled(SettingsIcon_)({})
+const AboutIcon = styled(AboutIcon_)({})
+const ReportsIcon = styled(ReportsIcon_)({})
+
+const routes = [
   {
     group: 'legal',
     label: 'Terms of Use',
@@ -70,13 +87,17 @@ export default [
     to: '/',
     render: () => (
       <Transition>
-        <HomePage />
+        <HomePage routes={routes} />
       </Transition>
     ),
   },
   {
     label: 'About',
     Icon: AboutIcon,
+    includeOnHomePage: false,
+    cta: 'More',
+    description:
+      'The database is intended as a resource to collect and track interventions on climate change (adaptation and mitigation) on past, current and future climate change response efforts (policies, plans, strategies, projects and research) within South Africa.',
     exact: true,
     render: () => (
       <Transition>
@@ -89,7 +110,11 @@ export default [
   {
     label: 'Data reports',
     Icon: ReportsIcon,
+    includeOnHomePage: true,
     exact: true,
+    cta: 'View',
+    description:
+      "Explore an overview of the South Africa's climate change response. Information is collated to summarize project progress as large-scale trends and statistics. View and download charts and maps showing project progress, locations, funding sources, operation sectors and more.",
     render: () => (
       <Transition>
         <ReportsPage />
@@ -99,24 +124,14 @@ export default [
     includeInFooter: true,
   },
   {
-    breadcrumbsLabel: 'Submissions',
-    BreadcrumbsIcon: SubmissionsIcon,
-    label: 'Search submissions',
-    Icon: SearchSubmissionsIcon,
-    exact: true,
-    to: '/submissions',
-    render: () => (
-      <Transition>
-        <SubmissionsPage />
-      </Transition>
-    ),
-    includeInFooter: true,
-  },
-  {
-    label: 'New submission',
+    label: 'Contribute',
     Icon: SubmitIcon,
     exact: true,
+    includeOnHomePage: true,
     to: '/submissions/new',
+    cta: 'Start',
+    description:
+      'Upload and periodically update project details. Although the submission of information to the database is voluntary, data providers are encouraged to upload and update the information into the database to benefit a wide range of use cases in the country.',
     render: () => (
       <Transition>
         <CreateSubmission />
@@ -126,7 +141,7 @@ export default [
   },
 
   {
-    label: 'New submission',
+    label: 'Contribute',
     excludeFromNav: true,
     to: '/submissions/new/:id',
     exact: true,
@@ -135,6 +150,24 @@ export default [
         <NewSubmissionPage id={props.match.params.id} {...props} />
       </Transition>
     ),
+  },
+  {
+    breadcrumbsLabel: 'Submissions',
+    BreadcrumbsIcon: SubmissionsIcon,
+    label: 'Search data',
+    Icon: SearchSubmissionsIcon,
+    description:
+      'Search our database for funding and other details of climate change related projects, including specific information regarding mitigation and adaptation strategies. Get up-to-date activity data on the South African climate change response, and project advancement.',
+    includeOnHomePage: true,
+    cta: 'Explore',
+    exact: true,
+    to: '/submissions',
+    render: () => (
+      <Transition>
+        <SubmissionsPage />
+      </Transition>
+    ),
+    includeInFooter: true,
   },
   {
     label: 'Edit submission',
@@ -243,3 +276,5 @@ export default [
     ),
   },
 ]
+
+export default routes

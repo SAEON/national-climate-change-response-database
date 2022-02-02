@@ -5,17 +5,14 @@ import ToolbarHeader from '../../../components/toolbar-header'
 import { Div } from '../../../components/html-tags'
 import Divider from '@mui/material/Divider'
 import Hidden from '@mui/material/Hidden'
+import CountSummary from './count-summary'
 
 export default () => {
   return (
     <ToolbarHeader>
       <NewSubmission />
       <Hidden smDown>
-        <Divider
-          flexItem
-          orientation="vertical"
-          sx={{ marginLeft: theme => theme.spacing(2), marginRight: theme => theme.spacing(2) }}
-        />
+        <Div sx={{ marginLeft: theme => theme.spacing(2) }} />
         <DownloadExcelTemplate />
         <Div sx={{ marginLeft: theme => theme.spacing(2) }} />
         <UploadProject />
@@ -26,6 +23,9 @@ export default () => {
         />
       </Hidden>
       <Div sx={{ marginRight: 'auto' }} />
+      <Hidden smDown>
+        <CountSummary />
+      </Hidden>
     </ToolbarHeader>
   )
 }

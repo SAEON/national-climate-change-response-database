@@ -3,13 +3,12 @@ import ChartDataProvider from './context'
 import Header from './header'
 import Heatmap from './heatmap'
 import Content from './content'
-import MapCaption from './map-caption'
 import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
 import BoxButton from '../../components/fancy-buttons/box-button'
 import { Div } from '../../components/html-tags'
 
-export default () => {
+export default ({ routes }) => {
   const ref = useRef(null)
 
   return (
@@ -18,7 +17,6 @@ export default () => {
 
       {/* MAP */}
       <Heatmap contentRef={ref}>
-        <MapCaption />
         <Div sx={{ position: 'absolute', zIndex: 100, left: 0, right: 0, top: 0, bottom: 0 }}>
           <Div sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
             <Container>
@@ -38,7 +36,7 @@ export default () => {
       </Heatmap>
 
       {/* CONTENT */}
-      <Content ref={el => (ref.current = el)} />
+      <Content routes={routes} ref={el => (ref.current = el)} />
     </ChartDataProvider>
   )
 }

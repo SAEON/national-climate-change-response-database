@@ -32,9 +32,11 @@ export default ({ routes }) => {
           >
             <Grid container spacing={4}>
               <Grid container item xs={12} sm={4}>
+                {/* PAGES */}
                 <PageRoutes routes={_routes} />
               </Grid>
               <Grid container item xs={12} sm={4}>
+                {/* LEGAL */}
                 <Legal routes={_routes} />
               </Grid>
               <Grid item xs={12} sm={4}>

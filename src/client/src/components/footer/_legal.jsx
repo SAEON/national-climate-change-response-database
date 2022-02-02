@@ -3,10 +3,13 @@ import Grid from '@mui/material/Grid'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { Div } from '../../components/html-tags'
+import { useTheme } from '@mui/material/styles'
 
 export default ({ routes }) => {
+  const theme = useTheme()
+
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{ alignContent: 'flex-start' }}>
       <Grid item xs={12}>
         <Typography variant="h5">Legal</Typography>
       </Grid>
@@ -26,10 +29,7 @@ export default ({ routes }) => {
                   component={({ style, ...otherProps }) => (
                     <Link
                       {...otherProps}
-                      sx={Object.assign(
-                        { ...style },
-                        { color: 'white', marginLeft: theme => theme.spacing(1) }
-                      )}
+                      style={{ ...style, color: 'white', marginLeft: theme.spacing(1) }}
                       to={to}
                       component={RouterLink}
                       key={label}

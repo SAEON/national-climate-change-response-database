@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material/styles'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import checkTenantRouteAuthorization from '../../lib/check-tenant-route-authorization'
+import { Div } from '../../components/html-tags'
 
 export default ({ routes }) => {
   const theme = useTheme()
@@ -14,7 +15,7 @@ export default ({ routes }) => {
   const { hasPermission } = useContext(authorizationContext)
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{ alignContent: 'flex-start' }}>
       <Grid item xs={12}>
         <Typography variant="h5">Quick links</Typography>
       </Grid>
@@ -38,8 +39,8 @@ export default ({ routes }) => {
           })
           .map(({ label, Icon, to }) => (
             <Grid item xs={12} key={label}>
-              <div
-                style={{
+              <Div
+                sx={{
                   display: 'flex',
                   alignItems: 'center',
                 }}
@@ -49,10 +50,7 @@ export default ({ routes }) => {
                   component={({ style, ...otherProps }) => (
                     <Link
                       {...otherProps}
-                      style={Object.assign(
-                        { ...style },
-                        { color: 'white', marginLeft: theme.spacing(1) }
-                      )}
+                      style={{ ...style, color: 'white', marginLeft: theme.spacing(1) }}
                       to={to}
                       component={RouterLink}
                       key={label}
@@ -64,7 +62,7 @@ export default ({ routes }) => {
                 >
                   {label}
                 </Typography>
-              </div>
+              </Div>
             </Grid>
           ))}
       </Grid>

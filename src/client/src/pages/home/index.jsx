@@ -10,6 +10,7 @@ import { alpha } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
 import Tenants from './tenants'
 import Charts from './charts'
+import Hidden from '@mui/material/Hidden'
 
 const G = ({ sx = {}, ...props }) => (
   <Grid container spacing={8} sx={{ my: theme => theme.spacing(6), ...sx }} {...props} />
@@ -31,20 +32,28 @@ export default () => {
       {/* CONTENT */}
       <Div ref={el => (contentRef.current = el)}>
         {/* CHARTS */}
-        <Div sx={{ backgroundColor: theme => alpha(theme.palette.common.white, 0.4) }}>
-          <Container
-            sx={{
-              paddingTop: theme => theme.spacing(12),
-              paddingBottom: theme => theme.spacing(12),
-            }}
-          >
-            <Div sx={{ mx: theme => theme.spacing(8) }}>
-              <G>
-                <Charts />
-              </G>
-            </Div>
-          </Container>
-        </Div>
+        <Hidden mdDown>
+          <Div sx={{ backgroundColor: theme => alpha(theme.palette.common.white, 0.4) }}>
+            <Container
+              sx={{
+                paddingTop: theme => theme.spacing(12),
+                paddingBottom: theme => theme.spacing(12),
+              }}
+            >
+              <Div
+                sx={theme => ({
+                  [theme.breakpoints.up('md')]: {
+                    mx: theme => theme.spacing(8),
+                  },
+                })}
+              >
+                <G>
+                  <Charts />
+                </G>
+              </Div>
+            </Container>
+          </Div>
+        </Hidden>
 
         {/* PAGE LINKS */}
         <Div sx={{ backgroundColor: theme => alpha(theme.palette.common.black, 0.4) }}>
@@ -68,7 +77,13 @@ export default () => {
               paddingBottom: theme => theme.spacing(12),
             }}
           >
-            <Div sx={{ mx: theme => theme.spacing(8) }}>
+            <Div
+              sx={theme => ({
+                [theme.breakpoints.up('md')]: {
+                  mx: theme => theme.spacing(8),
+                },
+              })}
+            >
               <G>
                 <Tenants />
               </G>

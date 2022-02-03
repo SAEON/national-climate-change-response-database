@@ -5,7 +5,8 @@ export default ({ sx = {}, ...props }) => (
     sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', ...sx }}
     item
     xs={12}
-    sm={4}
+    sm={6}
+    md={4}
     {...props}
   />
 )

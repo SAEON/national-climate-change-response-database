@@ -11,7 +11,9 @@ import Grid from '@mui/material/Grid'
 import Tenants from './tenants'
 import Charts from './charts'
 
-const G = props => <Grid container spacing={8} sx={{ my: theme => theme.spacing(6) }} {...props} />
+const G = ({ sx = {}, ...props }) => (
+  <Grid container spacing={8} sx={{ my: theme => theme.spacing(6), ...sx }} {...props} />
+)
 
 export default () => {
   const contentRef = useRef(null)
@@ -32,13 +34,15 @@ export default () => {
         <Div sx={{ backgroundColor: theme => alpha(theme.palette.common.white, 0.4) }}>
           <Container
             sx={{
-              paddingTop: theme => theme.spacing(3),
+              paddingTop: theme => theme.spacing(12),
               paddingBottom: theme => theme.spacing(12),
             }}
           >
-            <G>
-              <Charts />
-            </G>
+            <Div sx={{ mx: theme => theme.spacing(8) }}>
+              <G>
+                <Charts />
+              </G>
+            </Div>
           </Container>
         </Div>
 

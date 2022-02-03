@@ -4,6 +4,7 @@ export default ({
   data: {
     PROJECT_COUNT: { data },
   },
+  ...props
 }) => {
   const chart = transformData(data, {
     d1: 'intervention',
@@ -23,6 +24,7 @@ export default ({
         },
       }}
       series={Object.entries(chart.series).map(([, series]) => series)}
+      {...props}
     />
   )
 }

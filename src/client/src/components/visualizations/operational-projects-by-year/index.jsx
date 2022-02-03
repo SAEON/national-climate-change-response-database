@@ -4,12 +4,14 @@ export default ({
   data: {
     OPERATIONAL_PROJECTS_BY_YEAR: { data },
   },
+  title = 'Operational projects',
+  ...props
 }) => {
   const chart = transformData(data, { d1: 'year', d2: 'intervention', fact: 'operationalProjects' })
 
   return (
     <BarChart
-      title={'Operational projects (annually)'}
+      title={title}
       categories={chart.categories}
       xAxis={{ name: 'Year' }}
       yAxis={{
@@ -19,6 +21,7 @@ export default ({
         },
       }}
       series={Object.entries(chart.series).map(([, series]) => series)}
+      {...props}
     />
   )
 }

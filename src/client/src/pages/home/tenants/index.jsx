@@ -6,7 +6,7 @@ import { alpha, styled } from '@mui/material/styles'
 import BoxButton from '../../../components/fancy-buttons/box-button'
 import Typography from '@mui/material/Typography'
 import DatabaseIcon from 'mdi-react/DatabaseIcon'
-import { Span } from '../../../components/html-tags'
+import { Span, Div } from '../../../components/html-tags'
 
 const Text_ = styled(Typography)(({ theme }) => ({
   color: alpha(theme.palette.common.white, 0.9),
@@ -56,7 +56,7 @@ export default () => {
   return (
     <>
       {data.tenants.map(({ hostname, title, shortTitle, description }) => (
-        <GridItem sm={6} key={hostname}>
+        <GridItem sm={12} md={6} key={hostname}>
           <Title>{shortTitle || 'Missing shortTitle'}</Title>
           <DBIcon
             sx={theme => ({
@@ -76,6 +76,13 @@ export default () => {
               />
             </Span>
           </Tooltip>
+          <Div
+            sx={theme => ({
+              [theme.breakpoints.down('md')]: {
+                marginBottom: theme.spacing(8),
+              },
+            })}
+          />
         </GridItem>
       ))}
     </>

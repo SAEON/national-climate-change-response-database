@@ -4,6 +4,7 @@ export default ({
   data: {
     SECTOR_BUDGET: { data },
   },
+  ...props
 }) => {
   const chart = transformData(
     data.filter(({ intervention }) => intervention === 'Adaptation'),
@@ -17,6 +18,7 @@ export default ({
       xAxis={{ name: '' }}
       legend={{ show: false }}
       series={Object.entries(chart.series).map(([, series]) => series)}
+      {...props}
     />
   )
 }

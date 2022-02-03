@@ -14,24 +14,25 @@ export default ({
   legend = { show: true, top: 50 },
   yAxis = {},
   xAxis = {},
+  toolbox = {
+    top: 5,
+    right: 5,
+    feature: {
+      magicType: {
+        type: ['line', 'bar', 'stack'],
+      },
+      saveAsImage: {
+        pixelRatio: 10,
+      },
+    },
+  },
 }) => {
   return (
     <Echarts
       theme={theme}
       style={{ height: '100%', width: '100%' }}
       option={{
-        toolbox: {
-          top: 5,
-          right: 5,
-          feature: {
-            magicType: {
-              type: ['line', 'bar', 'stack'],
-            },
-            saveAsImage: {
-              pixelRatio: 10,
-            },
-          },
-        },
+        toolbox,
         dataZoom: [
           {
             type: 'inside',

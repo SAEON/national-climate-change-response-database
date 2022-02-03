@@ -62,7 +62,6 @@ export default ({ routes, interventionType, setInterventionType }) => {
         <Button
           disableElevation
           component={Link}
-          sx={{ ml: theme => theme.spacing(1) }}
           variant="contained"
           to={'/reports'}
           color={'inherit'}

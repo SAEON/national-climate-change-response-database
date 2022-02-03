@@ -9,7 +9,6 @@ export default ({ children }) => {
   const windowSize = useWindowSize()
   const [headerRef, setHeaderRef] = useState(null)
   const [contentRef, setContentRef] = useState(null)
-  console.log('re-rendering layout')
 
   return (
     <context.Provider

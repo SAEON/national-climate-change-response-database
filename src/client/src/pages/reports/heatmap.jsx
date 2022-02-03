@@ -159,7 +159,7 @@ export default () => {
             }}
             variant="caption"
           >
-            NOTE: National projects without explicit GPS coordinates are excluded
+            NOTE: National projects without explicit GPS coordinates are excluded from this map
           </Typography>
         </Div>
       </MapProvider>

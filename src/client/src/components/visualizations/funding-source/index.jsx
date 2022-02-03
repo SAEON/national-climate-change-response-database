@@ -4,6 +4,7 @@ export default ({
   data: {
     FUNDING_SOURCE: { data },
   },
+  ...props
 }) => {
   const chart = transformData(data, { d1: 'intervention', d2: 'fundingSource', fact: 'budget' })
 
@@ -13,6 +14,7 @@ export default ({
       categories={chart.categories}
       xAxis={{ name: 'Intervention type' }}
       series={Object.entries(chart.series).map(([, series]) => series)}
+      {...props}
     />
   )
 }

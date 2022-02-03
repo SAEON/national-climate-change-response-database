@@ -11,7 +11,6 @@ const Button = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
   [theme.breakpoints.down('sm')]: {
     width: '100% !important',
-    height: 100,
   },
   '& .MuiTypography-root': {
     outline: '2px solid transparent',
@@ -79,7 +78,7 @@ const FancyButton = ({
   const { sx = {}, ...otherProps } = props
 
   return (
-    <Div sx={{ boxShadow: 5, width: '100%', height: '100%', ...sx }} {...otherProps}>
+    <Div sx={{ boxShadow: 3, width: '100%', height: '100%', ...sx }} {...otherProps}>
       <Button
         component={onClick || href ? undefined : Link}
         href={href}

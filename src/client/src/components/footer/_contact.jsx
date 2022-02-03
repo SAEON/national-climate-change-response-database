@@ -14,7 +14,7 @@ export default () => {
       </Grid>
       <Grid item xs={12}>
         <Typography variant="body1">Data enquiries</Typography>
-        <Typography variant="body2">{'tmakholela@dffe.gov.za'.replace('@', ' [ at ] ')}</Typography>
+        <Typography variant="body2">{'rditlopo@dffe.gov.za '.replace('@', ' [ at ] ')}</Typography>
       </Grid>
     </Grid>
   )

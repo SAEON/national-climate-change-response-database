@@ -8,6 +8,9 @@ import LayerGroup from 'ol/layer/Group'
 import Feature from 'ol/Feature'
 import Point from 'ol/geom/Point'
 import WKT from 'ol/format/WKT'
+import Typography from '@mui/material/Typography'
+import { alpha } from '@mui/material/styles'
+import Link from '@mui/material/Link'
 
 const _wkt = new WKT()
 
@@ -164,5 +167,27 @@ export default ({ geofencePolygons = [], points = [], setPoints }) => {
     }
   }, [map, drawInteraction, mouseenter, mouseleave])
 
-  return null
+  return (
+    <Typography
+      variant="caption"
+      sx={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        backgroundColor: theme => alpha(theme.palette.common.white, 0.8),
+        m: theme => theme.spacing(0),
+        p: theme => theme.spacing(0.5),
+      }}
+    >
+      ©{' '}
+      <Link
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.openstreetmap.org/copyright"
+      >
+        OpenStreetMap
+      </Link>{' '}
+      contributors
+    </Typography>
+  )
 }

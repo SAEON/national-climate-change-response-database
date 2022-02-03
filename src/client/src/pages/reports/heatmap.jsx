@@ -10,7 +10,8 @@ import { context as dataContext } from './context'
 import { parse } from 'wkt'
 import Button from '@mui/material/Button'
 import { Typography, useMediaQuery } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
+import { useTheme, alpha } from '@mui/material/styles'
+import Link from '@mui/material/Link'
 
 const fadeLayer = ({ layer, start = 0, end = 1 }) => {
   if (start >= end) return
@@ -24,7 +25,7 @@ const HeatMap = ({ zoom, blur, radius }) => {
   const { data } = useContext(dataContext)
   const { map } = useContext(mapContext)
   const theme = useTheme()
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'))
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'))
 
   useEffect(() => {
     let layer
@@ -62,11 +63,11 @@ const HeatMap = ({ zoom, blur, radius }) => {
         mr: theme => theme.spacing(1),
         mt: theme => theme.spacing(1),
         display: 'flex',
-        flexDirection: smDown ? 'column' : 'row',
+        flexDirection: mdDown ? 'column' : 'row',
       }}
     >
       <Button
-        sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
+        sx={mdDown ? {} : { mr: theme => theme.spacing(1) }}
         variant="contained"
         color={interventionType === null ? 'primary' : 'inherit'}
         size="small"
@@ -76,7 +77,7 @@ const HeatMap = ({ zoom, blur, radius }) => {
         All
       </Button>
       <Button
-        sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
+        sx={mdDown ? {} : { mr: theme => theme.spacing(1) }}
         variant="contained"
         color={interventionType === 'Adaptation' ? 'primary' : 'inherit'}
         size="small"
@@ -86,7 +87,7 @@ const HeatMap = ({ zoom, blur, radius }) => {
         Adaptation
       </Button>
       <Button
-        sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
+        sx={mdDown ? {} : { mr: theme => theme.spacing(1) }}
         variant="contained"
         color={interventionType === 'Mitigation' ? 'primary' : 'inherit'}
         size="small"
@@ -128,6 +129,27 @@ export default () => {
       >
         <HeatMap zoom={zoom} blur={35} radius={12} />
         {/* <BaseLayerSwitcher /> */}
+        <Typography
+          variant="caption"
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            backgroundColor: theme => alpha(theme.palette.common.white, 0.8),
+            m: theme => theme.spacing(0),
+            p: theme => theme.spacing(0.5),
+          }}
+        >
+          ©{' '}
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.openstreetmap.org/copyright"
+          >
+            OpenStreetMap
+          </Link>{' '}
+          contributors
+        </Typography>
         <Div sx={{ position: 'absolute', bottom: 0, left: 0, zIndex: 10 }}>
           <Typography
             sx={{

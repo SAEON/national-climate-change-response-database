@@ -1,4 +1,4 @@
-import { useRef, useContext } from 'react'
+import { useRef, useContext, useState } from 'react'
 import { context as clientContext } from '../../contexts/client-context'
 import ChartDataProvider from './context'
 import Header from './header'
@@ -10,17 +10,19 @@ import Typography from '@mui/material/Typography'
 import { Div } from '../../components/html-tags'
 import { alpha } from '@mui/material/styles'
 import Card from '@mui/material/Card'
+import Hidden from '@mui/material/Hidden'
 
 export default ({ routes }) => {
   const { about: pageContent } = JSON.parse(useContext(clientContext).frontMatter)
-  const ref = useRef(null)
+  const contentRef = useRef(null)
+  const [toolbarRef, setToolbarRef] = useState(null)
 
   return (
     <ChartDataProvider>
-      <Header />
+      <Header ref={el => setToolbarRef(el)} />
 
       {/* MAP */}
-      <Heatmap contentRef={ref}>
+      <Heatmap contentRef={contentRef} toolbarRef={toolbarRef}>
         <Div sx={{ position: 'absolute', zIndex: 100, left: 0, right: 0, top: 0, bottom: 0 }}>
           <Div sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
             <Container>
@@ -46,17 +48,19 @@ export default ({ routes }) => {
                       {pageContent.title}
                     </Typography>
                   </Grid>
-                  <Grid item lg={6} sx={{ flexGrow: 1 }}>
-                    <Typography
-                      sx={{
-                        textAlign: 'left',
-                        color: theme => alpha(theme.palette.common.white, 0.9),
-                      }}
-                      variant="body2"
-                    >
-                      {pageContent.content}
-                    </Typography>
-                  </Grid>
+                  <Hidden smDown>
+                    <Grid item lg={6} sx={{ flexGrow: 1 }}>
+                      <Typography
+                        sx={{
+                          textAlign: 'justify',
+                          color: theme => alpha(theme.palette.common.white, 0.9),
+                        }}
+                        variant="body2"
+                      >
+                        {pageContent.content}
+                      </Typography>
+                    </Grid>
+                  </Hidden>
                 </Grid>
               </Card>
             </Container>
@@ -65,7 +69,7 @@ export default ({ routes }) => {
       </Heatmap>
 
       {/* CONTENT */}
-      <Content routes={routes} ref={el => (ref.current = el)} />
+      <Content routes={routes} ref={el => (contentRef.current = el)} />
     </ChartDataProvider>
   )
 }

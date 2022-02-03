@@ -17,7 +17,11 @@ export default () => {
             size="small"
             variant="text"
             color="primary"
-            startIcon={<SubmitIcon size={18} />}
+            startIcon={
+              <Hidden lgDown>
+                <SubmitIcon size={18} />
+              </Hidden>
+            }
           >
             New submission
           </Button>

@@ -4,6 +4,7 @@ import { Typography } from '@mui/material'
 import Divider from '@mui/material/Divider'
 import Fade from '@mui/material/Fade'
 import { Span } from '../../../components/html-tags'
+import Hidden from '@mui/material/Hidden'
 
 const D = props => (
   <Divider
@@ -18,7 +19,6 @@ const D = props => (
 const S = ({ sx = {}, ...props }) => (
   <Span
     sx={{
-      fontSize: '0.9rem',
       fontWeight: 'bold',
       fontStyle: 'italic',
       marginRight: theme => theme.spacing(1),
@@ -61,11 +61,13 @@ export default () => {
         <Typography variant="overline">
           <S>{c}</S> Cross cutting
         </Typography>
-        <D />
-        <Typography variant="overline">
-          <S sx={{ marginRight: 'unset' }} />
-          project submissions
-        </Typography>
+        <Hidden lgDown>
+          <D />
+          <Typography variant="overline">
+            <S sx={{ marginRight: 'unset' }} />
+            project submissions
+          </Typography>
+        </Hidden>
       </Span>
     </Fade>
   )

@@ -9,14 +9,10 @@ import AppHeader, { Toolbar as ApplicationHeader_ } from './application-header'
 import Divider from '@mui/material/Divider'
 import HideOnScroll from './animations/hide-on-scroll'
 import ElevationOnScroll from './animations/elevation-on-scroll'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import { Div } from '../html-tags'
 
 const FullHeader = forwardRef(({ contentBase, contentRef, routes }, ref) => {
   const imageHeight = useImageHeight()
-  const theme = useTheme()
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
     <Div ref={ref}>
@@ -34,7 +30,12 @@ const FullHeader = forwardRef(({ contentBase, contentRef, routes }, ref) => {
       {/* PUSH CONTENT DOWN */}
       <HideOnScroll contentRef={contentRef}>
         <ApplicationBanner_>
-          <Div sx={{ minHeight: `${imageHeight}px`, ...(mdDown ? {} : { marginBottom: 3 }) }} />
+          <Div
+            sx={{
+              minHeight: `${imageHeight}px`,
+              marginBottom: 3,
+            }}
+          />
         </ApplicationBanner_>
       </HideOnScroll>
       <ApplicationHeader_ />

@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import DownloadExcelTemplate from '../../../components/download-template'
 import UploadProject from '../../../components/submit-template'
 import NewSubmission from '../../../components/new-submission'
@@ -7,11 +8,11 @@ import Divider from '@mui/material/Divider'
 import Hidden from '@mui/material/Hidden'
 import CountSummary from './count-summary'
 
-export default () => {
+export default forwardRef((props, ref) => {
   return (
-    <ToolbarHeader>
+    <ToolbarHeader ref={ref}>
       <NewSubmission />
-      <Hidden smDown>
+      <Hidden mdDown>
         <Div sx={{ marginLeft: theme => theme.spacing(2) }} />
         <DownloadExcelTemplate />
         <Div sx={{ marginLeft: theme => theme.spacing(2) }} />
@@ -28,4 +29,4 @@ export default () => {
       </Hidden>
     </ToolbarHeader>
   )
-}
+})

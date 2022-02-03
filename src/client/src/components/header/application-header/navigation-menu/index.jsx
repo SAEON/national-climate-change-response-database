@@ -15,10 +15,11 @@ import checkTenantRouteAuthorization from '../../../../lib/check-tenant-route-au
  * TODO - a lot of this logic is duplicated in the footer component.
  * Should be combined
  */
-export default ({ routes }) => {
+export default () => {
   const [anchorEl, setAnchorEl] = useState(null)
   const { hasPermission, isAuthenticated } = useContext(authorizationContext)
   const tenantContext = useContext(clientContext)
+  const routes = tenantContext._clientRoutes
 
   return (
     <>

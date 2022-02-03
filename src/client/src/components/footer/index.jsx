@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import { context as clientContext } from '../../contexts/client-context'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
@@ -8,8 +10,10 @@ import Legal from './_legal'
 import PageRoutes from './_page-routes'
 import { Div } from '../html-tags'
 
-export default ({ routes }) => {
-  const _routes = routes.filter(({ includeInFooter }) => includeInFooter)
+export default () => {
+  const _routes = useContext(clientContext)._clientRoutes.filter(
+    ({ includeInFooter }) => includeInFooter
+  )
 
   return (
     <Div sx={{ position: 'relative' }}>

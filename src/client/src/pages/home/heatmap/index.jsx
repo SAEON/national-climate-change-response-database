@@ -12,9 +12,8 @@ import ScrollButton_ from '../../../components/fancy-buttons/scroll-button'
 import debounce from '../../../lib/debounce'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-import Hidden from '@mui/material/Hidden'
 import { alpha, useTheme } from '@mui/material/styles'
+import Buttons from './_buttons'
 
 const fadeLayer = ({ layer, start = 0, end = 1 }) => {
   if (start >= end) return
@@ -46,13 +45,13 @@ const ScrollButton = ({ contentRef }) => {
         onClick={() =>
           window.scrollTo({ top: contentRef.current.offsetTop, left: 0, behavior: 'smooth' })
         }
-        sx={{ bottom: 96, position: 'relative', zIndex: 101 }}
+        sx={{ bottom: 96, position: 'relative', zIndex: 9 }}
       />
     </Fade>
   )
 }
 
-const HeatMap = ({ zoom }) => {
+const HeatMap = ({ children, zoom }) => {
   const [interventionType, setInterventionType] = useState(null)
   const { data } = useContext(dataContext)
   const { map } = useContext(mapContext)
@@ -60,6 +59,7 @@ const HeatMap = ({ zoom }) => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'))
   const {
     region: { geometry },
+    _clientRoutes: routes,
   } = useContext(clientContext)
 
   useEffect(() => {
@@ -69,7 +69,6 @@ const HeatMap = ({ zoom }) => {
         data,
         opacity: 0,
         zoom,
-        gradient: ['#893448', '#d95850', '#eb8146', '#ffb248', '#f2d643', '#ebdba4'],
         filter: ({ intervention }) => {
           if (interventionType === null) {
             return true
@@ -79,7 +78,7 @@ const HeatMap = ({ zoom }) => {
         },
       })
       map.addLayer(layer)
-      fadeLayer({ layer })
+      fadeLayer({ layer, end: 0.8 })
     }
 
     return () => {
@@ -88,54 +87,29 @@ const HeatMap = ({ zoom }) => {
   }, [data, geometry, interventionType, map, zoom])
 
   return (
-    <Hidden smDown>
-      <Div
+    <>
+      <Buttons
+        routes={routes}
+        interventionType={interventionType}
+        setInterventionType={setInterventionType}
+      />
+      <Typography
+        variant="caption"
         sx={{
-          zIndex: 999,
+          zIndex: 11,
+          fontStyle: 'italic',
+          color: theme => alpha(theme.palette.common.white, 0.9),
           position: 'absolute',
-          top: 0,
           right: 0,
+          [smDown ? 'top' : 'bottom']: 0,
           mr: theme => theme.spacing(1),
-          mt: theme => theme.spacing(1),
+          mb: theme => theme.spacing(0.5),
         }}
       >
-        <Button
-          sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
-          variant="contained"
-          color={interventionType === null ? 'primary' : 'inherit'}
-          size="small"
-          onClick={() => setInterventionType(null)}
-        >
-          All
-        </Button>
-        <Button
-          sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
-          variant="contained"
-          color={interventionType === 'Adaptation' ? 'primary' : 'inherit'}
-          size="small"
-          onClick={() => setInterventionType('Adaptation')}
-        >
-          Adaptation
-        </Button>
-        <Button
-          sx={smDown ? {} : { mr: theme => theme.spacing(1) }}
-          variant="contained"
-          color={interventionType === 'Mitigation' ? 'primary' : 'inherit'}
-          size="small"
-          onClick={() => setInterventionType('Mitigation')}
-        >
-          Mitigation
-        </Button>
-        <Button
-          onClick={() => setInterventionType('Cross cutting')}
-          variant="contained"
-          color={interventionType === 'Cross cutting' ? 'primary' : 'inherit'}
-          size="small"
-        >
-          Cross cutting
-        </Button>
-      </Div>
-    </Hidden>
+        Project location distribution (excluding national projects)
+      </Typography>
+      {children}
+    </>
   )
 }
 
@@ -146,9 +120,6 @@ export default ({ children, contentRef, toolbarRef }) => {
     isDefault: isDefaultTenant,
   } = useContext(clientContext)
 
-  const theme = useTheme()
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'))
-
   const [x, y] = parse(centroid).coordinates
   const zoom = isDefaultTenant ? 6.5 : 7.5
 
@@ -156,6 +127,10 @@ export default ({ children, contentRef, toolbarRef }) => {
     () => (headerRef?.offsetHeight || 0) + (toolbarRef?.offsetHeight || 0),
     [headerRef, toolbarRef]
   )
+
+  if (!headerRef || !toolbarRef) {
+    return null
+  }
 
   return (
     <Div sx={{ height: `calc(100vh - ${offsetHeight}px)`, width: '100%', position: 'relative' }}>
@@ -166,9 +141,9 @@ export default ({ children, contentRef, toolbarRef }) => {
             height: '100%',
             width: '100%',
             position: 'absolute',
-            zIndex: 99,
+            zIndex: 7,
             opacity: 1,
-            backgroundColor: theme => alpha(theme.palette.common.black, 0.2),
+            backgroundColor: theme => alpha(theme.palette.common.black, 0.3),
             backgroundImage: theme =>
               `linear-gradient(${alpha(
                 theme.palette.primary.main,
@@ -188,22 +163,9 @@ export default ({ children, contentRef, toolbarRef }) => {
         controls={[]}
         layers={[baseLayer()]}
       >
-        <HeatMap zoom={zoom} />
-        <ScrollButton contentRef={contentRef} />
-        <Typography
-          variant="caption"
-          sx={{
-            fontStyle: 'italic',
-            color: theme => alpha(theme.palette.common.white, 0.9),
-            position: 'absolute',
-            right: 0,
-            [smDown ? 'top' : 'bottom']: 0,
-            mr: theme => theme.spacing(1),
-            mb: theme => theme.spacing(0.5),
-          }}
-        >
-          Project location distribution (excluding national projects)
-        </Typography>
+        <HeatMap zoom={zoom}>
+          <ScrollButton contentRef={contentRef} />
+        </HeatMap>
       </MapProvider>
     </Div>
   )

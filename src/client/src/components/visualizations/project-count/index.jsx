@@ -1,9 +1,27 @@
 import { useMemo } from 'react'
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
-import { alpha } from '@mui/material/styles'
+import { alpha, useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+
+const T = ({ sx = {}, ...props }) => (
+  <Typography
+    sx={{
+      flexBasis: 0,
+      flexGrow: 1,
+      fontSize: '0.8rem',
+      textAlign: 'center',
+      ...sx,
+    }}
+    variant="overline"
+    {...props}
+  />
+)
 
 export default ({ data }) => {
+  const theme = useTheme()
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'))
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'))
   const _data = useMemo(
     () =>
       data?.PROJECT_COUNT.data.reduce(
@@ -25,21 +43,21 @@ export default ({ data }) => {
       sx={{
         width: '100%',
         backgroundColor: theme => alpha(theme.palette.common.white, 1),
+        display: 'flex',
+        justifyContent: 'space-around',
+        flexDirection: smDown ? 'column' : 'row',
       }}
       variant="outlined"
     >
-      <Typography
-        sx={{
-          fontSize: '0.8rem',
-          display: 'block',
-          textAlign: 'center',
-          margin: theme => theme.spacing(2),
-        }}
-        variant="overline"
-      >
-        <b>{a}</b> Adaptation projects | <b>{m}</b> Mitigation projects | <b>{c}</b> Cross cutting
-        projects
-      </Typography>
+      <T sx={smDown ? {} : { margin: theme => theme.spacing(2) }}>
+        <b>{a}</b> Adaptation {mdDown ? '' : 'projects'}
+      </T>
+      <T sx={smDown ? {} : { margin: theme => theme.spacing(2) }}>
+        <b>{m}</b> Mitigation {mdDown ? '' : 'projects'}
+      </T>
+      <T sx={smDown ? {} : { margin: theme => theme.spacing(2) }}>
+        <b>{c}</b> Cross cutting {mdDown ? '' : 'projects'}
+      </T>
     </Card>
   )
 }

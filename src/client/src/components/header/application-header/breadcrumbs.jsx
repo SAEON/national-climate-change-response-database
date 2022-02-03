@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import { context as clientContext } from '../../../contexts/client-context'
 import Typography from '@mui/material/Typography'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import { Link, useLocation } from 'react-router-dom'
@@ -17,7 +19,8 @@ const sxIcon = {
   height: 18,
 }
 
-export default ({ contentBase = '/', routes }) => {
+export default ({ contentBase = '/' }) => {
+  const { _clientRoutes: routes } = useContext(clientContext)
   const { pathname } = useLocation() // Trigger re-render on location changes
   const normalizedPathname = pathname.replace(contentBase, '/')
 

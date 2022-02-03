@@ -50,7 +50,7 @@ const SettingsIcon = styled(SettingsIcon_)({})
 const AboutIcon = styled(AboutIcon_)({})
 const ReportsIcon = styled(ReportsIcon_)({})
 
-const routes = [
+export default [
   {
     group: 'legal',
     label: 'Terms of Use',
@@ -87,7 +87,7 @@ const routes = [
     to: '/',
     render: () => (
       <Transition>
-        <HomePage routes={routes} />
+        <HomePage />
       </Transition>
     ),
   },
@@ -276,5 +276,3 @@ const routes = [
     ),
   },
 ]
-
-export default routes

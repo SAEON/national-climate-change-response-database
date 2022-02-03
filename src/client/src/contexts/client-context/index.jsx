@@ -7,7 +7,7 @@ export const context = createContext()
  * The client context is a combination of
  * tenant details and HTTP origin details
  */
-export default ({ children }) => {
+export default ({ routes, children }) => {
   const { error, loading, data } = useQuery(
     gql`
       query {
@@ -52,6 +52,7 @@ export default ({ children }) => {
   return (
     <context.Provider
       value={{
+        _clientRoutes: routes,
         ...data.clientContext,
       }}
     >

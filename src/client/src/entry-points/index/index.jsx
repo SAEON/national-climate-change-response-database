@@ -10,17 +10,17 @@ import Footer from '../../components/footer'
 const Entry = () => {
   return (
     <>
-      <Header routes={routes} />
+      <Header />
       <SizeContent>
-        <RouteSwitcher routes={routes} />
+        <RouteSwitcher />
       </SizeContent>
-      <Footer routes={routes} />
+      <Footer />
     </>
   )
 }
 
 render(
-  <Application>
+  <Application routes={routes}>
     <Entry />
   </Application>,
   document.getElementById('root')

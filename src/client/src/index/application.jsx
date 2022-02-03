@@ -7,10 +7,10 @@ import Loading from '../components/loading'
 
 const Render = lazy(() => import('./_render'))
 
-export default ({ children }) => (
+export default ({ routes, children }) => (
   <ErrorBoundary>
     <ApolloProvider>
-      <ClientContextProvider>
+      <ClientContextProvider routes={routes}>
         <ThemeContextProvider>
           <Suspense fallback={<Loading />}>
             <Render>{children}</Render>

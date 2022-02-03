@@ -5,8 +5,9 @@ import { context as clientContext } from '../contexts/client-context'
 import FourFour from '../components/404'
 import useTheme from '@mui/material/styles/useTheme'
 
-export default withRouter(({ routes }) => {
+export default withRouter(() => {
   const tenantContext = useContext(clientContext)
+  const { _clientRoutes: routes } = tenantContext
   const theme = useTheme()
 
   return (

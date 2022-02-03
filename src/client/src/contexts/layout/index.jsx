@@ -1,16 +1,20 @@
 import { createContext, useState, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
+import useWindowSize from './_use-window-size'
 
 export const context = createContext()
 
 export default ({ children }) => {
   useLocation() // Trigger re-render on location changes
+  const windowSize = useWindowSize()
   const [headerRef, setHeaderRef] = useState(null)
   const [contentRef, setContentRef] = useState(null)
+  console.log('re-rendering layout')
 
   return (
     <context.Provider
       value={{
+        windowSize,
         headerRef,
         setHeaderRef: el => setHeaderRef(el),
         contentRef,

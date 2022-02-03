@@ -1,4 +1,5 @@
-import { forwardRef } from 'react'
+import { useContext, forwardRef } from 'react'
+import { context as clientContext } from '../../../contexts/client-context'
 import Container from '@mui/material/Container'
 import { Div } from '../../../components/html-tags'
 import BoxButton from '../../../components/fancy-buttons/box-button'
@@ -30,8 +31,10 @@ const Content = props => (
   />
 )
 
-export default forwardRef(({ routes }, ref) => {
-  const emphasizedRoutes = routes.filter(({ includeOnHomePage = false }) => includeOnHomePage)
+export default forwardRef((props, ref) => {
+  const emphasizedRoutes = useContext(clientContext)._clientRoutes.filter(
+    ({ includeOnHomePage = false }) => includeOnHomePage
+  )
 
   return (
     <Div ref={ref} sx={{ backgroundColor: theme => alpha(theme.palette.common.black, 0.4) }}>

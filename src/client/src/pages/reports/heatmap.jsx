@@ -70,6 +70,7 @@ const HeatMap = ({ zoom, blur, radius }) => {
         variant="contained"
         color={interventionType === null ? 'primary' : 'inherit'}
         size="small"
+        disableElevation
         onClick={() => setInterventionType(null)}
       >
         All
@@ -79,6 +80,7 @@ const HeatMap = ({ zoom, blur, radius }) => {
         variant="contained"
         color={interventionType === 'Adaptation' ? 'primary' : 'inherit'}
         size="small"
+        disableElevation
         onClick={() => setInterventionType('Adaptation')}
       >
         Adaptation
@@ -88,6 +90,7 @@ const HeatMap = ({ zoom, blur, radius }) => {
         variant="contained"
         color={interventionType === 'Mitigation' ? 'primary' : 'inherit'}
         size="small"
+        disableElevation
         onClick={() => setInterventionType('Mitigation')}
       >
         Mitigation
@@ -97,6 +100,7 @@ const HeatMap = ({ zoom, blur, radius }) => {
         variant="contained"
         color={interventionType === 'Cross cutting' ? 'primary' : 'inherit'}
         size="small"
+        disableElevation
       >
         Cross cutting
       </Button>
@@ -116,7 +120,6 @@ export default () => {
   return (
     <Div sx={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
       <MapProvider
-        controls={[]}
         view={{
           zoom,
           center: [x, y],
@@ -125,11 +128,11 @@ export default () => {
       >
         <HeatMap zoom={zoom} blur={35} radius={12} />
         {/* <BaseLayerSwitcher /> */}
-        <Div sx={{ position: 'absolute', bottom: 0, right: 0, zIndex: 10 }}>
+        <Div sx={{ position: 'absolute', bottom: 0, left: 0, zIndex: 10 }}>
           <Typography
             sx={{
               fontStyle: 'italic',
-              mr: theme => theme.spacing(1),
+              ml: theme => theme.spacing(1),
               mb: theme => theme.spacing(0.5),
             }}
             variant="caption"

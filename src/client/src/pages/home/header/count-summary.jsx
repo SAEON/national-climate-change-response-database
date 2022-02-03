@@ -19,6 +19,7 @@ const D = props => (
 const S = ({ sx = {}, ...props }) => (
   <Span
     sx={{
+      color: theme => theme.palette.primary.main,
       fontWeight: 'bold',
       fontStyle: 'italic',
       marginRight: theme => theme.spacing(1),
@@ -48,7 +49,7 @@ export default () => {
   const c = useMemo(() => _data?.['CROSS CUTTING'] || '-', [_data])
 
   return (
-    <Fade in={Boolean(_data)}>
+    <Fade key="data-in" in={Boolean(_data)}>
       <Span sx={{ display: 'inline-flex' }}>
         <Typography variant="overline">
           <S>{a}</S> Adaptation

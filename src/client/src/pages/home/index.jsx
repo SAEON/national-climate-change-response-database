@@ -12,7 +12,7 @@ import { alpha } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import Hidden from '@mui/material/Hidden'
 
-export default ({ routes }) => {
+export default () => {
   const { about: pageContent } = JSON.parse(useContext(clientContext).frontMatter)
   const contentRef = useRef(null)
   const [toolbarRef, setToolbarRef] = useState(null)
@@ -23,7 +23,7 @@ export default ({ routes }) => {
 
       {/* MAP */}
       <Heatmap contentRef={contentRef} toolbarRef={toolbarRef}>
-        <Div sx={{ position: 'absolute', zIndex: 100, left: 0, right: 0, top: 0, bottom: 0 }}>
+        <Div sx={{ position: 'absolute', zIndex: 8, left: 0, right: 0, top: 0, bottom: 0 }}>
           <Div sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
             <Container>
               <Card
@@ -50,15 +50,21 @@ export default ({ routes }) => {
                   </Grid>
                   <Hidden smDown>
                     <Grid item lg={6} sx={{ flexGrow: 1 }}>
-                      <Typography
-                        sx={{
-                          textAlign: 'justify',
-                          color: theme => alpha(theme.palette.common.white, 0.9),
-                        }}
-                        variant="body2"
-                      >
-                        {pageContent.content}
-                      </Typography>
+                      {pageContent.content.split('\n').map((text, i) => {
+                        return (
+                          <Typography
+                            key={i}
+                            sx={{
+                              mb: theme => theme.spacing(1),
+                              textAlign: 'justify',
+                              color: theme => alpha(theme.palette.common.white, 0.9),
+                            }}
+                            variant="body2"
+                          >
+                            {text ? text : <br />}
+                          </Typography>
+                        )
+                      })}
                     </Grid>
                   </Hidden>
                 </Grid>
@@ -69,7 +75,7 @@ export default ({ routes }) => {
       </Heatmap>
 
       {/* CONTENT */}
-      <Content routes={routes} ref={el => (contentRef.current = el)} />
+      <Content ref={el => (contentRef.current = el)} />
     </ChartDataProvider>
   )
 }

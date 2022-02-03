@@ -11,7 +11,7 @@ import HideOnScroll from './animations/hide-on-scroll'
 import ElevationOnScroll from './animations/elevation-on-scroll'
 import { Div } from '../html-tags'
 
-const FullHeader = forwardRef(({ contentBase, contentRef, routes }, ref) => {
+const FullHeader = forwardRef(({ contentBase, contentRef }, ref) => {
   const imageHeight = useImageHeight()
 
   return (
@@ -22,7 +22,7 @@ const FullHeader = forwardRef(({ contentBase, contentRef, routes }, ref) => {
             <ApplicationBanner />
           </HideOnScroll>
           <Divider />
-          <AppHeader contentBase={contentBase} routes={routes} />
+          <AppHeader contentBase={contentBase} />
           <Divider />
         </AppBar>
       </ElevationOnScroll>
@@ -43,7 +43,7 @@ const FullHeader = forwardRef(({ contentBase, contentRef, routes }, ref) => {
   )
 })
 
-export default ({ routes }) => {
+export default () => {
   const { setHeaderRef, contentRef } = useContext(layoutContext)
-  return <FullHeader contentRef={contentRef} ref={setHeaderRef} routes={routes} />
+  return <FullHeader contentRef={contentRef} ref={setHeaderRef} />
 }

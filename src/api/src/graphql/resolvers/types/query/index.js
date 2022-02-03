@@ -21,7 +21,7 @@ export default {
   submissionTemplates: authorize({ permission: PERMISSIONS['view-submission-templates'] })(
     submissionTemplates
   ),
-  tenants: authorize({ permission: PERMISSIONS['view-tenants'] })(tenants),
+  tenants,
   chart,
   clientContext,
   submission,

@@ -83,6 +83,8 @@ const FancyButton = ({
       <Button
         component={onClick || href ? undefined : Link}
         href={href}
+        rel={href && 'noopener noreferrer'}
+        target={href && '_blank'}
         onClick={onClick}
         to={onClick ? undefined : href ? undefined : to}
         disabled={disabled}

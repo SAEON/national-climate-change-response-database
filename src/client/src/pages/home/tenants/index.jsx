@@ -57,7 +57,7 @@ export default () => {
   }
 
   return (
-    <Grid container spacing={6}>
+    <Grid justifyContent="center" container spacing={6}>
       {data.tenants.map(({ hostname, title, shortTitle, description }) => (
         <GridItem key={hostname}>
           <Title>{shortTitle || 'Missing shortTitle'}</Title>

@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import heatMap from '../../../components/visualizations/heat-map'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import Typography from '@mui/material/Typography'
-import { alpha, useTheme } from '@mui/material/styles'
+import { alpha } from '@mui/material/styles'
 import { context as dataContext } from '../context'
 import { context as mapContext } from '../../../components/ol-react'
 import { context as clientContext } from '../../../contexts/client-context'
@@ -20,17 +19,24 @@ export default ({ zoom }) => {
   const [interventionType, setInterventionType] = useState(null)
   const { data } = useContext(dataContext)
   const { map } = useContext(mapContext)
-  const theme = useTheme()
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'))
+
   const {
     region: { geometry },
     _clientRoutes: routes,
   } = useContext(clientContext)
 
   useEffect(() => {
-    let layer
     if (data) {
-      layer = heatMap({
+      // If a heatmap layer already exists remove it
+      map.getLayers().forEach(l => {
+        if (l.get('id') === 'heatmap') {
+          map.removeLayer(l)
+        }
+      })
+
+      // Add a heatmap layer
+      const layer = heatMap({
+        id: 'heatmap',
         data,
         opacity: 0,
         zoom,

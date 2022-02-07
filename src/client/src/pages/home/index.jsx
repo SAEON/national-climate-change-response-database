@@ -11,6 +11,7 @@ import Charts from './charts'
 import { alpha } from '@mui/material/styles'
 import ScrollButton from './_scroll-button'
 import Typography from '@mui/material/Typography'
+import Hidden from '@mui/material/Hidden'
 
 const Container = props => <Container_ sx={{ py: theme => theme.spacing(8) }} {...props} />
 
@@ -47,7 +48,9 @@ export default () => {
       {/* MAP */}
       <Map id="/home-heatmap">
         <Welcome />
-        <ScrollButton contentRef={contentRef} />
+        <Hidden xsDown>
+          <ScrollButton contentRef={contentRef} />
+        </Hidden>
       </Map>
 
       {/* CONTENT */}

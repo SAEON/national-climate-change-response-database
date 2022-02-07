@@ -6,6 +6,7 @@ import Heatmap from 'ol/layer/Heatmap'
  * Returns an ol/Layer instance
  */
 export default ({
+  id = 'heatmap',
   data,
   opacity,
   zoom,
@@ -26,6 +27,7 @@ export default ({
 }) => {
   const format = new WKT()
   return new Heatmap({
+    id,
     opacity,
     weight: feature => feature.get('weighting'),
     gradient,

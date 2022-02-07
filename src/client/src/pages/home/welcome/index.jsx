@@ -32,9 +32,11 @@ export default () => {
                       display: 'flex',
                       textAlign: 'center',
                       color: alpha(theme.palette.common.white, 0.9),
+                      [theme.breakpoints.down('lg')]: {
+                        mb: theme.spacing(2),
+                      },
                       [theme.breakpoints.down('sm')]: {
                         fontSize: '1.1rem',
-                        mb: theme.spacing(2),
                       },
                     })}
                     variant="h5"

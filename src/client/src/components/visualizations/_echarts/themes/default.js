@@ -2,12 +2,10 @@ import tinygradient from 'tinygradient'
 
 // https://mycolor.space/
 export default (steps, ...colors) => {
-  const gradient = tinygradient(colors)
-    .hsv(steps, 'short')
-    .map(c => c.toHex8String())
-
   return {
-    color: gradient,
+    color: tinygradient(colors)
+      .hsv(steps, 'short')
+      .map(c => c.toHex8String()),
     backgroundColor: 'rgba(242,234,191,0.15)',
     textStyle: {},
     title: {

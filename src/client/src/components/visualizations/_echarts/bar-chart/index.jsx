@@ -1,7 +1,8 @@
 import Echarts from 'echarts-for-react'
-import theme from '../themes/default'
+import makeEchartsTheme from '../themes/default'
 import _seriesTemplate from './_series-template'
 import _transformData from './_transform-data'
+import { useTheme } from '@mui/material/styles'
 
 export const seriesTemplate = _seriesTemplate
 
@@ -27,9 +28,17 @@ export default ({
     },
   },
 }) => {
+  const theme = useTheme()
+
   return (
     <Echarts
-      theme={theme}
+      theme={makeEchartsTheme(
+        9,
+        { color: theme.palette.primary.main, pos: 0 },
+        { color: theme.palette.grey[200], pos: 0.3 },
+        { color: theme.palette.grey[400], pos: 0.6 },
+        { color: theme.palette.secondary.main, pos: 1 }
+      )}
       style={{ height: '100%', width: '100%' }}
       option={{
         toolbox,

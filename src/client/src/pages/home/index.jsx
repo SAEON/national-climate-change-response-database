@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import ChartDataProvider from './context'
 import Header from './header'
-import Heatmap from './heatmap'
+import Map from './map'
 import PageLinks from './page-links'
 import Welcome from './welcome'
 import { Div } from '../../components/html-tags'
@@ -39,17 +39,16 @@ const Bg = ({ sx = {}, ...props }) => (
 
 export default () => {
   const contentRef = useRef(null)
-  const [toolbarRef, setToolbarRef] = useState(null)
 
   return (
     <ChartDataProvider>
-      <Header ref={el => setToolbarRef(el)} />
+      <Header />
 
       {/* MAP */}
-      <Heatmap id="/home-heatmap" contentRef={contentRef} toolbarRef={toolbarRef}>
+      <Map id="/home-heatmap">
         <Welcome />
         <ScrollButton contentRef={contentRef} />
-      </Heatmap>
+      </Map>
 
       {/* CONTENT */}
       <Div ref={el => (contentRef.current = el)}>

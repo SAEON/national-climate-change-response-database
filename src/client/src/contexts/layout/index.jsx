@@ -1,6 +1,7 @@
 import { createContext, useState, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 import useWindowSize from './_use-window-size'
+import { Div } from '../../components/html-tags'
 
 export const context = createContext()
 
@@ -25,7 +26,7 @@ export default ({ children }) => {
   )
 }
 
-export const SizeContent = ({ children, height = undefined, style = {} }) => {
+export const SizeContent = ({ children, height = undefined, sx = {}, style = {} }) => {
   const { headerRef, setContentRef } = useContext(context)
 
   if (!headerRef) {
@@ -37,16 +38,17 @@ export const SizeContent = ({ children, height = undefined, style = {} }) => {
     : { minHeight: `calc(100% - ${headerRef.offsetHeight || 0}px)` }
 
   return (
-    <div
+    <Div
       id="size-content"
       ref={setContentRef}
-      style={{
+      sx={{
         position: 'relative',
         ...css,
-        ...style,
+        ...sx,
       }}
+      style={style}
     >
       {children}
-    </div>
+    </Div>
   )
 }

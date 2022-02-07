@@ -1,35 +1,39 @@
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import { context as clientContext } from '../../../contexts/client-context'
-import { context as layoutContext } from '../../../contexts/layout'
 import MapProvider from '../../../components/ol-react'
 import baseLayer from '../../../components/ol-react/layers/terrestris-base-map'
 import Fade from '@mui/material/Fade'
 import { parse } from 'wkt'
 import { Div } from '../../../components/html-tags'
 import { alpha } from '@mui/material/styles'
-import HeatMap from './_data-layer'
+import HeatMap from './_heat-map'
+import { useImageHeight } from '../../../components/header/application-banner'
 
-export default ({ children, toolbarRef }) => {
-  const { headerRef } = useContext(layoutContext)
+export default ({ children }) => {
   const {
     region: { centroid },
     isDefault: isDefaultTenant,
   } = useContext(clientContext)
+  const imageHeight = useImageHeight()
 
   const [x, y] = parse(centroid).coordinates
   const zoom = isDefaultTenant ? 6.5 : 7.5
 
-  const offsetHeight = useMemo(
-    () => (headerRef?.offsetHeight || 0) + (toolbarRef?.offsetHeight || 0),
-    [headerRef, toolbarRef]
-  )
-
-  // if (!headerRef || !toolbarRef) {
-  //   return null
-  // }
-
   return (
-    <Div sx={{ height: `calc(100vh - ${offsetHeight}px)`, width: '100%', position: 'relative' }}>
+    <Div
+      sx={theme => ({
+        width: '100%',
+        position: 'relative',
+        height: `calc(100vh - ${
+          imageHeight + parseInt(theme.spacing(3).replace('px', ''), 10) + 64 + 48
+        }px)`,
+        [theme.breakpoints.down('sm')]: {
+          height: `calc(100vh - ${
+            imageHeight + parseInt(theme.spacing(3).replace('px', ''), 10) + 56 + 48
+          }px)`,
+        },
+      })}
+    >
       <Fade timeout={2000} key="map" in={true}>
         <Div
           sx={{
@@ -58,7 +62,8 @@ export default ({ children, toolbarRef }) => {
         controls={[]}
         layers={[baseLayer()]}
       >
-        <HeatMap zoom={zoom}>{children}</HeatMap>
+        <HeatMap zoom={zoom} />
+        {children}
       </MapProvider>
     </Div>
   )

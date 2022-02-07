@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography'
 import { Div } from '../../../components/html-tags'
 import { alpha } from '@mui/material/styles'
 import Card from '@mui/material/Card'
-import Hidden from '@mui/material/Hidden'
 import Fade from '@mui/material/Fade'
 
 export default () => {
@@ -28,36 +27,44 @@ export default () => {
               <Grid container spacing={2} justifyContent="center">
                 <Grid item lg={6} sx={{ display: 'flex' }}>
                   <Typography
-                    sx={{
+                    sx={theme => ({
                       alignItems: 'center',
                       display: 'flex',
                       textAlign: 'center',
-                      color: theme => alpha(theme.palette.common.white, 0.9),
-                    }}
+                      color: alpha(theme.palette.common.white, 0.9),
+                      [theme.breakpoints.down('sm')]: {
+                        fontSize: '1.1rem',
+                        mb: theme.spacing(2),
+                      },
+                    })}
                     variant="h5"
                   >
                     {pageContent.title}
                   </Typography>
                 </Grid>
-                <Hidden smDown>
-                  <Grid item lg={6} sx={{ flexGrow: 1 }}>
-                    {pageContent.content.split('\n').map((text, i) => {
-                      return (
-                        <Typography
-                          key={i}
-                          sx={{
-                            mb: theme => theme.spacing(1),
+
+                <Grid item lg={6} sx={{ flexGrow: 1 }}>
+                  {pageContent.content.split('\n').map((text, i) => {
+                    return (
+                      <Typography
+                        key={i}
+                        sx={theme => ({
+                          mb: theme.spacing(1),
+                          textAlign: 'center',
+                          display: i === 0 ? 'inherit' : 'none',
+                          color: alpha(theme.palette.common.white, 0.9),
+                          [theme.breakpoints.up('sm')]: {
                             textAlign: 'justify',
-                            color: theme => alpha(theme.palette.common.white, 0.9),
-                          }}
-                          variant="body2"
-                        >
-                          {text ? text : <br />}
-                        </Typography>
-                      )
-                    })}
-                  </Grid>
-                </Hidden>
+                            display: 'inherit',
+                          },
+                        })}
+                        variant="body2"
+                      >
+                        {text ? text : <br />}
+                      </Typography>
+                    )
+                  })}
+                </Grid>
               </Grid>
             </Card>
           </Container>

@@ -41,6 +41,12 @@ export default async (_, { ids }, ctx) => {
         console.error('Unable to delete tenant assets. Clean up folder manually', error)
       }
 
+      // Delete user-role-tenant permissions for this tenant
+      await transaction
+        .request()
+        .input('tenantId', id)
+        .query(`delete from UserXrefRoleXrefTenant where tenantId = @tenantId;`)
+
       // Delete Tenant entry
       await transaction.request().input('id', id).query(`delete from Tenants where id = @id;`)
     }

@@ -100,6 +100,7 @@ export default ({ id }) => {
               'regionalPolicy',
               'correspondingAction',
             ],
+            'Progress calculator': ['progressData'],
             'Climate impact': [
               'observedClimateChangeImpacts',
               'addressedClimateChangeImpact',

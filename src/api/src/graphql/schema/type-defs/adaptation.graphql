@@ -58,4 +58,9 @@ input AdaptationInput {
   Impact of response :: What has been the impact of the response in reducing climate change impacts?
   """
   responseImpact: String
+
+  """
+  Achieved progress :: Achieved progress by project
+  """
+  progressData: JSON
 }

@@ -5,7 +5,7 @@ import debounce from '../../../../../../lib/debounce'
 import DateRange from './date-range'
 
 export default memo(
-  ({ calculator = {}, updateCalculator = {} }) => {
+  ({ calculator = {}, updateCalculator = {}, renderAchievement, renderExpenditure }) => {
     const effect = useMemo(
       () => debounce(({ calculator }) => updateCalculator(calculator)),
       [updateCalculator]
@@ -17,6 +17,8 @@ export default memo(
           <>
             <DateRange calculator={calculator} update={update} />
             <InputTables
+              renderAchievement={renderAchievement}
+              renderExpenditure={renderExpenditure}
               calculator={calculator}
               updateCalculator={value => update({ calculator: value })}
             />

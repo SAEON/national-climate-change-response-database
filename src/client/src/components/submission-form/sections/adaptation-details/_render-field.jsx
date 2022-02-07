@@ -7,6 +7,7 @@ import {
 import { context as formContext } from '../../context'
 import Loading from '../../../loading'
 
+const ProgressCalculator = lazy(() => import('../../form/components/calculators/progress'))
 const FileUpload = lazy(() => import('../../form/components/upload'))
 
 const multilineFields = [
@@ -43,6 +44,18 @@ export default ({ field, formName }) => {
           placeholder={placeholder}
           helperText={helperText}
           value={value}
+        />
+      </Suspense>
+    )
+  }
+
+  if (fieldName === 'progressData') {
+    return (
+      <Suspense key={fieldName} fallback={<Loading />}>
+        <ProgressCalculator
+          calculator={form[fieldName] || {}}
+          updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
+          renderExpenditure
         />
       </Suspense>
     )

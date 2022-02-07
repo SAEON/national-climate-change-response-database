@@ -63,7 +63,7 @@ export default ({
       })}
 
       {/* MITIGATION */}
-      {Object.keys(mitigation).length
+      {Object.keys(mitigation).filter(key => key !== 'fileUploads').length
         ? Object.entries(mitigationSections).map(([title, fieldNames]) => {
             return (
               <Grid item xs={12} key={title}>
@@ -79,7 +79,7 @@ export default ({
         : null}
 
       {/* ADAPTATION */}
-      {Object.keys(adaptation).length
+      {Object.keys(adaptation).filter(key => key !== 'fileUploads').length
         ? Object.entries(adaptationSections).map(([title, fieldNames]) => {
             return (
               <Grid item xs={12} key={title}>

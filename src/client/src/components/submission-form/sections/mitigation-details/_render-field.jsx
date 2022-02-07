@@ -65,6 +65,8 @@ export default ({ field, formName }) => {
         <ProgressCalculator
           calculator={form[fieldName] || {}}
           updateCalculator={calculator => updateForm({ [fieldName]: calculator })}
+          renderAchievement
+          renderExpenditure
         />
       </Suspense>
     )

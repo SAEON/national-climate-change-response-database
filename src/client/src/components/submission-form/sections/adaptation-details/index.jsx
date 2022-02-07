@@ -24,6 +24,7 @@ const Compose = memo(({ fields, validation }) => {
           'hazard',
           'otherHazard',
         ],
+        'Progress calculator': ['progressData'],
         'Climate impact': [
           'observedClimateChangeImpacts',
           'addressedClimateChangeImpact',

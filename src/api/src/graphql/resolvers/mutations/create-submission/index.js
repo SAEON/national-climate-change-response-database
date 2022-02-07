@@ -11,9 +11,9 @@ export default async (self, args, ctx) => {
       .request()
       .input('id', ctx.user.info(ctx).id)
       .input('createdAt', new Date().toISOString()).query(`
-        insert into Submissions (userId, createdBy, createdAt)
+        insert into Submissions (createdBy, createdAt)
         output inserted.*
-        values (@id, @id, @createdAt);`)
+        values (@id, @createdAt);`)
 
     const submission = result.recordset[0]
 

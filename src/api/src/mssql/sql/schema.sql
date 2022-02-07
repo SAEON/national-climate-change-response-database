@@ -265,7 +265,6 @@ create table Submissions (
   adaptation nvarchar(max),
   research nvarchar(max),
   isSubmitted bit default 0,
-  userId int foreign key references Users (id),
   createdBy int foreign key references Users (id),
   createdAt datetime2 not null,
   deletedAt datetime2 null,

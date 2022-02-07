@@ -9,9 +9,9 @@ import DialogActions from '@mui/material/DialogActions'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import { styled } from '@mui/material/styles'
-import MessageDialogue from '../../../../message-dialogue'
+import MessageDialogue from '../../../../../message-dialogue'
 import TextField from '@mui/material/TextField'
-import { Div } from '../../../../html-tags'
+import { Div } from '../../../../../html-tags'
 
 const DataGrid = styled(DataGrid_)({})
 

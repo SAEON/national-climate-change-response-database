@@ -1,5 +1,4 @@
-import { useContext, useMemo } from 'react'
-import { context as dataContext } from '../context'
+import { useMemo } from 'react'
 import { Typography } from '@mui/material'
 import Divider from '@mui/material/Divider'
 import Fade from '@mui/material/Fade'
@@ -29,19 +28,17 @@ const S = ({ sx = {}, ...props }) => (
   ></Span>
 )
 
-export default () => {
-  const { data } = useContext(dataContext)
-
+export default ({ PROJECT_COUNT }) => {
   const _data = useMemo(
     () =>
-      data?.PROJECT_COUNT.data.reduce(
+      PROJECT_COUNT?.data.reduce(
         (summary, { intervention, total }) => ({
           ...summary,
           [intervention.toUpperCase()]: (summary[intervention.toUpperCase()] || 0) + total,
         }),
         {}
       ),
-    [data?.PROJECT_COUNT.data]
+    [PROJECT_COUNT?.data]
   )
 
   const a = useMemo(() => _data?.ADAPTATION || '-', [_data?.ADAPTATION])

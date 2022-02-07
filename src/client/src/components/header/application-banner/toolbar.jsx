@@ -1,19 +1,16 @@
 import Toolbar from '@mui/material/Toolbar'
 
-export default props => {
-  const { style, ...otherProps } = props
-
+export default ({ sx, ...props }) => {
   return (
     <Toolbar
       disableGutters
-      style={Object.assign(
-        {
-          display: 'flex',
-          justifyContent: 'space-between',
-        },
-        otherProps
-      )}
-      {...otherProps}
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        p: theme => theme.spacing(1),
+        ...sx,
+      }}
+      {...props}
     />
   )
 }

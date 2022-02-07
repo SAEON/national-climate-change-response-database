@@ -1,4 +1,5 @@
-import { forwardRef } from 'react'
+import { useContext, forwardRef } from 'react'
+import { context as dataContext } from '../context'
 import DownloadExcelTemplate from '../../../components/download-template'
 import UploadProject from '../../../components/submit-template'
 import NewSubmission from '../../../components/new-submission'
@@ -9,6 +10,8 @@ import Hidden from '@mui/material/Hidden'
 import CountSummary from './count-summary'
 
 export default forwardRef((props, ref) => {
+  const { data } = useContext(dataContext)
+
   return (
     <ToolbarHeader ref={ref}>
       <NewSubmission />
@@ -25,7 +28,7 @@ export default forwardRef((props, ref) => {
       </Hidden>
       <Div sx={{ marginRight: 'auto' }} />
       <Hidden smDown>
-        <CountSummary />
+        <CountSummary PROJECT_COUNT={data?.PROJECT_COUNT} />
       </Hidden>
     </ToolbarHeader>
   )

@@ -24,9 +24,9 @@ export default ({ children, toolbarRef }) => {
     [headerRef, toolbarRef]
   )
 
-  if (!headerRef || !toolbarRef) {
-    return null
-  }
+  // if (!headerRef || !toolbarRef) {
+  //   return null
+  // }
 
   return (
     <Div sx={{ height: `calc(100vh - ${offsetHeight}px)`, width: '100%', position: 'relative' }}>

@@ -32,8 +32,8 @@ const FullHeader = forwardRef(({ contentBase, contentRef }, ref) => {
         <ApplicationBanner_>
           <Div
             sx={{
-              minHeight: `${imageHeight}px`,
-              marginBottom: 3,
+              height: theme =>
+                `${imageHeight + parseInt(theme.spacing(1).replace('px', ''), 10)}px`,
             }}
           />
         </ApplicationBanner_>

@@ -27,11 +27,18 @@ export default () => {
     <Toolbar_>
       {/* DFFE LOGO */}
 
-      <Div sx={{ flexBasis: 0, flexGrow: 1, margin: theme => theme.spacing(1), display: 'flex' }}>
+      <Div
+        sx={{
+          flexBasis: 0,
+          flexGrow: 1,
+          display: 'flex',
+          height: theme => `${imageHeight + parseInt(theme.spacing(1).replace('px', ''), 10)}px`,
+        }}
+      >
         <A sx={{ target: '_blank', rel: 'noreferrer' }} href="http://www.environment.gov.za/">
           <Img
             crossOrigin="use-credentials"
-            sx={{ maxHeight: imageHeight, width: 'auto' }}
+            style={{ height: imageHeight, width: 'auto' }}
             src={`${HOSTNAME}/${logoUrl}`}
             alt={`Logo: ${title} (${description})`}
           />
@@ -52,7 +59,11 @@ export default () => {
       >
         <Tooltip title={description}>
           <Typography
-            sx={mdDown ? { fontSize: '16px' } : {}}
+            sx={theme => ({
+              [theme.breakpoints.down('lg')]: {
+                fontSize: '16px',
+              },
+            })}
             color="textPrimary"
             variant="h5"
             variantMapping={{ h5: 'h1' }}
@@ -67,16 +78,17 @@ export default () => {
         sx={{
           flexBasis: 0,
           flexGrow: 1,
-          margin: theme => theme.spacing(1),
           display: 'flex',
           justifyContent: 'flex-end',
         }}
       >
         <A sx={{ maxHeight: imageHeight, width: 'auto' }} href="http://www.environment.gov.za/">
           <Img
-            sx={{
+            style={{
               maxHeight: imageHeight,
               width: 'auto',
+            }}
+            sx={{
               display: 'block',
               marginLeft: 'auto',
             }}

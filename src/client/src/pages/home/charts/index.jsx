@@ -1,4 +1,4 @@
-import GridItem from '../components/grid-item'
+import GridItem_ from '../components/grid-item'
 import BoxButton from '../../../components/fancy-buttons/box-button'
 import ESTIMATED_BUDGET from '../../../components/visualizations/spend-budget'
 import OPERATIONAL_PROJECTS_BY_YEAR from '../../../components/visualizations/operational-projects-by-year'
@@ -7,21 +7,20 @@ import { ChartContainer as CC } from '../../reports'
 import { alpha } from '@mui/material/styles'
 import Progress from '@mui/material/CircularProgress'
 import { Div } from '../../../components/html-tags'
+import Grid from '@mui/material/Grid'
 
 const ChartContainer = props => (
   <CC
     sx={{
       backgroundColor: theme => alpha(theme.palette.common.white, 0.8),
-      transition: theme => theme.transitions.create('transform'),
-      ':hover': {
-        transform: 'scale(1.05)',
-      },
+      height: 300,
+      width: '100%',
     }}
     {...props}
   />
 )
 
-const G = props => <GridItem sm={12} md={4} style={{ paddingTop: 0 }} height={250} {...props} />
+const GridItem = props => <GridItem_ sm={12} md={4} {...props} />
 
 export default () => {
   const { loading, data, error } = useQuery(
@@ -42,9 +41,11 @@ export default () => {
 
   if (loading) {
     return (
-      <G sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
-        <Progress sx={{ color: theme => alpha(theme.palette.common.white, 0.5) }} size={48} />
-      </G>
+      <Grid container>
+        <GridItem sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+          <Progress sx={{ color: theme => alpha(theme.palette.common.white, 0.5) }} size={48} />
+        </GridItem>
+      </Grid>
     )
   }
 
@@ -53,35 +54,39 @@ export default () => {
   }
 
   return (
-    <>
-      <G>
+    <Grid container spacing={6}>
+      <GridItem>
         <ChartContainer>
           <ESTIMATED_BUDGET toolbox={{ show: false }} data={data} />
         </ChartContainer>
         <Div
           sx={theme => ({
             [theme.breakpoints.down('md')]: {
-              marginBottom: theme.spacing(6),
+              marginBottom: theme.spacing(1),
             },
           })}
         />
-      </G>
+      </GridItem>
 
-      <G>
+      <GridItem>
         <ChartContainer>
           <OPERATIONAL_PROJECTS_BY_YEAR toolbox={{ show: false }} data={data} />
         </ChartContainer>
         <Div
           sx={theme => ({
             [theme.breakpoints.down('md')]: {
-              marginBottom: theme.spacing(6),
+              marginBottom: theme.spacing(1),
             },
           })}
         />
-      </G>
-      <G>
-        <BoxButton sx={{ boxShadow: 3 }} to="/reports" title="... View charts" />
-      </G>
-    </>
+      </GridItem>
+      <GridItem>
+        <BoxButton
+          sx={{ boxShadow: 3, height: 300, width: '100%' }}
+          to="/reports"
+          title="... View charts"
+        />
+      </GridItem>
+    </Grid>
   )
 }

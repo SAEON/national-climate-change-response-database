@@ -4,6 +4,7 @@ import BoxButton from '../../../components/fancy-buttons/box-button'
 import { alpha, styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import GridItem from '../components/grid-item'
+import Grid from '@mui/material/Grid'
 
 const Text_ = styled(Typography)(({ theme }) => ({
   color: alpha(theme.palette.common.white, 0.9),
@@ -27,7 +28,7 @@ export default () => {
   )
 
   return (
-    <>
+    <Grid container spacing={6}>
       {emphasizedRoutes.map(({ cta, label, Icon, description = 'Description missing', to }) => {
         return (
           <GridItem key={label}>
@@ -45,6 +46,6 @@ export default () => {
           </GridItem>
         )
       })}
-    </>
+    </Grid>
   )
 }

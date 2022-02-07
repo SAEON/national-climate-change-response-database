@@ -7,6 +7,7 @@ import BoxButton from '../../../components/fancy-buttons/box-button'
 import Typography from '@mui/material/Typography'
 import DatabaseIcon from 'mdi-react/DatabaseIcon'
 import { Span, Div } from '../../../components/html-tags'
+import Grid from '@mui/material/Grid'
 
 const Text_ = styled(Typography)(({ theme }) => ({
   color: alpha(theme.palette.common.white, 0.9),
@@ -43,9 +44,11 @@ export default () => {
 
   if (loading) {
     return (
-      <GridItem>
-        <CircularProgress sx={{ color: theme => alpha(theme.palette.common.white, 0.5) }} />
-      </GridItem>
+      <Grid container>
+        <GridItem>
+          <CircularProgress sx={{ color: theme => alpha(theme.palette.common.white, 0.5) }} />
+        </GridItem>
+      </Grid>
     )
   }
 
@@ -54,9 +57,9 @@ export default () => {
   }
 
   return (
-    <>
+    <Grid container spacing={6}>
       {data.tenants.map(({ hostname, title, shortTitle, description }) => (
-        <GridItem sm={12} md={6} key={hostname}>
+        <GridItem key={hostname}>
           <Title>{shortTitle || 'Missing shortTitle'}</Title>
           <DBIcon
             sx={theme => ({
@@ -85,6 +88,6 @@ export default () => {
           />
         </GridItem>
       ))}
-    </>
+    </Grid>
   )
 }

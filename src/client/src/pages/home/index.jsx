@@ -5,15 +5,36 @@ import Heatmap from './heatmap'
 import PageLinks from './page-links'
 import Welcome from './welcome'
 import { Div } from '../../components/html-tags'
-import Container from '@mui/material/Container'
-import { alpha } from '@mui/material/styles'
-import Grid from '@mui/material/Grid'
+import Container_ from '@mui/material/Container'
 import Tenants from './tenants'
 import Charts from './charts'
-import Hidden from '@mui/material/Hidden'
+import { alpha } from '@mui/material/styles'
+import ScrollButton from './_scroll-button'
+import Typography from '@mui/material/Typography'
 
-const G = ({ sx = {}, ...props }) => (
-  <Grid container spacing={8} sx={{ my: theme => theme.spacing(6), ...sx }} {...props} />
+const Container = props => <Container_ sx={{ py: theme => theme.spacing(8) }} {...props} />
+
+const Title = props => (
+  <Typography
+    variant="h4"
+    sx={{
+      textAlign: 'center',
+      mt: theme => theme.spacing(3),
+      mb: theme => theme.spacing(6),
+      color: theme => alpha(theme.palette.common.white, 0.9),
+    }}
+    {...props}
+  />
+)
+
+const Bg = ({ sx = {}, ...props }) => (
+  <Div
+    sx={{
+      pb: theme => theme.spacing(6),
+      ...sx,
+    }}
+    {...props}
+  />
 )
 
 export default () => {
@@ -25,71 +46,36 @@ export default () => {
       <Header ref={el => setToolbarRef(el)} />
 
       {/* MAP */}
-      <Heatmap contentRef={contentRef} toolbarRef={toolbarRef}>
+      <Heatmap id="/home-heatmap" contentRef={contentRef} toolbarRef={toolbarRef}>
         <Welcome />
+        <ScrollButton contentRef={contentRef} />
       </Heatmap>
 
       {/* CONTENT */}
       <Div ref={el => (contentRef.current = el)}>
-        {/* CHARTS */}
-        <Hidden mdDown>
-          <Div sx={{ backgroundColor: theme => alpha(theme.palette.common.white, 0.4) }}>
-            <Container
-              sx={{
-                paddingTop: theme => theme.spacing(12),
-                paddingBottom: theme => theme.spacing(12),
-              }}
-            >
-              <Div
-                sx={theme => ({
-                  [theme.breakpoints.up('md')]: {
-                    mx: theme => theme.spacing(8),
-                  },
-                })}
-              >
-                <G>
-                  <Charts />
-                </G>
-              </Div>
-            </Container>
-          </Div>
-        </Hidden>
-
         {/* PAGE LINKS */}
-        <Div sx={{ backgroundColor: theme => alpha(theme.palette.common.black, 0.4) }}>
-          <Container
-            sx={{
-              paddingTop: theme => theme.spacing(3),
-              paddingBottom: theme => theme.spacing(12),
-            }}
-          >
-            <G>
-              <PageLinks />
-            </G>
+        <Bg sx={{ backgroundColor: theme => alpha(theme.palette.common.black, 0.4) }}>
+          <Container>
+            <Title>Our platform</Title>
+            <PageLinks />
           </Container>
-        </Div>
+        </Bg>
+
+        {/* CHARTS */}
+        <Bg sx={{ backgroundColor: theme => alpha(theme.palette.common.black, 0.2) }}>
+          <Container>
+            <Title>Our data</Title>
+            <Charts />
+          </Container>
+        </Bg>
 
         {/* TENANTS */}
-        <Div sx={{ backgroundColor: theme => alpha(theme.palette.common.white, 0.1) }}>
-          <Container
-            sx={{
-              paddingTop: theme => theme.spacing(3),
-              paddingBottom: theme => theme.spacing(12),
-            }}
-          >
-            <Div
-              sx={theme => ({
-                [theme.breakpoints.up('md')]: {
-                  mx: theme => theme.spacing(8),
-                },
-              })}
-            >
-              <G>
-                <Tenants />
-              </G>
-            </Div>
+        <Bg sx={{ backgroundColor: theme => alpha(theme.palette.common.black, 0.1) }}>
+          <Container>
+            <Title>Regional databases</Title>
+            <Tenants />
           </Container>
-        </Div>
+        </Bg>
       </Div>
     </ChartDataProvider>
   )

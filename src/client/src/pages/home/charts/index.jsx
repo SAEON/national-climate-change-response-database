@@ -54,7 +54,7 @@ export default () => {
   }
 
   return (
-    <Grid container spacing={6}>
+    <Grid justifyContent="center" container spacing={6}>
       <GridItem>
         <ChartContainer>
           <ESTIMATED_BUDGET toolbox={{ show: false }} data={data} />

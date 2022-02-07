@@ -28,7 +28,7 @@ export default () => {
   )
 
   return (
-    <Grid container spacing={6}>
+    <Grid justifyContent="center" container spacing={6}>
       {emphasizedRoutes.map(({ cta, label, Icon, description = 'Description missing', to }) => {
         return (
           <GridItem key={label}>

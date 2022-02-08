@@ -17,7 +17,6 @@ export default ({ routes }) => {
         {routes
           .filter(({ group }) => group === 'source code')
           .map(({ label, Icon, href, to }) => {
-            console.log('href', href)
             return (
               <Grid item xs={12} key={label}>
                 <Div

@@ -10,8 +10,7 @@ export default async ctx => {
   const { pool } = ctx.mssql
   const { submissionId, formName } = ctx.query
   if (!submissionId || !formName) {
-    ctx.status = 400
-    return
+    ctx.throw(400)
   }
 
   const { user } = ctx

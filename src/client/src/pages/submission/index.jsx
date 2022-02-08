@@ -83,6 +83,7 @@ export default ({ id }) => {
               'coBenefitEconomic',
               'coBenefitEconomicDescription',
             ],
+            'Progress reports': ['fileUploads'],
             'Progress calculator': ['progressData'],
             'Carbon credit information': [
               'carbonCredit',

@@ -34,7 +34,8 @@ export default async ctx => {
      */
     ctx.body = createReadStream(filePath)
     ctx.attachment(basename(filePath))
-  } catch {
-    ctx.response.status = 404
+  } catch (error) {
+    console.error('Error retrieving Excel template', error.message)
+    ctx.throw(404)
   }
 }

@@ -28,6 +28,7 @@ import loginRoute from './http/login.js'
 import attachFileToSubmission from './http/attach-file-to-submission.js'
 import submitCompletedTemplates from './http/submit-completed-templates/index.js'
 import downloadTemplateRoute from './http/download-template.js'
+import downloadPublicFileRoute from './http/download-public-file.js'
 import downloadSubmissions from './http/download-submissions/index.js'
 import apolloServer from './graphql/index.js'
 import { PORT, API_KEY, SSL_ENV } from './config/index.js'
@@ -114,6 +115,7 @@ app
       .post('/http/submit-completed-templates', submitCompletedTemplates)
       .put('/http/create-tenant', createTenantRoute)
       .get('/http/download-template', downloadTemplateRoute)
+      .get('/http/download-public-file', downloadPublicFileRoute)
       .post('/http/download-submissions', downloadSubmissions)
       .routes()
   )

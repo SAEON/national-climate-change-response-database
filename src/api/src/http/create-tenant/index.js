@@ -160,9 +160,9 @@ export default async ctx => {
     console.error('Unable to create tenant', error)
     await transaction.rollback()
     if (error.message.includes('Violation of UNIQUE KEY constraint')) {
-      return (ctx.status = 409)
+      ctx.throw(409)
     } else {
-      return (ctx.status = 400)
+      ctx.throw(400)
     }
   }
 }

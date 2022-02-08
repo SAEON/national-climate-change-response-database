@@ -5,7 +5,7 @@ import Link from '@mui/material/Link'
 import Button from '@mui/material/Button'
 import FileIcon_ from 'mdi-react/DownloadIcon'
 import { styled } from '@mui/material/styles'
-import { Div } from '../../../components/html-tags'
+import { Span } from '../../../components/html-tags'
 
 const FileIcon = styled(FileIcon_)({})
 
@@ -17,9 +17,9 @@ const renderValue = ({ key, value }) => {
   if (key === 'fileUploads') {
     return (
       <>
-        <Div sx={{ my: theme => theme.spacing(1) }} />
+        <Span sx={{ my: theme => theme.spacing(1) }} />
         {value.map(({ id, name }) => (
-          <Div key={name} sx={{ mt: theme => theme.spacing(0.5) }}>
+          <Span key={name} sx={{ mt: theme => theme.spacing(0.5), display: 'block' }}>
             <Button
               component={Link}
               target="_blank"
@@ -31,7 +31,7 @@ const renderValue = ({ key, value }) => {
             >
               {name}
             </Button>
-          </Div>
+          </Span>
         ))}
       </>
     )

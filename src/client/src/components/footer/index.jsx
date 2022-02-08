@@ -7,6 +7,7 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Contact from './_contact'
 import Legal from './_legal'
+import SourceCode from './_source-code'
 import PageRoutes from './_page-routes'
 import { Div } from '../html-tags'
 
@@ -35,16 +36,17 @@ export default () => {
             sx={theme => ({ paddingTop: theme.spacing(4), paddingBottom: theme.spacing(4) })}
           >
             <Grid container spacing={4}>
-              <Grid container item xs={12} sm={4}>
-                {/* PAGES */}
+              <Grid container item xs={12} sm={3}>
                 <PageRoutes routes={_routes} />
               </Grid>
-              <Grid container item xs={12} sm={4}>
-                {/* LEGAL */}
+              <Grid container item xs={12} sm={3}>
                 <Legal routes={_routes} />
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={3}>
                 <Contact />
+              </Grid>
+              <Grid container item xs={12} sm={3}>
+                <SourceCode routes={_routes} />
               </Grid>
             </Grid>
           </Container>

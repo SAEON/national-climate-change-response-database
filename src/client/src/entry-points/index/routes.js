@@ -14,6 +14,8 @@ import PrivacyIcon_ from 'mdi-react/LockCheckIcon'
 import SettingsIcon_ from 'mdi-react/SettingsIcon'
 import AboutIcon_ from 'mdi-react/InfoVariantIcon'
 import ReportsIcon_ from 'mdi-react/ChartBarStackedIcon'
+import GithubIcon_ from 'mdi-react/GithubIcon'
+import LicenseIcon_ from 'mdi-react/LicenseIcon'
 import { DEFAULT_TENANT_ADDRESS } from '../../config'
 import { styled } from '@mui/material/styles'
 
@@ -33,6 +35,7 @@ const UsersPage = lazy(() => import('../../pages/users'))
 const LoginPage = lazy(() => import('../../pages/login'))
 const TermsOfUsePage = lazy(() => import('../../pages/terms-of-use'))
 const PaiaPopiaPage = lazy(() => import('../../pages/paia-popia'))
+const LicensePage = lazy(() => import('../../pages/license'))
 
 const UsersIcon = styled(UsersIcon_)({})
 const UserIcon = styled(UserIcon_)({})
@@ -49,6 +52,8 @@ const PrivacyIcon = styled(PrivacyIcon_)({})
 const SettingsIcon = styled(SettingsIcon_)({})
 const AboutIcon = styled(AboutIcon_)({})
 const ReportsIcon = styled(ReportsIcon_)({})
+const GithubIcon = styled(GithubIcon_)({})
+const LicenseIcon = styled(LicenseIcon_)({})
 
 export default [
   {
@@ -272,6 +277,28 @@ export default [
     render: () => (
       <Transition>
         <UsersPage />
+      </Transition>
+    ),
+  },
+  {
+    group: 'source code',
+    label: 'Source code',
+    Icon: GithubIcon,
+    href: 'https://github.com/SAEON/national-climate-change-systems',
+    excludeFromNav: true,
+    includeInFooter: true,
+    to: '/no-route', // Hack - the to property is still required
+  },
+  {
+    group: 'source code',
+    label: 'License (MIT)',
+    Icon: LicenseIcon,
+    excludeFromNav: true,
+    includeInFooter: true,
+    to: '/license',
+    render: () => (
+      <Transition>
+        <LicensePage />
       </Transition>
     ),
   },

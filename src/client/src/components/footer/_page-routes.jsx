@@ -35,6 +35,8 @@ export default ({ routes }) => {
             }
 
             if (group === 'legal') return false
+            if (group === 'source code') return false
+
             return true
           })
           .map(({ label, Icon, to }) => (

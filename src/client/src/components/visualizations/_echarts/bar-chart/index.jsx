@@ -16,6 +16,7 @@ export default ({
   yAxis = {},
   xAxis = {},
   toolbox = {
+    showTitle: true,
     top: 5,
     right: 5,
     feature: {
@@ -23,6 +24,7 @@ export default ({
         type: ['line', 'bar', 'stack'],
       },
       saveAsImage: {
+        title: 'Save as image',
         pixelRatio: 10,
       },
     },

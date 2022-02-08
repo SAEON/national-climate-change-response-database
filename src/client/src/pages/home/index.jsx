@@ -46,7 +46,7 @@ export default () => {
       <Header />
 
       {/* MAP */}
-      <Map id="/home-heatmap">
+      <Map>
         <Welcome />
         <Hidden mdDown>
           <ScrollButton contentRef={contentRef} />

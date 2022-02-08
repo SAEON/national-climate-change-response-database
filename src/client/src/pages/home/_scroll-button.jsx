@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import debounce from '../../lib/debounce'
-import ScrollButton from '../../components/fancy-buttons/scroll-button'
+import ScrollButton from '../../components/fancy-buttons/scroll-button-arrow'
 import Fade from '@mui/material/Fade'
 
 export default ({ contentRef }) => {
@@ -26,7 +26,7 @@ export default ({ contentRef }) => {
         onClick={() =>
           window.scrollTo({ top: contentRef.current.offsetTop, left: 0, behavior: 'smooth' })
         }
-        sx={{ bottom: 96, position: 'relative', zIndex: 9 }}
+        sx={{ bottom: theme => theme.spacing(6), position: 'relative', zIndex: 9 }}
       />
     </Fade>
   )

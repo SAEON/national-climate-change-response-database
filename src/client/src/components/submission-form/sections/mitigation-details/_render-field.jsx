@@ -260,7 +260,7 @@ export default ({ field, formName }) => {
   }
 
   if (carbonCreditsFields.includes(fieldName)) {
-    if (!`'${form.carbonCredit}'`.toBoolean()) {
+    if (`${form.carbonCredit}` === 'false') {
       return null
     }
   }

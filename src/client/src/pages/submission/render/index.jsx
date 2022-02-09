@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Grid'
-import Card from './_card'
+import Card from './card'
 import { parse } from 'wkt'
+import fixGridValues from '../../../components/submission-form/form/components/calculators/fix-grid-values'
 
 export default ({
   submission,
@@ -38,20 +39,10 @@ export default ({
                 Object.entries(project)
                   .filter(([field]) => fieldNames.includes(field))
                   .map(([field, value]) => {
-                    if (
-                      field === 'province' ||
-                      field === 'districtMunicipality' ||
-                      field === 'localMunicipality'
-                    ) {
-                      return [field, value.map(({ term }) => term).join(', ')]
-                    }
-
                     if (field === 'xy') {
                       return [
-                        'coordinates',
-                        parse(value)
-                          .geometries.map(({ coordinates: [x, y] }) => `(${x} ${y})`)
-                          .join(', '),
+                        'coordinates (lng/lat)',
+                        parse(value).geometries.map(({ coordinates: [x, y] }) => `(${x} ${y})`),
                       ]
                     }
                     return [field, value]
@@ -70,7 +61,17 @@ export default ({
                 <Card
                   title={title}
                   json={Object.fromEntries(
-                    Object.entries(mitigation).filter(([field]) => fieldNames.includes(field))
+                    Object.entries(mitigation)
+                      .filter(([field]) => fieldNames.includes(field))
+                      .map(([field, value]) => {
+                        if (field === 'progressData') {
+                          return [
+                            field,
+                            fixGridValues({ calculatorType: 'progress', calculator: value }),
+                          ]
+                        }
+                        return [field, value]
+                      })
                   )}
                 />
               </Grid>
@@ -86,7 +87,18 @@ export default ({
                 <Card
                   title={title}
                   json={Object.fromEntries(
-                    Object.entries(adaptation).filter(([field]) => fieldNames.includes(field))
+                    Object.entries(adaptation)
+                      .filter(([field]) => fieldNames.includes(field))
+                      .map(([field, value]) => {
+                        if (field === 'progressData') {
+                          const { grid2 } = fixGridValues({
+                            calculatorType: 'progress',
+                            calculator: value,
+                          })
+                          return [field, { grid2 }]
+                        }
+                        return [field, value]
+                      })
                   )}
                 />
               </Grid>

@@ -84,7 +84,7 @@ export default ({ id }) => {
               'coBenefitEconomicDescription',
             ],
             'Progress reports': ['fileUploads'],
-            'Progress calculator': ['progressData'],
+            'Progress data': ['progressData'],
             'Carbon credit information': [
               'carbonCredit',
               'carbonCreditStandard',
@@ -101,7 +101,7 @@ export default ({ id }) => {
               'regionalPolicy',
               'correspondingAction',
             ],
-            'Progress calculator': ['progressData'],
+            'Progress data': ['progressData'],
             'Climate impact': [
               'observedClimateChangeImpacts',
               'addressedClimateChangeImpact',

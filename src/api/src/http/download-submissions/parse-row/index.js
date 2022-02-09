@@ -6,9 +6,11 @@ import {
   adaptationInputFields,
   adaptationVocabularyFields,
 } from '../../../graphql/schema/index.js'
+import { HOSTNAME } from '../../../config/index.js'
 import parseProgressData from './parse-progress-data/index.js'
-const generalVocabularyFields = ['submissionStatus']
 import { stringify as stringifySync } from 'csv/sync'
+
+const generalVocabularyFields = ['submissionStatus']
 
 const generalInputFields = {
   /**
@@ -78,7 +80,10 @@ ${stringifySync(tables.expenditure, { header: true, delimiter: ';', quoted: fals
   }
 
   if (key === 'fileUploads') {
-    return 'TODO - should this be a comma separated list of download URLs?'
+    return value
+      .map(({ id, name }) => `${HOSTNAME}/http/download-public-file?fileId=${id} (${name})`)
+      .join(' \n')
+      .trim()
   }
 
   if (key === 'createdAt' || key === 'deletedAt') {

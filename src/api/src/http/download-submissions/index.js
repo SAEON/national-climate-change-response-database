@@ -111,7 +111,7 @@ export default async ctx => {
           };`
     }
 
-    logSql(sql, `Submission(s) download. User ID: ${user.info(ctx).id}`, true)
+    logSql(sql, `Submission(s) download. User ID: ${user.info(ctx).id}`)
 
     request.query(sql)
 

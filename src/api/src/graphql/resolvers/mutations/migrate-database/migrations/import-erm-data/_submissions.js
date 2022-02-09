@@ -1,31 +1,16 @@
-import getCurrentDirectory from '../../../../../lib/get-current-directory.js'
-import { join } from 'path'
-import createPool from '../../../../../mssql/pool.js'
-import logSql from '../../../../../lib/log-sql.js'
-import { readFile } from 'fs'
+import makeStreamingPool, { pool } from '../../../../../../mssql/pool.js'
+import logSql from '../../../../../../lib/log-sql.js'
 import makeProjectJson from './_make-project-json.js'
 import makeMitigationJson from './_make-mitigation-json.js'
 import makeAdaptationJson from './_make-adaptation-json.js'
-
-const __dirname = getCurrentDirectory(import.meta)
+import sql from './_erm-sql-query.js'
 
 const makeValidationStatus = str => JSON.stringify({ term: str || 'Pending' })
 
-export default async ctx => {
+export default async () => {
   try {
     console.info('Seeding system with ERM submissions data')
-    const { query } = ctx.mssql
-    const createIterator = createPool({ database: 'NCCRD_ERM', batchSize: 1 })
-
-    const sql = await new Promise((resolve, reject) =>
-      readFile(join(__dirname, './erm.sql'), (error, data) => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve(data.toString('utf8'))
-        }
-      })
-    )
+    const createIterator = makeStreamingPool({ database: 'NCCRD_ERM', batchSize: 1 })
 
     let iterator = await createIterator(sql)
     while (!iterator.done) {
@@ -140,8 +125,8 @@ export default async ctx => {
           rollback transaction load_erm_data;
         end catch`
 
-        logSql(sql, 'Seed ERM data')
-        const result = await query(sql)
+        logSql(sql, 'Import ERM data')
+        const result = await (await pool.connect()).query(sql)
         if (!result?.recordset?.[0]?.id) {
           throw new Error('Failed ERM insert')
         }

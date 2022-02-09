@@ -39,8 +39,7 @@ export default async (ctx, validTenants, ...permissions) => {
     sql,
     `Ensure permission. User ID ${userId} / Tenant ID ${ctx.tenant.id} / Permission(s) ${permissions
       .map(({ name }) => name)
-      .join(',')}`,
-    true
+      .join(',')}`
   )
 
   const isAuthorized = Boolean(result.recordset.length)

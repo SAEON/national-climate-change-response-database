@@ -105,26 +105,72 @@ const typeFields = graphqlSync({
   ),
 }).data
 
+export default schema
+
 export const projectVocabularyFields = _projectVocabularyFields
 export const mitigationVocabularyFields = _mitigationVocabularyFields
 export const adaptationVocabularyFields = _adaptationVocabularyFields
-export const projectInputFields = Object.fromEntries(
-  typeFields.p.inputFields.map(({ name, type: { kind, ofType }, description }) => [
-    name,
-    { kind: ofType?.kind || kind, description },
-  ])
-)
-export const mitigationInputFields = Object.fromEntries(
-  typeFields.m.inputFields.map(({ name, type: { kind, ofType }, description }) => [
-    name,
-    { kind: ofType?.kind || kind, description },
-  ])
-)
-export const adaptationInputFields = Object.fromEntries(
-  typeFields.a.inputFields.map(({ name, type: { kind, ofType }, description }) => [
-    name,
-    { kind: ofType?.kind || kind, description },
-  ])
-)
 
-export default schema
+const getFields = inputFields =>
+  Object.fromEntries(
+    inputFields.map(({ name, type: { kind, ofType }, description }) => {
+      return [name, { kind: kind === 'NON_NULL' ? ofType.kind : kind, description }]
+    })
+  )
+
+export const projectInputFields = getFields(typeFields.p.inputFields)
+export const mitigationInputFields = getFields(typeFields.m.inputFields)
+export const adaptationInputFields = getFields(typeFields.a.inputFields)
+
+/**
+ * THESE MAPS NEED TO BE
+ * KEPT UP-TO-DATE MANUALLY
+ *
+ * (sorry!)
+ * Keeping this information in the
+ * field descriptions makes it easy
+ * to use the vocabulary trees on the
+ * client. It would have been better to
+ * annotate/decorate field definitions instead
+ * of using descriptions.
+ *
+ * These need to match the tree specified
+ * GraphQL types (tress are specified in the
+ * type descriptions).
+ */
+
+export const projectVocabularyFieldsTreeMap = {
+  estimatedBudget: 'budgetRanges',
+  interventionType: 'interventionTypes',
+  implementationStatus: 'actionStatus',
+  fundingType: 'fundingTypes',
+  province: 'regions',
+  districtMunicipality: 'regions',
+  localMunicipality: 'regions',
+}
+
+export const mitigationVocabularyFieldsTreeMap = {
+  hostSector: 'mitigationSectors',
+  hostSubSectorPrimary: 'mitigationSectors',
+  hostSubSectorSecondary: 'mitigationSectors',
+  mitigationType: 'mitigationType',
+  mitigationSubType: 'mitigationType',
+  mitigationProgramme: 'mitigationProgramme',
+  nationalPolicy: 'mitigationPolicies',
+  regionalPolicy: 'mitigationPolicies',
+  coBenefitEnvironmental: 'coBenefits',
+  coBenefitSocial: 'coBenefits',
+  coBenefitEconomic: 'coBenefits',
+  carbonCreditStandard: 'carbonCreditStandards',
+  carbonCreditCdmExecutiveStatus: 'executiveStatus',
+  carbonCreditCdmMethodology: 'cdmMethodology',
+  carbonCreditVoluntaryOrganization: 'carbonCreditVoluntaryOrganizations',
+}
+
+export const adaptationVocabularyFieldsTreeMap = {
+  adaptationSector: 'adaptationSectors',
+  nationalPolicy: 'adaptationPolicies',
+  regionalPolicy: 'adaptationPolicies',
+  target: 'adaptationPolicies',
+  hazard: 'hazards',
+}

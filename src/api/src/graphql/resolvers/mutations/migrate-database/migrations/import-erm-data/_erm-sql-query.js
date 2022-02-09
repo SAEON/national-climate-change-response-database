@@ -1,3 +1,11 @@
+/**
+ * This SQL is a select statement that will
+ * just pull all project submissions from the
+ * old ERM database
+ *
+ *
+ */
+export default `
 ;with projectDetails as (
   select distinct
     p.ProjectDetailsId,
@@ -161,4 +169,4 @@
   where p.ProjectDetailsId not in (10171, 10179, 10178) -- these are test entries
 )
 
-select * from submissions;
+select * from submissions;`

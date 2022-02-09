@@ -1,7 +1,4 @@
-import {
-  mitigationVocabularyFields,
-  mitigationInputFields,
-} from '../../../../../graphql/schema/index.js'
+import { mitigationVocabularyFields, mitigationInputFields } from '../../../../../schema/index.js'
 
 export default mitigation => {
   if (!mitigation) return JSON.stringify({})

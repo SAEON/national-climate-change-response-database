@@ -17,6 +17,7 @@ export const DEPLOYMENT_ENV = process.env.DEPLOYMENT_ENV || 'development'
 export const FILES_DIRECTORY = _('FILES_DIRECTORY', `..${sep}..${sep}assets`)
 export const GQL_HOSTNAME = `${HOSTNAME}/graphql`
 export const IMAGES_DIRECTORY = p(FILES_DIRECTORY, `.${sep}images`)
+export const MIGRATION_LOGS_DIRECTORY = p(FILES_DIRECTORY, `.${sep}migration-logs`)
 export const LOG_REQUEST_DETAILS = (process.env.LOG_REQUEST_DETAILS || 'true').toBoolean()
 export const PORT = process.env.PORT || 3000
 export const SKIP_INSTALLS = (process.env.SKIP_INSTALLS || 'false').toBoolean() // For debugging only
@@ -36,6 +37,7 @@ export const UPLOADS_DIRECTORY = p(FILES_DIRECTORY, `.${sep}uploads`)
   await ensureDirectory(UPLOADS_DIRECTORY)
   await ensureDirectory(TEMP_DIRECTORY)
   await ensureDirectory(IMAGES_DIRECTORY)
+  await ensureDirectory(MIGRATION_LOGS_DIRECTORY)
 })().catch(error => {
   if (FILES_DIRECTORY.includes('snapshot')) {
     console.error(

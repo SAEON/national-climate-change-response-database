@@ -1,4 +1,4 @@
-import { projectVocabularyFields, projectInputFields } from '../../../../../graphql/schema/index.js'
+import { projectVocabularyFields, projectInputFields } from '../../../../../schema/index.js'
 import { stringify } from 'wkt'
 
 export default project => {

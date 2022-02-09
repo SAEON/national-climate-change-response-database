@@ -10,7 +10,7 @@ export default async (
     mitigation = {},
     adaptation = {},
     isSubmitted = false,
-    submissionStatus = undefined,
+    submissionStatus = { term: 'Pending' },
     submissionComments = '',
   },
   ctx
@@ -32,10 +32,7 @@ export default async (
       .input('submissionComments', submissionComments)
       .input('isSubmitted', isSubmitted)
       .input('submissionId', submissionId)
-
-    if (submissionStatus) {
-      request.input('submissionStatus', JSON.stringify(submissionStatus))
-    }
+      .input('submissionStatus', JSON.stringify(submissionStatus))
 
     const result = await request.query(`
       merge Submissions t
@@ -45,7 +42,7 @@ export default async (
           @mitigation mitigation,
           @adaptation adaptation,
           @isSubmitted isSubmitted,
-          ${submissionStatus ? `@submissionStatus submissionStatus,` : ''}
+          @submissionStatus submissionStatus,
           @submissionComments submissionComments,
           @userId createdBy,
           @createdAt createdAt
@@ -55,7 +52,7 @@ export default async (
         mitigation,
         adaptation,
         isSubmitted,
-        ${submissionStatus ? 'submissionStatus,' : ''}
+        submissionStatus,
         submissionComments,
         createdBy,
         createdAt
@@ -65,8 +62,8 @@ export default async (
         s.mitigation,
         s.adaptation,
         s.isSubmitted,
-        ${submissionStatus ? 's.submissionStatus,' : ''}
-        submissionComments,
+        s.submissionStatus,
+        s.submissionComments,
         s.createdBy,
         s.createdAt
       )
@@ -75,7 +72,7 @@ export default async (
         t.mitigation = s.mitigation,
         t.adaptation = s.adaptation,
         t.isSubmitted = s.isSubmitted,
-        ${submissionStatus ? 't.submissionStatus = s.submissionStatus,' : ''}
+        t.submissionStatus = s.submissionStatus,
         t.submissionComments = s.submissionComments
         
       output

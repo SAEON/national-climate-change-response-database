@@ -35,10 +35,6 @@ export default Object.freeze({
     name: 'assign-permission',
     description: 'Assign permission to role',
   },
-  'seed-database': {
-    name: 'seed-database',
-    description: 'Seed the SQL Server database',
-  },
   'migrate-database': {
     name: 'migrate-database',
     description: 'Run database migration scripts',

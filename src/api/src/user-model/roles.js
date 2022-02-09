@@ -56,9 +56,5 @@ export const admin = {
 export const sysadmin = {
   name: 'sysadmin',
   description: 'System administrators',
-  permissions: deduplicate([
-    ...admin.permissions,
-    permissions['migrate-database'],
-    permissions['seed-database'],
-  ]),
+  permissions: deduplicate([...admin.permissions, permissions['migrate-database']]),
 }

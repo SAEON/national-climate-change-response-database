@@ -1,7 +1,4 @@
-import {
-  adaptationVocabularyFields,
-  adaptationInputFields,
-} from '../../../../../graphql/schema/index.js'
+import { adaptationVocabularyFields, adaptationInputFields } from '../../../../../schema/index.js'
 
 export default adaptation => {
   if (!adaptation) return JSON.stringify({})

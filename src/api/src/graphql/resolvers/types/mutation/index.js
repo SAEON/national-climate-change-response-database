@@ -1,5 +1,4 @@
 import assignRolesToUser from '../../mutations/assign-roles-to-user/index.js'
-import seedDatabase from '../../mutations/seed-database/index.js'
 import PERMISSIONS from '../../../../user-model/permissions.js'
 import authorize from '../../../../user-model/authorize.js'
 import createSubmission from '../../mutations/create-submission/index.js'
@@ -38,7 +37,6 @@ export default {
   assignRolesToUser: authorize({ permission: PERMISSIONS['assign-role'] })(assignRolesToUser),
 
   // DB
-  seedDatabase: authorize({ permission: PERMISSIONS['seed-database'] })(seedDatabase),
   migrateDatabase: authorize({ permission: PERMISSIONS['migrate-database'] })(migrateDatabase),
 
   // Tenants

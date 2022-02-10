@@ -31,7 +31,7 @@ const migrations = new Promise((resolve, reject) => {
   })
 })
 
-export default async (self, { migration: key }, ctx) => {
+export default async (self, { migration: key, input = {} }, ctx) => {
   console.info('Running DB migration', key)
 
   const index = await migrations
@@ -39,7 +39,7 @@ export default async (self, { migration: key }, ctx) => {
   const fn = await import(migration).then(({ default: fn }) => fn)
 
   try {
-    const result = await fn(ctx)
+    const result = await fn(ctx, { ...input })
     if (result === true || result === undefined) {
       return true
     } else {

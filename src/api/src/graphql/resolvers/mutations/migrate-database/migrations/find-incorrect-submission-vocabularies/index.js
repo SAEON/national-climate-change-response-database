@@ -16,7 +16,10 @@ import { appendFile, unlink } from 'fs/promises'
 import query from './_query.js'
 import { stringify } from 'csv'
 
-const filepath = join(MIGRATION_LOGS_DIRECTORY, 'find-and-try-fix-submission-vocabularies.csv')
+export const csvFilePath = join(
+  MIGRATION_LOGS_DIRECTORY,
+  'find-and-try-fix-submission-vocabularies.csv'
+)
 
 const appendToCsv = async ({ filepath, data }) => {
   await appendFile(
@@ -40,12 +43,19 @@ const appendToCsv = async ({ filepath, data }) => {
   )
 }
 
-export default async () => {
+export default async (ctx, { tenantId }) => {
+  if (!tenantId) {
+    throw new Error('This migration must be run in the context of a specific tenant')
+  }
+
   // Delete the output CSV
-  await unlink(filepath).catch(() => null)
+  await unlink(csvFilePath).catch(() => null)
 
   // Re-instantiate the blank CSV with headers
-  await appendToCsv({ filepath, data: [['ID', 'Title', 'URL', 'Field', 'Incorrect term']] })
+  await appendToCsv({
+    filepath: csvFilePath,
+    data: [['ID', 'Title', 'URL', 'Field', 'Incorrect term']],
+  })
 
   /**
    * Identify submissions where submissionStatus
@@ -53,31 +63,39 @@ export default async () => {
    * vocabulary tree
    */
   await appendToCsv({
-    filepath,
+    filepath: csvFilePath,
     data: (
-      await (await pool.connect()).request().query(
-        `select
-          id,
-          json_value(s.project, '$.title') Title,
-          concat('${HOSTNAME}/submissions/', id) [URL],
-          'submissionStatus' Field,
-          json_value(s.submissionStatus, '$.term') [Incorrect term]
-        from Submissions s
-        where
-          s.isSubmitted = 1
-          and s.deletedAt is null
-          and json_value(s.submissionStatus, '$.term') not in (
-          select
-            v.term
-          from Trees t
-          join VocabularyXrefTree x on x.treeId = t.id
-          join VocabularyXrefVocabulary vxv on vxv.childId = x.vocabularyId
-          join Vocabulary v on v.id = vxv.childId
-          where
-            t.name = 'projectValidationStatus'
-            and vxv.parentId is not null
-        );`
+      await (
+        await pool.connect()
       )
+        .request()
+        .input('tenantId', tenantId)
+        .input('urlBase', `${HOSTNAME}/submissions/`)
+        .query(
+          `select
+            s.id,
+            json_value(s.project, '$.title') Title,
+            concat(@urlBase, s.id) [URL],
+            'submissionStatus' Field,
+            json_value(s.submissionStatus, '$.term') [Incorrect term]
+          from Submissions s
+          join TenantXrefSubmission txs on txs.submissionId = s.id
+          where
+            txs.tenantId = @tenantId
+            and s.isSubmitted = 1
+            and s.deletedAt is null
+            and json_value(s.submissionStatus, '$.term') not in (
+            select
+              v.term
+            from Trees t
+            join VocabularyXrefTree x on x.treeId = t.id
+            join VocabularyXrefVocabulary vxv on vxv.childId = x.vocabularyId
+            join Vocabulary v on v.id = vxv.childId
+            where
+              t.name = 'projectValidationStatus'
+              and vxv.parentId is not null
+          );`
+        )
     ).recordset,
   })
 
@@ -88,8 +106,9 @@ export default async () => {
     const tree = projectVocabularyFieldsTreeMap[field]
     try {
       await appendToCsv({
-        filepath,
+        filepath: csvFilePath,
         data: await query('project', {
+          tenantId,
           field,
           kind: projectInputFields[field].kind,
           tree,
@@ -107,8 +126,9 @@ export default async () => {
     const tree = mitigationVocabularyFieldsTreeMap[field]
     try {
       await appendToCsv({
-        filepath,
+        filepath: csvFilePath,
         data: await query('mitigation', {
+          tenantId,
           field,
           kind: mitigationInputFields[field].kind,
           tree,
@@ -126,8 +146,9 @@ export default async () => {
     const tree = adaptationVocabularyFieldsTreeMap[field]
     try {
       await appendToCsv({
-        filepath,
+        filepath: csvFilePath,
         data: await query('adaptation', {
+          tenantId,
           field,
           kind: adaptationInputFields[field].kind,
           tree,

@@ -4,12 +4,10 @@ import Uploads from './_uploads'
 import Header from './header'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import useTheme from '@mui/material/styles/useTheme'
 import Typography from '@mui/material/Typography'
+import { Div } from '../../../components/html-tags'
 
 export default ({ active, headerRef }) => {
-  const theme = useTheme()
-
   if (!active) {
     return null
   }
@@ -21,15 +19,15 @@ export default ({ active, headerRef }) => {
   return (
     <Provider>
       {createPortal(<Header />, headerRef)}
-      <Card variant="overline">
+      <Card variant="outlined">
         <CardContent>
-          <Typography>
+          <Typography variant="body1">
             Excel templates are shared across all sub-deployments (tenants). Only the most recent
             template is ever used
           </Typography>
         </CardContent>
       </Card>
-      <div style={{ marginTop: theme.spacing(2) }} />
+      <Div sx={{ marginTop: theme => theme.spacing(2) }} />
       <Uploads />
     </Provider>
   )

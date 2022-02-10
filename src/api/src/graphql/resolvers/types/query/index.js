@@ -13,6 +13,7 @@ import tenants from '../../queries/tenants/index.js'
 import regions from '../../queries/regions/index.js'
 import clientContext from '../../queries/client-context/index.js'
 import chart from '../../queries/chart/index.js'
+import incorrectSubmissionVocabularies from '../../queries/incorrect-submission-vocabularies/index.js'
 
 export default {
   users: authorize({ permission: PERMISSIONS['view-users'] })(users),
@@ -20,6 +21,9 @@ export default {
   permissions: authorize({ permission: PERMISSIONS['view-permissions'] })(permissions),
   submissionTemplates: authorize({ permission: PERMISSIONS['view-submission-templates'] })(
     submissionTemplates
+  ),
+  incorrectSubmissionVocabularies: authorize({ permission: PERMISSIONS['validate-submission'] })(
+    incorrectSubmissionVocabularies
   ),
   tenants,
   chart,

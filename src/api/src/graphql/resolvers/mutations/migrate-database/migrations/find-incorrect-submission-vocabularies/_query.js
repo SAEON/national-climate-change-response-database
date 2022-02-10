@@ -1,20 +1,29 @@
 import { HOSTNAME } from '../../../../../../config/index.js'
 import { pool } from '../../../../../../mssql/pool.js'
 
-export default async (details, { field, kind, tree }) => {
+export default async (details, { tenantId, field, kind, tree }) => {
   if (kind === 'LIST') {
     return (
-      await (await pool.connect()).request().query(
-        `;with cte as (
+      await (
+        await pool.connect()
+      )
+        .request()
+        .input('tenantId', tenantId)
+        .input('urlBase', `${HOSTNAME}/submissions/`)
+        .input('tree', tree)
+        .query(
+          `;with cte as (
           select
-            id,
+            s.id,
             json_value(s.project, '$.title') Title,
-            concat('${HOSTNAME}/submissions/', id) [URL],
+            concat(@urlBase, s.id) [URL],
             p.[value] val
           from Submissions s
+          join TenantXrefSubmission txs on txs.submissionId = s.id
           cross apply openjson(s.${details}) p
           where
-            s.isSubmitted = 1
+            txs.tenantId = @tenantId
+            and s.isSubmitted = 1
             and s.deletedAt is null
             and p.[key] = '${field}'
         )
@@ -36,37 +45,46 @@ export default async (details, { field, kind, tree }) => {
               join VocabularyXrefVocabulary vxv on vxv.childId = x.vocabularyId
               join Vocabulary v on v.id = vxv.childId
             where
-            t.name = 'regions'
+            t.name = @tree
             and vxv.parentId is not null
           );`
-      )
+        )
     ).recordset
   } else {
     return (
-      await (await pool.connect()).request().query(
-        `select
-          id,
-          json_value(s.project, '$.title') Title,
-          concat('${HOSTNAME}/submissions/', id) [URL],
-          '${details}.${field}' Field,
-          json_value(s.${details}, '$.${field}.term') [Incorrect term]
-        from Submissions s
-        where
-          s.isSubmitted = 1
-          and s.deletedAt is null
-          and json_value(s.${details}, '$.${field}.term') is not null
-          and json_value(s.${details}, '$.${field}.term') not in (
-            select
-              v.term
-            from Trees t
-            join VocabularyXrefTree x on x.treeId = t.id
-            join VocabularyXrefVocabulary vxv on vxv.childId = x.vocabularyId
-            join Vocabulary v on v.id = vxv.childId
-            where
-              t.name = '${tree}'
-              and vxv.parentId is not null
-          );`
+      await (
+        await pool.connect()
       )
+        .request()
+        .input('tenantId', tenantId)
+        .input('urlBase', `${HOSTNAME}/submissions/`)
+        .input('tree', tree)
+        .query(
+          `select
+            s.id,
+            json_value(s.project, '$.title') Title,
+            concat(@urlBase, s.id) [URL],
+            '${details}.${field}' Field,
+            json_value(s.${details}, '$.${field}.term') [Incorrect term]
+          from Submissions s
+          join TenantXrefSubmission txs on txs.submissionId = s.id
+          where
+            txs.tenantId = @tenantId
+            and s.isSubmitted = 1
+            and s.deletedAt is null
+            and json_value(s.${details}, '$.${field}.term') is not null
+            and json_value(s.${details}, '$.${field}.term') not in (
+              select
+                v.term
+              from Trees t
+              join VocabularyXrefTree x on x.treeId = t.id
+              join VocabularyXrefVocabulary vxv on vxv.childId = x.vocabularyId
+              join Vocabulary v on v.id = vxv.childId
+              where
+                t.name = @tree
+                and vxv.parentId is not null
+            );`
+        )
     ).recordset
   }
 }

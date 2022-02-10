@@ -126,9 +126,13 @@ type Region {
 
 type Query {
   """
-
+  Get Report data for a particular visualization
   """
   chart(id: Chart!): JSON!
+  """
+  Get a list of submissions that seem to have bad data
+  """
+  incorrectSubmissionVocabularies(tenantId: Int!): JSON!
   """
   Retrieve the HTTP/Tenant information of the connecting client
   """
@@ -201,12 +205,16 @@ input TenantInput {
   theme: JSON
 }
 
+input MigrationInput {
+  tenantId: Int
+}
+
 type Mutation {
   """
   Run scripts on the database. These scripts should
   be idempotent in case they are run multiple times
   """
-  migrateDatabase(migration: Migrations!): Boolean!
+  migrateDatabase(migration: Migrations!, input: MigrationInput): Boolean!
   """
   Update tenant
   """

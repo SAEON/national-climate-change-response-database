@@ -4,12 +4,10 @@ import Table from './table'
 import Header from './header'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import useTheme from '@mui/material/styles/useTheme'
 import Typography from '@mui/material/Typography'
+import { Div } from '../../../components/html-tags'
 
 export default ({ active, headerRef }) => {
-  const theme = useTheme()
-
   if (!active) {
     return null
   }
@@ -21,7 +19,7 @@ export default ({ active, headerRef }) => {
   return (
     <Provider>
       {createPortal(<Header />, headerRef)}
-      <Card variant="overline">
+      <Card variant="outlined">
         <CardContent>
           <Typography>
             When adding tenants to the deployment, you will need to (1) configure an Nginx server
@@ -31,7 +29,7 @@ export default ({ active, headerRef }) => {
           </Typography>
         </CardContent>
       </Card>
-      <div style={{ marginTop: theme.spacing(2) }} />
+      <Div sx={{ marginTop: theme => theme.spacing(2) }} />
       <Table />
     </Provider>
   )

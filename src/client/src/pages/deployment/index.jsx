@@ -9,10 +9,13 @@ import Header from './header'
 import ExcelIcon from 'mdi-react/MicrosoftExcelIcon'
 import Fade from '@mui/material/Fade'
 import TenantIcon from 'mdi-react/AccountGroupIcon'
+import WarningIcon from 'mdi-react/WarningIcon'
 import { Div, Span } from '../../components/html-tags'
+import useLocalStorage from '../../hooks/use-localstorage'
 
 const ExcelTemplates = lazy(() => import('./excel-templates'))
 const Tenants = lazy(() => import('./tenants'))
+const FlaggedVocabularies = lazy(() => import('./flagged-vocabularies'))
 
 const _sections = [
   {
@@ -29,10 +32,17 @@ const _sections = [
     Render: Tenants,
     requiredPermission: '/deployment',
   },
+  {
+    primaryText: 'Flagged vocabularies',
+    secondaryText: 'Manual checks required',
+    Icon: () => <WarningIcon />,
+    Render: FlaggedVocabularies,
+    requiredPermission: '/deployment',
+  },
 ]
 
 export default () => {
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useLocalStorage(window.location.href, 0)
   const [ref, setRef] = useState(null)
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)

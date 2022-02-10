@@ -13,11 +13,15 @@ export default async (details, { field, kind, tree }) => {
             p.[value] val
           from Submissions s
           cross apply openjson(s.${details}) p
-          where p.[key] = '${field}'
+          where
+            s.isSubmitted = 1
+            and s.deletedAt is null
+            and p.[key] = '${field}'
         )
         
         select
-          cte.TItle,
+          cte.id,
+          cte.Title,
           cte.[URL],
           '${details}.${field}' Field,
           json_value(vocab.[value], '$.term') [Incorrect term]
@@ -41,14 +45,16 @@ export default async (details, { field, kind, tree }) => {
     return (
       await (await pool.connect()).request().query(
         `select
-          json_value(s.${details}, '$.title') Title,
+          id,
+          json_value(s.project, '$.title') Title,
           concat('${HOSTNAME}/submissions/', id) [URL],
           '${details}.${field}' Field,
           json_value(s.${details}, '$.${field}.term') [Incorrect term]
         from Submissions s
         where
-          json_value(s.${details}, '$.${field}.term') is not null
-          and json_value(s.${details}, '$.${field}.term') != ''
+          s.isSubmitted = 1
+          and s.deletedAt is null
+          and json_value(s.${details}, '$.${field}.term') is not null
           and json_value(s.${details}, '$.${field}.term') not in (
             select
               v.term

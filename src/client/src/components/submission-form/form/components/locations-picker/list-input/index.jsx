@@ -27,21 +27,21 @@ const NewPointForm = ({ closeFn, points, setPoints }) => {
     <>
       <DialogContent>
         <TextField
-          value={lat}
-          onChange={e => setLat(e.target.value)}
-          label="Latitude"
+          value={lng}
+          onChange={e => setLng(e.target.value)}
+          label="Longitude"
           type="number"
-          helperText="Latitude in degrees (East / West)"
+          helperText="Longitude in degrees (East / West)"
           fullWidth
           variant="outlined"
           margin="normal"
         />
         <TextField
-          value={lng}
-          onChange={e => setLng(e.target.value)}
-          label="Longitude"
+          value={lat}
+          onChange={e => setLat(e.target.value)}
+          label="Latitude"
           type="number"
-          helperText="Longitude in degrees (North / South)"
+          helperText="Latitude in degrees (North / South)"
           fullWidth
           variant="outlined"
           margin="normal"
@@ -51,7 +51,7 @@ const NewPointForm = ({ closeFn, points, setPoints }) => {
         <Button
           key="add-gps-point"
           onClick={e => {
-            setPoints([...points, [parseFloat(lat), parseFloat(lng)]])
+            setPoints([...points, [parseFloat(lng), parseFloat(lat)]])
             closeFn(e)
           }}
           startIcon={<PlusIcon size={18} />}

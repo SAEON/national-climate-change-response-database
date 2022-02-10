@@ -75,7 +75,6 @@ const RenderField = memo(
               [fieldName]: nationalIndex >= 0 ? [val[nationalIndex]] : val,
               districtMunicipality: undefined,
               localMunicipality: undefined,
-              xy: undefined,
             })
           }}
           label={placeholder}
@@ -127,11 +126,8 @@ const RenderField = memo(
         />
       )
     } else if (fieldName === 'xy') {
-      if (!form.province?.length) {
-        return null
-      }
       return (
-        <Collapse orientation="vertical" in={Boolean(form.province?.length)}>
+        <Collapse orientation="vertical" in={true}>
           <span>
             <Suspense key={fieldName} fallback={<Loading />}>
               <LocationsPicker

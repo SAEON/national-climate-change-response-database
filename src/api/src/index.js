@@ -29,6 +29,7 @@ import attachFileToSubmission from './http/attach-file-to-submission.js'
 import submitCompletedTemplates from './http/submit-completed-templates/index.js'
 import downloadTemplateRoute from './http/download-template.js'
 import downloadPublicFileRoute from './http/download-public-file.js'
+import downloadFlaggedVocabularies from './http/download-flagged-vocabularies.js'
 import downloadSubmissions from './http/download-submissions/index.js'
 import apolloServer from './graphql/index.js'
 import { PORT, API_KEY, SSL_ENV } from './config/index.js'
@@ -116,6 +117,7 @@ app
       .put('/http/create-tenant', createTenantRoute)
       .get('/http/download-template', downloadTemplateRoute)
       .get('/http/download-public-file', downloadPublicFileRoute)
+      .get('/http/download-flagged-vocabularies', downloadFlaggedVocabularies)
       .post('/http/download-submissions', downloadSubmissions)
       .routes()
   )

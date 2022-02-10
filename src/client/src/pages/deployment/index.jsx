@@ -11,7 +11,6 @@ import Fade from '@mui/material/Fade'
 import TenantIcon from 'mdi-react/AccountGroupIcon'
 import WarningIcon from 'mdi-react/WarningIcon'
 import { Div, Span } from '../../components/html-tags'
-import useLocalStorage from '../../hooks/use-localstorage'
 
 const ExcelTemplates = lazy(() => import('./excel-templates'))
 const Tenants = lazy(() => import('./tenants'))
@@ -42,7 +41,7 @@ const _sections = [
 ]
 
 export default () => {
-  const [activeIndex, setActiveIndex] = useLocalStorage(window.location.href, 0)
+  const [activeIndex, setActiveIndex] = useState(0)
   const [ref, setRef] = useState(null)
   const isAuthenticated = useContext(authenticationContext).authenticate()
   const { hasPermission } = useContext(authorizationContext)

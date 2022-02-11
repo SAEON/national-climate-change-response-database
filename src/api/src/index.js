@@ -27,7 +27,7 @@ import oauthAuthenticationCallbackRoute from './http/oauth-authentication-callba
 import loginRoute from './http/login.js'
 import attachFileToSubmission from './http/attach-file-to-submission.js'
 import submitCompletedTemplates from './http/submit-completed-templates/index.js'
-import downloadTemplateRoute from './http/download-template.js'
+import downloadExcelTemplateRoute from './http/download-excel-submission-template/index.js'
 import downloadPublicFileRoute from './http/download-public-file.js'
 import downloadFlaggedVocabularies from './http/download-flagged-vocabularies.js'
 import downloadSubmissions from './http/download-submissions/index.js'
@@ -115,7 +115,7 @@ app
       .post('/http/attach-file-to-submission', attachFileToSubmission)
       .post('/http/submit-completed-templates', submitCompletedTemplates)
       .put('/http/create-tenant', createTenantRoute)
-      .get('/http/download-template', downloadTemplateRoute)
+      .get('/http/download-template', downloadExcelTemplateRoute)
       .get('/http/download-public-file', downloadPublicFileRoute)
       .get('/http/download-flagged-vocabularies', downloadFlaggedVocabularies)
       .post('/http/download-submissions', downloadSubmissions)

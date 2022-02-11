@@ -26,6 +26,7 @@
   "bin": "src/api/bin/index.js",
   "pkg": {
     "assets": [
+      "src/api/bin/base.xlsm",
       "src/api/bin/trees/**/*",
       "src/api/bin/type-defs/**/*",
       "src/api/bin/sql/**/*",

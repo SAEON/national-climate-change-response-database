@@ -1,7 +1,7 @@
 import { pool } from '../pool.js'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
 import { createReadStream, readdir } from 'fs'
-import { join } from 'path'
+import { join, sep } from 'path'
 import { parse } from 'csv'
 import { performance } from 'perf_hooks'
 import mssql from 'mssql'
@@ -12,7 +12,7 @@ export default async () => {
   const t0 = performance.now()
 
   const VOCABULARIES = await new Promise((y, n) =>
-    readdir(join(__dirname, './trees'), {}, (e, files) => (e ? n(e) : y(files.sort())))
+    readdir(join(__dirname, `.${sep}trees`), {}, (e, files) => (e ? n(e) : y(files.sort())))
   )
 
   /**
@@ -34,7 +34,7 @@ export default async () => {
     for (const VOCABULARY of VOCABULARIES) {
       console.info('Loading vocabulary', VOCABULARY, 'into database')
 
-      const parser = createReadStream(join(__dirname, `./trees/${VOCABULARY}`)).pipe(
+      const parser = createReadStream(join(__dirname, `.${sep}trees${sep}${VOCABULARY}`)).pipe(
         parse({ columns: true, skipEmptyLines: true })
       )
 

@@ -12,10 +12,10 @@ import Typography from '@mui/material/Typography'
 import { alpha } from '@mui/material/styles'
 import Link from '@mui/material/Link'
 
-const _wkt = new WKT()
-
 // eslint-disable-next-line
 export default ({ geofencePolygons = [], points = [], setPoints }) => {
+  const _wkt = useMemo(() =>  new WKT(), [])
+
   const { enqueueSnackbar } = useSnackbar()
   const { map } = useContext(mapContext)
   const source = useMemo(() => new VectorSource({ wrapX: false }), [])
@@ -28,7 +28,7 @@ export default ({ geofencePolygons = [], points = [], setPoints }) => {
         featureProjection: 'EPSG:4326',
       })
     })
-  }, [geofencePolygons])
+  }, [_wkt, geofencePolygons])
 
   const drawInteraction = useMemo(
     () =>

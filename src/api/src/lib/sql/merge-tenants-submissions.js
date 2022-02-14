@@ -98,8 +98,13 @@ values
   (s.tenantId, s.submissionId)
 
 /**
- * (tenantId, submissionId) currently exists. Should it be deleted?
- * Select 1 in the "and" clause where row should be deleted
+ * Not matched by source means (tenantId, submissionId)
+ * currently exists. The question is, should it be deleted?
+ * 
+ * The logic of this is that for any given case, the value
+ * "1" is selected (or not) to indicate whether a row should
+ * be deleted (or not deleted). i.e. "Select 1 in the "and"
+ * clause where the row should be deleted"
  *
  * The merge SQL works in the following 'contexts' depending on input
  *
@@ -178,7 +183,9 @@ and (
             from
               _source
           )
-      ) -- (other, don't delete row)
+      )
+      
+      -- (other, don't delete row)
       else 0
     end
 ) = 1 then delete;`

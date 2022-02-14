@@ -14,7 +14,7 @@ import Link from '@mui/material/Link'
 
 // eslint-disable-next-line
 export default ({ geofencePolygons = [], points = [], setPoints }) => {
-  const _wkt = useMemo(() =>  new WKT(), [])
+  const _wkt = useMemo(() => new WKT(), [])
 
   const { enqueueSnackbar } = useSnackbar()
   const { map } = useContext(mapContext)

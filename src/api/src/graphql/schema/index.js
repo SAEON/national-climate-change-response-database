@@ -107,10 +107,6 @@ const typeFields = graphqlSync({
 
 export default schema
 
-export const projectVocabularyFields = _projectVocabularyFields
-export const mitigationVocabularyFields = _mitigationVocabularyFields
-export const adaptationVocabularyFields = _adaptationVocabularyFields
-
 const getFields = inputFields =>
   Object.fromEntries(
     inputFields.map(({ name, type: { kind, ofType }, description }) => {
@@ -118,59 +114,46 @@ const getFields = inputFields =>
     })
   )
 
+const getTreeName = ({ field, inputType }) => {
+  const tree = inputType[field].description.split('::')[2].trim()
+
+  if (!tree) {
+    throw new Error(
+      `Unable to get vocabulary tree from GraphQL input type. Are you sure the description is in the correct format? ("Display name :: Description :: Tree name"). Field: ${field}. Input type: ${JSON.stringify(
+        inputType,
+        null,
+        2
+      )}`
+    )
+  }
+
+  return tree
+}
+
+export const projectVocabularyFields = _projectVocabularyFields
+export const mitigationVocabularyFields = _mitigationVocabularyFields
+export const adaptationVocabularyFields = _adaptationVocabularyFields
 export const projectInputFields = getFields(typeFields.p.inputFields)
 export const mitigationInputFields = getFields(typeFields.m.inputFields)
 export const adaptationInputFields = getFields(typeFields.a.inputFields)
 
-/**
- * THESE MAPS NEED TO BE
- * KEPT UP-TO-DATE MANUALLY
- *
- * (sorry!)
- * Keeping this information in the
- * field descriptions makes it easy
- * to use the vocabulary trees on the
- * client. It would have been better to
- * annotate/decorate field definitions instead
- * of using descriptions.
- *
- * These need to match the tree specified
- * GraphQL types (tress are specified in the
- * type descriptions).
- */
+export const projectVocabularyFieldsTreeMap = Object.fromEntries(
+  _projectVocabularyFields.map(field => [
+    field,
+    getTreeName({ field, inputType: projectInputFields }),
+  ])
+)
 
-export const projectVocabularyFieldsTreeMap = {
-  estimatedBudget: 'budgetRanges',
-  interventionType: 'interventionTypes',
-  implementationStatus: 'actionStatus',
-  fundingType: 'fundingTypes',
-  province: 'regions',
-  districtMunicipality: 'regions',
-  localMunicipality: 'regions',
-}
+export const mitigationVocabularyFieldsTreeMap = Object.fromEntries(
+  _mitigationVocabularyFields.map(field => [
+    field,
+    getTreeName({ field, inputType: mitigationInputFields }),
+  ])
+)
 
-export const mitigationVocabularyFieldsTreeMap = {
-  hostSector: 'mitigationSectors',
-  hostSubSectorPrimary: 'mitigationSectors',
-  hostSubSectorSecondary: 'mitigationSectors',
-  mitigationType: 'mitigationType',
-  mitigationSubType: 'mitigationType',
-  mitigationProgramme: 'mitigationProgramme',
-  nationalPolicy: 'mitigationPolicies',
-  regionalPolicy: 'mitigationPolicies',
-  coBenefitEnvironmental: 'coBenefits',
-  coBenefitSocial: 'coBenefits',
-  coBenefitEconomic: 'coBenefits',
-  carbonCreditStandard: 'carbonCreditStandards',
-  carbonCreditCdmExecutiveStatus: 'executiveStatus',
-  carbonCreditCdmMethodology: 'cdmMethodology',
-  carbonCreditVoluntaryOrganization: 'carbonCreditVoluntaryOrganizations',
-}
-
-export const adaptationVocabularyFieldsTreeMap = {
-  adaptationSector: 'adaptationSectors',
-  nationalPolicy: 'adaptationPolicies',
-  regionalPolicy: 'adaptationPolicies',
-  target: 'adaptationPolicies',
-  hazard: 'hazards',
-}
+export const adaptationVocabularyFieldsTreeMap = Object.fromEntries(
+  _adaptationVocabularyFields.map(field => [
+    field,
+    getTreeName({ field, inputType: adaptationInputFields }),
+  ])
+)

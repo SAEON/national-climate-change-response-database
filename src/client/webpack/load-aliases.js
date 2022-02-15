@@ -20,5 +20,5 @@ module.exports = (ROOT, mode) => ({
 
   // React
   react: path.resolve(ROOT, './node_modules/react'),
-  'react-dom': path.resolve(ROOT, './node_modules/react-dom')
+  'react-dom': path.resolve(ROOT, './node_modules/react-dom'),
 })

@@ -50,6 +50,7 @@ export const admin = {
     permissions['create-tenant'],
     permissions['update-tenant'],
     permissions['delete-tenant'],
+    permissions.DBA,
   ]),
 }
 

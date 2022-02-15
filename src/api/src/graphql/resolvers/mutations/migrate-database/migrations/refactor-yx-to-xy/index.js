@@ -10,7 +10,11 @@ import wkt from 'wkt'
  * to use YX points, and also used to allow users to input YX
  * points. This script just changes YX to XY in the database
  */
-export default async () => {
+export default async ctx => {
+  const { user } = ctx
+  const { ensurePermission } = user
+  await ensurePermission({ ctx, permission: PERMISSIONS['migrate-database'] })
+
   const transaction = new mssql.Transaction(await pool.connect())
   await transaction.begin()
 

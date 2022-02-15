@@ -35,6 +35,10 @@ export default Object.freeze({
     name: 'assign-permission',
     description: 'Assign permission to role',
   },
+  DBA: {
+    name: 'DBA',
+    description: 'Administer database content',
+  },
   'migrate-database': {
     name: 'migrate-database',
     description: 'Run database migration scripts',

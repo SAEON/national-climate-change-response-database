@@ -12,7 +12,7 @@ module.exports = (ROOT, output) => {
           template: path.join(ROOT, `src/entry-points/${name}/index.html`),
           filename: path.join(ROOT, output, `${name}.html`),
           PUBLIC_PATH: '',
-          chunks: [name]
+          chunks: [name],
         })
     )
 }

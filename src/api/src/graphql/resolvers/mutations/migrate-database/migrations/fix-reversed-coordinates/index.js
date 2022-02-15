@@ -2,6 +2,7 @@ import { pool } from '../../../../../../mssql/pool.js'
 import mssql from 'mssql'
 import OL from 'ol/format/WKT.js'
 import wkt from 'wkt'
+import PERMISSIONS from '../../../../../../user-model/permissions.js'
 
 /**
  * The heatmap on the client shows that sometimes
@@ -9,7 +10,11 @@ import wkt from 'wkt'
  * order. You can see this because the points appear
  * just off the coast of Africa
  */
-export default async () => {
+export default async ctx => {
+  const { user } = ctx
+  const { ensurePermission } = user
+  await ensurePermission({ ctx, permission: PERMISSIONS['migrate-database'] })
+
   const ol = new OL()
   const transaction = new mssql.Transaction(await pool.connect())
   await transaction.begin()

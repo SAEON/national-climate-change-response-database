@@ -27,6 +27,14 @@ export const SUBMITTED_TEMPLATES_DIRECTORY = p(FILES_DIRECTORY, `.${sep}submitte
 export const TEMP_DIRECTORY = p(FILES_DIRECTORY, `.${sep}temp`)
 export const UPLOADS_DIRECTORY = p(FILES_DIRECTORY, `.${sep}uploads`)
 
+if (DEPLOYMENT_ENV === 'production') {
+  if (SKIP_INSTALLS) {
+    throw new Error(
+      'SKIP_INSTALLS is set to true. This is for local development only and should be set to false for deployments'
+    )
+  }
+}
+
 /**
  * Ensure required directories exists
  */

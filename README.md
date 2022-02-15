@@ -60,6 +60,7 @@ git clone <repository> nccs
 cd nccs
 
 # Install package dependencies (this might take several minutes on the first run)
+# This command occasionally fails (don't know why). If so, run "npm install" in the root folder, src/api, and src/client
 npm run install-dependencies
 ```
 
@@ -70,6 +71,7 @@ npm run install-dependencies
 docker network create --driver bridge nccrd
 
 # Start a Developer SQL Server instance (manually create the database)
+mkdir /home/$USER/sql-server-data
 docker run \
   --net=nccrd \
   --name sql-server \
@@ -82,6 +84,15 @@ docker run \
   -p 1433:1433 \
   -d \
   mcr.microsoft.com/mssql/server:2017-latest
+
+### Setup the NCCRD database
+# (1) Then log in to SQL Server using SA creds (sa / password!123#)
+# (2) Make sure the system database "model" is set to recovery model = simple (to avoid large, unecessary log files)
+# (3) Create a database called "nccrd" with "SIMPLE" recovery mode (should be default if you set the model DB to SIMPLE)
+
+### Configure API and client environment variables and adjust values accordingly
+cp src/api/.env.example src/api/.env
+cp src/client/.env.example src/client/.env 
 
 # Start the Node.js API server in development mode
 npm run api

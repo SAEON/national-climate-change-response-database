@@ -141,8 +141,8 @@ export default ({ field, formName }) => {
   if (fieldName === 'nationalPolicy') {
     return (
       <ControlledVocabularySelectMultiple
-        key={fieldName}
         id={fieldName}
+        key={fieldName}
         tree={tree}
         roots={['National policy']}
         name={fieldName}
@@ -186,25 +186,6 @@ export default ({ field, formName }) => {
   /**
    * Controlled vocabulary
    */
-  if (fieldName === 'coBenefitEconomic') {
-    return (
-      <ControlledVocabularySelect
-        key={fieldName}
-        tree={tree}
-        root="Economic"
-        name={fieldName}
-        value={value}
-        error={isRequired && !value}
-        onChange={val => updateForm({ [fieldName]: val })}
-        placeholder={placeholder}
-        helperText={helperText}
-      />
-    )
-  }
-
-  /**
-   * Controlled vocabulary
-   */
   if (fieldName === 'mitigationProgramme') {
     return (
       <ControlledVocabularySelect
@@ -224,17 +205,38 @@ export default ({ field, formName }) => {
   /**
    * Controlled vocabulary
    */
-  if (fieldName === 'coBenefitEnvironmental') {
+  if (fieldName === 'coBenefitEconomic') {
     return (
-      <ControlledVocabularySelect
+      <ControlledVocabularySelectMultiple
+        id={fieldName}
         key={fieldName}
         tree={tree}
-        root="Environmental"
+        roots={['Economic']}
         name={fieldName}
         value={value}
         error={isRequired && !value}
         onChange={val => updateForm({ [fieldName]: val })}
-        placeholder={placeholder}
+        label={placeholder}
+        helperText={helperText}
+      />
+    )
+  }
+
+  /**
+   * Controlled vocabulary
+   */
+  if (fieldName === 'coBenefitEnvironmental') {
+    return (
+      <ControlledVocabularySelectMultiple
+        id={fieldName}
+        key={fieldName}
+        tree={tree}
+        roots={['Environmental']}
+        name={fieldName}
+        value={value}
+        error={isRequired && !value}
+        onChange={val => updateForm({ [fieldName]: val })}
+        label={placeholder}
         helperText={helperText}
       />
     )
@@ -245,16 +247,17 @@ export default ({ field, formName }) => {
    */
   if (fieldName === 'coBenefitSocial') {
     return (
-      <ControlledVocabularySelect
+      <ControlledVocabularySelectMultiple
+        id={fieldName}
         key={fieldName}
         tree={tree}
-        root="Social"
+        roots={['Social']}
         name={fieldName}
         value={value}
         error={isRequired && !value}
         onChange={val => updateForm({ [fieldName]: val })}
-        placeholder={placeholder}
         helperText={helperText}
+        label={placeholder}
       />
     )
   }

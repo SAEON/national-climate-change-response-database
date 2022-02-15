@@ -8,10 +8,8 @@ Co-benefit,Economic,coBenefits
 Environmental,"Improved air quality",coBenefits
 Environmental,"Water saved (Ml/annum)",coBenefits
 Environmental,"Avoided coal (Mt/annum)",coBenefits
-Environmental,"Sustainable natural resources use (contributes to the utilization of South Africa's sustainable natural resourcesNo)",coBenefits
-Environmental,"Sustainable natural resources use (does not contribute to the utilization of South Africa's sustainable natural resources)",coBenefits
-Environmental,"Biodiversity conservation (contributes to biodiversity conservation)",coBenefits
-Environmental,"Biodiversity conservation (does not contribute to biodiversity conservation)",coBenefits
+Environmental,"Sustainable natural resources use",coBenefits
+Environmental,"Biodiversity conservation",coBenefits
 Environmental,"Waste (organic and inorganic) diverted from landfill (t/annum)",coBenefits
 Environmental,"Increase in MW of installed renewable electricity",coBenefits
 
@@ -19,7 +17,6 @@ Social,"Local investment (Rands)",coBenefits
 Social,"Municipal spend on climate change interventions (Rands/annum) OR municipal revenues",coBenefits
 Social,"Technology development, diffusion and transfer (Qualitative description)",coBenefits
 Social,"Resource efficiency (promotes efficient use of resources)",coBenefits
-Social,"Resource efficiency (Does not promote efficient use of resources)",coBenefits
 Social,"Energy cost savings per energy carrier (R/annum)",coBenefits
 Social,"Energy savings per energy carrier (PJ/annum)",coBenefits
 Social,"No. of green jobs created per annum",coBenefits
@@ -27,10 +24,8 @@ Social,"Total no. of jobs created per annum",coBenefits
 Social,"No. of new SMMEs created per annum",coBenefits
 Social,"Number of people to trained with new skills per annum",coBenefits
 
-Economic,"Contribution to basic service access (Yes - contributes to access to basic services",coBenefits
-Economic,"Contribution to basic service access (No - does not contribute to access to basic services)",coBenefits
+Economic,"Contribution to basic service access",coBenefits
 Economic,"Contribution to promotion of gender equality (Number or percentage of jobs for women per year)",coBenefits
 Economic,"Youth empowerment (Number or percentage of jobs for people under 35 per year)",coBenefits
 Economic,"Local ownership (% local ownership of assets)",coBenefits
-Economic,"Rural social upliftment (Yes - project is in rural area)",coBenefits
-Economic,"Rural social upliftment No - project is in an urban area)",coBenefits
+Economic,"Rural social upliftment",coBenefits

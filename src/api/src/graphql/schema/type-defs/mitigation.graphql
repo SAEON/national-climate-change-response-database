@@ -54,7 +54,7 @@ input MitigationInput {
   """
   Environmental co-benefit :: Select co-benefit :: coBenefits
   """
-  coBenefitEnvironmental: ControlledVocabularyInput
+  coBenefitEnvironmental: [ControlledVocabularyInput]
   """
   Environmental co-benefit description :: Please indicate the quantified environmental benefits from the project :: coBenefits
   """
@@ -62,7 +62,7 @@ input MitigationInput {
   """
   Social co-benefit :: Select co-benefit :: coBenefits
   """
-  coBenefitSocial: ControlledVocabularyInput
+  coBenefitSocial: [ControlledVocabularyInput]
   """
   Social co-benefit description :: Please indicate the quantified social benefits from the project
   """
@@ -70,7 +70,7 @@ input MitigationInput {
   """
   Economic co-benefit :: Select co-benefit :: coBenefits
   """
-  coBenefitEconomic: ControlledVocabularyInput
+  coBenefitEconomic: [ControlledVocabularyInput]
   """
   Economic co-benefit description :: Please indicate the quantified social benefits from the project
   """

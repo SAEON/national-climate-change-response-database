@@ -37,7 +37,7 @@ export default {
   assignRolesToUser: authorize({ permission: PERMISSIONS['assign-role'] })(assignRolesToUser),
 
   // DB
-  migrateDatabase: authorize({ permission: PERMISSIONS.DBA })(migrateDatabase),
+  migrateDatabase: authorize({ permission: PERMISSIONS['migrate-database'] })(migrateDatabase),
 
   // Tenants
   updateTenant: authorize({ permission: PERMISSIONS['update-tenant'] })(updateTenant),

@@ -32,7 +32,7 @@ export default async (ctx, validTenants, ...permissions) => {
     join Users u on u.id = xu.userId
     where
       userId = @userId
-      and p.name in (${permissions.map((p, i) => `@p_${i}`).join(',')});`
+      and p.name in (${permissions.map((_, i) => `@p_${i}`).join(',')});`
   const result = await request.query(sql)
 
   logSql(

@@ -22,7 +22,7 @@ export default {
   submissionTemplates: authorize({ permission: PERMISSIONS['view-submission-templates'] })(
     submissionTemplates
   ),
-  incorrectSubmissionVocabularies: authorize({ permission: PERMISSIONS['migrate-database'] })(
+  incorrectSubmissionVocabularies: authorize({ permission: PERMISSIONS.DBA })(
     incorrectSubmissionVocabularies
   ),
   tenants,

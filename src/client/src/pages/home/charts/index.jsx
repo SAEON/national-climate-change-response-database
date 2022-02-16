@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid'
 const ChartContainer = props => (
   <CC
     sx={{
-      backgroundColor: theme => alpha(theme.palette.common.white, 0.8),
+      backgroundColor: theme => alpha(theme.palette.common.white, 0.9),
       height: 300,
       width: '100%',
     }}

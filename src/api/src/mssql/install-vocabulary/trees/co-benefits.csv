@@ -13,19 +13,19 @@ Environmental,"Biodiversity conservation",coBenefits
 Environmental,"Waste (organic and inorganic) diverted from landfill (t/annum)",coBenefits
 Environmental,"Increase in MW of installed renewable electricity",coBenefits
 
-Social,"Local investment (Rands)",coBenefits
-Social,"Municipal spend on climate change interventions (Rands/annum) OR municipal revenues",coBenefits
-Social,"Technology development, diffusion and transfer (Qualitative description)",coBenefits
-Social,"Resource efficiency (promotes efficient use of resources)",coBenefits
-Social,"Energy cost savings per energy carrier (R/annum)",coBenefits
-Social,"Energy savings per energy carrier (PJ/annum)",coBenefits
-Social,"No. of green jobs created per annum",coBenefits
-Social,"Total no. of jobs created per annum",coBenefits
-Social,"No. of new SMMEs created per annum",coBenefits
-Social,"Number of people to trained with new skills per annum",coBenefits
+Economic,"Local investment (Rands)",coBenefits
+Economic,"Municipal spend on climate change interventions (Rands/annum) OR municipal revenues",coBenefits
+Economic,"Technology development, diffusion and transfer (Qualitative description)",coBenefits
+Economic,"Resource efficiency (promotes efficient use of resources)",coBenefits
+Economic,"Energy cost savings per energy carrier (R/annum)",coBenefits
+Economic,"Energy savings per energy carrier (KJ/annum)",coBenefits
+Economic,"No. of green jobs created per annum",coBenefits
+Economic,"Total no. of jobs created per annum",coBenefits
+Economic,"No. of new SMMEs created per annum",coBenefits
+Economic,"Number of people to be trained with new skills per annum",coBenefits
 
-Economic,"Contribution to basic service access",coBenefits
-Economic,"Contribution to promotion of gender equality (Number or percentage of jobs for women per year)",coBenefits
-Economic,"Youth empowerment (Number or percentage of jobs for people under 35 per year)",coBenefits
-Economic,"Local ownership (% local ownership of assets)",coBenefits
-Economic,"Rural social upliftment",coBenefits
+Social,"Contribution to basic service access",coBenefits
+Social,"Contribution to promotion of gender equality (Number or percentage of jobs for women per year)",coBenefits
+Social,"Youth empowerment (Number or percentage of jobs for people under 35 per year)",coBenefits
+Social,"Local ownership (% local ownership of assets)",coBenefits
+Social,"Rural social upliftment",coBenefits

@@ -13,7 +13,10 @@ const csvOptions = {
   quoted: true,
 }
 
-const stringifyRow = row => stringifySync([row], csvOptions)
+const sanitizeNewlines = val =>
+  typeof val === 'string' ? val.replaceAll(/\r\n/g, '\\n').replaceAll(/\n/g, '\\n') : val
+
+const stringifyRow = row => stringifySync([row.map(val => sanitizeNewlines(val))], csvOptions)
 
 /**
  * Stream downloads to user in CSV
@@ -84,7 +87,13 @@ export default async ctx => {
     ctx.body = dataStream
     ctx.attachment(`CCRD download ${format(new Date(), 'yyyy-MM-dd HH-mm-ss')}.csv`) // This doesn't seem to go through to the client, when the client uses the fetch API
 
-    // Push the CSV headers to the download
+    /**
+     * Push the CSV headers to the download
+     *
+     * NOTE - The CSV spec allows newlines in quoted fields.
+     * But older Excel versions do not. So replace newlines with
+     * escaped newlines
+     **/
     dataStream.push(stringifyRow(makeHeaderRow({ columns })))
 
     // Create a MSSQL streaming query

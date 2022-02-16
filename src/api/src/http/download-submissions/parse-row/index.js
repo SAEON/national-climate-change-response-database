@@ -35,8 +35,8 @@ const parseValue = (id, { key, obj, vocabFields, inputFields }) => {
         console.error(
           'Error parsing submission ID',
           id,
-          'A vocabulary field expecting a list is stored as an object. Field',
-          key
+          `Field: ${key}`,
+          'A vocabulary field expecting a list is stored as an object. If this field has been changed from a single term input to a list input, this is expected and you can ignore this message. But in the future please migrate the data to correct for this'
         )
         return value?.term || ''
       }

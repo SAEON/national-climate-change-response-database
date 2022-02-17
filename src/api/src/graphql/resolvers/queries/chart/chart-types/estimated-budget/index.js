@@ -56,7 +56,7 @@ const sql = `
     startYear [year],
     endYear,
     annualBudget
-    from T2
+  from T2
   where
     annualBudget is not null
   
@@ -68,24 +68,21 @@ const sql = `
     [year] + 1 [year],
     endYear,
     annualBudget
-    from rws
+  from rws
   where
     rws.[year] < rws.endYear
 )
   
 select
-[year],
-intervention,
-sum(annualBudget) spend
-
+  [year],
+  intervention,
+  sum(annualBudget) spend
 from rws
-
 group by
-[year],
-intervention
-
+  [year],
+  intervention
 order by
-[year] asc;`
+  [year] asc;`
 
 export default async ctx =>
   (

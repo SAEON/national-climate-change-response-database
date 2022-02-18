@@ -10,32 +10,45 @@ import {
 } from '../../graphql/resolvers/types/form-layout/layout-config.js'
 import {
   projectInputFields,
-  projectVocabularyFieldsTreeMap,
   adaptationInputFields,
-  adaptationVocabularyFieldsTreeMap,
   mitigationInputFields,
-  mitigationVocabularyFieldsTreeMap,
 } from '../../graphql/schema/index.js'
+import col2Letter from '../../lib/xlsx/col-to-letter.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 const baseTemplatePath = normalize(join(__dirname, `.${sep}base.xlsm`))
 
+const formLayoutSheet = '_FormLayout'
 const vocabularySheet = '_Vocabularies'
-const veryHiddenSheets = [vocabularySheet, '_VBA', '_Compile']
+const fieldDefinitionSheet = '_FieldDefinitions'
+const veryHiddenSheets = [
+  vocabularySheet,
+  '_VBA',
+  '_Compile',
+  fieldDefinitionSheet,
+  formLayoutSheet,
+]
 
-function colLetter(num) {
-  let letters = ''
-  while (num >= 0) {
-    letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[num % 26] + letters
-    num = Math.floor(num / 26) - 1
-  }
-  return letters
+const addFieldDefs = ({ sheet, fields, range, title }) => {
+  const [startCol, endCol] = range.split(':')
+  sheet
+    .range(`${startCol}1:${endCol}1`)
+    .merged(true)
+    .value([[title]])
+    .style('horizontalAlignment', 'center')
+  sheet
+    .range(`${startCol}2:${endCol}2`)
+    .value([['Field', 'Label', 'description', 'Type', 'Vocabulary Tree']])
+  Object.entries(fields).forEach(([fieldName, { kind, description: _description }], i) => {
+    const [label, description, vocabularyTree] = _description.split('::')
+    sheet
+      .range(`${startCol}${i + 3}:${endCol}${i + 3}`)
+      .value([[fieldName, label, description || '', kind, vocabularyTree || '']])
+  })
 }
 
 export default async ctx => {
-  const { user } = ctx
-  const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS['create-submission'] })
+  await ctx.user?.ensurePermission({ ctx, permission: PERMISSIONS['create-submission'] })
 
   /**
    * Make the vocabulary trees
@@ -102,13 +115,54 @@ export default async ctx => {
   // Open the xlsx file
   const workbook = await xlsx.fromFileAsync(baseTemplatePath)
 
+  /**
+   * Set the field type definitions
+   */
+
+  // Project
+  addFieldDefs({
+    sheet: workbook.sheet(fieldDefinitionSheet),
+    fields: projectInputFields,
+    range: 'A:E',
+    title: 'Project',
+  })
+
+  // Mitigation
+  addFieldDefs({
+    sheet: workbook.sheet(fieldDefinitionSheet),
+    fields: mitigationInputFields,
+    range: 'F:J',
+    title: 'Mitigation',
+  })
+
+  // Adaptation
+  addFieldDefs({
+    sheet: workbook.sheet(fieldDefinitionSheet),
+    fields: adaptationInputFields,
+    range: 'K:O',
+    title: 'Adaptation',
+  })
+
   // Write the trees to the Excel template
   Object.entries(trees).forEach(([name, tree], i) => {
     workbook
       .sheet(vocabularySheet)
-      .range(`${colLetter(i)}1:${colLetter(i)}2`)
+      .range(`${col2Letter(i)}1:${col2Letter(i)}2`)
       .value([[name], [JSON.stringify(tree)]])
   })
+
+  // Write the form layout configuration to the Excel template
+  workbook
+    .sheet(formLayoutSheet)
+    .range(`A1:C2`)
+    .value([
+      ['Project', 'Mitigation', 'Adaptation'],
+      [
+        JSON.stringify(projectFormLayout),
+        JSON.stringify(mitigationFormLayout),
+        JSON.stringify(adaptationFormLayout),
+      ],
+    ])
 
   // Hide sheets
   veryHiddenSheets.forEach(sheetName => {

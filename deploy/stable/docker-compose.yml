@@ -64,6 +64,5 @@ services:
       HOSTNAME: https://nccrd.environment.gov.za
       SSL_ENV: production
       ODP_AUTH_CLIENT_SECRET: $ODP_AUTH_CLIENT_SECRET
-      SHOW_DEV_WARNING: 'false'
     networks:
       - nccrd_stable

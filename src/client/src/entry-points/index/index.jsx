@@ -35,8 +35,8 @@ const Entry = () => {
           You have reached a DEVELOPMENT deployment of the <i>Climate Change Response Database</i>{' '}
           software platform. If you are testing the site you can ignore this message. Otherwise
           please navigate to the live deployment at{' '}
-          <Link target="_blank" rel="noopener noreferrer" href={HOSTNAME}>
-            {HOSTNAME}
+          <Link target="_blank" rel="noopener noreferrer" href={'https://nccrd.environment.gov.za'}>
+            nccrd.environment.gov.za
           </Link>
         </DialogContent>
         <DialogActions>

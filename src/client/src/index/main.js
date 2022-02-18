@@ -1,7 +1,7 @@
 import 'core-js'
 import 'regenerator-runtime'
 import 'typeface-roboto'
-import '../index.scss'
+import '../index.css'
 import '../lib/log-config'
 if (!window.crypto) window.crypto = window.msCrypto // IE 11
 import 'cross-fetch/polyfill' // IE 11

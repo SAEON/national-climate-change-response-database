@@ -1,3 +1,12 @@
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 ::-webkit-scrollbar {
   width: 4px;
   height: 6px;
@@ -12,4 +21,15 @@
 ::-webkit-scrollbar-thumb {
   background-color: #999999;
   border-radius: 4px;
+}
+
+.map-mouse-position {
+  padding: 8px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.debug {
+  border: 5px solid red !important;
 }

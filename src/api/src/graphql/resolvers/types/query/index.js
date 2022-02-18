@@ -13,6 +13,7 @@ import tenants from '../../queries/tenants/index.js'
 import regions from '../../queries/regions/index.js'
 import clientContext from '../../queries/client-context/index.js'
 import chart from '../../queries/chart/index.js'
+import formLayout from '../../queries/form-layout.js'
 import incorrectSubmissionVocabularies from '../../queries/incorrect-submission-vocabularies/index.js'
 
 export default {
@@ -25,6 +26,7 @@ export default {
   incorrectSubmissionVocabularies: authorize({ permission: PERMISSIONS.DBA })(
     incorrectSubmissionVocabularies
   ),
+  formLayout: authorize({ permission: PERMISSIONS['create-submission'] })(formLayout),
   tenants,
   chart,
   clientContext,

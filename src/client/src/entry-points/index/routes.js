@@ -1,4 +1,8 @@
 import { lazy } from 'react'
+import Transition_ from '../../components/page-transition'
+import { DEFAULT_TENANT_ADDRESS, GQL_HOSTNAME } from '../../config'
+import { styled } from '@mui/material/styles'
+
 import UsersIcon_ from 'mdi-react/AccountMultipleIcon'
 import UserIcon_ from 'mdi-react/AccountIcon'
 import HomeIcon_ from 'mdi-react/HomeIcon'
@@ -8,7 +12,6 @@ import SubmitIcon_ from 'mdi-react/DatabaseAddIcon'
 import SubmissionsIcon_ from 'mdi-react/DatabaseIcon'
 import UserSubmissionIcon_ from 'mdi-react/AccountIcon'
 import LoginIcon_ from 'mdi-react/LoginIcon'
-import Transition_ from '../../components/page-transition'
 import TermsIcon_ from 'mdi-react/ContractIcon'
 import PrivacyIcon_ from 'mdi-react/LockCheckIcon'
 import SettingsIcon_ from 'mdi-react/SettingsIcon'
@@ -16,8 +19,7 @@ import AboutIcon_ from 'mdi-react/InfoVariantIcon'
 import ReportsIcon_ from 'mdi-react/ChartBarStackedIcon'
 import GithubIcon_ from 'mdi-react/GithubIcon'
 import LicenseIcon_ from 'mdi-react/LicenseIcon'
-import { DEFAULT_TENANT_ADDRESS } from '../../config'
-import { styled } from '@mui/material/styles'
+import ApiIcon_ from 'mdi-react/ApiIcon'
 
 const HomePage = lazy(() => import('../../pages/home'))
 const ReportsPage = lazy(() => import('../../pages/reports'))
@@ -54,6 +56,7 @@ const AboutIcon = styled(AboutIcon_)({})
 const ReportsIcon = styled(ReportsIcon_)({})
 const GithubIcon = styled(GithubIcon_)({})
 const LicenseIcon = styled(LicenseIcon_)({})
+const ApiIcon = styled(ApiIcon_)({})
 
 export default [
   {
@@ -279,6 +282,14 @@ export default [
         <UsersPage />
       </Transition>
     ),
+  },
+  {
+    label: 'GraphQL Playground',
+    Icon: ApiIcon,
+    href: GQL_HOSTNAME,
+    excludeFromNav: true,
+    includeInFooter: true,
+    to: '/no-route', // Hack - the to property is still required
   },
   {
     group: 'source code',

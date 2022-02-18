@@ -39,7 +39,7 @@ export default ({ routes }) => {
 
             return true
           })
-          .map(({ label, Icon, to }) => (
+          .map(({ label, Icon, href, to }) => (
             <Grid item xs={12} key={label}>
               <Div
                 sx={{
@@ -53,8 +53,11 @@ export default ({ routes }) => {
                     <Link
                       {...otherProps}
                       style={{ ...style, color: 'white', marginLeft: theme.spacing(1) }}
-                      to={to}
-                      component={RouterLink}
+                      to={href ? undefined : to}
+                      href={href}
+                      rel={href && 'noopener noreferrer'}
+                      target={href && '_blank'}
+                      component={href ? 'a' : RouterLink}
                       key={label}
                     >
                       {label}

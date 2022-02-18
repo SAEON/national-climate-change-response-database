@@ -1,62 +1,23 @@
-import { useContext, memo } from 'react'
-import { ComposeForm } from '../../form'
+import { useContext } from 'react'
 import { context as formContext } from '../../context'
 import RenderField from './_render-field'
+import ComposeForm from '../_compose-form'
 
-const Compose = memo(({ fields, validation }) => {
-  return (
-    <ComposeForm
-      formName="mitigation"
-      validation={validation}
-      RenderField={RenderField}
-      fields={fields}
-      hideSections={[]}
-      defaultExpanded={['Host sector']}
-      sections={{
-        'Host sector': ['hostSector', 'hostSubSectorPrimary', 'hostSubSectorSecondary'],
-        'Project type': ['mitigationType', 'mitigationSubType'],
-        'Policy information': [
-          'mitigationProgramme',
-          'nationalPolicy',
-          'otherNationalPolicy',
-          'regionalPolicy',
-          'otherRegionalPolicy',
-          'primaryIntendedOutcome',
-        ],
-        'Progress reports': ['fileUploads'],
-        'Progress calculator': ['progressData'],
-        'Co-benefit information': [
-          'coBenefitEnvironmental',
-          'coBenefitEnvironmentalDescription',
-          'coBenefitSocial',
-          'coBenefitSocialDescription',
-          'coBenefitEconomic',
-          'coBenefitEconomicDescription',
-        ],
-        'Carbon credit information': [
-          'carbonCredit',
-          'carbonCreditStandard',
-          'carbonCreditCdmExecutiveStatus',
-          'carbonCreditCdmMethodology',
-          'carbonCreditVoluntaryOrganization',
-          'carbonCreditVoluntaryMethodology',
-          'carbonCreditCdmProjectNumber',
-        ],
-      }}
-    />
-  )
-})
-
-/**
- * Don't render ComposeForm directly,
- * as that will trigger many re-renders
- */
 export default ({ active }) => {
-  const { mitigationFields, mitigationFormsValidation } = useContext(formContext)
+  const { formLayout, mitigationFields, mitigationFormsValidation } = useContext(formContext)
 
   if (!active) {
     return null
   }
 
-  return <Compose validation={mitigationFormsValidation} fields={mitigationFields} />
+  return (
+    <ComposeForm
+      formName="mitigation"
+      RenderField={RenderField}
+      validation={mitigationFormsValidation}
+      fields={mitigationFields}
+      formLayout={formLayout.mitigationDetails}
+      defaultExpanded={['Host sector']}
+    />
+  )
 }

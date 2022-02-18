@@ -81,6 +81,11 @@ export default ({
         adaptationFields: __type(name: $adaptationInputType) {
           ...CoreFields
         }
+        formLayout {
+          generalDetails
+          mitigationDetails
+          adaptationDetails
+        }
       }
     `,
     {
@@ -92,6 +97,7 @@ export default ({
     }
   )
 
+  const formLayout = data?.formLayout
   const projectFields = data?.projectFields.inputFields
   const mitigationFields = data?.mitigationFields.inputFields
   const adaptationFields = data?.adaptationFields.inputFields
@@ -276,6 +282,7 @@ export default ({
         mode,
         submissionId,
         projectFields,
+        formLayout,
         generalDetailsForm,
         generalDetailsFormValidation,
         updateGeneralDetailsForm,

@@ -1,51 +1,23 @@
-import { useContext, memo } from 'react'
-import { ComposeForm } from '../../form'
+import { useContext } from 'react'
 import { context as formContext } from '../../context'
 import RenderField from './_render-field'
+import ComposeForm from '../_compose-form'
 
-const Compose = memo(({ fields, validation }) => {
-  return (
-    <ComposeForm
-      formName="adaptation"
-      validation={validation}
-      RenderField={RenderField}
-      fields={fields}
-      defaultExpanded={['Adaptation details']}
-      sections={{
-        'Adaptation details': [
-          'adaptationSector',
-          'otherAdaptationSector',
-          'nationalPolicy',
-          'otherNationalPolicy',
-          'target',
-          'otherTarget',
-          'regionalPolicy',
-          'otherRegionalPolicy',
-          'hazard',
-          'otherHazard',
-        ],
-        'Progress calculator': ['progressData'],
-        'Climate impact': [
-          'observedClimateChangeImpacts',
-          'addressedClimateChangeImpact',
-          'responseImpact',
-        ],
-        'Progress reports': ['fileUploads'],
-      }}
-    />
-  )
-})
-
-/**
- * Don't render ComposeForm directly,
- * as that will trigger many re-renders
- */
 export default ({ active }) => {
-  const { adaptationFields, adaptationFormsValidation } = useContext(formContext)
+  const { adaptationFields, adaptationFormsValidation, formLayout } = useContext(formContext)
 
   if (!active) {
     return null
   }
 
-  return <Compose validation={adaptationFormsValidation} fields={adaptationFields} />
+  return (
+    <ComposeForm
+      formName="adaptation"
+      RenderField={RenderField}
+      validation={adaptationFormsValidation}
+      fields={adaptationFields}
+      formLayout={formLayout.adaptationDetails}
+      defaultExpanded={['Adaptation details']}
+    />
+  )
 }

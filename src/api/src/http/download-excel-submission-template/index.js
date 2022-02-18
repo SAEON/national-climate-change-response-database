@@ -3,6 +3,19 @@ import getCurrentDirectory from '../../lib/get-current-directory.js'
 import PERMISSIONS from '../../user-model/permissions.js'
 import xlsx from 'xlsx-populate'
 import { pool } from '../../mssql/pool.js'
+import {
+  generalDetails as projectFormLayout,
+  mitigationDetails as mitigationFormLayout,
+  adaptationDetails as adaptationFormLayout,
+} from '../../graphql/resolvers/types/form-layout/layout-config.js'
+import {
+  projectInputFields,
+  projectVocabularyFieldsTreeMap,
+  adaptationInputFields,
+  adaptationVocabularyFieldsTreeMap,
+  mitigationInputFields,
+  mitigationVocabularyFieldsTreeMap,
+} from '../../graphql/schema/index.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 const baseTemplatePath = normalize(join(__dirname, `.${sep}base.xlsm`))

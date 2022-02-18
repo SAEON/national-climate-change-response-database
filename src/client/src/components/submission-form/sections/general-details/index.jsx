@@ -1,71 +1,23 @@
-import { useContext, memo } from 'react'
-import { ComposeForm } from '../../form'
+import { useContext } from 'react'
 import { context as formContext } from '../../context'
 import RenderField from './_render-field'
+import ComposeForm from '../_compose-form'
 
-const Compose = memo(
-  ({ fields, validation }) => {
-    return (
-      <ComposeForm
-        formName="project"
-        RenderField={RenderField}
-        fields={fields}
-        defaultExpanded={['Project overview']}
-        validation={validation}
-        sections={{
-          'Project overview': [
-            'title',
-            'interventionType',
-            'description',
-            'implementationStatus',
-            'implementingOrganization',
-            'otherImplementingPartners',
-            'startYear',
-            'endYear',
-            'link',
-          ],
-          'Project funding': [
-            'fundingOrganisation',
-            'fundingType',
-            'fundingTypeOther',
-            'actualBudget',
-            'estimatedBudget',
-          ],
-          'Geographic location(s)': [
-            'province',
-            'districtMunicipality',
-            'localMunicipality',
-            'cityOrTown',
-            'xy',
-          ],
-          'Project manager': [
-            'projectManagerName',
-            'projectManagerOrganization',
-            'projectManagerPosition',
-            'projectManagerEmail',
-            'projectManagerTelephone',
-            'projectManagerMobile',
-          ],
-          'Submission status': ['__submissionStatus', '__submissionComments'],
-        }}
-      />
-    )
-  },
-  ({ validation: a }, { validation: { b } }) => {
-    return JSON.stringify(a) == JSON.stringify(b)
-  }
-)
-
-/**
- * Don't render ComposeForm directly,
- * as that will trigger many re-renders
- */
 export default ({ active }) => {
-  const { projectFields, generalDetailsFormValidation } = useContext(formContext)
+  const { formLayout, projectFields, generalDetailsFormValidation } = useContext(formContext)
 
   if (!active) {
     return null
   }
 
-  return <Compose validation={generalDetailsFormValidation} fields={projectFields} />
+  return (
+    <ComposeForm
+      formName="project"
+      RenderField={RenderField}
+      validation={generalDetailsFormValidation}
+      fields={projectFields}
+      formLayout={formLayout.generalDetails}
+      defaultExpanded={['Project overview']}
+    />
+  )
 }

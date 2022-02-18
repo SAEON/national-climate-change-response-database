@@ -93,6 +93,12 @@ type SubmissionTemplate {
   filePath: String!
 }
 
+type FormLayout {
+  generalDetails: JSON!
+  mitigationDetails: JSON!
+  adaptationDetails: JSON!
+}
+
 type Submission {
   id: ID!
   _id: Int
@@ -125,6 +131,10 @@ type Region {
 # enum Charts => build dynamically
 
 type Query {
+  """
+  Get JSON describing UI form layout. Used for the web and Excel form
+  """
+  formLayout: FormLayout!
   """
   Get Report data for a particular visualization
   """

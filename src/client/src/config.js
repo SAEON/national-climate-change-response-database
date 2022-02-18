@@ -1,5 +1,6 @@
 export const DEPLOYMENT_ENV = process.env.DEPLOYMENT_ENV || 'development'
 export const DEFAULT_NOTICES = process.env.DEFAULT_NOTICES || '' // "msg,info;msg2,warn;msg3,error;etd"
+export const SHOW_DEV_WARNING = process.env.SHOW_DEV_WARNING || 'false'
 
 export const HOSTNAME = process.env.HOSTNAME
   ? process.env.HOSTNAME === 'origin'

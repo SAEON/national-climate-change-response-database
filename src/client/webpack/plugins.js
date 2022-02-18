@@ -9,7 +9,6 @@ const dotenv = require('dotenv').config({ path: path.join(ROOT, './.env') })
 const {
   NODE_ENV: mode,
   DEPLOYMENT_ENV = 'local',
-  HOSTNAME = '',
   DEFAULT_TENANT_ADDRESS,
 } = process.env
 
@@ -19,7 +18,6 @@ module.exports = (ROOT, output) => {
       'process.env': {
         NODE_ENV: JSON.stringify(mode),
         DEPLOYMENT_ENV: JSON.stringify(DEPLOYMENT_ENV),
-        HOSTNAME: JSON.stringify(HOSTNAME),
         DEFAULT_TENANT_ADDRESS: JSON.stringify(DEFAULT_TENANT_ADDRESS),
         PACKAGE_NAME: JSON.stringify(packageJson.name),
         PACKAGE_DESCRIPTION: JSON.stringify(packageJson.description),

@@ -4,7 +4,6 @@ import _findRegionGeometry from './_find-region-geometry.js'
 import _findUserTenantRoles from './_find-user-tenant-roles.js'
 import _findRolePermissions from './_find-role-permissions.js'
 import _findUserPermissions from './_find-user-permissions.js'
-import _findSubmissionTemplateUsers from './_find-submission-template-users.js'
 import _findTenantSubmissions from './_find-tenant-submissions.js'
 import _findRegions from './_find-regions.js'
 import _findUserTenants from './_find-user-tenants.js'
@@ -17,7 +16,6 @@ export const makeDataFinders = () => {
   const findUserTenantRoles = _findUserTenantRoles()
   const findRolePermissions = _findRolePermissions()
   const findUserPermissions = _findUserPermissions()
-  const findSubmissionTemplateUsers = _findSubmissionTemplateUsers()
   const findRegions = _findRegions()
   const findUserTenants = _findUserTenants()
   const findRoles = _findRoles()
@@ -29,7 +27,6 @@ export const makeDataFinders = () => {
     findUserPermissions: userId => findUserPermissions.load(userId),
     findRolePermissions: roleId => findRolePermissions.load(roleId),
     findRegionGeometry: vocabularyId => findRegionGeometry.load(vocabularyId),
-    findSubmissionTemplateUsers: userId => findSubmissionTemplateUsers.load(userId),
     findRegions: regionId => findRegions.load(regionId),
     findUserTenants: userId => findUserTenants.load(userId),
     findRoles: id => findRoles.load(id),

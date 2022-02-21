@@ -13,7 +13,7 @@ import { MIGRATION_LOGS_DIRECTORY, HOSTNAME } from '../../../../../../config/ind
 import { pool } from '../../../../../../mssql/pool.js'
 import { join } from 'path'
 import { appendFile, unlink } from 'fs/promises'
-import query from './_query.js'
+import query, { DEV_QUERY_LIMIT } from './_query.js'
 import { stringify } from 'csv'
 
 export const csvFilePath = join(MIGRATION_LOGS_DIRECTORY, 'incorrect-submission-vocabularies.csv')
@@ -62,7 +62,7 @@ export default async (ctx, { tenantId }) => {
     // Re-instantiate the blank CSV with headers
     await appendToCsv({
       filepath: csvFilePath,
-      data: [['ID', 'Title', 'URL', 'Field', 'Incorrect term']],
+      data: [['ID', 'Title', 'URL', 'Field', 'Incorrect term', 'Tree']],
     })
 
     /**
@@ -80,7 +80,7 @@ export default async (ctx, { tenantId }) => {
           .input('tenantId', tenantId)
           .input('urlBase', `${HOSTNAME}/submissions/`)
           .query(
-            `select
+            `select ${DEV_QUERY_LIMIT}
               s.id,
               json_value(s.project, '$.title') Title,
               concat(@urlBase, s.id) [URL],

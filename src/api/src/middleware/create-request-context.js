@@ -1,7 +1,14 @@
 import { makeDataFinders } from '../mssql/data-loaders/index.js'
 import query from '../mssql/query.js'
 import { pool } from '../mssql/pool.js'
-import schema from '../graphql/schema/index.js'
+import schema, {
+  projectInputFields,
+  mitigationInputFields,
+  adaptationInputFields,
+  projectVocabularyFieldsTreeMap,
+  mitigationVocabularyFieldsTreeMap,
+  adaptationVocabularyFieldsTreeMap,
+} from '../graphql/schema/index.js'
 import userModel from '../user-model/index.js'
 
 /**
@@ -15,6 +22,20 @@ export default app => async (ctx, next) => {
 
   app.context.gql = {
     schema,
+    inputFields: {
+      project: {
+        fields: projectInputFields,
+        vocabularyFields: projectVocabularyFieldsTreeMap,
+      },
+      mitigation: {
+        fields: mitigationInputFields,
+        vocabularyFields: mitigationVocabularyFieldsTreeMap,
+      },
+      adaptation: {
+        fields: adaptationInputFields,
+        vocabularyFields: adaptationVocabularyFieldsTreeMap,
+      },
+    },
   }
 
   app.context.mssql = {

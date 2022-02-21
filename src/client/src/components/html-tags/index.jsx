@@ -19,3 +19,7 @@ export const Tfoot = styled('tfoot')({})
 export const Tr = styled('tr')({})
 export const Th = styled('th')({})
 export const Td = styled('td')({})
+
+export const Pre = styled('pre')({})
+
+export const Code = styled('code')({})

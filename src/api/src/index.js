@@ -22,7 +22,6 @@ import createTenantRoute from './http/create-tenant/index.js'
 import publicImageRoute from './http/public-image/index.js'
 import logoutRoute from './http/logout.js'
 import loginSuccessRoute from './http/login-success.js'
-import uploadTemplateRoute from './http/upload-template.js'
 import oauthAuthenticationCallbackRoute from './http/oauth-authentication-callback.js'
 import loginRoute from './http/login.js'
 import attachFileToSubmission from './http/attach-file-to-submission.js'
@@ -111,7 +110,6 @@ app
       .get('/http/authenticate', authenticateRoute)
       .get('/http/public-image/:name', publicImageRoute)
       .get('/http/logout', logoutRoute)
-      .post('/http/upload-template', uploadTemplateRoute)
       .post('/http/attach-file-to-submission', attachFileToSubmission)
       .post('/http/submit-completed-templates', submitCompletedTemplates)
       .put('/http/create-tenant', createTenantRoute)

@@ -228,23 +228,6 @@ create table VocabularyXrefRegion (
 );
 end
 
--- ExcelSubmissionTemplates
-if not exists (
-  select *
-  from sys.objects
-  where
-    object_id = OBJECT_ID(N'[dbo].[ExcelSubmissionTemplates]')
-    and type = 'U'
-)
-begin
-create table ExcelSubmissionTemplates (
-  id int not null identity primary key,
-  createdBy int foreign key references Users (id),
-  filePath nvarchar(500) not null unique,
-  createdAt datetime2 not null
-);
-end
-
 -- Submissions
 if not exists (
   select *

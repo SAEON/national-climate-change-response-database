@@ -86,13 +86,6 @@ input AdaptationFiltersInput {
   vocabularyFilters: [VocabularyFilterInput!]
 }
 
-type SubmissionTemplate {
-  id: Int!
-  createdBy: User
-  createdAt: DateTime!
-  filePath: String!
-}
-
 type FormLayout {
   generalDetails: JSON!
   mitigationDetails: JSON!
@@ -132,6 +125,14 @@ type Region {
 
 type Query {
   """
+  Returns the SQL used in the fixVocabulary mutation to check on the UI
+  """
+  fixVocabularySql(term: String!, field: String!, incorrectTerm: String!): JSON!
+  """
+  Get all (distinct) terms of a particular tree
+  """
+  flattenedTree(treeName: String!): [String!]!
+  """
   Get JSON describing UI form layout. Used for the web and Excel form
   """
   formLayout: FormLayout!
@@ -155,10 +156,6 @@ type Query {
   Retrieve all tenanted versions of this deployment
   """
   tenants: [Tenant!]!
-  """
-  Get a list of all the the Excel submission templates that have been uploaded
-  """
-  submissionTemplates: [SubmissionTemplate!]!
   """
   Get an in-progress form by the ID of the incomplete submission
   """
@@ -220,6 +217,10 @@ input MigrationInput {
 }
 
 type Mutation {
+  """
+  Run an 'update submissions ...' SQL query to update term values to correct terms
+  """
+  fixVocabulary(term: String!, field: String!, incorrectTerm: String!): Boolean!
   """
   Run scripts on the database. These scripts should
   be idempotent in case they are run multiple times

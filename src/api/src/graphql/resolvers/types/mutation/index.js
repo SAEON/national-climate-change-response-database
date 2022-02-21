@@ -9,6 +9,7 @@ import updateTenant from '../../mutations/update-tenant/index.js'
 import deleteTenants from '../../mutations/delete-tenants/index.js'
 import { pool } from '../../../../mssql/pool.js'
 import migrateDatabase from '../../mutations/migrate-database/index.js'
+import fixVocabulary from '../../mutations/fix-vocabulary/index.js'
 
 const getSubmissionOwner = id =>
   pool
@@ -32,6 +33,9 @@ export default {
   removeSubmissionAttachments: authorize({ permission: PERMISSIONS['attach-file-to-submission'] })(
     removeSubmissionAttachments
   ),
+
+  // Submissions
+  fixVocabulary: authorize({ permission: PERMISSIONS.DBA })(fixVocabulary),
 
   // Access
   assignRolesToUser: authorize({ permission: PERMISSIONS['assign-role'] })(assignRolesToUser),

@@ -6,24 +6,15 @@ import Container from '@mui/material/Container'
 import AccessDenied from '../../components/access-denied'
 import VerticalTabs from '../../packages/vertical-tabs'
 import Header from './header'
-import ExcelIcon from 'mdi-react/MicrosoftExcelIcon'
 import Fade from '@mui/material/Fade'
 import TenantIcon from 'mdi-react/AccountGroupIcon'
 import WarningIcon from 'mdi-react/WarningIcon'
 import { Div, Span } from '../../components/html-tags'
 
-const ExcelTemplates = lazy(() => import('./excel-templates'))
 const Tenants = lazy(() => import('./tenants'))
 const FlaggedVocabularies = lazy(() => import('./flagged-vocabularies'))
 
 const _sections = [
-  {
-    primaryText: 'Excel templates',
-    secondaryText: 'Submission form for offline use (.xlsm)',
-    Icon: () => <ExcelIcon />,
-    Render: ExcelTemplates,
-    requiredPermission: '/deployment',
-  },
   {
     primaryText: 'Tenants',
     secondaryText: 'Provincial deployment',
@@ -33,7 +24,8 @@ const _sections = [
   },
   {
     primaryText: 'Flagged vocabularies',
-    secondaryText: 'Manual checks required',
+    secondaryText:
+      'Fix outdated vocabulary terms to be consistent with controlled vocabulary trees',
     Icon: () => <WarningIcon />,
     Render: FlaggedVocabularies,
     requiredPermission: '/deployment',

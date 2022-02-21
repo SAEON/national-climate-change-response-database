@@ -16,7 +16,7 @@ const listSql = path => `
     select distinct
       id
     from Submissions s
-    cross apply openjson(JSON_QUERY(s.project, '$.province')) with (term nvarchar(4000) '$.term') p
+    cross apply openjson(JSON_QUERY(s.project, @jsonField)) with (term nvarchar(4000) '$.term') p
     where
       p.term = @incorrectTerm
   )
@@ -29,7 +29,7 @@ const listSql = path => `
         else p.term
       end term
     from Submissions s
-    cross apply openjson(JSON_QUERY(s.project, '$.province')) with (term nvarchar(4000) '$.term') p
+    cross apply openjson(JSON_QUERY(s.project, @jsonField)) with (term nvarchar(4000) '$.term') p
     where
       s.id in (select id from t1)
   )

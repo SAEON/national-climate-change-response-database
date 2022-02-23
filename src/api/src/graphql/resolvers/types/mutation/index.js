@@ -15,7 +15,7 @@ const getSubmissionOwner = id =>
   pool
     .connect()
     .then(pool => pool.request().input('id', id).query(`select * from Submissions where id = @id;`))
-    .then(({ recordset }) => recordset[0].userId)
+    .then(({ recordset }) => recordset[0].createdBy)
 
 export default {
   // Submission

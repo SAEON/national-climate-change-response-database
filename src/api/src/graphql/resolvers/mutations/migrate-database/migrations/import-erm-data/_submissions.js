@@ -100,7 +100,6 @@ export default async () => {
             s.adaptation,
             s.research,
             s.isSubmitted,
-            s.userId,
             s.createdBy,
             s.createdAt
           )
@@ -113,7 +112,6 @@ export default async () => {
             t.adaptation = s.adaptation,
             t.research = s.research,
             t.isSubmitted = s.isSubmitted,
-            t.userId = s.userId,
             t.createdBy = s.createdBy,
             t.createdAt = s.createdAt;
           

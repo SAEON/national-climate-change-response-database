@@ -8,7 +8,7 @@
 export default origin => {
   let hostname
   try {
-    hostname = new URL(origin).hostname
+    hostname = new URL(origin)?.hostname
   } catch (error) {
     hostname = origin
   }

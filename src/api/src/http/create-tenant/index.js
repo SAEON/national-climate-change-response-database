@@ -1,4 +1,3 @@
-import PERMISSIONS from '../../user-model/permissions.js'
 import { pool } from '../../mssql/pool.js'
 import mssql from 'mssql'
 import { normalize, join, sep } from 'path'
@@ -11,10 +10,6 @@ import sanitize from 'sanitize-filename'
  * Creates the new tenant
  */
 export default async ctx => {
-  const { user } = ctx
-  const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS['create-tenant'] })
-
   const {
     hostname,
     title = null,

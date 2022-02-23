@@ -1,6 +1,6 @@
 import passport from 'koa-passport'
 import base64url from 'base64url'
-import { HOSTNAME, ODP_AUTH_SCOPES } from '../config/index.js'
+import { HOSTNAME, ODP_AUTH_SCOPES } from '../../config/index.js'
 
 /**
  * If /login is called without a 'redirect'

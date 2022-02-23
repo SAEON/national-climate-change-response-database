@@ -1,6 +1,5 @@
 import { join, normalize, sep } from 'path'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
-import PERMISSIONS from '../../user-model/permissions.js'
 import xlsx from 'xlsx-populate'
 import { pool } from '../../mssql/pool.js'
 import {
@@ -48,8 +47,6 @@ const addFieldDefs = ({ sheet, fields, range, title }) => {
 }
 
 export default async ctx => {
-  await ctx.user?.ensurePermission({ ctx, permission: PERMISSIONS['create-submission'] })
-
   /**
    * Make the vocabulary trees
    */

@@ -26,7 +26,6 @@ const stringifyRow = row => stringifySync([row.map(val => sanitizeNewlines(val))
 export default async ctx => {
   const { user } = ctx
   const { ensurePermission } = user
-  await ensurePermission({ ctx, permission: PERMISSIONS['download-submission'] })
 
   // Check if user can see non-accepted projects
   let acceptedProjectsOnly = false

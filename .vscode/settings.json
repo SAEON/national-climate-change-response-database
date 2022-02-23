@@ -79,7 +79,8 @@
     "Ulwazi",
     "uniqueidentifier",
     "unprepare",
-    "usermod"
+    "usermod",
+    "Vocabs"
   ],
   "eslint.workingDirectories": ["src/api", "src/client"]
 }

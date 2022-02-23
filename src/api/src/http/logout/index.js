@@ -1,5 +1,5 @@
-import { HOSTNAME, ODP_AUTH_LOGOUT_REDIRECT } from '../config/index.js'
-import { pool } from '../mssql/pool.js'
+import { HOSTNAME, ODP_AUTH_LOGOUT_REDIRECT } from '../../config/index.js'
+import { pool } from '../../mssql/pool.js'
 
 export default async ctx => {
   let REDIRECT_ADDRESS = HOSTNAME

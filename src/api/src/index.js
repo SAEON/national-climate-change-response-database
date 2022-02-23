@@ -17,24 +17,26 @@ import whitelistRoutes from './middleware/whitelist-routes.js'
 import blacklistRoutes from './middleware/blacklist-routes.js'
 import logReqDetails from './middleware/log-req-details.js'
 import fourOFour from './middleware/404.js'
-import authenticateRoute from './http/authenticate.js'
-import createTenantRoute from './http/create-tenant/index.js'
-import publicImageRoute from './http/public-image/index.js'
-import logoutRoute from './http/logout.js'
-import loginSuccessRoute from './http/login-success.js'
-import oauthAuthenticationCallbackRoute from './http/oauth-authentication-callback.js'
-import loginRoute from './http/login.js'
-import attachFileToSubmission from './http/attach-file-to-submission.js'
-import submitCompletedTemplates from './http/submit-completed-templates/index.js'
-import downloadExcelTemplateRoute from './http/download-excel-submission-template/index.js'
-import downloadPublicFileRoute from './http/download-public-file.js'
-import downloadFlaggedVocabularies from './http/download-flagged-vocabularies.js'
-import downloadSubmissions from './http/download-submissions/index.js'
 import apolloServer from './graphql/index.js'
 import { PORT, API_KEY, SSL_ENV } from './config/index.js'
 import hoursToMilliseconds from './lib/hours-to-ms.js'
 import getCurrentDirectory from './lib/get-current-directory.js'
 import path from 'path'
+import {
+  authenticateRoute,
+  createTenantRoute,
+  publicImageRoute,
+  loginRoute,
+  loginSuccessRoute,
+  logoutRoute,
+  oauthAuthenticationCallbackRoute,
+  attachFileToSubmissionRoute,
+  submitCompletedTemplatesRoute,
+  downloadExcelSubmissionTemplateRoute,
+  downloadPublicFileRoute,
+  downloadSubmissionsRoute,
+  downloadFlaggedVocabulariesRoute,
+} from './http/index.js'
 
 /**
  * Authentication clients are
@@ -110,13 +112,13 @@ app
       .get('/http/authenticate', authenticateRoute)
       .get('/http/public-image/:name', publicImageRoute)
       .get('/http/logout', logoutRoute)
-      .post('/http/attach-file-to-submission', attachFileToSubmission)
-      .post('/http/submit-completed-templates', submitCompletedTemplates)
+      .post('/http/attach-file-to-submission', attachFileToSubmissionRoute)
+      .post('/http/submit-completed-templates', submitCompletedTemplatesRoute)
       .put('/http/create-tenant', createTenantRoute)
-      .get('/http/download-template', downloadExcelTemplateRoute)
+      .get('/http/download-template', downloadExcelSubmissionTemplateRoute)
       .get('/http/download-public-file', downloadPublicFileRoute)
-      .get('/http/download-flagged-vocabularies', downloadFlaggedVocabularies)
-      .post('/http/download-submissions', downloadSubmissions)
+      .get('/http/download-flagged-vocabularies', downloadFlaggedVocabulariesRoute)
+      .post('/http/download-submissions', downloadSubmissionsRoute)
       .routes()
   )
   .use(fourOFour)

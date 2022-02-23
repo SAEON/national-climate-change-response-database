@@ -71,8 +71,8 @@ const app = new Koa()
 app.keys = [API_KEY]
 app.proxy = true
 app
-  .use(async (ctx, next) => {
-    return koaSession(
+  .use(async (ctx, next) =>
+    koaSession(
       {
         key: 'koa.session',
         maxAge: hoursToMilliseconds(12),
@@ -87,7 +87,7 @@ app
       },
       app
     )(ctx, next)
-  })
+  )
   .use(cors(app))
   .use(
     whitelistRoutes(

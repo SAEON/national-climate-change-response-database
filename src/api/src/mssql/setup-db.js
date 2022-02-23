@@ -1,4 +1,4 @@
-import { SKIP_INSTALLS } from '../config/index.js'
+import { SKIP_INSTALLS, DEPLOYMENT_ENV } from '../config/index.js'
 import installSchema from './install-schema.js'
 import installUserModel from './install-user-model/index.js'
 import installDefaultAdmins from './install-default-admins/index.js'
@@ -6,13 +6,18 @@ import installSysadmins from './install-sysadmins/index.js'
 import installDefaultTenant from './install-default-tenant/index.js'
 import installVocabulary from './install-vocabulary/index.js'
 import installRegionGeometries from './install-region-geometries/index.js'
+import registerTenantSubmissions from './register-tenant-submissions/index.js'
 
 const info = (...args) => console.info(...args)
 
 export default async () => {
   try {
     if (SKIP_INSTALLS) {
-      info("======= WARNING ======= skipping schema installs. Don't do this on production")
+      if (DEPLOYMENT_ENV === 'production') {
+        throw new Error(
+          'Skipping default installs is not allowed on production. This is only for convenient restart times during development'
+        )
+      }
     } else {
       await installSchema().then(() => info('Installed schema\n'))
       await installRegionGeometries().then(() => info('Installed region geometries\n'))
@@ -25,5 +30,14 @@ export default async () => {
   } catch (error) {
     console.error('Unable to setup database', error)
     process.exit(1)
+  }
+
+  // This can be done asynchronously
+  if (!SKIP_INSTALLS) {
+    registerTenantSubmissions()
+      .then(() => info('Tenant submissions registered'))
+      .catch(error => {
+        throw error
+      })
   }
 }

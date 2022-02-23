@@ -2,9 +2,8 @@ import theme from './default-theme.js'
 import frontMatter from './front-matter.js'
 import { pool } from '../pool.js'
 import { HOSTNAME, DEFAULT_SHORTNAME } from '../../config/index.js'
-import mergeTenantsSubmissions from '../../lib/sql/merge-tenants-submissions.js'
 
-export default async () => {
+export default async () =>
   await (await pool.connect())
     .request()
     .input('hostname', new URL(HOSTNAME).hostname)
@@ -75,14 +74,3 @@ export default async () => {
       output
           $action,
           inserted.id;`)
-
-  console.info('Installed default tenant. Populating TenantXrefSubmission...')
-
-  await (
-    await pool.connect()
-  )
-    .request()
-    .input('tenantId', null) // This means "all tenants"
-    .input('submissionId', null) // This means "all submissions"
-    .query(mergeTenantsSubmissions)
-}

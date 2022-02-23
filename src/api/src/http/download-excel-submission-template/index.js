@@ -17,6 +17,7 @@ import col2Letter from '../../lib/xlsx/col-to-letter.js'
 const __dirname = getCurrentDirectory(import.meta)
 const baseTemplatePath = normalize(join(__dirname, `.${sep}base.xlsm`))
 
+const submissionsSheet = 'Submissions'
 const formLayoutSheet = '_FormLayout'
 const vocabularySheet = '_Vocabularies'
 const fieldDefinitionSheet = '_FieldDefinitions'
@@ -161,9 +162,60 @@ export default async ctx => {
       ],
     ])
 
+  // Use the form layout configuration to draw the user-facing submissions page
+  ;[
+    { name: 'General details', sections: projectFormLayout },
+    { name: 'Mitigation details', sections: mitigationFormLayout },
+    { name: 'Adaptation details', sections: adaptationFormLayout },
+  ].reduce((formOffset, { name, sections }) => {
+    const colCount = sections.reduce(
+      (count, section) =>
+        count +
+        Object.values(section)
+          .flat()
+          .filter(field => field.indexOf('__') !== 0).length,
+      0
+    )
+
+    if (colCount < 1) return formOffset
+
+    workbook
+      .sheet(submissionsSheet)
+      .range(`${col2Letter(formOffset)}2:${col2Letter(formOffset + colCount)}2`)
+      .merged(true)
+      .value(name)
+
+    sections.reduce((sectionOffset, section) => {
+      const [name, fieldset_] = Object.entries(section)[0]
+      const fieldset = fieldset_.filter(
+        field => field.indexOf('__') !== 0 && field !== 'fileUploads'
+      )
+      const colCount = fieldset.length
+
+      if (colCount < 1) {
+        return sectionOffset
+      }
+
+      workbook
+        .sheet(submissionsSheet)
+        .range(`${col2Letter(sectionOffset)}3:${col2Letter(sectionOffset + colCount)}3`)
+        .merged(true)
+        .value(name)
+
+      workbook
+        .sheet(submissionsSheet)
+        .range(`${col2Letter(sectionOffset)}4:${col2Letter(sectionOffset + colCount)}4`)
+        .value([fieldset])
+
+      return sectionOffset + colCount + 1
+    }, formOffset)
+
+    return formOffset + colCount + 1
+  }, 0)
+
   // Hide sheets
   veryHiddenSheets.forEach(sheetName => {
-    workbook.sheet(sheetName).hidden('very')
+    // workbook.sheet(sheetName).hidden('very')
   })
 
   // Send the file back to the client as a download

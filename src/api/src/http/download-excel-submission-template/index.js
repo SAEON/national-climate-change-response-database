@@ -13,6 +13,9 @@ import {
   mitigationInputFields,
 } from '../../graphql/schema/index.js'
 import col2Letter from '../../lib/xlsx/col-to-letter.js'
+import color from 'color'
+
+const BASE_COLOR = '#006400'
 
 const __dirname = getCurrentDirectory(import.meta)
 const baseTemplatePath = normalize(join(__dirname, `.${sep}base.xlsm`))
@@ -167,50 +170,90 @@ export default async ctx => {
     { name: 'General details', sections: projectFormLayout },
     { name: 'Mitigation details', sections: mitigationFormLayout },
     { name: 'Adaptation details', sections: adaptationFormLayout },
-  ].reduce((formOffset, { name, sections }) => {
+  ].reduce((offset, { name, sections }) => {
     const colCount = sections.reduce(
       (count, section) =>
         count +
         Object.values(section)
           .flat()
-          .filter(field => field.indexOf('__') !== 0).length,
+          .filter(field => field.indexOf('__') !== 0 && field != 'fileUploads').length,
       0
     )
 
-    if (colCount < 1) return formOffset
+    if (colCount < 1) return offset
 
+    // Form headers (row 2)
     workbook
       .sheet(submissionsSheet)
-      .range(`${col2Letter(formOffset)}2:${col2Letter(formOffset + colCount)}2`)
+      .range(`${col2Letter(offset)}2:${col2Letter(offset + colCount - 1)}2`)
       .merged(true)
       .value(name)
+    workbook
+      .sheet(submissionsSheet)
+      .range(`${col2Letter(offset)}2:${col2Letter(offset + colCount - 1)}2`)
+      .style({
+        bold: true,
+        fontColor: 'ffffff',
+        fill: {
+          type: 'solid',
+          color: {
+            rgb: `${color(BASE_COLOR).lighten(0.1).rgbNumber()}`,
+          },
+        },
+      })
 
-    sections.reduce((sectionOffset, section) => {
+    sections.reduce((offset, section) => {
       const [name, fieldset_] = Object.entries(section)[0]
       const fieldset = fieldset_.filter(
         field => field.indexOf('__') !== 0 && field !== 'fileUploads'
       )
       const colCount = fieldset.length
 
-      if (colCount < 1) {
-        return sectionOffset
-      }
+      if (colCount < 1) return offset
 
+      // Section headers (row 3)
       workbook
         .sheet(submissionsSheet)
-        .range(`${col2Letter(sectionOffset)}3:${col2Letter(sectionOffset + colCount)}3`)
+        .range(`${col2Letter(offset)}3:${col2Letter(offset + colCount - 1)}3`)
         .merged(true)
         .value(name)
-
       workbook
         .sheet(submissionsSheet)
-        .range(`${col2Letter(sectionOffset)}4:${col2Letter(sectionOffset + colCount)}4`)
+        .range(`${col2Letter(offset)}3:${col2Letter(offset + colCount - 1)}3`)
+        .style({
+          bold: true,
+          fontColor: 'ffffff',
+          fill: {
+            type: 'solid',
+            color: {
+              rgb: `${color(BASE_COLOR).lighten(0.2).rgbNumber()}`,
+            },
+          },
+        })
+
+      // Section fields (row 4)
+      workbook
+        .sheet(submissionsSheet)
+        .range(`${col2Letter(offset)}4:${col2Letter(offset + colCount)}4`)
         .value([fieldset])
+      workbook
+        .sheet(submissionsSheet)
+        .range(`${col2Letter(offset)}4:${col2Letter(offset + colCount - 1)}4`)
+        .style({
+          bold: true,
+          fontColor: 'ffffff',
+          fill: {
+            type: 'solid',
+            color: {
+              rgb: `${color(BASE_COLOR).lighten(0.3).rgbNumber()}`,
+            },
+          },
+        })
 
-      return sectionOffset + colCount + 1
-    }, formOffset)
+      return offset + colCount
+    }, offset)
 
-    return formOffset + colCount + 1
+    return offset + colCount
   }, 0)
 
   // Hide sheets

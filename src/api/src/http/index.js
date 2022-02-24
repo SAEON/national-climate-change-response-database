@@ -36,7 +36,7 @@ export const submitCompletedTemplatesRoute = a({
 
 export const attachFileToSubmissionRoute = async ctx =>
   a({
-    permission: P['attach-file-to-submission'],
+    permission: P['update-submission'],
     resourceOwner: (
       await (await pool.connect())
         .request()

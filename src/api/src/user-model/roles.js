@@ -6,11 +6,7 @@ const deduplicate = arr => _deduplicate(arr, (p1, p2) => p1.name === p2.name)
 export const user = {
   name: 'user',
   description: 'Default login role (unmanaged users)',
-  permissions: deduplicate([
-    permissions['attach-file-to-submission'],
-    permissions['create-submission'],
-    permissions['download-submission'],
-  ]),
+  permissions: deduplicate([permissions['create-submission'], permissions['download-submission']]),
 }
 
 export const maintainer = {

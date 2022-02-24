@@ -35,7 +35,7 @@ export default {
 
   removeSubmissionAttachments: async (...args) =>
     a({
-      permission: PERMISSIONS['attach-file-to-submission'],
+      permission: PERMISSIONS['update-submission'],
       resourceOwner: await getSubmissionOwner(args[1].submissionId),
     })(removeSubmissionAttachments)(...args),
 

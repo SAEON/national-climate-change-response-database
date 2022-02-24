@@ -55,10 +55,6 @@ export default Object.freeze({
     name: 'view-submission-templates',
     description: 'View Excel template submissions',
   },
-  'attach-file-to-submission': {
-    name: 'attach-file-to-submission',
-    description: 'Upload file attachment for a submission',
-  },
   'download-submission': {
     name: 'download-submission',
     description: 'Download data for a single submission',

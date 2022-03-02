@@ -18,7 +18,7 @@
     "url": "git+https://github.com/SAEON/national-climate-change-systems.git"
   },
   "dependencies": {
-    "@apollo/client": "^3.5.9",
+    "@apollo/client": "^3.5.10",
     "@babel/core": "^7.17.5",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
@@ -27,8 +27,8 @@
     "@babel/runtime": "^7.17.2",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
-    "@mui/lab": "^5.0.0-alpha.70",
-    "@mui/material": "^5.4.3",
+    "@mui/lab": "^5.0.0-alpha.71",
+    "@mui/material": "^5.4.4",
     "@svgr/webpack": "^6.2.1",
     "abortcontroller-polyfill": "^1.7.3",
     "ace-builds": "^1.4.14",
@@ -49,7 +49,7 @@
     "mdi-react": "^8.2.0",
     "nanoid": "^3.3.1",
     "notistack": "^2.0.3",
-    "ol": "^6.12.0",
+    "ol": "^6.13.0",
     "react": "^17.0.2",
     "react-ace": "^9.5.0",
     "react-cookie-consent": "^7.3.1",
@@ -76,10 +76,10 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
     "@babel/eslint-plugin": "^7.16.5",
-    "eslint": "^8.9.0",
-    "eslint-plugin-react": "^7.29.0",
+    "eslint": "^8.10.0",
+    "eslint-plugin-react": "^7.29.2",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "npm-check-updates": "^12.4.0",
+    "npm-check-updates": "^12.5.0",
     "onchange": "^7.1.0",
     "prettier": "^2.5.1",
     "webpack-dev-server": "^4.7.4"

@@ -15,13 +15,13 @@ export default () => {
     <Fade key="welcome-in" in={true}>
       <Div sx={{ position: 'absolute', zIndex: 8, left: 0, right: 0, top: 0, bottom: 0 }}>
         <Div sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-          <Container>
+          <Container sx={{ maxHeight: '88%', overflowY: 'auto' }}>
             <Card
               variant="outlined"
               sx={{
                 boxShadow: 3,
                 backgroundColor: theme => alpha(theme.palette.common.black, 0.4),
-                padding: theme => theme.spacing(8),
+                padding: theme => theme.spacing(6),
               }}
             >
               <Grid container spacing={2} justifyContent="center">

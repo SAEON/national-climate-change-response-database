@@ -1,10 +1,11 @@
 import col2Letter from '../../lib/xlsx/col-to-letter.js'
 
+export const FORM_HEADER_COLOR = '375623'
+export const SECTION_HEADER_COLOR = '548235'
+export const ENTRY_COLOR = 'E2EFDA'
+export const WHITE = 'FFFFFF'
+
 const FORM_WIDTH = 12
-const FORM_HEADER_COLOR = '375623'
-const SECTION_HEADER_COLOR = '548235'
-const ENTRY_COLOR = 'E2EFDA'
-const WHITE = 'FFFFFF'
 
 export default ({
   workbook,

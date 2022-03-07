@@ -4,7 +4,7 @@ import mergeTenantsSubmissions from '../../lib/sql/merge-tenants-submissions.js'
 
 export default async () => {
   console.info(
-    'Installed default tenant. Populating TenantXrefSubmission (asynchronously, you can use the app whilst this is done)'
+    'Installed default tenant. Populating TenantXrefSubmission (asynchronously, you can use the app whilst this is in progress)'
   )
 
   const transaction = new mssql.Transaction(await pool.connect())

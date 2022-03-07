@@ -6,7 +6,7 @@ import MessageDialogue from '../message-dialogue'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
-import { NCCRD_API_HTTP_ADDRESS } from '../../config'
+import { NCCRD_API_HTTP_ADDRESS, NCCRD_DFFE_CONTACT } from '../../config'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default () => {
@@ -20,12 +20,12 @@ export default () => {
       text={
         <>
           <Typography sx={{ marginBottom: theme => theme.spacing(2) }} variant="body2">
-            You can submit filled-in Excel templates on this page.
+            Download excel template for capturing submission data offline
           </Typography>
           <Typography variant="body2">
-            Please note that the template has to be filled in exactly as downloaded, otherwise
-            submissions will be rejected. If you would like to change the template in any way please
-            contact a systems administrator.
+            Please submit filled in templates to {NCCRD_DFFE_CONTACT.replace('@', ' [ at ] ')}. Note
+            that the online form is much easier to fill in, and the offline template is provided as
+            a backup in case the online form is not accessible for whatever reason
           </Typography>
         </>
       }
@@ -46,7 +46,7 @@ export default () => {
             color="primary"
             startIcon={lgUp ? <Icon size={18} /> : null}
           >
-            Excel template
+            Offline submission
           </Button>
         )
       }}

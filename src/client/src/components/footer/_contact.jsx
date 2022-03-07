@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import { NCCRD_TECHNICAL_CONTACT } from '../../config'
+import { NCCRD_TECHNICAL_CONTACT, NCCRD_DFFE_CONTACT } from '../../config'
 
 export default () => {
   return (
@@ -14,7 +14,7 @@ export default () => {
       </Grid>
       <Grid item xs={12}>
         <Typography variant="body1">Data enquiries</Typography>
-        <Typography variant="body2">{'rditlopo@dffe.gov.za '.replace('@', ' [ at ] ')}</Typography>
+        <Typography variant="body2">{NCCRD_DFFE_CONTACT.replace('@', ' [ at ] ')}</Typography>
       </Grid>
     </Grid>
   )

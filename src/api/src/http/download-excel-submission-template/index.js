@@ -1,7 +1,6 @@
 import { join, normalize, sep } from 'path'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
 import xlsx from 'xlsx-populate'
-import { pool } from '../../mssql/pool.js'
 import {
   generalDetails as projectFormLayout,
   mitigationDetails as mitigationFormLayout,
@@ -12,253 +11,73 @@ import {
   adaptationInputFields,
   mitigationInputFields,
 } from '../../graphql/schema/index.js'
-import col2Letter from '../../lib/xlsx/col-to-letter.js'
-import color from 'color'
+import populateForms from './_populate-forms.js'
+import populateTables from './populate-tables/index.js'
 
-const BASE_COLOR = '#006400'
+const TEMPLATE_NAME = 'base.xlsm'
+const GENERAL_DETAILS_SHEETNAME = 'General project details'
+const MITIGATION_DETAILS_SHEETNAME = 'Mitigation details'
+const ADAPTATION_DETAILS_SHEETNAME = 'Adaptation details'
+const PROGRESS_DATA_SHEETS = 'Progress tables'
 
-const __dirname = getCurrentDirectory(import.meta)
-const baseTemplatePath = normalize(join(__dirname, `.${sep}base.xlsm`))
-
-const submissionsSheet = 'Submissions'
-const formLayoutSheet = '_FormLayout'
-const vocabularySheet = '_Vocabularies'
-const fieldDefinitionSheet = '_FieldDefinitions'
-const veryHiddenSheets = [
-  vocabularySheet,
-  '_VBA',
-  '_Compile',
-  fieldDefinitionSheet,
-  formLayoutSheet,
-]
-
-const addFieldDefs = ({ sheet, fields, range, title }) => {
-  const [startCol, endCol] = range.split(':')
-  sheet
-    .range(`${startCol}1:${endCol}1`)
-    .merged(true)
-    .value([[title]])
-    .style('horizontalAlignment', 'center')
-  sheet
-    .range(`${startCol}2:${endCol}2`)
-    .value([['Field', 'Label', 'description', 'Type', 'Vocabulary Tree']])
-  Object.entries(fields).forEach(([fieldName, { kind, description: _description }], i) => {
-    const [label, description, vocabularyTree] = _description.split('::')
-    sheet
-      .range(`${startCol}${i + 3}:${endCol}${i + 3}`)
-      .value([[fieldName, label, description || '', kind, vocabularyTree || '']])
-  })
+const excludedFields = {
+  [GENERAL_DETAILS_SHEETNAME]: ['__submissionStatus', '__submissionComments'],
+  [MITIGATION_DETAILS_SHEETNAME]: [],
+  [ADAPTATION_DETAILS_SHEETNAME]: [],
 }
 
+const __dirname = getCurrentDirectory(import.meta)
+const baseTemplatePath = normalize(join(__dirname, `.${sep}${TEMPLATE_NAME}`))
+
 export default async ctx => {
-  /**
-   * Make the vocabulary trees
-   */
-
-  const fragments = (
-    await (
-      await pool.connect()
-    ).query(`
-      ;with fragments as (
-        select
-          t.[name] tree,
-          v.id,
-          v.term,
-          case
-            when ( select parentId from VocabularyXrefVocabulary x where x.childId = v.id and x.treeId = t.id ) is null then 1
-            else 0
-          end isRoot,
-          ( select ( select childId id from VocabularyXrefVocabulary where parentId = v.id for json path ) children
-            for json path, without_array_wrapper ) fragment
-        from Trees t
-        join VocabularyXrefTree vxt on vxt.treeId = t.id
-        join Vocabulary v on v.id = vxt.vocabularyId
-      )
-      
-      select
-        tree [name],
-        id,
-        term,
-        isRoot,
-        fragment tree
-      from fragments;`)
-  ).recordset
-
-  const trees = fragments
-    .filter(({ isRoot }) => Boolean(isRoot))
-    .reduce(
-      (trees, fragment) => ({
-        ...trees,
-        [fragment.name]: (function extendTree({ parent, children = [], fragments }) {
-          return {
-            ...parent,
-            children: children.map(({ id }) => {
-              const fragment = fragments.find(({ id: parentId }) => id === parentId)
-              return extendTree({
-                parent: { id, term: fragment.term },
-                children: JSON.parse(fragment.tree).children,
-                fragments,
-              })
-            }),
-          }
-        })({
-          parent: {
-            id: fragment.id,
-            term: fragment.term,
-          },
-          children: JSON.parse(fragment.tree).children,
-          fragments,
-        }),
-      }),
-      {}
-    )
-
   // Open the xlsx file
   const workbook = await xlsx.fromFileAsync(baseTemplatePath)
 
-  /**
-   * Set the field type definitions
-   */
-
-  // Project
-  addFieldDefs({
-    sheet: workbook.sheet(fieldDefinitionSheet),
-    fields: projectInputFields,
-    range: 'A:E',
-    title: 'Project',
+  // GENERAL DETAILS
+  populateForms({
+    workbook,
+    name: GENERAL_DETAILS_SHEETNAME,
+    title: GENERAL_DETAILS_SHEETNAME.toUpperCase(),
+    formLayout: projectFormLayout,
+    inputFields: projectInputFields,
+    blacklistFields: excludedFields[GENERAL_DETAILS_SHEETNAME],
   })
 
-  // Mitigation
-  addFieldDefs({
-    sheet: workbook.sheet(fieldDefinitionSheet),
-    fields: mitigationInputFields,
-    range: 'F:J',
-    title: 'Mitigation',
+  // MITIGATION DETAILS
+  populateForms({
+    workbook,
+    name: MITIGATION_DETAILS_SHEETNAME,
+    title: MITIGATION_DETAILS_SHEETNAME.toUpperCase(),
+    formLayout: mitigationFormLayout,
+    inputFields: mitigationInputFields,
+    blacklistFields: excludedFields[MITIGATION_DETAILS_SHEETNAME],
+    defaultContent: {
+      fileUploads: 'Create or edit submissions online to use this feature',
+      progressData:
+        "Please add progres data to the appropriate tables on the 'Progress tables' sheet",
+    },
   })
 
-  // Adaptation
-  addFieldDefs({
-    sheet: workbook.sheet(fieldDefinitionSheet),
-    fields: adaptationInputFields,
-    range: 'K:O',
-    title: 'Adaptation',
+  // ADAPTATION DETAILS
+  populateForms({
+    workbook,
+    name: ADAPTATION_DETAILS_SHEETNAME,
+    title: ADAPTATION_DETAILS_SHEETNAME.toUpperCase(),
+    formLayout: adaptationFormLayout,
+    inputFields: adaptationInputFields,
+    blacklistFields: excludedFields[ADAPTATION_DETAILS_SHEETNAME],
+    defaultContent: {
+      fileUploads: 'Create or edit submissions online to use this feature',
+      progressData:
+        "Please add progres data to the appropriate tables on the 'Progress tables' sheet",
+    },
   })
 
-  // Write the trees to the Excel template
-  Object.entries(trees).forEach(([name, tree], i) => {
-    workbook
-      .sheet(vocabularySheet)
-      .range(`${col2Letter(i)}1:${col2Letter(i)}2`)
-      .value([[name], [JSON.stringify(tree)]])
-  })
+  // PROGRESS TABLES
 
-  // Write the form layout configuration to the Excel template
-  workbook
-    .sheet(formLayoutSheet)
-    .range(`A1:C2`)
-    .value([
-      ['Project', 'Mitigation', 'Adaptation'],
-      [
-        JSON.stringify(projectFormLayout),
-        JSON.stringify(mitigationFormLayout),
-        JSON.stringify(adaptationFormLayout),
-      ],
-    ])
-
-  // Use the form layout configuration to draw the user-facing submissions page
-  ;[
-    { name: 'General details', sections: projectFormLayout },
-    { name: 'Mitigation details', sections: mitigationFormLayout },
-    { name: 'Adaptation details', sections: adaptationFormLayout },
-  ].reduce((offset, { name, sections }) => {
-    const colCount = sections.reduce(
-      (count, section) =>
-        count +
-        Object.values(section)
-          .flat()
-          .filter(field => field.indexOf('__') !== 0 && field != 'fileUploads').length,
-      0
-    )
-
-    if (colCount < 1) return offset
-
-    // Form headers (row 2)
-    workbook
-      .sheet(submissionsSheet)
-      .range(`${col2Letter(offset)}2:${col2Letter(offset + colCount - 1)}2`)
-      .merged(true)
-      .value(name)
-    workbook
-      .sheet(submissionsSheet)
-      .range(`${col2Letter(offset)}2:${col2Letter(offset + colCount - 1)}2`)
-      .style({
-        bold: true,
-        fontColor: 'ffffff',
-        fill: {
-          type: 'solid',
-          color: {
-            rgb: `${color(BASE_COLOR).lighten(0.1).rgbNumber()}`,
-          },
-        },
-      })
-
-    sections.reduce((offset, section) => {
-      const [name, fieldset_] = Object.entries(section)[0]
-      const fieldset = fieldset_.filter(
-        field => field.indexOf('__') !== 0 && field !== 'fileUploads'
-      )
-      const colCount = fieldset.length
-
-      if (colCount < 1) return offset
-
-      // Section headers (row 3)
-      workbook
-        .sheet(submissionsSheet)
-        .range(`${col2Letter(offset)}3:${col2Letter(offset + colCount - 1)}3`)
-        .merged(true)
-        .value(name)
-      workbook
-        .sheet(submissionsSheet)
-        .range(`${col2Letter(offset)}3:${col2Letter(offset + colCount - 1)}3`)
-        .style({
-          bold: true,
-          fontColor: 'ffffff',
-          fill: {
-            type: 'solid',
-            color: {
-              rgb: `${color(BASE_COLOR).lighten(0.2).rgbNumber()}`,
-            },
-          },
-        })
-
-      // Section fields (row 4)
-      workbook
-        .sheet(submissionsSheet)
-        .range(`${col2Letter(offset)}4:${col2Letter(offset + colCount)}4`)
-        .value([fieldset])
-      workbook
-        .sheet(submissionsSheet)
-        .range(`${col2Letter(offset)}4:${col2Letter(offset + colCount - 1)}4`)
-        .style({
-          bold: true,
-          fontColor: 'ffffff',
-          fill: {
-            type: 'solid',
-            color: {
-              rgb: `${color(BASE_COLOR).lighten(0.3).rgbNumber()}`,
-            },
-          },
-        })
-
-      return offset + colCount
-    }, offset)
-
-    return offset + colCount
-  }, 0)
-
-  // Hide sheets
-  veryHiddenSheets.forEach(sheetName => {
-    // workbook.sheet(sheetName).hidden('very')
+  populateTables({
+    workbook,
+    name: PROGRESS_DATA_SHEETS,
   })
 
   // Send the file back to the client as a download

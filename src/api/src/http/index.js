@@ -14,7 +14,7 @@ export { default as oauthAuthenticationCallbackRoute } from './oauth-authenticat
 // Authenticated routes (see below for authentication/authorization checks on these routes)
 import attachFileToSubmission from './attach-file-to-submission/index.js'
 import createTenant from './create-tenant/index.js'
-import template from './download-excel-submission-template/index2.js'
+import template from './download-excel-submission-template/index.js'
 import submissions from './download-submissions/index.js'
 import submitTemplate from './submit-completed-templates/index.js'
 import flaggedVocabs from './download-flagged-vocabularies/index.js'

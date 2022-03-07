@@ -1,6 +1,6 @@
 parent,term,tree
 ,Status,actionStatus
-Status,Operational,actionStatus
+Status,Under implementation,actionStatus
 Status,Planned project,actionStatus
 Status,Complete,actionStatus
-Status,Discontinued,actionStatus
+Status,Project Ended,actionStatus

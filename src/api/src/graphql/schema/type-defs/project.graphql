@@ -83,7 +83,7 @@ input ProjectInput {
   """
   interventionType: ControlledVocabularyInput!
   """
-  Implementation status :: <b>Operational</b> - Ongoing project <br /><b>Planned project</b> - Project has not begun but is being constructed or has been registered/approved/funded<br /><b>Complete</b> - The project has been finalized<br /><b>Discontinued</b> - planned project terminated :: actionStatus
+  Implementation status :: <b>Under implementation</b> - Ongoing project <br /><b>Planned project</b> - Project has not begun but is being constructed or has been registered/approved/funded<br /><b>Complete</b> - The project has been finalized<br /><b>Project Ended</b> - planned project terminated :: actionStatus
   """
   implementationStatus: ControlledVocabularyInput
   """

@@ -1,6 +1,6 @@
 input ProjectInput {
   """
-  Title ::
+  Title :: Project title
   """
   title: String!
   """
@@ -42,11 +42,11 @@ input ProjectInput {
   xy: WKT_4326
 
   """
-  Name ::
+  Name :: Project manager name
   """
   projectManagerName: String
   """
-  Company/organization ::
+  Company/organization :: Project manager company/organization
   """
   projectManagerOrganization: String
   """
@@ -54,15 +54,15 @@ input ProjectInput {
   """
   projectManagerPosition: String
   """
-  Email address ::
+  Email address :: Project manager email address
   """
   projectManagerEmail: String
   """
-  Telephone number ::
+  Telephone number :: Project manager telephone number
   """
   projectManagerTelephone: String
   """
-  Mobile number ::
+  Mobile number :: Project manager mobile number
   """
   projectManagerMobile: String
   """

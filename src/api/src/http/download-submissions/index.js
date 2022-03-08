@@ -48,7 +48,11 @@ export default async ctx => {
     return
   }
 
-  const fieldBlackList = ['project.projectManagerTelephone', 'project.projectManagerMobile']
+  const fieldBlackList = [
+    'project.projectManagerTelephone',
+    'project.projectManagerMobile',
+    'mitigation._ermDbEmissions',
+  ]
 
   /**
    * Get a list of all keys

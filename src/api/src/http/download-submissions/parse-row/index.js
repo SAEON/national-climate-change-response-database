@@ -32,8 +32,8 @@ const parseValue = (id, { key, obj, vocabFields, inputFields }) => {
       try {
         return value?.map(({ term }) => term).join(',') || ''
       } catch (error) {
-        console.error(
-          'Error parsing submission ID',
+        console.warn(
+          'Error parsing submission for download to CSV. ID',
           id,
           `Field: ${key}`,
           'A vocabulary field expecting a list is stored as an object. If this field has been changed from a single term input to a list input, this is expected and you can ignore this message. But in the future please migrate the data to correct for this'
@@ -43,6 +43,10 @@ const parseValue = (id, { key, obj, vocabFields, inputFields }) => {
     }
 
     return value?.term || ''
+  }
+
+  if (key === 'carbonCredit') {
+    return `${value}`
   }
 
   if (key === 'progressData') {

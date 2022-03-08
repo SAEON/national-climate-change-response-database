@@ -20,6 +20,7 @@ export default async (_, { id: submissionId, isSubmitted = undefined }, ctx) => 
     where
       exists ( select tenantId from TenantXrefSubmission x where x.tenantId = @tenantId and x.submissionId = @id )
       and id = @id
+      and deletedAt is null
       ${isSubmitted === undefined ? '' : 'and isSubmitted = @isSubmitted'}`)
   ).recordset[0]
 }

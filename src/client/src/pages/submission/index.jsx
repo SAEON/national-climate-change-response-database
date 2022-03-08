@@ -20,6 +20,9 @@ export default ({ id }) => {
           adaptation
           isSubmitted
           createdAt
+          createdBy {
+            id
+          }
         }
       }
     `,
@@ -45,7 +48,8 @@ export default ({ id }) => {
     )
   }
 
-  const { mitigation, adaptation, project, submissionStatus, submissionComments } = data.submission
+  const { mitigation, adaptation, project, submissionStatus, submissionComments, createdBy } =
+    data.submission
 
   if (!project) {
     throw new Error(
@@ -55,7 +59,7 @@ export default ({ id }) => {
 
   return (
     <>
-      <Header id={id} {...project} />
+      <Header id={id} createdBy={createdBy} {...project} />
       <div style={{ marginTop: theme.spacing(2) }} />
       <Container style={{ minHeight: 1000 }}>
         <Render

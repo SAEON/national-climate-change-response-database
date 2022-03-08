@@ -6,6 +6,7 @@ import { gql, useMutation } from '@apollo/client'
 import MessageDialogue from '../../../components/message-dialogue'
 import Hidden from '@mui/material/Hidden'
 import IconButton from '@mui/material/IconButton'
+import { Div } from '../../../components/html-tags'
 
 export default ({ id, createdBy }) => {
   const { hasPermission, user } = useContext(authContext)
@@ -38,51 +39,54 @@ export default ({ id, createdBy }) => {
   }
 
   return (
-    <MessageDialogue
-      title="Confirm delete"
-      text="Are you sure you want to delete this project submission? This action cannot be undone"
-      tooltipProps={{
-        placement: 'top',
-        title: 'Delete this submission',
-      }}
-      Button={openFn => (
-        <>
-          <Hidden smDown>
+    <>
+      <Div sx={{ marginLeft: theme => theme.spacing(1) }} />
+      <MessageDialogue
+        title="Confirm delete"
+        text="Are you sure you want to delete this project submission? This action cannot be undone"
+        tooltipProps={{
+          placement: 'top',
+          title: 'Delete this submission',
+        }}
+        Button={openFn => (
+          <>
+            <Hidden smDown>
+              <Button
+                onClick={openFn}
+                startIcon={<DeleteIcon size={18} />}
+                color="primary"
+                size="small"
+                variant="text"
+              >
+                Delete
+              </Button>
+            </Hidden>
+            <Hidden smUp>
+              <IconButton onClick={openFn} color="primary" size="small">
+                <DeleteIcon size={18} />
+              </IconButton>
+            </Hidden>
+          </>
+        )}
+        Actions={[
+          closeFn => (
             <Button
-              onClick={openFn}
+              key="delete-submission"
+              onClick={e => {
+                closeFn(e)
+                deleteSubmission({ variables: { id } })
+              }}
               startIcon={<DeleteIcon size={18} />}
               color="primary"
               size="small"
-              variant="text"
+              variant="contained"
+              disableElevation
             >
-              Delete
+              Confirm
             </Button>
-          </Hidden>
-          <Hidden smUp>
-            <IconButton onClick={openFn} color="primary" size="small">
-              <DeleteIcon size={18} />
-            </IconButton>
-          </Hidden>
-        </>
-      )}
-      Actions={[
-        closeFn => (
-          <Button
-            key="delete-submission"
-            onClick={e => {
-              closeFn(e)
-              deleteSubmission({ variables: { id } })
-            }}
-            startIcon={<DeleteIcon size={18} />}
-            color="primary"
-            size="small"
-            variant="contained"
-            disableElevation
-          >
-            Confirm
-          </Button>
-        ),
-      ]}
-    />
+          ),
+        ]}
+      />
+    </>
   )
 }

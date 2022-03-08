@@ -9,9 +9,9 @@ import getHostnameFromOrigin from '../lib/get-hostname-from-origin.js'
 
 export default app => async (ctx, next) => {
   const { method, headers } = ctx.req
-  const { origin } = headers
+  const { origin, referer } = headers
 
-  const hostname = getHostnameFromOrigin(origin)
+  const hostname = getHostnameFromOrigin(origin || referer)
   const allowed = await (await pool.connect()).request().input('hostname', hostname).query(`
       select
         id,

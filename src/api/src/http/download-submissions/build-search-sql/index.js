@@ -37,8 +37,10 @@ export default ({ search, request, acceptedProjectsOnly }) => {
     select
       *
     from Submissions s
+    join TenantXrefSubmission x on x.submissionId = s.id
     where
-      deletedAt is null
+      x.tenantId = @tenantId
+      and deletedAt is null
       and isSubmitted = 1
 
       ${

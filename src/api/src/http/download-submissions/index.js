@@ -19,10 +19,8 @@ const sanitizeNewlines = val =>
 const stringifyRow = row => stringifySync([row.map(val => sanitizeNewlines(val))], csvOptions)
 
 /**
- * Stream downloads to user in CSV
- * form.
+ * Stream downloads to user in CSV form
  */
-
 export default async ctx => {
   const { user } = ctx
   const { ensurePermission } = user
@@ -101,6 +99,7 @@ export default async ctx => {
 
     // Create a MSSQL streaming query
     const request = (await pool.connect()).request()
+    request.input('tenantId', ctx.tenant.id)
     request.stream = true
 
     let sql
@@ -113,9 +112,11 @@ export default async ctx => {
       sql = `
         select
           *
-        from Submissions
+        from Submissions s
+        join TenantXrefSubmission x on x.submissionId = s.id
         where
-          id in (${ids.map((_, i) => `@id_${i}`).join(', ')})
+          x.tenantId = @tenantId
+          and id in (${ids.map((_, i) => `@id_${i}`).join(', ')})
           ${
             acceptedProjectsOnly
               ? `and upper(JSON_VALUE(s.submissionStatus, '$.term')) = 'ACCEPTED'`

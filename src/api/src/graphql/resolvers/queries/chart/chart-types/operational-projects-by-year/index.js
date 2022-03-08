@@ -63,7 +63,7 @@ const sql = `
   from rws
   
   where
-    implementationStatus = 'Operational'
+    implementationStatus = 'Under implementation'
   
   group by
     [year],

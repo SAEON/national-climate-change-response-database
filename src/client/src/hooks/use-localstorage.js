@@ -1,12 +1,17 @@
 import { useState } from 'react'
 
+/**
+ * Copied from somwhere on StackOverflow
+ * (can't remember where)
+ */
+
 export default (key, initialValue) => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       const item = window.localStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
     } catch (error) {
-      console.log(error) // TODO - not sure why this would error
+      console.error(error) // not sure why this would error
       return initialValue
     }
   })
@@ -17,7 +22,7 @@ export default (key, initialValue) => {
       setStoredValue(valueToStore)
       window.localStorage.setItem(key, JSON.stringify(valueToStore))
     } catch (error) {
-      console.log(error) // TODO - not sure why this would error
+      console.error(error) // not sure why this would error
     }
   }
 

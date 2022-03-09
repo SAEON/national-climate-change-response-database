@@ -89,7 +89,7 @@ const sql = `
   from T2
   where
     xy is not null
-    and coalescedRegion != 'South Africa' -- TODO: Not sure how best to incorporate national provinces without GPS points into this query
+    and coalescedRegion != 'South Africa' -- NOTE: Not sure how best to incorporate national provinces without GPS points into this query. So I just ignore them
 )
 
 select

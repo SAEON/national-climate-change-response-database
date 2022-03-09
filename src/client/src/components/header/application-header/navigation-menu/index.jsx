@@ -11,9 +11,6 @@ import checkTenantRouteAuthorization from '../../../../lib/check-tenant-route-au
  * SPA routes are shown based on 2 authorization conditions
  *  (1) Does the current tenant have permission to show the route
  *  (2) Does the current user have permission to see the route
- *
- * TODO - a lot of this logic is duplicated in the footer component.
- * Should be combined
  */
 export default () => {
   const [anchorEl, setAnchorEl] = useState(null)

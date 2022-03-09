@@ -16,7 +16,7 @@ module.exports = (ROOT, output) => {
 
   return {
     bonjour: false,
-    http2: false, // TODO - make this true, but then the API needs to also be https for dev purposes
+    http2: false, // NOTE - if this is true then the API needs to also be https for dev on local (I don't know how)
     host: 'localhost',
     open: ['http://localhost:3001'],
     allowedHosts: 'all',

@@ -1,5 +1,4 @@
 import { makeDataFinders } from '../mssql/data-loaders/index.js'
-import query from '../mssql/query.js'
 import { pool } from '../mssql/pool.js'
 import schema, {
   projectInputFields,
@@ -40,7 +39,6 @@ export default app => async (ctx, next) => {
 
   app.context.mssql = {
     dataFinders: makeDataFinders(), // Request level batching
-    query,
     pool,
   }
 

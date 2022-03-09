@@ -1,7 +1,6 @@
 import ToolbarHeader from '../../../components/toolbar-header'
 import DeleteSubmission from './delete-submission'
 import DownloadExcelTemplate from '../../../components/download-template'
-import UploadProject from '../../../components/submit-template'
 import { useTheme } from '@mui/material/styles'
 import Divider from '@mui/material/Divider'
 import Hidden from '@mui/material/Hidden'
@@ -15,7 +14,6 @@ export default ({ id }) => {
       <Hidden smDown>
         <DownloadExcelTemplate />
         <div style={{ marginLeft: theme.spacing(2) }} />
-        <UploadProject />
         <Divider
           flexItem
           orientation="vertical"

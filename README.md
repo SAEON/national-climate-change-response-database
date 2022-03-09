@@ -92,7 +92,7 @@ docker run \
 
 ### Configure API and client environment variables and adjust values accordingly
 cp src/api/.env.example src/api/.env
-cp src/client/.env.example src/client/.env 
+cp src/client/.env.example src/client/.env
 
 # Start the Node.js API server in development mode
 npm run api

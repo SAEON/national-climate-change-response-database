@@ -1,5 +1,4 @@
 module.exports = mode => {
-
   return [
     {
       test: /\.(js|jsx|ts|tsx|cjs|mjs)$/,
@@ -9,7 +8,7 @@ module.exports = mode => {
         options: {
           envName: mode,
           babelrc: false,
-          cacheDirectory: true
+          cacheDirectory: true,
         },
       },
     },

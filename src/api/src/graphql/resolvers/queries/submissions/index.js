@@ -16,7 +16,7 @@ export default async (_, args, ctx) => {
   }
 
   const request = (await pool.connect()).request()
-  const sql = makeRecordsQuery(MAX_PAGE_SIZE)({ request, tenantId, ...args })
+  const sql = await makeRecordsQuery(MAX_PAGE_SIZE)(ctx, { request, tenantId, ...args })
   logSql(sql, 'Submissions')
   return (await request.query(sql)).recordset
 }

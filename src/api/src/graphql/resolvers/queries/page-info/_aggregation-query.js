@@ -1,8 +1,8 @@
 import baseQuery from '../submissions/_base-query.js'
 
-export default args => {
+export default async (ctx, args) => {
   return `
     select
     count(*) submissionCount
-    from ${baseQuery(args)};`
+    from ${await baseQuery(ctx, args)};`
 }

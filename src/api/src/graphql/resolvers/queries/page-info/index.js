@@ -15,7 +15,7 @@ export default async (_, args, ctx) => {
   }
 
   const request = (await pool.connect()).request()
-  const sql = makeAggregationQuery({ request, tenantId, ...args })
+  const sql = await makeAggregationQuery(ctx, { request, tenantId, ...args })
 
   logSql(sql, 'Submissions (page info)')
   const result = await request.query(sql)

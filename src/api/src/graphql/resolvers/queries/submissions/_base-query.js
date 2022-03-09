@@ -1,30 +1,40 @@
 export default ({
+  request,
   isSubmitted = true,
-  submissionStatus = undefined,
   tenantId,
   projectFilters: {
     title: { value: titleFilter = undefined } = {},
     province: { value: provinceFilter = undefined } = {},
-    submissionStatus: { value: submissionStatusFilter = undefined } = {},
+    submissionStatus: { value: submissionStatusFilter = null } = {},
     ...projectVocabularyFilters
   } = {},
   mitigationFilters: { ...mitigationVocabularyFilters } = {},
   adaptationFilters: { ...adaptationVocabularyFilters } = {},
 }) => {
+  // Configure params
+  request.input('isSubmitted', isSubmitted === true ? 1 : 0)
+  request.input('tenantId', tenantId)
+  request.input('submissionStatusFilter', submissionStatusFilter)
+
+  // titleFilter
+  const strtWldCrd = titleFilter?.[0] === '%'
+  const endWildCrd = titleFilter?.[titleFilter?.length - 1] === '%'
+  titleFilter = titleFilter ? titleFilter.replace(/%/, '').replace(/%$/, '') : null
+  request.input('titleFilter', titleFilter)
+
   return `
     Submissions s
     where
-      exists ( select 1 from TenantXrefSubmission x where x.tenantId = '${sanitizeSqlValue(
-        tenantId
-      )}' and x.submissionId = s.id)
+      exists ( select 1 from TenantXrefSubmission x where x.tenantId = @tenantId
+      and x.submissionId = s.id)
       and deletedAt is null
-      and isSubmitted = ${isSubmitted ? 1 : 0}
-      ${
-        submissionStatus
-          ? `and json_value(submissionStatus, '$.term') = '${sanitizeSqlValue(submissionStatus)}'`
-          : ''
+      and isSubmitted = @isSubmitted
+      and json_value(submissionStatus, '$.term') = coalesce(@submissionStatusFilter, json_value(submissionStatus, '$.term'))
+      and _projectTitle ${
+        strtWldCrd || endWildCrd
+          ? `like ${strtWldCrd ? `'%' + ` : ''} @titleFilter ${endWildCrd ? ` + '%'` : ''}`
+          : `= coalesce(@titleFilter, _projectTitle)`
       }
-      ${titleFilter ? `and _projectTitle like '${sanitizeSqlValue(titleFilter)}'` : ''}
       ${
         provinceFilter
           ? `and s.id in (
@@ -37,13 +47,6 @@ export default ({
               ) tbl
               where p like '%${sanitizeSqlValue(provinceFilter)}%'
             )`
-          : ''
-      }
-      ${
-        submissionStatusFilter
-          ? `and json_value(submissionStatus, '$.term') = '${sanitizeSqlValue(
-              submissionStatusFilter
-            )}'`
           : ''
       }
       ${Object.entries(projectVocabularyFilters)

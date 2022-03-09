@@ -1,9 +1,9 @@
 import logSql from '../../../../lib/log-sql.js'
 import makeAggregationQuery from './_aggregation-query.js'
+import { pool } from '../../../../mssql/pool.js'
 import { MAX_PAGE_SIZE } from '../submissions/index.js'
 
 export default async (_, args, ctx) => {
-  const { query } = ctx.mssql
   const { limit = MAX_PAGE_SIZE, offset = 0 } = args
 
   const {
@@ -14,10 +14,11 @@ export default async (_, args, ctx) => {
     throw new Error(`Submissions request is limited to a maximum page size of ${MAX_PAGE_SIZE}`)
   }
 
-  const sql = makeAggregationQuery({ ...args, tenantId })
+  const request = (await pool.connect()).request()
+  const sql = makeAggregationQuery({ request, tenantId, ...args })
 
   logSql(sql, 'Submissions (page info)')
-  const result = await query(sql)
+  const result = await request.query(sql)
   const { submissionCount: totalRecords } = result.recordset[0]
 
   return {

@@ -21,7 +21,7 @@ export default ({ ...props }) => {
   )
 
   if (error) {
-    throw error
+    console.error('Error fetching map data', error)
   }
 
   return <context.Provider value={{ loading, data }} {...props} />

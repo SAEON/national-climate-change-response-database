@@ -95,7 +95,7 @@ const sql = `
 select
 xy,
 intervention,
-( budget - usefulMinBudget ) / ( usefulMaxBudget  - usefulMinBudget ) weighting
+( budget - usefulMinBudget ) / case when ( usefulMaxBudget  - usefulMinBudget ) = 0 then 1 else ( usefulMaxBudget  - usefulMinBudget ) end weighting
 from T3;`
 
 export default async ctx =>

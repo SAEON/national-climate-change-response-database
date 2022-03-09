@@ -3,20 +3,20 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Client](#client)
+- [Nginx](#nginx)
 - [API](#api)
-- [Client](#client-1)
+- [Client](#client)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Client
+## Nginx
 
-[Nginx configuration source code](nginx/README.md)
+[Nginx configuration source code](nginx/)
 
 ## API
 
-[API source code](api/README.md)
+[API source code](api/)
 
 ## Client
 
-[Client source code](api/README.md)
+[Client source code](client/)

@@ -28,6 +28,18 @@ export default async () => {
         userId: userEmailAddress,
         createdAt,
       } of rows) {
+        const request = (await pool.connect()).request()
+        request.input('_id', _id)
+        request.input('userEmailAddress', userEmailAddress)
+        request.input('submissionStatus', makeValidationStatus(submissionStatus))
+        request.input('submissionComments', submissionComments)
+        request.input('submissionType', submissionType)
+        request.input('projectJson', makeProjectJson(project))
+        request.input('mitigationJson', makeMitigationJson(mitigation))
+        request.input('adaptationJson', makeAdaptationJson(adaptation))
+        request.input('researchJson', research || JSON.stringify({}))
+        request.input('createdAt', new Date(createdAt).toISOString())
+
         const sql = `
         begin transaction load_erm_data
         begin try
@@ -35,7 +47,7 @@ export default async () => {
           /* Merge Users */
           merge Users t
           using (
-            select '${sanitizeSqlValue(userEmailAddress)}' emailAddress
+            select '@userEmailAddress' emailAddress
           ) s on s.emailAddress = t.emailAddress
           when not matched then insert (emailAddress)
           values (s.emailAddress);
@@ -47,7 +59,7 @@ export default async () => {
               id userId,
               ( select id from Roles where name = 'public' ) roleId
             from Users
-            where emailAddress = '${sanitizeSqlValue(userEmailAddress)}'
+            where emailAddress = @userEmailAddress
           ) s on s.userId = t.userId and s.roleId = t.roleId
           when not matched then insert (userId, roleId)
           values (s.userId, s.roleId);
@@ -59,22 +71,18 @@ export default async () => {
           merge Submissions t
           using (
             select
-              ${_id} _id,
-              '${sanitizeSqlValue(makeValidationStatus(submissionStatus))}' submissionStatus,
-              '${sanitizeSqlValue(submissionComments)}' submissionComments,
-              '${sanitizeSqlValue(submissionType)}' submissionType,
-              '${sanitizeSqlValue(makeProjectJson(project))}' project,
-              '${sanitizeSqlValue(makeMitigationJson(mitigation))}' mitigation,
-              '${sanitizeSqlValue(makeAdaptationJson(adaptation))}' adaptation,
-              '${sanitizeSqlValue(research || JSON.stringify({}))}' research,
+              @_id _id,
+              '@submissionStatus' submissionStatus,
+              '@submissionComments' submissionComments,
+              '@submissionType' submissionType,
+              '@projectJson' project,
+              '@mitigationJson' mitigation,
+              '@adaptationJson' adaptation,
+              '@researchJson' research,
               1 isSubmitted,
-              ( select id from Users where emailAddress = '${sanitizeSqlValue(
-                userEmailAddress
-              )}' ) userId,
-              ( select id from Users where emailAddress = '${sanitizeSqlValue(
-                userEmailAddress
-              )}' ) createdBy,
-              '${sanitizeSqlValue(new Date(createdAt).toISOString())}' createdAt
+              ( select id from Users where emailAddress = @userEmailAddress ) userId,
+              ( select id from Users where emailAddress = @userEmailAddress ) createdBy,
+              '@new Date(createdAt).toISOString()' createdAt
           ) s on s._id = t._id
           when not matched then insert (
             _id,
@@ -124,7 +132,7 @@ export default async () => {
         end catch`
 
         logSql(sql, 'Import ERM data')
-        const result = await (await pool.connect()).query(sql)
+        const result = await request.query(sql)
         if (!result?.recordset?.[0]?.id) {
           throw new Error('Failed ERM insert')
         }

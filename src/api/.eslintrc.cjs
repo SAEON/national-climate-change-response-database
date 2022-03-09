@@ -9,7 +9,6 @@ module.exports = {
     globalThis: false,
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
-    sanitizeSqlValue: true,
   },
   parser: '@babel/eslint-parser',
   parserOptions: {

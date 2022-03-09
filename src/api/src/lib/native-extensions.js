@@ -3,21 +3,6 @@ String.prototype.toBoolean = function () {
 }
 
 /**
- * A helper function for sanitizing SQL strings
- * to assist for building dynamic SQL
- *
- * @param {String} value
- * @returns String
- */
-global.sanitizeSqlValue = value => {
-  if (typeof value === 'string') {
-    return value.replaceAll("'", "''")
-  }
-
-  return value
-}
-
-/**
  * String.prototype.replaceAll() polyfill
  * https://gomakethings.com/how-to-replace-a-section-of-a-string-with-another-one-with-vanilla-js/
  * @author Chris Ferdinandi

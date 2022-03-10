@@ -11,27 +11,27 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
   - [System requirements](#system-requirements)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
   - [Local development](#local-development)
+    - [Build an executable from the source code](#build-an-executable-from-the-source-code)
 - [Deployment](#deployment)
-  - [Configuration](#configuration)
-      - [SSL_ENV](#ssl_env)
-      - [DEPLOYMENT_ENV](#deployment_env)
-      - [Other vars](#other-vars)
   - [Proxy headers](#proxy-headers)
   - [Deploy bundled API + client](#deploy-bundled-api--client)
   - [Deploy as Docker image](#deploy-as-docker-image)
-  - [Deploy from published Docker image](#deploy-from-published-docker-image)
-  - [Deploy using Docker-compose](#deploy-using-docker-compose)
-  - [Build an executable from the source code](#build-an-executable-from-the-source-code)
-- [Running the application as an executable](#running-the-application-as-an-executable)
-  - [With a configuration file](#with-a-configuration-file)
-  - [Linux & Mac](#linux--mac)
-  - [Windows](#windows)
-    - [Installing the executable as a Windows service](#installing-the-executable-as-a-windows-service)
+  - [Deploy via the released executable](#deploy-via-the-released-executable)
+    - [Linux & Mac](#linux--mac)
+    - [Windows](#windows)
+      - [Installing the executable as a Windows service](#installing-the-executable-as-a-windows-service)
+- [Configuration](#configuration)
+  - [Environment variables](#environment-variables)
+    - [SSL_ENV](#ssl_env)
+    - [DEPLOYMENT_ENV](#deployment_env)
+    - [Other vars](#other-vars)
+  - [Using a configuraiton file](#using-a-configuraiton-file)
 - [System migrations](#system-migrations)
 - [Source code documentation](#source-code-documentation)
   - [Platform](#platform)
   - [API](#api)
   - [Client](#client)
+  - [Nginx](#nginx)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -101,46 +101,40 @@ npm run api
 npm run client
 ```
 
+### Build an executable from the source code
+This is done on release via the GitHub actions workflow. This is how to do it manually
+
+```sh
+# Install Node.js 16.x on the server (https://nodejs.org/en/)
+
+# Clone the repository if not already done
+git clone ... nccrd
+cd nccrd
+
+# Install dependencies if not already done
+# This sometimes fails - I don't know why. If it fails, run the command "npm install" from /src/api, src/client, and the current directory
+npm run install-dependencies
+
+# Create the executables
+npm run pkg
+```
+
+Executables for Mac, Linux and Windows will be placed in the `binaries/` folder. These executables can be started directly (see below for configuration)
+
 # Deployment
 
-This project comprises a server (Node.js application) as well as a website (React.js static files). These services are separate in terms of how the source code is laid out. Both services need to be deployed together. Node.js applications typically include an HTTP server bound to localhost, with HTTP requests proxy-passed to this localhost address. The static website first needs to be built from the source code, and then served from a webserver. Proxy-passing to a Node.js server and serving static files is fairly straightforward using Nginx, Apache, IIS, etc. (Alternatively, it would seem that it's possible to host Node.js applications [directly in IIS](https://github.com/azure/iisnode/wiki/iisnode-releases))
+This project comprises a server (Node.js application) as well as a website (React.js static files). These services are separate in terms of how the source code is laid out. Both services need to be deployed together. Node.js applications typically include an HTTP server bound to localhost/0.0.0.0, with HTTP requests proxy-passed to this address (note the HTTP headers mentioned below - the proxy server needs to set these explicitly)
 
-Several mechanisms are available to deploy this project from source code:
+Configuring a proxy server for a Node.js deployment is fairly straightforward using Nginx, Apache, IIS, etc. (Alternatively, it would seem that it's possible to host Node.js applications [directly in IIS](https://github.com/azure/iisnode/wiki/iisnode-releases))
 
-1. Install Node.js on a server, and then run the API and serve the (built) client separately
-2. Build a docker image that will serve the API and client together
-3. Use Docker-compose to setup a deployment that includes the API, client, and Sql Server
-4. Package the API and client into a single executable that can be started on any server
+Server setup instructions are included in this repository:
 
-## Configuration
-
-#### SSL_ENV
-
-- `production`
-- `development`
-
-"production" is for deployment behind an SSL-offloading proxy server. In this case, incoming requests MUST have the X-Forwarded-Proto header explicitly set to "https", otherwise all server requests will fail
-
-#### DEPLOYMENT_ENV
-
-- `production`
-- `development`
-
-In development mode:
-
-- Configuration secrets are logged in plain text to make debugging easier for the API
-- The client configuration is logged (in production mode the client configuration is not logged at all)
-- JavaScript code is NOT minified to make debugging easier
-- Webpack bundling is run in development mode (the web client will theoretically be less responsive in this case)
-- A number of helpful, but expensive, developer checks are performed that will greatly slow down the application (both API and client)
-
-#### Other vars
-
-... Please let me know if more detail is required for other variables
+- [platform/windows](Windows)
+- [platform/centos](CentOS 7.6)
 
 ## Proxy headers
 
-When deployed behind a proxy, the following headers need to be set by the public-facing webserver explicitly:
+When deployed behind a proxy (usually the case for Node.js HTTP APIs), the following headers need to be set by the public-facing webserver explicitly.
 
 | Header            | Description                               |
 | ----------------- | ----------------------------------------- |
@@ -148,17 +142,14 @@ When deployed behind a proxy, the following headers need to be set by the public
 | Host              | The original host of the incoming request |
 | X-Forwarded-Proto | The value should be "HTTPS"               |
 
-(There are other headers configured on the example [Nginx block](platform/centos/nginx/nccrd.conf), but they are likely not required generally).
+For an example of setting HTTP headers using Nginx, refer to [the Nginx server block](src/nginx/conf.d/nccrd.conf) used to host this application at SAEON.
 
 ## Deploy bundled API + client
 
 The easiest way to deploy the application from source code is to serve the React.js static files from the Node.js server. Note the following:
 
 1. API (`/http` and `/graphql`) calls are gzipped by the Node.js application, but **static files are NOT** (configure this in your webserver)
-2. No caching policy is set by the Node.js server when static files are requested (also configure this in your webserver)
-3. The HTTP `origin` header should be set explicitly by the proxy server and should be the domain by which the application is served from
-
-Refer to this [this Nginx configuration file](platform/centos/nginx/nginx.conf) and [this Nginx server block](platform/centos/nginx/nccrd.conf) for an example of how to configure a webserver to set caching headers and compress static files. [IIS configuration instructions](platform/windows/README.md) are also included.
+2. No caching policy is set by the Node.js server when static files are requested (also configure this in your webserver - for an example see [this Nginx configuration](src/nginx/nginx.conf))
 
 To start this application from source code:
 
@@ -170,6 +161,7 @@ git clone ... nccrd
 cd nccrd
 
 # Install dependencies if not already done
+# This sometimes fails - I don't know why. If it fails, run the command "npm install" from /src/api, src/client, and the current directory
 npm run install-dependencies
 
 # Start the application
@@ -208,62 +200,11 @@ docker run \
   -d nccrd
 ```
 
-## Deploy from published Docker image
+## Deploy via the released executable
 
-Use the same `docker run` command as specified above. Currently there is no plan to publish a public Docker image of this source code, if so this document will be updated to indicate the name of the docker image
+Binary executables are built automatically for Windows, Max, and Linux every time a tag is added to the repository. Download the latest version of the built application from [the releases page](https://github.com/SAEON/national-climate-change-systems/releases), and start the executable from a terminal window (this is preferable to double clicking the executable, as you will see logs when the application exits).
 
-## Deploy using Docker-compose
-
-Refer to the [docker-compose.yml](docker-compose.yml) file for a deployment configuration that includes SQL Server, which can be used via the following command (with default configuration values defined in [docker-compose.env](docker-compose.yml)):
-
-```sh
-docker-compose --env-file docker-compose.env up -d --force-recreate --build
-```
-
-## Build an executable from the source code
-
-```sh
-# Install Node.js 16.x on the server (https://nodejs.org/en/)
-
-# Clone the repository if not already done
-git clone ... nccrd
-cd nccrd
-
-# Install dependencies if not already done
-npm run install-dependencies
-
-# Create the executables
-npm run pkg
-```
-
-Executables for Mac, Linux and Windows will be placed in the `binaries/` folder. These executables can be started directly (see below for configuration)
-
-# Running the application as an executable
-
-Binary executables are built automatically for Windows, Max, and Linux every time a tag is added to the repository. Download the latest version of the built application from [the releases page](https://github.com/SAEON/national-climate-change-systems/releases), and start the executable from a terminal. The examples below show how to start the application with the correct SQL Server configuration (and other configurable properties). Alternatively, placing a `.env` file in the same folder as the executable will result in configuring the application on startup.
-
-## With a configuration file
-
-It should be possible to specify configuration in a `.env` file in the same directory as the executable. Add configuration values to the file in the format below and then start the executable. (NOTE there is currently a bug on Windows Server 2019 where the configuration file is NOT read, in this case specify configuration as part of a Powershell script).
-
-```txt
-LOG_SQL_QUERIES=true
-MSSQL_DATABASE='nccrd'
-MSSQL_HOSTNAME='localhost'
-MSSQL_PASSWORD='password!123#'
-MSSQL_PORT=1433
-MSSQL_USERNAME='sa'
-FILES_DIRECTORY=''
-DEFAULT_SYSADMIN_EMAIL_ADDRESSES=''
-DEFAULT_ADMIN_EMAIL_ADDRESSES=''
-DEPLOYMENT_ENV='development'
-SSL_ENV='development'
-HOSTNAME='http://localhost:3000'
-PORT=3000
-ODP_AUTH_CLIENT_SECRET='<secret>'
-```
-
-## Linux & Mac
+### Linux & Mac
 
 ```sh
 LOG_SQL_QUERIES=true \
@@ -283,7 +224,7 @@ ODP_AUTH_CLIENT_SECRET='<secret>' \
 nccrd-<linux or mac>
 ```
 
-## Windows
+### Windows
 
 Open a **powershell** terminal and run the following command:
 
@@ -305,13 +246,50 @@ $env:ODP_AUTH_CLIENT_SECRET="<secret>";
 .\nccrd-win.exe
 ```
 
-### Installing the executable as a Windows service
+#### Installing the executable as a Windows service
 
 Please see the [Windows platform installation instructions](platform/windows/) for installing the NCCRD as a service (i.e. it will start on server startup, and also restart on error).
 
+# Configuration
+The application reads environment variables on startup and caches the environment variables within application memory (using sensible defaults that are suited to development with no configuration specified). To configure the application, set environment variables and then start the application.
+
+## Environment variables
+The full list of environment variables can be found in the source code (`src/api/src/config` for the API, and `src/client/src/config.js` for the client).
+
+### SSL_ENV
+
+- `production`
+- `development`
+
+"production" is for deployment behind an SSL-offloading proxy server. In this case, incoming requests MUST have the X-Forwarded-Proto header explicitly set to "https", otherwise all server requests will fail
+
+### DEPLOYMENT_ENV
+
+- `production`
+- `development`
+
+In development mode:
+
+- Configuration secrets are logged in plain text to make debugging easier for the API
+- The client configuration is logged (in production mode the client configuration is not logged at all)
+- JavaScript code is NOT minified to make debugging easier
+- Webpack bundling is run in development mode (the web client will theoretically be less responsive in this case)
+- A number of helpful, but expensive, developer checks are performed that will greatly slow down the application (both API and client)
+
+### Other vars
+
+... Please let me know if more information is required for other environment variables
+
+## Using a configuraiton file
+
+- Specify environment variable configuration in `src/api/.env` for the API (refer to `src/api/.env.example` for an example file)
+- Specify environment variable configuration in `src/client/.env` for the client (refer to `src/client/.env.example` for an example file). Unlike the API, which will reload the `.env` file on every application start, the client reads the `.env` file once at build time. Restart the client application to update configuration.
+
+NOTE there is currently a bug on Windows Server 2019 where the configuration file is ***NOT*** read on startup. In this case specify configuration as part of a Powershell script as shown above.
+
 # System migrations
 
-Moving a deployment from one system to another is fairly straightforward - just move the application server, restore the database and update configuration. However there is are a couple caveats:
+Moving a deployment from one system to another is fairly straightforward - just deploy to a new server, restore the database and update configuration. However there is are a couple caveats:
 
 1. Don't forget to move the uploads directory to the environment! Look at the configuration value `FILES_DIRECTORY` on your current deployment to see where files are uploaded to
 2. **file uploads are referenced in SQL Server via absolute paths. As such, you will need to update the file paths referenced in Sql Server**
@@ -329,3 +307,7 @@ Moving a deployment from one system to another is fairly straightforward - just 
 ## Client
 
 [src/client/README.md](src/client/)
+
+## Nginx
+
+[src/nginx/README.md](src/nginx/)

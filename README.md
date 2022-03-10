@@ -25,7 +25,7 @@ Suite of services - for tracking, analysing, and monitoring climate adaptation a
     - [SSL_ENV](#ssl_env)
     - [DEPLOYMENT_ENV](#deployment_env)
     - [Other vars](#other-vars)
-  - [Using a configuraiton file](#using-a-configuraiton-file)
+  - [Using a configuration file](#using-a-configuration-file)
 - [System migrations](#system-migrations)
 - [Source code documentation](#source-code-documentation)
   - [Platform](#platform)
@@ -45,7 +45,7 @@ Setup the repository for development on a local machine. The Node.js and React s
 2. Node.js **node:^16**
 
 ```sh
-# Make sure that Node.js ^node:16.14.0 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+# Make sure that Node.js 16 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall.
 # Assuming an Ubuntu Linux environment
 curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings
@@ -102,6 +102,7 @@ npm run client
 ```
 
 ### Build an executable from the source code
+
 This is done on release via the GitHub actions workflow. This is how to do it manually
 
 ```sh
@@ -251,9 +252,11 @@ $env:ODP_AUTH_CLIENT_SECRET="<secret>";
 Please see the [Windows platform installation instructions](platform/windows/) for installing the NCCRD as a service (i.e. it will start on server startup, and also restart on error).
 
 # Configuration
+
 The application reads environment variables on startup and caches the environment variables within application memory (using sensible defaults that are suited to development with no configuration specified). To configure the application, set environment variables and then start the application.
 
 ## Environment variables
+
 The full list of environment variables can be found in the source code (`src/api/src/config` for the API, and `src/client/src/config.js` for the client).
 
 ### SSL_ENV
@@ -280,12 +283,12 @@ In development mode:
 
 ... Please let me know if more information is required for other environment variables
 
-## Using a configuraiton file
+## Using a configuration file
 
 - Specify environment variable configuration in `src/api/.env` for the API (refer to `src/api/.env.example` for an example file)
 - Specify environment variable configuration in `src/client/.env` for the client (refer to `src/client/.env.example` for an example file). Unlike the API, which will reload the `.env` file on every application start, the client reads the `.env` file once at build time. Restart the client application to update configuration.
 
-NOTE there is currently a bug on Windows Server 2019 where the configuration file is ***NOT*** read on startup. In this case specify configuration as part of a Powershell script as shown above.
+NOTE there is currently a bug on Windows Server 2019 where the configuration file is **_NOT_** read on startup. In this case specify configuration as part of a Powershell script as shown above.
 
 # System migrations
 

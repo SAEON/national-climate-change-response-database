@@ -289,6 +289,39 @@ In development mode:
 
 NOTE there is currently a bug on Windows Server 2019 where the configuration file is **_NOT_** read on startup. In this case specify configuration as part of a Powershell script as shown above.
 
+## Configuring the database
+Configure database connections using environment variables as explained above. Don't forget to configure to take regular backups!
+
+### Backing up the database via T-SQL
+Using SQL Server via a Dockerized Linux deployment (as configured on the SAEON platform), configure scheduled backups using `sqlcmd`. The command below works in a development (localhost) environment if setup as outlined above.
+
+```sh
+docker run \
+  --net=nccrd \
+  -v /home/$USER/sql-server-data:/var/opt/mssql \
+  -e 'ACCEPT_EULA=Y' \
+  -e 'SA_PASSWORD=password!123#' \
+  -e 'MSSQL_PID=Express' \
+  -e 'MSSQL_AGENT_ENABLED=true' \
+  --rm mcr.microsoft.com/mssql/server:2017-latest \
+  sh -c \
+    "/opt/mssql-tools/bin/sqlcmd \
+      -S sql-server \
+      -d nccrd \
+      -U sa \
+      -P 'password!123#' \
+      -Q \" \
+        declare @db nvarchar(256); \
+        declare @path nvarchar(512); \
+        declare @filename nvarchar(512); \
+        declare @filedate nvarchar(40); \
+        set @path = '/var/opt/mssql/bak/'; \
+        set @db = 'nccrd'; \
+        select @filedate = convert(nvarchar(20), getdate(), 112); \
+        set @filename = @path + @db + '_' + @filedate + '.bak'; \
+        backup database @db to disk = @filename;\""
+```
+
 # System migrations
 
 Moving a deployment from one system to another is fairly straightforward - just deploy to a new server, restore the database and update configuration. However there is are a couple caveats:

@@ -322,6 +322,22 @@ docker run \
         backup database @db to disk = @filename;\""
 ```
 
+Since crontab doesn't support multiline commands, to run this command on a scheduled basis via a cronjob:
+
+```sh
+sudo su
+cd /path/to/script.sh
+touch script.sh
+chmod +x script.sh
+
+# Copy the command above (with correct username/password/etc) into script.sh
+
+sudo crontab -e
+
+# Add the following to the file and save (to run a backup at 0400 every day):
+0 4 * * * /path/to/script.sh >> /path/to/logfile.log 2>&1
+```
+
 # System migrations
 
 Moving a deployment from one system to another is fairly straightforward - just deploy to a new server, restore the database and update configuration. However there is are a couple caveats:

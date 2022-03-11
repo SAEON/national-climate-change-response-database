@@ -295,7 +295,7 @@ NOTE there is currently a bug on Windows Server 2019 where the configuration fil
 Configure database connections using environment variables as explained above. Don't forget to configure to take regular backups!
 
 ### Backing up the database via T-SQL
-Using SQL Server via a Dockerized Linux deployment (as configured on the SAEON platform), configure scheduled backups using `sqlcmd`. The command below works in a development (localhost) environment if setup as outlined above.
+Using SQL Server via a Dockerized Linux deployment (as configured on the SAEON platform), configure scheduled backups using `sqlcmd`. The command below works in a development (localhost) environment if setup as outlined above (note that `with compression` is not supported on SQL Server Express license).
 
 ```sh
 docker run \
@@ -303,7 +303,7 @@ docker run \
   -v /home/$USER/sql-server-data:/var/opt/mssql \
   -e 'ACCEPT_EULA=Y' \
   -e 'SA_PASSWORD=password!123#' \
-  -e 'MSSQL_PID=Express' \
+  -e 'MSSQL_PID=Developer' \
   -e 'MSSQL_AGENT_ENABLED=false' \
   --rm mcr.microsoft.com/mssql/server:2017-latest \
   sh -c \
@@ -321,7 +321,7 @@ docker run \
         set @db = 'nccrd'; \
         select @filedate = convert(nvarchar(20), getdate(), 112); \
         set @filename = @path + @db + '_' + @filedate + '.bak'; \
-        backup database @db to disk = @filename;\""
+        backup database @db to disk = @filename with compression;\""
 ```
 
 Since crontab doesn't support multiline commands, to run this command on a scheduled basis via a cronjob:

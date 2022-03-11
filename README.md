@@ -302,7 +302,7 @@ docker run \
   -e 'ACCEPT_EULA=Y' \
   -e 'SA_PASSWORD=password!123#' \
   -e 'MSSQL_PID=Express' \
-  -e 'MSSQL_AGENT_ENABLED=true' \
+  -e 'MSSQL_AGENT_ENABLED=false' \
   --rm mcr.microsoft.com/mssql/server:2017-latest \
   sh -c \
     "/opt/mssql-tools/bin/sqlcmd \

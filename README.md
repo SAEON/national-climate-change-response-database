@@ -25,6 +25,8 @@ A database for tracking, analysing, and monitoring climate adaptation and mitiga
     - [DEPLOYMENT_ENV](#deployment_env)
     - [Other vars](#other-vars)
   - [Using a configuration file](#using-a-configuration-file)
+  - [Configuring the database](#configuring-the-database)
+    - [Backing up the database via T-SQL](#backing-up-the-database-via-t-sql)
 - [System migrations](#system-migrations)
 - [Source code documentation](#source-code-documentation)
   - [Platform](#platform)

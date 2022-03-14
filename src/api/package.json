@@ -19,9 +19,9 @@
   "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^8.10.0",
+    "eslint": "^8.11.0",
     "nodemon": "^2.0.15",
-    "npm-check-updates": "^12.5.2",
+    "npm-check-updates": "^12.5.3",
     "prettier": "^2.5.1"
   },
   "dependencies": {
@@ -33,7 +33,7 @@
     "@graphql-tools/schema": "^8.3.2",
     "@koa/router": "^10.1.1",
     "@rollup/plugin-json": "^4.1.0",
-    "apollo-server-core": "^3.6.3",
+    "apollo-server-core": "^3.6.4",
     "apollo-server-koa": "3.6",
     "base64url": "^3.0.1",
     "color": "^4.2.1",
@@ -59,7 +59,7 @@
     "ol": "^6.13.0",
     "openid-client": "^5.1.4",
     "rimraf": "^3.0.2",
-    "rollup": "^2.70.0",
+    "rollup": "^2.70.1",
     "sanitize-filename": "^1.6.3",
     "shpjs": "^4.0.2",
     "sift": "^16.0.0",

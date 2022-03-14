@@ -25,7 +25,7 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@babel/runtime": "^7.17.2",
-    "@emotion/react": "^11.8.1",
+    "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@mui/lab": "^5.0.0-alpha.72",
     "@mui/material": "^5.5.0",
@@ -76,10 +76,10 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
     "@babel/eslint-plugin": "^7.16.5",
-    "eslint": "^8.10.0",
-    "eslint-plugin-react": "^7.29.3",
+    "eslint": "^8.11.0",
+    "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "npm-check-updates": "^12.5.2",
+    "npm-check-updates": "^12.5.3",
     "onchange": "^7.1.0",
     "prettier": "^2.5.1",
     "webpack-dev-server": "^4.7.4"

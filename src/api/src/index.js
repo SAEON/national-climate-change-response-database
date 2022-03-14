@@ -55,7 +55,7 @@ import('./mssql/setup-db.js')
         try {
           await fn()
         } catch (error) {
-          const TRY_AGAIN_IN = 2
+          const TRY_AGAIN_IN = 30
           console.error('Unable to configure oauth2 oidc strategy', error)
           console.info(`Trying again to configure authentication in ${TRY_AGAIN_IN} seconds...`)
           await new Promise(res => setTimeout(res, TRY_AGAIN_IN * 1000))

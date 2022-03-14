@@ -50,7 +50,7 @@ import('./mssql/setup-db.js')
     process.exit(1)
   })
   .then(() =>
-    import('./passport/index.js').then(async ({ default: fn }) =>
+    import('./passport/index.js').then(({ default: fn }) =>
       (async function configureAuth() {
         try {
           await fn()

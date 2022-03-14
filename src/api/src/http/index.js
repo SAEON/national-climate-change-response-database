@@ -16,7 +16,6 @@ import attachFileToSubmission from './attach-file-to-submission/index.js'
 import createTenant from './create-tenant/index.js'
 import template from './download-excel-submission-template/index.js'
 import submissions from './download-submissions/index.js'
-import submitTemplate from './submit-completed-templates/index.js'
 import flaggedVocabs from './download-flagged-vocabularies/index.js'
 
 export const createTenantRoute = a({ permission: P['create-tenant'] })(createTenant)
@@ -29,10 +28,6 @@ export const downloadExcelSubmissionTemplateRoute = a({
 export const downloadSubmissionsRoute = a({
   permission: P['download-submission'],
 })(submissions)
-
-export const submitCompletedTemplatesRoute = a({
-  permission: P['create-submission'],
-})(submitTemplate)
 
 export const attachFileToSubmissionRoute = async ctx =>
   a({

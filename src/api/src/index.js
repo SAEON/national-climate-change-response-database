@@ -31,7 +31,6 @@ import {
   logoutRoute,
   oauthAuthenticationCallbackRoute,
   attachFileToSubmissionRoute,
-  submitCompletedTemplatesRoute,
   downloadExcelSubmissionTemplateRoute,
   downloadPublicFileRoute,
   downloadSubmissionsRoute,
@@ -127,7 +126,6 @@ app
       .get('/http/public-image/:name', publicImageRoute)
       .get('/http/logout', logoutRoute)
       .post('/http/attach-file-to-submission', attachFileToSubmissionRoute)
-      .post('/http/submit-completed-templates', submitCompletedTemplatesRoute)
       .put('/http/create-tenant', createTenantRoute)
       .get('/http/download-template', downloadExcelSubmissionTemplateRoute)
       .get('/http/download-public-file', downloadPublicFileRoute)

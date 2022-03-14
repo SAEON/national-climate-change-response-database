@@ -1,5 +1,4 @@
 import DownloadExcelTemplate from '../../../components/download-template'
-import UploadProject from '../../../components/submit-template'
 import NewSubmission from '../../../components/new-submission'
 import ToolbarHeader from '../../../components/toolbar-header'
 import Divider from '@mui/material/Divider'
@@ -19,13 +18,7 @@ export default () => {
           style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
         />
         <DownloadExcelTemplate />
-        <div style={{ marginLeft: theme.spacing(2) }} />
-        <UploadProject />
-        <Divider
-          flexItem
-          orientation="vertical"
-          style={{ marginLeft: theme.spacing(2), marginRight: theme.spacing(2) }}
-        />
+        <Divider flexItem orientation="vertical" style={{ marginLeft: theme.spacing(2) }} />
       </Hidden>
       <div style={{ marginRight: 'auto' }} />
     </ToolbarHeader>

@@ -57,7 +57,7 @@ export default () => {
             target="_blank"
             rel="noopener noreferrer"
             href={`${NCCRD_API_HTTP_ADDRESS}/download-template`}
-            key="submit-project-by-excel-template"
+            key="excel-template-download"
             startIcon={<Icon size={18} />}
             onClick={e => {
               closeFn(e)

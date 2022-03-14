@@ -2,7 +2,6 @@
 import { useContext, forwardRef } from 'react'
 import { context as dataContext } from '../context'
 import DownloadExcelTemplate from '../../../components/download-template'
-// import UploadProject from '../../../components/submit-template'
 import { Link } from 'react-router-dom'
 import NewSubmission from '../../../components/new-submission'
 import ToolbarHeader from '../../../components/toolbar-header'

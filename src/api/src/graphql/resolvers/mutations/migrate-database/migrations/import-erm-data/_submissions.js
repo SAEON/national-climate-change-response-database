@@ -1,4 +1,4 @@
-import makeStreamingPool, { pool } from '../../../../../../mssql/pool.js'
+import { makeStreamingPool, pool } from '../../../../../../mssql/pool.js'
 import logSql from '../../../../../../lib/log-sql.js'
 import makeProjectJson from './_make-project-json.js'
 import makeMitigationJson from './_make-mitigation-json.js'

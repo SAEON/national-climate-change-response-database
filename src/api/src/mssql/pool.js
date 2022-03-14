@@ -71,7 +71,7 @@ const getPool = ({
   }
 }
 
-export default ({
+export const makeStreamingPool = ({
   user = MSSQL_USERNAME,
   password = MSSQL_PASSWORD,
   server = MSSQL_HOSTNAME,

@@ -8,6 +8,8 @@ import { Div } from '../../../components/html-tags'
 import { alpha } from '@mui/material/styles'
 import HeatMap from './_heat-map'
 import { useImageHeight } from '../../../components/header/application-banner'
+import Link from '@mui/material/Link'
+import Typography from '@mui/material/Typography'
 
 export default ({ children }) => {
   const {
@@ -62,6 +64,27 @@ export default ({ children }) => {
         controls={[]}
         layers={[baseLayer()]}
       >
+        <Typography
+          variant="caption"
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            backgroundColor: theme => alpha(theme.palette.common.white, 0.8),
+            m: theme => theme.spacing(0),
+            p: theme => theme.spacing(0.5),
+          }}
+        >
+          ©{' '}
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.openstreetmap.org/copyright"
+          >
+            OpenStreetMap
+          </Link>{' '}
+          contributors
+        </Typography>
         <HeatMap zoom={zoom} />
         {children}
       </MapProvider>

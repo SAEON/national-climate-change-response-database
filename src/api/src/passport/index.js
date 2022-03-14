@@ -23,18 +23,20 @@ if (!ODP_AUTH_CLIENT_ID || !ODP_AUTH_CLIENT_SECRET) {
  * This is configured on startup, so when a tenant
  * is added to the deployment, restart the app
  */
-Issuer.discover(ODP_AUTH_WELL_KNOWN)
-  .then(async issuer => {
-    const tenants = (
-      await (await pool.connect()).request().query(`select hostname from Tenants;`)
-    ).recordset.map(({ hostname }) => [
-      hostname,
-      `${protocol}//${hostname}${port ? `:${port}` : ''}${ODP_AUTH_REDIRECT_PATH}`,
-    ])
 
-    tenants.forEach(([id, cbUri]) => {
-      passport.use(id, strategy({ issuer, redirect_uri: cbUri }))
-    })
+export default async () => {
+  const issuer = await Issuer.discover(ODP_AUTH_WELL_KNOWN)
+
+  const tenants = (
+    await (await pool.connect()).request().query(`select hostname from Tenants;`)
+  ).recordset.map(({ hostname }) => [
+    hostname,
+    `${protocol}//${hostname}${port ? `:${port}` : ''}${ODP_AUTH_REDIRECT_PATH}`,
+  ])
+
+  tenants.forEach(([id, cbUri]) => {
+    passport.use(id, strategy({ issuer, redirect_uri: cbUri }))
   })
-  .then(() => console.info('Authentication configured successfully'))
-  .catch(error => console.error('Unable to configure oauth2 oidc strategy', error))
+
+  console.info('Authentication configured successfully')
+}

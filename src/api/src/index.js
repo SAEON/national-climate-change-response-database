@@ -49,7 +49,21 @@ import('./mssql/setup-db.js')
     console.error(error.message)
     process.exit(1)
   })
-  .then(() => import('./passport/index.js'))
+  .then(() =>
+    import('./passport/index.js').then(async ({ default: fn }) =>
+      (async function configureAuth() {
+        try {
+          await fn()
+        } catch (error) {
+          const TRY_AGAIN_IN = 2
+          console.error('Unable to configure oauth2 oidc strategy', error)
+          console.info(`Trying again to configure authentication in ${TRY_AGAIN_IN} seconds...`)
+          await new Promise(res => setTimeout(res, TRY_AGAIN_IN * 1000))
+          configureAuth()
+        }
+      })()
+    )
+  )
 
 const __dirname = getCurrentDirectory(import.meta)
 

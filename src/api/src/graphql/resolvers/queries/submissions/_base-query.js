@@ -42,7 +42,7 @@ export default async (
   request.input('submissionStatus', submissionStatus)
 
   // titleFilter
-  const strtWldCrd = titleFilter?.[0] === '%'
+  const startWldCrd = titleFilter?.[0] === '%'
   const endWildCrd = titleFilter?.[titleFilter?.length - 1] === '%'
   titleFilter = titleFilter ? titleFilter.replace(/%/, '').replace(/%$/, '') : null
   request.input('titleFilter', titleFilter)
@@ -97,8 +97,8 @@ export default async (
       ${
         titleFilter
           ? `and _projectTitle ${
-              strtWldCrd || endWildCrd
-                ? `like ${strtWldCrd ? `'%' + ` : ''} @titleFilter ${endWildCrd ? ` + '%'` : ''}`
+              startWldCrd || endWildCrd
+                ? `like ${startWldCrd ? `'%' + ` : ''} @titleFilter ${endWildCrd ? ` + '%'` : ''}`
                 : `= @titleFilter`
             }`
           : ''
@@ -144,7 +144,7 @@ export default async (
         .map(([fieldName, { value: filter = undefined } = {}], i) =>
           filter
             ? `
-            and json_value(adaptation, '$.${fieldName}.term') = adaptationVFilter_${i}`
+            and json_value(adaptation, '$.${fieldName}.term') = @adaptationVFilter_${i}`
             : ''
         )
         .join('\n')}`

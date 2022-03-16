@@ -53,7 +53,7 @@
   "devDependencies": {
     "doctoc": "^2.1.0",
     "npm-check-updates": "^12.5.3",
-    "prettier": "^2.5.1"
+    "prettier": "^2.6.0"
   },
   "dependencies": {
     "pkg": "^5.5.2",

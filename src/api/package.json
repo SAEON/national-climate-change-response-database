@@ -22,13 +22,13 @@
     "eslint": "^8.11.0",
     "nodemon": "^2.0.15",
     "npm-check-updates": "^12.5.3",
-    "prettier": "^2.5.1"
+    "prettier": "^2.6.0"
   },
   "dependencies": {
     "@babel/cli": "^7.17.6",
-    "@babel/core": "^7.17.5",
+    "@babel/core": "^7.17.7",
     "@babel/eslint-parser": "^7.17.0",
-    "@babel/eslint-plugin": "^7.16.5",
+    "@babel/eslint-plugin": "^7.17.7",
     "@babel/preset-env": "^7.16.11",
     "@graphql-tools/schema": "^8.3.2",
     "@koa/router": "^10.1.1",

@@ -73,19 +73,24 @@ export default ({ active, submissions }) => {
           ({
             id,
             _id,
-            project: { title = '', interventionType: { term: intervention = '' } = {} } = {},
+            project,
             isSubmitted,
             submissionStatus,
             submissionComments: comments,
-          } = {}) => ({
-            id: _id,
-            formNumber: id,
-            title,
-            status: submissionStatus?.term,
-            intervention,
-            comments,
-            isSubmitted: isSubmitted ? 'Yes' : 'No',
-          })
+          } = {}) => {
+            const { title = 'Untitled', interventionType } = project || {}
+            const { term: intervention = 'NA' } = interventionType || {}
+
+            return {
+              id: _id,
+              formNumber: id,
+              title,
+              status: submissionStatus?.term,
+              intervention,
+              comments,
+              isSubmitted: isSubmitted ? 'Yes' : 'No',
+            }
+          }
         )}
       />
     </div>

@@ -57,20 +57,18 @@ export default ({ active, submissions }) => {
             ),
           },
         ]}
-        rows={inProgressSubmissions.map(
-          ({
-            id,
-            _id,
-            project: { title = '', interventionType: { term: intervention = '' } = {} } = {},
-            isSubmitted,
-          } = {}) => ({
+        rows={inProgressSubmissions.map(({ id, _id, project, isSubmitted } = {}) => {
+          const { title = 'Untitled', interventionType = 'NA' } = project || {}
+          const { term: intervention } = interventionType || {}
+
+          return {
             id: _id,
             formNumber: id,
-            intervention,
-            title,
+            intervention: intervention || '',
+            title: title || 'Unknown',
             isSubmitted: isSubmitted ? 'Yes' : 'No',
-          })
-        )}
+          }
+        })}
       />
     </div>
   )

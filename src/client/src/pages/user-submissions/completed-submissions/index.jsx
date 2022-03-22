@@ -36,12 +36,6 @@ export default ({ active, submissions }) => {
             headerRenderer,
           },
           {
-            key: 'isSubmitted',
-            name: 'Submitted',
-            headerRenderer,
-            width: 120,
-          },
-          {
             key: 'status',
             name: 'Status',
             headerRenderer,
@@ -50,12 +44,24 @@ export default ({ active, submissions }) => {
           {
             key: 'comments',
             name: 'Comments',
-            width: 180,
             headerRenderer,
+          },
+          {
+            key: '_view',
+            name: '',
+            width: 100,
+            formatter: ({ row: { formNumber } }) => (
+              <div style={{ width: '100%', textAlign: 'center' }}>
+                <Link component={RouterLink} to={`/submissions/${formNumber}`} underline="hover">
+                  View
+                </Link>
+              </div>
+            ),
           },
           {
             key: '_edit',
             name: '',
+            width: 100,
             formatter: ({ row: { formNumber } }) => (
               <div style={{ width: '100%', textAlign: 'center' }}>
                 <Link
@@ -63,21 +69,14 @@ export default ({ active, submissions }) => {
                   to={`/submissions/${formNumber}/edit`}
                   underline="hover"
                 >
-                  Edit submission
+                  Edit
                 </Link>
               </div>
             ),
           },
         ]}
         rows={_submissions.map(
-          ({
-            id,
-            _id,
-            project,
-            isSubmitted,
-            submissionStatus,
-            submissionComments: comments,
-          } = {}) => {
+          ({ id, _id, project, submissionStatus, submissionComments: comments } = {}) => {
             const { title = 'Untitled', interventionType } = project || {}
             const { term: intervention = 'NA' } = interventionType || {}
 
@@ -88,7 +87,6 @@ export default ({ active, submissions }) => {
               status: submissionStatus?.term,
               intervention,
               comments,
-              isSubmitted: isSubmitted ? 'Yes' : 'No',
             }
           }
         )}

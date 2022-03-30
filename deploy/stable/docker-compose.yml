@@ -27,7 +27,7 @@ services:
         condition: any
         delay: 5s
     ports:
-      - 10000:80
+      - 7007:80
     networks:
       - nccrd_stable
 

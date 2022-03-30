@@ -27,7 +27,7 @@ services:
         condition: any
         delay: 30s
     ports:
-      - 9000:80
+      - 7006:80
     networks:
       - nccrd_next
 

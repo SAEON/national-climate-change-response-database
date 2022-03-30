@@ -17,7 +17,7 @@ jobs:
     outputs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
-      - name: Check out source code (shared)
+      - name: Checkout source code
         uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_REF }}

@@ -131,8 +131,8 @@ Configuring a proxy server for a Node.js deployment is fairly straightforward us
 
 Server setup instructions are included in this repository:
 
-- [platform/windows](Windows)
-- [platform/centos](CentOS 7.6)
+- [Window](platform/windows)
+- [CentOS 7.6](platform/centos)
 
 ## Proxy headers
 

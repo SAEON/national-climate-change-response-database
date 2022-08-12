@@ -31,7 +31,8 @@
       "src/api/bin/type-defs/**/*",
       "src/api/bin/sql/**/*",
       "src/api/bin/client-dist/**/*",
-      "src/api/bin/images/**/*"
+      "src/api/bin/images/**/*",
+      "src/api/src/**/*"
     ],
     "targets": [
       "node16-linux-x64",
@@ -51,12 +52,12 @@
   },
   "homepage": "https://github.com/SAEON/national-climate-change-systems#readme",
   "devDependencies": {
-    "doctoc": "^2.1.0",
-    "npm-check-updates": "^12.5.3",
-    "prettier": "^2.6.0"
+    "doctoc": "^2.2.0",
+    "npm-check-updates": "^16.0.5",
+    "prettier": "^2.7.1"
   },
   "dependencies": {
-    "pkg": "^5.5.2",
+    "pkg": "^5.8.0",
     "rimraf": "^3.0.2"
   }
 }

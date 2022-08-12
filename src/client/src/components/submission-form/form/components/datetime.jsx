@@ -1,5 +1,5 @@
 import { memo, useMemo } from 'react'
-import DatePicker from '@mui/lab/DatePicker'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import QuickForm from '../../../quick-form'
 import TextField from '@mui/material/TextField'
 import debounce from '../../../../lib/debounce'

@@ -77,7 +77,7 @@ const fixProgressCalculatorGrids = ({ calculator }) => {
 
   return {
     /**
-     * Mitigation achievement
+     * Project achievement
      * fields:
      *   - achieved
      *   - achievedUnit

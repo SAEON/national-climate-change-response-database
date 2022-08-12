@@ -43,15 +43,7 @@ Setup the repository for development on a local machine. The Node.js and React s
 ## System requirements
 
 1. Docker
-2. Node.js **node:^16**
-
-```sh
-# Make sure that Node.js 16 is installed. Follow the instructions at https://github.com/nodesource/distributions/blob/master/README.md#debinstall.
-# Assuming an Ubuntu Linux environment
-curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-sudo apt-get install gcc g++ make # Required for building node-sass and other modules with native bindings
-sudo apt-get install -y nodejs
-```
+2. Node.js (v16.14.2)
 
 ## Install source code and dependencies
 

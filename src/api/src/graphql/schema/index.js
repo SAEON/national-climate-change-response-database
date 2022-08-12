@@ -2,7 +2,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema'
 import { graphqlSync, print } from 'graphql'
 import { gql } from 'apollo-server-koa'
 import { join } from 'path'
-import { readFileSync, readdirSync } from 'fs'
+import { readFileSync, readdirSync, lstatSync } from 'fs'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
 import * as resolvers from '../resolvers/index.js'
 import {
@@ -19,36 +19,11 @@ const _import = p =>
   })
 
 /**
- * Load GraphQL definition strings
- */
-const STATIC_SCHEMA_PARTS = readdirSync(join(__dirname, './type-defs'))
-
-/**
- * Load GraphQL enum of database migrations
- */
-const DB_MIGRATION_ENUM = `enum Migrations { ${readdirSync(
-  join(__dirname, '../resolvers/mutations/migrate-database/migrations')
-)
-  .map(entry => entry.replaceAll('-', '_').toUpperCase())
-  .join(' ')} }`
-
-/**
- * Load GraphQL enum of chart types
- */
-const CHART_TYPES_ENUM = `enum Chart { ${readdirSync(
-  join(__dirname, '../resolvers/queries/chart/chart-types')
-)
-  .map(entry => entry.replaceAll('-', '_').toUpperCase())
-  .join(' ')} }`
-
-/**
  * Merge GraphQL definition strings
  */
-const typeDefs = [
-  ...STATIC_SCHEMA_PARTS.map(name => `${_import(`./type-defs/${name}`)}`),
-  DB_MIGRATION_ENUM,
-  CHART_TYPES_ENUM,
-].join('\n')
+const typeDefs = readdirSync(join(__dirname, './type-defs'))
+  .map(name => `${_import(`./type-defs/${name}`)}`)
+  .join('\n')
 
 /**
  * Create GraphQL schema from type definition string
@@ -56,6 +31,7 @@ const typeDefs = [
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
+  inheritResolversFromInterfaces: true,
 })
 
 console.info('Building input type fields list from GraphQL schema')

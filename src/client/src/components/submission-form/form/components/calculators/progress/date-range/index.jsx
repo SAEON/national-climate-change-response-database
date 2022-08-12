@@ -1,4 +1,4 @@
-import DatePicker from '@mui/lab/DatePicker'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import { parseISO, subYears } from 'date-fns'
@@ -14,7 +14,7 @@ export default ({ calculator, update }) => {
         <DatePicker
           renderInput={params => (
             <TextField
-              helperText={'What year did/will the mitigation project start?'}
+              helperText={'What year did/will the project start?'}
               fullWidth
               variant="outlined"
               margin="normal"
@@ -28,7 +28,7 @@ export default ({ calculator, update }) => {
           views={['year']}
           placeholder={'Start year'}
           label={'Start year'}
-          id="progress-calculator-mitigation-start"
+          id="progress-calculator-start"
           value={parseISO(startYear)}
           onChange={value =>
             update({
@@ -64,7 +64,7 @@ export default ({ calculator, update }) => {
           views={['year']}
           placeholder={'End year'}
           label={'End year'}
-          id="progress-calculator-mitigation-end"
+          id="progress-calculator-end"
           value={parseISO(endYear)}
           onChange={value =>
             update({

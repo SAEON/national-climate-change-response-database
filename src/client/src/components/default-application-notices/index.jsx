@@ -16,26 +16,25 @@ export default ({ children }) => {
     enqueueSnackbar(`Welcome back ${user.emailAddress}`, { variant: 'info' })
   }, [enqueueSnackbar, user])
 
-  useEffect(
-    () =>
-      (async () => {
-        for (const { msg, variant } of DEFAULT_NOTICES.split(';')
-          .filter(_ => _)
-          .map(str => {
-            const [msg, variant] = str.split(',').map(s => s.trim())
-            return {
-              msg,
-              variant,
-            }
-          })) {
-          enqueueSnackbar(msg, {
+  useEffect(() => {
+    // eslint-disable-next-line
+    ;(async () => {
+      for (const { msg, variant } of DEFAULT_NOTICES.split(';')
+        .filter(_ => _)
+        .map(str => {
+          const [msg, variant] = str.split(',').map(s => s.trim())
+          return {
+            msg,
             variant,
-          })
-          await new Promise(res => setTimeout(res, 250))
-        }
-      })(),
-    [enqueueSnackbar]
-  )
+          }
+        })) {
+        enqueueSnackbar(msg, {
+          variant,
+        })
+        await new Promise(res => setTimeout(res, 250))
+      }
+    })()
+  }, [enqueueSnackbar])
 
   return children
 }

@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { context as clientContext } from '../client-context'
-import { ThemeProvider, StyledEngineProvider, createTheme } from '@mui/material/styles'
+import ThemeProvider from '@mui/material/styles/ThemeProvider'
+import { StyledEngineProvider, createTheme } from '@mui/material/styles'
 
 export const context = createContext()
 

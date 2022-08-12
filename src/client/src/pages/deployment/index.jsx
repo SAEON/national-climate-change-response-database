@@ -8,7 +8,7 @@ import VerticalTabs from '../../packages/vertical-tabs'
 import Header from './header'
 import Fade from '@mui/material/Fade'
 import TenantIcon from 'mdi-react/AccountGroupIcon'
-import WarningIcon from 'mdi-react/WarningIcon'
+import WarningIcon from 'mdi-react/AlertIcon'
 import { Div, Span } from '../../components/html-tags'
 
 const Tenants = lazy(() => import('./tenants'))

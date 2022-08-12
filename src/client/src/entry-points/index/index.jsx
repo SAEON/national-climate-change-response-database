@@ -1,13 +1,13 @@
 import '../../index/main'
 import { useState } from 'react'
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import RouteSwitcher from '../../index/route-switcher'
 import Application from '../../index/application'
 import routes from './routes'
 import { SizeContent } from '../../contexts/layout'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
-import { SHOW_DEV_WARNING, HOSTNAME } from '../../config'
+import { SHOW_DEV_WARNING } from '../../config'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
@@ -56,9 +56,9 @@ const Entry = () => {
   )
 }
 
-render(
+const root = createRoot(document.getElementById('root'))
+root.render(
   <Application routes={routes}>
     <Entry />
-  </Application>,
-  document.getElementById('root')
+  </Application>
 )

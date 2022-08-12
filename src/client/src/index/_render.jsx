@@ -6,8 +6,8 @@ import DefaultApplicationNotices from '../components/default-application-notices
 import CookieConsent from '../components/cookie-consent'
 import DetectDevice from '../components/detect-device'
 import CssBaseline from '@mui/material/CssBaseline'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { BrowserRouter as Router } from 'react-router-dom'
 import LayoutProvider from '../contexts/layout'
 

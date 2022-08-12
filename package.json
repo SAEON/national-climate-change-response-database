@@ -1,6 +1,6 @@
 {
   "name": "nccrd",
-  "version": "1.0.0",
+  "version": "5.0.5",
   "description": "National climate change response database",
   "type": "module",
   "scripts": {

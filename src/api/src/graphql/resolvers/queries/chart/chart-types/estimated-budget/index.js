@@ -8,12 +8,12 @@ const sql = `
       JSON_VALUE(s.project, '$.implementationStatus.term') implementationStatus,
       JSON_VALUE(s.project, '$.interventionType.term') intervention,
       case JSON_VALUE(s.project, '$.actualBudget')
-      when '' then null
-      else round(JSON_VALUE(s.project, '$.actualBudget'), 0)
+        when '' then null
+        else round(JSON_VALUE(s.project, '$.actualBudget'), 0)
       end actualBudget,
       JSON_VALUE(s.project, '$.estimatedBudget.term') estimatedBudget,
       JSON_VALUE(s.project, '$.fundingType.term') fundingSource,
-    YEAR(GETDATE()) currentYear,
+      YEAR(GETDATE()) currentYear,
       year(convert(datetimeoffset, JSON_VALUE(s.project, '$.startYear')) at time zone 'South Africa Standard Time') startYear,
       year(convert(datetimeoffset, JSON_VALUE(s.project, '$.endYear')) at time zone 'South Africa Standard Time') endYear
   from Submissions s
@@ -35,13 +35,13 @@ const sql = `
     fundingSource,
     startYear,
     case
-    when endYear >= currentYear then currentYear - 1
-    else endYear
-  end endYear,
+      when endYear >= currentYear then currentYear - 1
+      else endYear
+    end endYear,
     (case
-    when endYear >= currentYear then currentYear - 1
-    else endYear
-  end - startYear + 1) activeYears,
+      when endYear >= currentYear then currentYear - 1
+      else endYear
+    end - startYear + 1) activeYears,
     coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) coalescedBudget,
     round(coalesce(actualBudget, case estimatedBudget when '' then null else dbo.ESTIMATE_SPEND(estimatedBudget) end) / (endYear - startYear + 1), 0) annualBudget
   from T1

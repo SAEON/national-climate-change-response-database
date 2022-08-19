@@ -321,7 +321,7 @@ if not exists (
 )
 begin
 DECLARE @sql NVARCHAR(MAX);
-SET @sql = N'create function [dbo].[ESTIMATE_SPEND] ( @estimatedBudget nvarchar(500) ) returns bigint as begin declare @result bigint ;with cte as ( select cast( replace(replace(replace(trim(value), ''R'', ''''), ''m'', ''000000''), ''k'', ''000'') as bigint ) val from string_split(@estimatedBudget, ''-'') ) select @result = avg(val) from cte return @result end';
+SET @sql = N'create function [dbo].[ESTIMATE_SPEND] ( @estimatedBudget nvarchar(500) ) returns bigint as begin declare @result bigint ;with bounds as ( select * from string_split(@estimatedBudget, ''-'') ) ,cte as ( select cast( replace( replace( replace( trim( replace( replace( value, ''<'', '''' ), ''>'', '''')), ''R'', ''''), ''m'', ''000000'' ), ''k'', ''000'' ) as bigint ) val from bounds ) select @result = avg(val) from cte return @result end';
 EXEC sp_executesql @sql;
 end
 

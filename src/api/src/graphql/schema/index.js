@@ -2,7 +2,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema'
 import { graphqlSync, print } from 'graphql'
 import { gql } from 'apollo-server-koa'
 import { join } from 'path'
-import { readFileSync, readdirSync, lstatSync } from 'fs'
+import { readFileSync, readdirSync } from 'fs'
 import getCurrentDirectory from '../../lib/get-current-directory.js'
 import * as resolvers from '../resolvers/index.js'
 import {

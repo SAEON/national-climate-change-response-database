@@ -46,17 +46,17 @@ const external = [
 ]
 
 export default [{
-  input: 'src/index.js',
-  preserveEntrySignatures: false,
-  external,
-  output: {
-    dir: 'bin',
-    format: 'cjs',
-  },
-  plugins: [
-    nodeResolve({
-      modulesOnly: true
-    }),
-    json()
-  ],
+    input: 'src/index.js',
+    preserveEntrySignatures: false,
+    external,
+    output: {
+      dir: 'bin',
+      format: 'cjs',
+    },
+    plugins: [
+      nodeResolve({
+        modulesOnly: true
+      }),
+      json()
+    ],
 }]

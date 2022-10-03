@@ -1,5 +1,5 @@
 **/node_modules/**
 **/package-lock.json
 **/client-dist/**
-src/mssql/install-region-geometries/geojson/**/*.js
+src/mssql/install-region-geometries/geojson/**/*.cjs
 bin

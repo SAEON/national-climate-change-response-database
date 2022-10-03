@@ -1,5 +1,6 @@
 import Typography from '@mui/material/Typography'
-import DataGrid_, { TextEditor } from 'react-data-grid'
+import 'react-data-grid/lib/styles.css'
+import DataGrid_, { textEditor } from 'react-data-grid'
 import { styled } from '@mui/material/styles'
 import AchievedUnitEditor from './_unit-editor'
 import { Div } from '../../../../../../../html-tags'
@@ -73,7 +74,7 @@ export default ({ rows, updateCalculator, calculator, grid1 }) => {
               key: 'achieved',
               name: 'How much was generated/saved/avoided achieved',
               headerRenderer,
-              editor: TextEditor,
+              editor: textEditor,
               width: 450,
             },
             {

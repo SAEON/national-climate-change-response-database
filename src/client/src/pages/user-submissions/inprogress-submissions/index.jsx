@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import 'react-data-grid/lib/styles.css';
 import DataGrid from 'react-data-grid'
 import Link from '@mui/material/Link'
 import { Link as RouterLink } from 'react-router-dom'

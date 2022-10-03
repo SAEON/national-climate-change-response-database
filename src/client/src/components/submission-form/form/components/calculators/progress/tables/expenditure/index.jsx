@@ -1,5 +1,6 @@
 import Typography from '@mui/material/Typography'
-import DataGrid, { TextEditor } from 'react-data-grid'
+import 'react-data-grid/lib/styles.css'
+import DataGrid, { textEditor } from 'react-data-grid'
 import useTheme from '@mui/material/styles/useTheme'
 
 const headerRenderer = ({ column }) => (
@@ -75,7 +76,7 @@ export default ({ rows, grid2, calculator, updateCalculator }) => {
             {
               key: 'expenditureZar',
               name: 'Expenditure in (ZAR)',
-              editor: TextEditor,
+              editor: textEditor,
               headerRenderer,
               summaryFormatter: ({ row }) => <>{row.expenditureSum}</>,
             },

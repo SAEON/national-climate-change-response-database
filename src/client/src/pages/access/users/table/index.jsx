@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import 'react-data-grid/lib/styles.css';
 import DataGrid, { SelectColumn } from 'react-data-grid'
 import RolesEditor from './_roles-editor'
 

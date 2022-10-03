@@ -269,7 +269,7 @@ In development mode:
 - Configuration secrets are logged in plain text to make debugging easier for the API
 - The client configuration is logged (in production mode the client configuration is not logged at all)
 - JavaScript code is NOT minified to make debugging easier
-- Webpack bundling is run in development mode (the web client will theoretically be less responsive in this case)
+- Webpack bundling is run in development mode (the web client will execute slower and be be less responsive compared to bundling in production mode)
 - A number of helpful, but expensive, developer checks are performed that will greatly slow down the application (both API and client)
 
 ### Other vars
@@ -281,7 +281,7 @@ In development mode:
 - Specify environment variable configuration in `src/api/.env` for the API (refer to `src/api/.env.example` for an example file)
 - Specify environment variable configuration in `src/client/.env` for the client (refer to `src/client/.env.example` for an example file). Unlike the API, which will reload the `.env` file on every application start, the client reads the `.env` file once at build time. Restart the client application to update configuration.
 
-NOTE there is currently a bug on Windows Server 2019 where the configuration file is **_NOT_** read on startup. In this case specify configuration as part of a Powershell script as shown above.
+NOTE I noticed that on Windows Server 2019 the configuration file is **_NOT_** read on startup. In this case specify configuration via Powershell instead of using a `.env` file.
 
 ## Configuring the database
 Configure database connections using environment variables as explained above. Don't forget to configure to take regular backups!

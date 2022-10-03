@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { context as tenantsContext } from '../_context'
+import 'react-data-grid/lib/styles.css';
 import DataGrid, { SelectColumn } from 'react-data-grid'
 import IconButton from '@mui/material/IconButton'
 import JsonIcon from 'mdi-react/CodeJsonIcon'

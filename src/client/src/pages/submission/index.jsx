@@ -5,8 +5,10 @@ import Container from '@mui/material/Container'
 import Render from './render'
 import useTheme from '@mui/material/styles/useTheme'
 import FourO4 from '../../components/404'
+import { useParams } from 'react-router-dom'
 
-export default ({ id }) => {
+export default () => {
+  const { id } = useParams()
   const theme = useTheme()
   const { error, loading, data } = useQuery(
     gql`

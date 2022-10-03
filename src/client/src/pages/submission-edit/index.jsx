@@ -7,10 +7,12 @@ import Header from './header'
 import useTheme from '@mui/material/styles/useTheme'
 import AccessDenied from '../../components/access-denied'
 import Container from '@mui/material/Container'
+import { useParams } from 'react-router-dom'
 
 const ProjectForm = lazy(() => import('../../components/submission-form'))
 
-const LoadProject = ({ id }) => {
+const LoadProject = () => {
+  const { id } = useParams()
   const theme = useTheme()
   const { hasPermission, user } = useContext(authorizationContext)
 

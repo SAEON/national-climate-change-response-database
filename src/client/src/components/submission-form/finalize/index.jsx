@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { gql, useMutation } from '@apollo/client'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import CardHeader from '@mui/material/CardHeader'
 import Card from '@mui/material/Card'
@@ -10,7 +10,8 @@ import { context as formContext, convertFormToGqlInput } from '../context'
 import Typography from '@mui/material/Typography'
 
 export default ({ mode }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
+
   const {
     generalDetailsForm,
     generalDetailsFormValidation,
@@ -76,7 +77,7 @@ export default ({ mode }) => {
       },
       onCompleted: ({ saveSubmission }) => {
         const { id } = saveSubmission
-        history.push(`/submissions/${id}`)
+        navigate(`/submissions/${id}`)
       },
     }
   )

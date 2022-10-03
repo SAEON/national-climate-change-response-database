@@ -1,18 +1,20 @@
-import { Route, Switch, withRouter } from 'react-router-dom'
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import checkTenantRouteAuthorization from '../lib/check-tenant-route-authorization'
 import { context as clientContext } from '../contexts/client-context'
 import FourFour from '../components/404'
 import useTheme from '@mui/material/styles/useTheme'
 
-export default withRouter(() => {
+export default () => {
   const tenantContext = useContext(clientContext)
-  const { _clientRoutes: routes } = tenantContext
+  const { _clientRoutes: _routes } = tenantContext
   const theme = useTheme()
 
+  const routes = useMemo(() => _routes.filter(({ Component }) => Boolean(Component)), [_routes])
+
   return (
-    <Switch key={location.pathname || '/'}>
-      {routes.map(({ label: key, to: path, exact, render, tenants }) => {
+    <Routes>
+      {routes.map(({ label: key, to: path, exact, Component, tenants }) => {
         if (tenants) {
           if (!checkTenantRouteAuthorization(tenants, tenantContext)) {
             return (
@@ -31,8 +33,8 @@ export default withRouter(() => {
           }
         }
 
-        return <Route key={key} path={path} exact={exact} render={render} />
+        return <Route key={key} path={path} exact={exact} element={<Component />} />
       })}
-    </Switch>
+    </Routes>
   )
-})
+}

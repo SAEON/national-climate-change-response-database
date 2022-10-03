@@ -2,12 +2,13 @@ import { gql, useMutation } from '@apollo/client'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 import Button from '@mui/material/Button'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Hidden from '@mui/material/Hidden'
 import MessageDialogue from '../../../../components/message-dialogue'
 
 export default ({ id }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
+
   const [deleteSubmission] = useMutation(
     gql`
       mutation deleteSubmission($id: ID!) {
@@ -17,7 +18,7 @@ export default ({ id }) => {
     {
       onCompleted: ({ deleteSubmission: id }) => {
         if (id) {
-          history.goBack()
+          navigate(-1)
         }
       },
       update: (cache, { data: { deleteSubmission: id } }) =>

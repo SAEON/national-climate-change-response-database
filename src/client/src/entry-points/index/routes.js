@@ -63,8 +63,7 @@ export default [
     group: 'legal',
     label: 'Terms of Use',
     Icon: TermsIcon,
-    exact: true,
-    render: () => (
+    Component: () => (
       <Transition>
         <TermsOfUsePage />
       </Transition>
@@ -77,8 +76,7 @@ export default [
     group: 'legal',
     label: 'PAIA & POPIA',
     Icon: PrivacyIcon,
-    exact: true,
-    render: () => (
+    Component: () => (
       <Transition>
         <PaiaPopiaPage />
       </Transition>
@@ -90,10 +88,9 @@ export default [
   {
     label: 'Home',
     Icon: HomeIcon,
-    exact: true,
     includeInFooter: true,
     to: '/',
-    render: () => (
+    Component: () => (
       <Transition>
         <HomePage />
       </Transition>
@@ -106,8 +103,7 @@ export default [
     cta: 'More',
     description:
       'The database is intended as a resource to collect and track interventions on climate change (adaptation and mitigation) on past, current and future climate change response efforts (policies, plans, strategies, projects and research) within South Africa.',
-    exact: true,
-    render: () => (
+    Component: () => (
       <Transition>
         <AboutPage />
       </Transition>
@@ -119,11 +115,10 @@ export default [
     label: 'Data reports',
     Icon: ReportsIcon,
     includeOnHomePage: true,
-    exact: true,
     cta: 'View',
     description:
       "Explore an overview of the South Africa's climate change response. Information is collated to summarize project progress as large-scale trends and statistics. View and download charts and maps showing project progress, locations, funding sources, operation sectors and more.",
-    render: () => (
+    Component: () => (
       <Transition>
         <ReportsPage />
       </Transition>
@@ -134,13 +129,12 @@ export default [
   {
     label: 'Contribute',
     Icon: SubmitIcon,
-    exact: true,
     includeOnHomePage: true,
     to: '/submissions/new',
     cta: 'Start',
     description:
       'Upload and periodically update project details. Although the submission of information to the database is voluntary, data providers are encouraged to upload and update the information into the database to benefit a wide range of use cases in the country.',
-    render: () => (
+    Component: () => (
       <Transition>
         <CreateSubmission />
       </Transition>
@@ -152,10 +146,9 @@ export default [
     label: 'Contribute',
     excludeFromNav: true,
     to: '/submissions/new/:id',
-    exact: true,
-    render: props => (
+    Component: () => (
       <Transition>
-        <NewSubmissionPage id={props.match.params.id} {...props} />
+        <NewSubmissionPage />
       </Transition>
     ),
   },
@@ -168,9 +161,8 @@ export default [
       'Search our database for funding and other details of climate change related projects, including specific information regarding mitigation and adaptation strategies. Get up-to-date activity data on the South African climate change response, and project advancement.',
     includeOnHomePage: true,
     cta: 'Explore',
-    exact: true,
     to: '/submissions',
-    render: () => (
+    Component: () => (
       <Transition>
         <SubmissionsPage />
       </Transition>
@@ -181,10 +173,9 @@ export default [
     label: 'Edit submission',
     excludeFromNav: true,
     to: '/submissions/:id/edit',
-    exact: true,
-    render: props => (
+    Component: () => (
       <Transition>
-        <EditSubmissionPage id={props.match.params.id} {...props} />
+        <EditSubmissionPage />
       </Transition>
     ),
   },
@@ -192,10 +183,9 @@ export default [
     label: 'Submission',
     excludeFromNav: true,
     to: '/submissions/:id',
-    exact: true,
-    render: props => (
+    Component: () => (
       <Transition>
-        <SubmissionPage id={props.match.params.id} {...props} />
+        <SubmissionPage />
       </Transition>
     ),
   },
@@ -203,9 +193,8 @@ export default [
     label: 'Your submissions',
     Icon: UserSubmissionIcon,
     to: '/user/submissions',
-    exact: true,
     requiredPermission: 'create-submission',
-    render: () => (
+    Component: () => (
       <Transition>
         <UserSubmissionsPage />
       </Transition>
@@ -217,7 +206,7 @@ export default [
     to: '/user',
     requiredPermission: 'create-submission',
     excludeFromNav: true,
-    render: () => (
+    Component: () => (
       <Transition>
         <UserPage />
       </Transition>
@@ -227,10 +216,9 @@ export default [
     label: 'Deployment',
     Icon: DeploymentsIcon,
     to: '/deployment',
-    exact: true,
     requiredPermission: '/deployment',
     tenants: ['default'],
-    render: () => (
+    Component: () => (
       <Transition>
         <DeploymentPage />
       </Transition>
@@ -240,10 +228,9 @@ export default [
     label: 'Access',
     Icon: UsersIcon,
     to: '/access',
-    exact: true,
     requiredPermission: '/access',
     tenants: ['default'],
-    render: () => (
+    Component: () => (
       <Transition>
         <AccessPage />
       </Transition>
@@ -253,7 +240,6 @@ export default [
     label: 'Main site',
     Icon: SettingsIcon,
     href: `${DEFAULT_TENANT_ADDRESS}`,
-    exact: true,
     to: '/no-route', // Hack - the to property is still required
     requiredPermission: '/deployment',
     includeInFooter: true,
@@ -263,10 +249,9 @@ export default [
     label: 'Login',
     Icon: LoginIcon,
     to: '/login',
-    exact: true,
     excludeFromNav: isAuthenticated => !isAuthenticated,
     includeInFooter: true,
-    render: () => (
+    Component: () => (
       <Transition>
         <LoginPage />
       </Transition>
@@ -277,7 +262,7 @@ export default [
     Icon: UsersIcon,
     to: '/users',
     excludeFromNav: true,
-    render: () => (
+    Component: () => (
       <Transition>
         <UsersPage />
       </Transition>
@@ -307,7 +292,7 @@ export default [
     excludeFromNav: true,
     includeInFooter: true,
     to: '/license',
-    render: () => (
+    Component: () => (
       <Transition>
         <LicensePage />
       </Transition>

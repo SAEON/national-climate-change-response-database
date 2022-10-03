@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { gql, useMutation } from '@apollo/client'
 import Loading from '../../components/loading'
 import { context as authenticationContext } from '../../contexts/authentication'
@@ -44,7 +44,7 @@ export default () => {
   }
 
   if (id) {
-    return <Redirect to={`/submissions/new/${id}`} />
+    return <Navigate to={`/submissions/new/${id}`} />
   }
 
   return <Loading />

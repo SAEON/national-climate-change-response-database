@@ -1,3 +1,3 @@
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
-export default () => <Redirect to="/access" />
+export default () => <Navigate to="/access" />

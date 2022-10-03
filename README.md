@@ -237,7 +237,7 @@ $env:SSL_ENV="development";
 $env:HOSTNAME="http://localhost:3000";
 $env:PORT="3000";
 $env:ODP_AUTH_CLIENT_SECRET="<secret>";
-.\nccrd-win.exe
+& '.\nccrd-win.exe'
 ```
 
 #### Installing the executable as a Windows service

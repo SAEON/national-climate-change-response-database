@@ -52,13 +52,11 @@ Setup the repository for development on a local machine. The Node.js and React s
 ## Install source code and dependencies
 
 ```sh
-# Download the source code
-git clone <repository> nccs
-cd nccs
-
-# Install package dependencies (this might take several minutes on the first run)
-# This command occasionally fails (don't know why). If so, run "npm install" in the root folder, src/api, and src/client
-npm run install-dependencies
+# Download the source code and install dependencies
+git clone git@github.com:SAEON/national-climate-change-response-database.git nccrd
+cd nccrd
+npm --prefix src/api install
+npm --prefix src/client install
 ```
 
 ## Setup SQL Server
@@ -137,22 +135,7 @@ The easiest way to deploy the application from source code is to serve the React
 1. API (`/http` and `/graphql`) calls are gzipped by the Node.js application, but **static files are NOT** (configure this in your webserver)
 2. No caching policy is set by the Node.js server when static files are requested (also configure this in your webserver - for an example see [this Nginx configuration](src/nginx/nginx.conf))
 
-To start this application from source code:
-
-```sh
-# Install Node.js 16.x on the server (https://nodejs.org/en/)
-
-# Clone the repository if not already done
-git clone ... nccrd
-cd nccrd
-
-# Install dependencies if not already done
-# This sometimes fails - I don't know why. If it fails, run the command "npm install" from /src/api, src/client, and the current directory
-npm run install-dependencies
-
-# Start the application
-npm run start:bundled
-```
+To start this application from source code, download the source code and install dependencies as outlined above. Then from the root of the repository run `npm run start:bundled`.
 
 ## Deploy as Docker image
 
@@ -192,22 +175,7 @@ Binary executables are built automatically for Windows, Max, and Linux every tim
 
 ### Build an executable from the source code
 
-This is done on release via the GitHub actions workflow. This is how to do it manually
-
-```sh
-# Install Node.js 16.x on the server (https://nodejs.org/en/)
-
-# Clone the repository if not already done
-git clone ... nccrd
-cd nccrd
-
-# Install dependencies if not already done
-# This sometimes fails - I don't know why. If it fails, run the command "npm install" from /src/api, src/client, and the current directory
-npm run install-dependencies
-
-# Create the executables
-npm run pkg
-```
+This is done on release via the GitHub actions workflow. To do it manually, download the source code and install dependencies as outlined above. Then from the root of the repository run `npm run pkg`.
 
 Executables for Mac, Linux and Windows will be placed in the `binaries/` folder. These executables can be started directly (see below for configuration)
 

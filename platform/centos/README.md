@@ -49,6 +49,15 @@ visudo
 <name> ALL=(ALL) NOPASSWD:ALL
 ```
 
+# Install Nginx
+
+```sh
+sudo yum install -y epel-release
+sudo yum -y install nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+```
+
 # Install Docker
 
 ```sh
@@ -69,13 +78,6 @@ sudo systemctl start docker
 sudo docker swarm init
 ```
 
-# Install Nginx
-
-```sh
-sudo yum -y install nginx
-systemctl enable nginx
-systemctl start nginx
-```
 ## Configure SSL
 ```sh
 sudo su
@@ -98,14 +100,14 @@ Reference nginx files are defined in the `platform/centos/nginx` folder. The ser
 # Install and configure firewalld
 
 ```sh
-sudo yum -y install firewalld
-sudo systemctl unmask firewalld
-sudo systemctl enable firewalld
-sudo systemctl start firewalld
-sudo firewall-cmd --permanent --zone=public --add-service=http
-sudo firewall-cmd --permanent --zone=public --add-service=https
-sudo firewall-cmd --permanent --add-port=1433/tcp # SQL Server
-sudo firewall-cmd --reload
+sudo yum -y install firewalld \
+  && systemctl unmask firewalld \
+  && systemctl enable firewalld \
+  && systemctl start firewalld \
+  && sudo firewall-cmd --permanent --zone=public --add-service=http \
+  && firewall-cmd --permanent --zone=public --add-service=https \
+  && sudo firewall-cmd --permanent --add-port=1433/tcp \
+  && firewall-cmd --reload
 ```
 
 # Setup continuous deployment via GitHub Actions

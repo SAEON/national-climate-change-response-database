@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}_stable
+  IMAGE_NAME: ${{ github.repository }}_stable_node
   NGINX_IMAGE_NAME: ${{ github.repository }}_stable_nginx
   BRANCH_REF: stable
 

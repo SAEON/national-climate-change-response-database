@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  NCCRD_IMAGE_NAME: ${{ github.repository }}_next
+  NCCRD_IMAGE_NAME: ${{ github.repository }}_next_node
   NGINX_IMAGE_NAME: ${{ github.repository }}_next_nginx
   BRANCH_REF: next
 

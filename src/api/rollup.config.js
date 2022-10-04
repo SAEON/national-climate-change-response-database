@@ -1,5 +1,5 @@
 import json from '@rollup/plugin-json'
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 
 const external = [
   '@graphql-tools/schema',
@@ -45,7 +45,8 @@ const external = [
   'zlib',
 ]
 
-export default [{
+export default [
+  {
     input: 'src/index.js',
     preserveEntrySignatures: false,
     external,
@@ -55,8 +56,9 @@ export default [{
     },
     plugins: [
       nodeResolve({
-        modulesOnly: true
+        modulesOnly: true,
       }),
-      json()
+      json(),
     ],
-}]
+  },
+]

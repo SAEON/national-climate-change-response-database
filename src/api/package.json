@@ -8,7 +8,7 @@
     "start:prod": "TZ=utc node --no-warnings --loader ./loaders/geojson.js --experimental-json-modules src",
     "lint": "eslint -c .eslintrc.cjs \"./**/*.{js,mjs,cjs}\"",
     "rollup": "rimraf bin && rollup --config rollup.config.js && cp -r src/http/public-image/images bin/images && cp -r src/mssql/install-vocabulary/trees bin/trees && cp src/http/download-excel-submission-template/base.xlsm bin/base.xlsm && cp -r src/graphql/schema/type-defs bin/type-defs && cp -r src/mssql/sql bin/sql && cp -r src/mssql/install-region-geometries/geojson/ bin/geojson && cp -r src/client-dist bin/client-dist",
-    "prettier": "prettier --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
+    "prettier": "prettier --cache --cache-strategy metadata --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
     "ncu": "ncu -x koa-passport",
     "ncu -u": "ncu -u -x koa-passport"
   },

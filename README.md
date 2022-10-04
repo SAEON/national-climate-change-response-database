@@ -1,4 +1,5 @@
 # National Climate Change Response Database (NCCRD)
+
 A database for tracking, analysing, and monitoring climate adaptation and mitigation projects
 
 # README Contents
@@ -6,16 +7,20 @@ A database for tracking, analysing, and monitoring climate adaptation and mitiga
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
+
 - [Quick start](#quick-start)
   - [System requirements](#system-requirements)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
-  - [Local development](#local-development)
-    - [Build an executable from the source code](#build-an-executable-from-the-source-code)
+  - [Setup SQL Server](#setup-sql-server)
+  - [Create a database](#create-a-database)
+  - [Start the application](#start-the-application)
 - [Deployment](#deployment)
   - [Proxy headers](#proxy-headers)
   - [Deploy bundled API + client](#deploy-bundled-api--client)
   - [Deploy as Docker image](#deploy-as-docker-image)
   - [Deploy via the released executable](#deploy-via-the-released-executable)
+    - [Build an executable from the source code](#build-an-executable-from-the-source-code)
     - [Linux & Mac](#linux--mac)
     - [Windows](#windows)
       - [Installing the executable as a Windows service](#installing-the-executable-as-a-windows-service)
@@ -57,7 +62,7 @@ cd nccs
 npm run install-dependencies
 ```
 
-## Local development
+## Setup SQL Server
 
 ```sh
 # Create a Docker network
@@ -77,43 +82,27 @@ docker run \
   -p 1433:1433 \
   -d \
   mcr.microsoft.com/mssql/server:2017-latest
-
-### Setup the NCCRD database
-# (1) Then log in to SQL Server using SA creds (sa / password!123#)
-# (2) Make sure the system database "model" is set to recovery model = simple (to avoid large, unecessary log files)
-# (3) Create a database called "nccrd" with "SIMPLE" recovery mode (should be default if you set the model DB to SIMPLE)
-
-### Configure API and client environment variables and adjust values accordingly
-cp src/api/.env.example src/api/.env
-cp src/client/.env.example src/client/.env
-
-# Start the Node.js API server in development mode
-npm run api
-
-# Start the React.js client in development mode
-npm run client
 ```
 
-### Build an executable from the source code
+## Create a database
 
-This is done on release via the GitHub actions workflow. This is how to do it manually
+1. Log in to SQL Server using `sa` credentials (sa / password!123#, if you used the command above)
+2. (Optionally) set the system database "model" recovery model to `simple` (to avoid large, unnecessary log files)
+3. Create a database called "nccrd" with "SIMPLE" recovery mode (should be default if you set the model DB to SIMPLE)
+
+## Start the application
+
+The application comprises an API (Node.js server) and client (website). These need to be started separately for development, but can be deployed together.
 
 ```sh
-# Install Node.js 16.x on the server (https://nodejs.org/en/)
+# Open a terminal window, and from the repository root:
+cd src/api
+npm run api
 
-# Clone the repository if not already done
-git clone ... nccrd
-cd nccrd
-
-# Install dependencies if not already done
-# This sometimes fails - I don't know why. If it fails, run the command "npm install" from /src/api, src/client, and the current directory
-npm run install-dependencies
-
-# Create the executables
-npm run pkg
+# Open another terminal window, and from the repository root:
+cd src/client
+npm run client
 ```
-
-Executables for Mac, Linux and Windows will be placed in the `binaries/` folder. These executables can be started directly (see below for configuration)
 
 # Deployment
 
@@ -197,6 +186,27 @@ docker run \
 ## Deploy via the released executable
 
 Binary executables are built automatically for Windows, Max, and Linux every time a tag is added to the repository. Download the latest version of the built application from [the releases page](https://github.com/SAEON/national-climate-change-systems/releases), and start the executable from a terminal window (this is preferable to double clicking the executable, as you will see logs when the application exits).
+
+### Build an executable from the source code
+
+This is done on release via the GitHub actions workflow. This is how to do it manually
+
+```sh
+# Install Node.js 16.x on the server (https://nodejs.org/en/)
+
+# Clone the repository if not already done
+git clone ... nccrd
+cd nccrd
+
+# Install dependencies if not already done
+# This sometimes fails - I don't know why. If it fails, run the command "npm install" from /src/api, src/client, and the current directory
+npm run install-dependencies
+
+# Create the executables
+npm run pkg
+```
+
+Executables for Mac, Linux and Windows will be placed in the `binaries/` folder. These executables can be started directly (see below for configuration)
 
 ### Linux & Mac
 
@@ -284,9 +294,11 @@ In development mode:
 NOTE I noticed that on Windows Server 2019 the configuration file is **_NOT_** read on startup. In this case specify configuration via Powershell instead of using a `.env` file.
 
 ## Configuring the database
+
 Configure database connections using environment variables as explained above. Don't forget to configure to take regular backups!
 
 ### Backing up the database via T-SQL
+
 Using SQL Server via a Dockerized Linux deployment (as configured on the SAEON platform), configure scheduled backups using `sqlcmd`. The command below works in a development (localhost) environment if setup as outlined above (note that `with compression` is not supported on SQL Server Express license).
 
 ```sh

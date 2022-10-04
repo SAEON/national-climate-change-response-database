@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import 'react-data-grid/lib/styles.css';
+import 'react-data-grid/lib/styles.css'
 import DataGrid from 'react-data-grid'
 
 const headerRenderer = ({ column }) => (

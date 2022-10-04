@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import 'react-data-grid/lib/styles.css';
+import 'react-data-grid/lib/styles.css'
 import DataGrid_ from 'react-data-grid'
 import Button from '@mui/material/Button'
 import PlusIcon from 'mdi-react/PlusIcon'

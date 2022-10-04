@@ -2,4 +2,4 @@
 **/package-lock.json
 **/client-dist/**
 src/api/bin
-src/api/src/mssql/install-region-geometries/geojson/*.js
+src/api/src/mssql/install-region-geometries/geojson/*

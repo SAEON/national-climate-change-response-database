@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { context as dataContext } from '../_context'
-import 'react-data-grid/lib/styles.css';
+import 'react-data-grid/lib/styles.css'
 import DataGrid from 'react-data-grid'
 import { Div } from '../../../../components/html-tags'
 import Link from '@mui/material/Link'

@@ -18,24 +18,14 @@
 
 # (Optional) Configure SSH login
 
+**Create an SSH key on your local PC**
 ```sh
-# Create an RSA key on YOUR computer
-# Use defaults for all options
 ssh-keygen -t rsa
-
-# Copy your public key
-cat ~/.ssh/id_id_rsa.pub # Copy the output to your clipboard
+cat ~/.ssh/id_id_rsa.pub
 ```
 
+**Add your key to the remote server**
 ```sh
-# Login
-ssh <user>@<hostname>
-
-# If you logged in as root, setup a new user
-adduser <name>
-su <name> # Login as the user you have just created
-
-# Add the encryption key you previously generated to this machine
 mkdir ~/.ssh
 chmod 700 ~/.ssh
 touch ~/.ssh/authorized_keys
@@ -43,13 +33,8 @@ chmod 600 ~/.ssh/authorized_keys
 vi ~/.ssh/authorized_keys # Copy your id_rsa.pub key into this file
 
 # Configure public key authentication
-sudo su
-vi /etc/ssh/sshd_config
+sudo vi /etc/ssh/sshd_config
 # set PubkeyAuthentication to 'yes'
-
-# Arguably a server is more secure if you disable password login and don't allow root login
-# set PermitRootLogin to 'no'
-# set PasswordAuthentication to 'no'
 
 # Restart the SSH service
 service sshd restart
@@ -67,15 +52,13 @@ visudo
 # Install Docker
 
 ```sh
-ssh <user>@<hostname>
-
 sudo yum install -y yum-utils
 
 sudo yum-config-manager \
   --add-repo \
   https://download.docker.com/linux/centos/docker-ce.repo
 
-sudo yum install \
+sudo yum install -y \
   docker-ce \
   docker-ce-cli \
   containerd.io \
@@ -83,29 +66,18 @@ sudo yum install \
 
 sudo systemctl enable docker
 sudo systemctl start docker
-```
-
-Add a docker-cleanup job to the CRONTAB
-
-```sh
-sudo su
-crontab -e
-
-# Add this line
-0 0 * * 0 docker system prune -f > /opt/docker-system-clean.log 2>&1
+sudo docker swarm init
 ```
 
 # Install Nginx
 
 ```sh
-ssh <user>@<hostname>
 sudo yum -y install nginx
 systemctl enable nginx
 systemctl start nginx
 ```
 ## Configure SSL
 ```sh
-ssh <user>@<hostname>
 sudo su
 mkdir /opt # Might already exist
 mkdir /opt/ssl
@@ -126,7 +98,6 @@ Reference nginx files are defined in the `platform/centos/nginx` folder. The ser
 # Install and configure firewalld
 
 ```sh
-ssh <user>@<hostname>
 sudo yum -y install firewalld
 sudo systemctl unmask firewalld
 sudo systemctl enable firewalld
@@ -146,11 +117,9 @@ sudo adduser runner
 sudo usermod -aG docker runner
 ```
 
-
 # Disable SELinux (or configure it correctly)
 
 ```sh
-ssh <user>@<hostname>
 sudo vi /etc/selinux/config
 
 # Make sure this line is uncommented

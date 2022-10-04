@@ -83,7 +83,8 @@
     "uniqueidentifier",
     "unprepare",
     "usermod",
-    "Vocabs"
+    "Vocabs",
+    "webserver"
   ],
   "eslint.workingDirectories": ["src/api", "src/client"]
 }

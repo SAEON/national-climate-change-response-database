@@ -13,6 +13,7 @@ A database for tracking, analysing, and monitoring climate adaptation and mitiga
   - [Setup SQL Server](#setup-sql-server)
   - [Create a database](#create-a-database)
   - [Start the application](#start-the-application)
+    - [Create a tenant (GeoFenced sub-deployment)](#create-a-tenant-geofenced-sub-deployment)
 - [Deployment](#deployment)
   - [Proxy headers](#proxy-headers)
   - [Deploy bundled API + client](#deploy-bundled-api--client)
@@ -101,6 +102,10 @@ npm run api
 cd src/client
 npm run client
 ```
+
+### Create a tenant (GeoFenced sub-deployment)
+
+Navigate to `/deployment`, and click the `ADD TENANT` button. For local development you should use `something.localhost` as the hostname, and you may have to configure your machine's host file so that requests to `something.localhost` are resolved correctly to the development server (`http://something.localhost => localhost`). For deployment, after specifying a new tenant the webserver needs to be configured to support that additional domain resolution, and authentication needs to be configured with that new domain.
 
 # Deployment
 

@@ -22,10 +22,10 @@ export default ({ active, headerRef }) => {
       <Card variant="outlined">
         <CardContent>
           <Typography>
-            When adding tenants to the deployment, you will need to (1) configure an Nginx server
-            block, (2) update the authentication client with callback URLs suited to the new tenant
-            domain, and (3) restart the application server to configure the new tenant&apos;s
-            authentication client
+            When adding tenants to the deployment, you will need to (1) configure your webserver to
+            support resolving the new domain name, and (2) register a new authentication client with
+            callback URLs suited to the new tenant domain, and (3) restart the application server to
+            configure the new tenant&apos;s authentication client.
           </Typography>
         </CardContent>
       </Card>

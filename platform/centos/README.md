@@ -117,6 +117,8 @@ sudo adduser runner
 sudo usermod -aG docker runner
 ```
 
+Follow [the instructions on GitHub](/settings/actions/runners) to install a self-hosted runner.
+
 # Disable SELinux (or configure it correctly)
 
 ```sh

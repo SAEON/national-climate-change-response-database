@@ -1,6 +1,7 @@
 name: deploy@next
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - next

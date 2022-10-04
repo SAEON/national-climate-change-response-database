@@ -165,7 +165,7 @@ docker run \
 
 ## Deploy via the released executable
 
-Binary executables are built automatically for Windows, Max, and Linux every time a tag is added to the repository. Download the latest version of the built application from [the releases page](https://github.com/SAEON/national-climate-change-systems/releases), and start the executable from a terminal window (this is preferable to double clicking the executable, as you will see logs when the application exits).
+Binary executables are built automatically for Windows, Mac, and Linux every time a tag is added to the repository. Download the latest version of the built application from [the releases page](https://github.com/SAEON/national-climate-change-systems/releases), and start the executable from a terminal window (this is preferable to double clicking the executable, as you will see logs when the application exits).
 
 ### Build an executable from the source code
 

@@ -1,27 +1,22 @@
+# Configure CentOS 7.6
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Configure CentOS 7.6](#configure-centos-76)
-  - [Configure login to work without a password (optional)](#configure-login-to-work-without-a-password-optional)
-  - [Give your user passwordless sudo access (optional)](#give-your-user-passwordless-sudo-access-optional)
-  - [Install Docker](#install-docker)
-  - [Install Docker Compose](#install-docker-compose)
-    - [Clean up docker files regularly](#clean-up-docker-files-regularly)
-    - [Add your user to the 'docker' group](#add-your-user-to-the-docker-group)
-  - [Install Nginx](#install-nginx)
-    - [Configure Nginx TSL](#configure-nginx-tsl)
-    - [Configure Nginx server blocks](#configure-nginx-server-blocks)
-  - [Install and configure firewalld](#install-and-configure-firewalld)
-  - [Setup continuous deployment via GitHub Actions](#setup-continuous-deployment-via-github-actions)
-  - [Disable SELinux (or configure it correctly)](#disable-selinux-or-configure-it-correctly)
+- [(Optional) Configure SSH login](#optional-configure-ssh-login)
+- [(Optional) Give your user passwordless sudo access](#optional-give-your-user-passwordless-sudo-access)
+- [Install Docker](#install-docker)
+- [Install Nginx](#install-nginx)
+  - [Configure SSL](#configure-ssl)
+  - [Configure Nginx](#configure-nginx)
+- [Install and configure firewalld](#install-and-configure-firewalld)
+- [Setup continuous deployment via GitHub Actions](#setup-continuous-deployment-via-github-actions)
+- [Disable SELinux (or configure it correctly)](#disable-selinux-or-configure-it-correctly)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Configure CentOS 7.6
-
-Configuring CentOS involves running some commands and editing some text files using the `vi` (or some other text editor that comes with, or is installed, on CentOS).
-
-## Configure login to work without a password (optional)
+# (Optional) Configure SSH login
 
 ```sh
 # Create an RSA key on YOUR computer
@@ -60,7 +55,7 @@ vi /etc/ssh/sshd_config
 service sshd restart
 ```
 
-## Give your user passwordless sudo access (optional)
+# (Optional) Give your user passwordless sudo access
 
 ```sh
 visudo
@@ -69,64 +64,46 @@ visudo
 <name> ALL=(ALL) NOPASSWD:ALL
 ```
 
-## Install Docker
+# Install Docker
 
 ```sh
 ssh <user>@<hostname>
-sudo su
-yum -y remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
-yum -y remove docker-ce docker-ce-cli containerd.io
-yum -y install yum-utils
-yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-yum -y install docker-ce docker-ce-cli containerd.io
-systemctl enable docker
-systemctl start docker
+
+sudo yum install -y yum-utils
+
+sudo yum-config-manager \
+  --add-repo \
+  https://download.docker.com/linux/centos/docker-ce.repo
+
+sudo yum install \
+  docker-ce \
+  docker-ce-cli \
+  containerd.io \
+  docker-compose-plugin
+
+sudo systemctl enable docker
+sudo systemctl start docker
 ```
 
-## Install Docker Compose
+Add a docker-cleanup job to the CRONTAB
 
 ```sh
-ssh <user>@<hostname>
-sudo su
-curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-```
-
-### Clean up docker files regularly
-
-```sh
-ssh <user>@<hostname>
 sudo su
 crontab -e
-```
 
-Make sure the following line is in the crontab
-
-```sh
+# Add this line
 0 0 * * 0 docker system prune -f > /opt/docker-system-clean.log 2>&1
 ```
 
-### Add your user to the 'docker' group
+# Install Nginx
 
 ```sh
 ssh <user>@<hostname>
-sudo su
-usermod -a -G docker <name>
-```
-
-## Install Nginx
-
-```sh
-ssh <user>@<hostname>
-sudo su
-yum -y install epel-release
-yum -y install nginx
+sudo yum -y install nginx
 systemctl enable nginx
 systemctl start nginx
 ```
-
-### Configure Nginx TSL
-
+## Configure SSL
 ```sh
 ssh <user>@<hostname>
 sudo su
@@ -137,82 +114,44 @@ mkdir /opt/ssl
 openssl dhparam -out /opt/ssl/dhparam.pem 2048
 ```
 
-Obtain SSL certs - the following two files are expected to exist:
+Obtain SSL certs. Or create self-signed certs for testing:
 
-```txt
-/opt/ssl/nccrd.saeon.ac.za.cer
-/opt/ssl/nccrd.saeon.ac.za.key
+```sh
+sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl/<hostname>.key -out  /opt/ssl/<hostname>.cer
 ```
 
-### Configure Nginx server blocks
+## Configure Nginx
+Reference nginx files are defined in the `platform/centos/nginx` folder. The server blocks should be updated for the correct hostname, and for SSL cert paths
 
-Reference nginx files are defined in the `src/nginx` folder. Overwrite the target nginx configuration with these files (obviously adjusting for the specific deployment environment)
-
-```txt
-src/nginx/nginx.conf => /etc/nginx/nginx.conf (overwrite the main configuration file)
-src/nginx/conf.d/ => /etc/nginx/conf.d/ (overwrite the conf.d configuration directory)
-```
-
-## Install and configure firewalld
+# Install and configure firewalld
 
 ```sh
 ssh <user>@<hostname>
-sudo su
-yum -y install firewalld
-systemctl unmask firewalld
-systemctl enable firewalld
-systemctl start firewalld
-firewall-cmd --permanent --zone=public --add-service=http
-firewall-cmd --permanent --zone=public --add-service=https
-firewall-cmd --permanent --add-port=1433/tcp # SQL Server
-firewall-cmd --reload
+sudo yum -y install firewalld
+sudo systemctl unmask firewalld
+sudo systemctl enable firewalld
+sudo systemctl start firewalld
+sudo firewall-cmd --permanent --zone=public --add-service=http
+sudo firewall-cmd --permanent --zone=public --add-service=https
+sudo firewall-cmd --permanent --add-port=1433/tcp # SQL Server
+sudo firewall-cmd --reload
 ```
 
-## Setup continuous deployment via GitHub Actions
+# Setup continuous deployment via GitHub Actions
 
-On the deployment server, create a limited permissions user called `runner`
+On the deployment server, create a limited permissions user called `runner` that is part of the `docker` group
 
 ```sh
-sudo su
-adduser runner
-passwd runner # Enter a strong password, and add this password as a repository secret
+sudo adduser runner
+sudo usermod -aG docker runner
 ```
 
-The `runner` user needs to be able to run `docker`, but should not be in the `docker` group
 
-```sh
-visudo
-
-# Add this line to the bottom of the visudo file
-runner ALL=NOPASSWD: /opt/deploy-docker-stack.sh
-```
-
-Create the deploy script `/opt/deploy-docker-stack.sh` with the following content
-
-```sh
-#!/bin/sh
-
-echo "Compose file: $1"
-echo "Compose env file $2"
-echo "Deploying stack: $3"
-
-export $(cat $2) > /dev/null 2>&1;
-docker stack deploy -c $1 $3
-```
-
-Make sure the script has the correct permissions
-
-```sh
-chown root /opt/deploy-docker-stack.sh
-chmod 755 /opt/deploy-docker-stack.sh
-```
-
-## Disable SELinux (or configure it correctly)
+# Disable SELinux (or configure it correctly)
 
 ```sh
 ssh <user>@<hostname>
-sudo su
-vi /etc/selinux/config
+sudo vi /etc/selinux/config
 
 # Make sure this line is uncommented
 SELINUX=disabled

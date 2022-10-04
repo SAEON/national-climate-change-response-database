@@ -2,10 +2,9 @@
 
 A database for tracking, analysing, and monitoring climate adaptation and mitigation projects
 
-# README Contents
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Quick start](#quick-start)
   - [Install source code and dependencies](#install-source-code-and-dependencies)

@@ -8,7 +8,6 @@ A database for tracking, analysing, and monitoring climate adaptation and mitiga
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Quick start](#quick-start)
-  - [System requirements](#system-requirements)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
   - [Setup SQL Server](#setup-sql-server)
   - [Create a database](#create-a-database)

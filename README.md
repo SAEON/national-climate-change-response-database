@@ -9,7 +9,7 @@ A database for tracking, analysing, and monitoring climate adaptation and mitiga
 
 - [Quick start](#quick-start)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
-  - [Setup SQL Server](#setup-sql-server)
+  - [SQL Server setup](#sql-server-setup)
   - [Create a database](#create-a-database)
   - [Start the application](#start-the-application)
     - [Create a tenant (GeoFenced sub-deployment)](#create-a-tenant-geofenced-sub-deployment)

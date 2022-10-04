@@ -41,13 +41,7 @@ A database for tracking, analysing, and monitoring climate adaptation and mitiga
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Quick start
-
-Setup the repository for development on a local machine. The Node.js and React services are run using a local installation of Node.js, and dependent services (SQL Server) are run via Docker containers
-
-## System requirements
-
-1. Docker
-2. Node.js (v16.14.2)
+The application runtime is Node.js v16.14.2. Local development assumes a Linux environment with administrator access to a SQL Server instance. 
 
 ## Install source code and dependencies
 
@@ -60,6 +54,7 @@ npm --prefix src/client install
 ```
 
 ## Setup SQL Server
+The easiest way to quickly setup a SQL Server instance is via [Docker Engine](https://docs.docker.com/engine/) and using a Developer/Express license. It is also necessary to install [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms) (SSMS) to configure the database server and database.
 
 ```sh
 # Create a Docker network
@@ -83,7 +78,7 @@ docker run \
 
 ## Create a database
 
-1. Log in to SQL Server using `sa` credentials (sa / password!123#, if you used the command above)
+1. Log in to SQL Server via SSMS using `sa` credentials (sa / password!123#, if you used the command above)
 2. (Optionally) set the system database "model" recovery model to `simple` (to avoid large, unnecessary log files)
 3. Create a database called "nccrd" with "SIMPLE" recovery mode (should be default if you set the model DB to SIMPLE)
 

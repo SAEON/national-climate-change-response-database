@@ -101,7 +101,7 @@ jobs:
           username: ${{ secrets.DEPLOYMENT_HOST_USERNAME }}
           password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
           port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
-          source: 'deploy/next/docker-compose.yml'
+          source: 'deploy/next/stack.yml'
           target: 'nccrd-next'
 
       - name: (SSH) Deploy Docker stack
@@ -112,9 +112,9 @@ jobs:
           password: ${{ secrets.DEPLOYMENT_HOST_PASSWORD }}
           port: ${{ secrets.DEPLOYMENT_HOST_SSH_PORT }}
           script: |
-            echo "MSSQL_PASSWORD=${{ secrets.MSSQL_PASSWORD }}" > /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "MSSQL_USERNAME=${{ secrets.MSSQL_USERNAME }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "NCCRD_IMAGE=${{ needs.build-nccrd.outputs.image }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "NGINX_IMAGE=${{ needs.build-nginx.outputs.image }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
-            echo "ODP_AUTH_CLIENT_SECRET=${{ secrets.ODP_AUTH_CLIENT_SECRET }}" >> /home/runner/nccrd-next/deploy/next/docker-compose.env
-            sudo /opt/deploy-docker-stack.sh /home/runner/nccrd-next/deploy/next/docker-compose.yml /home/runner/nccrd-next/deploy/next/docker-compose.env nccrd_next
+            echo "MSSQL_PASSWORD=${{ secrets.MSSQL_PASSWORD }}" > /home/runner/nccrd-next/deploy/next/stack.env
+            echo "MSSQL_USERNAME=${{ secrets.MSSQL_USERNAME }}" >> /home/runner/nccrd-next/deploy/next/stack.env
+            echo "NCCRD_IMAGE=${{ needs.build-nccrd.outputs.image }}" >> /home/runner/nccrd-next/deploy/next/stack.env
+            echo "NGINX_IMAGE=${{ needs.build-nginx.outputs.image }}" >> /home/runner/nccrd-next/deploy/next/stack.env
+            echo "ODP_AUTH_CLIENT_SECRET=${{ secrets.ODP_AUTH_CLIENT_SECRET }}" >> /home/runner/nccrd-next/deploy/next/stack.env
+            sudo /opt/deploy-docker-stack.sh /home/runner/nccrd-next/deploy/next/stack.yml /home/runner/nccrd-next/deploy/next/stack.env nccrd_next

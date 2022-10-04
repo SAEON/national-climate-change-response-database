@@ -8,8 +8,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  NCCRD_IMAGE_NAME: saeon/nccrd_next
-  NGINX_IMAGE_NAME: saeon/nccrd_next_nginx
+  NCCRD_IMAGE_NAME: ${{ github.repository }}_next
+  NGINX_IMAGE_NAME: ${{ github.repository }}_next_nginx
   BRANCH_REF: next
 
 jobs:

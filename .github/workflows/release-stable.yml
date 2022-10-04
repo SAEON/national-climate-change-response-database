@@ -1,7 +1,6 @@
 name: release@stable
 
 on:
-  workflow_dispatch:
   push:
     tags:
       - '*'

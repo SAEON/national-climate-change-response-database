@@ -8,8 +8,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: saeon/nccrd_stable
-  NGINX_IMAGE_NAME: saeon/nccrd_stable_nginx
+  IMAGE_NAME: ${{ github.repository }}_stable
+  NGINX_IMAGE_NAME: ${{ github.repository }}_stable_nginx
   BRANCH_REF: stable
 
 jobs:

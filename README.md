@@ -52,8 +52,8 @@ npm --prefix src/api install
 npm --prefix src/client install
 ```
 
-## Setup SQL Server
-The easiest way to quickly setup a SQL Server instance is via [Docker Engine](https://docs.docker.com/engine/) and using a Developer/Express license. It is also necessary to install [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms) (SSMS) to configure the database server and database.
+## SQL Server setup
+The easiest way to quickly set up a SQL Server instance is via [Docker Engine](https://docs.docker.com/engine/) and using a Developer/Express license. It is also necessary to install [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms) (SSMS) to configure the database server and database.
 
 ```sh
 # Create a Docker network
@@ -97,7 +97,7 @@ npm run client
 
 ### Create a tenant (GeoFenced sub-deployment)
 
-Navigate to `/deployment`, and click the `ADD TENANT` button. For local development you should use `something.localhost` as the hostname, and you may have to configure your machine's host file so that requests to `something.localhost` are resolved correctly to the development server (`http://something.localhost => localhost`). For deployment, after specifying a new tenant the webserver needs to be configured to support that additional domain resolution, and authentication needs to be configured with that new domain.
+Navigate to `/deployment`, and click the `ADD TENANT` button. For local development you should use `something.localhost` as the hostname, and you may have to configure your machine's host file so requests to `something.localhost` are resolved correctly to the development server (`http://something.localhost => localhost`). For deployment, after specifying a new tenant the webserver needs to be configured to support that additional domain resolution, and authentication needs to be configured with that new domain.
 
 # Deployment
 
@@ -256,7 +256,7 @@ In development mode:
 - Specify environment variable configuration in `src/api/.env` for the API (refer to `src/api/.env.example` for an example file)
 - Specify environment variable configuration in `src/client/.env` for the client (refer to `src/client/.env.example` for an example file). Unlike the API, which will reload the `.env` file on every application start, the client reads the `.env` file once at build time. Restart the client application to update configuration.
 
-NOTE I noticed that on Windows Server 2019 the configuration file is **_NOT_** read on startup. In this case specify configuration via Powershell instead of using a `.env` file.
+NOTE: I noticed that on Windows Server 2019 the configuration file is **_NOT_** read on startup. In this case specify configuration via Powershell instead of using a `.env` file.
 
 ## Configuring the database
 
@@ -311,7 +311,7 @@ sudo crontab -e
 
 # System migrations
 
-Moving a deployment from one system to another is fairly straightforward - just deploy to a new server, restore the database and update configuration. However there is are a couple caveats:
+Moving a deployment from one system to another is fairly straightforward - just deploy to a new server, restore the database and update configuration. However there are a couple caveats:
 
 1. Don't forget to move the uploads directory to the environment! Look at the configuration value `FILES_DIRECTORY` on your current deployment to see where files are uploaded to
 2. **file uploads are referenced in SQL Server via absolute paths. As such, you will need to update the file paths referenced in Sql Server**

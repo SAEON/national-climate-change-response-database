@@ -1,7 +1,10 @@
+
 # Windows server
+
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Via reverse proxy](#via-reverse-proxy)
   - [Install IIS](#install-iis)
@@ -16,6 +19,7 @@
 - [Proxy server alternatives](#proxy-server-alternatives)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 # Via reverse proxy
 
@@ -98,7 +102,7 @@ DEPLOYMENT_ENV=production
 SSL_ENV=production
 HOSTNAME=https://testing-nccrd-windows.saeon.ac.za
 PORT=3000
-ODP_AUTH_CLIENT_SECRET=asdfasdfsa.9asdf-asdf
+ODP_AUTH_CLIENT_SECRET=secret-string
 MSSQL_DATABASE=nccrd
 MSSQL_HOSTNAME=localhost
 MSSQL_PASSWORD=password

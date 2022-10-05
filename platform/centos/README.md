@@ -103,6 +103,11 @@ sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /opt/ssl/<hostn
 Reference nginx files are defined in the `platform/centos/nginx` folder. The server blocks should be updated for the correct hostname, and for SSL cert paths
 
 # Install and configure firewalld
+Setup a firewall and explicitly allow:
+
+- Public HTTP traffic
+- Public HTTPS traffic
+- Public SQL Server connections (depending on how SQL Server is setup)
 
 ```sh
 sudo yum -y install firewalld \
@@ -126,8 +131,6 @@ sudo usermod -aG docker runner
 
 ## Self hosted runner setup
 On the deployment server, create a limited permissions user called `runner` that is part of the `docker` group
-
-
 
 Follow [the instructions on GitHub](/settings/actions/runners) to install a self-hosted runner.
 

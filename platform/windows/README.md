@@ -36,7 +36,7 @@ Proxying has to be enabled at a server level (the ARR module), but individual pr
 
 ## Create a web.config file
 
-Create a site in IIS and change the web.config file to look like the [example](/web.config).
+Create a site in IIS and change the web.config file to look like the [example](/platform/windows/web.config).
 
 ## Configure reverse proxies
 

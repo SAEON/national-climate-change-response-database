@@ -50,11 +50,14 @@ visudo
 <name> ALL=(ALL) NOPASSWD:ALL
 ```
 
-# Install Nginx
+# Install Nginx and Git
 
 ```sh
 sudo yum install -y epel-release
-sudo yum -y install nginx
+sudo yum -y install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm
+sudo yum -y install \
+  nginx \
+  git
 sudo systemctl enable nginx
 sudo systemctl start nginx
 ```

@@ -6,8 +6,8 @@
 
 - [(Optional) Configure SSH login](#optional-configure-ssh-login)
 - [(Optional) Give your user passwordless sudo access](#optional-give-your-user-passwordless-sudo-access)
-- [Install Docker](#install-docker)
 - [Install Nginx](#install-nginx)
+- [Install Docker](#install-docker)
   - [Configure SSL](#configure-ssl)
   - [Configure Nginx](#configure-nginx)
 - [Install and configure firewalld](#install-and-configure-firewalld)

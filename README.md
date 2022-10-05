@@ -11,7 +11,9 @@ A database for tracking, analysing, and monitoring climate adaptation and mitiga
   - [SQL Server setup](#sql-server-setup)
   - [Create a database](#create-a-database)
   - [Start the application](#start-the-application)
-    - [Create a tenant (GeoFenced sub-deployment)](#create-a-tenant-geofenced-sub-deployment)
+  - [Configure authentication](#configure-authentication)
+  - [Create a tenant (GeoFenced sub-deployment)](#create-a-tenant-geofenced-sub-deployment)
+    - [Configure tenant authentication](#configure-tenant-authentication)
 - [Deployment](#deployment)
   - [Proxy headers](#proxy-headers)
   - [Deploy bundled API + client](#deploy-bundled-api--client)
@@ -94,9 +96,50 @@ cd src/client
 npm run client
 ```
 
-### Create a tenant (GeoFenced sub-deployment)
+## Configure authentication
+
+The application supports OAuth 2 authentication. Theoretically any OAuth 2 provider can be used, but in practice I have found that different OAuth 2 providers - Auth0, Google, Twitter, ORY (SAEON's implementation) require minor changes to source code for specifying/handling callback state. As such only SAEON's OAuth 2 system is directly supported. For new deployments / development environments it is necessary to request that SAEON register your application. These are the details required
+
+```json
+{
+  "client_id":"SAEON.YOUR_APP",
+  "redirect_uris":[
+     "http://localhost:3000/http/authenticate/redirect/saeon",
+     "https://<hostname>/http/authenticate/redirect/saeon"
+  ],
+  "grant_types":[
+     "authorization_code",
+     "refresh_token"
+  ],
+  "response_types":[
+     "code"
+  ],
+  "scope":"openid offline SAEON.YOUR_APP",
+  "post_logout_redirect_uris":[
+     "http://localhost:3000/http/logout",
+     "https://<hostname>/http/logout"
+  ]
+}
+```
+
+## Create a tenant (GeoFenced sub-deployment)
 
 Navigate to `/deployment`, and click the `ADD TENANT` button. For local development you should use `something.localhost` as the hostname, and you may have to configure your machine's host file so requests to `something.localhost` are resolved correctly to the development server (`http://something.localhost => localhost`). For deployment, after specifying a new tenant the webserver needs to be configured to support that additional domain resolution, and authentication needs to be configured with that new domain.
+
+### Configure tenant authentication
+The Oauth 2 registration needs to be updated with additional `redirect_uris` and `post_logout_redirect_uris` uris. For example, to register a new client on the subdomain `new-tenant`, the following URIs need to be added:
+
+**`redirect_uris`**
+```txt
+http://new-tenant.localhost:3000/http/authenticate/redirect/saeon
+https://new-tenant.<hostname>/http/authenticate/redirect/saeon
+```
+
+**`post_logout_redirect_uris`**
+```txt
+http://new-tenant.localhost:3000/http/logout
+https://new-tenant.<hostname>/http/logout
+```
 
 # Deployment
 

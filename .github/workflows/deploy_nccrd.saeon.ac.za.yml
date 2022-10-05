@@ -19,7 +19,7 @@ jobs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ env.BRANCH_REF }}
 
@@ -52,7 +52,7 @@ jobs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Check out source code (shared)
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ env.BRANCH_REF }}
 
@@ -88,7 +88,7 @@ jobs:
     runs-on: github-runner.saeon.int
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ env.BRANCH_REF }}
 

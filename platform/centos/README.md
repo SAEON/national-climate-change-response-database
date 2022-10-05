@@ -35,6 +35,7 @@ vi ~/.ssh/authorized_keys # Copy your id_rsa.pub key into this file
 # Configure public key authentication
 sudo vi /etc/ssh/sshd_config
 # set PubkeyAuthentication to 'yes'
+# set PasswordAuthentication to 'yes' or 'no'
 
 # Restart the SSH service
 service sshd restart

@@ -12,7 +12,7 @@
   - [Configure Nginx](#configure-nginx)
 - [Install and configure firewalld](#install-and-configure-firewalld)
 - [Setup continuous deployment via GitHub Actions](#setup-continuous-deployment-via-github-actions)
-  - [Self hosted runner setup](#self-hosted-runner-setup)
+  - [self-hosted runner setup](#self-hosted-runner-setup)
 - [Disable SELinux (or configure it correctly)](#disable-selinux-or-configure-it-correctly)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -121,7 +121,7 @@ sudo yum -y install firewalld \
 ```
 
 # Setup continuous deployment via GitHub Actions
-Either use the Microsoft-provided shared runners, or setup a self hosted runner to run GitHub Actions workflows. In either case a limited permissions user is required.
+Either use the Microsoft-provided shared runners, or setup a self-hosted runner to run GitHub Actions workflows. In either case a limited permissions user is required. Depending on the exact server setup, this user may/may not need access to be a member of the `docker` group.
 
 ```sh
 sudo adduser runner
@@ -129,10 +129,8 @@ sudo passwd runner # this should be a strong password
 sudo usermod -aG docker runner
 ```
 
-## Self hosted runner setup
-On the deployment server, create a limited permissions user called `runner` that is part of the `docker` group
-
-Follow [the instructions on GitHub](/settings/actions/runners) to install a self-hosted runner.
+## self-hosted runner setup
+Follow GitHub's instructions to install a self-hosted runner, and then adjust the Actions workflows accordingly.
 
 # Disable SELinux (or configure it correctly)
 

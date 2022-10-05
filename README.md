@@ -23,6 +23,7 @@ A database for tracking, analysing, and monitoring climate adaptation and mitiga
     - [Linux & Mac](#linux--mac)
     - [Windows](#windows)
       - [Installing the executable as a Windows service](#installing-the-executable-as-a-windows-service)
+  - [Continuous Deployment](#continuous-deployment)
 - [Configuration](#configuration)
   - [Environment variables](#environment-variables)
     - [SSL_ENV](#ssl_env)
@@ -261,6 +262,14 @@ $env:ODP_AUTH_CLIENT_SECRET="<secret>";
 #### Installing the executable as a Windows service
 
 Please see the [Windows platform installation instructions](platform/windows/) for installing the NCCRD as a service (i.e. it will start on server startup, and also restart on error).
+
+## Continuous Deployment
+Continuous integration and deployment (CICD) refers to environments where source code changes are automatically merged and deployed to testing, staging, and production servers. 
+
+This repository is configured to automatically deploy source code changes on the `next` branch to a testing/staging environment, and to automatically deploy to production when commits are tagged. GitHub Actions tooling (part of the [github.com](https://github.com) platform) is used for this. Refer to [workflow files](/.github/workflows/) where this logic is laid out.
+
+Refer to [deploy_nccrd.sign-on.co.za.yml](/.github/workflows/deploy_nccrd.sign-on.co.za.yml) for an example CICD workflow with reference to [CentOS 7](/platform/centos) environment. The GitHub Actions tooling is also supported on Windows Server, so a similar deployment pipeline can also be achieved.
+
 
 # Configuration
 

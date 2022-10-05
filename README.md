@@ -49,6 +49,7 @@ The application runtime is Node.js v16.14.2. Local development assumes a Linux e
 # Download the source code and install dependencies
 git clone git@github.com:SAEON/national-climate-change-response-database.git nccrd
 cd nccrd
+npm install
 npm --prefix src/api install
 npm --prefix src/client install
 ```

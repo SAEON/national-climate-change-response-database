@@ -116,6 +116,7 @@ On the deployment server, create a limited permissions user called `runner` that
 
 ```sh
 sudo adduser runner
+sudo passwd runner # this should be a strong password
 sudo usermod -aG docker runner
 ```
 

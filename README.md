@@ -266,7 +266,7 @@ Please see the [Windows platform installation instructions](platform/windows/) f
 ## Continuous Deployment
 Continuous integration and deployment (CICD) refers to environments where source code changes are automatically merged and deployed to testing, staging, and production servers. 
 
-This repository is configured to automatically deploy source code changes on the `next` branch to a testing/staging environment, and to automatically deploy to production when commits are tagged. GitHub Actions tooling (part of the [github.com](https://github.com) platform) is used for this. Refer to [workflow files](/.github/workflows/) where this logic is laid out.
+This repository is configured to automatically deploy source code changes on the `next` branch to a testing/staging environment, and to automatically deploy to production when commits are tagged. The [GitHub Actions tooling](https://github.com/features/actions) (part of the [github.com](https://github.com) platform) is used for this. Refer to [workflow files](/.github/workflows/) where this logic is laid out.
 
 Refer to [deploy_nccrd.sign-on.co.za.yml](/.github/workflows/deploy_nccrd.sign-on.co.za.yml) for an example CICD workflow with reference to [CentOS 7](/platform/centos) environment. The GitHub Actions tooling is also supported on Windows Server, so a similar deployment pipeline can also be achieved.
 

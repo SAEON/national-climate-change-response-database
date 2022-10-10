@@ -18,6 +18,25 @@ create table Users (
 create unique index users_unique_saeonId on Users(saeonId) where saeonId is not null;
 end
 
+-- Downloads
+if not exists (
+  select *
+  from sys.objects
+  where
+    object_id = OBJECT_ID(N'[dbo].[DownloadLog]')
+    and type = 'U'
+)
+begin
+create table DownloadLog (
+  id int not null identity primary key,
+  userId int not null foreign key references Users (id),
+  timestamp datetime2 not null default GETDATE(),
+  submissionIds nvarchar(max) null,
+  submissionSearch nvarchar(max) null,
+  index ix_DownloadLog_userId nonclustered (userId)
+)
+end
+
 -- Logins
 if not exists (
   select *

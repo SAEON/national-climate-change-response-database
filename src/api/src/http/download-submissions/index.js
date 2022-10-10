@@ -147,8 +147,22 @@ export default async ctx => {
       throw error
     })
 
-    request.on('done', () => {
+    request.on('done', async () => {
       dataStream.push(null)
+
+      // Log the download event
+      try {
+        const logger = (await pool.connect()).request()
+        logger.input('userId', user.info(ctx).id)
+        logger.input('submissionIds', JSON.stringify(ids))
+        logger.input('submissionSearch', search)
+
+        await logger.query(`
+          insert into DownloadLog (userId, submissionIds, submissionSearch)
+          values (@userId, @submissionIds, @submissionSearch);`)
+      } catch (error) {
+        console.error('Error logging download', error.message)
+      }
     })
   } catch (error) {
     console.error(error.message)

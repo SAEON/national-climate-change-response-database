@@ -6,6 +6,7 @@ import {
 
 const fieldToHumanOverrides = {
   id: 'ID',
+  uri: 'URI',
   submissionStatus: 'Submission status',
   submissionComments: 'Submission comments',
   submissionType: 'Submission type (OLD ERM field)',

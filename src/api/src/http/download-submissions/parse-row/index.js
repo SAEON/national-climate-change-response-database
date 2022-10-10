@@ -45,6 +45,10 @@ const parseValue = (id, { key, obj, vocabFields, inputFields }) => {
     return value?.term || ''
   }
 
+  if (key === 'id') {
+    return id
+  }
+
   if (key === 'carbonCredit') {
     return `${value}`
   }
@@ -107,19 +111,27 @@ ${stringifySync(tables.expenditure, { header: true, delimiter: ';', quoted: fals
   return value || ''
 }
 
-export default ({ submission, columns }) => {
+export default ({ ctx, submission, columns }) => {
+  const origin = ctx.get('origin')
   let { project, mitigation, adaptation, ...fields } = submission
   project = JSON.parse(project)
   mitigation = JSON.parse(mitigation)
   adaptation = JSON.parse(adaptation)
+  const id = submission.id[0]
 
   const row = new Array(Object.keys(columns).length).fill('')
+
+  // Create the URI cell
+  {
+    const i = columns.uri
+    row[i] = `${origin}/submissions/${id}`
+  }
 
   // Project fields
   for (const key in project) {
     const i = columns[`project.${key}`]
     if (isNaN(i)) continue
-    row[i] = parseValue(submission.id, {
+    row[i] = parseValue(id, {
       key,
       obj: project,
       vocabFields: projectVocabularyFields,
@@ -131,7 +143,7 @@ export default ({ submission, columns }) => {
   for (const key in mitigation) {
     const i = columns[`mitigation.${key}`]
     if (isNaN(i)) continue
-    row[i] = parseValue(submission.id, {
+    row[i] = parseValue(id, {
       key,
       obj: mitigation,
       vocabFields: mitigationVocabularyFields,
@@ -143,7 +155,7 @@ export default ({ submission, columns }) => {
   for (const key in adaptation) {
     const i = columns[`adaptation.${key}`]
     if (isNaN(i)) continue
-    row[i] = parseValue(submission.id, {
+    row[i] = parseValue(id, {
       key,
       obj: adaptation,
       vocabFields: adaptationVocabularyFields,
@@ -155,7 +167,7 @@ export default ({ submission, columns }) => {
   for (const key in fields) {
     const i = columns[key]
     if (isNaN(i)) continue
-    row[i] = parseValue(submission.id, {
+    row[i] = parseValue(id, {
       key,
       obj: fields,
       vocabFields: generalVocabularyFields,

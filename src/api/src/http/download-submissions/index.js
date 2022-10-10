@@ -79,6 +79,7 @@ export default async ctx => {
 
   const columns = [
     { key: 'id' },
+    { key: 'uri' },
     { key: 'submissionStatus' },
     ...keys.filter(({ key }) => !fieldBlackList.includes(key)),
     { key: 'createdAt' },
@@ -134,7 +135,7 @@ export default async ctx => {
 
     // Push rows to download one at a time
     request.on('row', submission => {
-      dataStream.push(stringifyRow(parseRow({ submission, columns })))
+      dataStream.push(stringifyRow(parseRow({ ctx, submission, columns })))
     })
 
     request.on('error', error => {

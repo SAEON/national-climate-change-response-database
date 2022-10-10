@@ -32,7 +32,7 @@ export default async (
       .input('submissionComments', submissionComments)
       .input('isSubmitted', isSubmitted)
       .input('submissionId', submissionId)
-      .input('submissionStatus', JSON.stringify(submissionStatus))
+      .input('submissionStatus', JSON.stringify({ userId, ...submissionStatus }))
 
     const result = await request.query(`
       merge Submissions t

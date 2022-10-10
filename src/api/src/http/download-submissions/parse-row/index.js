@@ -9,6 +9,9 @@ import {
 import { HOSTNAME } from '../../../config/index.js'
 import parseProgressData from './parse-progress-data/index.js'
 import { stringify as stringifySync } from 'csv/sync'
+import { parse as parseWkt } from 'wkt'
+import dms from 'dms-conversion'
+const { default: DmsCoordinates } = dms
 
 const generalVocabularyFields = ['submissionStatus']
 
@@ -47,6 +50,13 @@ const parseValue = (id, { key, obj, vocabFields, inputFields }) => {
 
   if (key === 'id') {
     return id
+  }
+
+  if (key === 'xy') {
+    return parseWkt(value)
+      .geometries.filter(({ type }) => type?.toLowerCase() === 'point')
+      .map(({ coordinates: [x, y] }) => new DmsCoordinates(y, x).toString().replace(',', ''))
+      .join(', ')
   }
 
   if (key === 'carbonCredit') {

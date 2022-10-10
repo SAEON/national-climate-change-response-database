@@ -18,6 +18,23 @@ create table Users (
 create unique index users_unique_saeonId on Users(saeonId) where saeonId is not null;
 end
 
+-- Logins
+if not exists (
+  select *
+  from sys.objects
+  where
+    object_id = OBJECT_ID(N'[dbo].[Logins]')
+    and type = 'U'
+)
+begin
+create table Logins (
+  id int not null identity primary key,
+  userId int not null foreign key references Users (id),
+  timestamp datetime2 not null default GETDATE(),
+  index ix_Logins_userId nonclustered (userId)
+);
+end
+
 -- Roles
 if not exists (
   select *

@@ -109,6 +109,12 @@ export default ({ issuer, redirect_uri }) => {
           )
           .then(({ recordset: r }) => r[0])
 
+        // Register this login
+        await transaction
+          .request()
+          .input('userId', user.id)
+          .query('insert into dbo.Logins (userId) values (@userId);')
+
         // Commit transaction
         await transaction.commit()
 

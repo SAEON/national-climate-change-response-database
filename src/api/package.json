@@ -19,9 +19,9 @@
   "author": "zd.smith@saeon.nrf.ac.za",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^8.24.0",
+    "eslint": "^8.25.0",
     "nodemon": "^2.0.20",
-    "npm-check-updates": "^16.3.7",
+    "npm-check-updates": "^16.3.11",
     "prettier": "^2.7.1"
   },
   "dependencies": {
@@ -34,7 +34,7 @@
     "@koa/router": "^12.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^14.1.0",
-    "apollo-server-core": "^3.10.2",
+    "apollo-server-core": "^3.10.3",
     "apollo-server-koa": "3.10",
     "base64url": "^3.0.1",
     "color": "^4.2.3",
@@ -64,7 +64,7 @@
     "sanitize-filename": "^1.6.3",
     "shpjs": "^4.0.4",
     "sift": "^16.0.0",
-    "sql-formatter": "^11.0.1",
+    "sql-formatter": "^11.0.2",
     "wkt": "^0.1.1",
     "xlsx-populate": "^1.21.0"
   }

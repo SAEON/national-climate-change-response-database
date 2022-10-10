@@ -48,6 +48,10 @@ export default async ctx => {
 
   const fieldBlackList = [
     'project.projectManagerTelephone',
+    'project.projectManagerName',
+    'project.projectManagerPosition',
+    'project.projectManagerEmail',
+    'project.projectManagerTelephone',
     'project.projectManagerMobile',
     'mitigation._ermDbEmissions',
   ]

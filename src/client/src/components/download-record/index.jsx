@@ -121,11 +121,19 @@ const OpenedDialog = ({ title, id, search, closeFn }) => {
           <b>
             <i>{title}</i>
           </b>{' '}
-          (submission ID <i>{id}</i>)<br />
+          (submission ID <i>{id || 'many'}</i>)<br />
           <br />
           While we take reasonable care to curate the information made available via this site, we
           cannot guarantee accuracy since most information is submitted via 3<sup>rd</sup> parties,
           and errors / misleading information is possible.
+          <br />
+          <br />
+          <b>
+            <i>Opening the CSV in Excel</i>
+          </b>
+          <br />
+          The download is in CSV format. To use in Excel, (1) Open Excel, (2) Go to the Data tab,
+          and (3) Import the CSV via the text file data source wizard.
         </span>
       </DialogContent>
       <DialogActions>

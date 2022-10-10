@@ -36,9 +36,7 @@ const DownloadButton = ({ closeFn, id, search }) => {
 
         if (id) {
           formData.append('ids', JSON.stringify([id]))
-        }
-
-        if (search) {
+        } else if (search) {
           formData.append('search', JSON.stringify(search))
         }
 

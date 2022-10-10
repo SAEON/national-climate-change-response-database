@@ -121,7 +121,7 @@ export default async ctx => {
         join TenantXrefSubmission x on x.submissionId = s.id
         where
           x.tenantId = @tenantId
-          and id in (${ids.map((_, i) => `@id_${i}`).join(', ')})
+          and s.id in (${ids.map((_, i) => `@id_${i}`).join(', ')})
           ${
             acceptedProjectsOnly
               ? `and upper(JSON_VALUE(s.submissionStatus, '$.term')) = 'ACCEPTED'`

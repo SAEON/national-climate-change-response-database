@@ -49,7 +49,6 @@ services:
     volumes:
       - nccrd_next:/nccrd-assets
     environment:
-      DEFAULT_TENANT_ADDRESS: https://nccrd.saeon.ac.za
       FILES_DIRECTORY: /nccrd-assets
       LOG_REQUEST_DETAILS: 'false'
       LOG_SQL_QUERIES: 'false'

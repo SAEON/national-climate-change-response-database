@@ -48,7 +48,7 @@
   "homepage": "https://github.com/SAEON/national-climate-change-systems#readme",
   "devDependencies": {
     "doctoc": "^2.2.1",
-    "npm-check-updates": "^16.3.8",
+    "npm-check-updates": "^16.3.11",
     "prettier": "^2.7.1"
   },
   "dependencies": {

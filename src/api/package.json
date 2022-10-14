@@ -9,8 +9,8 @@
     "lint": "eslint -c .eslintrc.cjs \"./**/*.{js,mjs,cjs}\"",
     "rollup": "rimraf bin && rollup --config rollup.config.js && cp -r src/http/public-image/images bin/images && cp -r src/mssql/install-vocabulary/trees bin/trees && cp src/http/download-excel-submission-template/base.xlsm bin/base.xlsm && cp -r src/graphql/schema/type-defs bin/type-defs && cp -r src/mssql/sql bin/sql && cp -r src/mssql/install-region-geometries/geojson/ bin/geojson && cp -r src/client-dist bin/client-dist",
     "prettier": "prettier --cache --cache-strategy metadata --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
-    "ncu": "ncu -x koa-passport",
-    "ncu -u": "ncu -u -x koa-passport"
+    "ncu": "ncu -x koa-passport,rollup,@rollup/plugin-json,@rollup/plugin-node-resolve",
+    "ncu -u": "ncu -u -x koa-passport,rollup,@rollup/plugin-json,@rollup/plugin-node-resolve"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
     "@babel/core": "^7.19.3",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/eslint-plugin": "^7.19.1",
-    "@babel/preset-env": "^7.19.3",
+    "@babel/preset-env": "^7.19.4",
     "@graphql-tools/schema": "^9.0.4",
     "@koa/router": "^12.0.0",
     "@rollup/plugin-json": "^4.1.0",
@@ -39,7 +39,7 @@
     "base64url": "^3.0.1",
     "color": "^4.2.3",
     "cookie": "^0.5.0",
-    "csv": "^6.2.0",
+    "csv": "^6.2.1",
     "dataloader": "^2.1.0",
     "date-fns": "^2.29.3",
     "dms-conversion": "^3.1.1",

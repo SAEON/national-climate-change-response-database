@@ -147,6 +147,7 @@ create table Tenants (
   flagUrl nvarchar(500),
   regionId uniqueidentifier foreign key references Regions (id),
   includeUnboundedSubmissions bit default 0 not null,
+  contactEmailAddress nvarchar(2000),
   constraint frontMatter_json check ( isjson(frontMatter) = 1 ),
   constraint json_theme check ( isjson(theme) = 1 )
 );

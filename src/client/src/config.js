@@ -16,5 +16,3 @@ export const PACKAGE_DESCRIPTION = process.env.PACKAGE_DESCRIPTION.toString()
 export const PACKAGE_KEYWORDS = process.env.PACKAGE_KEYWORDS.toString().split(',')
 export const NCCRD_TECHNICAL_CONTACT =
   process.env.NCCRD_TECHNICAL_CONTACT || 'zd.smith@saeon.nrf.ac.za'
-
-export const NCCRD_DFFE_CONTACT = process.env.NCCRD_DFFE_CONTACT || 'rditlopo@dffe.gov.za'

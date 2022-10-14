@@ -47,6 +47,7 @@ type ClientContext {
   origin: String
   isDefault: Boolean!
   title: String
+  contactEmailAddress: String
   shortTitle: String
   frontMatter: JSON
   description: String

@@ -1,18 +1,20 @@
 import { useContext } from 'react'
 import { context as authenticationContext } from '../../contexts/authentication'
+import { context as clientContext } from '../../contexts/client-context'
 import Icon from 'mdi-react/MicrosoftExcelIcon'
 import Button from '@mui/material/Button'
 import MessageDialogue from '../message-dialogue'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
-import { NCCRD_API_HTTP_ADDRESS, NCCRD_DFFE_CONTACT } from '../../config'
+import { NCCRD_API_HTTP_ADDRESS } from '../../config'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default () => {
   const theme = useTheme()
   const lgUp = useMediaQuery(theme.breakpoints.up('lg'))
   const isAuthenticated = useContext(authenticationContext)
+  const { contactEmailAddress } = useContext(clientContext)
 
   return (
     <MessageDialogue
@@ -23,9 +25,9 @@ export default () => {
             Download excel template for capturing submission data offline
           </Typography>
           <Typography variant="body2">
-            Please submit filled in templates to {NCCRD_DFFE_CONTACT.replace('@', ' [ at ] ')}. Note
-            that the online form is much easier to fill in, and the offline template is provided as
-            a backup in case the online form is not accessible for whatever reason
+            Please submit filled in templates to {contactEmailAddress.replace('@', ' [ at ] ')}.
+            Note that the online form is much easier to fill in, and the offline template is
+            provided as a backup in case the online form is not accessible for whatever reason
           </Typography>
         </>
       }

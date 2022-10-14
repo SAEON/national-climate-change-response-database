@@ -35,6 +35,7 @@ export default async () => {
       .input('frontMatter', JSON.stringify(frontMatter))
       .input('flagUrl', 'http/public-image/sa-flag.jpg')
       .input('includeUnboundedSubmissions', 1)
+      .input('contactEmailAddress', '')
       .input('theme', JSON.stringify(theme)).query(`
         merge Tenants t
         using (
@@ -49,7 +50,8 @@ export default async () => {
             @logoUrl logoUrl,
             @flagUrl flagUrl,
             ( select id from Regions where code = 'ZA') regionId,
-            @includeUnboundedSubmissions includeUnboundedSubmissions
+            @includeUnboundedSubmissions includeUnboundedSubmissions,
+            @contactEmailAddress contactEmailAddress
         ) s on s.hostname = t.hostname
         
         when not matched
@@ -64,7 +66,8 @@ export default async () => {
             logoUrl,
             flagUrl,
             regionId,
-            includeUnboundedSubmissions
+            includeUnboundedSubmissions,
+            contactEmailAddress
           ) values (
             s.hostname,
             s.isDefault,
@@ -76,7 +79,8 @@ export default async () => {
             s.logoUrl,
             s.flagUrl,
             s.regionId,
-            s.includeUnboundedSubmissions
+            s.includeUnboundedSubmissions,
+            s.contactEmailAddress
           )
 
         when matched

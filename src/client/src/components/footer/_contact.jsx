@@ -1,8 +1,12 @@
+import { useContext } from 'react'
+import { context as clientContext } from '../../contexts/client-context'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import { NCCRD_TECHNICAL_CONTACT, NCCRD_DFFE_CONTACT } from '../../config'
+import { NCCRD_TECHNICAL_CONTACT } from '../../config'
 
 export default () => {
+  const { contactEmailAddress } = useContext(clientContext)
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -14,7 +18,9 @@ export default () => {
       </Grid>
       <Grid item xs={12}>
         <Typography variant="body1">Data enquiries</Typography>
-        <Typography variant="body2">{NCCRD_DFFE_CONTACT.replace('@', ' [ at ] ')}</Typography>
+        <Typography variant="body2">
+          {contactEmailAddress?.replace('@', ' [ at ] ') || 'Missing contact address'}
+        </Typography>
       </Grid>
     </Grid>
   )

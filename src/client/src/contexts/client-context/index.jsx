@@ -22,6 +22,7 @@ export default ({ routes, children }) => {
           shortTitle
           frontMatter
           description
+          contactEmailAddress
           logoUrl
           flagUrl
           region {

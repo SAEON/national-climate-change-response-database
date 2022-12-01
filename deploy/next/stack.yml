@@ -15,7 +15,8 @@ services:
     image: $NGINX_IMAGE
     deploy:
       placement:
-        max_replicas_per_node: 2
+        constraints:
+          - node.labels.service == apps
       replicas: 1
       rollback_config:
         parallelism: 0

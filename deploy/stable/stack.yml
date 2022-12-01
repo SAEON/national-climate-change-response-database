@@ -57,7 +57,7 @@ services:
       MSSQL_DATABASE: nccrd_stable
       MSSQL_HOSTNAME: mssql.saeon.int
       MSSQL_PASSWORD: $MSSQL_PASSWORD
-      MSSQL_PORT: 2433
+      MSSQL_PORT: 1433
       MSSQL_USERNAME: $MSSQL_USERNAME
       DEFAULT_ADMIN_EMAIL_ADDRESSES: 'TMakholela@environment.gov.za,tmakholela@yahoo.com,rditlopo@environment.gov.za'
       DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za

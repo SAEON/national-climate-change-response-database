@@ -45,7 +45,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.NGINX_IMAGE_NAME }}
           tags: |
             type=sha
-            type=raw,value=latest,priority=1
 
       - name: Build and push NCCRD
         uses: docker/build-push-action@master

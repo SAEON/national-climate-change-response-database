@@ -35,7 +35,8 @@ services:
     image: $NCCRD_IMAGE
     deploy:
       placement:
-        max_replicas_per_node: 2
+        constraints:
+          - node.labels.service == apps
       replicas: 1
       rollback_config:
         parallelism: 0
@@ -45,7 +46,7 @@ services:
         failure_action: rollback
       restart_policy:
         condition: any
-        delay: 30s
+        delay: 15s
     volumes:
       - nccrd_next:/nccrd-assets
     environment:
@@ -53,9 +54,9 @@ services:
       LOG_REQUEST_DETAILS: 'false'
       LOG_SQL_QUERIES: 'false'
       MSSQL_DATABASE: nccrd_next
-      MSSQL_HOSTNAME: mssql.saeon.int
+      MSSQL_HOSTNAME: 192.168.118.194
       MSSQL_PASSWORD: $MSSQL_PASSWORD
-      MSSQL_PORT: 3433
+      MSSQL_PORT: 1433
       MSSQL_USERNAME: $MSSQL_USERNAME
       DEFAULT_ADMIN_EMAIL_ADDRESSES: ''
       DEFAULT_SYSADMIN_EMAIL_ADDRESSES: zd.smith@saeon.nrf.ac.za

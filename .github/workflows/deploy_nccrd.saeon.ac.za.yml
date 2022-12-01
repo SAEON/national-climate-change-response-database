@@ -8,8 +8,8 @@ env:
   SWARM_USERNAME: ${{ secrets.SWARM_USERNAME }} # Organization secret
   SWARM_PASSWORD: ${{ secrets.SWARM_PASSWORD }} # Organization secret
   SWARM_SSH_PORT: ${{ secrets.SWARM_SSH_PORT }} # Organization secret
-  MSSQL_PASSWORD: ${{ secrets.MSSQL_PASSWORD }} # Repository secret
-  MSSQL_USERNAME: ${{ secrets.MSSQL_USERNAME }} # Repository secret
+  MSSQL_PASSWORD: ${{ secrets.MSSQL_PASSWORD_NEXT }} # Repository secret
+  MSSQL_USERNAME: ${{ secrets.MSSQL_USERNAME_NEXT }} # Repository secret
   ODP_AUTH_CLIENT_SECRET: ${{ secrets.ODP_AUTH_CLIENT_SECRET }} # Repository secret
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   NCCRD_IMAGE_NAME: ${{ github.repository }}_next_node

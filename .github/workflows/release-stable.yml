@@ -9,7 +9,7 @@ jobs:
   pkg-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@master
         with:
           ref: stable
 
@@ -22,7 +22,7 @@ jobs:
           docker cp $(docker create --rm nccrd-binaries):/app/binaries/ ./
 
       - name: Publish binaries
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@master
         with:
           files: |
             binaries/nccrd-linux

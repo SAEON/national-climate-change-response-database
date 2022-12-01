@@ -27,12 +27,12 @@ jobs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Check out source code (shared)
-        uses: actions/checkout@v3
+        uses: actions/checkout@master
         with:
           ref: ${{ env.BRANCH_REF }}
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@master
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -40,14 +40,15 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@master
         with:
           images: ${{ env.REGISTRY }}/${{ env.NGINX_IMAGE_NAME }}
           tags: |
             type=sha
+            type=raw,value=latest,priority=1
 
       - name: Build and push NCCRD
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@master
         with:
           context: src/nginx
           push: true
@@ -60,12 +61,12 @@ jobs:
       image: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Check out source code (shared)
-        uses: actions/checkout@v3
+        uses: actions/checkout@master
         with:
           ref: ${{ env.BRANCH_REF }}
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@master
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -73,14 +74,14 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@master
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=sha
 
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@master
         with:
           context: .
           build-args: |
@@ -96,7 +97,7 @@ jobs:
     runs-on: saeon
     steps:
       - name: Check out source code (int)
-        uses: actions/checkout@v3
+        uses: actions/checkout@master
         with:
           ref: ${{ env.BRANCH_REF }}
 

@@ -107,7 +107,7 @@ jobs:
           host: ${{ env.SWARM_HOSTNAME }}
           username: ${{ env.SWARM_USERNAME }}
           password: ${{ env.SWARM_PASSWORD }}
-          port: ${{ .env.SWARM_SSH_PORT }}
+          port: ${{ env.SWARM_SSH_PORT }}
           source: 'deploy/stable/stack.yml'
           target: 'nccrd-stable'
 

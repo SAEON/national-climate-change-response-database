@@ -1,6 +1,7 @@
 import { pool } from '../../../../mssql/pool.js'
 import mssql from 'mssql'
 import mergeTenantSubmissions from '../../../../lib/sql/merge-tenants-submissions.js'
+import logger from '../../../../lib/logger.js'
 
 export default async (
   _,
@@ -106,7 +107,7 @@ export default async (
     await transaction.commit()
     return result.recordset[0]
   } catch (error) {
-    console.error('Error saving submission', submissionId)
+    logger.error('Error saving submission', submissionId)
     await transaction.rollback()
     throw error
   }

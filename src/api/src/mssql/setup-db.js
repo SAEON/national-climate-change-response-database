@@ -7,8 +7,9 @@ import installDefaultTenant from './install-default-tenant/index.js'
 import installVocabulary from './install-vocabulary/index.js'
 import installRegionGeometries from './install-region-geometries/index.js'
 import registerTenantSubmissions from './register-tenant-submissions/index.js'
+import logger from '../lib/logger.js'
 
-const info = (...args) => console.info(...args)
+const info = (...args) => logger.info(...args)
 
 export default async () => {
   try {
@@ -28,7 +29,7 @@ export default async () => {
       await installDefaultAdmins().then(() => info('Installed admins\n'))
     }
   } catch (error) {
-    console.error('Unable to setup database', error)
+    logger.error('Unable to setup database', error)
     process.exit(1)
   }
 

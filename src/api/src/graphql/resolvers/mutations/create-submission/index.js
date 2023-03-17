@@ -1,5 +1,6 @@
 import mssql from 'mssql'
 import mergeTenantsSubmissions from '../../../../lib/sql/merge-tenants-submissions.js'
+import logger from '../../../../lib/logger.js'
 
 export default async (self, args, ctx) => {
   const { pool } = ctx.mssql
@@ -28,7 +29,7 @@ export default async (self, args, ctx) => {
 
     return submission
   } catch (error) {
-    console.error('Unable to create submission', error)
+    logger.error('Unable to create submission', error)
     await transaction.rollback()
     throw error
   }

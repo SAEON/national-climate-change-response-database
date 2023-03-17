@@ -1,6 +1,7 @@
 import { pool } from '../../../../../../mssql/pool.js'
 import mssql from 'mssql'
 import wkt from 'wkt'
+import logger from '../../../../../../lib/logger.js'
 
 /**
  * It's conventional to name geometry points as YX (Long/Lat)
@@ -62,15 +63,12 @@ export default async () => {
         where
           id = @id;`)
 
-      console.info('Updated Submissions.project', id)
+      logger.info('Updated Submissions.project', id)
     }
 
     await transaction.commit()
   } catch (error) {
-    console.error(
-      'Unable to complete the yx => xy field migration. Rolling back transaction',
-      error
-    )
+    logger.error('Unable to complete the yx => xy field migration. Rolling back transaction', error)
     await transaction.rollback()
     throw error
   }

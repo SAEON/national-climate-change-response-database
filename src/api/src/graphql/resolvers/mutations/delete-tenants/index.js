@@ -2,6 +2,7 @@ import mssql from 'mssql'
 import { basename, sep, normalize, join } from 'path'
 import { unlink } from 'fs'
 import { IMAGES_DIRECTORY } from '../../../../config/index.js'
+import logger from '../../../../lib/logger.js'
 
 export default async (_, { ids }, ctx) => {
   const { pool } = ctx.mssql
@@ -38,7 +39,7 @@ export default async (_, { ids }, ctx) => {
           await new Promise((y, x) => unlink(p, e => (e ? x(e) : y())))
         }
       } catch (error) {
-        console.error('Unable to delete tenant assets. Clean up folder manually', error)
+        logger.error('Unable to delete tenant assets. Clean up folder manually', error)
       }
 
       // Delete user-role-tenant permissions for this tenant
@@ -54,7 +55,7 @@ export default async (_, { ids }, ctx) => {
     await transaction.commit()
     return ids
   } catch (error) {
-    console.error('Error deleting tenants', ids)
+    logger.error('Error deleting tenants', ids)
     await transaction.rollback()
     throw error
   }

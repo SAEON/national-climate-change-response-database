@@ -1,6 +1,7 @@
 import { pool } from '../../mssql/pool.js'
 import { createReadStream } from 'fs'
 import { basename } from 'path'
+import logger from '../../lib/logger.js'
 
 export default async ctx => {
   const { fileId } = ctx.query
@@ -22,7 +23,7 @@ export default async ctx => {
     ctx.body = createReadStream(filePath)
     ctx.attachment(basename(filePath))
   } catch (error) {
-    console.error('Error retrieving submission file', error.message)
+    logger.error('Error retrieving submission file', error.message)
     ctx.throw(404)
   }
 }

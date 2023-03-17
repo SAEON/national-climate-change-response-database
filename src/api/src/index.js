@@ -4,6 +4,7 @@ import { createServer } from 'http'
 import Koa from 'koa'
 import serve from 'koa-static'
 import mount from 'koa-mount'
+import logger from './lib/logger.js'
 import KoaRouter from '@koa/router'
 import koaCompress from 'koa-compress'
 import koaBody from 'koa-bodyparser'
@@ -45,7 +46,7 @@ import {
 import('./mssql/setup-db.js')
   .then(({ default: fn }) => fn())
   .catch(error => {
-    console.error(error.message)
+    logger.error(error.message)
     process.exit(1)
   })
   .then(() =>
@@ -55,8 +56,8 @@ import('./mssql/setup-db.js')
           await fn()
         } catch (error) {
           const TRY_AGAIN_IN = 30
-          console.error('Unable to configure oauth2 oidc strategy', error)
-          console.info(`Trying again to configure authentication in ${TRY_AGAIN_IN} seconds...`)
+          logger.error('Unable to configure oauth2 oidc strategy', error)
+          logger.info(`Trying again to configure authentication in ${TRY_AGAIN_IN} seconds...`)
           await new Promise(res => setTimeout(res, TRY_AGAIN_IN * 1000))
           configureAuth()
         }
@@ -75,7 +76,7 @@ const staticSpaMiddleware = async (ctx, next) => {
   try {
     return await serve(SPA_PATH)(Object.assign(ctx, { path: 'index.html' }), next)
   } catch (error) {
-    console.error('Error setting up static SPA middleware', error)
+    logger.error('Error setting up static SPA middleware', error)
   }
 }
 
@@ -144,11 +145,11 @@ const httpServer = createServer(app.callback())
 apolloServer
   .start()
   .then(() => apolloServer.applyMiddleware({ app: app, cors: false }))
-  .catch(error => console.error('Unable to start Apollo server', error))
+  .catch(error => logger.error('Unable to start Apollo server', error))
 
 // Start public HTTP server
 httpServer.listen(PORT, () => {
-  console.info(`NCCRD API server ready`)
-  console.info(`NCCRD GraphQL server ready`)
-  console.info(`NCCRD GraphQL subscriptions server ready`)
+  logger.info(`NCCRD API server ready`)
+  logger.info(`NCCRD GraphQL server ready`)
+  logger.info(`NCCRD GraphQL subscriptions server ready`)
 })

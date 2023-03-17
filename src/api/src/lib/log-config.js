@@ -1,4 +1,5 @@
 import * as config from '../config/index.js'
+import logger from './logger.js'
 
 const mask = str => str?.replace(/./g, '*').padEnd(60, '*')
 
@@ -9,7 +10,7 @@ const MASKED_FIELDS =
     ? ['API_KEY', 'ODP_AUTH_CLIENT_SECRET', 'MSSQL_USERNAME', 'MSSQL_PASSWORD']
     : []
 
-console.info(
+logger.info(
   'Configuration',
   Object.fromEntries(
     Object.entries(config)

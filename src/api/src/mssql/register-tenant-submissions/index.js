@@ -1,9 +1,10 @@
 import { pool } from '../pool.js'
 import mssql from 'mssql'
 import mergeTenantsSubmissions from '../../lib/sql/merge-tenants-submissions.js'
+import logger from '../../lib/logger.js'
 
 export default async () => {
-  console.info(
+  logger.info(
     'Installed default tenant. Populating TenantXrefSubmission (asynchronously, you can use the app whilst this is in progress)'
   )
 
@@ -23,7 +24,7 @@ export default async () => {
         .input('submissionId', null)
         .query(mergeTenantsSubmissions)
 
-      console.info('Registered submissions for tenantId', tenantId)
+      logger.info('Registered submissions for tenantId', tenantId)
     }
 
     await transaction.commit()

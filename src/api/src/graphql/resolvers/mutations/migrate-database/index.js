@@ -1,7 +1,8 @@
 import * as migrations from './migrations/index.js'
+import logger from '../../../../lib/logger.js'
 
 export default async (self, { migration: key, input = {} }, ctx) => {
-  console.info('Running DB migration', key)
+  logger.info('Running DB migration', key)
   const fn = migrations[key]
 
   try {
@@ -12,7 +13,7 @@ export default async (self, { migration: key, input = {} }, ctx) => {
       return false
     }
   } catch (error) {
-    console.error('Error running DB migration', key, error)
+    logger.error('Error running DB migration', key, error)
     throw error
   }
 }

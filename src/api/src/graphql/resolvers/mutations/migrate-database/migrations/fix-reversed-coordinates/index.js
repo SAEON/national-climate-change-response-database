@@ -2,6 +2,7 @@ import { pool } from '../../../../../../mssql/pool.js'
 import mssql from 'mssql'
 import OL from 'ol/format/WKT.js'
 import wkt from 'wkt'
+import logger from '../../../../../../lib/logger.js'
 
 /**
  * The heatmap on the client shows that sometimes
@@ -65,7 +66,7 @@ export default async () => {
         }
 
         const correctedXy = wkt.stringify(correctedXy_)
-        console.info('Fixing', id, xy, correctedXy)
+        logger.info('Fixing', id, xy, correctedXy)
         await transaction.request().input('id', id).input('xy', correctedXy).query(`
           update Submissions
           set project = JSON_MODIFY(project, '$.xy', @xy)
@@ -75,7 +76,7 @@ export default async () => {
 
     await transaction.commit()
   } catch (error) {
-    console.error('Unable to fix reverse coordinates (failed DB migration script)', error)
+    logger.error('Unable to fix reverse coordinates (failed DB migration script)', error)
     await transaction.rollback()
     throw error
   }

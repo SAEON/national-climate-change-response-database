@@ -7,6 +7,7 @@ import {
   ODP_AUTH_LOGOUT_REDIRECT as DEFAULT_LOGOUT_REDIRECT,
 } from '../config/index.js'
 import { user as userRole } from '../user-model/roles.js'
+import logger from '../lib/logger.js'
 
 export default ({ issuer, redirect_uri }) => {
   const client = new issuer.Client({
@@ -120,7 +121,7 @@ export default ({ issuer, redirect_uri }) => {
 
         cb(null, user)
       } catch (error) {
-        console.error('Error authenticating user', error)
+        logger.error('Error authenticating user', error)
         await transaction.rollback()
         cb(error, null)
       }

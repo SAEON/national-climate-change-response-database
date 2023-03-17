@@ -1,5 +1,6 @@
 import mssql from 'mssql'
 import { pool } from '../pool.js'
+import logger from '../../lib/logger.js'
 
 export default async ({ USERS, role }) => {
   if (USERS.length) {
@@ -37,13 +38,13 @@ export default async ({ USERS, role }) => {
           when not matched then insert (userId, roleId, tenantId)
           values (s.userId, s.roleId, tenantId);`)
 
-        console.info(`${role}:`, user)
+        logger.info(`${role}:`, user)
       }
 
       // Commit the transaction
       await transaction.commit()
     } catch (error) {
-      console.error(`Unable to provision ${role} users`, error.message)
+      logger.error(`Unable to provision ${role} users`, error.message)
       await transaction.rollback()
       process.exit(1)
     }

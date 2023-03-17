@@ -1,5 +1,6 @@
 import { unlink } from 'fs'
 import mssql from 'mssql'
+import logger from '../../../../lib/logger.js'
 
 export default async (_, { ids, submissionId }, ctx) => {
   const { pool } = ctx.mssql
@@ -52,7 +53,7 @@ export default async (_, { ids, submissionId }, ctx) => {
 
       transaction.commit()
     } catch (error) {
-      console.error('Error removing attachment', id, error)
+      logger.error('Error removing attachment', id, error)
       await transaction.rollback()
       transaction.rollback()
     }

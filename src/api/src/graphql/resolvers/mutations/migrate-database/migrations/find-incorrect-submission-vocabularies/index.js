@@ -15,6 +15,7 @@ import { join } from 'path'
 import { appendFile, unlink } from 'fs/promises'
 import query, { DEV_QUERY_LIMIT } from './_query.js'
 import { stringify } from 'csv'
+import logger from '../../../../../../lib/logger.js'
 
 export const csvFilePath = join(MIGRATION_LOGS_DIRECTORY, 'incorrect-submission-vocabularies.csv')
 
@@ -123,7 +124,7 @@ export default async (ctx, { tenantId }) => {
           }),
         })
       } catch (error) {
-        console.error(`QUERY ERROR (project). key: ${field}. tree: ${tree}`, error.message)
+        logger.error(`QUERY ERROR (project). key: ${field}. tree: ${tree}`, error.message)
       }
     }
 
@@ -143,7 +144,7 @@ export default async (ctx, { tenantId }) => {
           }),
         })
       } catch (error) {
-        console.error(`QUERY ERROR (mitigation). key: ${field}. tree: ${tree}`, error.message)
+        logger.error(`QUERY ERROR (mitigation). key: ${field}. tree: ${tree}`, error.message)
       }
     }
 
@@ -163,11 +164,11 @@ export default async (ctx, { tenantId }) => {
           }),
         })
       } catch (error) {
-        console.error(`QUERY ERROR (adaptation). key: ${field}. tree: ${tree}`, error.message)
+        logger.error(`QUERY ERROR (adaptation). key: ${field}. tree: ${tree}`, error.message)
       }
     }
   } catch (error) {
-    console.error('Unknown error occurred', error)
+    logger.error('Unknown error occurred', error)
   } finally {
     isRunning = false
   }

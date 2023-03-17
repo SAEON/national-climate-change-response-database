@@ -4,6 +4,7 @@ import { performance } from 'perf_hooks'
 import { join, normalize, sep } from 'path'
 import mssql from 'mssql'
 import insertRegion from './_insert-region-query.js'
+import logger from '../../lib/logger.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 
@@ -47,7 +48,7 @@ export default async () => {
       const za = await load('za-boundary.cjs')
       const { properties, geometry } = za.features[0]
       await insertRegion(transaction, { properties, geometry })
-      console.info('Loaded ZA geometry')
+      logger.info('Loaded ZA geometry')
 
       // SA provinces
       const provinces = (await load('za-provinces.cjs')).features
@@ -63,7 +64,7 @@ export default async () => {
           geometry: feature.geometry,
         })
       }
-      console.info('Loaded provinces geometry')
+      logger.info('Loaded provinces geometry')
 
       // SA district municipalities & metropolitan municipalities
       const districts = (await load('za-district-municipalities.cjs')).features
@@ -79,7 +80,7 @@ export default async () => {
           geometry: feature.geometry,
         })
       }
-      console.info('Loaded district municipality geometry')
+      logger.info('Loaded district municipality geometry')
 
       // SA local municipalities (including local municipalities that are also metropolitan municipalities)
       const regions = (await load('za-local-municipalities.cjs')).features
@@ -95,16 +96,16 @@ export default async () => {
           geometry: feature.geometry,
         })
       }
-      console.info('Loaded local municipality geometry')
+      logger.info('Loaded local municipality geometry')
     } else {
-      console.info('Skipping geometry installing (already installed)')
+      logger.info('Skipping geometry installing (already installed)')
     }
 
     await transaction.commit()
 
     const t1 = performance.now()
     const runtime = `${Math.round((t1 - t0) / 1000, 2)} seconds`
-    console.info('Regions loaded!', runtime)
+    logger.info('Regions loaded!', runtime)
   } catch (error) {
     await transaction.rollback()
     throw error

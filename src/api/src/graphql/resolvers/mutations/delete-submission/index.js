@@ -1,5 +1,6 @@
 import mergeTenantsSubmissions from '../../../../lib/sql/merge-tenants-submissions.js'
 import mssql from 'mssql'
+import logger from '../../../../lib/logger.js'
 
 export default async (_, { id }, ctx) => {
   const { pool } = ctx.mssql
@@ -21,7 +22,7 @@ export default async (_, { id }, ctx) => {
 
     await transaction.commit()
   } catch (error) {
-    console.error('Error deleting tenants', id)
+    logger.error('Error deleting tenants', id)
     await transaction.rollback()
     throw error
   }

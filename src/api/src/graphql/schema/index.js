@@ -10,6 +10,7 @@ import {
   mitigationVocabularyFields as _mitigationVocabularyFields,
   adaptationVocabularyFields as _adaptationVocabularyFields,
 } from './vocabulary-fields.js'
+import logger from '../../lib/logger.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 
@@ -34,7 +35,7 @@ const schema = makeExecutableSchema({
   inheritResolversFromInterfaces: true,
 })
 
-console.info('Building input type fields list from GraphQL schema')
+logger.info('Building input type fields list from GraphQL schema')
 const typeFields = graphqlSync({
   schema,
   source: print(

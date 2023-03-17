@@ -5,6 +5,7 @@ import { join, sep } from 'path'
 import { parse } from 'csv'
 import { performance } from 'perf_hooks'
 import mssql from 'mssql'
+import logger from '../../lib/logger.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 
@@ -32,7 +33,7 @@ export default async () => {
     await transaction.request().query('delete from Vocabulary;')
 
     for (const VOCABULARY of VOCABULARIES) {
-      console.info('Loading vocabulary', VOCABULARY, 'into database')
+      logger.info('Loading vocabulary', VOCABULARY, 'into database')
 
       const parser = createReadStream(join(__dirname, `.${sep}trees${sep}${VOCABULARY}`)).pipe(
         parse({ columns: true, skipEmptyLines: true })
@@ -156,9 +157,9 @@ export default async () => {
 
     const t1 = performance.now()
     const runtime = `${Math.round((t1 - t0) / 1000, 2)} seconds`
-    console.info('Vocabularies loaded!', runtime)
+    logger.info('Vocabularies loaded!', runtime)
   } catch (error) {
-    console.error('Error loading vocabulary trees', error)
+    logger.error('Error loading vocabulary trees', error)
     await transaction.rollback()
     throw error
   }

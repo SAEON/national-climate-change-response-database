@@ -1,6 +1,7 @@
 import { join, normalize, sep } from 'path'
 import getCurrentDirectory from '../lib/get-current-directory.js'
 import ensureDirectory from '../lib/ensure-directory.js'
+import logger from '../lib/logger.js'
 
 const __dirname = getCurrentDirectory(import.meta)
 const p = (...args) => normalize(join(...args))
@@ -48,14 +49,14 @@ if (DEPLOYMENT_ENV === 'production') {
   await ensureDirectory(MIGRATION_LOGS_DIRECTORY)
 })().catch(error => {
   if (FILES_DIRECTORY.includes('snapshot')) {
-    console.error(
+    logger.error(
       'ERROR - missing application directory.',
       'Please specify the FILES_DIRECTORY environment variable when starting the application',
       `If you are executing this application via Powershell, try: $env:FILES_DIRECTORY="./assets"; .\\nccrd-win.exe'`,
       error
     )
   } else {
-    console.error(
+    logger.error(
       'ERROR - missing application directory.',
       'Please create directory',
       FILES_DIRECTORY,

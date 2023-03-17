@@ -7,6 +7,7 @@ import makeHeaderRow from './make-header-row/index.js'
 import { stringify as stringifySync } from 'csv/sync'
 import buildSearchSql from './build-search-sql/index.js'
 import logSql from '../../lib/log-sql.js'
+import logger from '../../lib/logger.js'
 
 const csvOptions = {
   delimiter: ',',
@@ -139,7 +140,7 @@ export default async ctx => {
     })
 
     request.on('error', error => {
-      console.error(
+      logger.error(
         'Error generating download for IDs or search',
         ids?.join(';') || JSON.stringify(search),
         error.message
@@ -161,11 +162,11 @@ export default async ctx => {
           insert into DownloadLog (userId, submissionIds, submissionSearch)
           values (@userId, @submissionIds, @submissionSearch);`)
       } catch (error) {
-        console.error('Error logging download', error.message)
+        logger.error('Error logging download', error.message)
       }
     })
   } catch (error) {
-    console.error(error.message)
+    logger.error(error.message)
     ctx.response.status = 404
   }
 }

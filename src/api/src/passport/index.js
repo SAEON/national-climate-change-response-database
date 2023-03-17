@@ -12,9 +12,10 @@ import strategy from './_strategy.js'
 import './_serialize-user.js'
 import './_deserialize-user.js'
 const { port, protocol } = new URL(HOSTNAME)
+import logger from '../lib/logger.js'
 
 if (!ODP_AUTH_CLIENT_ID || !ODP_AUTH_CLIENT_SECRET) {
-  console.error('OAUTH credentials not provided')
+  logger.error('OAUTH credentials not provided')
   process.exit(1)
 }
 
@@ -38,5 +39,5 @@ export default async () => {
     passport.use(id, strategy({ issuer, redirect_uri: cbUri }))
   })
 
-  console.info('Authentication configured successfully')
+  logger.info('Authentication configured successfully')
 }

@@ -5,6 +5,7 @@ import { IMAGES_DIRECTORY } from '../../config/index.js'
 import { createReadStream, createWriteStream } from 'fs'
 import mergeTenantsSubmissions from '../../lib/sql/merge-tenants-submissions.js'
 import sanitize from 'sanitize-filename'
+import logger from '../../lib/logger.js'
 
 /**
  * Creates the new tenant
@@ -152,7 +153,7 @@ export default async ctx => {
 
     ctx.body = JSON.stringify(tenant)
   } catch (error) {
-    console.error('Unable to create tenant', error)
+    logger.error('Unable to create tenant', error)
     await transaction.rollback()
     if (error.message.includes('Violation of UNIQUE KEY constraint')) {
       ctx.throw(409)

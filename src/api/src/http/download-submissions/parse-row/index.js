@@ -12,6 +12,7 @@ import { stringify as stringifySync } from 'csv/sync'
 import { parse as parseWkt } from 'wkt'
 import { error } from '../../../lib/logger.js'
 import dms from 'dms-conversion'
+import logger from '../../../lib/logger.js'
 
 const { default: DmsCoordinates } = dms
 
@@ -29,103 +30,109 @@ const generalInputFields = {
 }
 
 const parseValue = (id, { key, obj, vocabFields, inputFields }) => {
-  let value = obj[key]
+  try {
+    let value = obj[key]
 
-  if (vocabFields.includes(key)) {
-    value = typeof value === 'string' ? JSON.parse(value) : value
-    if (inputFields[key].kind === 'LIST') {
+    if (vocabFields.includes(key)) {
+      value = typeof value === 'string' ? JSON.parse(value) : value
+      if (inputFields[key].kind === 'LIST') {
+        try {
+          return value?.map(({ term }) => term).join(',') || ''
+        } catch (error) {
+          logger.warn(
+            'Error parsing submission for download to CSV. ID',
+            id,
+            `Field: ${key}`,
+            'A vocabulary field expecting a list is stored as an object. If this field has been changed from a single term input to a list input, this is expected and you can ignore this message. But in the future please migrate the data to correct for this'
+          )
+          return value?.term || ''
+        }
+      }
+
+      return value?.term || ''
+    }
+
+    if (key === 'id') {
+      return id
+    }
+
+    if (key === 'xy') {
+      return parseWkt(value)
+        .geometries.filter(({ type }) => type?.toLowerCase() === 'point')
+        .map(({ coordinates: [x, y] }) => new DmsCoordinates(y, x).toString().replace(',', ''))
+        .join(', ')
+    }
+
+    if (key === 'carbonCredit') {
+      return `${value}`
+    }
+
+    if (key === 'progressData') {
       try {
-        return value?.map(({ term }) => term).join(',') || ''
-      } catch (error) {
-        console.warn(
-          'Error parsing submission for download to CSV. ID',
-          id,
-          `Field: ${key}`,
-          'A vocabulary field expecting a list is stored as an object. If this field has been changed from a single term input to a list input, this is expected and you can ignore this message. But in the future please migrate the data to correct for this'
+        const tables = Object.entries(parseProgressData(value)).reduce(
+          (tables, [key, value]) => {
+            // Progress
+            if (key.includes('_progress')) {
+              key = key.replace('_progress_calc_', '')
+              key = key.split('_')
+              const col = key[0]
+              const row = key[1]
+              tables.progress[row - 1] = tables.progress[row - 1] || {}
+              tables.progress[row - 1][col] = value
+            } else {
+              // Expenditure
+              key = key.replace('_expenditure_calc_', '')
+              key = key.split('_')
+              const col = key[0]
+              const row = key[1]
+              tables.expenditure[row - 1] = tables.expenditure[row - 1] || {}
+              tables.expenditure[row - 1][col] = value
+            }
+
+            return tables
+          },
+          { expenditure: [], progress: [] }
         )
-        return value?.term || ''
+
+        return `
+    ### PROGRESS DATA
+    ${stringifySync(tables.progress, { header: true, delimiter: ';', quoted: false })}
+    
+    ### EXPENDITURE DATA
+    ${stringifySync(tables.expenditure, { header: true, delimiter: ';', quoted: false })}`
+      } catch (e) {
+        error(`Error parsing progress calculator for ID`, id, e)
+        throw new Error(
+          `Unable to parse progress calculator. Please fix the progress calculator input manually`
+        )
       }
     }
 
-    return value?.term || ''
-  }
-
-  if (key === 'id') {
-    return id
-  }
-
-  if (key === 'xy') {
-    return parseWkt(value)
-      .geometries.filter(({ type }) => type?.toLowerCase() === 'point')
-      .map(({ coordinates: [x, y] }) => new DmsCoordinates(y, x).toString().replace(',', ''))
-      .join(', ')
-  }
-
-  if (key === 'carbonCredit') {
-    return `${value}`
-  }
-
-  if (key === 'progressData') {
-    try {
-      const tables = Object.entries(parseProgressData(value)).reduce(
-        (tables, [key, value]) => {
-          // Progress
-          if (key.includes('_progress')) {
-            key = key.replace('_progress_calc_', '')
-            key = key.split('_')
-            const col = key[0]
-            const row = key[1]
-            tables.progress[row - 1] = tables.progress[row - 1] || {}
-            tables.progress[row - 1][col] = value
-          } else {
-            // Expenditure
-            key = key.replace('_expenditure_calc_', '')
-            key = key.split('_')
-            const col = key[0]
-            const row = key[1]
-            tables.expenditure[row - 1] = tables.expenditure[row - 1] || {}
-            tables.expenditure[row - 1][col] = value
-          }
-
-          return tables
-        },
-        { expenditure: [], progress: [] }
-      )
-
-      return `
-  ### PROGRESS DATA
-  ${stringifySync(tables.progress, { header: true, delimiter: ';', quoted: false })}
-  
-  ### EXPENDITURE DATA
-  ${stringifySync(tables.expenditure, { header: true, delimiter: ';', quoted: false })}`
-    } catch (e) {
-      error(`Error parsing progress calculator for ID`, id, e)
-      return `ERROR please fix the progress calculator input for this record`
+    if (key === 'fileUploads') {
+      return value
+        .map(({ id, name }) => `${HOSTNAME}/http/download-public-file?fileId=${id} (${name})`)
+        .join(' \n')
+        .trim()
     }
-  }
 
-  if (key === 'fileUploads') {
-    return value
-      .map(({ id, name }) => `${HOSTNAME}/http/download-public-file?fileId=${id} (${name})`)
-      .join(' \n')
-      .trim()
-  }
-
-  if (key === 'createdAt' || key === 'deletedAt') {
-    return value?.toISOString() || ''
-  }
-
-  if (typeof value === 'object') {
-    return JSON.stringify(value)
-  }
-
-  if (key === 'startYear' || key === 'endYear') {
-    if (value?.length > 4) {
-      return new Date(value).getFullYear()
+    if (key === 'createdAt' || key === 'deletedAt') {
+      return value?.toISOString() || ''
     }
-  }
 
-  return value || ''
+    if (typeof value === 'object') {
+      return JSON.stringify(value)
+    }
+
+    if (key === 'startYear' || key === 'endYear') {
+      if (value?.length > 4) {
+        return new Date(value).getFullYear()
+      }
+    }
+
+    return value || ''
+  } catch (error) {
+    return `ERROR: ${error.message}`
+  }
 }
 
 export default ({ ctx, submission, columns }) => {

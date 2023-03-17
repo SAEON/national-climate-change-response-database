@@ -1,4 +1,5 @@
 import fixGridValues from './_fix-grid-values.js'
+import logger from '../../../../lib/logger.js'
 
 /**
  * grid1 => progress data
@@ -61,7 +62,7 @@ export default calculator => {
 
     return excelFields
   } catch (error) {
-    console.error(
+    logger.error(
       'Error parsing progress data for calculator object',
       calculator,
       fixGridValues({ calculator, debug: true })

@@ -68,7 +68,6 @@
     "typeface-roboto": "1.1.13",
     "url": "^0.11.0",
     "url-loader": "^4.1.1",
-    "use-http": "^1.0.27",
     "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1",
     "wkt": "^0.1.1"

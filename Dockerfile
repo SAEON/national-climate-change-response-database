@@ -1,5 +1,5 @@
 # Build client
-FROM node:16.14.2 as client
+FROM node:19.8.1 as client
 
 ARG DEPLOYMENT_ENV=production
 ARG DEFAULT_NOTICES=

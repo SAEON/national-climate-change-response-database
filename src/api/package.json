@@ -9,8 +9,8 @@
     "lint": "eslint -c .eslintrc.cjs \"./**/*.{js,mjs,cjs}\"",
     "rollup": "rimraf bin && rollup --config rollup.config.js && cp -r src/http/public-image/images bin/images && cp -r src/mssql/install-vocabulary/trees bin/trees && cp src/http/download-excel-submission-template/base.xlsm bin/base.xlsm && cp -r src/graphql/schema/type-defs bin/type-defs && cp -r src/mssql/sql bin/sql && cp -r src/mssql/install-region-geometries/geojson/ bin/geojson && cp -r src/client-dist bin/client-dist",
     "prettier": "prettier --cache --cache-strategy metadata --write \"./**/*.@(js|jsx|json|mjs|cjs|graphql)\"",
-    "ncu": "ncu",
-    "ncu -u": "ncu -u"
+    "ncu": "ncu -x koa-passport",
+    "ncu -u": "ncu -u -x koa-passport"
   },
   "repository": {
     "type": "git",
@@ -51,7 +51,7 @@
     "koa-compress": "^5.1.0",
     "koa-morgan": "^1.0.1",
     "koa-mount": "^4.0.0",
-    "koa-passport": "^6.0.0",
+    "koa-passport": "^4.1.4",
     "koa-session": "^6.4.0",
     "koa-static": "^5.0.0",
     "koa2-formidable": "^1.0.3",

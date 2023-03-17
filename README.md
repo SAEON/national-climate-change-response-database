@@ -4,7 +4,8 @@ A database for tracking, analysing, and monitoring climate adaptation and mitiga
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
 
 - [Quick start](#quick-start)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
@@ -42,7 +43,8 @@ A database for tracking, analysing, and monitoring climate adaptation and mitiga
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Quick start
-The application runtime is Node.js v16.14.2. Local development assumes a Linux environment with administrator access to a SQL Server instance. 
+
+The application runtime is Node.js v16.14.2. Local development assumes a Linux environment with administrator access to a SQL Server instance.
 
 ## Install source code and dependencies
 
@@ -56,18 +58,19 @@ npm --prefix src/client install
 ```
 
 ## SQL Server setup
+
 The easiest way to quickly set up a SQL Server instance is via [Docker Engine](https://docs.docker.com/engine/) and using a Developer/Express license. It is also necessary to install [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms) (SSMS) to configure the database server and database.
 
 ```sh
 # Create a Docker network
-docker network create --driver bridge nccrd
+docker network create --driver bridge saeon_local
 
 # Start a Developer SQL Server instance (manually create the database)
 mkdir /home/$USER/sql-server-data
 docker run \
-  --net=nccrd \
+  --net=saeon_local \
   --name sql-server \
-  --restart always \
+  --restart unless-stopped \
   -v /home/$USER/sql-server-data:/var/opt/mssql \
   -e 'ACCEPT_EULA=Y' \
   -e 'SA_PASSWORD=password!123#' \
@@ -75,7 +78,7 @@ docker run \
   -e 'MSSQL_AGENT_ENABLED=true' \
   -p 1433:1433 \
   -d \
-  mcr.microsoft.com/mssql/server:2017-latest
+  mcr.microsoft.com/mssql/server:2019-latest
 ```
 
 ## Create a database
@@ -104,22 +107,17 @@ The application supports OAuth 2 authentication. Theoretically any OAuth 2 provi
 
 ```json
 {
-  "client_id":"SAEON.YOUR_APP",
-  "redirect_uris":[
-     "http://localhost:3000/http/authenticate/redirect/saeon",
-     "https://<hostname>/http/authenticate/redirect/saeon"
+  "client_id": "SAEON.YOUR_APP",
+  "redirect_uris": [
+    "http://localhost:3000/http/authenticate/redirect/saeon",
+    "https://<hostname>/http/authenticate/redirect/saeon"
   ],
-  "grant_types":[
-     "authorization_code",
-     "refresh_token"
-  ],
-  "response_types":[
-     "code"
-  ],
-  "scope":"openid offline SAEON.YOUR_APP",
-  "post_logout_redirect_uris":[
-     "http://localhost:3000/http/logout",
-     "https://<hostname>/http/logout"
+  "grant_types": ["authorization_code", "refresh_token"],
+  "response_types": ["code"],
+  "scope": "openid offline SAEON.YOUR_APP",
+  "post_logout_redirect_uris": [
+    "http://localhost:3000/http/logout",
+    "https://<hostname>/http/logout"
   ]
 }
 ```
@@ -129,15 +127,18 @@ The application supports OAuth 2 authentication. Theoretically any OAuth 2 provi
 Navigate to `/deployment`, and click the `ADD TENANT` button. For local development you should use `something.localhost` as the hostname, and you may have to configure your machine's host file so requests to `something.localhost` are resolved correctly to the development server (`http://something.localhost => localhost`). For deployment, after specifying a new tenant the webserver needs to be configured to support that additional domain resolution, and authentication needs to be configured with that new domain.
 
 ### Configure tenant authentication
+
 The Oauth 2 registration needs to be updated with additional `redirect_uris` and `post_logout_redirect_uris` uris. For example, to register a new client on the subdomain `new-tenant`, the following URIs need to be added:
 
 **`redirect_uris`**
+
 ```txt
 http://new-tenant.localhost:3000/http/authenticate/redirect/saeon
 https://new-tenant.<hostname>/http/authenticate/redirect/saeon
 ```
 
 **`post_logout_redirect_uris`**
+
 ```txt
 http://new-tenant.localhost:3000/http/logout
 https://new-tenant.<hostname>/http/logout
@@ -264,12 +265,12 @@ $env:ODP_AUTH_CLIENT_SECRET="<secret>";
 Please see the [Windows platform installation instructions](platform/windows/) for installing the NCCRD as a service (i.e. it will start on server startup, and also restart on error).
 
 ## Continuous Deployment
-Continuous integration and deployment (CICD) refers to environments where source code changes are automatically merged and deployed to testing, staging, and production servers. 
+
+Continuous integration and deployment (CICD) refers to environments where source code changes are automatically merged and deployed to testing, staging, and production servers.
 
 This repository is configured to automatically deploy source code changes on the `next` branch to a testing/staging environment, and to automatically deploy to production when commits are tagged. The [GitHub Actions tooling](https://github.com/features/actions) (part of the [github.com](https://github.com) platform) is used for this. Refer to [workflow files](/.github/workflows/) where this logic is laid out.
 
 Refer to [deploy_nccrd.sign-on.co.za.yml](/.github/workflows/deploy_nccrd.sign-on.co.za.yml) for an example CICD workflow with reference to [CentOS 7](/platform/centos) environment. The GitHub Actions tooling is also supported on Windows Server, so a similar deployment pipeline can also be achieved.
-
 
 # Configuration
 

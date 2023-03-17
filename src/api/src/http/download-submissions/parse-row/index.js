@@ -10,7 +10,9 @@ import { HOSTNAME } from '../../../config/index.js'
 import parseProgressData from './parse-progress-data/index.js'
 import { stringify as stringifySync } from 'csv/sync'
 import { parse as parseWkt } from 'wkt'
+import { error } from '../../../lib/logger.js'
 import dms from 'dms-conversion'
+
 const { default: DmsCoordinates } = dms
 
 const generalVocabularyFields = ['submissionStatus']
@@ -64,37 +66,42 @@ const parseValue = (id, { key, obj, vocabFields, inputFields }) => {
   }
 
   if (key === 'progressData') {
-    const tables = Object.entries(parseProgressData(value)).reduce(
-      (tables, [key, value]) => {
-        // Progress
-        if (key.includes('_progress')) {
-          key = key.replace('_progress_calc_', '')
-          key = key.split('_')
-          const col = key[0]
-          const row = key[1]
-          tables.progress[row - 1] = tables.progress[row - 1] || {}
-          tables.progress[row - 1][col] = value
-        } else {
-          // Expenditure
-          key = key.replace('_expenditure_calc_', '')
-          key = key.split('_')
-          const col = key[0]
-          const row = key[1]
-          tables.expenditure[row - 1] = tables.expenditure[row - 1] || {}
-          tables.expenditure[row - 1][col] = value
-        }
+    try {
+      const tables = Object.entries(parseProgressData(value)).reduce(
+        (tables, [key, value]) => {
+          // Progress
+          if (key.includes('_progress')) {
+            key = key.replace('_progress_calc_', '')
+            key = key.split('_')
+            const col = key[0]
+            const row = key[1]
+            tables.progress[row - 1] = tables.progress[row - 1] || {}
+            tables.progress[row - 1][col] = value
+          } else {
+            // Expenditure
+            key = key.replace('_expenditure_calc_', '')
+            key = key.split('_')
+            const col = key[0]
+            const row = key[1]
+            tables.expenditure[row - 1] = tables.expenditure[row - 1] || {}
+            tables.expenditure[row - 1][col] = value
+          }
 
-        return tables
-      },
-      { expenditure: [], progress: [] }
-    )
+          return tables
+        },
+        { expenditure: [], progress: [] }
+      )
 
-    return `
-### PROGRESS DATA
-${stringifySync(tables.progress, { header: true, delimiter: ';', quoted: false })}
-
-### EXPENDITURE DATA
-${stringifySync(tables.expenditure, { header: true, delimiter: ';', quoted: false })}`
+      return `
+  ### PROGRESS DATA
+  ${stringifySync(tables.progress, { header: true, delimiter: ';', quoted: false })}
+  
+  ### EXPENDITURE DATA
+  ${stringifySync(tables.expenditure, { header: true, delimiter: ';', quoted: false })}`
+    } catch (e) {
+      error(`Error parsing progress calculator for ID`, id, e)
+      return `ERROR please fix the progress calculator input for this record`
+    }
   }
 
   if (key === 'fileUploads') {

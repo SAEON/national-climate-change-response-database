@@ -1,6 +1,6 @@
 {
   "name": "nccrd",
-  "version": "5.0.5",
+  "version": "5.1.0",
   "description": "National climate change response database",
   "type": "module",
   "scripts": {
@@ -30,9 +30,9 @@
       "src/api/src/**/*"
     ],
     "targets": [
-      "node16-linux-x64",
-      "node16-macos-x64",
-      "node16-win-x64"
+      "latest-linux-x64",
+      "latest-macos-x64",
+      "latest-win-x64"
     ],
     "outputPath": "binaries"
   },

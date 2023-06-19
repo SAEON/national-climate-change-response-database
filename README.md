@@ -1,12 +1,11 @@
 # National Climate Change Response Database (NCCRD)
 
-A database for tracking, analysing, and monitoring climate adaptation and mitigation projects
+A database for tracking, analysing, and monitoring climate adaptation and mitigation projects at a national and sub-national (i.e. provincial) level.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
-
+- [System architecture](#system-architecture)
 - [Quick start](#quick-start)
   - [Install source code and dependencies](#install-source-code-and-dependencies)
   - [SQL Server setup](#sql-server-setup)
@@ -41,6 +40,9 @@ A database for tracking, analysing, and monitoring climate adaptation and mitiga
   - [Nginx](#nginx)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# System architecture
+The NCCRD is an application server, and that connects to a SQL Server database. A browser client (React.js) is served from the Node.js application server
 
 # Quick start
 

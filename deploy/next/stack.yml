@@ -52,6 +52,10 @@ services:
       restart_policy:
         condition: any
         delay: 15s
+      resources:
+        limits:
+          cpus: "1"
+          memory: 150M
     volumes:
       - nccrd_next:/nccrd-assets
     environment:

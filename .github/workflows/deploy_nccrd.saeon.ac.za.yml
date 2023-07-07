@@ -4,14 +4,6 @@ on:
   workflow_dispatch:
 
 env:
-  SWARM_HOSTNAME: ${{ secrets.SWARM_HOSTNAME }} # Organization secret
-  SWARM_USERNAME: ${{ secrets.SWARM_USERNAME }} # Organization secret
-  SWARM_PASSWORD: ${{ secrets.SWARM_PASSWORD }} # Organization secret
-  SWARM_SSH_PORT: ${{ secrets.SWARM_SSH_PORT }} # Organization secret
-  MSSQL_PASSWORD: ${{ secrets.MSSQL_PASSWORD_NEXT }} # Repository secret
-  MSSQL_USERNAME: ${{ secrets.MSSQL_USERNAME_NEXT }} # Repository secret
-  ODP_AUTH_CLIENT_SECRET: ${{ secrets.ODP_AUTH_CLIENT_SECRET }} # Repository secret
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   NCCRD_IMAGE_NAME: ${{ github.repository }}_next_node
   NGINX_IMAGE_NAME: ${{ github.repository }}_next_nginx
   REGISTRY: ghcr.io
@@ -33,7 +25,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ env.GITHUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -66,7 +58,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ env.GITHUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -101,24 +93,24 @@ jobs:
       - name: (SCP) Copy Docker files to app server
         uses: appleboy/scp-action@master
         with:
-          host: ${{ env.SWARM_HOSTNAME }}
-          username: ${{ env.SWARM_USERNAME }}
-          password: ${{ env.SWARM_PASSWORD }}
-          port: ${{ env.SWARM_SSH_PORT }}
+          host: ${{ secrets.SWARM_HOSTNAME }}
+          username: ${{ secrets.SWARM_USERNAME }}
+          password: ${{ secrets.SWARM_PASSWORD }}
+          port: ${{ secrets.SWARM_SSH_PORT }}
           source: 'deploy/next/stack.yml'
           target: 'nccrd-next'
 
       - name: (SSH) Deploy Docker stack
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ env.SWARM_HOSTNAME }}
-          username: ${{ env.SWARM_USERNAME }}
-          password: ${{ env.SWARM_PASSWORD }}
-          port: ${{ env.SWARM_SSH_PORT }}
+          host: ${{ secrets.SWARM_HOSTNAME }}
+          username: ${{ secrets.SWARM_USERNAME }}
+          password: ${{ secrets.SWARM_PASSWORD }}
+          port: ${{ secrets.SWARM_SSH_PORT }}
           script: |
-            echo "MSSQL_PASSWORD=${{ env.MSSQL_PASSWORD }}" > /home/runner/nccrd-next/deploy/next/stack.env
-            echo "MSSQL_USERNAME=${{ env.MSSQL_USERNAME }}" >> /home/runner/nccrd-next/deploy/next/stack.env
+            echo "MSSQL_PASSWORD=${{ secrets.MSSQL_PASSWORD_NEXT }}" > /home/runner/nccrd-next/deploy/next/stack.env
+            echo "MSSQL_USERNAME=${{ secrets.MSSQL_USERNAME_NEXT }}" >> /home/runner/nccrd-next/deploy/next/stack.env
             echo "NCCRD_IMAGE=${{ needs.build-nccrd.outputs.image }}" >> /home/runner/nccrd-next/deploy/next/stack.env
             echo "NGINX_IMAGE=${{ needs.build-nginx.outputs.image }}" >> /home/runner/nccrd-next/deploy/next/stack.env
-            echo "ODP_AUTH_CLIENT_SECRET=${{ env.ODP_AUTH_CLIENT_SECRET }}" >> /home/runner/nccrd-next/deploy/next/stack.env
+            echo "ODP_AUTH_CLIENT_SECRET=${{ secrets.ODP_AUTH_CLIENT_SECRET }}" >> /home/runner/nccrd-next/deploy/next/stack.env
             sudo /opt/deploy-docker-stack.sh /home/runner/nccrd-next/deploy/next/stack.yml /home/runner/nccrd-next/deploy/next/stack.env nccrd_next

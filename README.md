@@ -369,7 +369,9 @@ sudo crontab -e
 Moving a deployment from one system to another is fairly straightforward - just deploy to a new server, restore the database and update configuration. However there are a couple caveats:
 
 1. Don't forget to move the uploads directory to the environment! Look at the configuration value `FILES_DIRECTORY` on your current deployment to see where files are uploaded to
-2. **file uploads are referenced in SQL Server via absolute paths. As such, you will need to update the file paths referenced in Sql Server**
+2. **file uploads are referenced in SQL Server via absolute paths. As such, you will need to update the file paths referenced in Sql Server**. Look at `dbo.WebSubmissionFiles` to see where files are stored.
+
+In the case of the SAEON deployment, the `FILES_DIRECTORY` is within a directory mounted to the container, making it fairly straightforward to migrate to new environments. Just copy/paste the directory containing files to a new server, and update the deployment volume bind to reflect the new host path.
 
 # Source code documentation
 

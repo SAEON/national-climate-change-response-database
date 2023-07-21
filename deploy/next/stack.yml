@@ -1,9 +1,5 @@
 version: '3.9'
 
-volumes:
-  nccrd_next:
-    driver: local
-
 networks:
   nccrd_next:
     name: nccrd_next
@@ -57,13 +53,15 @@ services:
           cpus: "1"
           memory: 150M
     volumes:
-      - nccrd_next:/nccrd-assets
+      - type: bind
+        source: /mnt/nccrd/data/next
+        target: /nccrd-assets
     environment:
       FILES_DIRECTORY: /nccrd-assets
       LOG_REQUEST_DETAILS: 'false'
       LOG_SQL_QUERIES: 'false'
       MSSQL_DATABASE: nccrd_next
-      MSSQL_HOSTNAME: 192.168.118.194
+      MSSQL_HOSTNAME: mssql.saeon.int
       MSSQL_PASSWORD: $MSSQL_PASSWORD
       MSSQL_PORT: 1433
       MSSQL_USERNAME: $MSSQL_USERNAME
